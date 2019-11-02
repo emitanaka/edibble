@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 The main aims of `edibble` R-package are: 
 
 1. facilitate statistical thinking of adapting experimental designs to different conditions by implementing the **grammar of experimental design** to generate new designs, and 
-2. lubricate the project flow of experimental data *before* analysis. 
+2. lubricate the project flow of generating experimental data.
 
 The name origin of `edibble` is a play on `tibble` (a modern take on data frames) with motivation as `tibble` for experimental design. 
 
