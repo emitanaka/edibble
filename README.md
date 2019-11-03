@@ -135,11 +135,11 @@ user specifying which columns are treatment, units, grouping and so on.
 
 ### Outputs
 
-The end result of this will be a modified `tibble` (built from
-`pillar`). It will include summary of treatments and units. The plan is
-also to have the number of levels of factors printed as well.
+The resulting output of `edibble` will be a modified `tibble` (built
+from `pillar`). It will include summary of treatments and units. The
+plan is also to have the number of levels of factors printed as well.
 
-As under the hood, `edibble` output is a data frame, it is easy to
+As under the hood, `edibble` output is just a data frame, it is easy to
 export the output to a spreadsheet using standard exporting tools for
 data frames. While this seems such a small issue, this is important for
 lubricating the generation of experimental design to data collection.
@@ -172,7 +172,7 @@ standard circle units to user supplied images.
 \*Note this API prototype code is still experimental and bound to
 change.
 
-## ANOVA Table
+### ANOVA Table
 
 Another table output which `edibble` will support is ANOVA tables. These
 include the so-called skeleton ANOVA table which is essentially ANOVA
@@ -180,7 +180,7 @@ without the data (no sum of squares, mean squares and so on). The
 `edibble` ANOVA output will especially be useful for complex nested
 experiment and non-orthogonal designs.
 
-## Hasse diagrams
+### Hasse diagrams
 
 Another visualisation output in `edibble` will include Hasse diagram to
 show relationshional structures with different sources of variation.
