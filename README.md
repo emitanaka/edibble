@@ -105,6 +105,8 @@ separated by `_`. Some verbs include `set`, `get`, `group`, `modify`,
 `split`, `cross`, `combine`, `apply`, `assign`, `randomise`, `measure`,
 `allocate`, `permute`, `cluster`.
 
+The prototype code below generates a classic split-plot deisgn:
+
 ``` r
 design <- edibble() %>% 
   # [    ]
@@ -130,8 +132,9 @@ design <- edibble() %>%
   # U2 -> T2 [random]
 ```
 
-The input argument of `eddible` function can also include `data` and the
-user specifying which columns are treatment, units, grouping and so on.
+The input argument of `edibble` function can also include `data`
+followed by the user specifying which columns are treatment, units,
+grouping and so on.
 
 ### Outputs
 
@@ -166,7 +169,7 @@ design %>% animate_design()
 These functions are designed to visualise experimental design *fast*.
 Some more fine tuning can be provided so that users can customise the
 visualisation outputs for publications or reports. E.g.
-`modify_trts(.T1, images = c("drugA.jpg", "drugB.jpg")` to modify from
+`modify_trts(.T1, images = c("drugA.jpg", "drugB.jpg"))` to modify from
 standard circle units to user supplied images.
 
 \*Note this API prototype code is still experimental and bound to
