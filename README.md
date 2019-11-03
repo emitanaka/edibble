@@ -130,6 +130,11 @@ design <- edibble() %>%
   # U2 -> T2 [random]
 ```
 
+The input argument of `eddible` function can also include `data` and the
+user specifying which columns are treatment, units, grouping and so on.
+
+### Outputs
+
 The end result of this will be a modified `tibble` (built from
 `pillar`). It will include summary of treatments and units. The plan is
 also to have the number of levels of factors printed as well.
@@ -166,6 +171,19 @@ standard circle units to user supplied images.
 
 \*Note this API prototype code is still experimental and bound to
 change.
+
+## ANOVA Table
+
+Another table output which `edibble` will support is ANOVA tables. These
+include the so-called skeleton ANOVA table which is essentially ANOVA
+without the data (no sum of squares, mean squares and so on). The
+`edibble` ANOVA output will especially be useful for complex nested
+experiment and non-orthogonal designs.
+
+## Hasse diagrams
+
+Another visualisation output in `edibble` will include Hasse diagram to
+show relationshional structures with different sources of variation.
 
 ## Installation
 
