@@ -87,6 +87,86 @@ identified.
     all parties involved can digest the design quickly and correct any
     mistake as needed before conducting the experiment.
 
+## API Prototype
+
+The core elements of experimental design are `trts` and `units`.
+Specifications of more complex designs include:
+
+  - `phase` for multi-phase designs;
+  - `index` for temporal components (default value `0`);
+  - `keys` that uniquely identify observational units;
+  - `map` define mapping structures;
+  - `traits` for observations;
+  - `strata` for nested designs; (questioning this)
+  - `block` and `cluster` are synonyms for grouped units.
+
+These are manipulated by the *verb* that precedes these elements
+separated by `_`. Some verbs include `set`, `get`, `group`, `modify`,
+`split`, `cross`, `combine`, `apply`, `assign`, `randomise`, `measure`,
+`allocate`, `permute`, `cluster`.
+
+``` r
+design <- edibble() %>% 
+  # [    ]
+  set_trts(A = 1:3, B = c("X", "Y")) %>% 
+  # [ T1: A:{1 2 3}  ]
+  # [ T2: B:{X Y}    
+  set_units(18) %>% 
+  # [ T1: A:{1 2 3}  ]
+  # [ T2: B:{X Y}    ]
+  # [ U1: 1, ..., 18                ]
+  group_units(size = 3) %>% 
+  # [ T1: A:{1 2 3}  ]
+  # [ T2: B:{X Y}    ]
+  # [ U1: 1, ..., 18                ]
+  # [ U2: [1,2,3], [4,5,6],...,[16,17,18]]
+  randomise_map(.U1 ~ .T1,
+                .U2 ~ .T2) 
+  # [ T1: A:{1 2 3}  ]
+  # [ T2: B:{X Y}    ]
+  # [ U1: 1, ..., 18                ]
+  # [ U2: [1,2,3], [4,5,6],...,[16,17,18]]
+  # U1 -> T1 [random]
+  # U2 -> T2 [random]
+```
+
+The end result of this will be a modified `tibble` (built from
+`pillar`). It will include summary of treatments and units. The plan is
+also to have the number of levels of factors printed as well.
+
+As under the hood, `edibble` output is a data frame, it is easy to
+export the output to a spreadsheet using standard exporting tools for
+data frames. While this seems such a small issue, this is important for
+lubricating the generation of experimental design to data collection.
+Ultimately the person collecting the data should aim to add extra
+column(s) for the observed data to the `edibble` output.
+
+The `edibble` output can also be used to quickly generate a sketch of
+the design by adding one extra function in the pipeline. E.g.
+
+``` r
+design %>% visualise_design()
+```
+
+Using a similar mechanism to `lazy_dt` in `dtplyr`, `edibble` should
+also be able to *animate* the steps required to generate the design.
+This will make it useful for presentations or general communication to
+ensure all parties involved in the generation of experimental design are
+all on the same page.
+
+``` r
+design %>% animate_design()
+```
+
+These functions are designed to visualise experimental design *fast*.
+Some more fine tuning can be provided so that users can customise the
+visualisation outputs for publications or reports. E.g.
+`modify_trts(.T1, images = c("drugA.jpg", "drugB.jpg")` to modify from
+standard circle units to user supplied images.
+
+\*Note this API prototype code is still experimental and bound to
+change.
+
 ## Installation
 
 Currently the package is not available for
