@@ -136,6 +136,32 @@ The input argument of `edibble` function can also include `data`
 followed by the user specifying which columns are treatment, units,
 grouping and so on.
 
+### Optimal Design
+
+Ideally `edibble` will also allow for model-based design by feeding in
+the statistical model in its framework.
+
+### Sampling Surveys
+
+While the initial focus will be experiments were resources are well
+defined, but the final goal is to implement workflow to facilitate
+survey sampling designs as well. Sample surveys primarily focus on how
+to sample including the sample size needed. These can be implemented by
+say a function (that may be user-defined) that takes into account
+previous settings.
+
+``` r
+sample_size <- function(d) {
+  pwrout <- pwr::pwr.t.test(d = d, sig.level=.05, 
+                            power = .90, type = 'two.sample')
+  return(2 * ceiling(pwrout$n))
+}
+
+edibble() %>% 
+  set_trts(t = 2) %>% 
+  set_units(n = sample_size(0.3))
+```
+
 ### Outputs
 
 The resulting output of `edibble` will be a modified `tibble` (built
@@ -206,6 +232,9 @@ installation.
 ## Related Work
 
   - `DeclareDesign` although motivation is different to `edibble`.
+  - `desplot` for visualising designs.
+  - `dae` for functions useful in the design and ANOVA of experiments
+    (consider using this for the backend)
 
 ## Acknowlegement
 
