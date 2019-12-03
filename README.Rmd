@@ -174,6 +174,10 @@ Currently the package is not available for installation.
 * `desplot` for visualising designs. 
 * `dae` for functions useful in the design and ANOVA of experiments (consider using this for the backend)
 
+## More info
+
+* I presented this work on 27th Nov 2019 at NUMBATs, Monash. The slide can be found [here](http://emitanaka.org/slides/NUMBAT2019/).
+
 ## Acknowlegement 
 
 Thanks to Francis Hui, Di Cook, Rob Hyndman and Nick Tierney for their feedback on the proposed idea.

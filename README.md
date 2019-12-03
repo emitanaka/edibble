@@ -28,7 +28,7 @@ The grammatical expressions to generate design can draw parallel to
 The focus of `tidyverse` R-package is well suited for the data science
 project workflow as illustrated below in (B) (from [Grolemund and
 Wickham 2017](https://r4ds.had.co.nz/introduction.html)). For
-experimental data, statistical project begin before obtaining data as
+experimental data, statististical project begin before obtaining data as
 depicted below in (A). The focus of `edibble` is to facilitate work in
 (A).
 
@@ -235,6 +235,11 @@ installation.
   - `desplot` for visualising designs.
   - `dae` for functions useful in the design and ANOVA of experiments
     (consider using this for the backend)
+
+## More info
+
+  - I presented this work on 27th Nov 2019 at NUMBATs, Monash. The slide
+    can be found [here](http://emitanaka.org/slides/NUMBAT2019/).
 
 ## Acknowlegement
 
