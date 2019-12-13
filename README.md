@@ -233,6 +233,8 @@ installation.
 
   - `DeclareDesign` although motivation is different to `edibble`.
   - `desplot` for visualising designs.
+  - `designr` for balanced factorial designs with crossed and nested
+    random and fixed effect to data frame
   - `dae` for functions useful in the design and ANOVA of experiments
     (consider using this for the backend)
 

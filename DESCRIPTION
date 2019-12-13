@@ -10,4 +10,7 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports: 
-    pillar
+    pillar,
+    magrittr,
+    tibble
+RoxygenNote: 6.1.1
