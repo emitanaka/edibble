@@ -3,5 +3,6 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   edbl-output: edbl-output.html
-last_built: 2020-12-31T07:39Z
+  edbl-terms: edbl-terms.html
+last_built: 2020-12-31T07:42Z
 
