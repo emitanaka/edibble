@@ -4,7 +4,7 @@
 \alias{vec_ptype_abbr.edbl_unit}
 \title{edibble unit}
 \usage{
-vec_ptype_abbr.edbl_unit(x)
+\method{vec_ptype_abbr}{edbl_unit}(x)
 }
 \description{
 edibble unit

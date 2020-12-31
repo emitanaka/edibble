@@ -2,9 +2,15 @@
 % Please edit documentation in R/edibble.R
 \name{edibble}
 \alias{edibble}
+\alias{new_edibble}
+\alias{not_edibble}
 \title{Make input edibble}
 \usage{
 edibble(x, ..., units = NULL, trts = NULL)
+
+new_edibble(x, ..., nexus = NULL, class = NULL)
+
+not_edibble(x)
 }
 \arguments{
 \item{x}{A named list of edibble variables or data frame.}
@@ -12,13 +18,12 @@ edibble(x, ..., units = NULL, trts = NULL)
 \item{...}{Passed to \code{new_tibble}.}
 
 \item{units}{A character vector.}
-}
-\value{
-A data frame of class \code{edbl}.
+
+\item{trts}{A character vector.}
 }
 \description{
 If variables are already defined as external data then you can import this
-data as edibble. T
+data as edibble.
 }
 \seealso{
 See \code{\link[=initiate_design]{initiate_design()}} for initiating design from scratch.

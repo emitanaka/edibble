@@ -4,7 +4,7 @@
 \alias{pull.edbl_nexus}
 \title{Extract a single variable}
 \usage{
-pull.edbl_nexus(x, var = -1, ...)
+\method{pull}{edbl_nexus}(x, var = -1, ...)
 }
 \arguments{
 \item{x}{\code{edbl_nexus} object}

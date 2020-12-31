@@ -4,7 +4,7 @@
 \alias{type_sum.edbl_unit}
 \title{edibble unit}
 \usage{
-type_sum.edbl_unit(x)
+\method{type_sum}{edbl_unit}(x)
 }
 \description{
 edibble unit

@@ -126,6 +126,8 @@ is_edibble_nexus <- function(x) {
 
 
 #' Meta information print out for edibble
+#'
+#' @param x An edibble data frame.
 #' @importFrom tibble tbl_sum
 #' @export
 tbl_sum.edbl_df <- function(x) {
@@ -137,13 +139,13 @@ tbl_sum.edbl_df <- function(x) {
 #'
 #' @description
 #' If variables are already defined as external data then you can import this
-#' data as edibble. T
+#' data as edibble.
 #'
 #' @param x A named list of edibble variables or data frame.
 #' @param ... Passed to `new_tibble`.
 #' @param units A character vector.
+#' @param trts A character vector.
 #' @seealso See [initiate_design()] for initiating design from scratch.
-#' @return A data frame of class `edbl`.
 #'
 #' @export
 edibble <- function(x, ..., units = NULL, trts = NULL) {
@@ -152,12 +154,15 @@ edibble <- function(x, ..., units = NULL, trts = NULL) {
     #set_trts(trts)
 }
 
+#' @rdname edibble
 #' @export
 new_edibble <- function(x, ..., nexus = NULL, class = NULL) {
   tibble::new_tibble(x, ..., nrow = vec_size_common(!!!x),
                      class = "edbl_df", nexus = nexus)
 }
 
+
+#' @rdname edibble
 #' @export
 not_edibble <- function(x) {
   if (!is_edibble(x)) {

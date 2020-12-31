@@ -2,8 +2,8 @@
 % Please edit documentation in R/edibble-package.R
 \docType{package}
 \name{edibble-package}
-\alias{edibble}
 \alias{edibble-package}
+\alias{_PACKAGE}
 \title{edibble: Generate experimental designs using the grammar of experimental design}
 \description{
 A system to facilitate statistical thinking of 
