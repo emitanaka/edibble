@@ -42,6 +42,8 @@ In edibble, we can code the above split-plot design as below. You can see it out
 ```{r split-plot}
 library(edibble)
 
+set.seed(2020) # 🔥🦠🏠😱
+
 split <- initiate_design("Split-plot Design") %>% 
   set_units(wholeplot = 4,
             subplot = nested_in(wholeplot, 4)) %>% 

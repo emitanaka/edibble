@@ -51,6 +51,8 @@ can be thought of as tibble output for experimental design.
 ``` r
 library(edibble)
 
+set.seed(2020) # 🔥🦠🏠
+
 split <- initiate_design("Split-plot Design") %>% 
   set_units(wholeplot = 4,
             subplot = nested_in(wholeplot, 4)) %>% 
@@ -71,22 +73,22 @@ serve_table(split)
 #> # An edibble: 16 x 4
 #>    wholeplot  subplot    fertilizer variety 
 #>    <unit(4)>  <unit(16)> <trt(2)>   <trt(2)>
-#>  1 wholeplot1 subplot1   B          V2      
-#>  2 wholeplot1 subplot2   B          V2      
-#>  3 wholeplot1 subplot3   B          V1      
-#>  4 wholeplot1 subplot4   B          V1      
-#>  5 wholeplot2 subplot5   B          V1      
-#>  6 wholeplot2 subplot6   B          V2      
+#>  1 wholeplot1 subplot1   A          V2      
+#>  2 wholeplot1 subplot2   A          V2      
+#>  3 wholeplot1 subplot3   A          V1      
+#>  4 wholeplot1 subplot4   A          V1      
+#>  5 wholeplot2 subplot5   B          V2      
+#>  6 wholeplot2 subplot6   B          V1      
 #>  7 wholeplot2 subplot7   B          V1      
 #>  8 wholeplot2 subplot8   B          V2      
-#>  9 wholeplot3 subplot9   A          V2      
+#>  9 wholeplot3 subplot9   A          V1      
 #> 10 wholeplot3 subplot10  A          V2      
-#> 11 wholeplot3 subplot11  A          V1      
+#> 11 wholeplot3 subplot11  A          V2      
 #> 12 wholeplot3 subplot12  A          V1      
-#> 13 wholeplot4 subplot13  A          V2      
-#> 14 wholeplot4 subplot14  A          V1      
-#> 15 wholeplot4 subplot15  A          V2      
-#> 16 wholeplot4 subplot16  A          V1
+#> 13 wholeplot4 subplot13  B          V1      
+#> 14 wholeplot4 subplot14  B          V2      
+#> 15 wholeplot4 subplot15  B          V1      
+#> 16 wholeplot4 subplot16  B          V2
 ```
 
 Once you get the rough idea of how edibble specifies design, you should
