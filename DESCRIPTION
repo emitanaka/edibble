@@ -29,6 +29,7 @@ Suggests:
     knitr,
     rmarkdown,
     pillar,
+    dplyr,
     ggplot2 (>= 3.0.0)
 VignetteBuilder: knitr
 Depends: 
