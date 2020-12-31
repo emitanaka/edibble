@@ -1,0 +1,79 @@
+---
+title: "Output configurations in edibble"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{decorate}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(edibble)
+```
+
+## Modifying the look of edibble nexus print output
+
+Let's start off with looking at one of the classic designs stored as an edibble nexus object.
+
+```{r rcbd, eval = FALSE}
+nclassics$RCBD
+```
+
+```{r output1, echo = FALSE, out.width = "150px"}
+knitr::include_graphics("figures/vignette-decorate.png")
+```
+
+```{r opt1, eval = FALSE}
+options(edibble.tree.decorate.trts = cli::bg_cyan,
+        edibble.tree.decorate.units = function(x) cli::bg_yellow(glue::glue("<{x}>")),
+        edibble.tree.decorate.resp = cli::col_yellow,
+        edibble.tree.decorate.levels = function(x) cli::style_inverse(glue::glue("({x})")),
+        edibble.tree.decorate.main = cli::style_underline)
+
+nclassics$RCBD
+```
+
+```{r output2, echo = FALSE, out.width = "150px"}
+knitr::include_graphics("figures/vignette-decorate-new.png")
+```
+
+## Modify label outputs in edibble data frame
+
+
+```{r save-options, include = FALSE}
+old_opts <- options()
+```
+
+```{r redefine}
+redefine_struct <- function() {
+  initiate_design() %>% 
+  set_units(block = 10,
+            plot = nested_in(block, 20),
+            plants = nested_in(plot, 5)) %>% 
+  serve_table()
+}
+
+redefine_struct()
+```
+
+```{r opt3}
+options(edibble.levels.label.leading_zero = TRUE)
+redefine_struct()
+```
+
+```{r opt4}
+options(edibble.levels.label.leading_zero = TRUE,
+        edibble.levels.label.min_ndigits = 5)
+redefine_struct()
+```
+
+```{r restore-options, include = FALSE}
+options(old_opts)
+```
