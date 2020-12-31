@@ -1,0 +1,18 @@
+
+url: https://edibble.emitanaka.org
+
+home:
+  title: An R package that implements grammar of experimental design
+  description: Bla bla
+
+template:
+  opengraph:
+    image:
+      src: man/figures/card.png
+      alt: "edibble"
+    twitter:
+      creator: "@emitanaka"
+      site: "@MonashEBS"
+      card: summary_large_image
+  params:
+    bootswatch: yeti

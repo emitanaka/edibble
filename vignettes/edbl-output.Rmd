@@ -2,7 +2,7 @@
 title: "Output configurations in edibble"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{decorate}
+  %\VignetteIndexEntry{Output configurations in edibble}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
