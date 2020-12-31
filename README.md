@@ -25,8 +25,8 @@ where it is general, requires an input (usually a data frame) with the
 initial experimental design structure (e.g. `AlgDesign::optBlock()` or
 most optimal designs). Both of these approaches assume that the user is
 well acquainted with the experimental structure and objective, but in
-practice these are the greatest bottleneck before even thinking about
-the randomisation process.
+practice these are the greatest bottleneck before even getting to think
+about the randomisation process.
 
 💡 The big idea with the edibble R-package is that you specify an
 experimental design by being more expressive about the experiment. The
@@ -68,25 +68,25 @@ as below.
 
 ``` r
 serve_table(split)
-#> # An edibble: 16 x 4
-#>    wholeplot  subplot    fertilizer variety 
-#>    <unit(4)>  <unit(16)> <trt(2)>   <trt(2)>
-#>  1 wholeplot1 subplot1   A          V1      
-#>  2 wholeplot1 subplot2   A          V2      
-#>  3 wholeplot1 subplot3   A          V2      
-#>  4 wholeplot1 subplot4   A          V1      
-#>  5 wholeplot2 subplot5   B          V2      
-#>  6 wholeplot2 subplot6   B          V2      
-#>  7 wholeplot2 subplot7   B          V1      
-#>  8 wholeplot2 subplot8   B          V1      
-#>  9 wholeplot3 subplot9   A          V2      
-#> 10 wholeplot3 subplot10  A          V1      
-#> 11 wholeplot3 subplot11  A          V2      
-#> 12 wholeplot3 subplot12  A          V1      
-#> 13 wholeplot4 subplot13  B          V2      
-#> 14 wholeplot4 subplot14  B          V1      
-#> 15 wholeplot4 subplot15  B          V2      
-#> 16 wholeplot4 subplot16  B          V1
+#> # A tibble: 16 x 4
+#>    wholeplot  subplot    fertilizer variety   
+#>    <edbl_unt> <edbl_unt> <edbl_trt> <edbl_trt>
+#>  1 wholeplot1 subplot1   A          V1        
+#>  2 wholeplot1 subplot2   A          V2        
+#>  3 wholeplot1 subplot3   A          V2        
+#>  4 wholeplot1 subplot4   A          V1        
+#>  5 wholeplot2 subplot5   B          V2        
+#>  6 wholeplot2 subplot6   B          V1        
+#>  7 wholeplot2 subplot7   B          V2        
+#>  8 wholeplot2 subplot8   B          V1        
+#>  9 wholeplot3 subplot9   A          V2        
+#> 10 wholeplot3 subplot10  A          V1        
+#> 11 wholeplot3 subplot11  A          V2        
+#> 12 wholeplot3 subplot12  A          V1        
+#> 13 wholeplot4 subplot13  B          V2        
+#> 14 wholeplot4 subplot14  B          V1        
+#> 15 wholeplot4 subplot15  B          V1        
+#> 16 wholeplot4 subplot16  B          V2
 ```
 
 Once you get the rough idea of how edibble specifies design, you should
@@ -163,6 +163,7 @@ I say so myself).
   - `designr` for balanced factorial designs with crossed and nested
     random and fixed effect to data frame
   - `dae` for functions useful in the design and ANOVA of experiments
+    (this is in fact powering the randomisation in edibble)
   - `plotdesignr` for designing agronomic field experiments
 
 ## Code of Conduct
