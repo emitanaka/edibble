@@ -62,6 +62,8 @@ names_to_lnames <- function(.nexus, names) {
 }
 
 names_to_nesting_names <- function(.nexus, names) {
+  labels <- V(.nexus)$label2
+  if(is_null(labels)) return(names_to_lnames(.nexus, names))
   dict <- setNames(V(.nexus)$label2, V(.nexus)$name)
   res <- unname(dict[names])
   if(any(is.na(res))) return(names_to_lnames(.nexus, names))
