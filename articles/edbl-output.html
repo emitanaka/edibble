@@ -84,85 +84,147 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">edibble</span><span class="op">)</span></code></pre></div>
-<div id="modifying-the-look-of-edibble-nexus-print-output" class="section level2">
-<h2 class="hasAnchor">
-<a href="#modifying-the-look-of-edibble-nexus-print-output" class="anchor"></a>Modifying the look of edibble nexus print output</h2>
-<p>Let’s start off with looking at one of the classic designs stored as an edibble nexus object.</p>
+<p>When you construct an experimental design, there are many intermediate steps along the way before you are ready to serve your design. edibble stores these intermediate constructs as an <em>edibble nexus</em> (<code>edbl_nexus</code>) which you can visualise in a number of ways.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">nclassics</span><span class="op">$</span><span class="va">RCBD</span></code></pre></div>
-<p><img src="figures/vignette-decorate.png" width="150px"></p>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1231</span><span class="op">)</span> 
+
+<span class="va">new_rcbd</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="../reference/initiate_design.html">initiate_design</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"RCBD"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/set_units.html">set_units</a></span><span class="op">(</span>block <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"B1"</span>, <span class="st">"B2"</span><span class="op">)</span>,
+            unit <span class="op">=</span> <span class="fu"><a href="../reference/nested_in.html">nested_in</a></span><span class="op">(</span><span class="va">block</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/set_trts.html">set_trts</a></span><span class="op">(</span>trt <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/allocate_trts.html">allocate_trts</a></span><span class="op">(</span><span class="op">~</span><span class="va">unit</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/randomise_trts.html">randomise_trts</a></span><span class="op">(</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="va">rcbd</span> <span class="op">&lt;-</span> <span class="fu">new_rcbd</span><span class="op">(</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">rcbd</span><span class="op">)</span>
+<span class="co">#&gt; [1] "edbl_nexus" "igraph"</span></code></pre></div>
+<div id="print-for-edbl_nexus" class="section level2">
+<h2 class="hasAnchor">
+<a href="#print-for-edbl_nexus" class="anchor"></a>Print for <code>edbl_nexus</code>
+</h2>
+<p>If you print an <code>edbl_nexus</code> object, it will show you a tree structure with a high-level overview of the design. Below is a print out of a design. The output form isn’t really made for HTML and for complex reason color is lost for HTML (for the same reason as tibble).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rcbd</span>
+<span class="co">#&gt; RCBD</span>
+<span class="co">#&gt; ├─block (2 levels)</span>
+<span class="co">#&gt; │ └─unit (12 levels)</span>
+<span class="co">#&gt; ├─unit (12 levels)</span>
+<span class="co">#&gt; └─trt (4 levels)</span></code></pre></div>
+<p>The print out in terminal will look like below depending on your IDE theme (I’m using Tomorrow Night Bright theme in RStudio). You can see that the color of the nodes are dependant on which type of variable it is and also shows you how many levels each variable has.</p>
+<p><img src="figures/vignette-decorate.png" width="150px"></p>
+<div id="formatting-print-for-edbl_nexus" class="section level3">
+<h3 class="hasAnchor">
+<a href="#formatting-print-for-edbl_nexus" class="anchor"></a>Formatting print for <code>edbl_nexus</code>
+</h3>
+<p>If you don’t like the default choices, then you can easily customise the look by specifying the function of how to decorate the strings to options. Below I’m making use of functions in the cli package which wraps the string around in some styling.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>edibble.tree.decorate.trts <span class="op">=</span> <span class="fu">cli</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/cli/man/ansi-styles.html">bg_cyan</a></span>,
         edibble.tree.decorate.units <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">cli</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cli/man/ansi-styles.html">bg_yellow</a></span><span class="op">(</span><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html">glue</a></span><span class="op">(</span><span class="st">"&lt;{x}&gt;"</span><span class="op">)</span><span class="op">)</span>,
         edibble.tree.decorate.resp <span class="op">=</span> <span class="fu">cli</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/cli/man/ansi-styles.html">col_yellow</a></span>,
         edibble.tree.decorate.levels <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">cli</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cli/man/ansi-styles.html">style_inverse</a></span><span class="op">(</span><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html">glue</a></span><span class="op">(</span><span class="st">"({x})"</span><span class="op">)</span><span class="op">)</span>,
-        edibble.tree.decorate.main <span class="op">=</span> <span class="fu">cli</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/cli/man/ansi-styles.html">style_underline</a></span><span class="op">)</span>
-
-<span class="va">nclassics</span><span class="op">$</span><span class="va">RCBD</span></code></pre></div>
-<p><img src="figures/vignette-decorate-new.png" width="150px"></p>
-</div>
-<div id="modify-label-outputs-in-edibble-data-frame" class="section level2">
-<h2 class="hasAnchor">
-<a href="#modify-label-outputs-in-edibble-data-frame" class="anchor"></a>Modify label outputs in edibble data frame</h2>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">redefine_struct</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="../reference/initiate_design.html">initiate_design</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/set_units.html">set_units</a></span><span class="op">(</span>block <span class="op">=</span> <span class="fl">10</span>,
-            plot <span class="op">=</span> <span class="fu"><a href="../reference/nested_in.html">nested_in</a></span><span class="op">(</span><span class="va">block</span>, <span class="fl">20</span><span class="op">)</span>,
-            plants <span class="op">=</span> <span class="fu"><a href="../reference/nested_in.html">nested_in</a></span><span class="op">(</span><span class="va">plot</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="op">)</span>
-<span class="op">}</span>
-
-<span class="fu">redefine_struct</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # An edibble: 1,000 x 3</span>
-<span class="co">#&gt;    block      plot        plants    </span>
-<span class="co">#&gt;    &lt;unit(10)&gt; &lt;unit(200)&gt; &lt;unit(1k)&gt;</span>
-<span class="co">#&gt;  1 block1     plot1       plants1   </span>
-<span class="co">#&gt;  2 block1     plot1       plants2   </span>
-<span class="co">#&gt;  3 block1     plot1       plants3   </span>
-<span class="co">#&gt;  4 block1     plot1       plants4   </span>
-<span class="co">#&gt;  5 block1     plot1       plants5   </span>
-<span class="co">#&gt;  6 block1     plot2       plants6   </span>
-<span class="co">#&gt;  7 block1     plot2       plants7   </span>
-<span class="co">#&gt;  8 block1     plot2       plants8   </span>
-<span class="co">#&gt;  9 block1     plot2       plants9   </span>
-<span class="co">#&gt; 10 block1     plot2       plants10  </span>
-<span class="co">#&gt; # … with 990 more rows</span></code></pre></div>
+        edibble.tree.decorate.main <span class="op">=</span> <span class="fu">cli</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/cli/man/ansi-styles.html">style_underline</a></span><span class="op">)</span></code></pre></div>
+<p>Now the print out will look like below.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>edibble.levels.label.leading_zero <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu">redefine_struct</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # An edibble: 1,000 x 3</span>
-<span class="co">#&gt;    block      plot        plants    </span>
-<span class="co">#&gt;    &lt;unit(10)&gt; &lt;unit(200)&gt; &lt;unit(1k)&gt;</span>
-<span class="co">#&gt;  1 block01    plot001     plants0001</span>
-<span class="co">#&gt;  2 block01    plot001     plants0002</span>
-<span class="co">#&gt;  3 block01    plot001     plants0003</span>
-<span class="co">#&gt;  4 block01    plot001     plants0004</span>
-<span class="co">#&gt;  5 block01    plot001     plants0005</span>
-<span class="co">#&gt;  6 block01    plot002     plants0006</span>
-<span class="co">#&gt;  7 block01    plot002     plants0007</span>
-<span class="co">#&gt;  8 block01    plot002     plants0008</span>
-<span class="co">#&gt;  9 block01    plot002     plants0009</span>
-<span class="co">#&gt; 10 block01    plot002     plants0010</span>
-<span class="co">#&gt; # … with 990 more rows</span></code></pre></div>
+<code class="sourceCode R"><span class="va">rcbd</span></code></pre></div>
+<p><img src="figures/vignette-decorate-new.png" width="150px"></p>
+<p>Instead of overwriting the options each time, you can set your <code>.Rprofile</code> so that when you load R, it will load the options in your profile. You can easily open <code>.Rprofile</code> with <code>usethis::edit_r_profile()</code>. I normally don’t recommend to do this as it makes your output non-reproducible by others but the print output is made more for interactive use rather than reports so it doesn’t matter much in this case.</p>
+</div>
+</div>
+<div id="plot-for-edbl_nexus" class="section level2">
+<h2 class="hasAnchor">
+<a href="#plot-for-edbl_nexus" class="anchor"></a>Plot for <code>edbl_nexus</code>
+</h2>
+<p>There are two views available for <code>edbl_nexus</code>: high-level view and low-level view. The high-level view is designed for the user to see the overview of variable relations. [ADD link to other document with more explanation.]</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">rcbd</span><span class="op">)</span></code></pre></div>
+<p><img src="edbl-output_files/figure-html/rcbd-high-plot-1.png" width="384"></p>
+<p>There is also a low-level view of this.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">rcbd</span>, view <span class="op">=</span> <span class="st">"low"</span><span class="op">)</span></code></pre></div>
+<p><img src="edbl-output_files/figure-html/rcbd-low-plot-1.png" width="576"></p>
+<div id="formatting-plot-output-for-edbl_nexus" class="section level3">
+<h3 class="hasAnchor">
+<a href="#formatting-plot-output-for-edbl_nexus" class="anchor"></a>Formatting plot output for <code>edbl_nexus</code>
+</h3>
+<p>If you don’t like these aspects, you can in fact overwrite this. There are two ways you can do this.</p>
+<ol style="list-style-type: decimal">
+<li>
+<code>edbl_nexus</code> is just an <code>igraph</code> under the hood and it’s leveraging the <code>plot</code> method there which means you can customise it the way it is done for <code>igraph</code>,</li>
+<li>Modify the <code>options</code> output. You can see the full list of available options by printing <code>edibble:::op.edibble</code> with a few shown below.</li>
+</ol>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>edibble.vertex.shape.trt <span class="op">=</span> <span class="st">"circle"</span>,
+        edibble.edge.width.t2v <span class="op">=</span> <span class="fl">3</span>,
+        edibble.vertex.fill.trt <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span></code></pre></div>
+<p>This option is only applied to newly constructed designs so let’s reconstruct the same design.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rcbd2</span> <span class="op">&lt;-</span> <span class="fu">new_rcbd</span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">rcbd2</span><span class="op">)</span></code></pre></div>
+<p><img src="edbl-output_files/figure-html/rcbd-high-plot-v2-1.png" width="384"></p>
+</div>
+</div>
+<div id="print-for-edbl_df" class="section level2">
+<h2 class="hasAnchor">
+<a href="#print-for-edbl_df" class="anchor"></a>Print for <code>edbl_df</code>
+</h2>
+<p>[ADD explanation]</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="fu">new_rcbd</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; # An edibble: 12 x 3</span>
+<span class="co">#&gt;    block     unit       trt     </span>
+<span class="co">#&gt;    &lt;unit(2)&gt; &lt;unit(12)&gt; &lt;trt(4)&gt;</span>
+<span class="co">#&gt;  1 B1        unit1      B       </span>
+<span class="co">#&gt;  2 B1        unit2      D       </span>
+<span class="co">#&gt;  3 B1        unit3      C       </span>
+<span class="co">#&gt;  4 B1        unit4      A       </span>
+<span class="co">#&gt;  5 B1        unit5      B       </span>
+<span class="co">#&gt;  6 B1        unit6      D       </span>
+<span class="co">#&gt;  7 B2        unit7      A       </span>
+<span class="co">#&gt;  8 B2        unit8      D       </span>
+<span class="co">#&gt;  9 B2        unit9      A       </span>
+<span class="co">#&gt; 10 B2        unit10     C       </span>
+<span class="co">#&gt; 11 B2        unit11     B       </span>
+<span class="co">#&gt; 12 B2        unit12     C</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>edibble.levels.label.leading_zero <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="fu">new_rcbd</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; # An edibble: 12 x 3</span>
+<span class="co">#&gt;    block     unit       trt     </span>
+<span class="co">#&gt;    &lt;unit(2)&gt; &lt;unit(12)&gt; &lt;trt(4)&gt;</span>
+<span class="co">#&gt;  1 B1        unit01     A       </span>
+<span class="co">#&gt;  2 B1        unit02     D       </span>
+<span class="co">#&gt;  3 B1        unit03     C       </span>
+<span class="co">#&gt;  4 B1        unit04     B       </span>
+<span class="co">#&gt;  5 B1        unit05     C       </span>
+<span class="co">#&gt;  6 B1        unit06     A       </span>
+<span class="co">#&gt;  7 B2        unit07     D       </span>
+<span class="co">#&gt;  8 B2        unit08     C       </span>
+<span class="co">#&gt;  9 B2        unit09     D       </span>
+<span class="co">#&gt; 10 B2        unit10     B       </span>
+<span class="co">#&gt; 11 B2        unit11     B       </span>
+<span class="co">#&gt; 12 B2        unit12     A</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>edibble.levels.label.leading_zero <span class="op">=</span> <span class="cn">TRUE</span>,
         edibble.levels.label.min_ndigits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
-<span class="fu">redefine_struct</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # An edibble: 1,000 x 3</span>
-<span class="co">#&gt;    block      plot        plants     </span>
-<span class="co">#&gt;    &lt;unit(10)&gt; &lt;unit(200)&gt; &lt;unit(1k)&gt; </span>
-<span class="co">#&gt;  1 block00001 plot00001   plants00001</span>
-<span class="co">#&gt;  2 block00001 plot00001   plants00002</span>
-<span class="co">#&gt;  3 block00001 plot00001   plants00003</span>
-<span class="co">#&gt;  4 block00001 plot00001   plants00004</span>
-<span class="co">#&gt;  5 block00001 plot00001   plants00005</span>
-<span class="co">#&gt;  6 block00001 plot00002   plants00006</span>
-<span class="co">#&gt;  7 block00001 plot00002   plants00007</span>
-<span class="co">#&gt;  8 block00001 plot00002   plants00008</span>
-<span class="co">#&gt;  9 block00001 plot00002   plants00009</span>
-<span class="co">#&gt; 10 block00001 plot00002   plants00010</span>
-<span class="co">#&gt; # … with 990 more rows</span></code></pre></div>
+<span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="fu">new_rcbd</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; # An edibble: 12 x 3</span>
+<span class="co">#&gt;    block     unit       trt     </span>
+<span class="co">#&gt;    &lt;unit(2)&gt; &lt;unit(12)&gt; &lt;trt(4)&gt;</span>
+<span class="co">#&gt;  1 B1        unit00001  B       </span>
+<span class="co">#&gt;  2 B1        unit00002  C       </span>
+<span class="co">#&gt;  3 B1        unit00003  D       </span>
+<span class="co">#&gt;  4 B1        unit00004  A       </span>
+<span class="co">#&gt;  5 B1        unit00005  B       </span>
+<span class="co">#&gt;  6 B1        unit00006  A       </span>
+<span class="co">#&gt;  7 B2        unit00007  D       </span>
+<span class="co">#&gt;  8 B2        unit00008  B       </span>
+<span class="co">#&gt;  9 B2        unit00009  D       </span>
+<span class="co">#&gt; 10 B2        unit00010  C       </span>
+<span class="co">#&gt; 11 B2        unit00011  C       </span>
+<span class="co">#&gt; 12 B2        unit00012  A</span></code></pre></div>
 </div>
   </div>
 
