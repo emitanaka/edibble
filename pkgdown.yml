@@ -1,6 +1,7 @@
 pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
-articles: {}
-last_built: 2020-12-31T04:07Z
+articles:
+  edbl-output: edbl-output.html
+last_built: 2020-12-31T04:27Z
 
