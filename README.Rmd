@@ -8,8 +8,7 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
+  fig.path = "man/figures/README-"
 )
 ```
 # edibble
@@ -18,167 +17,101 @@ knitr::opts_chunk$set(
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
-The main aims of `edibble` R-package are: 
-
-1. facilitate statistical thinking of adapting experimental designs to different conditions by implementing the **grammar of experimental design** to generate new designs, and 
-2. lubricate the project flow of generating experimental data.
-
-The name origin of `edibble` is a play on `tibble` (a modern take on data frames) with motivation as `tibble` for experimental design. 
-
-The grammatical expressions to generate design can draw parallel to `dplyr` so some functions may be decoupled to a package called `edplyr` `r emo::ji("thinking")`
-
-## Experimental data 
-
-The focus of `tidyverse` R-package is well suited for the data science project workflow as illustrated below in (B) (from [Grolemund and Wickham 2017](https://r4ds.had.co.nz/introduction.html)). For experimental data, statististical project begin before obtaining data as depicted below in (A). The focus of `edibble` is to facilitate work in (A).
-
-<img src="man/figures/design-analysis-flow.png" width = "100%"/>
-
-
-## Statistical thinking
-
-The central idea of the *grammar of experimental design* can be illustrated by drawing analogy to the (layered) grammar of graphics implemented in `ggplot2`. 
-
-Grammar of graphics defines independent graphical components that make possible to graph complex plots and make it extensible. For example, in figure (B) below, a stacked barplot is transformed to a pie chart by transforming the coordinate system from Cartersian to polar coordinates. The corresponding functions to generate these figures in `base` R are `barplot` and `pie`. These singular purpose graphic functions can only generate the corresponding "named plots". Hence why `ggplot2` is powerful as the functions are no longer limiting the creation of different plots.  
-
-In experimental design, `agricolae` is by far the most popular R package on the CRAN task view of experimental design.  Just as there are "named plots", there are "named experimental designs". E.g. completely randomised design (CRD), randomised complete block design (CRBD), balanced incomplete block design (BIBD) and so on. The functions to generate designs in `agricolae` are motivated by these named designs (e.g. `design.crd()` and `design.rcbd()`). These functions are limiting the adaptation of experimental designs to different conditions in a similar manner to the `base` plots. Figure (A) below shows how CRD is tranformed to RCBD by imposing a blocking structure on the units (provided the units and treatment number are conformable). 
-
-<img src="man/figures/grammar-intro.png" width="100%"/>
-
-Below are connections between different named experimental designs.
-
-<img src="man/figures/design-connection.png" width="100%"/>
-
-Below show examples where the **elements of experimental designs** are identified.
-
-<img src="man/figures/expdesign1.png" width="100%"/>
-<img src="man/figures/expdesign2.png" width="100%"/>
-<img src="man/figures/expdesign3.png" width="100%"/>
-
-
-
-## Project Flow
-
-* `edibble` will integrate an easy way to export the design in a rectangular tabular format so there is a smooth translation from the generation of experimental design to data collection.
-
-* `edibble` will allow easy visualisation of experimental designs that serve as a communication medium in a number scenarios. For example, an easy way to visualise the experimental design would ensure that all parties involved can digest the design quickly and correct any mistake as needed before conducting the experiment. 
-
-## API Prototype
-
-The core elements of experimental design are `trts` and `units`. Specifications of more complex designs include:
-
-* `phase` for multi-phase designs; 
-* `index` for temporal components (default value `0`); 
-* `keys` that uniquely identify observational units; 
-* `map` define mapping structures; 
-* `traits` for observations; 
-* `strata` for nested designs; (questioning this)
-* `block` and  `cluster` are synonyms for grouped units. 
-
-These are manipulated by the *verb* that precedes these elements separated by `_`. Some verbs include `set`, `get`, `group`, `modify`, `split`, `cross`, `combine`, `apply`, `assign`, `randomise`, `measure`, `allocate`, `permute`, `cluster`.
-
-The prototype code below generates a classic split-plot deisgn:
-
-```{r, eval = FALSE}
-design <- edibble() %>% 
-  # [    ]
-  set_trts(A = 1:3, B = c("X", "Y")) %>% 
-  # [ T1: A:{1 2 3}  ]
-  # [ T2: B:{X Y}    
-  set_units(18) %>% 
-  # [ T1: A:{1 2 3}  ]
-  # [ T2: B:{X Y}    ]
-  # [ U1: 1, ..., 18                ]
-  group_units(size = 3) %>% 
-  # [ T1: A:{1 2 3}  ]
-  # [ T2: B:{X Y}    ]
-  # [ U1: 1, ..., 18                ]
-  # [ U2: [1,2,3], [4,5,6],...,[16,17,18]]
-  randomise_map(.U1 ~ .T1,
-                .U2 ~ .T2) 
-  # [ T1: A:{1 2 3}  ]
-  # [ T2: B:{X Y}    ]
-  # [ U1: 1, ..., 18                ]
-  # [ U2: [1,2,3], [4,5,6],...,[16,17,18]]
-  # U1 -> T1 [random]
-  # U2 -> T2 [random]
-```
-
-The input argument of `edibble` function can also include `data` followed by the user specifying which columns are treatment, units, grouping and so on.
-
-### Optimal Design 
-
-Ideally `edibble` will also allow for model-based design by feeding in the statistical model in its framework.
-
-### Sampling Surveys
-
-While the initial focus will be experiments were resources are well defined, but the final goal is to implement workflow to facilitate survey sampling designs as well. Sample surveys primarily focus on how to sample including the sample size needed. These can be implemented by say a function (that may be user-defined) that takes into account previous settings.
-
-```{r, eval = FALSE}
-sample_size <- function(d) {
-  pwrout <- pwr::pwr.t.test(d = d, sig.level=.05, 
-                            power = .90, type = 'two.sample')
-  return(2 * ceiling(pwrout$n))
-}
-
-edibble() %>% 
-  set_trts(t = 2) %>% 
-  set_units(n = sample_size(0.3))
-```
-
-
-### Outputs 
-
-The resulting output of `edibble` will be a modified `tibble` (built from `pillar`). It will include summary of treatments and units. The plan is also to have the number of levels of factors printed as well. 
-
-As under the hood, `edibble` output is just a data frame, it is easy to export the output to a spreadsheet using standard exporting tools for data frames. While this seems such a small issue, this is important for lubricating the generation of experimental design to data collection. Ultimately the person collecting the data should aim to add extra column(s) for the observed data to the `edibble` output. 
-
-The `edibble` output can also be used to quickly generate a sketch of the design by adding one extra function in the pipeline. E.g. 
-
-```{r, eval = FALSE}
-design %>% visualise_design()
-```
-
-Using a similar mechanism to `lazy_dt` in `dtplyr`, `edibble` should also be able to *animate* the steps required to generate the design. This will make it useful for presentations or general communication to ensure all parties involved in the generation of experimental design are all on the same page. 
-
-```{r, eval = FALSE}
-design %>% animate_design()
-```
-
-These functions are designed to visualise experimental design *fast*. Some more fine tuning can be provided so that users can customise the visualisation outputs for publications or reports. E.g. `modify_trts(.T1, images = c("drugA.jpg", "drugB.jpg"))` to modify from standard circle units to user supplied images. 
-
-*Note this API prototype code is still experimental and bound to change.
-
-### ANOVA Table
-
-Another table output which `edibble` will support is ANOVA tables. These include the so-called skeleton ANOVA table which is essentially ANOVA without the data (no sum of squares, mean squares and so on). The `edibble` ANOVA output will especially be useful for complex nested experiment and non-orthogonal designs. 
-
-### Hasse diagrams
-
-Another visualisation output in `edibble` will include Hasse diagram to show relationshional structures with different sources of variation. 
-
-
 ## Installation
 
-Currently the package is not available for installation.
+Install the development version with: 
 
-<!-- And the development version from [GitHub](https://github.com/) with: -->
+```
+# install.packages("remotes")
+remotes::install_github("emitanaka/edibble")
+```
 
-<!-- ``` r -->
-<!-- # install.packages("devtools") -->
-<!-- devtools::install_github("emitanaka/edibble") -->
-<!-- ``` -->
+
+## Overview
+
+Software for constructing experimental design generally utilise: (1) functions that are specific for creating particular experimental designs (e.g. `agricolae::design.lsd()` creates a Latin Square Design) or (2) where it is general, requires an input (usually a data frame) with the initial experimental design structure (e.g. `AlgDesign::optBlock()` or most optimal designs). Both of these approaches assume that the user is well acquainted with the experimental structure and objective, but in practice these are the greatest bottleneck before even getting to think about the randomisation process. 
+
+💡 The big idea with the edibble R-package is that you specify an experimental design by being more expressive about the experiment. The edibble code for constructing experimental design should evoke a rough idea about the experimental layout even to a layperson. 
+
+🎯 The grand goal for the edibble project is to define the _grammar of experimental design_ and implement it. 
+
+Take for an example, the classic split-plot design that contains 4 wholeplots with 4 sub plots within each wholeplot (so 16 subplots in total). There are 2 treatment factors: fertilizer (with levels A and B) and variety (with levels V1 and V2). Each level of the fertilizer is randomly applied to two wholeplots. Each level of variety is randomly applied to two subplots within each wholeplot. 
+
+In edibble, we can code the above split-plot design as below. You can see it outputs a data frame (or tibble) called edibble. The name origin of `edibble` is a play on [`tibble`](https://tibble.tidyverse.org/) and can be thought of as tibble output for experimental design.
+
+```{r split-plot}
+library(edibble)
+
+split <- initiate_design("Split-plot Design") %>% 
+  set_units(wholeplot = 4,
+            subplot = nested_in(wholeplot, 4)) %>% 
+  set_trts(fertilizer = c("A", "B"),
+           variety    = c("V1", "V2")) %>% 
+  allocate_trts(fertilizer ~ wholeplot, 
+                   variety ~ subplot) %>% 
+  randomise_trts()
+```
+
+Above object contains the intermediate construct of an experimental design (called `edbl_nexus`). When you are ready to serve your design, you can get the table output (called `edbl_df`) by using `serve_table` as below.
+
+```{r split-plot-table}
+serve_table(split)
+```
+
+Once you get the rough idea of how edibble specifies design, you should be roughly be able to visualise what the experimental design layout is just from looking at the code alone. Take another example below. Can you see what the design is?
+
+```{r rcbd, fig.height = 5, fig.width = 5}
+rcbd <- initiate_design("RCBD") %>% 
+  set_units(block = 4,
+            plot  = nested_in(block, 4)) %>% 
+  set_trts(fertilizer = c("A", "B"),
+           variety    = c("V1", "V2")) %>% 
+  allocate_trts(fertilizer:variety ~ plot) %>% 
+  randomise_trts()
+```
+
+The above design is an example of a Randomised Complete Block Design. If you change the unit names from `block` to `wholeplot` and `plot` to `subplot`, it looks like the Split-plot Design, so what differs here aside from the unit names? Yes, the allocation of treatment is more restrictive in the Split-plot Design. This is one of the key benefits of using edibble to construct your experimental design; it makes you think about your experiment in bare terms.
+
+If you have trouble understanding the layout, there are a number of considerations that are designed to help you to form a better understanding of what you have specified. I outline just a couple here with more details and explanations to come (writing takes a lot of time...).
+
+You can see a high-level overview of the variables and its relation by using `plot` on the intermediate construct of the design.
+
+```{r high-view, fig.height = 6, fig.width = 12}
+par(mfrow = c(1, 2))
+plot(rcbd)
+plot(split)
+```
+
+If you want to see the connections in terms of the actual units, then you can change the view to a low-level view. 
+
+```{r low-view, fig.height = 6, fig.width = 12}
+par(mfrow = c(1, 2))
+plot(rcbd, view = "low")
+plot(split, view = "low")
+```
+
+
+The low-level view is often a bit cluttered so you may like to use the interactive version as below instead. 
+
+```{r, eval = FALSE}
+subset_levels(rcbd) %>% 
+  igraph::tkplot()
+```
+
+⚠️ Please note that edibble is currently fragile. That means that the code is likely to break when you deviate from example code. Even it it works, you should diagnose the output to make sure it did what you expected.
+
 
 ## Related Work
 
-* `DeclareDesign` although motivation is different to `edibble`.
-* `desplot` for visualising designs. 
+The way that edibble specifies experimental design is largely novel (if I say so myself). 
+
+* `DeclareDesign` for survey or sampling designs
+* `desplot` for visualising designs
 * `designr` for balanced factorial designs with crossed and nested random and fixed effect to data frame
-* `dae` for functions useful in the design and ANOVA of experiments (consider using this for the backend)
+* `dae` for functions useful in the design and ANOVA of experiments (this is in fact powering the randomisation in edibble)
+* `plotdesignr` for designing agronomic field experiments
 
-## More info
+## Code of Conduct
 
-* I presented this work on 27th Nov 2019 at NUMBATs, Monash. The slide can be found [here](http://emitanaka.org/slides/NUMBAT2019/).
-
-## Acknowlegement 
-
-Thanks to Francis Hui, Di Cook, Rob Hyndman and Nick Tierney for their feedback on the proposed idea.
+Please note that the edibble project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.
