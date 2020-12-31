@@ -22,13 +22,13 @@ Imports:
     igraph,
     tibble,
     cli,
+    pillar,
     tidyselect (>= 1.0.0),
     dae
 Suggests: 
     testthat,
     knitr,
     rmarkdown,
-    pillar,
     dplyr,
     ggplot2 (>= 3.0.0)
 VignetteBuilder: knitr

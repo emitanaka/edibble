@@ -36,20 +36,11 @@ set_units.edbl_nexus <- function(.nexus, ...,
 
 
 
-#' edibble unit
 #' @export
 vec_ptype_abbr.edbl_unit <- function(x)  {
   paste0("unit(", number_si_prefix(nlevels(x)), ")")
 }
 
-#' edibble unit
-#' @importFrom pillar type_sum
-#' @export
-type_sum.edbl_unit <- function(x)  {
-  paste0("unit(", number_si_prefix(nlevels(x)), ")")
-}
-
-#' edibble unit
 #' @export
 vec_ptype_full.edbl_unit <- function(x) paste0("unit(", nlevels(x), ")")
 
