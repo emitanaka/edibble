@@ -19,55 +19,55 @@ set_trts <- function(.data, ...) {
 }
 
 #' @export
-set_trts.edbl_nexus <- function(.nexus, ...,
+set_trts.edbl_graph <- function(.data, ...,
                      .name_repair = c("check_unique", "unique", "universal", "minimal")) {
-  set_vars(.nexus, ..., .name_repair = .name_repair,
+  set_vars(.data, ..., .name_repair = .name_repair,
            .class = "edbl_trt")
 }
 
 #' Define which unit to apply treatment
 #'
-#' @param .nexus An `edbl_nexus` object.
+#' @param .data An `edbl_graph` object.
 #' @param ... One-sided or two-sided formula. If the input is a one-sided formula
 #' then the whole treatment is applied to the specified unit.
 #' @param class A sub-class. This is meant so that it can invoke the method
 #' `randomise_trts.class`.
 #' @export
-allocate_trts <- function(.nexus, ..., class = NULL) {
+allocate_trts <- function(.data, ..., class = NULL) {
   # doesn't support : or * right now
   dots <- enquos(...)
   specials <- c(":", "*")
-  out <- .nexus
+  out <- .data
   for(i in seq_along(dots)) {
     expr <- quo_get_expr(dots[[i]])
     .trt <- setdiff(as.character(f_lhs(expr)), specials)
     # there should be only a unit
     .EU <- as.character(f_rhs(expr)) #setdiff(as.character(f_rhs(expr)), specials)
     if(length(.trt)) {
-      # there should be an error if .trt is not within .nexus
+      # there should be an error if .trt is not within .data
       # maybe there should be a check that .trt is edbl_trt
       vnames_from <- .trt
     } else {
-      vnames_from <- names(subset(.nexus, class=="edbl_trt", .vtype = "var"))
+      vnames_from <- names(subset(.data, class=="edbl_trt", .vtype = "var"))
     }
     out <- igraph::add_edges(out,
-                             cross_edge_seq(.nexus,
-                                            var_levels(.nexus, vnames_from),
-                                            var_levels(.nexus, .EU)),
+                             cross_edge_seq(.data,
+                                            var_levels(.data, vnames_from),
+                                            var_levels(.data, .EU)),
                              attr = edge_attr_opt("t2vmay"))
     out <- igraph::add_edges(out,
-                             cross_edge_seq(.nexus,
+                             cross_edge_seq(.data,
                                             vnames_from,
                                             vnames_to = .EU),
                              attr = edge_attr_opt("t2v"))
   }
 
-  structure(out, class = class(.nexus))
+  structure(out, class = class(.data))
 }
 
 #' @export
 get_trt_vars <- function(x) {
-  if(is_edibble_nexus(x)) {
+  if(is_edibble_graph(x)) {
     return(V(x)$vname[V(x)$class=="edbl_trt"])
   }
   if(is_edibble(x)) {
@@ -77,31 +77,31 @@ get_trt_vars <- function(x) {
 }
 
 #' @export
-get_trt_levels <- function(.nexus) {
+get_trt_levels <- function(.data) {
   out <- list()
-  vars <- get_trt_vars(.nexus)
+  vars <- get_trt_vars(.data)
   for(avar in vars) {
-    out[[avar]] <- var_levels(.nexus, avar)
+    out[[avar]] <- var_levels(.data, avar)
   }
   out
 }
 
 #' Unlike `vars_levels`, there is a check in place
 #' that it is a treatment.
-trts_levels <- function(.nexus, vnames = NULL) {
+trts_levels <- function(.data, vnames = NULL) {
   if(is_null(vnames)) {
-    vars_levels(.nexus, names_trts(.nexus))
+    vars_levels(.data, names_trts(.data))
   } else {
-    if(!all(vnames %in% names_trts(.nexus))) {
+    if(!all(vnames %in% names_trts(.data))) {
       abort("Some {vnames} not a treatment.")
     }
-    vars_levels(.nexus, vnames)
+    vars_levels(.data, vnames)
   }
 }
 
 # make this to a replicabble?
-trts_levels_df <- function(.nexus, vnames = NULL) {
-  tibble::as_tibble(expand.grid(trts_levels(.nexus, vnames = vnames), stringsAsFactors = FALSE))
+trts_levels_df <- function(.data, vnames = NULL) {
+  tibble::as_tibble(expand.grid(trts_levels(.data, vnames = vnames), stringsAsFactors = FALSE))
 }
 
 #' @export
@@ -109,8 +109,8 @@ n_trts <- function(.data, ...) {
   UseMethod("n_trts")
 }
 
-n_trts.edbl_nexus <- function(.nexus) {
-  return(prod(lengths(get_trt_levels(.nexus))))
+n_trts.edbl_graph <- function(.data) {
+  return(prod(lengths(get_trt_levels(.data))))
 }
 
 n_trts.edbl_df <- function(.data) {
@@ -130,9 +130,9 @@ n_vars.edbl_df <- function(.data, class = NULL) {
 }
 
 #' @export
-n_vars.edbl_nexus <- function(.nexus, class = NULL) {
-  vnexus <- subset(.nexus, class %in% class, .vtype = "var")
-  if(is_null(class)) return(sum(V(.nexus)$vtype=="var"))
+n_vars.edbl_graph <- function(.data, class = NULL) {
+  vgraph <- subset(.data, class %in% class, .vtype = "var")
+  if(is_null(class)) return(sum(V(.data)$vtype=="var"))
   sum(V(.data)$class %in% class)
 }
 

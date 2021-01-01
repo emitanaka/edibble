@@ -67,7 +67,7 @@ check_args <- function(args, one, required) {
 
 #' A list of classical experimental designs
 #'
-#' @format A list of some classical experimental designs as either `edbl_nexus`
+#' @format A list of some classical experimental designs as either `edbl_graph`
 #' or `edbl_df` object. The designs included are:
 #' \describe{
 #'   \item{CRD} Completely randomised design.

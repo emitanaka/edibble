@@ -5,7 +5,7 @@
 #' This function doesn't really do much besides create an empty igraph.
 #'
 #' @param name Optional name used as title for printing the design.
-#' @return An `edbl_nexus` object which is a special type of `igraph` class.
+#' @return An `edbl_graph` object which is a special type of `igraph` class.
 #' @examples
 #' initiate_design("My design")
 #' @seealso Add variables to this design with [set_units()], [set_trts()], and
@@ -15,7 +15,7 @@
 start_design <- function(name = NULL) {
   name <- name %||% "An edibble design"
   out <- igraph::set_graph_attr(igraph::make_empty_graph(), "name", name)
-  structure(out, class = c("edbl_nexus", class(out)))
+  structure(out, class = c("edbl_graph", class(out)))
 }
 
 #' @export
@@ -23,17 +23,17 @@ initiate_design <- function(name = NULL) {
   start_design(name = name)
 }
 
-#' Print edibble nexus to terminal
+#' Print edibble graph to terminal
 #'
 #' @description
-#' This function prints an `edbl_nexus` object as a tree to terminal.
+#' This function prints an `edbl_graph` object as a tree to terminal.
 #' The variables are color coded (or decorated) with the given options.
 #' Any ANSI coloring or styling are only visible in the console or terminal
 #' outputs that support it. The print output is best used interactively since
 #' any text styling are lost in text or R Markdown output. More details can
 #' be found in `vignette("edbl-output")`.
 #'
-#' @param .nexus An edibble nexus.
+#' @param .data An edibble graph.
 #' @param decorate_trts,decorate_units,decorate_resp,decorate_levels,decorate_title
 #' A function applied to the name of treatment, unit, response factors or
 #' design title. The function should return a string. Most often this wraps the name with
@@ -51,7 +51,7 @@ initiate_design <- function(name = NULL) {
 #' ## └─irrigation (2 levels)
 #'
 #' @export
-print.edbl_nexus <- function(.nexus,
+print.edbl_graph <- function(.data,
                              decorate_units  = edibble_decorate("units"),
                              decorate_trts   = edibble_decorate("trts"),
                              decorate_resp   = edibble_decorate("resp"),
@@ -59,16 +59,16 @@ print.edbl_nexus <- function(.nexus,
                              decorate_main  = edibble_decorate("main"),
                              main = NULL) {
 
-  main <- main %||% igraph::graph_attr(.nexus, "name") %||% "An edibble design"
-  vnexus <- subset_vars(.nexus)
-  gnames <- V(vnexus)$name
+  main <- main %||% igraph::graph_attr(.data, "name") %||% "An edibble design"
+  vgraph <- subset_vars(.data)
+  gnames <- V(vgraph)$name
 
   if(is_null(gnames)) {
     data <- data.frame(var = "root", child = NA,
                        label = as.character(decorate_main(main)))
   } else {
 
-    classes <- V(vnexus)$class
+    classes <- V(vgraph)$class
     label_names <- decorate_vars(gnames,
                                  decorate_units,
                                  decorate_trts,
@@ -76,12 +76,12 @@ print.edbl_nexus <- function(.nexus,
                                  classes)
 
 
-    var_nlevels <- lengths(vars_levels(.nexus, gnames))
+    var_nlevels <- lengths(vars_levels(.data, gnames))
     nvar <- length(gnames)
-    ll <- lapply(V(vnexus),
+    ll <- lapply(V(vgraph),
               function(v) {
-                  class <- igraph::vertex_attr(vnexus, "class", v)
-                  children <- igraph::neighbors(vnexus, v, mode = "out")
+                  class <- igraph::vertex_attr(vgraph, "class", v)
+                  children <- igraph::neighbors(vgraph, v, mode = "out")
                   if(class!="edbl_trt" & !is_empty(children)) {
                     gnames[children]
                   } else {
@@ -107,24 +107,24 @@ print.edbl_nexus <- function(.nexus,
 #'
 #' @param x An object.
 #' @return `TRUE` if the object inherits the `edbl_df` class.
-#' @seealso See [is_edibble_nexus()] for testing if the object is `edbl_nexus`.
+#' @seealso See [is_edibble_graph()] for testing if the object is `edbl_graph`.
 #' @export
 is_edibble <- function(x) {
   inherits(x, "edbl_df")
 }
 
-#' Test if the object is an edibble nexus
+#' Test if the object is an edibble graph
 #'
 #' A simple function that return `TRUE` if the object inherits
-#' the `edbl_nexus` class, `FALSE` otherwise.
+#' the `edbl_graph` class, `FALSE` otherwise.
 #'
 #' @inheritParams is_edibble
-#' @return `TRUE` if the object inherits the `edbl_nexus` class.
+#' @return `TRUE` if the object inherits the `edbl_graph` class.
 #' @seealso See [is_edibble()] for testing `edbl_df` data frame.
 #'
 #' @export
-is_edibble_nexus <- function(x) {
-  inherits(x, "edbl_nexus")
+is_edibble_graph <- function(x) {
+  inherits(x, "edbl_graph")
 }
 
 
@@ -163,13 +163,13 @@ edibble <- function(.data, ..., units = NULL, trts = NULL) {
 #'
 #' @param .data data frame or list of the same size.
 #' @param ... Passed to `new_tibble`.
-#' @param nexus An edibble nexus object.
+#' @param graph An edibble graph object.
 #' @param class Subclasses for edibble. The default is NULL.
 #'
 #' @export
-new_edibble <- function(.data, ..., nexus = NULL, class = NULL) {
+new_edibble <- function(.data, ..., graph = NULL, class = NULL) {
   tibble::new_tibble(.data, ..., nrow = vec_size_common(!!!.data),
-                     class = "edbl_df", nexus = nexus)
+                     class = "edbl_df", graph = graph)
 }
 
 

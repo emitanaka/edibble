@@ -2,9 +2,9 @@
 #' Names of variables
 #'
 #' Functions to get or set the names of variables (with particular class) from
-#' edibble or edibble nexus object.
+#' edibble or edibble graph object.
 #'
-#' @param .object,.data,.nexus Either an edibble data frame or edibble nexus.
+#' @param .object,.data,.data Either an edibble data frame or edibble graph.
 #' @param class A string.
 #' @return A character vector of the names of the variables with the given class.
 #' @name names-ed-vars
@@ -36,10 +36,10 @@ names_vars <- function(.object, ...) {
 
 #' @rdname names-ed-vars
 #' @export
-names_vars.edbl_nexus <- function(.nexus, class = NULL) {
-  vnexus <- subset_vars(.nexus)
-  class <- class %||% V(vnexus)$class
-  return(V(vnexus)$name[V(vnexus)$class %in% class])
+names_vars.edbl_graph <- function(.data, class = NULL) {
+  vgraph <- subset_vars(.data)
+  class <- class %||% V(vgraph)$class
+  return(V(vgraph)$name[V(vgraph)$class %in% class])
 }
 
 #' @rdname names-ed-vars
@@ -52,27 +52,27 @@ names_vars.edbl_df <- function(.data, class = NULL) {
 
 #' @rdname names-ed-vars
 #' @export
-names.edbl_nexus <- function(.nexus, label = TRUE) {
-  if(label) return(V(.nexus)$vname)
-  V(.nexus)$name
+names.edbl_graph <- function(.data, label = TRUE) {
+  if(label) return(V(.data)$vname)
+  V(.data)$name
 }
 
 #' @rdname names-ed-vars
 #' @export
-`names<-.edbl_nexus` <- function(x, value) {
+`names<-.edbl_graph` <- function(x, value) {
   igraph::set_vertex_attr(x, "vname", value = value)
 }
 
 #' @export
-names_eunit <- function(.nexus, trt = NULL) {
-  trt <- trt %||% names_trt(.nexus)
-  vunit <- igraph::neighbors(.nexus, var_index(.nexus, trt), mode = "out")
-  var_names(.nexus, vunit)
+names_eunit <- function(.data, trt = NULL) {
+  trt <- trt %||% names_trt(.data)
+  vunit <- igraph::neighbors(.data, var_index(.data, trt), mode = "out")
+  var_names(.data, vunit)
 }
 
 #' @export
-names_ounit <- function(.nexus, resp = NULL) {
-  resp <- resp %||% names_resp(.nexus)
-  vunit <- igraph::neighbors(.nexus, var_index(.nexus, resp), mode = "out")
-  var_names(.nexus, vunit)
+names_ounit <- function(.data, resp = NULL) {
+  resp <- resp %||% names_resp(.data)
+  vunit <- igraph::neighbors(.data, var_index(.data, resp), mode = "out")
+  var_names(.data, vunit)
 }

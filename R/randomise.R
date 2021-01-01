@@ -1,33 +1,33 @@
-find_unit_parents <- function(.nexus, vname) {
-  unexus <- subset(.nexus, class=="edbl_unit", .vtype = "var")
-  unit_vertex <- which(V(unexus)$name==vname)
+find_unit_parents <- function(.data, vname) {
+  ugraph <- subset(.data, class=="edbl_unit", .vtype = "var")
+  unit_vertex <- which(V(ugraph)$name==vname)
   # get direct parents
-  parent_vertices <- igraph::neighbors(unexus, unit_vertex, mode = "in")
+  parent_vertices <- igraph::neighbors(ugraph, unit_vertex, mode = "in")
   if(length(parent_vertices) > 0) {
-    var_names(unexus, parent_vertices)
+    var_names(ugraph, parent_vertices)
   } else {
     NULL
   }
 }
 
-find_unit_ancestors <- function(.nexus, vname) {
+find_unit_ancestors <- function(.data, vname) {
   aname <- vname
   ancestors <- NULL
   repeat({
-    aname <- find_unit_parents(.nexus, aname)
+    aname <- find_unit_parents(.data, aname)
     if(is_null(aname)) break
     ancestors <- c(ancestors, aname)
   })
   ancestors
 }
 
-endpoints <- function(.nexus, etype, vtype) {
-  snexus <- switch(vtype,
-                   "var" = subset_vars(.nexus),
-                   "level" = subset_levels(.nexus))
-  ind <- which(E(snexus)$etype == etype)
-  es <- E(snexus)[ind]
-  ends <- igraph::ends(snexus, es)
+endpoints <- function(.data, etype, vtype) {
+  sgraph <- switch(vtype,
+                   "var" = subset_vars(.data),
+                   "level" = subset_levels(.data))
+  ind <- which(E(sgraph)$etype == etype)
+  es <- E(sgraph)[ind]
+  ends <- igraph::ends(sgraph, es)
   from <- ends[, 1]
   to <- ends[, 2]
   data.frame(from = from, to = to, es = as.numeric(es), stringsAsFactors = FALSE)
@@ -36,37 +36,37 @@ endpoints <- function(.nexus, etype, vtype) {
 
 #' Randomise treatments
 #'
-#' @param .nexus AN edibble nexus object.
+#' @param .data AN edibble graph object.
 #' @seealso Set the treatments by [set_trts()], set units by [set_units()],
 #' and specify which treatment factors are applied to which units by using
 #' [apply_trts()].
 #' @export
-randomise_trts <- function(.nexus, ...) {
+randomise_trts <- function(.data, ...) {
   UseMethod("randomise_trts")
 }
 
-#' Get the variable names given the vertex name of edibble nexus
-#' @param .nexus An edibble nexus.
+#' Get the variable names given the vertex name of edibble graph
+#' @param .data An edibble graph.
 #' @param names A vector of character with vertex names.
 #' @return A character vector of the variable name.
 #' @export
-names_to_vnames <- function(.nexus, names) {
-  dict <- setNames(V(.nexus)$vname, V(.nexus)$name)
+names_to_vnames <- function(.data, names) {
+  dict <- setNames(V(.data)$vname, V(.data)$name)
   unname(dict[names])
 }
 
-names_to_lnames <- function(.nexus, names) {
-  vnames <- names_to_vnames(.nexus, names)
+names_to_lnames <- function(.data, names) {
+  vnames <- names_to_vnames(.data, names)
   map_chr(seq_along(names),
           function(i) gsub(paste0("^", vnames[i], ":"), "", names[i]))
 }
 
-names_to_nesting_names <- function(.nexus, names) {
-  labels <- V(.nexus)$label2
-  if(is_null(labels)) return(names_to_lnames(.nexus, names))
-  dict <- setNames(V(.nexus)$label2, V(.nexus)$name)
+names_to_nesting_names <- function(.data, names) {
+  labels <- V(.data)$label2
+  if(is_null(labels)) return(names_to_lnames(.data, names))
+  dict <- setNames(V(.data)$label2, V(.data)$name)
   res <- unname(dict[names])
-  if(any(is.na(res))) return(names_to_lnames(.nexus, names))
+  if(any(is.na(res))) return(names_to_lnames(.data, names))
   res
 }
 
@@ -74,16 +74,16 @@ names_to_nesting_names <- function(.nexus, names) {
 #'
 #' @return A named list where names are the unit variable name and
 #'   element is the character vector with the treatment factors applied
-unit_to_trts <- function(.nexus, unit, trts, type = c("var", "level")) {
+unit_to_trts <- function(.data, unit, trts, type = c("var", "level")) {
   type <- match.arg(type)
   switch(type,
          var = {
-           tv <- endpoints(.nexus, "t2v", "var")
+           tv <- endpoints(.data, "t2v", "var")
            split(tv$from, tv$to)
          },
          level = {
-           snexus <- subset(.nexus, vname %in% c(unit, trts), .vtype = "level")
-           tvl <- endpoints(snexus, "t2vmay", "level")
+           sgraph <- subset(.data, vname %in% c(unit, trts), .vtype = "level")
+           tvl <- endpoints(sgraph, "t2vmay", "level")
            split(tvl$from, tvl$to)
          })
 }
@@ -101,23 +101,23 @@ rep_rpbl <- function(.data, times, length.out) {
 
 
 #' @export
-randomise_trts.edbl_nexus <- function(.nexus) {
-  unit_to_trts_list <- unit_to_trts(.nexus)
+randomise_trts.edbl_graph <- function(.data) {
+  unit_to_trts_list <- unit_to_trts(.data)
   units_with_trts_applied <- names(unit_to_trts_list)
-  out <- .nexus
+  out <- .data
   for(i in seq_along(unit_to_trts_list)) {
     unit <- units_with_trts_applied[i]
     trts <- unit_to_trts_list[[i]]
-    ancestors <- find_unit_ancestors(.nexus, unit)
+    ancestors <- find_unit_ancestors(.data, unit)
     units <- c(unit, ancestors)
-    snexus <- subset(.nexus, vname %in% units)
+    sgraph <- subset(.data, vname %in% units)
     # need to fix below
-    reps <- replicabble(.nexus, unit, trts)
+    reps <- replicabble(.data, unit, trts)
 
-    units_ls <- lapply(serve_units(snexus), as.character)
+    units_ls <- lapply(serve_units(sgraph), as.character)
     units_df <- as.data.frame(lapply(seq_along(units_ls), function(i) {
       vnames <- vertex_level_names(names(units_ls)[i], as.character(units_ls[[i]]))
-      as.factor(names_to_nesting_names(snexus, vnames))
+      as.factor(names_to_nesting_names(sgraph, vnames))
     }))
     names(units_df) <- names(units_ls)
 
@@ -154,7 +154,7 @@ randomise_trts.edbl_nexus <- function(.nexus) {
 
 
     nesting <- structure(lapply(units,
-                                function(aunit) find_unit_parents(snexus, aunit)),
+                                function(aunit) find_unit_parents(sgraph, aunit)),
                          names = units)
     # remove NULL results
     nesting <- nesting[!map_lgl(nesting, is_null)]
@@ -179,7 +179,7 @@ randomise_trts.edbl_nexus <- function(.nexus) {
     # }
     # chosen_df[, trts]
     for(atrt in trts) {
-      es <- match_edge_seq(.nexus, des[[atrt]], vertex_level_names(unit, units_ls[[unit]]))
+      es <- match_edge_seq(.data, des[[atrt]], vertex_level_names(unit, units_ls[[unit]]))
       out <- igraph::add_edges(out, es, attr = edge_attr_opt("t2v"))
     }
   }
@@ -197,13 +197,13 @@ randomise_trts.edbl_nexus <- function(.nexus) {
   #     pos <- sample(ntrt, size = rep_left)
   #     reps[pos] <- reps[pos] + 1
   #   }
-  #   rpbl <- replicabble(get_trt_levels(.nexus), .replicate = reps)
+  #   rpbl <- replicabble(get_trt_levels(.data), .replicate = reps)
   # } else if(length(parent_units)==1) {
   #   ll <- list()
   #   # assumes single hierarchy
   #   while(length(parent_units) > 0) {
   #     ll <- c(ll, parent_units)
-  #     parent_units <- find_unit_parents(.nexus, names(parent_units))
+  #     parent_units <- find_unit_parents(.data, names(parent_units))
   #   }
   #   rep_floor <- floor(nexp / ntrt)
   #   rep_left <- nexp - rep_floor * ntrt
@@ -221,12 +221,12 @@ randomise_trts.edbl_nexus <- function(.nexus) {
   #
   #   # assume rep_left = 0 for now
   #
-  #   ll <- c(ll, get_trt_levels(.nexus))
+  #   ll <- c(ll, get_trt_levels(.data))
   #   rpbl <- replicabble(ll, .replicate = reps)
   # } else if(length(parent_units) > 1) {
   #
   # }
 
-  #out <- igraph::set_graph_attr(.nexus, "replicabble", rpbl)
-  structure(out, class = class(.nexus))
+  #out <- igraph::set_graph_attr(.data, "replicabble", rpbl)
+  structure(out, class = class(.data))
 }

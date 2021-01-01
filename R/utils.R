@@ -2,7 +2,7 @@
 
 #' Get all the levels of edibble variables as a list
 #'
-#' @param x An edibble nexus or edibble object.
+#' @param x An edibble graph or edibble object.
 #' @return Returns a named list of levels of all edibble variables.
 #' @export
 ed_levels <- function(x) {
@@ -10,10 +10,10 @@ ed_levels <- function(x) {
 }
 
 #' @export
-ed_levels.edbl_nexus <- function(.nexus) {
-  vnexus <- igraph::induced_subgraph(.nexus, V(.nexus)$vtype=="var")
-  vnames <- V(vnexus)$name
-  res <- lapply(vnames, function(vname) var_levels(.nexus, vname))
+ed_levels.edbl_graph <- function(.data) {
+  vgraph <- igraph::induced_subgraph(.data, V(.data)$vtype=="var")
+  vnames <- V(vgraph)$name
+  res <- lapply(vnames, function(vname) var_levels(.data, vname))
   names(res) <- vnames
   res
 }
