@@ -4,7 +4,7 @@
 #' Functions to get or set the names of variables (with particular class) from
 #' edibble or edibble nexus object.
 #'
-#' @param x An edibble or edibble nexus.
+#' @param .object,.data,.nexus Either an edibble data frame or edibble nexus.
 #' @param class A string.
 #' @return A character vector of the names of the variables with the given class.
 #' @name names-ed-vars
@@ -12,41 +12,49 @@
 #' names_units(nclassics$split)
 #' names_trts(nclassics$split)
 #' @export
-names_units <- function(x) {
-  names_vars(x, class = "edbl_unit")
+names_units <- function(.object) {
+  names_vars(.object, class = "edbl_unit")
 }
 
 #' @rdname names-ed-vars
 #' @export
-names_trts <- function(x) {
-  names_vars(x, class = "edbl_trt")
+names_trts <- function(.object) {
+  names_vars(.object, class = "edbl_trt")
 }
 
 #' @rdname names-ed-vars
 #' @export
-names_resp <- function(x) {
-  names_vars(x, class = "edbl_resp")
+names_resp <- function(.object) {
+  names_vars(.object, class = "edbl_resp")
 }
 
 #' @rdname names-ed-vars
 #' @export
-names_vars <- function(x, class = NULL) {
-  if(is_edibble_nexus(x)) {
-    vnexus <- subset_vars(x)
-    class <- class %||% V(vnexus)$class
-    return(V(vnexus)$name[V(vnexus)$class %in% class])
-  }
-  if(is_edibble(x)) {
-    class <- class %||% map_chr(x, class)
-    ind <- map_lgl(x, function(var) any(class %in% class(var)))
-    return(names(x)[ind])
-  }
+names_vars <- function(.object, ...) {
+  UseMethod("names_vars")
 }
 
 #' @rdname names-ed-vars
 #' @export
-names.edbl_nexus <- function(x) {
-  V(x)$vname
+names_vars.edbl_nexus <- function(.nexus, class = NULL) {
+  vnexus <- subset_vars(.nexus)
+  class <- class %||% V(vnexus)$class
+  return(V(vnexus)$name[V(vnexus)$class %in% class])
+}
+
+#' @rdname names-ed-vars
+#' @export
+names_vars.edbl_df <- function(.data, class = NULL) {
+  class <- class %||% map_chr(.data, class)
+  ind <- map_lgl(.data, function(var) any(class %in% class(var)))
+  return(names(.data)[ind])
+}
+
+#' @rdname names-ed-vars
+#' @export
+names.edbl_nexus <- function(.nexus, label = TRUE) {
+  if(label) return(V(.nexus)$vname)
+  V(.nexus)$name
 }
 
 #' @rdname names-ed-vars
