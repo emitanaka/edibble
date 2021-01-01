@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Specify the nesting structure for units — nested_in • edibble</title>
+<title>An edibble constructor — new_edibble • edibble</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,10 @@
 
 
 
-<meta property="og:title" content="Specify the nesting structure for units — nested_in" />
-<meta property="og:description" content="Specify the nesting structure for units" />
+<meta property="og:title" content="An edibble constructor — new_edibble" />
+<meta property="og:description" content="
+
+" />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@emitanaka" />
@@ -147,39 +149,40 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Specify the nesting structure for units</h1>
-    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/nest.R'><code>R/nest.R</code></a></small>
-    <div class="hidden name"><code>nested_in.Rd</code></div>
+    <h1>An edibble constructor</h1>
+    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/edibble.R'><code>R/edibble.R</code></a></small>
+    <div class="hidden name"><code>new_edibble.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Specify the nesting structure for units</p>
+    
+
+
     </div>
 
-    <pre class="usage"><span class='fu'>nested_in</span><span class='op'>(</span><span class='va'>.var</span>, <span class='va'>...</span>, <span class='va'>.vname</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>new_edibble</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span>, nexus <span class='op'>=</span> <span class='cn'>NULL</span>, class <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>.data</th>
+      <td><p>data frame or list of the same size.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
-      <td><p>a single number OR a sequence of two-sided formula where the left-hand side corresponds to the level of <code>unit</code>
-and the right-hand side is the levels of the new unit OR the number of levels</p></td>
+      <td><p>Passed to <code>new_tibble</code>.</p></td>
     </tr>
     <tr>
-      <th>.vname</th>
-      <td><p>an optional variable name</p></td>
+      <th>nexus</th>
+      <td><p>An edibble nexus object.</p></td>
     </tr>
     <tr>
-      <th>x</th>
-      <td><p>A vector with the levels of the list with the name corresponding to
-the name of the unit to nest under.</p></td>
+      <th>class</th>
+      <td><p>Subclasses for edibble. The default is NULL.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Returns an isolated graph &lt;- &lt;- &lt;- &lt;-</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -19,8 +19,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="An R package that implements grammar of experimental design">
 <meta property="og:description" content="Bla bla">
-<meta property="og:image" content="https://edibble.emitanaka.org/reference/figures/card.png">
-<meta property="og:image:alt" content="edibble">
+<meta property="og:image" content="https://edibble.emitanaka.org/logo.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@emitanaka">
 <meta name="twitter:site" content="@MonashEBS">
@@ -127,7 +126,7 @@
 
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">2020</span><span class="op">)</span> <span class="co"># 🔥🦠🏠😱</span>
 
-<span class="va">split</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/initiate_design.html">initiate_design</a></span><span class="op">(</span><span class="st">"Split-plot Design"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<span class="va">spdes</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/start_design.html">start_design</a></span><span class="op">(</span><span class="st">"Split-plot Design"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/set_units.html">set_units</a></span><span class="op">(</span>wholeplot <span class="op">=</span> <span class="fl">4</span>,
             subplot <span class="op">=</span> <span class="fu"><a href="reference/nested_in.html">nested_in</a></span><span class="op">(</span><span class="va">wholeplot</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/set_trts.html">set_trts</a></span><span class="op">(</span>fertilizer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span>,
@@ -137,7 +136,7 @@
   <span class="fu"><a href="reference/randomise_trts.html">randomise_trts</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>Above object contains the intermediate construct of an experimental design (called <code>edbl_nexus</code>). When you are ready to serve your design, you can get the table output (called <code>edbl_df</code>) by using <code>serve_table</code> as below.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="va">split</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="va">spdes</span><span class="op">)</span>
 <span class="co">#&gt; # An edibble: 16 x 4</span>
 <span class="co">#&gt;    wholeplot  subplot    fertilizer variety </span>
 <span class="co">#&gt;    &lt;unit(4)&gt;  &lt;unit(16)&gt; &lt;trt(2)&gt;   &lt;trt(2)&gt;</span>
@@ -159,7 +158,7 @@
 <span class="co">#&gt; 16 wholeplot4 subplot16  B          V2</span></code></pre></div>
 <p>Once you get the rough idea of how edibble specifies design, you should be roughly be able to visualise what the experimental design layout is just from looking at the code alone. Take another example below. Can you see what the design is?</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rcbd</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/initiate_design.html">initiate_design</a></span><span class="op">(</span><span class="st">"RCBD"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">rcbd</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/start_design.html">start_design</a></span><span class="op">(</span><span class="st">"RCBD"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/set_units.html">set_units</a></span><span class="op">(</span>block <span class="op">=</span> <span class="fl">4</span>,
             plot  <span class="op">=</span> <span class="fu"><a href="reference/nested_in.html">nested_in</a></span><span class="op">(</span><span class="va">block</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/set_trts.html">set_trts</a></span><span class="op">(</span>fertilizer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span>,
@@ -172,13 +171,13 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">rcbd</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">split</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">spdes</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-high-view-1.png"><!-- --></p>
 <p>If you want to see the connections in terms of the actual units, then you can change the view to a low-level view.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">rcbd</span>, view <span class="op">=</span> <span class="st">"low"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">split</span>, view <span class="op">=</span> <span class="st">"low"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">spdes</span>, view <span class="op">=</span> <span class="st">"low"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-low-view-1.png"><!-- --></p>
 <p>The low-level view is often a bit cluttered so you may like to use the interactive version as below instead.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">

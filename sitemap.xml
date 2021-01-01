@@ -16,6 +16,9 @@
     <loc>https://edibble.emitanaka.org/reference/classics.html</loc>
   </url>
   <url>
+    <loc>https://edibble.emitanaka.org/reference/create_classics.html</loc>
+  </url>
+  <url>
     <loc>https://edibble.emitanaka.org/reference/cross_edge_seq.html</loc>
   </url>
   <url>
@@ -32,9 +35,6 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/get_value_type.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/initiate_design.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/is_edibble.html</loc>
@@ -64,6 +64,9 @@
     <loc>https://edibble.emitanaka.org/reference/nested_in.html</loc>
   </url>
   <url>
+    <loc>https://edibble.emitanaka.org/reference/new_edibble.html</loc>
+  </url>
+  <url>
     <loc>https://edibble.emitanaka.org/reference/new_edibble_var.html</loc>
   </url>
   <url>
@@ -77,9 +80,6 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/print.edbl_nexus.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/pull.edbl_nexus.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/randomise_trts.html</loc>
@@ -110,6 +110,9 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/set_vars.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/start_design.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/subset-edbl-nexus.html</loc>
