@@ -1,3 +1,3 @@
-# edibble 0.0.0.9000
+# edibble (development version)
 
 * Initial release of the package

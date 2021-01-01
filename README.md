@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# edibble
+# edibble <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
 <!-- badges: start -->
 
@@ -51,7 +51,7 @@ can be thought of as tibble output for experimental design.
 ``` r
 library(edibble)
 
-set.seed(2020) # 🔥🦠🏠
+set.seed(2020) # 🔥🦠🏠😱
 
 split <- initiate_design("Split-plot Design") %>% 
   set_units(wholeplot = 4,

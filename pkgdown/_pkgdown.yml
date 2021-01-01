@@ -15,4 +15,5 @@ template:
       site: "@MonashEBS"
       card: summary_large_image
   params:
-    bootswatch: yeti
+    bootswatch: united
+    ganalytics: G-3G9ZSVHHPR
