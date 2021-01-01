@@ -40,7 +40,10 @@
     <loc>https://edibble.emitanaka.org/reference/is_edibble.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/is_edibble_nexus.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/is_edibble_graph.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/match_edge_seq.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/measure_response.html</loc>
@@ -70,13 +73,16 @@
     <loc>https://edibble.emitanaka.org/reference/number_si_prefix.html</loc>
   </url>
   <url>
+    <loc>https://edibble.emitanaka.org/reference/path_seq.html</loc>
+  </url>
+  <url>
     <loc>https://edibble.emitanaka.org/reference/pipe.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/plot.edbl_nexus.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/plot.edbl_graph.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/print.edbl_nexus.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/print.edbl_graph.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/randomise_trts.html</loc>
@@ -94,7 +100,7 @@
     <loc>https://edibble.emitanaka.org/reference/serve_table.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/serve_table.edbl_nexus.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/serve_table.edbl_graph.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/set_trts.html</loc>
@@ -109,7 +115,7 @@
     <loc>https://edibble.emitanaka.org/reference/start_design.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/subset-edbl-nexus.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/subset-edbl-graph.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/tbl_sum.edbl_df.html</loc>

@@ -115,7 +115,7 @@
 <p>[WIP]</p>
 <p>If you are looking to get started with <em>code</em>, look at <code>vignette("edibble")</code> instead. This vignette is a bit wordy and at times serves as the dumping ground of my own thoughts.</p>
 <p>In this vignette, I introduce terms that refer to special objects and concepts in edibble as an attempt to deconstruct an experimental design to its bare components. I can’t say it has been an easy (let alone successful) attempt when the world of experimental design is so vast that sometimes such an attempt felt too ambitious and difficult, if not impossible, for me. Nonetheless, I gave it a try from the little knowledge I have on experimental design that stem mostly from working with plant breeding experiments and equally little skill I have in software development. Consequently, you might find (and rightly so) edibble subpar on many fronts compared to its grand goal. edibble will evolve, and hopefully also expand, as I come to understand better both the world of experimental design and the world of software development.</p>
-<p>In edibble, the objects are governed by their respective structures and rules. The government isn’t strict yet so there isn’t much check put in place so you probably can get away with violations of the structures and rules. If I can think better, some of these may be converted to <code>R6</code> class (in fact edibble nexus was using <code>R6</code> before I decided that <code>igraph</code> might be better!). This just means that there’s some drastic evolution that might happen. The code itself has already undergone a number of major structural changes before I finally decided to release it publicly.</p>
+<p>In edibble, the objects are governed by their respective structures and rules. The government isn’t strict yet so there isn’t much check put in place so you probably can get away with violations of the structures and rules. If I can think better, some of these may be converted to <code>R6</code> class (in fact edibble graph was using <code>R6</code> before I decided that <code>igraph</code> might be better!). This just means that there’s some drastic evolution that might happen. The code itself has already undergone a number of major structural changes before I finally decided to release it publicly.</p>
 <p>The key objects are summarised in the table below with more details under their respective sections. For some objects, further details can be found in the help documentation of functions given under the documentation column in the table below.</p>
 <table class="table">
 <colgroup>
@@ -156,8 +156,8 @@
 <td align="left"><code>?measure_resp</code></td>
 </tr>
 <tr class="odd">
-<td align="left">edibble nexus</td>
-<td align="left"><code>edbl_nexus</code></td>
+<td align="left">edibble graph</td>
+<td align="left"><code>edbl_graph</code></td>
 <td align="left">an intermediate construct of the experimental design</td>
 <td align="left">this vignette</td>
 </tr>
@@ -176,7 +176,7 @@
 <tr class="even">
 <td align="left">linkabble</td>
 <td align="left">
-<code>lkbl_nexus</code> or <code>lkbl_df</code>
+<code>lkbl_graph</code> or <code>lkbl_df</code>
 </td>
 <td align="left">a transitional component storing information about how levels across variables are linked</td>
 <td align="left">none</td>
@@ -241,10 +241,10 @@
 <p>You can find more specific information in the documentation for <code>?measure_resp</code>.</p>
 </div>
 </div>
-<div id="an-edibble-nexus" class="section level2">
+<div id="an-edibble-graph" class="section level2">
 <h2 class="hasAnchor">
-<a href="#an-edibble-nexus" class="anchor"></a>An edibble nexus</h2>
-<p>An edibble nexus, or <code>edbl_nexus</code> object, is a special type of directed graph made by <code>igraph</code>. This form is used to represent intermediate constructs of the experimental design. There are two views to this object: a <em>high-level view</em> and a <em>low-level view</em>.</p>
+<a href="#an-edibble-graph" class="anchor"></a>An edibble graph</h2>
+<p>An edibble graph, or <code>edbl_graph</code> object, is a special type of directed graph made by <code>igraph</code>. This form is used to represent intermediate constructs of the experimental design. There are two views to this object: a <em>high-level view</em> and a <em>low-level view</em>.</p>
 <p>In a <strong><em>high-level view</em></strong>:</p>
 <ul>
 <li>a vertex is a variable,</li>
@@ -286,8 +286,8 @@
 </ul>
 <p>A low-level view of the split-plot design is shown below.</p>
 <p><img src="figures/vignette-edibble-nexus-level.png" width="80%" style="display: block; margin: auto;"></p>
-<p>The whole edibble nexus object contains all the nodes and edges from the high- and low-level views. The whole edibble nexus can have numerous nodes and edges, even when the number of units are small, that it’s visualisation will be too cluttered to be any useful. Consequently, when visualising these intermediate construct of the experimental design, only a high- or low-level view is visible to the user, but the object contains the information seen in both views.</p>
-<p>Some information in the edibble nexus object is illustrated below. There are edges that connect levels across variables, as well as sequenetial path for the order of the levels, but you may need to squint to see the lines.</p>
+<p>The whole edibble graph object contains all the nodes and edges from the high- and low-level views. The whole edibble graph can have numerous nodes and edges, even when the number of units are small, that it’s visualisation will be too cluttered to be any useful. Consequently, when visualising these intermediate construct of the experimental design, only a high- or low-level view is visible to the user, but the object contains the information seen in both views.</p>
+<p>Some information in the edibble graph object is illustrated below. There are edges that connect levels across variables, as well as sequenetial path for the order of the levels, but you may need to squint to see the lines.</p>
 <p><img src="figures/vignette-edibble-nexus-all.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
 <div id="an-edibble-table-or-data-frame" class="section level2">
@@ -296,16 +296,16 @@
 <p>An edibble, or <code>edbl_df</code> object, is a special class of <a href="https://tibble.tidyverse.org/"><code>tibble</code></a>. The word “edibble” itself already implies that it is a table so appending the word with table or data frame seems superfluous. However, edibble can refer to the package, object, or used as an adjective to other objects, so appending edibble with table or data frame is to make explicit emphasis it refers to the <code>edbl_df</code> object, otherwise the reader is expected to infer its meaning by context.</p>
 <p>An edibble data frame is produced when the variables can be laid out in a <a href="https://www.jstatsoft.org/article/view/v059i10">tidy data</a> format. An edibble is constructed from two possible ways:</p>
 <ol style="list-style-type: decimal">
-<li>converting edibble nexus to edibble using <code>serve_table</code> and</li>
+<li>converting edibble graph to edibble using <code>serve_table</code> and</li>
 <li>converting existing data frame to edibble using <code>edibble</code>.</li>
 </ol>
-<p>We say that an edibble nexus is <strong>reconcilable</strong> if it can be converted to an edibble data frame with at least one row. The cell contents can be only filled out if every level in a variable can be matched to a level of another variable, otherwise it is not possible to complete a row.</p>
+<p>We say that an edibble graph is <strong>reconcilable</strong> if it can be converted to an edibble data frame with at least one row. The cell contents can be only filled out if every level in a variable can be matched to a level of another variable, otherwise it is not possible to complete a row.</p>
 <p><img src="figures/vignette-edibble-table.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
 <div id="mathematically" class="section level2">
 <h2 class="hasAnchor">
 <a href="#mathematically" class="anchor"></a>Mathematically</h2>
-<p>Let <span class="math inline">\(G\)</span> be a graph produced as edibble nexus with a vertex set <span class="math inline">\(V(G)\)</span>, an edge set <span class="math inline">\(E(G)\)</span> and a relation that associates with each edge two vertices. By definition of an edibble nexus, <span class="math inline">\(G\)</span> has the following properties:</p>
+<p>Let <span class="math inline">\(G\)</span> be a graph produced as edibble graph with a vertex set <span class="math inline">\(V(G)\)</span>, an edge set <span class="math inline">\(E(G)\)</span> and a relation that associates with each edge two vertices. By definition of an edibble graph, <span class="math inline">\(G\)</span> has the following properties:</p>
 <ul>
 <li>
 <span class="math inline">\(|V(G)| = p + \sum_{i=1}^{p}m_i\)</span> nodes where
@@ -319,7 +319,7 @@
 <li>
 <span class="math inline">\(|E(G)| \geq \sum_{i=1}^p 2m_i\)</span> since every level node is connected to its variable node and level nodes of the same variable are connected sequentially.</li>
 </ul>
-<p>An edibble nexus <span class="math inline">\(G\)</span> is reconcilable if every variable <span class="math inline">\(v_A \in V(G)\)</span> is connected to at least one other variable <span class="math inline">\(v_B \in V(G), v_A\neq v_B\)</span>; every pair of variables <span class="math inline">\(v_A \in G\)</span> and <span class="math inline">\(v_B \in G\)</span> in the with edge from <span class="math inline">\(v_Av_B\)</span>…………</p>
+<p>An edibble graph <span class="math inline">\(G\)</span> is reconcilable if every variable <span class="math inline">\(v_A \in V(G)\)</span> is connected to at least one other variable <span class="math inline">\(v_B \in V(G), v_A\neq v_B\)</span>; every pair of variables <span class="math inline">\(v_A \in G\)</span> and <span class="math inline">\(v_B \in G\)</span> in the with edge from <span class="math inline">\(v_Av_B\)</span>…………</p>
 </div>
   </div>
 

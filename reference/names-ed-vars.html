@@ -50,7 +50,7 @@
 
 <meta property="og:title" content="Names of variables — names-ed-vars" />
 <meta property="og:description" content="Functions to get or set the names of variables (with particular class) from
-edibble or edibble nexus object." />
+edibble or edibble graph object." />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@emitanaka" />
@@ -157,29 +157,35 @@ edibble or edibble nexus object." />
 
     <div class="ref-description">
     <p>Functions to get or set the names of variables (with particular class) from
-edibble or edibble nexus object.</p>
+edibble or edibble graph object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>names_units</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>names_units</span><span class='op'>(</span><span class='va'>.object</span><span class='op'>)</span>
 
-<span class='fu'>names_trts</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+<span class='fu'>names_trts</span><span class='op'>(</span><span class='va'>.object</span><span class='op'>)</span>
 
-<span class='fu'>names_resp</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+<span class='fu'>names_resp</span><span class='op'>(</span><span class='va'>.object</span><span class='op'>)</span>
 
-<span class='fu'>names_vars</span><span class='op'>(</span><span class='va'>x</span>, class <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+<span class='fu'>names_vars</span><span class='op'>(</span><span class='va'>.object</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='co'># S3 method for edbl_nexus</span>
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+<span class='co'># S3 method for edbl_graph</span>
+<span class='fu'>names_vars</span><span class='op'>(</span><span class='va'>.data</span>, class <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='co'># S3 method for edbl_nexus</span>
+<span class='co'># S3 method for edbl_df</span>
+<span class='fu'>names_vars</span><span class='op'>(</span><span class='va'>.data</span>, class <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+
+<span class='co'># S3 method for edbl_graph</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>.data</span>, label <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='co'># S3 method for edbl_graph</span>
 <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>An edibble or edibble nexus.</p></td>
+      <th>.object, .data, .data</th>
+      <td><p>Either an edibble data frame or edibble graph.</p></td>
     </tr>
     <tr>
       <th>class</th>
@@ -193,8 +199,8 @@ edibble or edibble nexus object.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>names_units</span><span class='op'>(</span><span class='va'>nclassics</span><span class='op'>$</span><span class='va'>split</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "mainplot" "subplot" </div><div class='input'><span class='fu'>names_trts</span><span class='op'>(</span><span class='va'>nclassics</span><span class='op'>$</span><span class='va'>split</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "variety"    "irrigation"</div></pre>
+</div><div class='output co'>#&gt; <span class='error'>Error in UseMethod("names_vars"): no applicable method for 'names_vars' applied to an object of class "c('edbl_nexus', 'igraph')"</span></div><div class='input'><span class='fu'>names_trts</span><span class='op'>(</span><span class='va'>nclassics</span><span class='op'>$</span><span class='va'>split</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in UseMethod("names_vars"): no applicable method for 'names_vars' applied to an object of class "c('edbl_nexus', 'igraph')"</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

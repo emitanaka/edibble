@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Serve edibble table — serve_table • edibble</title>
+<title>Make an edge sequence from two vectors of vertex names — match_edge_seq • edibble</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,8 +48,12 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Serve edibble table — serve_table" />
-<meta property="og:description" content="Serve edibble table" />
+<meta property="og:title" content="Make an edge sequence from two vectors of vertex names — match_edge_seq" />
+<meta property="og:description" content="For a pair of vectors of vertex names in .data, get the edge sequence
+that connects the vertices in the matching index. For example, if the graph
+has 4 nodes named A, B, C and D, then vnames_from = C(&quot;A&quot;, &quot;B&quot;) and
+vnames_to = c(&quot;C&quot;, &quot;D&quot;) means it returns the edge sequence so that node A
+will connect to node C and node B to node D." />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@emitanaka" />
@@ -149,18 +153,45 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Serve edibble table</h1>
-    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/serve.R'><code>R/serve.R</code></a></small>
-    <div class="hidden name"><code>serve_table.Rd</code></div>
+    <h1>Make an edge sequence from two vectors of vertex names</h1>
+    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/nest.R'><code>R/nest.R</code></a></small>
+    <div class="hidden name"><code>match_edge_seq.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Serve edibble table</p>
+    <p>For a pair of vectors of vertex names in <code>.data</code>, get the edge sequence
+that connects the vertices in the matching index. For example, if the graph
+has 4 nodes named A, B, C and D, then <code>vnames_from = C("A", "B")</code> and
+<code>vnames_to = c("C", "D")</code> means it returns the edge sequence so that node A
+will connect to node C and node B to node D.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>serve_table</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>match_edge_seq</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>vnames_from</span>, <span class='va'>vnames_to</span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>.data</th>
+      <td><p>An edibble graph.</p></td>
+    </tr>
+    <tr>
+      <th>vnames_from</th>
+      <td><p>The vertex name to start the edge.</p></td>
+    </tr>
+    <tr>
+      <th>vnames_to</th>
+      <td><p>The vertex name to end the edge.</p></td>
+    </tr>
+    </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>An edge sequence.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other edge-seq: 
+<code><a href='cross_edge_seq.html'>cross_edge_seq</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Serve edibble table — serve_table • edibble</title>
+<title>Serve edibble table — serve_table.edbl_graph • edibble</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,8 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Serve edibble table — serve_table" />
-<meta property="og:description" content="Serve edibble table" />
+<meta property="og:title" content="Serve edibble table — serve_table.edbl_graph" />
+<meta property="og:description" content="This converts an edibble graph object to a data frame called edibble." />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@emitanaka" />
@@ -151,16 +151,29 @@
     <div class="page-header">
     <h1>Serve edibble table</h1>
     <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/serve.R'><code>R/serve.R</code></a></small>
-    <div class="hidden name"><code>serve_table.Rd</code></div>
+    <div class="hidden name"><code>serve_table.edbl_graph.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Serve edibble table</p>
+    <p>This converts an edibble graph object to a data frame called edibble.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>serve_table</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='co'># S3 method for edbl_graph</span>
+<span class='fu'><a href='serve_table.html'>serve_table</a></span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>.data</th>
+      <td><p>An <code>edbl_graph</code> object.</p></td>
+    </tr>
+    </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>An <code>edbl</code> data frame with columns defined by vertices and
+rows displayed only if the vertices are connected and reconcile for output.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

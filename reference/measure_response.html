@@ -49,7 +49,7 @@
   
 
 <meta property="og:title" content="Measure response of given units — measure_response" />
-<meta property="og:description" content="This function creates new nodes to edibble nexus with the name
+<meta property="og:description" content="This function creates new nodes to edibble graph with the name
 corresponding to the intended response that will be measured." />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -156,12 +156,12 @@ corresponding to the intended response that will be measured." />
     </div>
 
     <div class="ref-description">
-    <p>This function creates new nodes to edibble nexus with the name
+    <p>This function creates new nodes to edibble graph with the name
 corresponding to the intended response that will be measured.</p>
     </div>
 
     <pre class="usage"><span class='fu'>measure_response</span><span class='op'>(</span>
-  <span class='va'>.nexus</span>,
+  <span class='va'>.data</span>,
   <span class='va'>...</span>,
   .name_repair <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"check_unique"</span>, <span class='st'>"unique"</span>, <span class='st'>"universal"</span>, <span class='st'>"minimal"</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
@@ -170,8 +170,8 @@ corresponding to the intended response that will be measured.</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.nexus</th>
-      <td><p>An <code>edbl_nexus</code> object</p></td>
+      <th>.data</th>
+      <td><p>An <code>edbl_graph</code> object</p></td>
     </tr>
     <tr>
       <th>...</th>

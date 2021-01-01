@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Serve edibble table — serve_table • edibble</title>
+<title>Print edibble graph to terminal — print.edbl_graph • edibble</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,8 +48,13 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Serve edibble table — serve_table" />
-<meta property="og:description" content="Serve edibble table" />
+<meta property="og:title" content="Print edibble graph to terminal — print.edbl_graph" />
+<meta property="og:description" content="This function prints an edbl_graph object as a tree to terminal.
+The variables are color coded (or decorated) with the given options.
+Any ANSI coloring or styling are only visible in the console or terminal
+outputs that support it. The print output is best used interactively since
+any text styling are lost in text or R Markdown output. More details can
+be found in vignette(&quot;edbl-output&quot;)." />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@emitanaka" />
@@ -149,19 +154,70 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Serve edibble table</h1>
-    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/serve.R'><code>R/serve.R</code></a></small>
-    <div class="hidden name"><code>serve_table.Rd</code></div>
+    <h1>Print edibble graph to terminal</h1>
+    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/edibble.R'><code>R/edibble.R</code></a></small>
+    <div class="hidden name"><code>print.edbl_graph.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Serve edibble table</p>
+    <p>This function prints an <code>edbl_graph</code> object as a tree to terminal.
+The variables are color coded (or decorated) with the given options.
+Any ANSI coloring or styling are only visible in the console or terminal
+outputs that support it. The print output is best used interactively since
+any text styling are lost in text or R Markdown output. More details can
+be found in <code><a href='../articles/edbl-output.html'>vignette("edbl-output")</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>serve_table</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='co'># S3 method for edbl_graph</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span>
+  <span class='va'>.data</span>,
+  decorate_units <span class='op'>=</span> <span class='fu'>edibble_decorate</span><span class='op'>(</span><span class='st'>"units"</span><span class='op'>)</span>,
+  decorate_trts <span class='op'>=</span> <span class='fu'>edibble_decorate</span><span class='op'>(</span><span class='st'>"trts"</span><span class='op'>)</span>,
+  decorate_resp <span class='op'>=</span> <span class='fu'>edibble_decorate</span><span class='op'>(</span><span class='st'>"resp"</span><span class='op'>)</span>,
+  decorate_levels <span class='op'>=</span> <span class='fu'>edibble_decorate</span><span class='op'>(</span><span class='st'>"levels"</span><span class='op'>)</span>,
+  decorate_main <span class='op'>=</span> <span class='fu'>edibble_decorate</span><span class='op'>(</span><span class='st'>"main"</span><span class='op'>)</span>,
+  main <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>.data</th>
+      <td><p>An edibble graph.</p></td>
+    </tr>
+    <tr>
+      <th>decorate_trts, decorate_units, decorate_resp, decorate_levels, decorate_title</th>
+      <td><p>A function applied to the name of treatment, unit, response factors or
+design title. The function should return a string. Most often this wraps the name with
+ANSI colored text. Run <code>edibble_opt()</code> to see the list of default
+values for the options.</p></td>
+    </tr>
+    </table>
 
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># stylizing are only visible in terminal output that supports it</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>nclassics</span><span class='op'>$</span><span class='va'>split</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; IGRAPH f9121e7 DN-- 20 51 -- Split plot design
+#&gt; + attr: name (g/c), vtype (v/c), vname (v/c), label (v/c), class (v/c),
+#&gt; | color (v/l), shape (v/c), label.color (v/c), label.family (v/c),
+#&gt; | label.font (v/n), label.cex (v/n), label2 (v/c), group (v/n), name
+#&gt; | (v/c), etype (e/c), color (e/c), arrow.mode (e/c), arrow.size (e/n),
+#&gt; | width (e/n), lty (e/n), curved (e/l)
+#&gt; + edges from f9121e7 (vertex names):
+#&gt; [1] subplot:subplot7-&gt;subplot:subplot8 subplot:subplot6-&gt;subplot:subplot7
+#&gt; [3] subplot:subplot5-&gt;subplot:subplot6 subplot:subplot4-&gt;subplot:subplot5
+#&gt; [5] subplot:subplot3-&gt;subplot:subplot4 subplot:subplot2-&gt;subplot:subplot3
+#&gt; [7] subplot:subplot1-&gt;subplot:subplot2 subplot         -&gt;subplot:subplot8
+#&gt; + ... omitted several edges</div><div class='input'><span class='co'>## Split plot design</span>
+<span class='co'>## ├─mainplot (4 levels)</span>
+<span class='co'>## │ └─subplot (8 levels)</span>
+<span class='co'>## ├─subplot (8 levels)</span>
+<span class='co'>## ├─variety (2 levels)</span>
+<span class='co'>## └─irrigation (2 levels)</span>
 
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

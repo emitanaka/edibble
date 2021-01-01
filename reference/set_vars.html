@@ -49,7 +49,7 @@
   
 
 <meta property="og:title" content="Set edibble variables — set_vars" />
-<meta property="og:description" content="A node in an edibble nexus becomes a variable when served." />
+<meta property="og:description" content="A node in an edibble graph becomes a variable when served." />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@emitanaka" />
@@ -155,7 +155,7 @@
     </div>
 
     <div class="ref-description">
-    <p>A node in an edibble nexus becomes a variable when served.</p>
+    <p>A node in an edibble graph becomes a variable when served.</p>
     </div>
 
     <pre class="usage"><span class='fu'>set_vars</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span><span class='op'>)</span></pre>
@@ -164,13 +164,13 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>.data, .data</th>
+      <td><p>An <code>edbl_graph</code> or <code>edbl_df</code> object.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>&lt;<code><a href='https://rlang.r-lib.org/reference/dyn-dots.html'>dynamic-dots</a></code>&gt;&lt;<code><a href='https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html'>tidy-select</a></code>&gt;
 Name-value pair.</p></td>
-    </tr>
-    <tr>
-      <th>.nexus, .data</th>
-      <td><p>An <code>edbl_nexus</code> or <code>edbl_df</code> object.</p></td>
     </tr>
     <tr>
       <th>.name_repair</th>

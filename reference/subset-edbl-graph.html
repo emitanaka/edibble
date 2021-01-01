@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Serve edibble table — serve_table • edibble</title>
+<title>Subset an edibble graph — subset-edbl-graph • edibble</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,8 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Serve edibble table — serve_table" />
-<meta property="og:description" content="Serve edibble table" />
+<meta property="og:title" content="Subset an edibble graph — subset-edbl-graph" />
+<meta property="og:description" content="This function subsets vertices of edibble graph based on vertex attributes." />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@emitanaka" />
@@ -149,17 +149,39 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Serve edibble table</h1>
-    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/serve.R'><code>R/serve.R</code></a></small>
-    <div class="hidden name"><code>serve_table.Rd</code></div>
+    <h1>Subset an edibble graph</h1>
+    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/subset.R'><code>R/subset.R</code></a></small>
+    <div class="hidden name"><code>subset-edbl-graph.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Serve edibble table</p>
+    <p>This function subsets vertices of edibble graph based on vertex attributes.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>serve_table</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='co'># S3 method for edbl_graph</span>
+<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span>, .vtype <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"var"</span>, <span class='st'>"level"</span><span class='op'>)</span><span class='op'>)</span>
 
+<span class='fu'>subset_vars</span><span class='op'>(</span><span class='va'>.data</span><span class='op'>)</span>
+
+<span class='fu'>subset_levels</span><span class='op'>(</span><span class='va'>.data</span><span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>.data</th>
+      <td><p>An edibble graph.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Expressions that return a logical value.</p></td>
+    </tr>
+    <tr>
+      <th>.vtype</th>
+      <td><p>The vertex type to subset. By default, all vertices are returned.
+For <code>"var"</code>, only vertices that have attribute <code>vtype</code> as "var" is returned.</p></td>
+    </tr>
+    </table>
 
 
   </div>

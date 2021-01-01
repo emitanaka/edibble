@@ -113,14 +113,13 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://edibble.emitanaka.org/">edibble</a></span><span class="op">)</span>
-<span class="co">#&gt; Warning: S3 method 'autoplot.edbl' was declared in NAMESPACE but not found</span></code></pre></div>
-<p>When you construct an experimental design, there are many intermediate steps along the way before you are ready to serve your design. edibble stores these intermediate constructs as an <em>edibble nexus</em> (<code>edbl_nexus</code>) which you can visualise in a number of ways.</p>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://edibble.emitanaka.org/">edibble</a></span><span class="op">)</span></code></pre></div>
+<p>When you construct an experimental design, there are many intermediate steps along the way before you are ready to serve your design. edibble stores these intermediate constructs as an <em>edibble graph</em> (<code>edbl_graph</code>) which you can visualise in a number of ways.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1231</span><span class="op">)</span> 
 
 <span class="va">new_rcbd</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu">initiate_design</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"RCBD"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/start_design.html">start_design</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"RCBD"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/set_units.html">set_units</a></span><span class="op">(</span>block <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"B1"</span>, <span class="st">"B2"</span><span class="op">)</span>,
             unit <span class="op">=</span> <span class="fu"><a href="../reference/nested_in.html">nested_in</a></span><span class="op">(</span><span class="va">block</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/set_trts.html">set_trts</a></span><span class="op">(</span>trt <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -131,12 +130,12 @@
 <span class="va">rcbd</span> <span class="op">&lt;-</span> <span class="fu">new_rcbd</span><span class="op">(</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">rcbd</span><span class="op">)</span>
-<span class="co">#&gt; [1] "edbl_nexus" "igraph"</span></code></pre></div>
-<div id="print-for-edbl_nexus" class="section level2">
+<span class="co">#&gt; [1] "edbl_graph" "igraph"</span></code></pre></div>
+<div id="print-for-edbl_graph" class="section level2">
 <h2 class="hasAnchor">
-<a href="#print-for-edbl_nexus" class="anchor"></a>Print for <code>edbl_nexus</code>
+<a href="#print-for-edbl_graph" class="anchor"></a>Print for <code>edbl_graph</code>
 </h2>
-<p>If you print an <code>edbl_nexus</code> object, it will show you a tree structure with a high-level overview of the design. Below is a print out of a design. The output form isn’t really made for HTML and for complex reason color is lost for HTML (for the same reason as tibble).</p>
+<p>If you print an <code>edbl_graph</code> object, it will show you a tree structure with a high-level overview of the design. Below is a print out of a design. The output form isn’t really made for HTML and for complex reason color is lost for HTML (for the same reason as tibble).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rcbd</span>
 <span class="co">#&gt; RCBD</span>
@@ -146,9 +145,9 @@
 <span class="co">#&gt; └─trt (4 levels)</span></code></pre></div>
 <p>The print out in terminal will look like below depending on your IDE theme (I’m using Tomorrow Night Bright theme in RStudio). You can see that the color of the nodes are dependant on which type of variable it is and also shows you how many levels each variable has.</p>
 <p><img src="figures/vignette-decorate.png" width="150px"></p>
-<div id="formatting-print-for-edbl_nexus" class="section level3">
+<div id="formatting-print-for-edbl_graph" class="section level3">
 <h3 class="hasAnchor">
-<a href="#formatting-print-for-edbl_nexus" class="anchor"></a>Formatting print for <code>edbl_nexus</code>
+<a href="#formatting-print-for-edbl_graph" class="anchor"></a>Formatting print for <code>edbl_graph</code>
 </h3>
 <p>If you don’t like the default choices, then you can easily customise the look by specifying the function of how to decorate the strings to options. Below I’m making use of functions in the cli package which wraps the string around in some styling.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -164,11 +163,11 @@
 <p>Instead of overwriting the options each time, you can set your <code>.Rprofile</code> so that when you load R, it will load the options in your profile. You can easily open <code>.Rprofile</code> with <code>usethis::edit_r_profile()</code>. I normally don’t recommend to do this as it makes your output non-reproducible by others but the print output is made more for interactive use rather than reports so it doesn’t matter much in this case.</p>
 </div>
 </div>
-<div id="plot-for-edbl_nexus" class="section level2">
+<div id="plot-for-edbl_graph" class="section level2">
 <h2 class="hasAnchor">
-<a href="#plot-for-edbl_nexus" class="anchor"></a>Plot for <code>edbl_nexus</code>
+<a href="#plot-for-edbl_graph" class="anchor"></a>Plot for <code>edbl_graph</code>
 </h2>
-<p>There are two views available for <code>edbl_nexus</code>: high-level view and low-level view. The high-level view is designed for the user to see the overview of variable relations. [ADD link to other document with more explanation.]</p>
+<p>There are two views available for <code>edbl_graph</code>: high-level view and low-level view. The high-level view is designed for the user to see the overview of variable relations. [ADD link to other document with more explanation.]</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">rcbd</span><span class="op">)</span></code></pre></div>
 <p><img src="edbl-output_files/figure-html/rcbd-high-plot-1.png" width="384"></p>
@@ -176,14 +175,14 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">rcbd</span>, view <span class="op">=</span> <span class="st">"low"</span><span class="op">)</span></code></pre></div>
 <p><img src="edbl-output_files/figure-html/rcbd-low-plot-1.png" width="576"></p>
-<div id="formatting-plot-output-for-edbl_nexus" class="section level3">
+<div id="formatting-plot-output-for-edbl_graph" class="section level3">
 <h3 class="hasAnchor">
-<a href="#formatting-plot-output-for-edbl_nexus" class="anchor"></a>Formatting plot output for <code>edbl_nexus</code>
+<a href="#formatting-plot-output-for-edbl_graph" class="anchor"></a>Formatting plot output for <code>edbl_graph</code>
 </h3>
 <p>If you don’t like these aspects, you can in fact overwrite this. There are two ways you can do this.</p>
 <ol style="list-style-type: decimal">
 <li>
-<code>edbl_nexus</code> is just an <code>igraph</code> under the hood and it’s leveraging the <code>plot</code> method there which means you can customise it the way it is done for <code>igraph</code>,</li>
+<code>edbl_graph</code> is just an <code>igraph</code> under the hood and it’s leveraging the <code>plot</code> method there which means you can customise it the way it is done for <code>igraph</code>,</li>
 <li>Modify the <code>options</code> output. You can see the full list of available options by printing <code>edibble:::op.edibble</code> with a few shown below.</li>
 </ol>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
