@@ -30,8 +30,7 @@ Imports:
 Suggests: 
     testthat,
     knitr,
-    rmarkdown,
-    ggplot2 (>= 3.0.0)
+    rmarkdown
 VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)
