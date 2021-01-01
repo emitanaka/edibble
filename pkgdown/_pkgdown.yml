@@ -7,9 +7,6 @@ home:
 
 template:
   opengraph:
-    image:
-      src: man/figures/card.png
-      alt: "edibble"
     twitter:
       creator: "@emitanaka"
       site: "@MonashEBS"

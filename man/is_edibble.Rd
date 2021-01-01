@@ -2,20 +2,23 @@
 % Please edit documentation in R/edibble.R
 \name{is_edibble}
 \alias{is_edibble}
-\title{Test if the object is edibble}
+\alias{not_edibble}
+\title{Test if the object is an edibble data frame}
 \usage{
 is_edibble(x)
+
+not_edibble(x)
 }
 \arguments{
 \item{x}{An object.}
 }
 \value{
-\code{TRUE} if the object inherits the \code{edbl} class.
+\code{TRUE} if the object inherits the \code{edbl_df} class.
 }
 \description{
 A simple function that return \code{TRUE} if the object inherits
-the \code{edbl} class, \code{FALSE} otherwise.
+the \code{edbl_df} class, \code{FALSE} otherwise.
 }
 \seealso{
-See \code{\link[=is_edibble_nexus]{is_edibble_nexus()}} for testing \code{edbl_nexus}.
+See \code{\link[=is_edibble_nexus]{is_edibble_nexus()}} for testing if the object is \code{edbl_nexus}.
 }

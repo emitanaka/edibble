@@ -34,7 +34,8 @@ serve_table.edbl_nexus <- function(.nexus, ...) {
 
 # Returns list of edibble variables
 serve_vars_not_reconciled <- function(.nexus) {
-  vnames <- V(.nexus)$vname
+  unexus <- subset_vars(.nexus)
+  vnames <- V(unexus)$name
   res <- lapply(vnames,
                 function(avar) {
                   new_edibble_var(levels = var_levels(.nexus, avar),

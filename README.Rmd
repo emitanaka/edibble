@@ -44,7 +44,7 @@ library(edibble)
 
 set.seed(2020) # 🔥🦠🏠😱
 
-split <- initiate_design("Split-plot Design") %>% 
+spdes <- start_design("Split-plot Design") %>% 
   set_units(wholeplot = 4,
             subplot = nested_in(wholeplot, 4)) %>% 
   set_trts(fertilizer = c("A", "B"),
@@ -57,13 +57,13 @@ split <- initiate_design("Split-plot Design") %>%
 Above object contains the intermediate construct of an experimental design (called `edbl_nexus`). When you are ready to serve your design, you can get the table output (called `edbl_df`) by using `serve_table` as below.
 
 ```{r split-plot-table}
-serve_table(split)
+serve_table(spdes)
 ```
 
 Once you get the rough idea of how edibble specifies design, you should be roughly be able to visualise what the experimental design layout is just from looking at the code alone. Take another example below. Can you see what the design is?
 
 ```{r rcbd, fig.height = 5, fig.width = 5}
-rcbd <- initiate_design("RCBD") %>% 
+rcbd <- start_design("RCBD") %>% 
   set_units(block = 4,
             plot  = nested_in(block, 4)) %>% 
   set_trts(fertilizer = c("A", "B"),
@@ -81,7 +81,7 @@ You can see a high-level overview of the variables and its relation by using `pl
 ```{r high-view, fig.height = 6, fig.width = 12}
 par(mfrow = c(1, 2))
 plot(rcbd)
-plot(split)
+plot(spdes)
 ```
 
 If you want to see the connections in terms of the actual units, then you can change the view to a low-level view. 
@@ -89,7 +89,7 @@ If you want to see the connections in terms of the actual units, then you can ch
 ```{r low-view, fig.height = 6, fig.width = 12}
 par(mfrow = c(1, 2))
 plot(rcbd, view = "low")
-plot(split, view = "low")
+plot(spdes, view = "low")
 ```
 
 

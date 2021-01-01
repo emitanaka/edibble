@@ -4,10 +4,10 @@
 \alias{tbl_sum.edbl_df}
 \title{Meta information print out for edibble}
 \usage{
-\method{tbl_sum}{edbl_df}(x)
+\method{tbl_sum}{edbl_df}(.data)
 }
 \arguments{
-\item{x}{An edibble data frame.}
+\item{.data}{An edibble data frame.}
 }
 \description{
 Meta information print out for edibble

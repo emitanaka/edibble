@@ -30,6 +30,10 @@ decorate_vars <- function(x, decorate_units, decorate_trts, decorate_resp, class
   x
 }
 
+remove_nulls <- function(x) {
+  x[map_lgl(x, function(el) !is_null(el))]
+}
+
 
 #' @export
 ed_levels.edbl <- function(x) {

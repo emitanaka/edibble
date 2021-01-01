@@ -53,7 +53,7 @@ library(edibble)
 
 set.seed(2020) # 🔥🦠🏠😱
 
-split <- initiate_design("Split-plot Design") %>% 
+spdes <- start_design("Split-plot Design") %>% 
   set_units(wholeplot = 4,
             subplot = nested_in(wholeplot, 4)) %>% 
   set_trts(fertilizer = c("A", "B"),
@@ -69,7 +69,7 @@ you can get the table output (called `edbl_df`) by using `serve_table`
 as below.
 
 ``` r
-serve_table(split)
+serve_table(spdes)
 #> # An edibble: 16 x 4
 #>    wholeplot  subplot    fertilizer variety 
 #>    <unit(4)>  <unit(16)> <trt(2)>   <trt(2)>
@@ -97,7 +97,7 @@ just from looking at the code alone. Take another example below. Can you
 see what the design is?
 
 ``` r
-rcbd <- initiate_design("RCBD") %>% 
+rcbd <- start_design("RCBD") %>% 
   set_units(block = 4,
             plot  = nested_in(block, 4)) %>% 
   set_trts(fertilizer = c("A", "B"),
@@ -126,7 +126,7 @@ using `plot` on the intermediate construct of the design.
 ``` r
 par(mfrow = c(1, 2))
 plot(rcbd)
-plot(split)
+plot(spdes)
 ```
 
 ![](man/figures/README-high-view-1.png)<!-- -->
@@ -137,7 +137,7 @@ you can change the view to a low-level view.
 ``` r
 par(mfrow = c(1, 2))
 plot(rcbd, view = "low")
-plot(split, view = "low")
+plot(spdes, view = "low")
 ```
 
 ![](man/figures/README-low-view-1.png)<!-- -->

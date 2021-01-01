@@ -17,5 +17,5 @@ A simple function that return \code{TRUE} if the object inherits
 the \code{edbl_nexus} class, \code{FALSE} otherwise.
 }
 \seealso{
-See \code{\link[=is_edibble]{is_edibble()}} for testing \code{edbl} data frame.
+See \code{\link[=is_edibble]{is_edibble()}} for testing \code{edbl_df} data frame.
 }

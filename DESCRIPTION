@@ -25,12 +25,12 @@ Imports:
     cli,
     pillar,
     tidyselect (>= 1.0.0),
-    dae
+    dae,
+    glue
 Suggests: 
     testthat,
     knitr,
     rmarkdown,
-    dplyr,
     ggplot2 (>= 3.0.0)
 VignetteBuilder: knitr
 Depends: 

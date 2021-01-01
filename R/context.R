@@ -18,22 +18,21 @@
 add_context <- function(.nexus, ..., .overwrite = TRUE) {
   new_context <- list2(...)
   current_context <- igraph::graph_attr(.nexus, "context") %||% list()
-  overwrite_names <- intersect(names(new_context), names(current_context))
+  overlapping_names <- intersect(names(new_context), names(current_context))
   if(.overwrite) {
-    current_context[overwrite_names] <- new_context[overwrite_names]
+    current_context[overlapping_names] <- new_context[overlapping_names]
   }
-  if(length(overwrite_names) > 0) {
+  if(!is_emtpy(overlapping_names)) {
     if(.overwrite) {
       warn("Some contexts already exist and have been ovewritten.")
     } else {
       warn("Some contexts already exist and have been ignored.")
     }
   }
-  new_context <- new_context[setdiff(names(new_context), overwrite_names)]
+  new_context <- new_context[setdiff(names(new_context), overlapping_names)]
 
-  out <- .nexus %>%
-    igraph::set_graph_attr("context", c(current_context, new_context))
+  out <-  igraph::set_graph_attr(.nexus, "context",
+                                 c(current_context, new_context))
 
-  class(out) <- class(.nexus)
-  out
+  structure(out, class = class(.nexus))
 }

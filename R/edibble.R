@@ -12,11 +12,10 @@
 #' [measure_units()].
 #'
 #' @export
-initiate_design <- function(name = NULL) {
+start_design <- function(name = NULL) {
   name <- name %||% "An edibble design"
   out <- igraph::set_graph_attr(igraph::make_empty_graph(), "name", name)
-  class(out) <- c("edbl_nexus", class(out))
-  out
+  structure(out, class = c("edbl_nexus", class(out)))
 }
 
 #' Print edibble nexus to terminal
@@ -54,38 +53,39 @@ print.edbl_nexus <- function(.nexus,
                              decorate_levels = edibble_decorate("levels"),
                              decorate_main  = edibble_decorate("main"),
                              main = NULL) {
-  if(is_null(main)) {
-    main <- igraph::graph_attr(.nexus, "name") %||% "An edibble design"
-  }
-  vnexus <- igraph::induced_subgraph(.nexus, V(.nexus)$vtype=="var")
-  vnames <- V(vnexus)$name
-  if(is_null(vnames)) {
+
+  main <- main %||% igraph::graph_attr(.nexus, "name") %||% "An edibble design"
+  vnexus <- subset_vars(.nexus)
+  gnames <- V(vnexus)$name
+
+  if(is_null(gnames)) {
     data <- data.frame(var = "root", child = NA,
                        label = as.character(decorate_main(main)))
   } else {
 
     classes <- V(vnexus)$class
-    label_names <- decorate_vars(vnames,
+    label_names <- decorate_vars(gnames,
                                  decorate_units,
                                  decorate_trts,
                                  decorate_resp,
                                  classes)
 
 
-    var_nlevels <- lengths(lapply(vnames, function(x) var_levels(.nexus, x)))
-    nvar <- length(vnames)
+    var_nlevels <- lengths(vars_levels(.nexus, gnames))
+    nvar <- length(gnames)
     ll <- lapply(V(vnexus),
               function(v) {
                   class <- igraph::vertex_attr(vnexus, "class", v)
                   children <- igraph::neighbors(vnexus, v, mode = "out")
-                  if(class!="edbl_trt" & length(children) > 0) {
-                    vnames[children]
+                  if(class!="edbl_trt" & !is_empty(children)) {
+                    gnames[children]
                   } else {
                     character()
                   }
               })
-    data <- data.frame(var = c("root", vnames),
-                       child = I(c(list(vnames), ll)),
+
+    data <- data.frame(var = c("root", gnames),
+                       child = I(c(list(gnames), ll)),
                        label = c(decorate_main(main),
                                  paste(label_names, map_chr(var_nlevels, decorate_levels))))
   }
@@ -95,16 +95,14 @@ print.edbl_nexus <- function(.nexus,
 
 
 
-
-
-#' Test if the object is edibble
+#' Test if the object is an edibble data frame
 #'
 #' A simple function that return `TRUE` if the object inherits
-#' the `edbl` class, `FALSE` otherwise.
+#' the `edbl_df` class, `FALSE` otherwise.
 #'
 #' @param x An object.
-#' @return `TRUE` if the object inherits the `edbl` class.
-#' @seealso See [is_edibble_nexus()] for testing `edbl_nexus`.
+#' @return `TRUE` if the object inherits the `edbl_df` class.
+#' @seealso See [is_edibble_nexus()] for testing if the object is `edbl_nexus`.
 #' @export
 is_edibble <- function(x) {
   inherits(x, "edbl_df")
@@ -117,7 +115,7 @@ is_edibble <- function(x) {
 #'
 #' @inheritParams is_edibble
 #' @return `TRUE` if the object inherits the `edbl_nexus` class.
-#' @seealso See [is_edibble()] for testing `edbl` data frame.
+#' @seealso See [is_edibble()] for testing `edbl_df` data frame.
 #'
 #' @export
 is_edibble_nexus <- function(x) {
@@ -127,42 +125,50 @@ is_edibble_nexus <- function(x) {
 
 #' Meta information print out for edibble
 #'
-#' @param x An edibble data frame.
+#' @param .data An edibble data frame.
 #' @importFrom tibble tbl_sum
 #' @export
-tbl_sum.edbl_df <- function(x) {
-  head_meta <- c("An edibble" = dim_desc(x))
+tbl_sum.edbl_df <- function(.data) {
+  head_meta <- c("An edibble" = dim_desc(.data))
   head_meta
 }
 
 #' Make input edibble
 #'
 #' @description
-#' If variables are already defined as external data then you can import this
+#' **(WIP)** If variables are already defined as external data then you can import this
 #' data as edibble.
 #'
-#' @param x A named list of edibble variables or data frame.
+#' @param .data A named list of edibble variables or data frame.
 #' @param ... Passed to `new_tibble`.
 #' @param units A character vector.
 #' @param trts A character vector.
-#' @seealso See [initiate_design()] for initiating design from scratch.
+#' @seealso See [start_design()] for initiating design from scratch.
 #'
 #' @export
-edibble <- function(x, ..., units = NULL, trts = NULL) {
-  new_edibble(x, ...) #%>%
+edibble <- function(.data, ..., units = NULL, trts = NULL) {
+  new_edibble(.data, ...) #%>%
     #set_units(units) %>%
     #set_trts(trts)
 }
 
-#' @rdname edibble
+#' An edibble constructor
+#'
+#' @description
+#'
+#' @param .data data frame or list of the same size.
+#' @param ... Passed to `new_tibble`.
+#' @param nexus An edibble nexus object.
+#' @param class Subclasses for edibble. The default is NULL.
+#'
 #' @export
-new_edibble <- function(x, ..., nexus = NULL, class = NULL) {
-  tibble::new_tibble(x, ..., nrow = vec_size_common(!!!x),
+new_edibble <- function(.data, ..., nexus = NULL, class = NULL) {
+  tibble::new_tibble(.data, ..., nrow = vec_size_common(!!!.data),
                      class = "edbl_df", nexus = nexus)
 }
 
 
-#' @rdname edibble
+#' @rdname is_edibble
 #' @export
 not_edibble <- function(x) {
   if (!is_edibble(x)) {

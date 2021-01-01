@@ -6,8 +6,18 @@
 \alias{_PACKAGE}
 \title{edibble: Generate experimental designs using the grammar of experimental design}
 \description{
+\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+
 A system to facilitate statistical thinking of 
     adapting experimental designs to different conditions.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://edibble.emitanaka.org/}
+  \item \url{https://github.com/emitanaka/edibble}
+}
+
 }
 \author{
 \strong{Maintainer}: Emi Tanaka \email{dr.emi.tanaka@gmail.com} (\href{https://orcid.org/0000-0002-1455-259X}{ORCID})
