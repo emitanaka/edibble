@@ -43,9 +43,6 @@
     <loc>https://edibble.emitanaka.org/reference/is_edibble_nexus.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/linkabble.html</loc>
-  </url>
-  <url>
     <loc>https://edibble.emitanaka.org/reference/measure_response.html</loc>
   </url>
   <url>
@@ -98,9 +95,6 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/serve_table.edbl_nexus.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/set_link.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/set_trts.html</loc>
