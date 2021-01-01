@@ -167,6 +167,7 @@ I say so myself).
   - `dae` for functions useful in the design and ANOVA of experiments
     (this is in fact powering the randomisation in edibble)
   - `plotdesignr` for designing agronomic field experiments
+  - `ExploreModelMatrix` for exploring design matrix
 
 ## Code of Conduct
 

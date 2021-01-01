@@ -112,6 +112,7 @@ The way that edibble specifies experimental design is largely novel (if I say so
 * `designr` for balanced factorial designs with crossed and nested random and fixed effect to data frame
 * `dae` for functions useful in the design and ANOVA of experiments (this is in fact powering the randomisation in edibble)
 * `plotdesignr` for designing agronomic field experiments
+* `ExploreModelMatrix` for exploring design matrix 
 
 ## Code of Conduct
 
