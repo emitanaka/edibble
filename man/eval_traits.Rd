@@ -4,7 +4,7 @@
 \alias{eval_traits}
 \title{Evaluate traits}
 \usage{
-eval_traits(x, vname, nexus = NULL)
+eval_traits(x, vname, graph = NULL)
 }
 \arguments{
 \item{x}{A value that may be a single number, unnamed vector,
@@ -12,7 +12,7 @@ a one sided formula or linkabble.}
 
 \item{vname}{The name of the variable.}
 
-\item{nexus}{An edibble nexus with levels converted as list used
+\item{graph}{An edibble graph with levels converted as list used
 for evaluation in any expressions.}
 }
 \value{

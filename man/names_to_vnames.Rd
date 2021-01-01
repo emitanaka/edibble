@@ -2,12 +2,12 @@
 % Please edit documentation in R/randomise.R
 \name{names_to_vnames}
 \alias{names_to_vnames}
-\title{Get the variable names given the vertex name of edibble nexus}
+\title{Get the variable names given the vertex name of edibble graph}
 \usage{
-names_to_vnames(.nexus, names)
+names_to_vnames(.data, names)
 }
 \arguments{
-\item{.nexus}{An edibble nexus.}
+\item{.data}{An edibble graph.}
 
 \item{names}{A vector of character with vertex names.}
 }
@@ -15,5 +15,5 @@ names_to_vnames(.nexus, names)
 A character vector of the variable name.
 }
 \description{
-Get the variable names given the vertex name of edibble nexus
+Get the variable names given the vertex name of edibble graph
 }

@@ -16,6 +16,7 @@ Useful links:
 \itemize{
   \item \url{https://edibble.emitanaka.org/}
   \item \url{https://github.com/emitanaka/edibble}
+  \item Report bugs at \url{https://github.com/emitanaka/edibble/issues}
 }
 
 }

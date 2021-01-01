@@ -5,17 +5,17 @@
 \title{Measure response of given units}
 \usage{
 measure_response(
-  .nexus,
+  .data,
   ...,
   .name_repair = c("check_unique", "unique", "universal", "minimal")
 )
 }
 \arguments{
-\item{.nexus}{An \code{edbl_nexus} object}
+\item{.data}{An \code{edbl_graph} object}
 
 \item{...}{Name-value pair.}
 }
 \description{
-This function creates new nodes to edibble nexus with the name
+This function creates new nodes to edibble graph with the name
 corresponding to the intended response that will be measured.
 }

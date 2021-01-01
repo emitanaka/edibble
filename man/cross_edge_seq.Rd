@@ -4,10 +4,10 @@
 \alias{cross_edge_seq}
 \title{Make an edge sequence for every pair from two vectors}
 \usage{
-cross_edge_seq(.nexus, vnames_from, vnames_to)
+cross_edge_seq(.data, vnames_from, vnames_to)
 }
 \arguments{
-\item{.nexus}{An edibble nexus.}
+\item{.data}{An edibble graph.}
 
 \item{vnames_from}{A character vector of vertex names.}
 
@@ -21,3 +21,8 @@ from first vector to every node in the second vector.V()
 Given two vectors of node names, return the edge sequence that connects
 every node from first vector to the second vector.
 }
+\seealso{
+Other edge-seq: 
+\code{\link{match_edge_seq}()}
+}
+\concept{edge-seq}

@@ -4,14 +4,14 @@
 \alias{new_edibble}
 \title{An edibble constructor}
 \usage{
-new_edibble(.data, ..., nexus = NULL, class = NULL)
+new_edibble(.data, ..., graph = NULL, class = NULL)
 }
 \arguments{
 \item{.data}{data frame or list of the same size.}
 
 \item{...}{Passed to \code{new_tibble}.}
 
-\item{nexus}{An edibble nexus object.}
+\item{graph}{An edibble graph object.}
 
 \item{class}{Subclasses for edibble. The default is NULL.}
 }

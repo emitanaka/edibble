@@ -7,10 +7,10 @@
 set_vars(.data, ...)
 }
 \arguments{
+\item{.data, .data}{An \code{edbl_graph} or \code{edbl_df} object.}
+
 \item{...}{<\code{\link[rlang:dyn-dots]{dynamic-dots}}><\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
 Name-value pair.}
-
-\item{.nexus, .data}{An \code{edbl_nexus} or \code{edbl_df} object.}
 
 \item{.name_repair}{Specify how to deal when there are duplicated name
 entries. The repair follows the same argument in \code{\link[tibble:tibble]{tibble::tibble()}}.}
@@ -20,7 +20,7 @@ This is mainly used to control the plotting parameters.
 See list of plot parameters \href{https://igraph.org/r/doc/plot.common.html}{here}.}
 }
 \description{
-A node in an edibble nexus becomes a variable when served.
+A node in an edibble graph becomes a variable when served.
 }
 \seealso{
 \code{\link[=set_units]{set_units()}} and \code{\link[=set_trts]{set_trts()}} for setting special types of nodes.

@@ -10,7 +10,7 @@ start_design(name = NULL)
 \item{name}{Optional name used as title for printing the design.}
 }
 \value{
-An \code{edbl_nexus} object which is a special type of \code{igraph} class.
+An \code{edbl_graph} object which is a special type of \code{igraph} class.
 }
 \description{
 This function doesn't really do much besides create an empty igraph.

@@ -16,7 +16,7 @@ and the right-hand side is the levels of the new unit OR the number of levels}
 the name of the unit to nest under.}
 }
 \value{
-Returns an isolated graph <- <- <- <-
+Returns an isolated graph
 }
 \description{
 Specify the nesting structure for units

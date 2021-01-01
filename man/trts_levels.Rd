@@ -5,7 +5,7 @@
 \title{Unlike \code{vars_levels}, there is a check in place
 that it is a treatment.}
 \usage{
-trts_levels(.nexus, vnames = NULL)
+trts_levels(.data, vnames = NULL)
 }
 \description{
 Unlike \code{vars_levels}, there is a check in place

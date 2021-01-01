@@ -4,10 +4,10 @@
 \alias{add_context}
 \title{Describe context related to experiment}
 \usage{
-add_context(.nexus, ..., .overwrite = TRUE)
+add_context(.data, ..., .overwrite = TRUE)
 }
 \arguments{
-\item{.nexus}{An edibble nexus.}
+\item{.data}{An edibble graph.}
 
 \item{...}{Name-value pairs.}
 

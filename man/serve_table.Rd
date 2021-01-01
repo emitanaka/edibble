@@ -4,7 +4,7 @@
 \alias{serve_table}
 \title{Serve edibble table}
 \usage{
-serve_table(.nexus, ...)
+serve_table(.data, ...)
 }
 \description{
 Serve edibble table

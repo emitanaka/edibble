@@ -2,7 +2,7 @@
 #' Sample a subset of the levels for the given variable
 #'
 #'
-#' @param .data An edibble table or edibble nexus.
+#' @param .data An edibble table or edibble graph.
 #' @param ... The edibble variable(s) in `.data` to subset levels from.
 #' @param n,prop Supply either `n`, the number of levels to sample, or `prop`,
 #'   the proportion of levels to sample.
@@ -17,7 +17,7 @@ sample_levels.default <- function(.data, ..., n, prop, weight_by = NULL) {
 }
 
 #' @export
-sample_levels.edbl_nexus <- function(.data, ..., n, prop, weight_by = NULL) {
+sample_levels.edbl_graph <- function(.data, ..., n, prop, weight_by = NULL) {
 
 
 }

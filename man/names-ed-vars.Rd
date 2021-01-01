@@ -6,24 +6,30 @@
 \alias{names_trts}
 \alias{names_resp}
 \alias{names_vars}
-\alias{names.edbl_nexus}
-\alias{names<-.edbl_nexus}
+\alias{names_vars.edbl_graph}
+\alias{names_vars.edbl_df}
+\alias{names.edbl_graph}
+\alias{names<-.edbl_graph}
 \title{Names of variables}
 \usage{
-names_units(x)
+names_units(.object)
 
-names_trts(x)
+names_trts(.object)
 
-names_resp(x)
+names_resp(.object)
 
-names_vars(x, class = NULL)
+names_vars(.object, ...)
 
-\method{names}{edbl_nexus}(x)
+\method{names_vars}{edbl_graph}(.data, class = NULL)
 
-\method{names}{edbl_nexus}(x) <- value
+\method{names_vars}{edbl_df}(.data, class = NULL)
+
+\method{names}{edbl_graph}(.data, label = TRUE)
+
+\method{names}{edbl_graph}(x) <- value
 }
 \arguments{
-\item{x}{An edibble or edibble nexus.}
+\item{.object, .data, .data}{Either an edibble data frame or edibble graph.}
 
 \item{class}{A string.}
 }
@@ -32,7 +38,7 @@ A character vector of the names of the variables with the given class.
 }
 \description{
 Functions to get or set the names of variables (with particular class) from
-edibble or edibble nexus object.
+edibble or edibble graph object.
 }
 \examples{
 names_units(nclassics$split)

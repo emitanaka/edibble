@@ -6,7 +6,7 @@
 \alias{nclassics}
 \title{A list of classical experimental designs}
 \format{
-A list of some classical experimental designs as either \code{edbl_nexus}
+A list of some classical experimental designs as either \code{edbl_graph}
 or \code{edbl_df} object. The designs included are:
 \describe{
 \item{CRD} Completely randomised design.

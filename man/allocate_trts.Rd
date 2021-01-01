@@ -4,10 +4,10 @@
 \alias{allocate_trts}
 \title{Define which unit to apply treatment}
 \usage{
-allocate_trts(.nexus, ..., class = NULL)
+allocate_trts(.data, ..., class = NULL)
 }
 \arguments{
-\item{.nexus}{An \code{edbl_nexus} object.}
+\item{.data}{An \code{edbl_graph} object.}
 
 \item{...}{One-sided or two-sided formula. If the input is a one-sided formula
 then the whole treatment is applied to the specified unit.}

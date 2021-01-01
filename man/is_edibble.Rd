@@ -20,5 +20,5 @@ A simple function that return \code{TRUE} if the object inherits
 the \code{edbl_df} class, \code{FALSE} otherwise.
 }
 \seealso{
-See \code{\link[=is_edibble_nexus]{is_edibble_nexus()}} for testing if the object is \code{edbl_nexus}.
+See \code{\link[=is_edibble_graph]{is_edibble_graph()}} for testing if the object is \code{edbl_graph}.
 }

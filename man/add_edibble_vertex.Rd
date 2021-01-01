@@ -2,20 +2,20 @@
 % Please edit documentation in R/vars.R
 \name{add_edibble_vertex}
 \alias{add_edibble_vertex}
-\alias{add_edibble_vertex.lkbl_nexus}
+\alias{add_edibble_vertex.lkbl_graph}
 \alias{add_edibble_vertex.default}
 \title{Add an edibble vertex}
 \usage{
-add_edibble_vertex(.nexus, ...)
+add_edibble_vertex(.data, ...)
 
-\method{add_edibble_vertex}{lkbl_nexus}(.lnexus, name, nexus = NULL, attr)
+\method{add_edibble_vertex}{lkbl_graph}(.lgraph, name, graph = NULL, attr)
 
-\method{add_edibble_vertex}{default}(x, name, nexus = NULL, attr)
+\method{add_edibble_vertex}{default}(x, name, graph = NULL, attr)
 }
 \arguments{
 \item{name}{Name of the edibble variable as string.}
 
-\item{nexus}{An edibble nexus with levels converted as list used
+\item{graph}{An edibble graph with levels converted as list used
 for evaluation in any expressions.}
 
 \item{x}{A value that may be a single number, unnamed vector,
@@ -27,5 +27,5 @@ Returns an evaluated expression.
 \description{
 In edibble, a short hand is used to assign new edibble variables/nodes.
 This function converts the short hand to make the minimal edibble node
-and returns an edibble nexus with that additional node.
+and returns an edibble graph with that additional node.
 }

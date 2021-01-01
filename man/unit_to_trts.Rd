@@ -4,7 +4,7 @@
 \alias{unit_to_trts}
 \title{Get the treatment variables for every unit}
 \usage{
-unit_to_trts(.nexus, unit, trts, type = c("var", "level"))
+unit_to_trts(.data, unit, trts, type = c("var", "level"))
 }
 \value{
 A named list where names are the unit variable name and

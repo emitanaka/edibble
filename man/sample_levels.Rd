@@ -7,7 +7,7 @@
 sample_levels(.data, ..., n, prop, weight_by = NULL)
 }
 \arguments{
-\item{.data}{An edibble table or edibble nexus.}
+\item{.data}{An edibble table or edibble graph.}
 
 \item{...}{The edibble variable(s) in \code{.data} to subset levels from.}
 

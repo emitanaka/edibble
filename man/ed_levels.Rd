@@ -7,7 +7,7 @@
 ed_levels(x)
 }
 \arguments{
-\item{x}{An edibble nexus or edibble object.}
+\item{x}{An edibble graph or edibble object.}
 }
 \value{
 Returns a named list of levels of all edibble variables.

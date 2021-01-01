@@ -7,7 +7,7 @@
 set_trts(.data, ...)
 }
 \arguments{
-\item{.data}{An \code{edbl_nexus} or \code{edbl_df} object.}
+\item{.data}{An \code{edbl_graph} or \code{edbl_df} object.}
 
 \item{...}{<\code{\link[rlang:dyn-dots]{dynamic-dots}}><\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
 Name-value pair.}
