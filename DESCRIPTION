@@ -16,6 +16,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Config/testthat/edition: 3
 URL: https://edibble.emitanaka.org/, https://github.com/emitanaka/edibble
+BugReports: https://github.com/emitanaka/edibble/issues
 Imports: 
     magrittr,
     rlang,
