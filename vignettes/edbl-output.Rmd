@@ -22,13 +22,13 @@ old_opts <- options()
 library(edibble)
 ```
 
-When you construct an experimental design, there are many intermediate steps along the way before you are ready to serve your design. edibble stores these intermediate constructs as an *edibble nexus* (`edbl_nexus`) which you can visualise in a number of ways. 
+When you construct an experimental design, there are many intermediate steps along the way before you are ready to serve your design. edibble stores these intermediate constructs as an *edibble graph* (`edbl_graph`) which you can visualise in a number of ways. 
 
 ```{r}
 set.seed(1231) 
 
 new_rcbd <- function() {
-  initiate_design(name = "RCBD") %>%
+  start_design(name = "RCBD") %>%
   set_units(block = c("B1", "B2"),
             unit = nested_in(block, 6)) %>%
   set_trts(trt = LETTERS[1:4]) %>%
@@ -43,9 +43,9 @@ class(rcbd)
 
 
 
-## Print for `edbl_nexus`
+## Print for `edbl_graph`
 
-If you print an `edbl_nexus` object, it will show you a tree structure with a high-level overview of the design. Below is a print out of a design. The output form isn't really made for HTML and for complex reason color is lost for HTML (for the same reason as tibble).
+If you print an `edbl_graph` object, it will show you a tree structure with a high-level overview of the design. Below is a print out of a design. The output form isn't really made for HTML and for complex reason color is lost for HTML (for the same reason as tibble).
 
 ```{r}
 rcbd
@@ -57,7 +57,7 @@ The print out in terminal will look like below depending on your IDE theme (I'm 
 knitr::include_graphics("figures/vignette-decorate.png")
 ```
 
-### Formatting print for `edbl_nexus`
+### Formatting print for `edbl_graph`
 
 If you don't like the default choices, then you can easily customise the look by specifying the function of how to decorate the strings to options. Below I'm making use of functions in the cli package which wraps the string around in some styling.  
 
@@ -81,9 +81,9 @@ knitr::include_graphics("figures/vignette-decorate-new.png")
 
 Instead of overwriting the options each time, you can set your `.Rprofile` so that when you load R, it will load the options in your profile. You can easily open `.Rprofile` with `usethis::edit_r_profile()`. I normally don't recommend to do this as it makes your output non-reproducible by others but the print output is made more for interactive use rather than reports so it doesn't matter much in this case. 
 
-## Plot for `edbl_nexus`
+## Plot for `edbl_graph`
 
-There are two views available for `edbl_nexus`: high-level view and low-level view. The high-level view is designed for the user to see the overview of variable relations. [ADD link to other document with more explanation.]
+There are two views available for `edbl_graph`: high-level view and low-level view. The high-level view is designed for the user to see the overview of variable relations. [ADD link to other document with more explanation.]
 
 ```{r rcbd-high-plot, fig.width = 4, fig.height = 4}
 plot(rcbd)
@@ -95,11 +95,11 @@ There is also a low-level view of this.
 plot(rcbd, view = "low")
 ```
 
-### Formatting plot output for `edbl_nexus`
+### Formatting plot output for `edbl_graph`
 
 If you don't like these aspects, you can in fact overwrite this. There are two ways you can do this. 
 
-1. `edbl_nexus` is just an `igraph` under the hood and it's leveraging the `plot` method there which means you can customise it the way it is done for `igraph`,
+1. `edbl_graph` is just an `igraph` under the hood and it's leveraging the `plot` method there which means you can customise it the way it is done for `igraph`,
 2. Modify the `options` output. You can see the full list of available options by printing `edibble:::op.edibble` with a few shown below.
 
 ```{r opt-plot}
