@@ -49,7 +49,7 @@ edibble response | `edbl_resp` | the intended response to be measured during the
 edibble nexus | `edbl_nexus` | an intermediate construct of the experimental design | this vignette
 edibble table/data frame | `edbl_df` | a tibble output for experimental design | this vignette
 replicabble | `rpbl_df` | a tibble that contains replication for treatment levels | `?replicabble`
-linkabble | `lkbl_nexus` or `lkbl_df` | a transitional component storing information about how levels across variables are linked | `?linkabble`
+linkabble | `lkbl_nexus` or `lkbl_df` | a transitional component storing information about how levels across variables are linked | none
 
 ## An edibble variable
 
