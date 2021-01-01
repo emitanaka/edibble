@@ -18,6 +18,11 @@ start_design <- function(name = NULL) {
   structure(out, class = c("edbl_nexus", class(out)))
 }
 
+#' @export
+initiate_design <- function(name = NULL) {
+  start_design(name = name)
+}
+
 #' Print edibble nexus to terminal
 #'
 #' @description
