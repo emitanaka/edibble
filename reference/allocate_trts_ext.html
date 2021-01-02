@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Names of variables — names-ed-vars • edibble</title>
+<title>Define which unit to apply treatment — allocate_trts_ext • edibble</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,9 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Names of variables — names-ed-vars" />
-<meta property="og:description" content="Functions to get or set the names of variables (with particular class) from
-edibble or edibble graph object." />
+<meta property="og:title" content="Define which unit to apply treatment — allocate_trts_ext" />
+<meta property="og:description" content="Define which unit to apply treatment" />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@emitanaka" />
@@ -150,57 +149,37 @@ edibble or edibble graph object." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Names of variables</h1>
-    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/names.R'><code>R/names.R</code></a></small>
-    <div class="hidden name"><code>names-ed-vars.Rd</code></div>
+    <h1>Define which unit to apply treatment</h1>
+    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/trts.R'><code>R/trts.R</code></a></small>
+    <div class="hidden name"><code>allocate_trts_ext.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Functions to get or set the names of variables (with particular class) from
-edibble or edibble graph object.</p>
+    <p>Define which unit to apply treatment</p>
     </div>
 
-    <pre class="usage"><span class='fu'>names_units</span><span class='op'>(</span><span class='va'>.data</span><span class='op'>)</span>
-
-<span class='fu'>names_trts</span><span class='op'>(</span><span class='va'>.data</span><span class='op'>)</span>
-
-<span class='fu'>names_resp</span><span class='op'>(</span><span class='va'>.data</span><span class='op'>)</span>
-
-<span class='fu'>names_vars</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for edbl_graph</span>
-<span class='fu'>names_vars</span><span class='op'>(</span><span class='va'>.data</span>, class <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
-
-<span class='co'># S3 method for edbl_df</span>
-<span class='fu'>names_vars</span><span class='op'>(</span><span class='va'>.data</span>, class <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
-
-<span class='co'># S3 method for edbl_graph</span>
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>.data</span>, label <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-
-<span class='co'># S3 method for edbl_graph</span>
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span></pre>
+    <pre class="usage"><span class='fu'>allocate_trts_ext</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span>, class <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>.data</th>
-      <td><p>Either an edibble data frame or edibble graph.</p></td>
+      <td><p>An <code>edbl_graph</code> object.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>One-sided or two-sided formula. If the input is a one-sided formula
+then the whole treatment is applied to the specified unit.</p></td>
     </tr>
     <tr>
       <th>class</th>
-      <td><p>A string.</p></td>
+      <td><p>A sub-class. This is meant so that it can invoke the method
+<code>randomise_trts.class</code>.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A character vector of the names of the variables with the given class.</p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>names_units</span><span class='op'>(</span><span class='va'>nclassics</span><span class='op'>$</span><span class='va'>split</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in UseMethod("names_vars"): no applicable method for 'names_vars' applied to an object of class "c('edbl_nexus', 'igraph')"</span></div><div class='input'><span class='fu'>names_trts</span><span class='op'>(</span><span class='va'>nclassics</span><span class='op'>$</span><span class='va'>split</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in UseMethod("names_vars"): no applicable method for 'names_vars' applied to an object of class "c('edbl_nexus', 'igraph')"</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
