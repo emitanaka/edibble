@@ -146,7 +146,7 @@ The low-level view is often a bit cluttered so you may like to use the
 interactive version as below instead.
 
 ``` r
-subset_levels(rcbd) %>% 
+subset_levels(rcbd$graph) %>% 
   igraph::tkplot()
 ```
 
