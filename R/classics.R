@@ -25,32 +25,31 @@
 #' @export
 create_classics <- function(name = c("crd", "rcbd", "spd"),
                             r = NULL, t = NULL, n = NULL,
-                            t1 = t, t2 = NULL,
-                            code = TRUE) {
-  des_args <- list(r = r, t = t, n = n, t1 = t1, t2 = t2)
+                            t1 = t, t2 = NULL, b = r,
+                            code = TRUE, seed = 2020) {
+  fn_args <- as.list(match.call())[-1]
+
+  name <- arg_match(name)
+  des <- NamedDesign$new(name, seed, fn_args)
   code_text <- switch(name,
                 crd = {
-                  check_args(des_args, one = c("r", "n"), required = "t")
-                  glue::glue("
-                    start_design(\"{name}\") %>%
-                      set_units(unit = {n}) %>%
-                      set_trts(treat = {t}) %>%
-                      allocate_trts(treat ~ unit) %>%
-                      randomise_trts() %>%
-                      serve_table()
-                  ")
+                  des$args_req("t")
+                  des$args_opt("r" = n / t, "n" = r * t)
+                  des$add(paste0("set_units(unit = ", des$args$n, ")"))
+                  des$add(paste0("set_trts(treat = ", des$args$t, ")"))
+                  des$add("allocate_trts(treat ~ unit)")
+                  des$final()
                 },
                 rcbd = {
-                  check_args(des_args, one = c("r", "n"), required = c("t", "b"))
-                  glue::glue("
-                    start_design(\"{name}\") %>%
-                      set_units(block = {b},
-                                unit = nested_in(block, {r})) %>%
-                      set_trts(treat = {t}) %>%
-                      allocate_trts(treat ~ unit) %>%
-                      randomise_trts() %>%
-                      serve_table()
-                  ")
+                  des$args_req("t")
+                  # need OR
+                  # what if not divisible??
+                  des$args_opt("r" = n / t, "b" = n / t, "n" = r * t)
+                  des$add(paste0("set_units(block = ", des$args$b, ",\n",
+                                 "          unit = nested_in(block, ", des$args$t, "))"))
+                  des$add(paste0("set_trts(treat = ", t, ")"))
+                  des$add("allocate_trts(treat ~ unit)")
+                  des$final()
                 })
 
   if(code) cat(code_text)
@@ -58,21 +57,50 @@ create_classics <- function(name = c("crd", "rcbd", "spd"),
   return(invisible(eval(parse(text = code_text))))
 }
 
+
+
 NamedDesign <- R6::R6Class("NamedDesign",
                            public = list(
-                             initialize = function(name) {
-                              private$name <- name
-                              private$code <- paste0("start_design(\"", name, "\")")},
+                             initialize = function(name, seed, args) {
+                              self$name <- name
+                              self$code <- paste0("set.seed(", seed, ")\n",
+                                                  "start_design(\"", name, "\")")
+                              self$args <- args
+                             },
+
+                             add = function(line) {
+                               self$code <- paste0(self$code, " %>%\n  ", line)
+                             },
+
+                             args_req = function(x = NULL) {
+                               if(!is_null(x) && !all(x %in% names(self$args))) {
+                                 abort("Required arguments are missing.")
+                               }
+                             },
+
+                             args_opt = function(...) {
+                               vals <- enquos(...)
+                               ones <- names(vals)
+                               arg_names <- names(self$args)
+                               if(!is_null(ones) && sum(arg_names %in% ones)!=1) {
+                                 abort("Unnecessary arguments defined.")
+                               } else {
+                                 one <- vals[!ones %in% arg_names]
+                                 val <- eval_tidy(one[[1]], self$args)
+                                 self$args[names(one)] <- val
+                               }
+                             },
+
+                             final = function() {
+                               paste0(self$code,
+                                      " %>%\n  randomise_trts()",
+                                      " %>%\n  serve_table()")
+                             },
+
                              name = NULL,
-                             code = ""
+                             code = "",
+                             args = NULL
                            ))
-
-check_args <- function(args, one, required) {
-  arg_names <- names(remove_nulls(args))
-  if(sum(arg_names %in% one)!=1) abort("Unnecessary arguments defined.")
-  if(!all(required %in% arg_names)) abort("Required arguments are missing.")
-}
-
 
 #' A list of classical experimental designs
 #'

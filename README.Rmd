@@ -92,7 +92,6 @@ plot(rcbd, view = "low")
 plot(spdes, view = "low")
 ```
 
-
 The low-level view is often a bit cluttered so you may like to use the interactive version as below instead. 
 
 ```{r, eval = FALSE}
@@ -101,6 +100,7 @@ subset_levels(rcbd$graph) %>%
 ```
 
 ⚠️ Please note that edibble is currently fragile. That means that the code is likely to break when you deviate from example code. Even it it works, you should diagnose the output to make sure it did what you expected.
+
 
 
 ## Related Work
