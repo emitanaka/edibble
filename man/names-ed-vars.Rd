@@ -12,13 +12,13 @@
 \alias{names<-.edbl_graph}
 \title{Names of variables}
 \usage{
-names_units(.object)
+names_units(.data)
 
-names_trts(.object)
+names_trts(.data)
 
-names_resp(.object)
+names_resp(.data)
 
-names_vars(.object, ...)
+names_vars(.data, ...)
 
 \method{names_vars}{edbl_graph}(.data, class = NULL)
 
@@ -29,7 +29,7 @@ names_vars(.object, ...)
 \method{names}{edbl_graph}(x) <- value
 }
 \arguments{
-\item{.object, .data, .data}{Either an edibble data frame or edibble graph.}
+\item{.data}{Either an edibble data frame or edibble graph.}
 
 \item{class}{A string.}
 }

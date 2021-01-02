@@ -4,13 +4,20 @@
 \alias{set_units}
 \title{Set units used in experiment}
 \usage{
-set_units(.data, ...)
+set_units(
+  .data,
+  ...,
+  .name_repair = c("check_unique", "unique", "universal", "minimal")
+)
 }
 \arguments{
 \item{.data}{An \code{edbl_graph} or \code{edbl_df} object.}
 
 \item{...}{<\code{\link[rlang:dyn-dots]{dynamic-dots}}><\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
 Name-value pair.}
+
+\item{.name_repair}{Specify how to deal when there are duplicated name
+entries. The repair follows the same argument in \code{\link[tibble:tibble]{tibble::tibble()}}.}
 }
 \description{
 This function creates new edibble variables of class \code{edbl_unit}.

@@ -4,7 +4,7 @@
 #' Functions to get or set the names of variables (with particular class) from
 #' edibble or edibble graph object.
 #'
-#' @param .object,.data,.data Either an edibble data frame or edibble graph.
+#' @param .data Either an edibble data frame or edibble graph.
 #' @param class A string.
 #' @return A character vector of the names of the variables with the given class.
 #' @name names-ed-vars
@@ -12,29 +12,31 @@
 #' names_units(nclassics$split)
 #' names_trts(nclassics$split)
 #' @export
-names_units <- function(.object) {
-  names_vars(.object, class = "edbl_unit")
+names_units <- function(.data) {
+  names_vars(.data, class = "edbl_unit")
 }
 
 #' @rdname names-ed-vars
 #' @export
-names_trts <- function(.object) {
-  names_vars(.object, class = "edbl_trt")
+names_trts <- function(.data) {
+  names_vars(.data, class = "edbl_trt")
 }
 
 #' @rdname names-ed-vars
 #' @export
-names_resp <- function(.object) {
-  names_vars(.object, class = "edbl_resp")
+names_resp <- function(.data) {
+  names_vars(.data, class = "edbl_resp")
 }
 
 #' @rdname names-ed-vars
 #' @export
-names_vars <- function(.object, ...) {
+names_vars <- function(.data, ...) {
   UseMethod("names_vars")
 }
 
 #' @rdname names-ed-vars
+#' @importFrom rlang %||%
+#' @importFrom igraph V
 #' @export
 names_vars.edbl_graph <- function(.data, class = NULL) {
   vgraph <- subset_vars(.data)
@@ -43,6 +45,7 @@ names_vars.edbl_graph <- function(.data, class = NULL) {
 }
 
 #' @rdname names-ed-vars
+#' @importFrom rlang %||%
 #' @export
 names_vars.edbl_df <- function(.data, class = NULL) {
   class <- class %||% map_chr(.data, class)
@@ -51,6 +54,7 @@ names_vars.edbl_df <- function(.data, class = NULL) {
 }
 
 #' @rdname names-ed-vars
+#' @importFrom igraph V
 #' @export
 names.edbl_graph <- function(.data, label = TRUE) {
   if(label) return(V(.data)$vname)
@@ -63,6 +67,7 @@ names.edbl_graph <- function(.data, label = TRUE) {
   igraph::set_vertex_attr(x, "vname", value = value)
 }
 
+#' @importFrom rlang %||%
 #' @export
 names_eunit <- function(.data, trt = NULL) {
   trt <- trt %||% names_trt(.data)
@@ -70,6 +75,7 @@ names_eunit <- function(.data, trt = NULL) {
   var_names(.data, vunit)
 }
 
+#' @importFrom rlang %||%
 #' @export
 names_ounit <- function(.data, resp = NULL) {
   resp <- resp %||% names_resp(.data)

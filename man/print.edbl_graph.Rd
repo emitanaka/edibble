@@ -39,5 +39,4 @@ print(nclassics$split)
 ## ├─subplot (8 levels)
 ## ├─variety (2 levels)
 ## └─irrigation (2 levels)
-
 }

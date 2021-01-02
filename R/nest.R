@@ -59,13 +59,15 @@ path_seq <- function(.data, vnames) {
 #' and the right-hand side is the levels of the new unit OR the number of levels
 #' @param .vname an optional variable name
 #' @return Returns an isolated graph
+#' @importFrom rlang enquos enquo quo_get_expr as_string
+#' @importFrom igraph add_vertices make_empty_graph add_edges set_graph_attr
 #' @export
 nested_in <- function(.var, ..., .vname) {
   parent_name <- as_string(quo_get_expr(enquo(.var)))
   parent_vlevels <- .var
   parent_nlevels <- length(parent_vlevels)
 
-  g <- igraph::add_vertices(igraph::make_empty_graph(),
+  g <- add_vertices(make_empty_graph(),
                             nv = parent_nlevels,
                             name = parent_vlevels,
                             ltype = "parent")
@@ -88,17 +90,17 @@ nested_in <- function(.var, ..., .vname) {
       for(i in seq_along(parent_vlevels)) {
         subchild_vlevels <- paste0(.vname, ":", child_levels[seq((i - 1) * nrep + 1, i * nrep)])
 
-        g <- igraph::add_vertices(g, nv = length(subchild_vlevels),
+        g <- add_vertices(g, nv = length(subchild_vlevels),
                                   name = subchild_vlevels,
                                   label2 = child_non_distinct_levels,
                                   ltype = "child", group = i)
-        g <- igraph::add_edges(g,
+        g <- add_edges(g,
                             cross_edge_seq(g, parent_vlevels[i], subchild_vlevels),
                             attr = edge_attr_opt("l2l"))
 
       }
 
-      g <- igraph::set_graph_attr(g, "parent_name", parent_name)
+      g <- set_graph_attr(g, "parent_name", parent_name)
 
       class(g) <- c("lkbl_graph", class(g))
       return(g)

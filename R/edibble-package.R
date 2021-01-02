@@ -1,6 +1,5 @@
-#' @import rlang vctrs
-#' @importFrom igraph V E
 #' @aliases edibble-package
+#' @import rlang vctrs
 #' @keywords internal
 "_PACKAGE"
 

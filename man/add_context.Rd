@@ -19,7 +19,7 @@ context already exists then it will be overwritten.
 }
 \examples{
 initiate_design("COVID-19") \%>\%
-  describe_context(question = "Does Pfizer vaccine work?",
+  add_context(question = "Does Pfizer vaccine work?",
                    where = "Tested in lab")
 
 }

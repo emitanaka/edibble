@@ -35,6 +35,10 @@ remove_nulls <- function(x) {
 }
 
 
+reset_graph_attr <- function(g1, g2) {
+  attributes(g1) <- attribute(g2)
+  g1
+}
 #' @export
 ed_levels.edbl <- function(x) {
   lapply(x, levels)

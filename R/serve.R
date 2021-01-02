@@ -4,6 +4,11 @@ serve_table <- function(.data, ...) {
   UseMethod("serve_table")
 }
 
+#' @export
+serve_table.EdibbleDesign <- function(.data, ...) {
+  .data$serve_table(...)
+}
+
 #' Serve edibble table
 #' @description
 #' This converts an edibble graph object to a data frame called edibble.

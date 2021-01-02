@@ -45,6 +45,11 @@ randomise_trts <- function(.data, ...) {
   UseMethod("randomise_trts")
 }
 
+#' @export
+randomise_trts.EdibbleDesign <- function(.data) {
+  .data$randomise_trts()
+}
+
 #' Get the variable names given the vertex name of edibble graph
 #' @param .data An edibble graph.
 #' @param names A vector of character with vertex names.

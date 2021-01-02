@@ -3,7 +3,7 @@
 #' @description
 #' A node in an edibble graph becomes a variable when served.
 #'
-#' @param .data,.data An `edbl_graph` or `edbl_df` object.
+#' @param .data An `edbl_graph` or `edbl_df` object.
 #' @param ... <[`dynamic-dots`][rlang::dyn-dots]><[`tidy-select`][dplyr::dplyr_tidy_select]>
 #' Name-value pair.
 #' @param .name_repair Specify how to deal when there are duplicated name

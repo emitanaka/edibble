@@ -29,10 +29,10 @@ create_classics <- function(name = c("crd", "rcbd", "spd"),
                             code = TRUE) {
   des_args <- list(r = r, t = t, n = n, t1 = t1, t2 = t2)
   code_text <- switch(name,
-                "crd" = {
+                crd = {
                   check_args(des_args, one = c("r", "n"), required = "t")
                   glue::glue("
-                    start_design(\"crd\") %>%
+                    start_design(\"{name}\") %>%
                       set_units(unit = {n}) %>%
                       set_trts(treat = {t}) %>%
                       allocate_trts(treat ~ unit) %>%
@@ -40,10 +40,10 @@ create_classics <- function(name = c("crd", "rcbd", "spd"),
                       serve_table()
                   ")
                 },
-                "rcbd" = {
+                rcbd = {
                   check_args(des_args, one = c("r", "n"), required = c("t", "b"))
                   glue::glue("
-                    start_design(\"crd\") %>%
+                    start_design(\"{name}\") %>%
                       set_units(block = {b},
                                 unit = nested_in(block, {r})) %>%
                       set_trts(treat = {t}) %>%
@@ -57,6 +57,15 @@ create_classics <- function(name = c("crd", "rcbd", "spd"),
 
   return(invisible(eval(parse(text = code_text))))
 }
+
+NamedDesign <- R6::R6Class("NamedDesign",
+                           public = list(
+                             initialize = function(name) {
+                              private$name <- name
+                              private$code <- paste0("start_design(\"", name, "\")")},
+                             name = NULL,
+                             code = ""
+                           ))
 
 check_args <- function(args, one, required) {
   arg_names <- names(remove_nulls(args))

@@ -1,5 +1,6 @@
 # inner functions of tibble
 
+#' @importFrom rlang %||%
 dim_desc <- function (x) {
   dim <- dim(x) %||% length(x)
   format_dim <- map_chr(dim, big_mark)

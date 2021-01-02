@@ -19,31 +19,21 @@
 #' initiate_design() %>%
 #'   set_units(block = 3)
 #' @export
-set_units <- function(.data, ...) {
-  UseMethod("set_units")
-}
-
-#' @export
-set_units.edbl_df <- function(.data, ...) {
-
-}
-
-#' @export
-set_units.edbl_graph <- function(.data, ...,
+set_units <- function(.data, ...,
                       .name_repair = c("check_unique", "unique", "universal", "minimal")) {
-  set_vars(.data, ..., .name_repair = .name_repair, .class = "edbl_unit")
+  .data$set_vars(..., .name_repair = .name_repair, .class = "edbl_unit")
 }
 
 
-
+#' @importFrom vctrs vec_ptype_abbr
 #' @export
 vec_ptype_abbr.edbl_unit <- function(x)  {
   paste0("unit(", number_si_prefix(nlevels(x)), ")")
 }
-
+#' @importFrom vctrs vec_ptype_full
 #' @export
 vec_ptype_full.edbl_unit <- function(x) paste0("unit(", nlevels(x), ")")
-
+#' @importFrom vctrs vec_cast
 #' @export
 vec_cast.edbl_unit.edbl_unit <- function(x, to, ...) {
   x

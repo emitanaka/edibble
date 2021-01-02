@@ -13,9 +13,10 @@
 #'
 #' @export
 start_design <- function(name = NULL) {
-  name <- name %||% "An edibble design"
-  out <- igraph::set_graph_attr(igraph::make_empty_graph(), "name", name)
-  structure(out, class = c("edbl_graph", class(out)))
+  EdibbleDesign$new(name = name)
+  #name <- name %||% "An edibble design"
+  #out <- igraph::set_graph_attr(igraph::make_empty_graph(), "name", name)
+  #structure(out, class = c("edbl_graph", class(out)))
 }
 
 #' @export
@@ -49,6 +50,7 @@ initiate_design <- function(name = NULL) {
 #' ## ├─subplot (8 levels)
 #' ## ├─variety (2 levels)
 #' ## └─irrigation (2 levels)
+#' @importFrom rlang %||%
 #'
 #' @export
 print.edbl_graph <- function(.data,
@@ -63,7 +65,7 @@ print.edbl_graph <- function(.data,
   vgraph <- subset_vars(.data)
   gnames <- V(vgraph)$name
 
-  if(is_null(gnames)) {
+  if(is_empty(gnames)) {
     data <- data.frame(var = "root", child = NA,
                        label = as.character(decorate_main(main)))
   } else {
@@ -165,6 +167,9 @@ edibble <- function(.data, ..., units = NULL, trts = NULL) {
 #' @param ... Passed to `new_tibble`.
 #' @param graph An edibble graph object.
 #' @param class Subclasses for edibble. The default is NULL.
+#'
+#' @importFrom vctrs vec_size_common
+#' @importFrom rlang !!!
 #'
 #' @export
 new_edibble <- function(.data, ..., graph = NULL, class = NULL) {

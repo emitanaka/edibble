@@ -26,6 +26,11 @@ plot.edbl_graph <- function(.data, view = c("high", "low"), ...,
                       layout = layout)
 }
 
+#' @export
+plot.EdibbleDesign <- function(.data, ...) {
+  .data$plot(...)
+}
+
 
 # questioning - remove?
 select_units <- function(.edbl) {

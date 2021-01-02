@@ -14,15 +14,14 @@
 #' @inheritParams set_vars
 #' @seealso See [set_units()] for setting units.
 #' @export
-set_trts <- function(.data, ...) {
-  UseMethod("set_trts")
+set_trts <- function(.data, ...,
+                      .name_repair = c("check_unique", "unique", "universal", "minimal")) {
+  .data$set_vars(..., .name_repair = .name_repair, .class = "edbl_trt")
 }
 
 #' @export
-set_trts.edbl_graph <- function(.data, ...,
-                     .name_repair = c("check_unique", "unique", "universal", "minimal")) {
-  set_vars(.data, ..., .name_repair = .name_repair,
-           .class = "edbl_trt")
+allocate_trts <- function(.data, ..., class = NULL) {
+  .data$allocate_trts(..., class = class)
 }
 
 #' Define which unit to apply treatment
@@ -33,7 +32,7 @@ set_trts.edbl_graph <- function(.data, ...,
 #' @param class A sub-class. This is meant so that it can invoke the method
 #' `randomise_trts.class`.
 #' @export
-allocate_trts <- function(.data, ..., class = NULL) {
+allocate_trts_ext <- function(.data, ..., class = NULL) {
   # doesn't support : or * right now
   dots <- enquos(...)
   specials <- c(":", "*")
@@ -62,7 +61,7 @@ allocate_trts <- function(.data, ..., class = NULL) {
                              attr = edge_attr_opt("t2v"))
   }
 
-  structure(out, class = class(.data))
+  structure(out, class = c(class, class(.data)))
 }
 
 #' @export
@@ -136,14 +135,20 @@ n_vars.edbl_graph <- function(.data, class = NULL) {
   sum(V(.data)$class %in% class)
 }
 
+#' @importFrom vctrs vec_ptype_abbr
 #' @export
 vec_ptype_abbr.edbl_trt <- function(x, ...)  {
   paste0("trt(", number_si_prefix(nlevels(x)), ")")
 }
+
+#' @importFrom vctrs vec_ptype_full
 #' @export
 vec_ptype_full.edbl_trt <- function(x, ...) paste0("trt(", nlevels(x), ")")
 
+#' @importFrom vctrs vec_cast
 #' @export
 vec_cast.edbl_trt.edbl_trt <- function(x, to, ...) {
   x
 }
+
+

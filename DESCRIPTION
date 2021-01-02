@@ -27,7 +27,8 @@ Imports:
     pillar,
     tidyselect (>= 1.0.0),
     dae,
-    glue
+    glue,
+    R6
 Suggests: 
     testthat,
     knitr,
