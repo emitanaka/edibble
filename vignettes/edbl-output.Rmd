@@ -10,8 +10,27 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  out.width = "100%",
+  cache = TRUE
 )
+
+# as seen for cli vignette
+# Turn on ANSI colors
+options(cli.num_colors = 256L)
+options(asciicast_knitr_svg = TRUE)
+asciicast::init_knitr_engine(
+  startup = quote({
+      library(edibble)
+      set.seed(1231) 
+      
+      rcbd <- start_design(name = "RCBD") %>% 
+              set_units(block = c("B1", "B2"),
+                        unit = nested_in(block, 6)) %>% 
+        set_trts(trt = LETTERS[1:4])
+    }),
+  echo = TRUE,
+  echo_input = FALSE)
 ```
 
 ```{r save-options, include = FALSE}
@@ -47,37 +66,28 @@ class(rcbd)
 
 If you print an `edbl_graph` object, it will show you a tree structure with a high-level overview of the design. Below is a print out of a design. The output form isn't really made for HTML and for complex reason color is lost for HTML (for the same reason as tibble).
 
-```{r}
+
+The print out in terminal will look like below depending on your IDE theme. You can see that the color of the nodes are dependant on which type of variable it is and also shows you how many levels each variable has.
+
+
+```{asciicast rcbd}
 rcbd
-```
-
-The print out in terminal will look like below depending on your IDE theme (I'm using Tomorrow Night Bright theme in RStudio). You can see that the color of the nodes are dependant on which type of variable it is and also shows you how many levels each variable has.
-
-```{r output1, echo = FALSE, out.width = "150px"}
-knitr::include_graphics("figures/vignette-decorate.png")
 ```
 
 ### Formatting print for `edbl_graph`
 
 If you don't like the default choices, then you can easily customise the look by specifying the function of how to decorate the strings to options. Below I'm making use of functions in the cli package which wraps the string around in some styling.  
 
-```{r opt1, eval = FALSE}
+```{asciicast rcbd2}
 options(edibble.tree.decorate.trts = cli::bg_cyan,
         edibble.tree.decorate.units = function(x) cli::bg_yellow(glue::glue("<{x}>")),
         edibble.tree.decorate.resp = cli::col_yellow,
         edibble.tree.decorate.levels = function(x) cli::style_inverse(glue::glue("({x})")),
         edibble.tree.decorate.main = cli::style_underline)
-```
 
-Now the print out will look like below.
-
-```{r opt1-print, eval = FALSE}
 rcbd
 ```
 
-```{r output2, echo = FALSE, out.width = "150px"}
-knitr::include_graphics("figures/vignette-decorate-new.png")
-```
 
 Instead of overwriting the options each time, you can set your `.Rprofile` so that when you load R, it will load the options in your profile. You can easily open `.Rprofile` with `usethis::edit_r_profile()`. I normally don't recommend to do this as it makes your output non-reproducible by others but the print output is made more for interactive use rather than reports so it doesn't matter much in this case. 
 
