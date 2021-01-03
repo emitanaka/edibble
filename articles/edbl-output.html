@@ -115,7 +115,7 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://edibble.emitanaka.org/">edibble</a></span><span class="op">)</span></code></pre></div>
-<p>When you construct an experimental design, there are many intermediate steps along the way before you are ready to serve your design. edibble stores these intermediate constructs as an <em>edibble graph</em> (<code>edbl_graph</code>) which you can visualise in a number of ways.</p>
+<p>When you construct an experimental design, there are many intermediate steps along the way before you are ready to serve your design. edibble stores these intermediate constructs as an <em>edibble design</em> (<code>EddibbleDesign</code>) which you can visualise in a number of ways.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1231</span><span class="op">)</span> 
 
@@ -132,6 +132,7 @@
 
 <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">rcbd</span><span class="op">)</span>
 <span class="co">#&gt; [1] "EdibbleDesign" "R6"</span></code></pre></div>
+<p>An <code>EdibbleDesign</code> contains a graph and table. The default print out is the same as <code>edbl_graph</code>.</p>
 <div id="print-for-edbl_graph" class="section level2">
 <h2 class="hasAnchor">
 <a href="#print-for-edbl_graph" class="anchor"></a>Print for <code>edbl_graph</code>
@@ -163,11 +164,11 @@ rcbd</a></code></pre>
 <p>There are two views available for <code>edbl_graph</code>: high-level view and low-level view. The high-level view is designed for the user to see the overview of variable relations. [ADD link to other document with more explanation.]</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">rcbd</span><span class="op">)</span></code></pre></div>
-<p><img src="edbl-output_files/figure-html/rcbd-high-plot-1.png" width="100%"></p>
+<p><img src="edbl-output_files/figure-html/rcbd-high-plot-1.png" width="384"></p>
 <p>There is also a low-level view of this.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">rcbd</span>, view <span class="op">=</span> <span class="st">"low"</span><span class="op">)</span></code></pre></div>
-<p><img src="edbl-output_files/figure-html/rcbd-low-plot-1.png" width="100%"></p>
+<p><img src="edbl-output_files/figure-html/rcbd-low-plot-1.png" width="576"></p>
 <div id="formatting-plot-output-for-edbl_graph" class="section level3">
 <h3 class="hasAnchor">
 <a href="#formatting-plot-output-for-edbl_graph" class="anchor"></a>Formatting plot output for <code>edbl_graph</code>
@@ -186,14 +187,14 @@ rcbd</a></code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rcbd2</span> <span class="op">&lt;-</span> <span class="fu">new_rcbd</span><span class="op">(</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">rcbd2</span><span class="op">)</span></code></pre></div>
-<p><img src="edbl-output_files/figure-html/rcbd-high-plot-v2-1.png" width="100%"></p>
+<p><img src="edbl-output_files/figure-html/rcbd-high-plot-v2-1.png" width="384"></p>
 </div>
 </div>
 <div id="print-for-edbl_df" class="section level2">
 <h2 class="hasAnchor">
 <a href="#print-for-edbl_df" class="anchor"></a>Print for <code>edbl_df</code>
 </h2>
-<p>[ADD explanation]</p>
+<p>When you <code>serve_table</code> to signal that you want the table, the default view for <code>EdibbleDesign</code> changs to the print out for <code>edbl_df</code>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="fu">new_rcbd</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [90m# An edibble: 12 x 3[39m</span>
