@@ -37,6 +37,7 @@ jobs:
         run: |
           remotes::install_github("r-lib/asciicast")
           remotes::install_deps(dependencies = TRUE)
+          install.packages("htmlwidgets")
           install.packages("pkgdown", type = "binary")
         shell: Rscript {0}
 
