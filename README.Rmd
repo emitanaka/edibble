@@ -101,6 +101,16 @@ subset_levels(rcbd$graph) %>%
 
 ⚠️ Please note that edibble is currently fragile. That means that the code is likely to break when you deviate from example code. Even it it works, you should diagnose the output to make sure it did what you expected.
 
+## Named experimental designs
+
+While named experimental designs can be muddling to understanding the experimental structure, it is still convenient to be able to concisely describe common structures. I take a compromising approach where named experimental designs can be generated consisely using the `create_classic` function. The output contains information about the design, the code to generate the design using edibble that can be easily copy-and-pasted and the output data frame. If you want just the edibble code alone then you can just substitute it with `create_classic_code`.
+
+```{r}
+create_classic("crd", n = 30, t = 5)
+create_classic_code("rcbd", t = 4, n = 40)
+create_classic("split", t1 = 4, t2  = 2, r = 4)
+```
+
 
 
 ## Related Work

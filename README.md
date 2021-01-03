@@ -155,6 +155,99 @@ code is likely to break when you deviate from example code. Even it it
 works, you should diagnose the output to make sure it did what you
 expected.
 
+## Named experimental designs
+
+While named experimental designs can be muddling to understanding the
+experimental structure, it is still convenient to be able to concisely
+describe common structures. I take a compromising approach where named
+experimental designs can be generated consisely using the
+`create_classic` function. The output contains information about the
+design, the code to generate the design using edibble that can be easily
+copy-and-pasted and the output data frame. If you want just the edibble
+code alone then you can just substitute it with `create_classic_code`.
+
+``` r
+create_classic("crd", n = 30, t = 5)
+#> 
+#> ── experimental design details ─────────────────────────────────────────────────
+#> ● This experimental design is often called Completely Randomised Design.
+#> ● You can change the number in `set.seed` to get another random instance of
+#>   the same design.
+#> ● This design has a total of 30 units testing a total of 5 treatments.
+#> ● This design is balanced.
+#> 
+#> ── edibble code ────────────────────────────────────────────────────────────────
+#> set.seed(2020)
+#> start_design("crd") %>%
+#>   set_units(unit = 30) %>%
+#>   set_trts(treat = 5) %>%
+#>   allocate_trts(treat ~ unit) %>%
+#>   randomise_trts() %>%
+#>   serve_table()
+#> 
+#> ── edibble data frame ──────────────────────────────────────────────────────────
+#> # An edibble: 30 x 2
+#>    unit       treat   
+#>    <unit(30)> <trt(5)>
+#>  1 unit1      treat4  
+#>  2 unit2      treat1  
+#>  3 unit3      treat1  
+#>  4 unit4      treat4  
+#>  5 unit5      treat2  
+#>  6 unit6      treat3  
+#>  7 unit7      treat3  
+#>  8 unit8      treat5  
+#>  9 unit9      treat3  
+#> 10 unit10     treat4  
+#> # … with 20 more rows
+create_classic_code("rcbd", t = 4, n = 40)
+#> set.seed(2020)
+#> start_design("rcbd") %>%
+#>   set_units(block = 10,
+#>             unit = nested_in(block, 4)) %>%
+#>   set_trts(treat = 4) %>%
+#>   allocate_trts(treat ~ unit) %>%
+#>   randomise_trts() %>%
+#>   serve_table()
+create_classic("split", t1 = 4, t2  = 2, r = 4)
+#> 
+#> ── experimental design details ─────────────────────────────────────────────────
+#> ● This experimental design is often called Split-Plot Design and Split-Unit
+#>   Design.
+#> ● You can change the number in `set.seed` to get another random instance of
+#>   the same design.
+#> ● This design has a total of 32 units testing a total of 8 treatments.
+#> ● This design is balanced.
+#> 
+#> ── edibble code ────────────────────────────────────────────────────────────────
+#> set.seed(2020)
+#> start_design("split") %>%
+#>   set_units(mainplot = 16,
+#>             subplot = nested_in(mainplot, 2)) %>%
+#>   set_trts(treat1 = 4,
+#>            treat2 = 2) %>%
+#>   allocate_trts(treat1 ~ mainplot,
+#>                 treat2 ~ subplot) %>%
+#>   randomise_trts() %>%
+#>   serve_table()
+#> 
+#> ── edibble data frame ──────────────────────────────────────────────────────────
+#> # An edibble: 32 x 4
+#>    mainplot   subplot    treat1   treat2  
+#>    <unit(16)> <unit(32)> <trt(4)> <trt(2)>
+#>  1 mainplot1  subplot1   treat14  treat22 
+#>  2 mainplot1  subplot2   treat14  treat21 
+#>  3 mainplot2  subplot3   treat14  treat22 
+#>  4 mainplot2  subplot4   treat14  treat21 
+#>  5 mainplot3  subplot5   treat12  treat21 
+#>  6 mainplot3  subplot6   treat12  treat22 
+#>  7 mainplot4  subplot7   treat14  treat21 
+#>  8 mainplot4  subplot8   treat14  treat22 
+#>  9 mainplot5  subplot9   treat12  treat21 
+#> 10 mainplot5  subplot10  treat12  treat22 
+#> # … with 22 more rows
+```
+
 ## Related Work
 
 The way that edibble specifies experimental design is largely novel (if

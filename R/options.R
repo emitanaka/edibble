@@ -82,6 +82,7 @@ edibble_decorate <- function(x) {
   edibble_opt(x, "edibble.tree.decorate.")
 }
 
+
 edibble_vertex_opt <- function(x) {
   edibble_opt(x, "edibble.vertex.")
 }
