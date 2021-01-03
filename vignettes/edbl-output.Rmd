@@ -11,8 +11,8 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  out.width = "100%",
-  cache = TRUE
+  cache = TRUE,
+  cache.path = "cache/"
 )
 
 # as seen for cli vignette
@@ -41,7 +41,7 @@ old_opts <- options()
 library(edibble)
 ```
 
-When you construct an experimental design, there are many intermediate steps along the way before you are ready to serve your design. edibble stores these intermediate constructs as an *edibble graph* (`edbl_graph`) which you can visualise in a number of ways. 
+When you construct an experimental design, there are many intermediate steps along the way before you are ready to serve your design. edibble stores these intermediate constructs as an *edibble design* (`EddibbleDesign`) which you can visualise in a number of ways. 
 
 ```{r}
 set.seed(1231) 
@@ -60,6 +60,7 @@ rcbd <- new_rcbd()
 class(rcbd)
 ```
 
+An `EdibbleDesign` contains a graph and table. The default print out is the same as `edbl_graph`. 
 
 
 ## Print for `edbl_graph`
@@ -70,7 +71,7 @@ If you print an `edbl_graph` object, it will show you a tree structure with a hi
 The print out in terminal will look like below depending on your IDE theme. You can see that the color of the nodes are dependant on which type of variable it is and also shows you how many levels each variable has.
 
 
-```{asciicast rcbd}
+```{asciicast rcbd, out.width = "100%"}
 rcbd
 ```
 
@@ -78,7 +79,7 @@ rcbd
 
 If you don't like the default choices, then you can easily customise the look by specifying the function of how to decorate the strings to options. Below I'm making use of functions in the cli package which wraps the string around in some styling.  
 
-```{asciicast rcbd2}
+```{asciicast rcbd2, out.width = "100%"}
 options(edibble.tree.decorate.trts = cli::bg_cyan,
         edibble.tree.decorate.units = function(x) cli::bg_yellow(glue::glue("<{x}>")),
         edibble.tree.decorate.resp = cli::col_yellow,
@@ -127,7 +128,7 @@ plot(rcbd2)
 
 ## Print for `edbl_df`
 
-[ADD explanation]
+When you `serve_table` to signal that you want the table, the default view for `EdibbleDesign` changs to the print out for `edbl_df`. 
 
 ```{r redefine}
 serve_table(new_rcbd())
