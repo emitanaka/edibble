@@ -210,45 +210,15 @@ create_classic_code("rcbd", t = 4, n = 40)
 #>   allocate_trts(treat ~ unit) %>%
 #>   randomise_trts() %>%
 #>   serve_table()
-
-create_classic("split", t1 = 4, t2  = 2, r = 4)
-#> 
-#> ── experimental design details ─────────────────────────────────────────────────
-#> ● This experimental design is often called Split-Plot Design and Split-Unit
-#>   Design.
-#> ● You can change the number in `set.seed` to get another random instance of
-#>   the same design.
-#> ● This design has a total of 32 units testing a total of 8 treatments.
-#> ● This design is balanced.
-#> 
-#> ── edibble code ────────────────────────────────────────────────────────────────
-#> set.seed(2020)
-#> start_design("split") %>%
-#>   set_units(mainplot = 16,
-#>             subplot = nested_in(mainplot, 2)) %>%
-#>   set_trts(treat1 = 4,
-#>            treat2 = 2) %>%
-#>   allocate_trts(treat1 ~ mainplot,
-#>                 treat2 ~ subplot) %>%
-#>   randomise_trts() %>%
-#>   serve_table()
-#> 
-#> ── edibble data frame ──────────────────────────────────────────────────────────
-#> # An edibble: 32 x 4
-#>    mainplot   subplot    treat1   treat2  
-#>    <unit(16)> <unit(32)> <trt(4)> <trt(2)>
-#>  1 mainplot1  subplot1   treat14  treat22 
-#>  2 mainplot1  subplot2   treat14  treat21 
-#>  3 mainplot2  subplot3   treat14  treat22 
-#>  4 mainplot2  subplot4   treat14  treat21 
-#>  5 mainplot3  subplot5   treat12  treat21 
-#>  6 mainplot3  subplot6   treat12  treat22 
-#>  7 mainplot4  subplot7   treat14  treat21 
-#>  8 mainplot4  subplot8   treat14  treat22 
-#>  9 mainplot5  subplot9   treat12  treat21 
-#> 10 mainplot5  subplot10  treat12  treat22 
-#> # … with 22 more rows
 ```
+
+What it looks like in the terminal:
+
+``` asciicast
+create_classic("split", t1 = 4, t2  = 2, r = 4)
+```
+
+![](man/figures/README-/split-plot-print.svg)<!-- -->
 
 ## Related Work
 

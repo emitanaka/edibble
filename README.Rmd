@@ -1,5 +1,6 @@
 ---
 output: github_document
+always_allow_html: true
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -109,7 +110,23 @@ While named experimental designs can be muddling to understanding the experiment
 create_classic("crd", n = 30, t = 5)
 
 create_classic_code("rcbd", t = 4, n = 40)
+```
 
+What it looks like in the terminal:
+
+```{r, include = FALSE}
+options(cli.num_colors = 256L)
+options(asciicast_knitr_svg = TRUE)
+asciicast::init_knitr_engine(
+  startup = quote({
+      library(edibble)
+    }),
+  echo = TRUE,
+  echo_input = FALSE)
+```
+
+
+```{asciicast split-plot-print}
 create_classic("split", t1 = 4, t2  = 2, r = 4)
 ```
 
