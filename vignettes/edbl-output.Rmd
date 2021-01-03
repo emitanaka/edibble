@@ -7,11 +7,16 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r save-options, include = FALSE}
+old_opts <- options()
+```
+
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  cache = TRUE,
+  cache = FALSE,
   cache.path = "cache/"
 )
 
@@ -33,9 +38,6 @@ asciicast::init_knitr_engine(
   echo_input = FALSE)
 ```
 
-```{r save-options, include = FALSE}
-old_opts <- options()
-```
 
 ```{r setup}
 library(edibble)
@@ -129,6 +131,11 @@ plot(rcbd2)
 ## Print for `edbl_df`
 
 When you `serve_table` to signal that you want the table, the default view for `EdibbleDesign` changs to the print out for `edbl_df`. 
+
+```{r, include = FALSE}
+options(crayon.enabled = FALSE)
+```
+
 
 ```{r redefine}
 serve_table(new_rcbd())
