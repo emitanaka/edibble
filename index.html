@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>An R package that implements grammar of experimental design • edibble</title>
+<title>edibble - an R package that implements grammar of experimental design • edibble</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
-<meta property="og:title" content="An R package that implements grammar of experimental design">
+<meta property="og:title" content="edibble - an R package that implements grammar of experimental design">
 <meta property="og:description" content="Bla bla">
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -186,23 +186,106 @@
   <span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/tkplot.html">tkplot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>⚠️ Please note that edibble is currently fragile. That means that the code is likely to break when you deviate from example code. Even it it works, you should diagnose the output to make sure it did what you expected.</p>
 </div>
+<div id="named-experimental-designs" class="section level2">
+<h2 class="hasAnchor">
+<a href="#named-experimental-designs" class="anchor"></a>Named experimental designs</h2>
+<p>While named experimental designs can be muddling to understanding the experimental structure, it is still convenient to be able to concisely describe common structures. I take a compromising approach where named experimental designs can be generated consisely using the <code>create_classic</code> function. The output contains information about the design, the code to generate the design using edibble that can be easily copy-and-pasted and the output data frame. If you want just the edibble code alone then you can just substitute it with <code>create_classic_code</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/create_classic.html">create_classic</a></span><span class="op">(</span><span class="st">"crd"</span>, n <span class="op">=</span> <span class="fl">30</span>, t <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; ── experimental design details ─────────────────────────────────────────────────</span>
+<span class="co">#&gt; ● This experimental design is often called Completely Randomised Design.</span>
+<span class="co">#&gt; ● You can change the number in `set.seed` to get another random instance of</span>
+<span class="co">#&gt;   the same design.</span>
+<span class="co">#&gt; ● This design has a total of 30 units testing a total of 5 treatments.</span>
+<span class="co">#&gt; ● This design is balanced.</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; ── edibble code ────────────────────────────────────────────────────────────────</span>
+<span class="co">#&gt; set.seed(2020)</span>
+<span class="co">#&gt; start_design("crd") %&gt;%</span>
+<span class="co">#&gt;   set_units(unit = 30) %&gt;%</span>
+<span class="co">#&gt;   set_trts(treat = 5) %&gt;%</span>
+<span class="co">#&gt;   allocate_trts(treat ~ unit) %&gt;%</span>
+<span class="co">#&gt;   randomise_trts() %&gt;%</span>
+<span class="co">#&gt;   serve_table()</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; ── edibble data frame ──────────────────────────────────────────────────────────</span>
+<span class="co">#&gt; # An edibble: 30 x 2</span>
+<span class="co">#&gt;    unit       treat   </span>
+<span class="co">#&gt;    &lt;unit(30)&gt; &lt;trt(5)&gt;</span>
+<span class="co">#&gt;  1 unit1      treat4  </span>
+<span class="co">#&gt;  2 unit2      treat1  </span>
+<span class="co">#&gt;  3 unit3      treat1  </span>
+<span class="co">#&gt;  4 unit4      treat4  </span>
+<span class="co">#&gt;  5 unit5      treat2  </span>
+<span class="co">#&gt;  6 unit6      treat3  </span>
+<span class="co">#&gt;  7 unit7      treat3  </span>
+<span class="co">#&gt;  8 unit8      treat5  </span>
+<span class="co">#&gt;  9 unit9      treat3  </span>
+<span class="co">#&gt; 10 unit10     treat4  </span>
+<span class="co">#&gt; # … with 20 more rows</span>
+
+<span class="fu"><a href="reference/create_classic.html">create_classic_code</a></span><span class="op">(</span><span class="st">"rcbd"</span>, t <span class="op">=</span> <span class="fl">4</span>, n <span class="op">=</span> <span class="fl">40</span><span class="op">)</span>
+<span class="co">#&gt; set.seed(2020)</span>
+<span class="co">#&gt; start_design("rcbd") %&gt;%</span>
+<span class="co">#&gt;   set_units(block = 10,</span>
+<span class="co">#&gt;             unit = nested_in(block, 4)) %&gt;%</span>
+<span class="co">#&gt;   set_trts(treat = 4) %&gt;%</span>
+<span class="co">#&gt;   allocate_trts(treat ~ unit) %&gt;%</span>
+<span class="co">#&gt;   randomise_trts() %&gt;%</span>
+<span class="co">#&gt;   serve_table()</span>
+
+<span class="fu"><a href="reference/create_classic.html">create_classic</a></span><span class="op">(</span><span class="st">"split"</span>, t1 <span class="op">=</span> <span class="fl">4</span>, t2  <span class="op">=</span> <span class="fl">2</span>, r <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; ── experimental design details ─────────────────────────────────────────────────</span>
+<span class="co">#&gt; ● This experimental design is often called Split-Plot Design and Split-Unit</span>
+<span class="co">#&gt;   Design.</span>
+<span class="co">#&gt; ● You can change the number in `set.seed` to get another random instance of</span>
+<span class="co">#&gt;   the same design.</span>
+<span class="co">#&gt; ● This design has a total of 32 units testing a total of 8 treatments.</span>
+<span class="co">#&gt; ● This design is balanced.</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; ── edibble code ────────────────────────────────────────────────────────────────</span>
+<span class="co">#&gt; set.seed(2020)</span>
+<span class="co">#&gt; start_design("split") %&gt;%</span>
+<span class="co">#&gt;   set_units(mainplot = 16,</span>
+<span class="co">#&gt;             subplot = nested_in(mainplot, 2)) %&gt;%</span>
+<span class="co">#&gt;   set_trts(treat1 = 4,</span>
+<span class="co">#&gt;            treat2 = 2) %&gt;%</span>
+<span class="co">#&gt;   allocate_trts(treat1 ~ mainplot,</span>
+<span class="co">#&gt;                 treat2 ~ subplot) %&gt;%</span>
+<span class="co">#&gt;   randomise_trts() %&gt;%</span>
+<span class="co">#&gt;   serve_table()</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; ── edibble data frame ──────────────────────────────────────────────────────────</span>
+<span class="co">#&gt; # An edibble: 32 x 4</span>
+<span class="co">#&gt;    mainplot   subplot    treat1   treat2  </span>
+<span class="co">#&gt;    &lt;unit(16)&gt; &lt;unit(32)&gt; &lt;trt(4)&gt; &lt;trt(2)&gt;</span>
+<span class="co">#&gt;  1 mainplot1  subplot1   treat14  treat22 </span>
+<span class="co">#&gt;  2 mainplot1  subplot2   treat14  treat21 </span>
+<span class="co">#&gt;  3 mainplot2  subplot3   treat14  treat22 </span>
+<span class="co">#&gt;  4 mainplot2  subplot4   treat14  treat21 </span>
+<span class="co">#&gt;  5 mainplot3  subplot5   treat12  treat21 </span>
+<span class="co">#&gt;  6 mainplot3  subplot6   treat12  treat22 </span>
+<span class="co">#&gt;  7 mainplot4  subplot7   treat14  treat21 </span>
+<span class="co">#&gt;  8 mainplot4  subplot8   treat14  treat22 </span>
+<span class="co">#&gt;  9 mainplot5  subplot9   treat12  treat21 </span>
+<span class="co">#&gt; 10 mainplot5  subplot10  treat12  treat22 </span>
+<span class="co">#&gt; # … with 22 more rows</span></code></pre></div>
+</div>
 <div id="related-work" class="section level2">
 <h2 class="hasAnchor">
 <a href="#related-work" class="anchor"></a>Related Work</h2>
-<p>The way that edibble specifies experimental design is largely novel (if I say so myself).</p>
+<p>The way that edibble specifies experimental design is largely novel (if I say so myself). Below are some related work.</p>
 <ul>
 <li>
 <code>DeclareDesign</code> for survey or sampling designs</li>
-<li>
-<code>desplot</code> for visualising designs</li>
 <li>
 <code>designr</code> for balanced factorial designs with crossed and nested random and fixed effect to data frame</li>
 <li>
 <code>dae</code> for functions useful in the design and ANOVA of experiments (this is in fact powering the randomisation in edibble)</li>
 <li>
 <code>plotdesignr</code> for designing agronomic field experiments</li>
-<li>
-<code>ExploreModelMatrix</code> for exploring design matrix</li>
 </ul>
 </div>
 <div id="code-of-conduct" class="section level2">
