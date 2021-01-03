@@ -107,7 +107,9 @@ While named experimental designs can be muddling to understanding the experiment
 
 ```{r}
 create_classic("crd", n = 30, t = 5)
+
 create_classic_code("rcbd", t = 4, n = 40)
+
 create_classic("split", t1 = 4, t2  = 2, r = 4)
 ```
 
@@ -115,14 +117,12 @@ create_classic("split", t1 = 4, t2  = 2, r = 4)
 
 ## Related Work
 
-The way that edibble specifies experimental design is largely novel (if I say so myself). 
+The way that edibble specifies experimental design is largely novel (if I say so myself). Below are some related work.
 
 * `DeclareDesign` for survey or sampling designs
-* `desplot` for visualising designs
 * `designr` for balanced factorial designs with crossed and nested random and fixed effect to data frame
 * `dae` for functions useful in the design and ANOVA of experiments (this is in fact powering the randomisation in edibble)
 * `plotdesignr` for designing agronomic field experiments
-* `ExploreModelMatrix` for exploring design matrix 
 
 ## Code of Conduct
 

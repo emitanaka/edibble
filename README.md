@@ -200,6 +200,7 @@ create_classic("crd", n = 30, t = 5)
 #>  9 unit9      treat3  
 #> 10 unit10     treat4  
 #> # … with 20 more rows
+
 create_classic_code("rcbd", t = 4, n = 40)
 #> set.seed(2020)
 #> start_design("rcbd") %>%
@@ -209,6 +210,7 @@ create_classic_code("rcbd", t = 4, n = 40)
 #>   allocate_trts(treat ~ unit) %>%
 #>   randomise_trts() %>%
 #>   serve_table()
+
 create_classic("split", t1 = 4, t2  = 2, r = 4)
 #> 
 #> ── experimental design details ─────────────────────────────────────────────────
@@ -251,16 +253,14 @@ create_classic("split", t1 = 4, t2  = 2, r = 4)
 ## Related Work
 
 The way that edibble specifies experimental design is largely novel (if
-I say so myself).
+I say so myself). Below are some related work.
 
   - `DeclareDesign` for survey or sampling designs
-  - `desplot` for visualising designs
   - `designr` for balanced factorial designs with crossed and nested
     random and fixed effect to data frame
   - `dae` for functions useful in the design and ANOVA of experiments
     (this is in fact powering the randomisation in edibble)
   - `plotdesignr` for designing agronomic field experiments
-  - `ExploreModelMatrix` for exploring design matrix
 
 ## Code of Conduct
 
