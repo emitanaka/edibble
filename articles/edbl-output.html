@@ -99,7 +99,8 @@
 
       
 
-      </header><script src="edbl-output_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="edbl-output_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="edbl-output_files/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="edbl-output_files/asciinema_player-2.6.1/asciinema-player.css" rel="stylesheet">
+<script src="edbl-output_files/asciinema_player-2.6.1/asciinema-player.js"></script><script src="edbl-output_files/jquery-3.2.1/jquery-3.2.1.min.js"></script><script src="edbl-output_files/asciinema_player-binding-1.0.0.9000/asciinema_player.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Output configurations in edibble</h1>
@@ -136,30 +137,22 @@
 <a href="#print-for-edbl_graph" class="anchor"></a>Print for <code>edbl_graph</code>
 </h2>
 <p>If you print an <code>edbl_graph</code> object, it will show you a tree structure with a high-level overview of the design. Below is a print out of a design. The output form isn’t really made for HTML and for complex reason color is lost for HTML (for the same reason as tibble).</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rcbd</span>
-<span class="co">#&gt; RCBD</span>
-<span class="co">#&gt; ├─block (2 levels)</span>
-<span class="co">#&gt; │ └─unit (12 levels)</span>
-<span class="co">#&gt; ├─unit (12 levels)</span>
-<span class="co">#&gt; └─trt (4 levels)</span></code></pre></div>
-<p>The print out in terminal will look like below depending on your IDE theme (I’m using Tomorrow Night Bright theme in RStudio). You can see that the color of the nodes are dependant on which type of variable it is and also shows you how many levels each variable has.</p>
-<p><img src="figures/vignette-decorate.png" width="150px"></p>
+<p>The print out in terminal will look like below depending on your IDE theme. You can see that the color of the nodes are dependant on which type of variable it is and also shows you how many levels each variable has.</p>
+<pre class="asciicast"><code>rcbd</code></pre>
+<p><img src="edbl-output_files/figure-html/rcbd.svg" width="100%"></p>
 <div id="formatting-print-for-edbl_graph" class="section level3">
 <h3 class="hasAnchor">
 <a href="#formatting-print-for-edbl_graph" class="anchor"></a>Formatting print for <code>edbl_graph</code>
 </h3>
 <p>If you don’t like the default choices, then you can easily customise the look by specifying the function of how to decorate the strings to options. Below I’m making use of functions in the cli package which wraps the string around in some styling.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>edibble.tree.decorate.trts <span class="op">=</span> <span class="fu">cli</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/cli/man/ansi-styles.html">bg_cyan</a></span>,
-        edibble.tree.decorate.units <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">cli</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cli/man/ansi-styles.html">bg_yellow</a></span><span class="op">(</span><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html">glue</a></span><span class="op">(</span><span class="st">"&lt;{x}&gt;"</span><span class="op">)</span><span class="op">)</span>,
-        edibble.tree.decorate.resp <span class="op">=</span> <span class="fu">cli</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/cli/man/ansi-styles.html">col_yellow</a></span>,
-        edibble.tree.decorate.levels <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">cli</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cli/man/ansi-styles.html">style_inverse</a></span><span class="op">(</span><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html">glue</a></span><span class="op">(</span><span class="st">"({x})"</span><span class="op">)</span><span class="op">)</span>,
-        edibble.tree.decorate.main <span class="op">=</span> <span class="fu">cli</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/cli/man/ansi-styles.html">style_underline</a></span><span class="op">)</span></code></pre></div>
-<p>Now the print out will look like below.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rcbd</span></code></pre></div>
-<p><img src="figures/vignette-decorate-new.png" width="150px"></p>
+<pre class="asciicast"><code><a href="https://rdrr.io/r/base/options.html">options(edibble.tree.decorate.trts = cli::bg_cyan,
+        edibble.tree.decorate.units = function(x) cli::bg_yellow(glue::glue("&lt;{x}&gt;")),
+        edibble.tree.decorate.resp = cli::col_yellow,
+        edibble.tree.decorate.levels = function(x) cli::style_inverse(glue::glue("({x})")),
+        edibble.tree.decorate.main = cli::style_underline)
+
+rcbd</a></code></pre>
+<p><img src="edbl-output_files/figure-html/rcbd2.svg" width="100%"></p>
 <p>Instead of overwriting the options each time, you can set your <code>.Rprofile</code> so that when you load R, it will load the options in your profile. You can easily open <code>.Rprofile</code> with <code>usethis::edit_r_profile()</code>. I normally don’t recommend to do this as it makes your output non-reproducible by others but the print output is made more for interactive use rather than reports so it doesn’t matter much in this case.</p>
 </div>
 </div>
@@ -168,13 +161,13 @@
 <a href="#plot-for-edbl_graph" class="anchor"></a>Plot for <code>edbl_graph</code>
 </h2>
 <p>There are two views available for <code>edbl_graph</code>: high-level view and low-level view. The high-level view is designed for the user to see the overview of variable relations. [ADD link to other document with more explanation.]</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">rcbd</span><span class="op">)</span></code></pre></div>
-<p><img src="edbl-output_files/figure-html/rcbd-high-plot-1.png" width="384"></p>
+<p><img src="edbl-output_files/figure-html/rcbd-high-plot-1.png" width="100%"></p>
 <p>There is also a low-level view of this.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">rcbd</span>, view <span class="op">=</span> <span class="st">"low"</span><span class="op">)</span></code></pre></div>
-<p><img src="edbl-output_files/figure-html/rcbd-low-plot-1.png" width="576"></p>
+<p><img src="edbl-output_files/figure-html/rcbd-low-plot-1.png" width="100%"></p>
 <div id="formatting-plot-output-for-edbl_graph" class="section level3">
 <h3 class="hasAnchor">
 <a href="#formatting-plot-output-for-edbl_graph" class="anchor"></a>Formatting plot output for <code>edbl_graph</code>
@@ -185,15 +178,15 @@
 <code>edbl_graph</code> is just an <code>igraph</code> under the hood and it’s leveraging the <code>plot</code> method there which means you can customise it the way it is done for <code>igraph</code>,</li>
 <li>Modify the <code>options</code> output. You can see the full list of available options by printing <code>edibble:::op.edibble</code> with a few shown below.</li>
 </ol>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>edibble.vertex.shape.trt <span class="op">=</span> <span class="st">"circle"</span>,
         edibble.edge.width.t2v <span class="op">=</span> <span class="fl">3</span>,
         edibble.vertex.fill.trt <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span></code></pre></div>
 <p>This option is only applied to newly constructed designs so let’s reconstruct the same design.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rcbd2</span> <span class="op">&lt;-</span> <span class="fu">new_rcbd</span><span class="op">(</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">rcbd2</span><span class="op">)</span></code></pre></div>
-<p><img src="edbl-output_files/figure-html/rcbd-high-plot-v2-1.png" width="384"></p>
+<p><img src="edbl-output_files/figure-html/rcbd-high-plot-v2-1.png" width="100%"></p>
 </div>
 </div>
 <div id="print-for-edbl_df" class="section level2">
@@ -201,60 +194,60 @@
 <a href="#print-for-edbl_df" class="anchor"></a>Print for <code>edbl_df</code>
 </h2>
 <p>[ADD explanation]</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="fu">new_rcbd</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # An edibble: 12 x 3</span>
+<span class="co">#&gt; [90m# An edibble: 12 x 3[39m</span>
 <span class="co">#&gt;    block     unit       trt     </span>
-<span class="co">#&gt;    &lt;unit(2)&gt; &lt;unit(12)&gt; &lt;trt(4)&gt;</span>
-<span class="co">#&gt;  1 B1        unit1      B       </span>
-<span class="co">#&gt;  2 B1        unit2      D       </span>
-<span class="co">#&gt;  3 B1        unit3      C       </span>
-<span class="co">#&gt;  4 B1        unit4      A       </span>
-<span class="co">#&gt;  5 B1        unit5      B       </span>
-<span class="co">#&gt;  6 B1        unit6      D       </span>
-<span class="co">#&gt;  7 B2        unit7      A       </span>
-<span class="co">#&gt;  8 B2        unit8      D       </span>
-<span class="co">#&gt;  9 B2        unit9      A       </span>
-<span class="co">#&gt; 10 B2        unit10     C       </span>
-<span class="co">#&gt; 11 B2        unit11     B       </span>
-<span class="co">#&gt; 12 B2        unit12     C</span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<span class="co">#&gt;    [3m[90m&lt;unit(2)&gt;[39m[23m [3m[90m&lt;unit(12)&gt;[39m[23m [3m[90m&lt;trt(4)&gt;[39m[23m</span>
+<span class="co">#&gt; [90m 1[39m B1        unit1      A       </span>
+<span class="co">#&gt; [90m 2[39m B1        unit2      C       </span>
+<span class="co">#&gt; [90m 3[39m B1        unit3      B       </span>
+<span class="co">#&gt; [90m 4[39m B1        unit4      D       </span>
+<span class="co">#&gt; [90m 5[39m B1        unit5      C       </span>
+<span class="co">#&gt; [90m 6[39m B1        unit6      A       </span>
+<span class="co">#&gt; [90m 7[39m B2        unit7      A       </span>
+<span class="co">#&gt; [90m 8[39m B2        unit8      B       </span>
+<span class="co">#&gt; [90m 9[39m B2        unit9      C       </span>
+<span class="co">#&gt; [90m10[39m B2        unit10     D       </span>
+<span class="co">#&gt; [90m11[39m B2        unit11     B       </span>
+<span class="co">#&gt; [90m12[39m B2        unit12     D</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>edibble.levels.label.leading_zero <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="fu">new_rcbd</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # An edibble: 12 x 3</span>
+<span class="co">#&gt; [90m# An edibble: 12 x 3[39m</span>
 <span class="co">#&gt;    block     unit       trt     </span>
-<span class="co">#&gt;    &lt;unit(2)&gt; &lt;unit(12)&gt; &lt;trt(4)&gt;</span>
-<span class="co">#&gt;  1 B1        unit01     A       </span>
-<span class="co">#&gt;  2 B1        unit02     D       </span>
-<span class="co">#&gt;  3 B1        unit03     C       </span>
-<span class="co">#&gt;  4 B1        unit04     B       </span>
-<span class="co">#&gt;  5 B1        unit05     C       </span>
-<span class="co">#&gt;  6 B1        unit06     A       </span>
-<span class="co">#&gt;  7 B2        unit07     D       </span>
-<span class="co">#&gt;  8 B2        unit08     C       </span>
-<span class="co">#&gt;  9 B2        unit09     D       </span>
-<span class="co">#&gt; 10 B2        unit10     B       </span>
-<span class="co">#&gt; 11 B2        unit11     B       </span>
-<span class="co">#&gt; 12 B2        unit12     A</span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<span class="co">#&gt;    [3m[90m&lt;unit(2)&gt;[39m[23m [3m[90m&lt;unit(12)&gt;[39m[23m [3m[90m&lt;trt(4)&gt;[39m[23m</span>
+<span class="co">#&gt; [90m 1[39m B1        unit01     D       </span>
+<span class="co">#&gt; [90m 2[39m B1        unit02     B       </span>
+<span class="co">#&gt; [90m 3[39m B1        unit03     C       </span>
+<span class="co">#&gt; [90m 4[39m B1        unit04     A       </span>
+<span class="co">#&gt; [90m 5[39m B1        unit05     D       </span>
+<span class="co">#&gt; [90m 6[39m B1        unit06     B       </span>
+<span class="co">#&gt; [90m 7[39m B2        unit07     A       </span>
+<span class="co">#&gt; [90m 8[39m B2        unit08     B       </span>
+<span class="co">#&gt; [90m 9[39m B2        unit09     A       </span>
+<span class="co">#&gt; [90m10[39m B2        unit10     C       </span>
+<span class="co">#&gt; [90m11[39m B2        unit11     D       </span>
+<span class="co">#&gt; [90m12[39m B2        unit12     C</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>edibble.levels.label.leading_zero <span class="op">=</span> <span class="cn">TRUE</span>,
         edibble.levels.label.min_ndigits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
 <span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="fu">new_rcbd</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # An edibble: 12 x 3</span>
+<span class="co">#&gt; [90m# An edibble: 12 x 3[39m</span>
 <span class="co">#&gt;    block     unit       trt     </span>
-<span class="co">#&gt;    &lt;unit(2)&gt; &lt;unit(12)&gt; &lt;trt(4)&gt;</span>
-<span class="co">#&gt;  1 B1        unit00001  B       </span>
-<span class="co">#&gt;  2 B1        unit00002  C       </span>
-<span class="co">#&gt;  3 B1        unit00003  D       </span>
-<span class="co">#&gt;  4 B1        unit00004  A       </span>
-<span class="co">#&gt;  5 B1        unit00005  B       </span>
-<span class="co">#&gt;  6 B1        unit00006  A       </span>
-<span class="co">#&gt;  7 B2        unit00007  D       </span>
-<span class="co">#&gt;  8 B2        unit00008  B       </span>
-<span class="co">#&gt;  9 B2        unit00009  D       </span>
-<span class="co">#&gt; 10 B2        unit00010  C       </span>
-<span class="co">#&gt; 11 B2        unit00011  C       </span>
-<span class="co">#&gt; 12 B2        unit00012  A</span></code></pre></div>
+<span class="co">#&gt;    [3m[90m&lt;unit(2)&gt;[39m[23m [3m[90m&lt;unit(12)&gt;[39m[23m [3m[90m&lt;trt(4)&gt;[39m[23m</span>
+<span class="co">#&gt; [90m 1[39m B1        unit00001  A       </span>
+<span class="co">#&gt; [90m 2[39m B1        unit00002  D       </span>
+<span class="co">#&gt; [90m 3[39m B1        unit00003  C       </span>
+<span class="co">#&gt; [90m 4[39m B1        unit00004  B       </span>
+<span class="co">#&gt; [90m 5[39m B1        unit00005  C       </span>
+<span class="co">#&gt; [90m 6[39m B1        unit00006  A       </span>
+<span class="co">#&gt; [90m 7[39m B2        unit00007  D       </span>
+<span class="co">#&gt; [90m 8[39m B2        unit00008  C       </span>
+<span class="co">#&gt; [90m 9[39m B2        unit00009  D       </span>
+<span class="co">#&gt; [90m10[39m B2        unit00010  B       </span>
+<span class="co">#&gt; [90m11[39m B2        unit00011  B       </span>
+<span class="co">#&gt; [90m12[39m B2        unit00012  A</span></code></pre></div>
 </div>
   </div>
 
