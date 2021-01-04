@@ -92,3 +92,16 @@ number_si_prefix <- function(x) {
 }
 
 
+# inspired by knitr::combine_words
+.combine_words <- function(words, sep = ", ", and = " and ",
+                           before = "", after = before, fun = function(x) x) {
+
+  words <- fun(paste0(before, words, after))
+  n <- length(words)
+  if(n <= 1) {
+    return(words)
+  }
+
+  words[n - 1] = paste0(words[n - 1], and, words[n])
+  paste0(words[-n], collapse = sep)
+}

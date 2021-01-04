@@ -2,9 +2,9 @@
 #' Create some classical named experimental designs
 #'
 #' @description
-#' This function creates some classical experimental designs.
+#' This function creates some classical named experimental designs.
 #'
-#' @param name The name of the classic experiment design. See
+#' @param name The short name of the classical named experiment design. See
 #'   under Details for the available named designs.
 #' @param t The number of treatments testing.
 #' @param r The total number of replicates if applicable.
@@ -24,8 +24,11 @@
 #'
 #' * "crd": completely randomised design
 #' * "rcbd": randomised complete block design
+#' * "split": split plot design
 #'
-#' @importFrom cli cli_h1 cli_text cli_end cli_li cli_ul style_bold style_italic ansi_strip col_magenta
+#' @examples
+#' create_classic("crd", n = 50, t = 5)
+#'
 #' @export
 create_classic <- function(name = c("crd", "rcbd", "split"),
                             r = NULL, t = NULL, n = NULL,
@@ -36,29 +39,29 @@ create_classic <- function(name = c("crd", "rcbd", "split"),
   des <- do.call(create_classic_code, c(fn_args, list(quiet = TRUE)))
 
   if(info) {
-    cli_h1("experimental design details")
-    cli_ul()
-    cli_li("This experimental design is often called
+    cli::cli_h1("experimental design details")
+    cli::cli_ul()
+    cli::cli_li("This experimental design is often called
            {.emph {des$name_full}}.")
-    cli_li("You can change the number in {.code set.seed} to get another random
+    cli::li_li("You can change the number in {.code set.seed} to get another random
            instance of the same design.")
-    cli_li("This design has a total of
+    cli::cli_li("This design has a total of
            {des$decorate_units(paste(des$args$n, 'units'))}
            testing a total of
            {des$decorate_trts(paste(des$args$t, 'treatments'))}.")
-    cli_li(des$info)
-    cli_end()
+    cli::cli_li(des$info)
+    cli::cli_end()
   }
 
   if(code) {
-    cli_h1("edibble code")
-    cat(des$code)
+    cli::cli_h1("edibble code")
+    cat(des$code, "\n")
   }
 
   df <- eval(parse(text = ansi_strip(des$code)))
 
   if(print) {
-    cli_h1("edibble data frame")
+    cli::cli_h1("edibble data frame")
     print(df)
   }
 
@@ -153,66 +156,66 @@ classical_split <- function(name, seed, t1, t2, r, ...) {
 
 
 NamedDesign <- R6::R6Class("NamedDesign",
-                           public = list(
-                             initialize = function(name, seed, args) {
-                              self$name <- name
-                              self$name_full <- name
-                              self$code <- paste0("set.seed(", seed, ")\n",
-                                                  "start_design(\"", name, "\")")
-                              self$args <- args
-                             },
+     public = list(
+       initialize = function(name, seed, args) {
+        self$name <- name
+        self$name_full <- name
+        self$code <- paste0("set.seed(", seed, ")\n",
+                            "start_design(\"", name, "\")")
+        self$args <- args
+       },
 
-                             add = function(line) {
-                               self$code <- paste0(self$code, " %>%\n  ", line)
-                             },
+       add = function(line) {
+         self$code <- paste0(self$code, " %>%\n  ", line)
+       },
 
-                             add_info = function(x) {
-                               self$info <- c(self$info, x)
-                             },
+       add_info = function(x) {
+         self$info <- c(self$info, x)
+       },
 
-                             args_req = function(x = NULL) {
-                               if(!is_null(x) && !all(x %in% names(self$args))) {
-                                 abort("Required arguments are missing.")
-                               }
-                             },
+       args_req = function(x = NULL) {
+         if(!is_null(x) && !all(x %in% names(self$args))) {
+           abort("Required arguments are missing.")
+         }
+       },
 
-                             args_opt = function(...) {
-                               vals <- enquos(...)
-                               ones <- names(vals)
-                               arg_names <- names(self$args)
-                               if(!is_null(ones) && sum(arg_names %in% ones)!=1) {
-                                 abort("Unnecessary arguments defined.")
-                               } else {
-                                 one <- vals[!ones %in% arg_names]
-                                 val <- eval_tidy(one[[1]], self$args)
-                                 if(val %% 1 !=0 ) {
-                                   abort(paste0("The supplied argument cannot be used to",
-                                         " construct \"", self$name, "\"."))
-                                 }
-                                 self$args[names(one)] <- val
-                               }
-                             },
+       args_opt = function(...) {
+         vals <- enquos(...)
+         ones <- names(vals)
+         arg_names <- names(self$args)
+         if(!is_null(ones) && sum(arg_names %in% ones)!=1) {
+           abort("Unnecessary arguments defined.")
+         } else {
+           one <- vals[!ones %in% arg_names]
+           val <- eval_tidy(one[[1]], self$args)
+           if(val %% 1 !=0 ) {
+             abort(paste0("The supplied argument cannot be used to",
+                   " construct \"", self$name, "\"."))
+           }
+           self$args[names(one)] <- val
+         }
+       },
 
-                             final = function() {
-                               self$code <- paste0(self$code,
-                                      " %>%\n  randomise_trts()",
-                                      " %>%\n  serve_table()")
-                             },
+       final = function() {
+         self$code <- paste0(self$code,
+                " %>%\n  randomise_trts()",
+                " %>%\n  serve_table()")
+       },
 
-                             decorate_units = function(x) {
-                               edibble_decorate("units")(x)
-                             },
+       decorate_units = function(x) {
+         edibble_decorate("units")(x)
+       },
 
-                             decorate_trts = function(x) {
-                               edibble_decorate("trts")(x)
-                             },
+       decorate_trts = function(x) {
+         edibble_decorate("trts")(x)
+       },
 
-                             name = NULL,
-                             name_full = NULL,
-                             code = "",
-                             args = NULL,
-                             info = NULL
-                           ))
+       name = NULL,
+       name_full = NULL,
+       code = "",
+       args = NULL,
+       info = NULL
+     ))
 
 #' A list of classical experimental designs
 #'

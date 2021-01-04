@@ -7,7 +7,7 @@
 add_context(.data, ..., .overwrite = TRUE)
 }
 \arguments{
-\item{.data}{An edibble graph.}
+\item{.data}{An edibble design.}
 
 \item{...}{Name-value pairs.}
 
@@ -18,8 +18,8 @@ This is just a function that stores a simple context. If the
 context already exists then it will be overwritten.
 }
 \examples{
-initiate_design("COVID-19") \%>\%
+start_design("COVID-19") \%>\%
   add_context(question = "Does Pfizer vaccine work?",
-                   where = "Tested in lab")
+                 where = "Tested in lab")
 
 }

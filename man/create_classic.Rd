@@ -6,7 +6,7 @@
 \title{Create some classical named experimental designs}
 \usage{
 create_classic(
-  name = c("crd", "rcbd", "spd"),
+  name = c("crd", "rcbd", "split"),
   r = NULL,
   t = NULL,
   n = NULL,
@@ -35,7 +35,7 @@ create_classic_code(
 )
 }
 \arguments{
-\item{name}{The name of the classic experiment design. See
+\item{name}{The short name of the classical named experiment design. See
 under Details for the available named designs.}
 
 \item{r}{The total number of replicates if applicable.}
@@ -60,12 +60,17 @@ TRUE.}
 \item{print}{Show the print out of the return object. Default is TRUE.}
 }
 \description{
-This function creates some classical experimental designs.
+This function creates some classical named experimental designs.
 }
 \details{
 For The available named designs are:
 \itemize{
 \item "crd": completely randomised design
 \item "rcbd": randomised complete block design
+\item "split": split plot design
 }
+}
+\examples{
+create_classic("crd", n = 50, t = 5)
+
 }

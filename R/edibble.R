@@ -182,6 +182,13 @@ new_edibble <- function(.data, ..., graph = NULL, class = NULL) {
 #' @export
 not_edibble <- function(x) {
   if (!is_edibble(x)) {
-    abort(sprintf("%s is not edibble.", deparse(substitute(x))))
+    abort(sprintf("%s is not an edibble table.", deparse(substitute(x))))
+  }
+}
+
+#' @export
+not_edibble_graph <- function(x) {
+  if(!is_edibble_graph(x)) {
+    abort(sprintf("%s is not an edibble graph.", deparse(substitute(x))))
   }
 }

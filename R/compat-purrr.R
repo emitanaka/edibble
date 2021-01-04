@@ -25,7 +25,6 @@ map_int <- function(.x, .f, ...) {
 }
 
 
-#' @importFrom rlang set_names
 map2 <- function(.x, .y, .f, ...) {
   out <- mapply(.f, .x, .y, MoreArgs = list(...), SIMPLIFY = FALSE)
   if (length(out) == length(.x)) {
