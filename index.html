@@ -189,7 +189,7 @@
 <div id="named-experimental-designs" class="section level2">
 <h2 class="hasAnchor">
 <a href="#named-experimental-designs" class="anchor"></a>Named experimental designs</h2>
-<p>While named experimental designs can be muddling to understanding the experimental structure, it is still convenient to be able to concisely describe common structures. I take a compromising approach where named experimental designs can be generated consisely using the <code>create_classic</code> function. The output contains information about the design, the code to generate the design using edibble that can be easily copy-and-pasted and the output data frame. If you want just the edibble code alone then you can just substitute it with <code>create_classic_code</code>.</p>
+<p>While named experimental designs can be muddling to understanding the experimental structure, it is still convenient to be able to concisely describe common structures. I take a compromising approach where named experimental designs can be generated concisely using the <code>create_classic</code> function. The output contains information about the design, the code to generate the design using edibble that can be easily copy-and-pasted and the output data frame. If you want the edibble code alone then you can just use <code>create_classic_code</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/create_classic.html">create_classic</a></span><span class="op">(</span><span class="st">"crd"</span>, n <span class="op">=</span> <span class="fl">30</span>, t <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
 <span class="co">#&gt; </span>
@@ -234,14 +234,21 @@
 <span class="co">#&gt;   allocate_trts(treat ~ unit) %&gt;%</span>
 <span class="co">#&gt;   randomise_trts() %&gt;%</span>
 <span class="co">#&gt;   serve_table()</span></code></pre></div>
-<p>What it looks like in the terminal:</p>
+<p>The terminal output has color. You can see the terminal output below for the Split-plot design.</p>
 <pre class="asciicast"><code><a href="reference/create_classic.html">create_classic("split", t1 = 4, t2  = 2, r = 4)</a></code></pre>
 <p><img src="reference/figures/README-/split-plot-print.svg"><!-- --></p>
 </div>
 <div id="related-work" class="section level2">
 <h2 class="hasAnchor">
 <a href="#related-work" class="anchor"></a>Related Work</h2>
-<p>The way that edibble specifies experimental design is largely novel (if I say so myself). Below are some related work.</p>
+<p>The way that edibble specifies experimental design is largely novel (if I say so myself) and there are no work that resembles it. I’m concurrently working on two extension packages:</p>
+<ul>
+<li>
+<code>deggust</code> - to visualise the designs constructed from edibble as ggplot2 objects (WIP).</li>
+<li>
+<code>sizzle</code> - for experiments that require sample size calculation (WIP).</li>
+</ul>
+<p>Below are some other related work. You can also have a look at the <a href="https://cran.r-project.org/web/views/ExperimentalDesign.html">CRAN Task View for Design of Experiment and Analysis of Experimental Data</a> for a whole collection.</p>
 <ul>
 <li>
 <code>DeclareDesign</code> for survey or sampling designs</li>
