@@ -43,7 +43,7 @@ create_classic <- function(name = c("crd", "rcbd", "split"),
     cli::cli_ul()
     cli::cli_li("This experimental design is often called
            {.emph {des$name_full}}.")
-    cli::li_li("You can change the number in {.code set.seed} to get another random
+    cli::cli_li("You can change the number in {.code set.seed} to get another random
            instance of the same design.")
     cli::cli_li("This design has a total of
            {des$decorate_units(paste(des$args$n, 'units'))}
@@ -58,7 +58,7 @@ create_classic <- function(name = c("crd", "rcbd", "split"),
     cat(des$code, "\n")
   }
 
-  df <- eval(parse(text = ansi_strip(des$code)))
+  df <- eval(parse(text = cli::ansi_strip(des$code)))
 
   if(print) {
     cli::cli_h1("edibble data frame")
@@ -106,8 +106,8 @@ classical_rcbd <- function(name, seed, t, r, b, n, ...) {
   des <- NamedDesign$new(name, seed, fn_args)
   des$name_full <- "Randomised Complete Block Design"
   des$add_info(paste0("This design is ",
-                      style_italic("balanced"),
-                      " and ", style_italic("complete"), "."))
+                      cli::style_italic("balanced"),
+                      " and ", cli::style_italic("complete"), "."))
   des$args_req("t")
   # need OR
   # what if not divisible??
@@ -132,7 +132,7 @@ classical_split <- function(name, seed, t1, t2, r, ...) {
   des <- NamedDesign$new(name, seed, fn_args)
   des$args$n <- t1 * t2 * r
   des$args$t <- t1 * t2
-  des$add_info(paste0("This design is ", style_italic("balanced.")))
+  des$add_info(paste0("This design is ", cli::style_italic("balanced.")))
   des$name_full <- c("Split-Plot Design", "Split-Unit Design")
   des$args_req(c("t1", "t2", "r"))
   des$add(paste0("set_units(", des$decorate_units("mainplot"), " = ",

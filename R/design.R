@@ -41,12 +41,16 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
         if(private$.active == "graph") {
           context_names <- names(private$.context)
           context <- private$.context
-          if(!is_empty(context_names)) {
+          if(!is_empty(context) && !private$.muffle) {
             cli_rule(left = "{.emph Context of the experiment}")
             cli_text()
             cli_ul()
             for(i in seq_along(context)) {
-              cli_li("{.emph {context_names[i]}}: {context[[i]]}")
+              if(is_null(context_names[i]) || context_names[i]=="") {
+                cli_li("{context[[i]]}")
+              } else {
+                cli_li("{.emph {context_names[i]}}: {context[[i]]}")
+              }
             }
             cli_end()
             cli_text()
@@ -89,13 +93,22 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
         } else {
           private$.context <- value
         }
+      },
+
+      muffle = function(value) {
+        if(missing(value)) {
+          private$.muffle
+        } else {
+          private$.muffle <- value
+        }
       }
-    ),
+   ),
 
     private = list(
       .name = "",
       .graph = NULL,
       .table = NULL,
       .active = "graph",
-      .context = list()
+      .context = list(),
+      .muffle = FALSE
     ))

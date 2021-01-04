@@ -221,6 +221,43 @@ create_classic("split", t1 = 4, t2  = 2, r = 4)
 
 ![](man/figures/README-/split-plot-print.svg)<!-- -->
 
+## Context of the experiment
+
+In designing an experiment, there may be certain context of the
+experiment that are important but aren’t utilised in the design of the
+experiment. You can add notes about the experiment in the
+`add_context()`.
+
+These are shown when you print your intermediate construct of the design
+to remind you about some context of the experiment. I think these steps
+are important since you may come to realise later some of the context
+may need to be properly accounted for in the design later, or if there
+are unexpected results in the experiment, these notes may aid you in
+uncovering some unexpected sources of variation.
+
+``` asciicast
+des <- start_design("COVID-19") %>%
+  add_context(question = "Is the vaccine effective?",
+              where = "Tested in the lab",
+              "experiment is blinded",
+              "experiment is carried out by one technician") %>% 
+  set_units(rat = 20) %>% 
+  set_trts(treat = c("A", "B")) 
+des
+```
+
+![](man/figures/README-/exp-context.svg)<!-- -->
+
+You can muffle these messages by using `suppress_context`. \[TODO: add
+option to muffle these and shorten some long contexts.\]
+
+``` r
+suppress_context(des)
+#> COVID-19
+#> ├─rat (20 levels)
+#> └─treat (2 levels)
+```
+
 ## Related Work
 
 The way that edibble specifies experimental design is largely novel (if

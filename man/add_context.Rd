@@ -9,9 +9,11 @@ add_context(.data, ..., .overwrite = TRUE)
 \arguments{
 \item{.data}{An edibble design.}
 
-\item{...}{Name-value pairs.}
+\item{...}{Name-value pairs where name is the context name and value is context
+in string. Unnamed values will appended as points at the end.}
 
-\item{.overwrite}{If the context}
+\item{.overwrite}{If the named context already exissts, it will overwrite.
+By default it is TRUE.}
 }
 \description{
 This is just a function that stores a simple context. If the
@@ -21,5 +23,7 @@ context already exists then it will be overwritten.
 start_design("COVID-19") \%>\%
   add_context(question = "Does Pfizer vaccine work?",
                  where = "Tested in lab")
-
+}
+\seealso{
+\code{\link[=sort_context]{sort_context()}} for sorting context alphabetically.
 }
