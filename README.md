@@ -160,11 +160,11 @@ expected.
 While named experimental designs can be muddling to understanding the
 experimental structure, it is still convenient to be able to concisely
 describe common structures. I take a compromising approach where named
-experimental designs can be generated consisely using the
+experimental designs can be generated concisely using the
 `create_classic` function. The output contains information about the
 design, the code to generate the design using edibble that can be easily
-copy-and-pasted and the output data frame. If you want just the edibble
-code alone then you can just substitute it with `create_classic_code`.
+copy-and-pasted and the output data frame. If you want the edibble code
+alone then you can just use `create_classic_code`.
 
 ``` r
 create_classic("crd", n = 30, t = 5)
@@ -212,7 +212,8 @@ create_classic_code("rcbd", t = 4, n = 40)
 #>   serve_table()
 ```
 
-What it looks like in the terminal:
+The terminal output has color. You can see the terminal output below for
+the Split-plot design.
 
 ``` asciicast
 create_classic("split", t1 = 4, t2  = 2, r = 4)
@@ -223,7 +224,18 @@ create_classic("split", t1 = 4, t2  = 2, r = 4)
 ## Related Work
 
 The way that edibble specifies experimental design is largely novel (if
-I say so myself). Below are some related work.
+I say so myself) and there are no work that resembles it. I’m
+concurrently working on two extension packages:
+
+  - `deggust` - to visualise the designs constructed from edibble as
+    ggplot2 objects (WIP).
+  - `sizzle` - for experiments that require sample size calculation
+    (WIP).
+
+Below are some other related work. You can also have a look at the [CRAN
+Task View for Design of Experiment and Analysis of Experimental
+Data](https://cran.r-project.org/web/views/ExperimentalDesign.html) for
+a whole collection.
 
   - `DeclareDesign` for survey or sampling designs
   - `designr` for balanced factorial designs with crossed and nested
