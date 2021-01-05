@@ -6,13 +6,7 @@
 \alias{nclassics}
 \title{A list of classical experimental designs}
 \format{
-A list of some classical experimental designs as either \code{edbl_graph}
-or \code{edbl_df} object. The designs included are:
-\describe{
-\item{CRD} Completely randomised design.
-\item{RCBD} Randomised complete block design.
-\item{SPD} Split plot design.
-}
+An object of class \code{list} of length 4.
 
 An object of class \code{list} of length 4.
 }
@@ -22,6 +16,12 @@ nclassics
 classics
 }
 \description{
-A list of classical experimental designs
+A list of some classical experimental designs as either \code{edbl_graph}
+or \code{edbl_df} object. The designs included are:
+\describe{
+\item{CRD} Completely randomised design.
+\item{RCBD} Randomised complete block design.
+\item{SPD} Split plot design.
+}
 }
 \keyword{datasets}
