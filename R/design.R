@@ -35,7 +35,7 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
       },
 
       plot = function(...) {
-        plot(private$.graph, ...)
+        plot(private$.graph, ..., main = private$.name)
         invisible(self)
       },
 
