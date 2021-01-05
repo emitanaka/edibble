@@ -50,5 +50,13 @@ For The available named designs are:
 }
 \examples{
 make_classical("crd", n = 50, t = 5)
-
+# if you omit the design parameters then it will use the default
+# (which may be random)
+make_classical("rcbd")
+# if you don't give any short names then it will generate a random one
+make_classical()
+}
+\seealso{
+See \code{\link[=find_classical_names]{find_classical_names()}} for finding the short names of the
+named experimental designs.
 }

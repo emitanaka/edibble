@@ -36,11 +36,6 @@ remove_nulls <- function(.x) {
   .x[!vapply(.x, is.null, logical(1))]
 }
 
-# this is just a special case to remove names from `formals`
-#' @importFrom rlang is_symbol
-remove_names <- function(.x) {
-  .x[!vapply(.x, is_symbol, logical(1))]
-}
 
 compact <- function(.x) {
   .x[!vapply(.x, is_empty, logical(1))]

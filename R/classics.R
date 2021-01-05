@@ -28,6 +28,13 @@
 #'
 #' @examples
 #' make_classical("crd", n = 50, t = 5)
+#' # if you omit the design parameters then it will use the default
+#' # (which may be random)
+#' make_classical("rcbd")
+#' # if you don't give any short names then it will generate a random one
+#' make_classical()
+#' @seealso See [find_classical_names()] for finding the short names of the
+#'  named experimental designs.
 #'
 #' @importFrom cli cli_h1 cli_ul cli_end cli_h2 col_grey style_italic ansi_strip
 #' @export
@@ -322,8 +329,8 @@ find_classical_names <- function(pkgs = NULL) {
   for(i in seq_along(ls_fns)) {
     cli_h2(pkg_names[i])
     for(prep_fn in ls_fns[[i]]) {
-      args <- remove_names(as.list(formals(prep_fn)))
-      des <- do.call(prep_fn, args)
+      args <- as.list(formals(prep_fn))
+      des <- do.call(prep_fn, list())
       short_names <- c(short_names, set_names(des$name, pkg_names[i]))
       cli_li("{.pkg {des$name}} with the arguments {.field {names(args)}}
              for a {.combine_words(des$name_full, fun = style_bold, and = ' or a ')}.")
