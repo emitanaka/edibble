@@ -227,7 +227,7 @@ named experimental designs.</p></div>
     <pre class="examples"><div class='input'><span class='fu'>make_classical</span><span class='op'>(</span><span class='st'>"crd"</span>, n <span class='op'>=</span> <span class='fl'>50</span>, t <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>experimental design details</span><span> </span><span style='color: #00BBBB;'>─────────────────────────────────────────────────</span><span></span></div><div class='output co'>#&gt; <span class='message'>● This experimental design is often called </span><span style='font-style: italic;'>Completely Randomised Design</span><span>.</span></div><div class='output co'>#&gt; <span class='message'>● You can change the number in </span><span style='color: #000000;background-color: #BBBBBB;'>`set.seed`</span><span> to get another random instance of</span>
 #&gt; <span class='message'>  the same design.</span></div><div class='output co'>#&gt; <span class='message'>● This design has a total of </span><span style='color: #BBBB00;background-color: #000000;'>50 units</span><span> testing a total of </span><span style='color: #0000BB;'>5 treatments</span><span>.</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #555555;'>The following information is only true for the chosen parameters and not</span><span></span>
-#&gt; <span class='message'></span><span style='color: #555555;'>necessary true for all Completely Randomised Designs.</span><span></span></div><div class='output co'>#&gt; <span class='message'>  ◯ This design is </span><span style='font-style: italic;'>balanced</span><span> for the given numbers.</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>  </span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>edibble code</span><span> </span><span style='color: #00BBBB;'>────────────────────────────────────────────────────────────────</span><span></span></div><div class='output co'>#&gt; set.seed(1609837833)
+#&gt; <span class='message'></span><span style='color: #555555;'>necessary true for all Completely Randomised Designs.</span><span></span></div><div class='output co'>#&gt; <span class='message'>  ◯ This design is </span><span style='font-style: italic;'>balanced</span><span> for the given numbers.</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>  </span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>edibble code</span><span> </span><span style='color: #00BBBB;'>────────────────────────────────────────────────────────────────</span><span></span></div><div class='output co'>#&gt; set.seed(1609837913)
 #&gt; start_design("crd") %&gt;%
 #&gt;   set_units(</span><span style='color: #BBBB00;background-color: #000000;'>unit</span><span> = 50) %&gt;%
 #&gt;   set_trts(</span><span style='color: #0000BB;'>treat</span><span> = 5) %&gt;%
@@ -236,67 +236,65 @@ named experimental designs.</p></div>
 #&gt;   serve_table() </div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>  </span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>edibble data frame</span><span> </span><span style='color: #00BBBB;'>──────────────────────────────────────────────────────────</span><span></span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># An edibble: 50 x 2</span><span>
 #&gt;    unit       treat   
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;unit(50)&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;trt(5)&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> unit1      treat5  
-#&gt; </span><span style='color: #555555;'> 2</span><span> unit2      treat3  
-#&gt; </span><span style='color: #555555;'> 3</span><span> unit3      treat5  
+#&gt; </span><span style='color: #555555;'> 1</span><span> unit1      treat1  
+#&gt; </span><span style='color: #555555;'> 2</span><span> unit2      treat4  
+#&gt; </span><span style='color: #555555;'> 3</span><span> unit3      treat4  
 #&gt; </span><span style='color: #555555;'> 4</span><span> unit4      treat2  
-#&gt; </span><span style='color: #555555;'> 5</span><span> unit5      treat2  
-#&gt; </span><span style='color: #555555;'> 6</span><span> unit6      treat4  
-#&gt; </span><span style='color: #555555;'> 7</span><span> unit7      treat3  
-#&gt; </span><span style='color: #555555;'> 8</span><span> unit8      treat1  
-#&gt; </span><span style='color: #555555;'> 9</span><span> unit9      treat5  
-#&gt; </span><span style='color: #555555;'>10</span><span> unit10     treat1  
+#&gt; </span><span style='color: #555555;'> 5</span><span> unit5      treat5  
+#&gt; </span><span style='color: #555555;'> 6</span><span> unit6      treat5  
+#&gt; </span><span style='color: #555555;'> 7</span><span> unit7      treat2  
+#&gt; </span><span style='color: #555555;'> 8</span><span> unit8      treat2  
+#&gt; </span><span style='color: #555555;'> 9</span><span> unit9      treat4  
+#&gt; </span><span style='color: #555555;'>10</span><span> unit10     treat4  
 #&gt; </span><span style='color: #555555;'># … with 40 more rows</span><span></div><div class='input'><span class='co'># if you omit the design parameters then it will use the default</span>
 <span class='co'># (which may be random)</span>
 <span class='fu'>make_classical</span><span class='op'>(</span><span class='st'>"rcbd"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>experimental design details</span><span> </span><span style='color: #00BBBB;'>─────────────────────────────────────────────────</span><span></span></div><div class='output co'>#&gt; <span class='message'>● This experimental design is often called </span><span style='font-style: italic;'>Randomised Complete Block Design</span><span>.</span></div><div class='output co'>#&gt; <span class='message'>● You can change the number in </span><span style='color: #000000;background-color: #BBBBBB;'>`set.seed`</span><span> to get another random instance of</span>
-#&gt; <span class='message'>  the same design.</span></div><div class='output co'>#&gt; <span class='message'>● This design has a total of </span><span style='color: #BBBB00;background-color: #000000;'>90 units</span><span> testing a total of </span><span style='color: #0000BB;'>10 treatments</span><span>.</span></div><div class='output co'>#&gt; <span class='message'>● This design is </span><span style='font-style: italic;'>balanced</span><span> and </span><span style='font-style: italic;'>complete</span><span>.</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>edibble code</span><span> </span><span style='color: #00BBBB;'>────────────────────────────────────────────────────────────────</span><span></span></div><div class='output co'>#&gt; set.seed(1609837833)
+#&gt; <span class='message'>  the same design.</span></div><div class='output co'>#&gt; <span class='message'>● This design has a total of </span><span style='color: #BBBB00;background-color: #000000;'>80 units</span><span> testing a total of </span><span style='color: #0000BB;'>8 treatments</span><span>.</span></div><div class='output co'>#&gt; <span class='message'>● This design is </span><span style='font-style: italic;'>balanced</span><span> and </span><span style='font-style: italic;'>complete</span><span>.</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>edibble code</span><span> </span><span style='color: #00BBBB;'>────────────────────────────────────────────────────────────────</span><span></span></div><div class='output co'>#&gt; set.seed(1609837914)
 #&gt; start_design("rcbd") %&gt;%
-#&gt;   set_units(</span><span style='color: #BBBB00;background-color: #000000;'>block</span><span> = 9,
-#&gt;             </span><span style='color: #BBBB00;background-color: #000000;'>unit</span><span> = nested_in(</span><span style='color: #BBBB00;background-color: #000000;'>block</span><span>, 10)) %&gt;%
-#&gt;   set_trts(</span><span style='color: #0000BB;'>treat</span><span> = 10) %&gt;%
+#&gt;   set_units(</span><span style='color: #BBBB00;background-color: #000000;'>block</span><span> = 10,
+#&gt;             </span><span style='color: #BBBB00;background-color: #000000;'>unit</span><span> = nested_in(</span><span style='color: #BBBB00;background-color: #000000;'>block</span><span>, 8)) %&gt;%
+#&gt;   set_trts(</span><span style='color: #0000BB;'>treat</span><span> = 8) %&gt;%
 #&gt;   allocate_trts(</span><span style='color: #0000BB;'>treat</span><span> ~ </span><span style='color: #BBBB00;background-color: #000000;'>unit</span><span>) %&gt;%
 #&gt;   randomise_trts() %&gt;%
-#&gt;   serve_table() </div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>edibble data frame</span><span> </span><span style='color: #00BBBB;'>──────────────────────────────────────────────────────────</span><span></span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># An edibble: 90 x 3</span><span>
-#&gt;    block     unit       treat    
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;unit(9)&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;unit(90)&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;trt(10)&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> block1    unit1      treat8   
-#&gt; </span><span style='color: #555555;'> 2</span><span> block1    unit2      treat7   
-#&gt; </span><span style='color: #555555;'> 3</span><span> block1    unit3      treat2   
-#&gt; </span><span style='color: #555555;'> 4</span><span> block1    unit4      treat10  
-#&gt; </span><span style='color: #555555;'> 5</span><span> block1    unit5      treat5   
-#&gt; </span><span style='color: #555555;'> 6</span><span> block1    unit6      treat3   
-#&gt; </span><span style='color: #555555;'> 7</span><span> block1    unit7      treat1   
-#&gt; </span><span style='color: #555555;'> 8</span><span> block1    unit8      treat4   
-#&gt; </span><span style='color: #555555;'> 9</span><span> block1    unit9      treat9   
-#&gt; </span><span style='color: #555555;'>10</span><span> block1    unit10     treat6   
-#&gt; </span><span style='color: #555555;'># … with 80 more rows</span><span></div><div class='input'><span class='co'># if you don't give any short names then it will generate a random one</span>
+#&gt;   serve_table() </div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>edibble data frame</span><span> </span><span style='color: #00BBBB;'>──────────────────────────────────────────────────────────</span><span></span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># An edibble: 80 x 3</span><span>
+#&gt;    block      unit       treat   
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;unit(10)&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;unit(80)&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;trt(8)&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> block1     unit1      treat2  
+#&gt; </span><span style='color: #555555;'> 2</span><span> block1     unit2      treat3  
+#&gt; </span><span style='color: #555555;'> 3</span><span> block1     unit3      treat5  
+#&gt; </span><span style='color: #555555;'> 4</span><span> block1     unit4      treat6  
+#&gt; </span><span style='color: #555555;'> 5</span><span> block1     unit5      treat8  
+#&gt; </span><span style='color: #555555;'> 6</span><span> block1     unit6      treat4  
+#&gt; </span><span style='color: #555555;'> 7</span><span> block1     unit7      treat1  
+#&gt; </span><span style='color: #555555;'> 8</span><span> block1     unit8      treat7  
+#&gt; </span><span style='color: #555555;'> 9</span><span> block2     unit9      treat5  
+#&gt; </span><span style='color: #555555;'>10</span><span> block2     unit10     treat1  
+#&gt; </span><span style='color: #555555;'># … with 70 more rows</span><span></div><div class='input'><span class='co'># if you don't give any short names then it will generate a random one</span>
 <span class='fu'>make_classical</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>→ No name was supplied so selecting a random named experimental design...</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>experimental design details</span><span> </span><span style='color: #00BBBB;'>─────────────────────────────────────────────────</span><span></span></div><div class='output co'>#&gt; <span class='message'>  ◯ This experimental design is often called </span><span style='font-style: italic;'>Split-Plot Design</span><span> or </span><span style='font-style: italic;'>Split-Unit</span><span></span>
+</div><div class='output co'>#&gt; <span class='message'>→ No name was supplied so selecting a random named experimental design...</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>experimental design details</span><span> </span><span style='color: #00BBBB;'>─────────────────────────────────────────────────</span><span></span></div><div class='output co'>#&gt; <span class='message'>  ◯ This experimental design is often called </span><span style='font-style: italic;'>Randomised Complete Block</span><span></span>
 #&gt; <span class='message'>    </span><span style='font-style: italic;'>Design</span><span>.</span></div><div class='output co'>#&gt; <span class='message'>  ◯ You can change the number in </span><span style='color: #000000;background-color: #BBBBBB;'>`set.seed`</span><span> to get another random instance of</span>
-#&gt; <span class='message'>    the same design.</span></div><div class='output co'>#&gt; <span class='message'>  ◯ This design has a total of </span><span style='color: #BBBB00;background-color: #000000;'>36 units</span><span> testing a total of </span><span style='color: #0000BB;'>18 treatments</span><span>.</span></div><div class='output co'>#&gt; <span class='message'>  ◯ This design is </span><span style='font-style: italic;'>balanced.</span><span></span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>  </span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>edibble code</span><span> </span><span style='color: #00BBBB;'>────────────────────────────────────────────────────────────────</span><span></span></div><div class='output co'>#&gt; set.seed(1609837833)
-#&gt; start_design("split") %&gt;%
-#&gt;   set_units(</span><span style='color: #BBBB00;background-color: #000000;'>mainplot</span><span> = 12,
-#&gt;             </span><span style='color: #BBBB00;background-color: #000000;'>subplot</span><span> = nested_in(</span><span style='color: #BBBB00;background-color: #000000;'>mainplot</span><span>, 3)) %&gt;%
-#&gt;   set_trts(</span><span style='color: #0000BB;'>treat1</span><span> = 6,
-#&gt;            </span><span style='color: #0000BB;'>treat2</span><span> = 3) %&gt;%
-#&gt;   allocate_trts(</span><span style='color: #0000BB;'>treat1</span><span> ~ </span><span style='color: #BBBB00;background-color: #000000;'>mainplot</span><span>,
-#&gt;                 </span><span style='color: #0000BB;'>treat2</span><span> ~ </span><span style='color: #BBBB00;background-color: #000000;'>subplot</span><span>) %&gt;%
+#&gt; <span class='message'>    the same design.</span></div><div class='output co'>#&gt; <span class='message'>  ◯ This design has a total of </span><span style='color: #BBBB00;background-color: #000000;'>54 units</span><span> testing a total of </span><span style='color: #0000BB;'>6 treatments</span><span>.</span></div><div class='output co'>#&gt; <span class='message'>  ◯ This design is </span><span style='font-style: italic;'>balanced</span><span> and </span><span style='font-style: italic;'>complete</span><span>.</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>  </span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>edibble code</span><span> </span><span style='color: #00BBBB;'>────────────────────────────────────────────────────────────────</span><span></span></div><div class='output co'>#&gt; set.seed(1609837914)
+#&gt; start_design("rcbd") %&gt;%
+#&gt;   set_units(</span><span style='color: #BBBB00;background-color: #000000;'>block</span><span> = 9,
+#&gt;             </span><span style='color: #BBBB00;background-color: #000000;'>unit</span><span> = nested_in(</span><span style='color: #BBBB00;background-color: #000000;'>block</span><span>, 6)) %&gt;%
+#&gt;   set_trts(</span><span style='color: #0000BB;'>treat</span><span> = 6) %&gt;%
+#&gt;   allocate_trts(</span><span style='color: #0000BB;'>treat</span><span> ~ </span><span style='color: #BBBB00;background-color: #000000;'>unit</span><span>) %&gt;%
 #&gt;   randomise_trts() %&gt;%
-#&gt;   serve_table() </div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>  </span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>edibble data frame</span><span> </span><span style='color: #00BBBB;'>──────────────────────────────────────────────────────────</span><span></span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># An edibble: 36 x 4</span><span>
-#&gt;    mainplot   subplot    treat1   treat2  
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;unit(12)&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;unit(36)&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;trt(6)&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;trt(3)&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> mainplot1  subplot1   treat14  treat22 
-#&gt; </span><span style='color: #555555;'> 2</span><span> mainplot1  subplot2   treat14  treat21 
-#&gt; </span><span style='color: #555555;'> 3</span><span> mainplot1  subplot3   treat14  treat23 
-#&gt; </span><span style='color: #555555;'> 4</span><span> mainplot2  subplot4   treat16  treat23 
-#&gt; </span><span style='color: #555555;'> 5</span><span> mainplot2  subplot5   treat16  treat22 
-#&gt; </span><span style='color: #555555;'> 6</span><span> mainplot2  subplot6   treat16  treat21 
-#&gt; </span><span style='color: #555555;'> 7</span><span> mainplot3  subplot7   treat13  treat22 
-#&gt; </span><span style='color: #555555;'> 8</span><span> mainplot3  subplot8   treat13  treat23 
-#&gt; </span><span style='color: #555555;'> 9</span><span> mainplot3  subplot9   treat13  treat21 
-#&gt; </span><span style='color: #555555;'>10</span><span> mainplot4  subplot10  treat16  treat23 
-#&gt; </span><span style='color: #555555;'># … with 26 more rows</span><span></div></span></pre>
+#&gt;   serve_table() </div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>  </span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>edibble data frame</span><span> </span><span style='color: #00BBBB;'>──────────────────────────────────────────────────────────</span><span></span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># An edibble: 54 x 3</span><span>
+#&gt;    block     unit       treat   
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;unit(9)&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;unit(54)&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;trt(6)&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> block1    unit1      treat3  
+#&gt; </span><span style='color: #555555;'> 2</span><span> block1    unit2      treat5  
+#&gt; </span><span style='color: #555555;'> 3</span><span> block1    unit3      treat4  
+#&gt; </span><span style='color: #555555;'> 4</span><span> block1    unit4      treat2  
+#&gt; </span><span style='color: #555555;'> 5</span><span> block1    unit5      treat6  
+#&gt; </span><span style='color: #555555;'> 6</span><span> block1    unit6      treat1  
+#&gt; </span><span style='color: #555555;'> 7</span><span> block2    unit7      treat3  
+#&gt; </span><span style='color: #555555;'> 8</span><span> block2    unit8      treat5  
+#&gt; </span><span style='color: #555555;'> 9</span><span> block2    unit9      treat2  
+#&gt; </span><span style='color: #555555;'>10</span><span> block2    unit10     treat1  
+#&gt; </span><span style='color: #555555;'># … with 44 more rows</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
