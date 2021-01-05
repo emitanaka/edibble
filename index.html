@@ -211,7 +211,7 @@
 <span class="co">#&gt;   ◯ This design is balanced for the given numbers.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;   ── edibble code ────────────────────────────────────────────────────────────────</span>
-<span class="co">#&gt; set.seed(1609836870)</span>
+<span class="co">#&gt; set.seed(1609849707)</span>
 <span class="co">#&gt; start_design("crd") %&gt;%</span>
 <span class="co">#&gt;   set_units(unit = 30) %&gt;%</span>
 <span class="co">#&gt;   set_trts(treat = 5) %&gt;%</span>
@@ -223,22 +223,22 @@
 <span class="co">#&gt; # An edibble: 30 x 2</span>
 <span class="co">#&gt;    unit       treat   </span>
 <span class="co">#&gt;    &lt;unit(30)&gt; &lt;trt(5)&gt;</span>
-<span class="co">#&gt;  1 unit1      treat2  </span>
-<span class="co">#&gt;  2 unit2      treat2  </span>
+<span class="co">#&gt;  1 unit1      treat3  </span>
+<span class="co">#&gt;  2 unit2      treat3  </span>
 <span class="co">#&gt;  3 unit3      treat5  </span>
-<span class="co">#&gt;  4 unit4      treat1  </span>
-<span class="co">#&gt;  5 unit5      treat4  </span>
+<span class="co">#&gt;  4 unit4      treat5  </span>
+<span class="co">#&gt;  5 unit5      treat5  </span>
 <span class="co">#&gt;  6 unit6      treat4  </span>
-<span class="co">#&gt;  7 unit7      treat3  </span>
+<span class="co">#&gt;  7 unit7      treat2  </span>
 <span class="co">#&gt;  8 unit8      treat3  </span>
-<span class="co">#&gt;  9 unit9      treat4  </span>
-<span class="co">#&gt; 10 unit10     treat1  </span>
+<span class="co">#&gt;  9 unit9      treat3  </span>
+<span class="co">#&gt; 10 unit10     treat2  </span>
 <span class="co">#&gt; # … with 20 more rows</span>
 
 <span class="fu"><a href="reference/make_classical.html">code_classical</a></span><span class="op">(</span><span class="st">"rcbd"</span>, t <span class="op">=</span> <span class="fl">4</span>, n <span class="op">=</span> <span class="fl">40</span><span class="op">)</span>
-<span class="co">#&gt; set.seed(1609836870)</span>
+<span class="co">#&gt; set.seed(1609849708)</span>
 <span class="co">#&gt; start_design("rcbd") %&gt;%</span>
-<span class="co">#&gt;   set_units(block = 5,</span>
+<span class="co">#&gt;   set_units(block = 7,</span>
 <span class="co">#&gt;             unit = nested_in(block, 4)) %&gt;%</span>
 <span class="co">#&gt;   set_trts(treat = 4) %&gt;%</span>
 <span class="co">#&gt;   allocate_trts(treat ~ unit) %&gt;%</span>
@@ -252,12 +252,14 @@
 <h2 class="hasAnchor">
 <a href="#context-of-the-experiment" class="anchor"></a>Context of the experiment</h2>
 <p>In designing an experiment, there may be certain context of the experiment that are important but aren’t utilised in the design of the experiment. You can add notes about the experiment in the <code><a href="reference/add_context.html">add_context()</a></code>.</p>
-<p>These are shown when you print your intermediate construct of the design to remind you about some context of the experiment. I think these steps are important since you may come to realise later some of the context may need to be properly accounted for in the design later, or if there are unexpected results in the experiment, these notes may aid you in uncovering some unexpected sources of variation.</p>
+<p>These are shown when you print your intermediate construct of the design to remind you about some context of the experiment. I think these steps are important since you may come to realise later some of the context may need to be properly accounted for in the design later, or if there are unexpected results in the experiment, these notes may aid you in uncovering some unexpected sources of variation. For longer form contexts, it’s better to write them to an external file and you can write the name of the file in context.</p>
+<p>The idea here is that the user is reminded about the experimental context but also these contexts can also be exported out together with the design table. Many experimental design software assume that the user knows what experimental design to implement from the get-go, but in practice there may be a lot of back-and-forth with the domain experts or others involved in the experiment. edibble tries to aid in the whole workflow and not just the design generation process.</p>
 <pre class="asciicast"><code>des &lt;- start_design("COVID-19") %&gt;%
   add_context(question = "Is the vaccine effective?",
               where = "Tested in the lab",
               "experiment is blinded",
-              "experiment is carried out by one technician") %&gt;% 
+              "experiment is carried out by one technician",
+              "More details are in {.file experimental-details.txt}.") %&gt;% 
   set_units(rat = 20) %&gt;% 
   set_trts(treat = c("A", "B")) 
 des</code></pre>
