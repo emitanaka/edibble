@@ -223,7 +223,7 @@ under Details for the available named designs.</p></td>
     <pre class="examples"><div class='input'><span class='fu'>make_classical</span><span class='op'>(</span><span class='st'>"crd"</span>, n <span class='op'>=</span> <span class='fl'>50</span>, t <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>experimental design details</span><span> </span><span style='color: #00BBBB;'>─────────────────────────────────────────────────</span><span></span></div><div class='output co'>#&gt; <span class='message'>● This experimental design is often called </span><span style='font-style: italic;'>Completely Randomised Design</span><span>.</span></div><div class='output co'>#&gt; <span class='message'>● You can change the number in </span><span style='color: #000000;background-color: #BBBBBB;'>`set.seed`</span><span> to get another random instance of</span>
 #&gt; <span class='message'>  the same design.</span></div><div class='output co'>#&gt; <span class='message'>● This design has a total of </span><span style='color: #BBBB00;background-color: #000000;'>50 units</span><span> testing a total of </span><span style='color: #0000BB;'>5 treatments</span><span>.</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #555555;'>The following information is only true for the chosen parameters and not</span><span></span>
-#&gt; <span class='message'></span><span style='color: #555555;'>necessary true for all Completely Randomised Designs.</span><span></span></div><div class='output co'>#&gt; <span class='message'>  ◯ This design is </span><span style='font-style: italic;'>balanced</span><span> for the given numbers.</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>  </span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>edibble code</span><span> </span><span style='color: #00BBBB;'>────────────────────────────────────────────────────────────────</span><span></span></div><div class='output co'>#&gt; set.seed(1609837008)
+#&gt; <span class='message'></span><span style='color: #555555;'>necessary true for all Completely Randomised Designs.</span><span></span></div><div class='output co'>#&gt; <span class='message'>  ◯ This design is </span><span style='font-style: italic;'>balanced</span><span> for the given numbers.</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>  </span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>edibble code</span><span> </span><span style='color: #00BBBB;'>────────────────────────────────────────────────────────────────</span><span></span></div><div class='output co'>#&gt; set.seed(1609837169)
 #&gt; start_design("crd") %&gt;%
 #&gt;   set_units(</span><span style='color: #BBBB00;background-color: #000000;'>unit</span><span> = 50) %&gt;%
 #&gt;   set_trts(</span><span style='color: #0000BB;'>treat</span><span> = 5) %&gt;%
@@ -232,16 +232,16 @@ under Details for the available named designs.</p></td>
 #&gt;   serve_table() </div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>  </span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>edibble data frame</span><span> </span><span style='color: #00BBBB;'>──────────────────────────────────────────────────────────</span><span></span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># An edibble: 50 x 2</span><span>
 #&gt;    unit       treat   
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;unit(50)&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;trt(5)&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> unit1      treat2  
+#&gt; </span><span style='color: #555555;'> 1</span><span> unit1      treat3  
 #&gt; </span><span style='color: #555555;'> 2</span><span> unit2      treat1  
-#&gt; </span><span style='color: #555555;'> 3</span><span> unit3      treat5  
-#&gt; </span><span style='color: #555555;'> 4</span><span> unit4      treat2  
-#&gt; </span><span style='color: #555555;'> 5</span><span> unit5      treat5  
-#&gt; </span><span style='color: #555555;'> 6</span><span> unit6      treat5  
-#&gt; </span><span style='color: #555555;'> 7</span><span> unit7      treat1  
-#&gt; </span><span style='color: #555555;'> 8</span><span> unit8      treat3  
-#&gt; </span><span style='color: #555555;'> 9</span><span> unit9      treat2  
-#&gt; </span><span style='color: #555555;'>10</span><span> unit10     treat4  
+#&gt; </span><span style='color: #555555;'> 3</span><span> unit3      treat4  
+#&gt; </span><span style='color: #555555;'> 4</span><span> unit4      treat5  
+#&gt; </span><span style='color: #555555;'> 5</span><span> unit5      treat1  
+#&gt; </span><span style='color: #555555;'> 6</span><span> unit6      treat1  
+#&gt; </span><span style='color: #555555;'> 7</span><span> unit7      treat3  
+#&gt; </span><span style='color: #555555;'> 8</span><span> unit8      treat4  
+#&gt; </span><span style='color: #555555;'> 9</span><span> unit9      treat1  
+#&gt; </span><span style='color: #555555;'>10</span><span> unit10     treat5  
 #&gt; </span><span style='color: #555555;'># … with 40 more rows</span><span></div><div class='input'>
 </div></span></pre>
   </div>
