@@ -179,7 +179,7 @@ make_classical("crd", n = 30, t = 5)
 #>   ◯ This design is balanced for the given numbers.
 #> 
 #>   ── edibble code ────────────────────────────────────────────────────────────────
-#> set.seed(1609836870)
+#> set.seed(1609849707)
 #> start_design("crd") %>%
 #>   set_units(unit = 30) %>%
 #>   set_trts(treat = 5) %>%
@@ -191,22 +191,22 @@ make_classical("crd", n = 30, t = 5)
 #> # An edibble: 30 x 2
 #>    unit       treat   
 #>    <unit(30)> <trt(5)>
-#>  1 unit1      treat2  
-#>  2 unit2      treat2  
+#>  1 unit1      treat3  
+#>  2 unit2      treat3  
 #>  3 unit3      treat5  
-#>  4 unit4      treat1  
-#>  5 unit5      treat4  
+#>  4 unit4      treat5  
+#>  5 unit5      treat5  
 #>  6 unit6      treat4  
-#>  7 unit7      treat3  
+#>  7 unit7      treat2  
 #>  8 unit8      treat3  
-#>  9 unit9      treat4  
-#> 10 unit10     treat1  
+#>  9 unit9      treat3  
+#> 10 unit10     treat2  
 #> # … with 20 more rows
 
 code_classical("rcbd", t = 4, n = 40)
-#> set.seed(1609836870)
+#> set.seed(1609849708)
 #> start_design("rcbd") %>%
-#>   set_units(block = 5,
+#>   set_units(block = 7,
 #>             unit = nested_in(block, 4)) %>%
 #>   set_trts(treat = 4) %>%
 #>   allocate_trts(treat ~ unit) %>%
@@ -235,14 +235,25 @@ to remind you about some context of the experiment. I think these steps
 are important since you may come to realise later some of the context
 may need to be properly accounted for in the design later, or if there
 are unexpected results in the experiment, these notes may aid you in
-uncovering some unexpected sources of variation.
+uncovering some unexpected sources of variation. For longer form
+contexts, it’s better to write them to an external file and you can
+write the name of the file in context.
+
+The idea here is that the user is reminded about the experimental
+context but also these contexts can also be exported out together with
+the design table. Many experimental design software assume that the user
+knows what experimental design to implement from the get-go, but in
+practice there may be a lot of back-and-forth with the domain experts or
+others involved in the experiment. edibble tries to aid in the whole
+workflow and not just the design generation process.
 
 ``` asciicast
 des <- start_design("COVID-19") %>%
   add_context(question = "Is the vaccine effective?",
               where = "Tested in the lab",
               "experiment is blinded",
-              "experiment is carried out by one technician") %>% 
+              "experiment is carried out by one technician",
+              "More details are in {.file experimental-details.txt}.") %>% 
   set_units(rat = 20) %>% 
   set_trts(treat = c("A", "B")) 
 des
