@@ -338,22 +338,3 @@ find_classical_names <- function(pkgs = NULL) {
   }
   invisible(short_names)
 }
-
-
-
-
-#' A list of classical experimental designs
-#'
-#' A list of some classical experimental designs as either `edbl_graph`
-#' or `edbl_df` object. The designs included are:
-#' \describe{
-#'   \item{CRD} Completely randomised design.
-#'   \item{RCBD} Randomised complete block design.
-#'   \item{SPD} Split plot design.
-#' }
-#' @name classics
-"nclassics"
-
-
-#' @rdname classics
-"classics"

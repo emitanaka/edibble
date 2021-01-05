@@ -14,3 +14,6 @@ template:
   params:
     bootswatch: united
     ganalytics: G-7HJYKJBM5E
+    docsearch:
+      api_key: 12ac28b2a1c1bed41e27966b7b482faf
+      index_name: edibble
