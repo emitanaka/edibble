@@ -104,12 +104,12 @@ subset_levels(rcbd$graph) %>%
 
 ## Named experimental designs
 
-While named experimental designs can be muddling to understanding the experimental structure, it is still convenient to be able to concisely describe common structures. I take a compromising approach where named experimental designs can be generated concisely using the `create_classic` function. The output contains information about the design, the code to generate the design using edibble that can be easily copy-and-pasted and the output data frame. If you want the edibble code alone then you can just use `create_classic_code`.
+While named experimental designs can be muddling to understanding the experimental structure, it is still convenient to be able to concisely describe common structures. I take a compromising approach where named experimental designs can be generated concisely using the `make_classical` function. The output contains information about the design, the code to generate the design using edibble that can be easily copy-and-pasted and the output data frame. If you want the edibble code alone then you can just use `code_classical`.
 
 ```{r}
-create_classic("crd", n = 30, t = 5)
+make_classical("crd", n = 30, t = 5)
 
-create_classic_code("rcbd", t = 4, n = 40)
+code_classical("rcbd", t = 4, n = 40)
 ```
 
 The terminal output has color. You can see the terminal output below for the Split-plot design.
@@ -127,7 +127,7 @@ asciicast::init_knitr_engine(
 
 
 ```{asciicast split-plot-print}
-create_classic("split", t1 = 4, t2  = 2, r = 4)
+make_classical("split", t1 = 4, t2  = 2, r = 4)
 ```
 
 ## Context of the experiment

@@ -35,7 +35,6 @@ names_vars <- function(.data, ...) {
 }
 
 #' @rdname names-ed-vars
-#' @importFrom rlang %||%
 #' @importFrom igraph V
 #' @export
 names_vars.edbl_graph <- function(.data, class = NULL) {
@@ -45,7 +44,6 @@ names_vars.edbl_graph <- function(.data, class = NULL) {
 }
 
 #' @rdname names-ed-vars
-#' @importFrom rlang %||%
 #' @export
 names_vars.edbl_df <- function(.data, class = NULL) {
   class <- class %||% map_chr(.data, class)
@@ -62,23 +60,10 @@ names.edbl_graph <- function(.data, label = TRUE) {
 }
 
 #' @rdname names-ed-vars
+#' @importFrom igraph set_vertex_attr
 #' @export
 `names<-.edbl_graph` <- function(x, value) {
-  igraph::set_vertex_attr(x, "vname", value = value)
+  set_vertex_attr(x, "vname", value = value)
 }
 
-#' @importFrom rlang %||%
-#' @export
-names_eunit <- function(.data, trt = NULL) {
-  trt <- trt %||% names_trt(.data)
-  vunit <- igraph::neighbors(.data, var_index(.data, trt), mode = "out")
-  var_names(.data, vunit)
-}
 
-#' @importFrom rlang %||%
-#' @export
-names_ounit <- function(.data, resp = NULL) {
-  resp <- resp %||% names_resp(.data)
-  vunit <- igraph::neighbors(.data, var_index(.data, resp), mode = "out")
-  var_names(.data, vunit)
-}

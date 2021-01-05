@@ -1,5 +1,6 @@
 #' @aliases edibble-package
-#' @import rlang vctrs
+#' @importFrom rlang %||% is_null is_empty is_named list2 abort warn
+#' @importFrom igraph V E
 #' @keywords internal
 "_PACKAGE"
 

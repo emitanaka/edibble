@@ -14,9 +14,6 @@
 #' @export
 start_design <- function(name = NULL) {
   EdibbleDesign$new(name = name)
-  #name <- name %||% "An edibble design"
-  #out <- igraph::set_graph_attr(igraph::make_empty_graph(), "name", name)
-  #structure(out, class = c("edbl_graph", class(out)))
 }
 
 #' @export
@@ -50,7 +47,8 @@ initiate_design <- function(name = NULL) {
 #' ## ├─subplot (8 levels)
 #' ## ├─variety (2 levels)
 #' ## └─irrigation (2 levels)
-#' @importFrom rlang %||%
+#' @importFrom igraph V vertex_attr neighbors
+#' @importFrom cli tree
 #'
 #' @export
 print.edbl_graph <- function(.data,
@@ -61,7 +59,7 @@ print.edbl_graph <- function(.data,
                              decorate_main  = edibble_decorate("main"),
                              main = NULL) {
 
-  main <- main %||% igraph::graph_attr(.data, "name") %||% "An edibble design"
+  main <- main %||% "An edibble design"
   vgraph <- subset_vars(.data)
   gnames <- V(vgraph)$name
 
@@ -82,8 +80,8 @@ print.edbl_graph <- function(.data,
     nvar <- length(gnames)
     ll <- lapply(V(vgraph),
               function(v) {
-                  class <- igraph::vertex_attr(vgraph, "class", v)
-                  children <- igraph::neighbors(vgraph, v, mode = "out")
+                  class <- vertex_attr(vgraph, "class", v)
+                  children <- neighbors(vgraph, v, mode = "out")
                   if(class!="edbl_trt" & !is_empty(children)) {
                     gnames[children]
                   } else {
@@ -96,7 +94,7 @@ print.edbl_graph <- function(.data,
                        label = c(decorate_main(main),
                                  paste(label_names, map_chr(var_nlevels, decorate_levels))))
   }
-  cat(cli::tree(data, root = "root"), sep = "\n")
+  cat(tree(data, root = "root"), sep = "\n")
 }
 
 
@@ -167,13 +165,13 @@ edibble <- function(.data, ..., units = NULL, trts = NULL) {
 #' @param ... Passed to `new_tibble`.
 #' @param graph An edibble graph object.
 #' @param class Subclasses for edibble. The default is NULL.
-#'
+#' @importFrom tibble new_tibble
 #' @importFrom vctrs vec_size_common
 #' @importFrom rlang !!!
 #'
 #' @export
 new_edibble <- function(.data, ..., graph = NULL, class = NULL) {
-  tibble::new_tibble(.data, ..., nrow = vec_size_common(!!!.data),
+  new_tibble(.data, ..., nrow = vec_size_common(!!!.data),
                      class = "edbl_df", graph = graph)
 }
 

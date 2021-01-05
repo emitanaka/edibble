@@ -1,23 +1,23 @@
 
-#' Create some classical named experimental designs
+#' Create a classical named experimental design
 #'
 #' @description
-#' This function creates some classical named experimental designs.
+#' The function `make_classical` generates a classical named experimental
+#' design by supplying its short name and prints out, by default:
 #'
-#' @param name The short name of the classical named experiment design. See
+#' * `.info`: information about the named experimental design,
+#' * `.code`: code to create the design using edibble, and
+#' * `.table`: an edibble data frame for the generated design.
+#'
+#' You can find the available short names with `find_classical_names()`.
+#'
+#'
+#' @param .name The short name of the classical named experimental design. See
 #'   under Details for the available named designs.
-#' @param t The number of treatments testing.
-#' @param r The total number of replicates if applicable.
-#' @param b The total number of blocks if applicable.
-#' @param n The total number of observations if applicable.
-#' @param t1 The number of levels for the first treatment factor.
-#' @param t2 The number of levels for the second treatment factor.
-#' @param output Show the info, code and print outputs? Default is TRUE.
-#' @param info Show information on design. Default is TRUE.
-#' @param code Show the edibble code for generating the design. Default is
-#'  TRUE.
-#' @param print Show the print out of the return object. Default is TRUE.
-#'
+#' @param .output A short hand to turn all printing on or off. Default is TRUE.
+#' @param .info,.code,.table A logical to turn on or off for their respective parts.
+#' @param ... Parameters passed into the `prep_classical_*` functions.
+#' @param .quiet Opposite of `.code`. Whether to suppress code output.
 #' @details
 #'
 #' For The available named designs are:
@@ -27,195 +27,313 @@
 #' * "split": split plot design
 #'
 #' @examples
-#' create_classic("crd", n = 50, t = 5)
+#' make_classical("crd", n = 50, t = 5)
 #'
+#' @importFrom cli cli_h1 cli_ul cli_end cli_h2 col_grey style_italic ansi_strip
 #' @export
-create_classic <- function(name = c("crd", "rcbd", "split"),
-                            r = NULL, t = NULL, n = NULL,
-                            t1 = t, t2 = NULL, b = r, seed = 2020,
-                            output = TRUE,
-                            code = output, info = output, print = output, ...) {
-  fn_args <- as.list(match.call())[-1]
-  des <- do.call(create_classic_code, c(fn_args, list(quiet = TRUE)))
+make_classical <- function(.name = "", ..., .seed = as.integer(Sys.time()),
+                            .output = TRUE, .code = .output, .info = .output,
+                            .table = .output) {
 
-  if(info) {
-    cli::cli_h1("experimental design details")
-    cli::cli_ul()
-    cli::cli_li("This experimental design is often called
-           {.emph {des$name_full}}.")
-    cli::cli_li("You can change the number in {.code set.seed} to get another random
+  des <- do.call(code_classical, c(list(.name = .name, .seed = .seed,
+                                        .quiet = .code), list2(...)))
+
+  if(.info) {
+    cli_h1("experimental design details")
+    cli_ul()
+    cli_li("This experimental design is often called
+           {.combine_words(des$name_full, and = ' or ', fun = style_italic)}.")
+    cli_li("You can change the number in {.code set.seed} to get another random
            instance of the same design.")
-    cli::cli_li("This design has a total of
-           {des$decorate_units(paste(des$args$n, 'units'))}
+    cli_li("This design has a total of
+           {des$decorate_units(paste(des$n, 'units'))}
            testing a total of
-           {des$decorate_trts(paste(des$args$t, 'treatments'))}.")
-    cli::cli_li(des$info)
-    cli::cli_end()
+           {des$decorate_trts(paste(des$t, 'treatments'))}.")
+    if(!is_empty(des$info_always)) {
+      cli_li(des$info_always)
+    } else if(!is_empty(des$info_this)) {
+      cli_end()
+      cli_text(col_grey("The following information is only true for the
+                        chosen parameters and not necessary true for all
+                        {des$name_full}s."))
+      cli_ul()
+      cli_li(des$info_this)
+    }
+    cli_end()
   }
 
-  if(code) {
-    cli::cli_h1("edibble code")
+  if(.code) {
+    cli_h1("edibble code")
     cat(des$code, "\n")
   }
 
-  df <- eval(parse(text = cli::ansi_strip(des$code)))
+  df <- eval(parse(text = ansi_strip(des$code)))
 
-  if(print) {
-    cli::cli_h1("edibble data frame")
+  if(.table) {
+    cli_h1("edibble data frame")
     print(df)
   }
 
   return(invisible(df))
 }
 
-#' @rdname create_classic
+#' @rdname make_classical
 #' @export
-create_classic_code <- function(name = c("crd", "rcbd", "spd"),
-                                 r = NULL, t = NULL, n = NULL,
-                                 t1 = t, t2 = NULL, b = r,
-                                 seed = 2020, ..., quiet = FALSE) {
-  fn_args <- as.list(match.call())[-1]
-  if(!"seed" %in% names(fn_args)) fn_args <- c(fn_args, list(seed = seed))
-  des <- do.call(paste0("classical_", name), fn_args)
-  if(!quiet) cat(des$code)
+code_classical <- function(.name = "", .seed = as.integer(Sys.time()),
+                           ..., .quiet = FALSE) {
+
+  des <- do.call(paste0("prep_classical_", .name), list2(...))
+  des$add_seed(.seed)
+  if(!.quiet) cat(des$code)
   invisible(des)
 }
 
-classical_crd <- function(name, seed, t, r, n, ...) {
-  fn_args <- as.list(match.call())[-1]
-  des <- NamedDesign$new(name, seed, fn_args)
-  des$add_info(paste0("This design is balanced."))
-  des$name_full <- "Completely Randomised Design"
-  des$args_req("t")
-  des$args_opt("r" = n / t, "n" = r * t)
-  des$add(paste0("set_units(",
+# randomly chose a design
+#' @importFrom cli cli_alert
+prep_classical_ <- function(...) {
+  cli_alert("No name was supplied so selecting a random named experimental design...")
+  .name <- sample(suppressMessages(find_classical_names()), 1L)
+  do.call(paste0("prep_classical_", .name), list2(...))
+}
+
+#' @importFrom cli style_italic
+prep_classical_crd <- function(t = 1 + sample(10, 1), n = t + sample(100, 1),
+                               r = n / t) {
+
+  # checks
+  if(!missing(n) & !missing(r)) {
+    abort("You cannot define both `n` and `r`.")
+  }
+  if(missing(n) & !missing(r)) {
+    n <- r * t
+  }
+
+  # des
+  des <- NamedDesign$new(name = "crd",
+                         name_full = "Completely Randomised Design",
+                         n = n,
+                         t = t)
+  if(r %% 1 == 0) {
+    des$add_info(paste0("This design is ", style_italic("balanced"),
+                        " for the given numbers."),
+                 always = FALSE)
+  }
+
+  des$add_code(paste0("set_units(",
                  des$decorate_units("unit"),
-                 " = ", des$args$n, ")"))
-  des$add(paste0("set_trts(",
+                 " = ", n, ")"))
+  des$add_code(paste0("set_trts(",
                  des$decorate_trts("treat"),
-                 " = ", des$args$t, ")"))
-  des$add(paste0("allocate_trts(",
+                 " = ", t, ")"))
+  des$add_code(paste0("allocate_trts(",
                  des$decorate_trts("treat"),
                  " ~ ", des$decorate_units("unit"), ")"))
-  des$final()
+  des$final_code()
+
   des
 }
 
-classical_rcbd <- function(name, seed, t, r, b, n, ...) {
-  fn_args <- as.list(match.call())[-1]
-  des <- NamedDesign$new(name, seed, fn_args)
-  des$name_full <- "Randomised Complete Block Design"
+#' @importFrom cli style_italic
+prep_classical_rcbd <- function(t = 1 + sample(10, 1),
+                                b = 1 + sample(10, 1), r = b, n = b * t) {
+
+  if(sum(!missing(b), !missing(r), !missing(n)) > 1) {
+    abort("Only one of `b`, `r` and `n` can be defined.")
+  }
+  if(missing(b) & !missing(r) & missing(n))  {
+    n <- r * t
+    b <- r
+  }
+  r <- n / t
+  if(r %% 1 != 0) abort("The replication will not a whole number based on chosen `n` and `t`.")
+
+  des <- NamedDesign$new(name = "rcbd",
+                         name_full = "Randomised Complete Block Design",
+                         n = n,
+                         t = t)
   des$add_info(paste0("This design is ",
-                      cli::style_italic("balanced"),
-                      " and ", cli::style_italic("complete"), "."))
-  des$args_req("t")
-  # need OR
-  # what if not divisible??
-  des$args_opt("r" = n / t, "b" = n / t, "n" = b * t)
-  des$add(paste0("set_units(", des$decorate_units("block"), " = ",
-                 des$args$b, ",\n",
+                      style_italic("balanced"),
+                      " and ", style_italic("complete"), "."),
+               always = TRUE)
+  des$add_code(paste0("set_units(", des$decorate_units("block"), " = ",
+                 b, ",\n",
                  "            ", des$decorate_units("unit"),
                  " = nested_in(", des$decorate_units("block"),
-                 ", ", des$args$t, "))"))
-  des$add(paste0("set_trts(",
+                 ", ", t, "))"))
+  des$add_code(paste0("set_trts(",
                  des$decorate_trts("treat"),
-                 " = ", des$args$t, ")"))
-  des$add(paste0("allocate_trts(",
+                 " = ", t, ")"))
+  des$add_code(paste0("allocate_trts(",
                  des$decorate_trts("treat"),
                  " ~ ", des$decorate_units("unit"), ")"))
-  des$final()
+  des$final_code()
   des
 }
 
-classical_split <- function(name, seed, t1, t2, r, ...) {
-  fn_args <- as.list(match.call())[-1]
-  des <- NamedDesign$new(name, seed, fn_args)
-  des$args$n <- t1 * t2 * r
-  des$args$t <- t1 * t2
-  des$add_info(paste0("This design is ", cli::style_italic("balanced.")))
-  des$name_full <- c("Split-Plot Design", "Split-Unit Design")
-  des$args_req(c("t1", "t2", "r"))
-  des$add(paste0("set_units(", des$decorate_units("mainplot"), " = ",
-                 des$args$t1 * des$args$r, ",\n",
+#' @importFrom cli style_italic
+prep_classical_split <- function(t1 = 1 + sample(10, 1),
+                                 t2 = 1 + sample(10, 1),
+                                  r = 1 + sample(10, 1)) {
+
+  des <- NamedDesign$new(name = "split",
+                         name_full = c("Split-Plot Design", "Split-Unit Design"),
+                         n = t1 * t2 * r,
+                         t = t1 * t2)
+  des$add_info(paste0("This design is ", style_italic("balanced.")),
+               always = TRUE)
+  des$add_code(paste0("set_units(", des$decorate_units("mainplot"), " = ",
+                 t1 * r, ",\n",
                  "            ", des$decorate_units("subplot"),
                  " = nested_in(", des$decorate_units("mainplot"),
-                 ", ", des$args$t2, "))"))
-  des$add(paste0("set_trts(",
+                 ", ", t2, "))"))
+  des$add_code(paste0("set_trts(",
                  des$decorate_trts("treat1"),
-                 " = ", des$args$t1, ",\n           ",
-                 des$decorate_trts("treat2"), " = ", des$args$t2,
+                 " = ", t1, ",\n           ",
+                 des$decorate_trts("treat2"), " = ", t2,
                  ")"))
-  des$add(paste0("allocate_trts(",
+  des$add_code(paste0("allocate_trts(",
                  des$decorate_trts("treat1"),
                  " ~ ", des$decorate_units("mainplot"), ",\n                ",
                  des$decorate_trts("treat2"),
                  " ~ ", des$decorate_units("subplot"), ")"))
-  des$final()
+  des$final_code()
   des
 }
 
-
+#' An R6 Class for a named experimental design
+#'
+#' @importFrom rlang eval_tidy
 NamedDesign <- R6::R6Class("NamedDesign",
      public = list(
-       initialize = function(name, seed, args) {
+       #' @field name The short name of the experimental design.
+       name = NULL,
+
+       #' @field name_full The full name of the experimental design.
+       name_full = NULL,
+
+       #' @field code The code, based on the grammar of experimental design,
+       #'  to generate the experimental design.
+       code = "",
+
+       #' @field n The total number of experimental units.
+       n = NULL,
+
+       #' @field t The total number of treatments tested.
+       t = NULL,
+
+       #' @field info_always A character vector containing information or properties
+       #' that is always true for this named design.  Each entry in the vector forms
+       #' a dot point.
+       info_always = NULL,
+
+       #' @field info_this A character vector containing information or properties
+       #' that is true for this named design for the chosen parameters.
+       info_this = NULL,
+
+       #' @description
+       #' Initialise the named design.
+       #' @param name Short name.
+       #' @param name_full The full name of the design.
+       #' @param seed The seed number.
+       #' @param n Total number of experimental units.
+       #' @param t Total number of treatments tested.
+       initialize = function(name, name_full = name, n, t) {
         self$name <- name
-        self$name_full <- name
-        self$code <- paste0("set.seed(", seed, ")\n",
-                            "start_design(\"", name, "\")")
-        self$args <- args
+        self$name_full <- name_full
+        self$code <- paste0("start_design(\"", name, "\")")
+        self$n <- n
+        self$t <- t
        },
 
-       add = function(line) {
-         self$code <- paste0(self$code, " %>%\n  ", line)
+       #' @description
+       #' Append code.
+       #' @param x A string specifying the code to append.
+       add_code = function(x) {
+         self$code <- paste0(self$code, " %>%\n  ", x)
        },
 
-       add_info = function(x) {
-         self$info <- c(self$info, x)
+       #' @description
+       #' Add code to set seed at the beginning.
+       #' @param seed The seed number.
+       add_seed = function(seed) {
+         self$code <- paste0("set.seed(", seed, ")\n", self$code)
        },
 
-       args_req = function(x = NULL) {
-         if(!is_null(x) && !all(x %in% names(self$args))) {
-           abort("Required arguments are missing.")
-         }
-       },
-
-       args_opt = function(...) {
-         vals <- enquos(...)
-         ones <- names(vals)
-         arg_names <- names(self$args)
-         if(!is_null(ones) && sum(arg_names %in% ones)!=1) {
-           abort("Unnecessary arguments defined.")
+       #' @description
+       #' Add information about the named design.
+       #' @param x A string specifying one info about a design.
+       #' @param always A logical to specify whether the added information is
+       #'  always true for this this design or only for the given parameter.
+       #'  Default is FALSE.
+       add_info = function(x, always = FALSE) {
+         if(always) {
+           self$info_always <- c(self$info_always, x)
          } else {
-           one <- vals[!ones %in% arg_names]
-           val <- eval_tidy(one[[1]], self$args)
-           if(val %% 1 !=0 ) {
-             abort(paste0("The supplied argument cannot be used to",
-                   " construct \"", self$name, "\"."))
-           }
-           self$args[names(one)] <- val
+           self$info_this <- c(self$info_this, x)
          }
        },
 
-       final = function() {
+       #' @description
+       #' This adds the final bit of code needed to generate the edibble
+       #' data frame.
+       final_code = function() {
          self$code <- paste0(self$code,
                 " %>%\n  randomise_trts()",
                 " %>%\n  serve_table()")
        },
 
+       #' @description
+       #' A function to decorate units.
+       #' @param x A string to decorate.
        decorate_units = function(x) {
          edibble_decorate("units")(x)
        },
 
+       #' @description
+       #' A function to decorate treatments.
+       #' @param x A string to decorate.
        decorate_trts = function(x) {
          edibble_decorate("trts")(x)
-       },
-
-       name = NULL,
-       name_full = NULL,
-       code = "",
-       args = NULL,
-       info = NULL
+       }
      ))
+
+#' Find the short names of the classical named designs
+#'
+#' @param pkgs A character vector containing the package names to search classical
+#' named designs from. By default it will search edibble and other packages loaded.
+#'
+#' @export
+find_classical_names <- function(pkgs = NULL) {
+  # ignore searching in base pkgs
+  base_pkgs <- c("stats", "graphics", "grDevices", "utils", "datasets",
+                 "methods", "base")
+  pkgs <- pkgs %||% setdiff(.packages(), base_pkgs)
+  pkgs <- unique(c(pkgs, "edibble")) # always add edibble whether it is loaded or not
+
+  ls_fns <- lapply(pkgs, function(pkg) {
+    fns <- unclass(lsf.str(envir = asNamespace(pkg), all = TRUE))
+    setdiff(fns[grep("^prep_classical_", fns)], "prep_classical_")
+  })
+  names(ls_fns) <- pkgs
+  ls_fns <- compact(ls_fns)
+
+  pkg_names <- names(ls_fns)
+  short_names <- NULL
+  for(i in seq_along(ls_fns)) {
+    cli_h2(pkg_names[i])
+    for(prep_fn in ls_fns[[i]]) {
+      args <- remove_names(as.list(formals(prep_fn)))
+      des <- do.call(prep_fn, args)
+      short_names <- c(short_names, set_names(des$name, pkg_names[i]))
+      cli_li("{.pkg {des$name}} with the arguments {.field {names(args)}}
+             for a {.combine_words(des$name_full, fun = style_bold, and = ' or a ')}.")
+    }
+  }
+  invisible(short_names)
+}
+
+
+
 
 #' A list of classical experimental designs
 #'

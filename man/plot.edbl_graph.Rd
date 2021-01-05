@@ -4,13 +4,7 @@
 \alias{plot.edbl_graph}
 \title{Plot graph of edibble variables}
 \usage{
-\method{plot}{edbl_graph}(
-  .data,
-  view = c("high", "low"),
-  ...,
-  layout = igraph::layout.auto,
-  main = NULL
-)
+\method{plot}{edbl_graph}(.data, view = c("high", "low"), ..., main = NULL)
 }
 \arguments{
 \item{.data}{An edibble graph.}
@@ -26,5 +20,4 @@ Plot graph of edibble variables
 }
 \examples{
 plot(.data, sample_levels(n = 30))
-
 }

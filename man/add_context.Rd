@@ -16,8 +16,8 @@ in string. Unnamed values will appended as points at the end.}
 By default it is TRUE.}
 }
 \description{
-This is just a function that stores a simple context. If the
-context already exists then it will be overwritten.
+This is a function that stores a simple context about the experiment.
+If the context already exists then it will be overwritten or ignored.
 }
 \examples{
 start_design("COVID-19") \%>\%

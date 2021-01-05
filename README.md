@@ -161,23 +161,25 @@ While named experimental designs can be muddling to understanding the
 experimental structure, it is still convenient to be able to concisely
 describe common structures. I take a compromising approach where named
 experimental designs can be generated concisely using the
-`create_classic` function. The output contains information about the
+`make_classical` function. The output contains information about the
 design, the code to generate the design using edibble that can be easily
 copy-and-pasted and the output data frame. If you want the edibble code
-alone then you can just use `create_classic_code`.
+alone then you can just use `code_classical`.
 
 ``` r
-create_classic("crd", n = 30, t = 5)
+make_classical("crd", n = 30, t = 5)
 #> 
 #> ── experimental design details ─────────────────────────────────────────────────
 #> ● This experimental design is often called Completely Randomised Design.
 #> ● You can change the number in `set.seed` to get another random instance of
 #>   the same design.
 #> ● This design has a total of 30 units testing a total of 5 treatments.
-#> ● This design is balanced.
+#> The following information is only true for the chosen parameters and not
+#> necessary true for all Completely Randomised Designs.
+#>   ◯ This design is balanced for the given numbers.
 #> 
-#> ── edibble code ────────────────────────────────────────────────────────────────
-#> set.seed(2020)
+#>   ── edibble code ────────────────────────────────────────────────────────────────
+#> set.seed(1609836270)
 #> start_design("crd") %>%
 #>   set_units(unit = 30) %>%
 #>   set_trts(treat = 5) %>%
@@ -185,26 +187,26 @@ create_classic("crd", n = 30, t = 5)
 #>   randomise_trts() %>%
 #>   serve_table()
 #> 
-#> ── edibble data frame ──────────────────────────────────────────────────────────
+#>   ── edibble data frame ──────────────────────────────────────────────────────────
 #> # An edibble: 30 x 2
 #>    unit       treat   
 #>    <unit(30)> <trt(5)>
-#>  1 unit1      treat4  
-#>  2 unit2      treat1  
+#>  1 unit1      treat1  
+#>  2 unit2      treat3  
 #>  3 unit3      treat1  
-#>  4 unit4      treat4  
-#>  5 unit5      treat2  
-#>  6 unit6      treat3  
-#>  7 unit7      treat3  
-#>  8 unit8      treat5  
-#>  9 unit9      treat3  
-#> 10 unit10     treat4  
+#>  4 unit4      treat2  
+#>  5 unit5      treat4  
+#>  6 unit6      treat2  
+#>  7 unit7      treat2  
+#>  8 unit8      treat4  
+#>  9 unit9      treat2  
+#> 10 unit10     treat1  
 #> # … with 20 more rows
 
-create_classic_code("rcbd", t = 4, n = 40)
-#> set.seed(2020)
+code_classical("rcbd", t = 4, n = 40)
+#> set.seed(1609836270)
 #> start_design("rcbd") %>%
-#>   set_units(block = 10,
+#>   set_units(block = 7,
 #>             unit = nested_in(block, 4)) %>%
 #>   set_trts(treat = 4) %>%
 #>   allocate_trts(treat ~ unit) %>%
@@ -216,7 +218,7 @@ The terminal output has color. You can see the terminal output below for
 the Split-plot design.
 
 ``` asciicast
-create_classic("split", t1 = 4, t2  = 2, r = 4)
+make_classical("split", t1 = 4, t2  = 2, r = 4)
 ```
 
 ![](man/figures/README-/split-plot-print.svg)<!-- -->

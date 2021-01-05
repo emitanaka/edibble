@@ -16,10 +16,12 @@ serve_table.EdibbleDesign <- function(.data, ...) {
 #' @param .data An `edbl_graph` object.
 #' @return An `edbl` data frame with columns defined by vertices and
 #' rows displayed only if the vertices are connected and reconcile for output.
+#' @importFrom igraph is_connected
+#' @importFrom rlang set_names
 #' @export
 serve_table.edbl_graph <- function(.data, ...) {
 
-  if(!igraph::is_connected(.data)) {
+  if(!is_connected(.data)) {
     lout <- serve_vars_not_reconciled(.data)
   } else {
     classes <- V(.data)$class
@@ -80,9 +82,10 @@ serve_unit_with_no_child <- function(.data, vname) {
                   class = var_class(.data, vname))
 }
 
+#' @importFrom igraph neighbors V
 get_vertex_child <- function(.data, vname) {
   vidx <- which(V(.data)$name==vname)
-  res <- setdiff(igraph::neighbors(.data, vidx, mode = "out"), vidx)
+  res <- setdiff(neighbors(.data, vidx, mode = "out"), vidx)
   if(length(res)) return(res)
   NULL
 }
@@ -91,9 +94,10 @@ serve_resps <- function(.data, lunits) {
 
 }
 
+#' @importFrom igraph degree V delete_vertices
 serve_units <- function(.data) {
   ugraph <- subset(.data, class=="edbl_unit", .vtype = "var")
-  leaves <- V(ugraph)$vname[igraph::degree(ugraph, mode = "out")==0]
+  leaves <- V(ugraph)$vname[degree(ugraph, mode = "out")==0]
   wgraph <- ugraph
   res <- list()
   while(length(leaves) > 0) {
@@ -108,12 +112,13 @@ serve_units <- function(.data) {
       })
     names(lvs) <- leaves
     res <- c(res, lvs)
-    wgraph <- igraph::delete_vertices(wgraph, V(wgraph)$name %in% leaves)
-    leaves <- V(wgraph)$name[igraph::degree(wgraph, mode = "out")==0]
+    wgraph <- delete_vertices(wgraph, V(wgraph)$name %in% leaves)
+    leaves <- V(wgraph)$name[degree(wgraph, mode = "out")==0]
   }
   res
 }
 
+#' @importFrom igraph V
 serve_trts <- function(.data, lunits) {
   ugraph <- subset(.data, class=="edbl_trt", .vtype = "var")
   vnames <- V(ugraph)$vname

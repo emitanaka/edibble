@@ -42,7 +42,7 @@ match_edge_seq <- function(.data, vnames_from, vnames_to) {
 #' @param vnames The vertex names.
 #' @export
 path_seq <- function(.data, vnames) {
-  if(length(vnames) > 0) {
+  if(!is_empty(vnames)) {
     vindex <- map_int(vnames, function(x) which(V(.data)$name==x))
     n <- length(vindex)
     data.frame(vindex[1:(n - 1)], vindex[2:n]) %>%
@@ -59,7 +59,7 @@ path_seq <- function(.data, vnames) {
 #' and the right-hand side is the levels of the new unit OR the number of levels
 #' @param .vname an optional variable name
 #' @return Returns an isolated graph
-#' @importFrom rlang enquos enquo quo_get_expr as_string
+#' @importFrom rlang enquos enquo quo_get_expr as_string f_lhs f_rhs
 #' @importFrom igraph add_vertices make_empty_graph add_edges set_graph_attr
 #' @export
 nested_in <- function(.var, ..., .vname) {

@@ -9,9 +9,10 @@ ed_levels <- function(x) {
   UseMethod("ed_levels")
 }
 
+#' @importFrom igraph induced_subgraph
 #' @export
 ed_levels.edbl_graph <- function(.data) {
-  vgraph <- igraph::induced_subgraph(.data, V(.data)$vtype=="var")
+  vgraph <- induced_subgraph(.data, V(.data)$vtype=="var")
   vnames <- V(vgraph)$name
   res <- lapply(vnames, function(vname) var_levels(.data, vname))
   names(res) <- vnames
@@ -30,8 +31,19 @@ decorate_vars <- function(x, decorate_units, decorate_trts, decorate_resp, class
   x
 }
 
-remove_nulls <- function(x) {
-  x[map_lgl(x, function(el) !is_null(el))]
+
+remove_nulls <- function(.x) {
+  .x[!vapply(.x, is.null, logical(1))]
+}
+
+# this is just a special case to remove names from `formals`
+#' @importFrom rlang is_symbol
+remove_names <- function(.x) {
+  .x[!vapply(.x, is_symbol, logical(1))]
+}
+
+compact <- function(.x) {
+  .x[!vapply(.x, is_empty, logical(1))]
 }
 
 
@@ -39,7 +51,7 @@ reset_graph_attr <- function(g1, g2) {
   attributes(g1) <- attribute(g2)
   g1
 }
-#' @export
+
 ed_levels.edbl <- function(x) {
   lapply(x, levels)
 }

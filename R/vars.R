@@ -21,7 +21,8 @@ set_vars <- function(.data, ...) {
   UseMethod("set_vars")
 }
 
-
+#' @importFrom rlang enquos
+#' @importFrom vctrs vec_as_names
 #' @export
 set_vars.edbl_graph <- function(.data, ..., .class = "edbl_var",
                                 .name_repair = c("check_unique", "unique", "universal", "minimal")) {
@@ -44,6 +45,9 @@ set_vars.edbl_graph <- function(.data, ..., .class = "edbl_var",
   structure(out, class = class(.data))
 }
 
+#' @importFrom rlang enquos
+#' @importFrom vctrs vec_as_names
+#' @importFrom tidyselect eval_select
 #' @export
 set_vars.edbl_df <- function(.data, ..., .attr = NULL,
                              .name_repair = c("check_unique", "unique", "universal", "minimal")) {
@@ -55,13 +59,12 @@ set_vars.edbl_df <- function(.data, ..., .attr = NULL,
   dots_names <- names(dots)
   vnames <- vec_as_names(c(names(.data), dots_names), repair = .name_repair)
 
-  loc <- tidyselect::eval_select(expr(c(...)), .data)
+  loc <- eval_select(expr(c(...)), .data)
 
 
   names(out) <- vnames
   out
 }
-
 
 
 var_class <- function(.data, vname) {
@@ -79,7 +82,7 @@ var_index <- function(.data, vname, var = FALSE) {
 #' @export
 var_names <- function(.data, vindex) {
   if(any(w <- V(.data)$vtype[vindex]!="var")) {
-    abort(glue::glue("The vertex index {vindex[w]} is not an edibble variable node."))
+    abort(paste0("The vertex index ", vindex[w], " is not an edibble variable node."))
   }
   V(.data)$name[vindex]
 }
@@ -137,6 +140,7 @@ traits <- function(labels = character(), levels = unique(labels), n = NULL,
 
 
 #' Constructor for an edibble variable
+#' @importFrom vctrs new_vctr
 new_edibble_var <- function(labels = character(), levels = unique(labels),
                             name = character(), rep = NULL, ..., class = NULL) {
   x <- new_vctr(labels, levels = levels, name = name,

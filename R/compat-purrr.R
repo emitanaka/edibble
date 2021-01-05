@@ -28,9 +28,9 @@ map_int <- function(.x, .f, ...) {
 map2 <- function(.x, .y, .f, ...) {
   out <- mapply(.f, .x, .y, MoreArgs = list(...), SIMPLIFY = FALSE)
   if (length(out) == length(.x)) {
-    set_names(out, names(.x))
+    setNames(out, names(.x))
   } else {
-    set_names(out, NULL)
+    setNames(out, NULL)
   }
 }
 

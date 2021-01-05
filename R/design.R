@@ -1,6 +1,6 @@
 
-#' @importFrom igraph E make_empty_graph set_graph_attr
-#' @importFrom cli cli_rule cli_text cli_li cli_end cli_ul
+#' @importFrom igraph make_empty_graph
+#' @importFrom cli cli_rule cli_text cli_ul cli_li
 EdibbleDesign <- R6::R6Class("EdibbleDesign",
     public = list(
 
@@ -22,6 +22,8 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
       },
 
       randomise_trts = function() {
+        if(!exists(".Random.seed")) set.seed(NULL)
+        private$.seed <- .Random.seed
         private$.graph <- randomise_trts(private$.graph)
         self
       },
@@ -110,5 +112,6 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
       .table = NULL,
       .active = "graph",
       .context = list(),
-      .muffle = FALSE
+      .muffle = FALSE,
+      .seed = NULL
     ))

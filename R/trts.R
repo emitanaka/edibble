@@ -31,6 +31,7 @@ allocate_trts <- function(.data, ..., class = NULL) {
 #' then the whole treatment is applied to the specified unit.
 #' @param class A sub-class. This is meant so that it can invoke the method
 #' `randomise_trts.class`.
+#' @importFrom rlang f_lhs
 #' @export
 allocate_trts_ext <- function(.data, ..., class = NULL) {
   # doesn't support : or * right now

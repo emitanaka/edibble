@@ -1,8 +1,9 @@
+#' @importFrom igraph neighbors V
 find_unit_parents <- function(.data, vname) {
   ugraph <- subset(.data, class=="edbl_unit", .vtype = "var")
   unit_vertex <- which(V(ugraph)$name==vname)
   # get direct parents
-  parent_vertices <- igraph::neighbors(ugraph, unit_vertex, mode = "in")
+  parent_vertices <- neighbors(ugraph, unit_vertex, mode = "in")
   if(length(parent_vertices) > 0) {
     var_names(ugraph, parent_vertices)
   } else {
@@ -21,13 +22,14 @@ find_unit_ancestors <- function(.data, vname) {
   ancestors
 }
 
+#' @importFrom igraph E ends
 endpoints <- function(.data, etype, vtype) {
   sgraph <- switch(vtype,
                    "var" = subset_vars(.data),
                    "level" = subset_levels(.data))
   ind <- which(E(sgraph)$etype == etype)
   es <- E(sgraph)[ind]
-  ends <- igraph::ends(sgraph, es)
+  ends <- ends(sgraph, es)
   from <- ends[, 1]
   to <- ends[, 2]
   data.frame(from = from, to = to, es = as.numeric(es), stringsAsFactors = FALSE)
@@ -105,6 +107,8 @@ rep_rpbl <- function(.data, times, length.out) {
 }
 
 
+#' @importFrom dae designRandomize
+#' @importFrom igraph add_edges delete_edges
 #' @export
 randomise_trts.edbl_graph <- function(.data) {
   unit_to_trts_list <- unit_to_trts(.data)
@@ -166,12 +170,12 @@ randomise_trts.edbl_graph <- function(.data) {
 
     # unfortunately this doesn't work since I label nested factors uniquely
     if(length(nesting) > 0) {
-      des <- dae::designRandomize(allocated = trts_df,
+      des <- designRandomize(allocated = trts_df,
                                   recipient = units_df,
                                   nested.recipients = nesting)
     } else {
-      des <- dae::designRandomize(allocated = trts_df,
-                                  recipient = units_df)
+      des <- designRandomize(allocated = trts_df,
+                             recipient = units_df)
 
     }
 
@@ -185,11 +189,11 @@ randomise_trts.edbl_graph <- function(.data) {
     # chosen_df[, trts]
     for(atrt in trts) {
       es <- match_edge_seq(.data, des[[atrt]], vertex_level_names(unit, units_ls[[unit]]))
-      out <- igraph::add_edges(out, es, attr = edge_attr_opt("t2v"))
+      out <- add_edges(out, es, attr = edge_attr_opt("t2v"))
     }
   }
 
-  out <- igraph::delete_edges(out, which(E(out)$etype == "t2vmay"))
+  out <- delete_edges(out, which(E(out)$etype == "t2vmay"))
 
   # setting up replicabble
 

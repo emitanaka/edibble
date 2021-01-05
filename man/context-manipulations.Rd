@@ -4,15 +4,31 @@
 \alias{context-manipulations}
 \alias{sort_context}
 \alias{suppress_context}
+\alias{express_context}
+\alias{switch_context}
 \title{Context manipulations}
 \usage{
-sort_context(.data, ...)
+sort_context(.data, descending = FALSE, method = c("auto", "shell", "radix"))
 
-suppress_context(.data, ...)
+suppress_context(.data)
+
+express_context(.data)
+
+switch_context(.data)
 }
 \arguments{
 \item{.data}{An edibble design object.}
+
+\item{descending}{Whether to sort it in ascending or descending alphabetical
+order.}
+
+\item{method}{the method to use for ordering. See \code{\link[base:order]{base::order()}} for
+explanation.}
 }
 \description{
-Context manipulations
+You can use \code{sort_context} to reorder named context alphabetically. If
+you don't want to see the context printed out each time, use \code{suppress_context}
+to muffle the context and \code{express_context} to turn on the context print out.
+Use \code{switch_context} to turn on print out of context if it was switched off,
+or turn off print out if it was switched on.
 }
