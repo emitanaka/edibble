@@ -4,6 +4,9 @@
     <loc>https://edibble.emitanaka.org/index.html</loc>
   </url>
   <url>
+    <loc>https://edibble.emitanaka.org/reference/NamedDesign.html</loc>
+  </url>
+  <url>
     <loc>https://edibble.emitanaka.org/reference/add_context.html</loc>
   </url>
   <url>
@@ -17,9 +20,6 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/context-manipulations.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/create_classic.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/cross_edge_seq.html</loc>
@@ -37,6 +37,9 @@
     <loc>https://edibble.emitanaka.org/reference/eval_traits.html</loc>
   </url>
   <url>
+    <loc>https://edibble.emitanaka.org/reference/find_classical_names.html</loc>
+  </url>
+  <url>
     <loc>https://edibble.emitanaka.org/reference/get_value_type.html</loc>
   </url>
   <url>
@@ -44,6 +47,9 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/is_edibble_graph.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/make_classical.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/match_edge_seq.html</loc>

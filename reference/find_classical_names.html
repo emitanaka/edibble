@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot graph of edibble variables — plot.edbl_graph • edibble</title>
+<title>Find the short names of the classical named designs — find_classical_names • edibble</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,8 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Plot graph of edibble variables — plot.edbl_graph" />
-<meta property="og:description" content="Plot graph of edibble variables" />
+<meta property="og:title" content="Find the short names of the classical named designs — find_classical_names" />
+<meta property="og:description" content="Find the short names of the classical named designs" />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@emitanaka" />
@@ -149,43 +149,28 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot graph of edibble variables</h1>
-    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/plot.R'><code>R/plot.R</code></a></small>
-    <div class="hidden name"><code>plot.edbl_graph.Rd</code></div>
+    <h1>Find the short names of the classical named designs</h1>
+    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/classics.R'><code>R/classics.R</code></a></small>
+    <div class="hidden name"><code>find_classical_names.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Plot graph of edibble variables</p>
+    <p>Find the short names of the classical named designs</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for edbl_graph</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>.data</span>, view <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"high"</span>, <span class='st'>"low"</span><span class='op'>)</span>, <span class='va'>...</span>, main <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>find_classical_names</span><span class='op'>(</span>pkgs <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.data</th>
-      <td><p>An edibble graph.</p></td>
-    </tr>
-    <tr>
-      <th>view</th>
-      <td><p>A string specifying the level of the view to plot.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional parameters passed to <code>plot.igraph</code>.</p></td>
-    </tr>
-    <tr>
-      <th>layout</th>
-      <td><p>An igraph layout.</p></td>
+      <th>pkgs</th>
+      <td><p>A character vector containing the package names to search classical
+named designs from. By default it will search edibble and other packages loaded.</p></td>
     </tr>
     </table>
 
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>.data</span>, <span class='fu'><a href='sample_levels.html'>sample_levels</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>30</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in plot(.data, sample_levels(n = 30)): object '.data' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

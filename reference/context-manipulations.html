@@ -49,7 +49,11 @@
   
 
 <meta property="og:title" content="Context manipulations — context-manipulations" />
-<meta property="og:description" content="Context manipulations" />
+<meta property="og:description" content="You can use sort_context to reorder named context alphabetically. If
+you don't want to see the context printed out each time, use suppress_context
+to muffle the context and express_context to turn on the context print out.
+Use switch_context to turn on print out of context if it was switched off,
+or turn off print out if it was switched on." />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@emitanaka" />
@@ -155,12 +159,20 @@
     </div>
 
     <div class="ref-description">
-    <p>Context manipulations</p>
+    <p>You can use <code>sort_context</code> to reorder named context alphabetically. If
+you don't want to see the context printed out each time, use <code>suppress_context</code>
+to muffle the context and <code>express_context</code> to turn on the context print out.
+Use <code>switch_context</code> to turn on print out of context if it was switched off,
+or turn off print out if it was switched on.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>sort_context</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>sort_context</span><span class='op'>(</span><span class='va'>.data</span>, descending <span class='op'>=</span> <span class='cn'>FALSE</span>, method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"auto"</span>, <span class='st'>"shell"</span>, <span class='st'>"radix"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>suppress_context</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'>suppress_context</span><span class='op'>(</span><span class='va'>.data</span><span class='op'>)</span>
+
+<span class='fu'>express_context</span><span class='op'>(</span><span class='va'>.data</span><span class='op'>)</span>
+
+<span class='fu'>switch_context</span><span class='op'>(</span><span class='va'>.data</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,6 +180,16 @@
     <tr>
       <th>.data</th>
       <td><p>An edibble design object.</p></td>
+    </tr>
+    <tr>
+      <th>descending</th>
+      <td><p>Whether to sort it in ascending or descending alphabetical
+order.</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>the method to use for ordering. See <code><a href='https://rdrr.io/r/base/order.html'>base::order()</a></code> for
+explanation.</p></td>
     </tr>
     </table>
 
