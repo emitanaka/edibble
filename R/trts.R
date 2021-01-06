@@ -14,11 +14,9 @@
 #' @inheritParams set_vars
 #' @seealso See [set_units()] for setting units.
 #' @export
-set_trts <- function(.data, ...,
+set_trts <- function(.design, ...,
                       .name_repair = c("check_unique", "unique", "universal", "minimal")) {
-  graph <- .data$graph
-  .data$graph <- set_vars(graph, ..., .name_repair = .name_repair, .class = "edbl_trt")
-  .data
+  set_vars(.design, ..., .name_repair = .name_repair, .class = "edbl_trt")
 }
 
 #' @export

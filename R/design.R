@@ -40,9 +40,9 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
         main <- main %||% private$.name
         view <- match.arg(view)
         out <- switch(view,
-                      high = subset_vars(private$.graph),
-                      low = subset_levels(private$.graph))
-        plot.igraph(private$.graph, ...,
+                      high = self$subset_graph("var"),
+                      low = self$subset_graph("level"))
+        plot.igraph(out, ...,
                     annotate.plot = TRUE,
                     main = main)
         invisible(self)
@@ -103,10 +103,82 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
       #'  active Which is active
       activate_graph = function() {
         private$.active <- "graph"
+      },
+
+      #' @description
+      #' Subset graph.
+      #' @param type A variable or level.
+      #' @importFrom igraph induced_subgraph
+      subset_graph = function(type = c("level", "var")) {
+        type <- match.arg(type)
+        graph <- private$.graph
+        structure(induced_subgraph(graph, V(graph)$vtype==type),
+                  class = class(graph))
+      },
+
+      #' @description
+      #' Get the variable names.
+      #' @param vindex Optional vertex index from graph object.
+      var_names = function(vindex) {
+        if(missing(vindex)) {
+          vgraph <- self$subset_graph(type = "var")
+          V(vgraph)$name
+        } else {
+          if(any(w <- V(private$.graph)$vtype[vindex]!="var")) {
+            abort(paste0("The vertex index ", vindex[w], " is not an edibble variable node."))
+          }
+          V(private$.graph)$name[vindex]
+        }
+      },
+
+      #' @description
+      #' Get the variable class.
+      #' @param vname The name of the variable node.
+      var_class = function(vname) {
+        if(missing(vname)) {
+          vgraph <- self$subset_graph(type = "var")
+          V(vgraph)$class
+        } else {
+          ind <- self$var_index(vname)
+          V(private$.graph)$class[ind]
+        }
+      },
+
+      #' @description
+      #' Get the variable vertex index given the name.
+      #' @param vname The name of the variable (or label).
+      #' @param var TRUE or FALSE.
+      var_index = function(vname, var = FALSE) {
+        if(var) {
+          which(V(private$.graph)$vname %in% vname)
+        } else {
+          which(V(private$.graph)$name %in% vname)
+        }
+      },
+
+      #' @description
+      #' Vertex labels.
+      #' @param name The name of the variable.
+      #' @param nlevels The total number of levels.
+      vertex_var_label = function(name, nlevels) {
+        paste0(name, "\n(", nlevels, " levels)")
+      },
+
+      #' @description
+      #' Vertex levels.
+      #' @param vname The name of the variable.
+      #' @param lnames The level names.
+      vertex_level_names = function(vname, lnames) {
+        paste0(vname, ":", lnames)
       }
     ),
 
     active  = list(
+
+      #' @field active get the active view
+      active = function() {
+        private$.active
+      },
 
       #' @field name the name
       name = function(value) {
@@ -127,10 +199,11 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
           private$.graph <- value
         } },
 
+
       #' @field table the name
       table = function(value) {
         if(missing(value)) {
-          private$.table <- serve_table(private$.graph)
+          private$.table <- render_table(self)
           private$.table
         } else {
           abort("cannot modify table")
@@ -151,6 +224,7 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
       .graph = NULL,
       .table = NULL,
       .active = NULL,
+      .context = NULL,
       .muffle = FALSE,
       .seed = NULL,
       .method = NULL,

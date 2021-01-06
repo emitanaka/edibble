@@ -173,13 +173,13 @@ make_classical("crd", n = 30, t = 5)
 #> ● This experimental design is often called Completely Randomised Design.
 #> ● You can change the number in `set.seed` to get another random instance of
 #>   the same design.
-#> ● This design has a total of 30 units testing a total of 5 treatments.
+#> ● This design has a total of units testing a total of 5 treatments.
 #> The following information is only true for the chosen parameters and not
 #> necessary true for all Completely Randomised Designs.
 #>   ◯ This design is balanced for the given numbers.
 #> 
 #>   ── edibble code ────────────────────────────────────────────────────────────────
-#> set.seed(1609904621)
+#> set.seed(1609920876)
 #> start_design("crd") %>%
 #>   set_units(unit = 30) %>%
 #>   set_trts(treat = 5) %>%
@@ -191,22 +191,22 @@ make_classical("crd", n = 30, t = 5)
 #> # An edibble: 30 x 2
 #>    unit       treat   
 #>    <unit(30)> <trt(5)>
-#>  1 unit1      treat4  
-#>  2 unit2      treat1  
+#>  1 unit1      treat1  
+#>  2 unit2      treat5  
 #>  3 unit3      treat5  
-#>  4 unit4      treat1  
-#>  5 unit5      treat3  
-#>  6 unit6      treat2  
-#>  7 unit7      treat1  
-#>  8 unit8      treat4  
-#>  9 unit9      treat3  
-#> 10 unit10     treat4  
+#>  4 unit4      treat2  
+#>  5 unit5      treat2  
+#>  6 unit6      treat5  
+#>  7 unit7      treat2  
+#>  8 unit8      treat1  
+#>  9 unit9      treat2  
+#> 10 unit10     treat3  
 #> # … with 20 more rows
 
 code_classical("rcbd", t = 4, n = 40)
-#> set.seed(1609904622)
+#> set.seed(1609920876)
 #> start_design("rcbd") %>%
-#>   set_units(block = 4,
+#>   set_units(block = 3,
 #>             unit = nested_in(block, 4)) %>%
 #>   set_trts(treat = 4) %>%
 #>   allocate_trts(treat ~ unit) %>%

@@ -5,15 +5,15 @@
 \title{Measure response of given units}
 \usage{
 measure_response(
-  .data,
+  .design,
   ...,
   .name_repair = c("check_unique", "unique", "universal", "minimal")
 )
 }
 \arguments{
-\item{.data}{An \code{edbl_graph} object}
-
 \item{...}{Name-value pair.}
+
+\item{.data}{An \code{edbl_graph} object}
 }
 \description{
 This function creates new nodes to edibble graph with the name

@@ -9,9 +9,9 @@
 #' @param ... Name-value pair.
 #'
 #' @export
-measure_response <- function(.data, ...,
+measure_response <- function(.design, ...,
                              .name_repair = c("check_unique", "unique", "universal", "minimal")) {
-  set_vars(.data, ..., .name_repair = .name_repair,
+  set_vars(.design, ..., .name_repair = .name_repair,
            .class = "edbl_resp")
 }
 

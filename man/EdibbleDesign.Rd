@@ -10,6 +10,8 @@ the experimental design.
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
+\item{\code{active}}{get the active view}
+
 \item{\code{name}}{the name}
 
 \item{\code{graph}}{the name}
@@ -17,10 +19,6 @@ the experimental design.
 \item{\code{table}}{the name}
 
 \item{\code{context}}{the name}
-
-\item{\code{muffle}}{the nam}
-
-\item{\code{active}}{Which is active}
 }
 \if{html}{\out{</div>}}
 }
@@ -32,6 +30,16 @@ the experimental design.
 \item \href{#method-plot}{\code{EdibbleDesign$plot()}}
 \item \href{#method-print}{\code{EdibbleDesign$print()}}
 \item \href{#method-save_seed}{\code{EdibbleDesign$save_seed()}}
+\item \href{#method-muffle}{\code{EdibbleDesign$muffle()}}
+\item \href{#method-chatty}{\code{EdibbleDesign$chatty()}}
+\item \href{#method-activate_table}{\code{EdibbleDesign$activate_table()}}
+\item \href{#method-activate_graph}{\code{EdibbleDesign$activate_graph()}}
+\item \href{#method-subset_graph}{\code{EdibbleDesign$subset_graph()}}
+\item \href{#method-var_names}{\code{EdibbleDesign$var_names()}}
+\item \href{#method-var_class}{\code{EdibbleDesign$var_class()}}
+\item \href{#method-var_index}{\code{EdibbleDesign$var_index()}}
+\item \href{#method-vertex_var_label}{\code{EdibbleDesign$vertex_var_label()}}
+\item \href{#method-vertex_level_names}{\code{EdibbleDesign$vertex_level_names()}}
 \item \href{#method-clone}{\code{EdibbleDesign$clone()}}
 }
 }
@@ -113,6 +121,154 @@ randomisation process.
 \if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$save_seed()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-muffle"></a>}}
+\if{latex}{\out{\hypertarget{method-muffle}{}}}
+\subsection{Method \code{muffle()}}{
+muffle the nam
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$muffle()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-chatty"></a>}}
+\if{latex}{\out{\hypertarget{method-chatty}{}}}
+\subsection{Method \code{chatty()}}{
+chatty turn off muffle
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$chatty()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-activate_table"></a>}}
+\if{latex}{\out{\hypertarget{method-activate_table}{}}}
+\subsection{Method \code{activate_table()}}{
+active Which is active
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$activate_table()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-activate_graph"></a>}}
+\if{latex}{\out{\hypertarget{method-activate_graph}{}}}
+\subsection{Method \code{activate_graph()}}{
+active Which is active
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$activate_graph()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-subset_graph"></a>}}
+\if{latex}{\out{\hypertarget{method-subset_graph}{}}}
+\subsection{Method \code{subset_graph()}}{
+Subset graph.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$subset_graph(type = c("level", "var"))}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{type}}{A variable or level.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-var_names"></a>}}
+\if{latex}{\out{\hypertarget{method-var_names}{}}}
+\subsection{Method \code{var_names()}}{
+Get the variable names.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$var_names(vindex)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{vindex}}{Optional vertex index from graph object.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-var_class"></a>}}
+\if{latex}{\out{\hypertarget{method-var_class}{}}}
+\subsection{Method \code{var_class()}}{
+Get the variable class.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$var_class(vname)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{vname}}{The name of the variable node.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-var_index"></a>}}
+\if{latex}{\out{\hypertarget{method-var_index}{}}}
+\subsection{Method \code{var_index()}}{
+Get the variable vertex index given the name.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$var_index(vname, var = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{vname}}{The name of the variable (or label).}
+
+\item{\code{var}}{TRUE or FALSE.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-vertex_var_label"></a>}}
+\if{latex}{\out{\hypertarget{method-vertex_var_label}{}}}
+\subsection{Method \code{vertex_var_label()}}{
+Vertex labels.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$vertex_var_label(name, nlevels)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{name}}{The name of the variable.}
+
+\item{\code{nlevels}}{The total number of levels.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-vertex_level_names"></a>}}
+\if{latex}{\out{\hypertarget{method-vertex_level_names}{}}}
+\subsection{Method \code{vertex_level_names()}}{
+Vertex levels.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$vertex_level_names(vname, lnames)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{vname}}{The name of the variable.}
+
+\item{\code{lnames}}{The level names.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

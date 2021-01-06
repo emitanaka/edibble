@@ -17,54 +17,40 @@ NULL
 #' This is mainly used to control the plotting parameters.
 #' See list of plot parameters [here](https://igraph.org/r/doc/plot.common.html).
 #' @export
+#' @importFrom vctrs vec_as_names
 set_vars <- function(.data, ...) {
   UseMethod("set_vars")
 }
 
-#' @importFrom rlang enquos
-#' @importFrom vctrs vec_as_names
 #' @export
-set_vars.edbl_graph <- function(.data, ..., .class = "edbl_var",
-                                .name_repair = c("check_unique", "unique", "universal", "minimal")) {
+set_vars.EdibbleDesign <- function(.design, ..., .class = "edbl_var",
+                                   .name_repair = c("check_unique", "unique", "universal", "minimal")) {
   .name_repair <- match.arg(.name_repair)
   dots <- enquos(...)
-  vnames_new <- names(dots)
-  vgraph <- subset_vars(.data)
-  vnames_old <- names(vgraph)
-  vnames <- vec_as_names(c(vnames_old, vnames_new), repair = .name_repair)
-  attr <- vertex_attr_opt(gsub("edbl_", "", .class))
 
-  out <- .data
-  for(i in seq_along(dots)) {
-    vname <- vnames[i + length(vnames_old)]
-    x <- eval_traits(dots[[i]], vname, out)
-    out <- add_edibble_vertex(x, vname, out, attr)
+  if(.design$active == "graph") {
+    vnames_new <- names(dots)
+    vnames_old <- .design$var_names()
+    vnames <- vec_as_names(c(vnames_old, vnames_new), repair = .name_repair)
+    attr <- vertex_attr_opt(gsub("edbl_", "", .class))
+
+    out <- .design$graph
+    for(i in seq_along(dots)) {
+      vname <- vnames[i + length(vnames_old)]
+      x <- eval_traits(dots[[i]], vname, out)
+      out <- add_edibble_vertex(x, vname, out, attr)
+    }
+
+    # since igraph operations seem to wipe out class info
+    .design$graph <- structure(out, class = class(.design$graph))
+
+
+  } else if(.design$active == "table") {
+    #loc <- tidyselect::eval_select(expr(c(...)), .data)
   }
-
-  # since igraph operations seem to wipe out class info
-  structure(out, class = class(.data))
+  .design
 }
 
-#' @importFrom rlang enquos
-#' @importFrom vctrs vec_as_names
-#' @importFrom tidyselect eval_select
-#' @export
-set_vars.edbl_df <- function(.data, ..., .attr = NULL,
-                             .name_repair = c("check_unique", "unique", "universal", "minimal")) {
-
-  .name_repair <- match.arg(.name_repair)
-  dots <- enquos(...)
-
-
-  dots_names <- names(dots)
-  vnames <- vec_as_names(c(names(.data), dots_names), repair = .name_repair)
-
-  loc <- eval_select(expr(c(...)), .data)
-
-
-  names(out) <- vnames
-  out
-}
 
 
 var_class <- function(.data, vname) {
@@ -189,30 +175,32 @@ vertex_level_names <- function(vname, lnames) {
   paste0(vname, ":", lnames)
 }
 
+#' @importFrom igraph add_vertices add_edges
 add_edibble_vertex_common <- function(.data, name, levels, attr) {
   label <-  vertex_var_label(name, length(levels))
   lnames <- vertex_level_names(name, levels)
-  var_node_added <- igraph::add_vertices(.data, 1,
+  var_node_added <- add_vertices(.data, 1,
                                          name = name,
                                          vtype = "var", vname = name,
                                          label = label,
                                          attr = attr)
-  lvl_nodes_added <- igraph::add_vertices(var_node_added, length(levels),
+  lvl_nodes_added <- add_vertices(var_node_added, length(levels),
                                           name = lnames,
                                           vtype = "level", vname = name,
                                           label = levels,
                                           attr = attr)
-  var2lvl_edges_added <- igraph::add_edges(lvl_nodes_added,
+  var2lvl_edges_added <- add_edges(lvl_nodes_added,
                                            cross_edge_seq(lvl_nodes_added, name, lnames),
                                            attr = edge_attr_opt("v2l"))
-  igraph::add_edges(var2lvl_edges_added,
+  add_edges(var2lvl_edges_added,
                     path_seq(var2lvl_edges_added, lnames),
                     attr = edge_attr_opt("l2lseq"))
 
 }
 
+#' @importFrom igraph union
 combine_graphs <- function(.data1, .data2) {
-  cgraph <- igraph::union(.data1, .data2, byname = TRUE)
+  cgraph <- union(.data1, .data2, byname = TRUE)
   # union has issues combining attributes
   for(comp in c("graph", "edge", "vertex")) {
     fnames <- getFromNamespace(paste0(comp, "_attr_names"), "igraph")
@@ -236,6 +224,7 @@ combine_graphs <- function(.data1, .data2) {
 }
 
 #' @rdname add_edibble_vertex
+#' @importFrom igraph graph_attr delete_graph_attr add_edges delete_vertex_attr
 #' @export
 add_edibble_vertex.lkbl_graph <- function(.lgraph, name, graph = NULL, attr) {
   levels <- gsub(paste0(name, ":"), "", V(.lgraph)$name[V(.lgraph)$ltype=="child"])
@@ -244,12 +233,12 @@ add_edibble_vertex.lkbl_graph <- function(.lgraph, name, graph = NULL, attr) {
   agraph <- add_edibble_vertex_common(graph, name, levels, attr)
 
   child_name <- name
-  parent_name <- igraph::graph_attr(.lgraph, "parent_name")
-  lgraph <- igraph::delete_graph_attr(.lgraph, "parent_name")
-  lgraph <- igraph::delete_vertex_attr(lgraph, "ltype")
+  parent_name <- graph_attr(.lgraph, "parent_name")
+  lgraph <- delete_graph_attr(.lgraph, "parent_name")
+  lgraph <- delete_vertex_attr(lgraph, "ltype")
 
   cgraph <- combine_graphs(agraph, lgraph)
-  out <- igraph::add_edges(cgraph,
+  out <- add_edges(cgraph,
                            cross_edge_seq(cgraph, parent_name, child_name),
                            attr = edge_attr_opt("v2v"))
 

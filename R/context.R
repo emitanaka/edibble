@@ -84,20 +84,14 @@ sort_context <- function(.data, descending = FALSE,
 #' @rdname context-manipulations
 #' @export
 suppress_context <- function(.data) {
-  .data$muffle <- TRUE
+  .data$muffle()
   .data
 }
 
 #' @rdname context-manipulations
 #' @export
 express_context <- function(.data) {
-  .data$muffle <- FALSE
+  .data$chatty()
   .data
 }
 
-#' @rdname context-manipulations
-#' @export
-switch_context <- function(.data) {
-  .data$muffle <- !.data$muffle
-  .data
-}

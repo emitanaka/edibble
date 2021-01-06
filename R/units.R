@@ -19,11 +19,10 @@
 #' initiate_design() %>%
 #'   set_units(block = 3)
 #' @export
-set_units <- function(.data, ...,
+set_units <- function(.design, ...,
                       .name_repair = c("check_unique", "unique", "universal", "minimal")) {
-  graph <- .data$graph
-  .data$graph <- set_vars(graph, ..., .name_repair = .name_repair, .class = "edbl_unit")
-  .data
+
+  set_vars(.design, ..., .name_repair = .name_repair, .class = "edbl_unit")
 }
 
 

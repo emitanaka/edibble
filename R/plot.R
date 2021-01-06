@@ -5,6 +5,6 @@
 #' @param ... Additional parameters passed to `plot.igraph`.
 #' @param main The title of the plot. By default it is`.data$.name`.
 #' @export
-plot.EdibbleDesign <- function(.data, view = c("high", "low"), ..., main = NULL) {
+plot.EdibbleDesign <- function(.data, view = "high", ..., main = NULL) {
   .data$plot(view = view, ..., main = main)
 }

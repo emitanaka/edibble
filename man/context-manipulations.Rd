@@ -5,7 +5,6 @@
 \alias{sort_context}
 \alias{suppress_context}
 \alias{express_context}
-\alias{switch_context}
 \title{Context manipulations}
 \usage{
 sort_context(.data, descending = FALSE, method = c("auto", "shell", "radix"))
@@ -13,8 +12,6 @@ sort_context(.data, descending = FALSE, method = c("auto", "shell", "radix"))
 suppress_context(.data)
 
 express_context(.data)
-
-switch_context(.data)
 }
 \arguments{
 \item{.data}{An edibble design object.}

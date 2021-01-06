@@ -21,21 +21,22 @@ serve_table.EdibbleDesign <- function(.design, ...) {
 #' @importFrom igraph is_connected
 #' @importFrom rlang set_names
 #' @export
-serve_table.edbl_graph <- function(.design, ...) {
-
-  if(!is_connected(.design)) {
-    lout <- serve_vars_not_reconciled(.design)
+render_table <- function(.design, ...) {
+  graph <- .design$graph
+  lgraph <- .design$subset_graph(type = "level")
+  if(!is_connected(lgraph)) {
+    lout <- serve_vars_not_reconciled(graph)
   } else {
-    classes <- V(.design)$class
+    classes <- .design$var_class()
     lunit <- ltrt <- lresp <- list()
-    if("edbl_unit" %in% classes) lunit <- serve_units(.design)
-    if("edbl_trt" %in% classes) ltrt <- serve_trts(.design, lunit)
-    if("edbl_resp" %in% classes) lresp <- serve_resps(.design, lunit)
+    if("edbl_unit" %in% classes) lunit <- serve_units(graph)
+    if("edbl_trt" %in% classes) ltrt <- serve_trts(graph, lunit)
+    if("edbl_resp" %in% classes) lresp <- serve_resps(graph, lunit)
     lout <- c(lunit, ltrt, lresp)
   }
 
-  vnames <- names(subset_vars(.design))
-  new_edibble(lout[vnames], graph = .design)
+  vnames <- .design$var_names()
+  new_edibble(lout[vnames])
 }
 
 
