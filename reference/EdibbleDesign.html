@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Serve edibble table — serve_table.edbl_graph • edibble</title>
+<title>An R6 Class for an edibble design — EdibbleDesign • edibble</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -54,8 +54,9 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Serve edibble table — serve_table.edbl_graph" />
-<meta property="og:description" content="This converts an edibble graph object to a data frame called edibble." />
+<meta property="og:title" content="An R6 Class for an edibble design — EdibbleDesign" />
+<meta property="og:description" content="An object with EdibbleDesign holds the core information related to
+the experimental design." />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@emitanaka" />
@@ -161,31 +162,107 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Serve edibble table</h1>
-    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/serve.R'><code>R/serve.R</code></a></small>
-    <div class="hidden name"><code>serve_table.edbl_graph.Rd</code></div>
+    <h1>An R6 Class for an edibble design</h1>
+    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/design.R'><code>R/design.R</code></a></small>
+    <div class="hidden name"><code>EdibbleDesign.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This converts an edibble graph object to a data frame called edibble.</p>
+    <p>An object with EdibbleDesign holds the core information related to
+the experimental design.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for edbl_graph</span>
-<span class='fu'><a href='serve_table.html'>serve_table</a></span><span class='op'>(</span><span class='va'>.design</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>.design</th>
-      <td><p>An <code>edbl_graph</code> object.</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
 
-    <p>An <code>edbl</code> data frame with columns defined by vertices and
-rows displayed only if the vertices are connected and reconcile for output.</p>
+    <p><div class="r6-active-bindings"></p><dl>
+<dt><code>name</code></dt><dd><p>the name</p></dd>
+
+<dt><code>graph</code></dt><dd><p>the name</p></dd>
+
+<dt><code>table</code></dt><dd><p>the name</p></dd>
+
+<dt><code>context</code></dt><dd><p>the name</p></dd>
+
+<dt><code>muffle</code></dt><dd><p>the nam</p></dd>
+
+<dt><code>active</code></dt><dd><p>Which is active</p></dd>
+
+</dl><p></div></p>
+    <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
+
+    
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
+
+<ul>
+<li><p><a href='#method-new'><code>EdibbleDesign$new()</code></a></p></li>
+<li><p><a href='#method-finalize'><code>EdibbleDesign$finalize()</code></a></p></li>
+<li><p><a href='#method-plot'><code>EdibbleDesign$plot()</code></a></p></li>
+<li><p><a href='#method-print'><code>EdibbleDesign$print()</code></a></p></li>
+<li><p><a href='#method-save_seed'><code>EdibbleDesign$save_seed()</code></a></p></li>
+<li><p><a href='#method-clone'><code>EdibbleDesign$clone()</code></a></p></li>
+</ul>
+<p><hr>
+<a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
+<p>Initialise the edibble design. See also <code><a href='start_design.html'>start_design()</a></code>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>name <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>name</code></dt><dd><p>The name or title of the project. The title
+should be informative and not overly long.
+If not supplied the default is "An edibble design".</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-finalize"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>finalize()</code></h3>
+<p>Invoked when the EdibbleDesign object is deleted.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>finalize</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<p><hr>
+<a id="method-plot"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code></h3>
+<p>Plot the intermediate contruct.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span>view <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"high"</span>, <span class='st'>"low"</span><span class='op'>)</span>, <span class='va'>...</span>, main <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>view</code></dt><dd><p>A high- or -low level view.</p></dd>
+
+<dt><code>...</code></dt><dd><p>Arguments passed into <code>plot.igraph</code>.</p></dd>
+
+<dt><code>main</code></dt><dd><p>The title of the plot. By default it is the
+name of the EdibbleDesign object.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-print"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
+<p>Print the intermediate construct.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>...</code></dt><dd><p>Arguments passed into <code>print</code>.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-save_seed"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>save_seed()</code></h3>
+<p>This saves the <code>.Random.seed</code> used just prior to the
+randomisation process.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>save_seed</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<p><hr>
+<a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
+
+</dl><p></div></p>
+
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

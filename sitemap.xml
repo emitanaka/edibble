@@ -4,6 +4,9 @@
     <loc>https://edibble.emitanaka.org/index.html</loc>
   </url>
   <url>
+    <loc>https://edibble.emitanaka.org/reference/EdibbleDesign.html</loc>
+  </url>
+  <url>
     <loc>https://edibble.emitanaka.org/reference/NamedDesign.html</loc>
   </url>
   <url>
@@ -13,10 +16,7 @@
     <loc>https://edibble.emitanaka.org/reference/add_edibble_vertex.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/allocate_trts_ext.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/classics.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/allocate_trts.edbl_graph.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/context-manipulations.html</loc>
@@ -88,7 +88,7 @@
     <loc>https://edibble.emitanaka.org/reference/pipe.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/plot.edbl_graph.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/plot.EdibbleDesign.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/print.edbl_graph.html</loc>
@@ -140,6 +140,9 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/unit_to_trts.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/use_method.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/utility-edibble-var.html</loc>
