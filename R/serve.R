@@ -1,17 +1,4 @@
 #' Serve edibble table
-#' @export
-serve_table <- function(.design, ...) {
-  UseMethod("serve_table")
-}
-
-#' @export
-serve_table.EdibbleDesign <- function(.design, ...) {
-  .design$table
-  .design$activate_table()
-  .design
-}
-
-#' Serve edibble table
 #' @description
 #' This converts an edibble graph object to a data frame called edibble.
 #'
@@ -21,7 +8,7 @@ serve_table.EdibbleDesign <- function(.design, ...) {
 #' @importFrom igraph is_connected
 #' @importFrom rlang set_names
 #' @export
-render_table <- function(.design, ...) {
+serve_table <- function(.design, ...) {
   graph <- .design$graph
   lgraph <- .design$subset_graph(type = "level")
   if(!is_connected(lgraph)) {
@@ -36,10 +23,8 @@ render_table <- function(.design, ...) {
   }
 
   vnames <- .design$var_names()
-  new_edibble(lout[vnames])
+  new_edibble(lout[vnames], design = .design)
 }
-
-
 
 
 # Returns list of edibble variables

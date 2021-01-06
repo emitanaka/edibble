@@ -1,30 +1,18 @@
 #' Set edibble variables
 #'
 #' @description
-#' A node in an edibble graph becomes a variable when served.
+#' Adds variable and their level nodes in an edibble graph.
 #'
-#' @param .data An `edbl_graph` or `edbl_df` object.
+#' @param .design An `EddibleDesign` object.
 #' @param ... <[`dynamic-dots`][rlang::dyn-dots]><[`tidy-select`][dplyr::dplyr_tidy_select]>
 #' Name-value pair.
 #' @param .name_repair Specify how to deal when there are duplicated name
 #' entries. The repair follows the same argument in [tibble::tibble()].
 #' @seealso [set_units()] and [set_trts()] for setting special types of nodes.
-#' @name set_vars
-NULL
-
-#' @rdname set_vars
-#' @param .attr Named list of node attributes.
-#' This is mainly used to control the plotting parameters.
-#' See list of plot parameters [here](https://igraph.org/r/doc/plot.common.html).
 #' @export
 #' @importFrom vctrs vec_as_names
-set_vars <- function(.data, ...) {
-  UseMethod("set_vars")
-}
-
-#' @export
-set_vars.EdibbleDesign <- function(.design, ..., .class = "edbl_var",
-                                   .name_repair = c("check_unique", "unique", "universal", "minimal")) {
+set_vars <- function(.design, ..., .class = "edbl_var",
+                     .name_repair = c("check_unique", "unique", "universal", "minimal")) {
   .name_repair <- match.arg(.name_repair)
   dots <- enquos(...)
 
@@ -52,6 +40,7 @@ set_vars.EdibbleDesign <- function(.design, ..., .class = "edbl_var",
 }
 
 
+### DELETE below when ready
 
 var_class <- function(.data, vname) {
   V(.data)$class[var_index(.data, vname)]

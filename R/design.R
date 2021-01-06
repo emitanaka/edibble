@@ -203,7 +203,7 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
       #' @field table the name
       table = function(value) {
         if(missing(value)) {
-          private$.table <- render_table(self)
+          private$.table <- serve_table(self)
           private$.table
         } else {
           abort("cannot modify table")

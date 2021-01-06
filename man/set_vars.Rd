@@ -4,23 +4,24 @@
 \alias{set_vars}
 \title{Set edibble variables}
 \usage{
-set_vars(.data, ...)
+set_vars(
+  .design,
+  ...,
+  .class = "edbl_var",
+  .name_repair = c("check_unique", "unique", "universal", "minimal")
+)
 }
 \arguments{
-\item{.data}{An \code{edbl_graph} or \code{edbl_df} object.}
+\item{.design}{An \code{EddibleDesign} object.}
 
 \item{...}{<\code{\link[rlang:dyn-dots]{dynamic-dots}}><\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
 Name-value pair.}
 
 \item{.name_repair}{Specify how to deal when there are duplicated name
 entries. The repair follows the same argument in \code{\link[tibble:tibble]{tibble::tibble()}}.}
-
-\item{.attr}{Named list of node attributes.
-This is mainly used to control the plotting parameters.
-See list of plot parameters \href{https://igraph.org/r/doc/plot.common.html}{here}.}
 }
 \description{
-A node in an edibble graph becomes a variable when served.
+Adds variable and their level nodes in an edibble graph.
 }
 \seealso{
 \code{\link[=set_units]{set_units()}} and \code{\link[=set_trts]{set_trts()}} for setting special types of nodes.

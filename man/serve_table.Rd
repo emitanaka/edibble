@@ -6,6 +6,13 @@
 \usage{
 serve_table(.design, ...)
 }
+\arguments{
+\item{.design}{An \code{edbl_graph} object.}
+}
+\value{
+An \code{edbl} data frame with columns defined by vertices and
+rows displayed only if the vertices are connected and reconcile for output.
+}
 \description{
-Serve edibble table
+This converts an edibble graph object to a data frame called edibble.
 }

@@ -11,6 +11,8 @@ set_units(
 )
 }
 \arguments{
+\item{.design}{An \code{EddibleDesign} object.}
+
 \item{...}{<\code{\link[rlang:dyn-dots]{dynamic-dots}}><\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
 Name-value pair.}
 

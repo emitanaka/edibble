@@ -4,7 +4,7 @@
 \alias{plot.EdibbleDesign}
 \title{Plot graph of edibble variables}
 \usage{
-\method{plot}{EdibbleDesign}(.data, view = c("high", "low"), ..., main = NULL)
+\method{plot}{EdibbleDesign}(.data, view = "high", ..., main = NULL)
 }
 \arguments{
 \item{.data}{An edibble desgin.}
