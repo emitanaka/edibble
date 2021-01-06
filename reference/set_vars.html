@@ -55,7 +55,7 @@
   
 
 <meta property="og:title" content="Set edibble variables — set_vars" />
-<meta property="og:description" content="A node in an edibble graph becomes a variable when served." />
+<meta property="og:description" content="Adds variable and their level nodes in an edibble graph." />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@emitanaka" />
@@ -167,17 +167,22 @@
     </div>
 
     <div class="ref-description">
-    <p>A node in an edibble graph becomes a variable when served.</p>
+    <p>Adds variable and their level nodes in an edibble graph.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>set_vars</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>set_vars</span><span class='op'>(</span>
+  <span class='va'>.design</span>,
+  <span class='va'>...</span>,
+  .class <span class='op'>=</span> <span class='st'>"edbl_var"</span>,
+  .name_repair <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"check_unique"</span>, <span class='st'>"unique"</span>, <span class='st'>"universal"</span>, <span class='st'>"minimal"</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.data</th>
-      <td><p>An <code>edbl_graph</code> or <code>edbl_df</code> object.</p></td>
+      <th>.design</th>
+      <td><p>An <code>EddibleDesign</code> object.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -188,12 +193,6 @@ Name-value pair.</p></td>
       <th>.name_repair</th>
       <td><p>Specify how to deal when there are duplicated name
 entries. The repair follows the same argument in <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>.attr</th>
-      <td><p>Named list of node attributes.
-This is mainly used to control the plotting parameters.
-See list of plot parameters <a href='https://igraph.org/r/doc/plot.common.html'>here</a>.</p></td>
     </tr>
     </table>
 
