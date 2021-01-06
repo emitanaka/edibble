@@ -4,10 +4,10 @@
 \alias{randomise_trts}
 \title{Randomise treatments}
 \usage{
-randomise_trts(.data, ...)
+randomise_trts(.design, ...)
 }
 \arguments{
-\item{.data}{AN edibble graph object.}
+\item{.design}{AN edibble graph object.}
 }
 \description{
 Randomise treatments

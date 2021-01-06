@@ -16,12 +16,21 @@
 #' @export
 set_trts <- function(.data, ...,
                       .name_repair = c("check_unique", "unique", "universal", "minimal")) {
-  .data$set_vars(..., .name_repair = .name_repair, .class = "edbl_trt")
+  graph <- .data$graph
+  .data$graph <- set_vars(graph, ..., .name_repair = .name_repair, .class = "edbl_trt")
+  .data
 }
 
 #' @export
-allocate_trts <- function(.data, ..., class = NULL) {
-  .data$allocate_trts(..., class = class)
+allocate_trts <- function(.data, ...) {
+  UseMethod("allocate_trts")
+}
+
+#' @export
+allocate_trts.EdibbleDesign <- function(.data, ...) {
+  graph <- .data$graph
+  .data$graph <- allocate_trts(graph, ...)
+  .data
 }
 
 #' Define which unit to apply treatment
@@ -33,7 +42,7 @@ allocate_trts <- function(.data, ..., class = NULL) {
 #' `randomise_trts.class`.
 #' @importFrom rlang f_lhs
 #' @export
-allocate_trts_ext <- function(.data, ..., class = NULL) {
+allocate_trts.edbl_graph <- function(.data, ...) {
   # doesn't support : or * right now
   dots <- enquos(...)
   specials <- c(":", "*")
@@ -62,7 +71,7 @@ allocate_trts_ext <- function(.data, ..., class = NULL) {
                              attr = edge_attr_opt("t2v"))
   }
 
-  structure(out, class = c(class, class(.data)))
+  structure(out, class = class(.data))
 }
 
 #' @export

@@ -21,7 +21,9 @@
 #' @export
 set_units <- function(.data, ...,
                       .name_repair = c("check_unique", "unique", "universal", "minimal")) {
-  .data$set_vars(..., .name_repair = .name_repair, .class = "edbl_unit")
+  graph <- .data$graph
+  .data$graph <- set_vars(graph, ..., .name_repair = .name_repair, .class = "edbl_unit")
+  .data
 }
 
 

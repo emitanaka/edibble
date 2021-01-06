@@ -12,7 +12,7 @@ Description: A system to facilitate statistical thinking of
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-Roxygen: list(markdown = TRUE)
+Roxygen: list(markdown = TRUE, r6 = TRUE)
 RoxygenNote: 7.1.1
 Config/testthat/edition: 3
 URL: https://edibble.emitanaka.org/, https://github.com/emitanaka/edibble

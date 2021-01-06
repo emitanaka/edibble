@@ -179,7 +179,7 @@ make_classical("crd", n = 30, t = 5)
 #>   ◯ This design is balanced for the given numbers.
 #> 
 #>   ── edibble code ────────────────────────────────────────────────────────────────
-#> set.seed(1609849707)
+#> set.seed(1609904621)
 #> start_design("crd") %>%
 #>   set_units(unit = 30) %>%
 #>   set_trts(treat = 5) %>%
@@ -191,22 +191,22 @@ make_classical("crd", n = 30, t = 5)
 #> # An edibble: 30 x 2
 #>    unit       treat   
 #>    <unit(30)> <trt(5)>
-#>  1 unit1      treat3  
-#>  2 unit2      treat3  
+#>  1 unit1      treat4  
+#>  2 unit2      treat1  
 #>  3 unit3      treat5  
-#>  4 unit4      treat5  
-#>  5 unit5      treat5  
-#>  6 unit6      treat4  
-#>  7 unit7      treat2  
-#>  8 unit8      treat3  
+#>  4 unit4      treat1  
+#>  5 unit5      treat3  
+#>  6 unit6      treat2  
+#>  7 unit7      treat1  
+#>  8 unit8      treat4  
 #>  9 unit9      treat3  
-#> 10 unit10     treat2  
+#> 10 unit10     treat4  
 #> # … with 20 more rows
 
 code_classical("rcbd", t = 4, n = 40)
-#> set.seed(1609849708)
+#> set.seed(1609904622)
 #> start_design("rcbd") %>%
-#>   set_units(block = 7,
+#>   set_units(block = 4,
 #>             unit = nested_in(block, 4)) %>%
 #>   set_trts(treat = 4) %>%
 #>   allocate_trts(treat ~ unit) %>%

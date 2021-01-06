@@ -4,10 +4,10 @@
 \alias{names_to_vnames}
 \title{Get the variable names given the vertex name of edibble graph}
 \usage{
-names_to_vnames(.data, names)
+names_to_vnames(.design, names)
 }
 \arguments{
-\item{.data}{An edibble graph.}
+\item{.design}{An edibble graph.}
 
 \item{names}{A vector of character with vertex names.}
 }

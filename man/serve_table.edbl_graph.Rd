@@ -4,10 +4,10 @@
 \alias{serve_table.edbl_graph}
 \title{Serve edibble table}
 \usage{
-\method{serve_table}{edbl_graph}(.data, ...)
+\method{serve_table}{edbl_graph}(.design, ...)
 }
 \arguments{
-\item{.data}{An \code{edbl_graph} object.}
+\item{.design}{An \code{edbl_graph} object.}
 }
 \value{
 An \code{edbl} data frame with columns defined by vertices and

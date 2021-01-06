@@ -45,6 +45,8 @@ make_classical <- function(.name = "", ..., .seed = as.integer(Sys.time()),
   des <- do.call(code_classical, c(list(.name = .name, .seed = .seed,
                                         .quiet = .code), list2(...)))
 
+  df <- eval(parse(text = ansi_strip(des$code)))
+
   if(.info) {
     cli_h1("experimental design details")
     cli_ul()
@@ -53,7 +55,7 @@ make_classical <- function(.name = "", ..., .seed = as.integer(Sys.time()),
     cli_li("You can change the number in {.code set.seed} to get another random
            instance of the same design.")
     cli_li("This design has a total of
-           {des$decorate_units(paste(des$n, 'units'))}
+           {des$decorate_units(paste(nrow(df), 'units'))}
            testing a total of
            {des$decorate_trts(paste(des$t, 'treatments'))}.")
     if(!is_empty(des$info_always)) {
@@ -74,7 +76,6 @@ make_classical <- function(.name = "", ..., .seed = as.integer(Sys.time()),
     cat(des$code, "\n")
   }
 
-  df <- eval(parse(text = ansi_strip(des$code)))
 
   if(.table) {
     cli_h1("edibble data frame")
@@ -207,6 +208,11 @@ prep_classical_split <- function(t1 = 1 + sample(10, 1),
   des
 }
 
+
+#prep_classical_factorial <- function(...) {
+#  dots <- list2(...)
+#}
+
 #' An R6 Class for a named experimental design
 #'
 #' @importFrom rlang eval_tidy
@@ -303,6 +309,8 @@ NamedDesign <- R6::R6Class("NamedDesign",
          edibble_decorate("trts")(x)
        }
      ))
+
+
 
 #' Find the short names of the classical named designs
 #'
