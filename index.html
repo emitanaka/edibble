@@ -205,13 +205,13 @@
 <span class="co">#&gt; ● This experimental design is often called Completely Randomised Design.</span>
 <span class="co">#&gt; ● You can change the number in `set.seed` to get another random instance of</span>
 <span class="co">#&gt;   the same design.</span>
-<span class="co">#&gt; ● This design has a total of 30 units testing a total of 5 treatments.</span>
+<span class="co">#&gt; ● This design has a total of units testing a total of 5 treatments.</span>
 <span class="co">#&gt; The following information is only true for the chosen parameters and not</span>
 <span class="co">#&gt; necessary true for all Completely Randomised Designs.</span>
 <span class="co">#&gt;   ◯ This design is balanced for the given numbers.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;   ── edibble code ────────────────────────────────────────────────────────────────</span>
-<span class="co">#&gt; set.seed(1609904621)</span>
+<span class="co">#&gt; set.seed(1609920876)</span>
 <span class="co">#&gt; start_design("crd") %&gt;%</span>
 <span class="co">#&gt;   set_units(unit = 30) %&gt;%</span>
 <span class="co">#&gt;   set_trts(treat = 5) %&gt;%</span>
@@ -223,22 +223,22 @@
 <span class="co">#&gt; # An edibble: 30 x 2</span>
 <span class="co">#&gt;    unit       treat   </span>
 <span class="co">#&gt;    &lt;unit(30)&gt; &lt;trt(5)&gt;</span>
-<span class="co">#&gt;  1 unit1      treat4  </span>
-<span class="co">#&gt;  2 unit2      treat1  </span>
+<span class="co">#&gt;  1 unit1      treat1  </span>
+<span class="co">#&gt;  2 unit2      treat5  </span>
 <span class="co">#&gt;  3 unit3      treat5  </span>
-<span class="co">#&gt;  4 unit4      treat1  </span>
-<span class="co">#&gt;  5 unit5      treat3  </span>
-<span class="co">#&gt;  6 unit6      treat2  </span>
-<span class="co">#&gt;  7 unit7      treat1  </span>
-<span class="co">#&gt;  8 unit8      treat4  </span>
-<span class="co">#&gt;  9 unit9      treat3  </span>
-<span class="co">#&gt; 10 unit10     treat4  </span>
+<span class="co">#&gt;  4 unit4      treat2  </span>
+<span class="co">#&gt;  5 unit5      treat2  </span>
+<span class="co">#&gt;  6 unit6      treat5  </span>
+<span class="co">#&gt;  7 unit7      treat2  </span>
+<span class="co">#&gt;  8 unit8      treat1  </span>
+<span class="co">#&gt;  9 unit9      treat2  </span>
+<span class="co">#&gt; 10 unit10     treat3  </span>
 <span class="co">#&gt; # … with 20 more rows</span>
 
 <span class="fu"><a href="reference/make_classical.html">code_classical</a></span><span class="op">(</span><span class="st">"rcbd"</span>, t <span class="op">=</span> <span class="fl">4</span>, n <span class="op">=</span> <span class="fl">40</span><span class="op">)</span>
-<span class="co">#&gt; set.seed(1609904622)</span>
+<span class="co">#&gt; set.seed(1609920876)</span>
 <span class="co">#&gt; start_design("rcbd") %&gt;%</span>
-<span class="co">#&gt;   set_units(block = 4,</span>
+<span class="co">#&gt;   set_units(block = 3,</span>
 <span class="co">#&gt;             unit = nested_in(block, 4)) %&gt;%</span>
 <span class="co">#&gt;   set_trts(treat = 4) %&gt;%</span>
 <span class="co">#&gt;   allocate_trts(treat ~ unit) %&gt;%</span>

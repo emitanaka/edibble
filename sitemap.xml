@@ -100,6 +100,9 @@
     <loc>https://edibble.emitanaka.org/reference/reexports.html</loc>
   </url>
   <url>
+    <loc>https://edibble.emitanaka.org/reference/render_table.html</loc>
+  </url>
+  <url>
     <loc>https://edibble.emitanaka.org/reference/replicabble.html</loc>
   </url>
   <url>
@@ -107,9 +110,6 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/serve_table.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/serve_table.edbl_graph.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/set_trts.html</loc>

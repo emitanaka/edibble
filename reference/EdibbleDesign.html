@@ -177,6 +177,8 @@ the experimental design.</p>
     <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
 
     <p><div class="r6-active-bindings"></p><dl>
+<dt><code>active</code></dt><dd><p>get the active view</p></dd>
+
 <dt><code>name</code></dt><dd><p>the name</p></dd>
 
 <dt><code>graph</code></dt><dd><p>the name</p></dd>
@@ -184,10 +186,6 @@ the experimental design.</p>
 <dt><code>table</code></dt><dd><p>the name</p></dd>
 
 <dt><code>context</code></dt><dd><p>the name</p></dd>
-
-<dt><code>muffle</code></dt><dd><p>the nam</p></dd>
-
-<dt><code>active</code></dt><dd><p>Which is active</p></dd>
 
 </dl><p></div></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
@@ -201,6 +199,16 @@ the experimental design.</p>
 <li><p><a href='#method-plot'><code>EdibbleDesign$plot()</code></a></p></li>
 <li><p><a href='#method-print'><code>EdibbleDesign$print()</code></a></p></li>
 <li><p><a href='#method-save_seed'><code>EdibbleDesign$save_seed()</code></a></p></li>
+<li><p><a href='#method-muffle'><code>EdibbleDesign$muffle()</code></a></p></li>
+<li><p><a href='#method-chatty'><code>EdibbleDesign$chatty()</code></a></p></li>
+<li><p><a href='#method-activate_table'><code>EdibbleDesign$activate_table()</code></a></p></li>
+<li><p><a href='#method-activate_graph'><code>EdibbleDesign$activate_graph()</code></a></p></li>
+<li><p><a href='#method-subset_graph'><code>EdibbleDesign$subset_graph()</code></a></p></li>
+<li><p><a href='#method-var_names'><code>EdibbleDesign$var_names()</code></a></p></li>
+<li><p><a href='#method-var_class'><code>EdibbleDesign$var_class()</code></a></p></li>
+<li><p><a href='#method-var_index'><code>EdibbleDesign$var_index()</code></a></p></li>
+<li><p><a href='#method-vertex_var_label'><code>EdibbleDesign$vertex_var_label()</code></a></p></li>
+<li><p><a href='#method-vertex_level_names'><code>EdibbleDesign$vertex_level_names()</code></a></p></li>
 <li><p><a href='#method-clone'><code>EdibbleDesign$clone()</code></a></p></li>
 </ul>
 <p><hr>
@@ -251,6 +259,92 @@ name of the EdibbleDesign object.</p></dd>
 randomisation process.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>save_seed</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
+<p><hr>
+<a id="method-muffle"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>muffle()</code></h3>
+<p>muffle the nam</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>muffle</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<p><hr>
+<a id="method-chatty"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>chatty()</code></h3>
+<p>chatty turn off muffle</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>chatty</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<p><hr>
+<a id="method-activate_table"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>activate_table()</code></h3>
+<p>active Which is active</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>activate_table</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<p><hr>
+<a id="method-activate_graph"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>activate_graph()</code></h3>
+<p>active Which is active</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>activate_graph</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<p><hr>
+<a id="method-subset_graph"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>subset_graph()</code></h3>
+<p>Subset graph.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>subset_graph</span><span class='op'>(</span>type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"level"</span>, <span class='st'>"var"</span><span class='op'>)</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>type</code></dt><dd><p>A variable or level.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-var_names"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>var_names()</code></h3>
+<p>Get the variable names.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>var_names</span><span class='op'>(</span><span class='va'>vindex</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>vindex</code></dt><dd><p>Optional vertex index from graph object.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-var_class"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>var_class()</code></h3>
+<p>Get the variable class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>var_class</span><span class='op'>(</span><span class='va'>vname</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>vname</code></dt><dd><p>The name of the variable node.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-var_index"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>var_index()</code></h3>
+<p>Get the variable vertex index given the name.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>var_index</span><span class='op'>(</span><span class='va'>vname</span>, var <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>vname</code></dt><dd><p>The name of the variable (or label).</p></dd>
+
+<dt><code>var</code></dt><dd><p>TRUE or FALSE.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-vertex_var_label"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>vertex_var_label()</code></h3>
+<p>Vertex labels.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>vertex_var_label</span><span class='op'>(</span><span class='va'>name</span>, <span class='va'>nlevels</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>name</code></dt><dd><p>The name of the variable.</p></dd>
+
+<dt><code>nlevels</code></dt><dd><p>The total number of levels.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-vertex_level_names"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>vertex_level_names()</code></h3>
+<p>Vertex levels.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>vertex_level_names</span><span class='op'>(</span><span class='va'>vname</span>, <span class='va'>lnames</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>vname</code></dt><dd><p>The name of the variable.</p></dd>
+
+<dt><code>lnames</code></dt><dd><p>The level names.</p></dd>
+
+</dl><p></div></p>
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
