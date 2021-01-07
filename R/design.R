@@ -82,24 +82,25 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
       },
 
       #' @description
-      #' muffle the nam
+      #' Turn off messages.
       muffle = function() {
         private$.muffle <- TRUE
       },
 
-      #' @description chatty turn off muffle
+      #' @description
+      #' Turn on messages.
       chatty = function() {
         private$.muffle <- FALSE
       },
 
       #' @description
-      #' active Which is active
+      #' Change active view to table.
       activate_table = function() {
         private$.active <- "table"
       },
 
       #' @description
-      #'  active Which is active
+      #' Change active view to graph.
       activate_graph = function() {
         private$.active <- "graph"
       },
@@ -215,7 +216,7 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
         private$getting_names_by_class(value)
       },
       # I shouldn't allow people to modify graph outside
-      #' @field graph the name
+      #' @field graph An edibble graph.
       graph = function(value) {
         if(missing(value)) {
           private$.graph
@@ -224,7 +225,7 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
         } },
 
 
-      #' @field table the name
+      #' @field table A table served from the edibble graph.
       table = function(value) {
         if(missing(value)) {
           private$.table <- serve_table(self)
@@ -233,7 +234,15 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
           abort("You cannot modify the edibble table directly.")
         } },
 
-      #' @field context the name
+      #' @field validation Data validation for response.
+      validation = function(value) {
+        if(missing(value)) {
+          private$.validation
+        } else {
+          abort("You cannot modify data validation directly.")
+        } },
+
+      #' @field context The context of the experiment.
       context = function(value) {
         if(missing(value)) {
           private$.context
@@ -252,6 +261,7 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
       .muffle = FALSE,
       .seed = NULL,
       .method = NULL,
+      .validation = NULL,
 
       # possibly delete
       use_method = function(.x, .f, ...) {

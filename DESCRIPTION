@@ -28,7 +28,8 @@ Imports:
     tidyselect (>= 1.0.0),
     dae,
     glue,
-    R6
+    R6,
+    openxlsx
 Suggests: 
     testthat,
     knitr,

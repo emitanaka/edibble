@@ -22,11 +22,13 @@ the experimental design.
 
 \item{\code{names_vars}}{The name of all variables.}
 
-\item{\code{graph}}{the name}
+\item{\code{graph}}{An edibble graph.}
 
-\item{\code{table}}{the name}
+\item{\code{table}}{A table served from the edibble graph.}
 
-\item{\code{context}}{the name}
+\item{\code{validation}}{Data validation for response.}
+
+\item{\code{context}}{The context of the experiment.}
 }
 \if{html}{\out{</div>}}
 }
@@ -132,7 +134,7 @@ randomisation process.
 \if{html}{\out{<a id="method-muffle"></a>}}
 \if{latex}{\out{\hypertarget{method-muffle}{}}}
 \subsection{Method \code{muffle()}}{
-muffle the nam
+Turn off messages.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$muffle()}\if{html}{\out{</div>}}
 }
@@ -142,7 +144,7 @@ muffle the nam
 \if{html}{\out{<a id="method-chatty"></a>}}
 \if{latex}{\out{\hypertarget{method-chatty}{}}}
 \subsection{Method \code{chatty()}}{
-chatty turn off muffle
+Turn on messages.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$chatty()}\if{html}{\out{</div>}}
 }
@@ -152,7 +154,7 @@ chatty turn off muffle
 \if{html}{\out{<a id="method-activate_table"></a>}}
 \if{latex}{\out{\hypertarget{method-activate_table}{}}}
 \subsection{Method \code{activate_table()}}{
-active Which is active
+Change active view to table.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$activate_table()}\if{html}{\out{</div>}}
 }
@@ -162,7 +164,7 @@ active Which is active
 \if{html}{\out{<a id="method-activate_graph"></a>}}
 \if{latex}{\out{\hypertarget{method-activate_graph}{}}}
 \subsection{Method \code{activate_graph()}}{
-active Which is active
+Change active view to graph.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$activate_graph()}\if{html}{\out{</div>}}
 }
