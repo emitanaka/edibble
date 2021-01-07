@@ -179,7 +179,15 @@ the experimental design.</p>
     <p><div class="r6-active-bindings"></p><dl>
 <dt><code>active</code></dt><dd><p>get the active view</p></dd>
 
-<dt><code>name</code></dt><dd><p>the name</p></dd>
+<dt><code>name</code></dt><dd><p>The name of the design or project</p></dd>
+
+<dt><code>names_trts</code></dt><dd><p>The treatment names.</p></dd>
+
+<dt><code>names_units</code></dt><dd><p>The unit variable names.</p></dd>
+
+<dt><code>names_resp</code></dt><dd><p>The unit variable names.</p></dd>
+
+<dt><code>names_vars</code></dt><dd><p>The name of all variables.</p></dd>
 
 <dt><code>graph</code></dt><dd><p>the name</p></dd>
 
@@ -203,12 +211,10 @@ the experimental design.</p>
 <li><p><a href='#method-chatty'><code>EdibbleDesign$chatty()</code></a></p></li>
 <li><p><a href='#method-activate_table'><code>EdibbleDesign$activate_table()</code></a></p></li>
 <li><p><a href='#method-activate_graph'><code>EdibbleDesign$activate_graph()</code></a></p></li>
-<li><p><a href='#method-subset_graph'><code>EdibbleDesign$subset_graph()</code></a></p></li>
-<li><p><a href='#method-var_names'><code>EdibbleDesign$var_names()</code></a></p></li>
-<li><p><a href='#method-var_class'><code>EdibbleDesign$var_class()</code></a></p></li>
-<li><p><a href='#method-var_index'><code>EdibbleDesign$var_index()</code></a></p></li>
-<li><p><a href='#method-vertex_var_label'><code>EdibbleDesign$vertex_var_label()</code></a></p></li>
-<li><p><a href='#method-vertex_level_names'><code>EdibbleDesign$vertex_level_names()</code></a></p></li>
+<li><p><a href='#method-rename'><code>EdibbleDesign$rename()</code></a></p></li>
+<li><p><a href='#method-add_variable'><code>EdibbleDesign$add_variable()</code></a></p></li>
+<li><p><a href='#method-add_allocation'><code>EdibbleDesign$add_allocation()</code></a></p></li>
+<li><p><a href='#method-assign_allocation'><code>EdibbleDesign$assign_allocation()</code></a></p></li>
 <li><p><a href='#method-clone'><code>EdibbleDesign$clone()</code></a></p></li>
 </ul>
 <p><hr>
@@ -280,71 +286,47 @@ randomisation process.</p><h4 class='hasAnchor' id='arguments'><a class='anchor'
 <p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>activate_graph</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
 <p><hr>
-<a id="method-subset_graph"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>subset_graph()</code></h3>
-<p>Subset graph.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>subset_graph</span><span class='op'>(</span>type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"level"</span>, <span class='st'>"var"</span><span class='op'>)</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-rename"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>rename()</code></h3>
+<p>Rename the variables</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>rename</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>type</code></dt><dd><p>A variable or level.</p></dd>
+<dt><code>...</code></dt><dd><p>Similar to <code><a href='https://dplyr.tidyverse.org/reference/rename.html'>dplyr::rename</a></code>, use <code>new_name = old_name</code> to
+rename variables.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-var_names"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>var_names()</code></h3>
-<p>Get the variable names.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>var_names</span><span class='op'>(</span><span class='va'>vindex</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-add_variable"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>add_variable()</code></h3>
+<p>Add the variable to the graph.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>add_variable</span><span class='op'>(</span><span class='va'>value</span>, <span class='va'>vname</span>, <span class='va'>attr</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>vindex</code></dt><dd><p>Optional vertex index from graph object.</p></dd>
+<dt><code>value</code></dt><dd><p>Short hand value of what to add.</p></dd>
+
+<dt><code>vname</code></dt><dd><p>The variable name</p></dd>
+
+<dt><code>attr</code></dt><dd><p>The vertex attributes.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-var_class"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>var_class()</code></h3>
-<p>Get the variable class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>var_class</span><span class='op'>(</span><span class='va'>vname</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-add_allocation"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>add_allocation()</code></h3>
+<p>This adds edges that connect treatment to unit.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>add_allocation</span><span class='op'>(</span><span class='va'>trts</span>, <span class='va'>unit</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>vname</code></dt><dd><p>The name of the variable node.</p></dd>
+<dt><code>trts</code></dt><dd><p>The name of the treatments.</p></dd>
+
+<dt><code>unit</code></dt><dd><p>The name of the unit. There should be only one unit.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-var_index"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>var_index()</code></h3>
-<p>Get the variable vertex index given the name.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>var_index</span><span class='op'>(</span><span class='va'>vname</span>, var <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-assign_allocation"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>assign_allocation()</code></h3>
+<p>This removes "t2vmay" edges and assigns edges from treatment to variable.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>assign_allocation</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
-<p><div class="arguments"></p><dl>
-<dt><code>vname</code></dt><dd><p>The name of the variable (or label).</p></dd>
-
-<dt><code>var</code></dt><dd><p>TRUE or FALSE.</p></dd>
-
-</dl><p></div></p>
-<p><hr>
-<a id="method-vertex_var_label"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>vertex_var_label()</code></h3>
-<p>Vertex labels.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>vertex_var_label</span><span class='op'>(</span><span class='va'>name</span>, <span class='va'>nlevels</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
-<p><div class="arguments"></p><dl>
-<dt><code>name</code></dt><dd><p>The name of the variable.</p></dd>
-
-<dt><code>nlevels</code></dt><dd><p>The total number of levels.</p></dd>
-
-</dl><p></div></p>
-<p><hr>
-<a id="method-vertex_level_names"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>vertex_level_names()</code></h3>
-<p>Vertex levels.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>vertex_level_names</span><span class='op'>(</span><span class='va'>vname</span>, <span class='va'>lnames</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
-<p><div class="arguments"></p><dl>
-<dt><code>vname</code></dt><dd><p>The name of the variable.</p></dd>
-
-<dt><code>lnames</code></dt><dd><p>The level names.</p></dd>
-
-</dl><p></div></p>
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>

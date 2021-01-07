@@ -176,28 +176,28 @@ and returns an edibble graph with that additional node.</p>
 
     <pre class="usage"><span class='fu'>add_edibble_vertex</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='co'># S3 method for lkbl_graph</span>
-<span class='fu'>add_edibble_vertex</span><span class='op'>(</span><span class='va'>.lgraph</span>, <span class='va'>name</span>, graph <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>attr</span><span class='op'>)</span>
-
 <span class='co'># S3 method for default</span>
-<span class='fu'>add_edibble_vertex</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>name</span>, graph <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>attr</span><span class='op'>)</span></pre>
+<span class='fu'>add_edibble_vertex</span><span class='op'>(</span><span class='va'>value</span>, <span class='va'>name</span>, design <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>attr</span><span class='op'>)</span>
+
+<span class='co'># S3 method for lkbl_graph</span>
+<span class='fu'>add_edibble_vertex</span><span class='op'>(</span><span class='va'>.lgraph</span>, <span class='va'>name</span>, design <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>attr</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>value</th>
+      <td><p>A value that may be a single number, unnamed vector,
+a one sided formula or linkabble.</p></td>
+    </tr>
+    <tr>
       <th>name</th>
       <td><p>Name of the edibble variable as string.</p></td>
     </tr>
     <tr>
-      <th>graph</th>
+      <th>design</th>
       <td><p>An edibble graph with levels converted as list used
 for evaluation in any expressions.</p></td>
-    </tr>
-    <tr>
-      <th>x</th>
-      <td><p>A value that may be a single number, unnamed vector,
-a one sided formula or linkabble.</p></td>
     </tr>
     </table>
 

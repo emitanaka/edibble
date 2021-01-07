@@ -16,7 +16,7 @@
     <loc>https://edibble.emitanaka.org/reference/add_edibble_vertex.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/allocate_trts.edbl_graph.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/allocate_trts.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/context-manipulations.html</loc>
@@ -25,16 +25,10 @@
     <loc>https://edibble.emitanaka.org/reference/cross_edge_seq.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/ed_levels.html</loc>
-  </url>
-  <url>
     <loc>https://edibble.emitanaka.org/reference/edibble-package.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/edibble.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/eval_traits.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/find_classical_names.html</loc>
@@ -62,6 +56,9 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/names-ed-vars.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/names_by_class.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/names_to_vnames.html</loc>
@@ -131,9 +128,6 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/traits_levels.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/trts_levels.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/unit_to_trts.html</loc>

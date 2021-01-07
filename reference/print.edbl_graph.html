@@ -182,7 +182,7 @@ be found in <code><a href='../articles/edbl-output.html'>vignette("edbl-output")
 
     <pre class="usage"><span class='co'># S3 method for edbl_graph</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span>
-  <span class='va'>.data</span>,
+  <span class='va'>.graph</span>,
   decorate_units <span class='op'>=</span> <span class='fu'>edibble_decorate</span><span class='op'>(</span><span class='st'>"units"</span><span class='op'>)</span>,
   decorate_trts <span class='op'>=</span> <span class='fu'>edibble_decorate</span><span class='op'>(</span><span class='st'>"trts"</span><span class='op'>)</span>,
   decorate_resp <span class='op'>=</span> <span class='fu'>edibble_decorate</span><span class='op'>(</span><span class='st'>"resp"</span><span class='op'>)</span>,
@@ -195,15 +195,15 @@ be found in <code><a href='../articles/edbl-output.html'>vignette("edbl-output")
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.data</th>
-      <td><p>An edibble graph.</p></td>
-    </tr>
-    <tr>
       <th>decorate_trts, decorate_units, decorate_resp, decorate_levels, decorate_title</th>
       <td><p>A function applied to the name of treatment, unit, response factors or
 design title. The function should return a string. Most often this wraps the name with
 ANSI colored text. Run <code>edibble_opt()</code> to see the list of default
 values for the options.</p></td>
+    </tr>
+    <tr>
+      <th>.data</th>
+      <td><p>An edibble graph.</p></td>
     </tr>
     </table>
 

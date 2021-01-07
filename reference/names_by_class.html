@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Make an edge sequence for every pair from two vectors — cross_edge_seq • edibble</title>
+<title>Get names by vertex class — names_by_class • edibble</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -54,9 +54,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Make an edge sequence for every pair from two vectors — cross_edge_seq" />
-<meta property="og:description" content="Given two vectors of node names, return the edge sequence that connects
-every node from first vector to the second vector." />
+<meta property="og:title" content="Get names by vertex class — names_by_class" />
+<meta property="og:description" content="Get the name of variables by class." />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@emitanaka" />
@@ -162,43 +161,26 @@ every node from first vector to the second vector." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Make an edge sequence for every pair from two vectors</h1>
-    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/nest.R'><code>R/nest.R</code></a></small>
-    <div class="hidden name"><code>cross_edge_seq.Rd</code></div>
+    <h1>Get names by vertex class</h1>
+    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/names.R'><code>R/names.R</code></a></small>
+    <div class="hidden name"><code>names_by_class.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Given two vectors of node names, return the edge sequence that connects
-every node from first vector to the second vector.</p>
+    <p>Get the name of variables by class.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cross_edge_seq</span><span class='op'>(</span><span class='va'>.graph</span>, <span class='va'>vnames_from</span>, <span class='va'>vnames_to</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>names_by_class</span><span class='op'>(</span><span class='va'>.graph</span>, class <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.graph</th>
-      <td><p>An edibble graph.</p></td>
-    </tr>
-    <tr>
-      <th>vnames_from</th>
-      <td><p>A character vector of vertex names.</p></td>
-    </tr>
-    <tr>
-      <th>vnames_to</th>
-      <td><p>A character vector of vertex names.</p></td>
+      <th>class</th>
+      <td><p>The class name.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>An edge sequence (vector of vertex indices) that connects every node
-from first vector to every node in the second vector.V()</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other edge-seq: 
-<code><a href='match_edge_seq.html'>match_edge_seq</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

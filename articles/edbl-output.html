@@ -132,7 +132,7 @@
   <span class="fu"><a href="../reference/set_units.html">set_units</a></span><span class="op">(</span>block <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"B1"</span>, <span class="st">"B2"</span><span class="op">)</span>,
             unit <span class="op">=</span> <span class="fu"><a href="../reference/nested_in.html">nested_in</a></span><span class="op">(</span><span class="va">block</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/set_trts.html">set_trts</a></span><span class="op">(</span>trt <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">allocate_trts</span><span class="op">(</span><span class="op">~</span><span class="va">unit</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/allocate_trts.html">allocate_trts</a></span><span class="op">(</span><span class="op">~</span><span class="va">unit</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/randomise_trts.html">randomise_trts</a></span><span class="op">(</span><span class="op">)</span>
 <span class="op">}</span>
 
@@ -208,16 +208,16 @@ rcbd</a></code></pre>
 <span class="co">#&gt; # An edibble: 12 x 3</span>
 <span class="co">#&gt;    block     unit       trt     </span>
 <span class="co">#&gt;    &lt;unit(2)&gt; &lt;unit(12)&gt; &lt;trt(4)&gt;</span>
-<span class="co">#&gt;  1 B1        unit1      A       </span>
-<span class="co">#&gt;  2 B1        unit2      C       </span>
-<span class="co">#&gt;  3 B1        unit3      B       </span>
-<span class="co">#&gt;  4 B1        unit4      D       </span>
+<span class="co">#&gt;  1 B1        unit1      B       </span>
+<span class="co">#&gt;  2 B1        unit2      D       </span>
+<span class="co">#&gt;  3 B1        unit3      C       </span>
+<span class="co">#&gt;  4 B1        unit4      A       </span>
 <span class="co">#&gt;  5 B1        unit5      C       </span>
 <span class="co">#&gt;  6 B1        unit6      A       </span>
-<span class="co">#&gt;  7 B2        unit7      A       </span>
-<span class="co">#&gt;  8 B2        unit8      B       </span>
+<span class="co">#&gt;  7 B2        unit7      B       </span>
+<span class="co">#&gt;  8 B2        unit8      D       </span>
 <span class="co">#&gt;  9 B2        unit9      C       </span>
-<span class="co">#&gt; 10 B2        unit10     D       </span>
+<span class="co">#&gt; 10 B2        unit10     A       </span>
 <span class="co">#&gt; 11 B2        unit11     B       </span>
 <span class="co">#&gt; 12 B2        unit12     D</span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -228,15 +228,15 @@ rcbd</a></code></pre>
 <span class="co">#&gt;    &lt;unit(2)&gt; &lt;unit(12)&gt; &lt;trt(4)&gt;</span>
 <span class="co">#&gt;  1 B1        unit01     D       </span>
 <span class="co">#&gt;  2 B1        unit02     B       </span>
-<span class="co">#&gt;  3 B1        unit03     C       </span>
-<span class="co">#&gt;  4 B1        unit04     A       </span>
-<span class="co">#&gt;  5 B1        unit05     D       </span>
+<span class="co">#&gt;  3 B1        unit03     A       </span>
+<span class="co">#&gt;  4 B1        unit04     C       </span>
+<span class="co">#&gt;  5 B1        unit05     A       </span>
 <span class="co">#&gt;  6 B1        unit06     B       </span>
-<span class="co">#&gt;  7 B2        unit07     A       </span>
-<span class="co">#&gt;  8 B2        unit08     B       </span>
-<span class="co">#&gt;  9 B2        unit09     A       </span>
-<span class="co">#&gt; 10 B2        unit10     C       </span>
-<span class="co">#&gt; 11 B2        unit11     D       </span>
+<span class="co">#&gt;  7 B2        unit07     D       </span>
+<span class="co">#&gt;  8 B2        unit08     C       </span>
+<span class="co">#&gt;  9 B2        unit09     D       </span>
+<span class="co">#&gt; 10 B2        unit10     B       </span>
+<span class="co">#&gt; 11 B2        unit11     A       </span>
 <span class="co">#&gt; 12 B2        unit12     C</span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>edibble.levels.label.leading_zero <span class="op">=</span> <span class="cn">TRUE</span>,
@@ -245,18 +245,18 @@ rcbd</a></code></pre>
 <span class="co">#&gt; # An edibble: 12 x 3</span>
 <span class="co">#&gt;    block     unit       trt     </span>
 <span class="co">#&gt;    &lt;unit(2)&gt; &lt;unit(12)&gt; &lt;trt(4)&gt;</span>
-<span class="co">#&gt;  1 B1        unit00001  D       </span>
+<span class="co">#&gt;  1 B1        unit00001  A       </span>
 <span class="co">#&gt;  2 B1        unit00002  D       </span>
 <span class="co">#&gt;  3 B1        unit00003  B       </span>
-<span class="co">#&gt;  4 B1        unit00004  C       </span>
-<span class="co">#&gt;  5 B1        unit00005  A       </span>
-<span class="co">#&gt;  6 B1        unit00006  C       </span>
-<span class="co">#&gt;  7 B2        unit00007  B       </span>
-<span class="co">#&gt;  8 B2        unit00008  A       </span>
-<span class="co">#&gt;  9 B2        unit00009  A       </span>
+<span class="co">#&gt;  4 B1        unit00004  D       </span>
+<span class="co">#&gt;  5 B1        unit00005  B       </span>
+<span class="co">#&gt;  6 B1        unit00006  D       </span>
+<span class="co">#&gt;  7 B2        unit00007  A       </span>
+<span class="co">#&gt;  8 B2        unit00008  C       </span>
+<span class="co">#&gt;  9 B2        unit00009  B       </span>
 <span class="co">#&gt; 10 B2        unit00010  C       </span>
-<span class="co">#&gt; 11 B2        unit00011  D       </span>
-<span class="co">#&gt; 12 B2        unit00012  B</span></code></pre></div>
+<span class="co">#&gt; 11 B2        unit00011  A       </span>
+<span class="co">#&gt; 12 B2        unit00012  C</span></code></pre></div>
 </div>
   </div>
 
