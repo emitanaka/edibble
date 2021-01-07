@@ -2,24 +2,24 @@
 % Please edit documentation in R/vars.R
 \name{add_edibble_vertex}
 \alias{add_edibble_vertex}
-\alias{add_edibble_vertex.lkbl_graph}
 \alias{add_edibble_vertex.default}
+\alias{add_edibble_vertex.lkbl_graph}
 \title{Add an edibble vertex}
 \usage{
 add_edibble_vertex(.data, ...)
 
-\method{add_edibble_vertex}{lkbl_graph}(.lgraph, name, graph = NULL, attr)
+\method{add_edibble_vertex}{default}(value, name, design = NULL, attr)
 
-\method{add_edibble_vertex}{default}(x, name, graph = NULL, attr)
+\method{add_edibble_vertex}{lkbl_graph}(.lgraph, name, design = NULL, attr)
 }
 \arguments{
+\item{value}{A value that may be a single number, unnamed vector,
+a one sided formula or linkabble.}
+
 \item{name}{Name of the edibble variable as string.}
 
-\item{graph}{An edibble graph with levels converted as list used
+\item{design}{An edibble graph with levels converted as list used
 for evaluation in any expressions.}
-
-\item{x}{A value that may be a single number, unnamed vector,
-a one sided formula or linkabble.}
 }
 \value{
 Returns an evaluated expression.

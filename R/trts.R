@@ -19,18 +19,6 @@ set_trts <- function(.design, ...,
   set_vars(.design, ..., .name_repair = .name_repair, .class = "edbl_trt")
 }
 
-#' @export
-allocate_trts <- function(.data, ...) {
-  UseMethod("allocate_trts")
-}
-
-#' @export
-allocate_trts.EdibbleDesign <- function(.data, ...) {
-  graph <- .data$graph
-  .data$graph <- allocate_trts(graph, ...)
-  .data
-}
-
 #' Define which unit to apply treatment
 #'
 #' @param .data An `edbl_graph` object.
@@ -38,39 +26,22 @@ allocate_trts.EdibbleDesign <- function(.data, ...) {
 #' then the whole treatment is applied to the specified unit.
 #' @param class A sub-class. This is meant so that it can invoke the method
 #' `randomise_trts.class`.
-#' @importFrom rlang f_lhs
+#' @importFrom rlang f_lhs f_rhs
+#' @importFrom igraph add_edges
 #' @export
-allocate_trts.edbl_graph <- function(.data, ...) {
-  # doesn't support : or * right now
+allocate_trts <- function(.design, ...) {
   dots <- enquos(...)
   specials <- c(":", "*")
-  out <- .data
   for(i in seq_along(dots)) {
     expr <- quo_get_expr(dots[[i]])
     .trt <- setdiff(as.character(f_lhs(expr)), specials)
-    # there should be only a unit
+    # there should be only one unit
     .EU <- as.character(f_rhs(expr)) #setdiff(as.character(f_rhs(expr)), specials)
-    if(length(.trt)) {
-      # there should be an error if .trt is not within .data
-      # maybe there should be a check that .trt is edbl_trt
-      vnames_from <- .trt
-    } else {
-      vnames_from <- names(subset(.data, class=="edbl_trt", .vtype = "var"))
-    }
-    out <- igraph::add_edges(out,
-                             cross_edge_seq(.data,
-                                            var_levels(.data, vnames_from),
-                                            var_levels(.data, .EU)),
-                             attr = edge_attr_opt("t2vmay"))
-    out <- igraph::add_edges(out,
-                             cross_edge_seq(.data,
-                                            vnames_from,
-                                            vnames_to = .EU),
-                             attr = edge_attr_opt("t2v"))
+    .design$add_allocation(.trt, .EU)
   }
-
-  structure(out, class = class(.data))
+  .design
 }
+
 
 #' @export
 get_trt_vars <- function(x) {
@@ -93,23 +64,8 @@ get_trt_levels <- function(.data) {
   out
 }
 
-#' Unlike `vars_levels`, there is a check in place
-#' that it is a treatment.
-trts_levels <- function(.data, vnames = NULL) {
-  if(is_null(vnames)) {
-    vars_levels(.data, names_trts(.data))
-  } else {
-    if(!all(vnames %in% names_trts(.data))) {
-      abort("Some {vnames} not a treatment.")
-    }
-    vars_levels(.data, vnames)
-  }
-}
 
-# make this to a replicabble?
-trts_levels_df <- function(.data, vnames = NULL) {
-  tibble::as_tibble(expand.grid(trts_levels(.data, vnames = vnames), stringsAsFactors = FALSE))
-}
+
 
 #' @export
 n_trts <- function(.data, ...) {

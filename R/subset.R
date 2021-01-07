@@ -3,38 +3,38 @@
 #' @description
 #' This function subsets vertices of edibble graph based on vertex attributes.
 #'
-#' @param .data An edibble graph.
+#' @param .graph An edibble graph.
 #' @param ... Expressions that return a logical value.
 #' @param .vtype The vertex type to subset. By default, all vertices are returned.
 #'   For `"var"`, only vertices that have attribute `vtype` as "var" is returned.
 #' @name subset-edbl-graph
-#'
+#' @importFrom igraph induced_subgraph vertex_attr
 #' @export
-subset.edbl_graph <- function(.data, ..., .vtype = c("all", "var", "level")) {
+subset.edbl_graph <- function(.graph, ..., .vtype = c("all", "var", "level")) {
   .vtype <- match.arg(.vtype)
   dots <- enquos(...)
   out <- switch(.vtype,
-                "all" = .data,
-                "var" = subset_vars(.data),
-                "level" = subset_levels(.data))
+                "all" = .graph,
+                "var" = subset_vars(.graph),
+                "level" = subset_levels(.graph))
   for(i in seq_along(dots)) {
-    ind <- which(eval_tidy(dots[[i]], igraph::vertex_attr(out)))
-    out <- igraph::induced_subgraph(out, ind)
+    ind <- which(eval_tidy(dots[[i]], vertex_attr(out)))
+    out <- induced_subgraph(out, ind)
   }
-  class(out) <- class(.data)
-  out
+  reinstate_graph_attrs(out, .graph)
 }
 
 #' @rdname subset-edbl-graph
 #' @export
-subset_vars <- function(.data) {
-  structure(igraph::induced_subgraph(.data, V(.data)$vtype=="var"),
-            class = class(.data))
+subset_vars <- function(.graph) {
+  reinstate_graph_attrs(induced_subgraph(.graph, V(.graph)$vtype=="var"),
+                        .graph)
 }
 
 #' @rdname subset-edbl-graph
 #' @export
-subset_levels <- function(.data) {
-  structure(igraph::induced_subgraph(.data, V(.data)$vtype=="level"),
-            class = class(.data))
+subset_levels <- function(.graph) {
+  reinstate_graph_attrs(induced_subgraph(.graph, V(.graph)$vtype=="level"),
+                        .graph)
 }
+

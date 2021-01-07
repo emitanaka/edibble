@@ -2,12 +2,12 @@
 #' Initiate the edibble design
 #'
 #' @description
-#' This function doesn't really do much besides create an empty igraph.
+#' This function doesn't really do much besides create a new EdibbleDesign.
 #'
 #' @param name Optional name used as title for printing the design.
-#' @return An `edbl_graph` object which is a special type of `igraph` class.
+#' @return An `EdibbleGraph` object which is a special type of `R6` class.
 #' @examples
-#' initiate_design("My design")
+#' start_design("My design")
 #' @seealso Add variables to this design with [set_units()], [set_trts()], and
 #' [measure_units()].
 #'
@@ -51,7 +51,7 @@ initiate_design <- function(name = NULL) {
 #' @importFrom cli tree
 #'
 #' @export
-print.edbl_graph <- function(.data,
+print.edbl_graph <- function(.graph,
                              decorate_units  = edibble_decorate("units"),
                              decorate_trts   = edibble_decorate("trts"),
                              decorate_resp   = edibble_decorate("resp"),
@@ -60,7 +60,7 @@ print.edbl_graph <- function(.data,
                              main = NULL) {
 
   main <- main %||% "An edibble design"
-  vgraph <- subset_vars(.data)
+  vgraph <- subset_vars(.graph)
   gnames <- V(vgraph)$name
 
   if(is_empty(gnames)) {
@@ -76,7 +76,7 @@ print.edbl_graph <- function(.data,
                                  classes)
 
 
-    var_nlevels <- lengths(vars_levels(.data, gnames))
+    var_nlevels <- lengths(vars_levels(.graph, gnames))
     nvar <- length(gnames)
     ll <- lapply(V(vgraph),
               function(v) {

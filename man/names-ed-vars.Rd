@@ -20,7 +20,7 @@ names_resp(.data)
 
 names_vars(.data, ...)
 
-\method{names_vars}{edbl_graph}(.data, class = NULL)
+\method{names_vars}{edbl_graph}(.graph, class = NULL)
 
 \method{names_vars}{edbl_df}(.data, class = NULL)
 

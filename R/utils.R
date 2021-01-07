@@ -1,24 +1,5 @@
 
 
-#' Get all the levels of edibble variables as a list
-#'
-#' @param x An edibble graph or edibble object.
-#' @return Returns a named list of levels of all edibble variables.
-#' @export
-ed_levels <- function(x) {
-  UseMethod("ed_levels")
-}
-
-#' @importFrom igraph induced_subgraph
-#' @export
-ed_levels.edbl_graph <- function(.data) {
-  vgraph <- induced_subgraph(.data, V(.data)$vtype=="var")
-  vnames <- V(vgraph)$name
-  res <- lapply(vnames, function(vname) var_levels(.data, vname))
-  names(res) <- vnames
-  res
-}
-
 decorate_vars <- function(x, decorate_units, decorate_trts, decorate_resp, classes) {
   edbl_classes <- c("edbl_unit", "edbl_trt", "edbl_resp")
   decorate_fns <- list(decorate_units, decorate_trts, decorate_resp)
@@ -41,16 +22,11 @@ compact <- function(.x) {
   .x[!vapply(.x, is_empty, logical(1))]
 }
 
-
-reset_graph_attr <- function(g1, g2) {
-  attributes(g1) <- attribute(g2)
+# igraph operations removes previous attributes so
+reinstate_graph_attrs <- function(g1, g2) {
+  attributes(g1) <- attributes(g2)
   g1
 }
-
-ed_levels.edbl <- function(x) {
-  lapply(x, levels)
-}
-
 
 #' Find how many digits
 ndigits <- function(x) {

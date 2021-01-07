@@ -12,7 +12,15 @@ the experimental design.
 \describe{
 \item{\code{active}}{get the active view}
 
-\item{\code{name}}{the name}
+\item{\code{name}}{The name of the design or project}
+
+\item{\code{names_trts}}{The treatment names.}
+
+\item{\code{names_units}}{The unit variable names.}
+
+\item{\code{names_resp}}{The unit variable names.}
+
+\item{\code{names_vars}}{The name of all variables.}
 
 \item{\code{graph}}{the name}
 
@@ -34,12 +42,10 @@ the experimental design.
 \item \href{#method-chatty}{\code{EdibbleDesign$chatty()}}
 \item \href{#method-activate_table}{\code{EdibbleDesign$activate_table()}}
 \item \href{#method-activate_graph}{\code{EdibbleDesign$activate_graph()}}
-\item \href{#method-subset_graph}{\code{EdibbleDesign$subset_graph()}}
-\item \href{#method-var_names}{\code{EdibbleDesign$var_names()}}
-\item \href{#method-var_class}{\code{EdibbleDesign$var_class()}}
-\item \href{#method-var_index}{\code{EdibbleDesign$var_index()}}
-\item \href{#method-vertex_var_label}{\code{EdibbleDesign$vertex_var_label()}}
-\item \href{#method-vertex_level_names}{\code{EdibbleDesign$vertex_level_names()}}
+\item \href{#method-rename}{\code{EdibbleDesign$rename()}}
+\item \href{#method-add_variable}{\code{EdibbleDesign$add_variable()}}
+\item \href{#method-add_allocation}{\code{EdibbleDesign$add_allocation()}}
+\item \href{#method-assign_allocation}{\code{EdibbleDesign$assign_allocation()}}
 \item \href{#method-clone}{\code{EdibbleDesign$clone()}}
 }
 }
@@ -163,112 +169,72 @@ active Which is active
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-subset_graph"></a>}}
-\if{latex}{\out{\hypertarget{method-subset_graph}{}}}
-\subsection{Method \code{subset_graph()}}{
-Subset graph.
+\if{html}{\out{<a id="method-rename"></a>}}
+\if{latex}{\out{\hypertarget{method-rename}{}}}
+\subsection{Method \code{rename()}}{
+Rename the variables
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$subset_graph(type = c("level", "var"))}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$rename(...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{type}}{A variable or level.}
+\item{\code{...}}{Similar to \code{dplyr::rename}, use \code{new_name = old_name} to
+rename variables.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-var_names"></a>}}
-\if{latex}{\out{\hypertarget{method-var_names}{}}}
-\subsection{Method \code{var_names()}}{
-Get the variable names.
+\if{html}{\out{<a id="method-add_variable"></a>}}
+\if{latex}{\out{\hypertarget{method-add_variable}{}}}
+\subsection{Method \code{add_variable()}}{
+Add the variable to the graph.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$var_names(vindex)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$add_variable(value, vname, attr)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{vindex}}{Optional vertex index from graph object.}
+\item{\code{value}}{Short hand value of what to add.}
+
+\item{\code{vname}}{The variable name}
+
+\item{\code{attr}}{The vertex attributes.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-var_class"></a>}}
-\if{latex}{\out{\hypertarget{method-var_class}{}}}
-\subsection{Method \code{var_class()}}{
-Get the variable class.
+\if{html}{\out{<a id="method-add_allocation"></a>}}
+\if{latex}{\out{\hypertarget{method-add_allocation}{}}}
+\subsection{Method \code{add_allocation()}}{
+This adds edges that connect treatment to unit.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$var_class(vname)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$add_allocation(trts, unit)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{vname}}{The name of the variable node.}
+\item{\code{trts}}{The name of the treatments.}
+
+\item{\code{unit}}{The name of the unit. There should be only one unit.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-var_index"></a>}}
-\if{latex}{\out{\hypertarget{method-var_index}{}}}
-\subsection{Method \code{var_index()}}{
-Get the variable vertex index given the name.
+\if{html}{\out{<a id="method-assign_allocation"></a>}}
+\if{latex}{\out{\hypertarget{method-assign_allocation}{}}}
+\subsection{Method \code{assign_allocation()}}{
+This removes "t2vmay" edges and assigns edges from treatment to variable.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$var_index(vname, var = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$assign_allocation()}\if{html}{\out{</div>}}
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{vname}}{The name of the variable (or label).}
-
-\item{\code{var}}{TRUE or FALSE.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-vertex_var_label"></a>}}
-\if{latex}{\out{\hypertarget{method-vertex_var_label}{}}}
-\subsection{Method \code{vertex_var_label()}}{
-Vertex labels.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$vertex_var_label(name, nlevels)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{name}}{The name of the variable.}
-
-\item{\code{nlevels}}{The total number of levels.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-vertex_level_names"></a>}}
-\if{latex}{\out{\hypertarget{method-vertex_level_names}{}}}
-\subsection{Method \code{vertex_level_names()}}{
-Vertex levels.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$vertex_level_names(vname, lnames)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{vname}}{The name of the variable.}
-
-\item{\code{lnames}}{The level names.}
-}
-\if{html}{\out{</div>}}
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

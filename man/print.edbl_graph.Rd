@@ -5,7 +5,7 @@
 \title{Print edibble graph to terminal}
 \usage{
 \method{print}{edbl_graph}(
-  .data,
+  .graph,
   decorate_units = edibble_decorate("units"),
   decorate_trts = edibble_decorate("trts"),
   decorate_resp = edibble_decorate("resp"),
@@ -15,12 +15,12 @@
 )
 }
 \arguments{
-\item{.data}{An edibble graph.}
-
 \item{decorate_trts, decorate_units, decorate_resp, decorate_levels, decorate_title}{A function applied to the name of treatment, unit, response factors or
 design title. The function should return a string. Most often this wraps the name with
 ANSI colored text. Run \code{\link[=edibble_opt]{edibble_opt()}} to see the list of default
 values for the options.}
+
+\item{.data}{An edibble graph.}
 }
 \description{
 This function prints an \code{edbl_graph} object as a tree to terminal.

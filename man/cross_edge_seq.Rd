@@ -4,10 +4,10 @@
 \alias{cross_edge_seq}
 \title{Make an edge sequence for every pair from two vectors}
 \usage{
-cross_edge_seq(.data, vnames_from, vnames_to)
+cross_edge_seq(.graph, vnames_from, vnames_to)
 }
 \arguments{
-\item{.data}{An edibble graph.}
+\item{.graph}{An edibble graph.}
 
 \item{vnames_from}{A character vector of vertex names.}
 

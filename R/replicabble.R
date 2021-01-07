@@ -6,9 +6,9 @@
 #' the number of combined levels of given trait variables.
 #' @importFrom tibble new_tibble
 #' @export
-replicabble <- function(.data, unit, trts) {
-  t2vsplit <- unit_to_trts(.data, unit, trts, type = "level")
-  df <- trts_levels_df(.data, trts)
+replicabble <- function(.design, unit, trts) {
+  t2vsplit <- unit_to_trts(.design, unit, trts, type = "level")
+  df <- expand.grid(vars_levels(.design$graph, trts), stringsAsFactors = FALSE)
   df$units <- lapply(1:nrow(df),
                          function(i) {
                            ind <- map_lgl(t2vsplit,
@@ -25,6 +25,11 @@ replicabble <- function(.data, unit, trts) {
   df$rep <- df$rep + sample(rep(c(1, 0), c(nremain, ntrts - nremain)))
 
   new_tibble(df, nrow = NROW(df), class = "rpbl_df")
+}
+
+# make this to a replicabble?
+trts_levels_df <- function(.data, vnames = NULL) {
+  tibble::as_tibble(expand.grid(trts_levels(.data, vnames = vnames), stringsAsFactors = FALSE))
 }
 
 

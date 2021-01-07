@@ -2,21 +2,9 @@
 % Please edit documentation in R/units.R
 \name{n_units}
 \alias{n_units}
-\alias{n_units.edbl_graph}
-\alias{n_units.edbl_df}
 \title{Number of units associated with the given variable}
 \usage{
-n_units(.data, ...)
-
-\method{n_units}{edbl_graph}(.data, var = NULL)
-
-\method{n_units}{edbl_df}(.data, var)
-}
-\arguments{
-\item{.data}{An edibble graph or an edibble data frame.}
-
-\item{var}{The name of the edibble variable. If this is not supplied then
-the number of experimental unit is returned.}
+n_units(.design)
 }
 \description{
 Number of units associated with the given variable

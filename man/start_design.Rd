@@ -10,13 +10,13 @@ start_design(name = NULL)
 \item{name}{Optional name used as title for printing the design.}
 }
 \value{
-An \code{edbl_graph} object which is a special type of \code{igraph} class.
+An \code{EdibbleGraph} object which is a special type of \code{R6} class.
 }
 \description{
-This function doesn't really do much besides create an empty igraph.
+This function doesn't really do much besides create a new EdibbleDesign.
 }
 \examples{
-initiate_design("My design")
+start_design("My design")
 }
 \seealso{
 Add variables to this design with \code{\link[=set_units]{set_units()}}, \code{\link[=set_trts]{set_trts()}}, and

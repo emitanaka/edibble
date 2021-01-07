@@ -3,16 +3,16 @@
 #' Given two vectors of node names, return the edge sequence that connects
 #' every node from first vector to the second vector.
 #'
-#' @param .data An edibble graph.
+#' @param .graph An edibble graph.
 #' @param vnames_from A character vector of vertex names.
 #' @param vnames_to A character vector of vertex names.
 #' @family edge-seq
 #' @return An edge sequence (vector of vertex indices) that connects every node
 #' from first vector to every node in the second vector.V()
 #' @export
-cross_edge_seq <- function(.data, vnames_from, vnames_to) {
-  vindex_from <- which(V(.data)$name %in% vnames_from)
-  vindex_to <- which(V(.data)$name %in% vnames_to)
+cross_edge_seq <- function(.graph, vnames_from, vnames_to) {
+  vindex_from <- which(V(.graph)$name %in% vnames_from)
+  vindex_to <- which(V(.graph)$name %in% vnames_to)
   as.vector(t(expand.grid(vindex_from, vindex_to)))
 }
 
@@ -43,7 +43,7 @@ match_edge_seq <- function(.data, vnames_from, vnames_to) {
 #' @export
 path_seq <- function(.data, vnames) {
   if(!is_empty(vnames)) {
-    vindex <- map_int(vnames, function(x) which(V(.data)$name==x))
+    vindex <- match(vnames, V(.data)$name)
     n <- length(vindex)
     data.frame(vindex[1:(n - 1)], vindex[2:n]) %>%
       t() %>%
@@ -83,23 +83,18 @@ nested_in <- function(.var, ..., .vname) {
       n <- nrep * parent_nlevels
       child_levels <- traits_levels(prefix = ifelse(missing(.vname), "", .vname),
                                     size = n)
+      child_levels <- vertex_level_names(.vname, child_levels)
       child_non_distinct_levels <- traits_levels(prefix = ifelse(missing(.vname), "", .vname),
                                                  size = nrep)
-      # I need to change how this is done.
-      # I suspect this is the part that's slowing it down a lot.
-      for(i in seq_along(parent_vlevels)) {
-        subchild_vlevels <- paste0(.vname, ":", child_levels[seq((i - 1) * nrep + 1, i * nrep)])
 
-        g <- add_vertices(g, nv = length(subchild_vlevels),
-                                  name = subchild_vlevels,
-                                  label2 = child_non_distinct_levels,
-                                  ltype = "child", group = i)
-        g <- add_edges(g,
-                            cross_edge_seq(g, parent_vlevels[i], subchild_vlevels),
-                            attr = edge_attr_opt("l2l"))
-
-      }
-
+      g <- add_vertices(g, nv = length(child_levels),
+                        name = child_levels,
+                        label2 = rep(child_non_distinct_levels, each = parent_nlevels),
+                        ltype = "child", group = rep(1:parent_nlevels, each = nrep))
+      es <- unname(unlist(lapply(seq_along(parent_vlevels), function(i) {
+          cross_edge_seq(g, parent_vlevels[i], child_levels[seq((i - 1) * nrep + 1, i * nrep)])
+        })))
+      g <- add_edges(g, es, attr = edge_attr_opt("l2l"))
       g <- set_graph_attr(g, "parent_name", parent_name)
 
       class(g) <- c("lkbl_graph", class(g))

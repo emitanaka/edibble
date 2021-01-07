@@ -41,33 +41,12 @@ vec_cast.edbl_unit.edbl_unit <- function(x, to, ...) {
 }
 
 #' Number of units associated with the given variable
-#' @param .data An edibble graph or an edibble data frame.
-#' @param var The name of the edibble variable. If this is not supplied then
-#'  the number of experimental unit is returned.
 #' @export
-n_units <- function(.data, ...) {
-  UseMethod("n_units")
+n_units <- function(.design) {
+  nrow(.design$table)
 }
 
 
-#' @rdname n_units
-#' @export
-n_units.edbl_graph <- function(.data, var = NULL) {
-  egraph <- structure(igraph::subgraph.edges(.data, which(E(.data)$etype=="t2vmay")),
-                      class = class(.data))
-  subset(egraph, name=="t1:t11")
-  var <- var %||% names_trts(.data)
-  vindex <- igraph::neighbors(.data, var_index(.data, var), mode = "out")
-  vname <- var_names(.data, vindex)
-  length(var_levels(.data, vname))
-}
-
-
-#' @rdname n_units
-#' @export
-n_units.edbl_df <- function(.data, var) {
- # [TODO]
-}
 
 
 

@@ -1,6 +1,6 @@
 #' @importFrom igraph neighbors V
-find_unit_parents <- function(.design, vname) {
-  ugraph <- subset(.design, class=="edbl_unit", .vtype = "var")
+find_unit_parents <- function(graph, vname) {
+  ugraph <- subset(graph, class=="edbl_unit", .vtype = "var")
   unit_vertex <- which(V(ugraph)$name==vname)
   # get direct parents
   parent_vertices <- neighbors(ugraph, unit_vertex, mode = "in")
@@ -11,11 +11,11 @@ find_unit_parents <- function(.design, vname) {
   }
 }
 
-find_unit_ancestors <- function(.design, vname) {
+find_unit_ancestors <- function(graph, vname) {
   aname <- vname
   ancestors <- NULL
   repeat({
-    aname <- find_unit_parents(.design, aname)
+    aname <- find_unit_parents(graph, aname)
     if(is_null(aname)) break
     ancestors <- c(ancestors, aname)
   })
@@ -23,10 +23,8 @@ find_unit_ancestors <- function(.design, vname) {
 }
 
 #' @importFrom igraph E ends
-endpoints <- function(.design, etype, vtype) {
-  sgraph <- switch(vtype,
-                   "var" = subset_vars(.design),
-                   "level" = subset_levels(.design))
+endpoints <- function(graph, etype, vtype_entry) {
+  sgraph <- subset(graph, vtype==vtype_entry)
   ind <- which(E(sgraph)$etype == etype)
   es <- E(sgraph)[ind]
   ends <- ends(sgraph, es)
@@ -50,11 +48,11 @@ randomise_trts <- function(.design, ...) {
 #' @export
 randomise_trts.EdibbleDesign <- function(.design) {
   .design$save_seed()
-  graph <- .design$graph
-  .design$graph <- randomise_trts(graph)
+  .design$assign_allocation()
   .design
 }
 
+# possibly DELETE
 #' Get the variable names given the vertex name of edibble graph
 #' @param .design An edibble graph.
 #' @param names A vector of character with vertex names.
@@ -86,13 +84,14 @@ names_to_nesting_names <- function(.design, names) {
 #'   element is the character vector with the treatment factors applied
 unit_to_trts <- function(.design, unit, trts, type = c("var", "level")) {
   type <- match.arg(type)
+  graph <- .design$graph
   switch(type,
          var = {
-           tv <- endpoints(.design, "t2v", "var")
+           tv <- endpoints(graph, "t2v", "var")
            split(tv$from, tv$to)
          },
          level = {
-           sgraph <- subset(.design, vname %in% c(unit, trts), .vtype = "level")
+           sgraph <- subset(graph, vname %in% c(unit, trts), .vtype = "level")
            tvl <- endpoints(sgraph, "t2vmay", "level")
            split(tvl$from, tvl$to)
          })
@@ -112,17 +111,16 @@ rep_rpbl <- function(.design, times, length.out) {
 
 #' @importFrom dae designRandomize
 #' @importFrom igraph add_edges delete_edges
-#' @export
-randomise_trts.edbl_graph <- function(.design) {
+randomise_trts_internal <- function(.design) {
   unit_to_trts_list <- unit_to_trts(.design)
   units_with_trts_applied <- names(unit_to_trts_list)
-  out <- .design
+  graph <- .design$graph
   for(i in seq_along(unit_to_trts_list)) {
     unit <- units_with_trts_applied[i]
     trts <- unit_to_trts_list[[i]]
-    ancestors <- find_unit_ancestors(.design, unit)
+    ancestors <- find_unit_ancestors(graph, unit)
     units <- c(unit, ancestors)
-    sgraph <- subset(.design, vname %in% units)
+    sgraph <- subset(graph, vname %in% units)
     # need to fix below
     reps <- replicabble(.design, unit, trts)
 
@@ -135,44 +133,18 @@ randomise_trts.edbl_graph <- function(.design) {
 
     nunit <- nrow(units_df)
     ntrt <- nrow(reps)
-    # okay rep has different behaviours depending on called internally
-    # in a package, vs terminal!!! Bloody hell!!!!!
-    # <in package>
-    # rep(cars[1:3,1:2, drop = FALSE], times =2)
-    # $speed
-    # [1] 4 4 7
-    #
-    # $dist
-    # [1]  2 10  4
-    #
-    # $speed
-    # [1] 4 4 7
-    #
-    # $dist
-    # [1]  2 10  4
-    # <terminal>
-    # rep(cars[1:3,1:2, drop = FALSE], times = 2)
-    # speed dist
-    # 1     4    2
-    # 2     4   10
-    # 3     7    4
-    # 4     4    2
-    # 5     4   10
-    # 6     7    4
 
     trts_df <- as.data.frame(rep_rpbl(reps[sample(nrow(reps)),trts, drop = FALSE],
                    times = ceiling(nunit / ntrt),
                    length.out = nrow(units_df)))
 
-
     nesting <- structure(lapply(units,
                                 function(aunit) find_unit_parents(sgraph, aunit)),
                          names = units)
-    # remove NULL results
-    nesting <- nesting[!map_lgl(nesting, is_null)]
+    nesting <- remove_nulls(nesting)
 
     # unfortunately this doesn't work since I label nested factors uniquely
-    if(length(nesting) > 0) {
+    if(!is_empty(nesting)) {
       des <- designRandomize(allocated = trts_df,
                                   recipient = units_df,
                                   nested.recipients = nesting)
@@ -182,63 +154,14 @@ randomise_trts.edbl_graph <- function(.design) {
 
     }
 
-    # allocated <- character()
-    # chosen_df <- cbind(rep_df[numeric(0),], "recipient" = character())
-    # for(j in 1:nrow(rep_df)) {
-    #   recipient <- sample(setdiff(rep_df$units[[j]], allocated), rep_df$rep[j])
-    #   allocated <- c(allocated, recipient)
-    #   chosen_df <- rbind(chosen_df, cbind(rep_df[j, ], "recipient" = recipient))
-    # }
-    # chosen_df[, trts]
     for(atrt in trts) {
-      es <- match_edge_seq(.design, des[[atrt]], vertex_level_names(unit, units_ls[[unit]]))
-      out <- add_edges(out, es, attr = edge_attr_opt("t2v"))
+      es <- match_edge_seq(.design$graph, des[[atrt]], vertex_level_names(unit, units_ls[[unit]]))
+      graph <- add_edges(graph, es, attr = edge_attr_opt("t2v"))
     }
+    graph <- reinstate_graph_attrs(graph, .design$graph)
   }
 
-  out <- delete_edges(out, which(E(out)$etype == "t2vmay"))
+  graph <- delete_edges(graph, which(E(graph)$etype == "t2vmay"))
 
-  # setting up replicabble
-
-  # if parent_units > 1, assumes there is no higher parents for now
-  # if(length(parent_units)==0) {
-  #   rep_floor <- floor(nexp / ntrt)
-  #   rep_left <- nexp - rep_floor * ntrt
-  #   reps <- rep(rep_floor, ntrt)
-  #   if(rep_left > 0) {
-  #     pos <- sample(ntrt, size = rep_left)
-  #     reps[pos] <- reps[pos] + 1
-  #   }
-  #   rpbl <- replicabble(get_trt_levels(.design), .replicate = reps)
-  # } else if(length(parent_units)==1) {
-  #   ll <- list()
-  #   # assumes single hierarchy
-  #   while(length(parent_units) > 0) {
-  #     ll <- c(ll, parent_units)
-  #     parent_units <- find_unit_parents(.design, names(parent_units))
-  #   }
-  #   rep_floor <- floor(nexp / ntrt)
-  #   rep_left <- nexp - rep_floor * ntrt
-  #   # these extras need to be distributed evenly
-  #   if(rep_left > 0) {
-  #     extra_trts <- sample(ntrt, size = rep_left)
-  #   }
-  #
-  #   # assumes enough replicate to cover at least 1 for each case
-  #   nblocks <- prod(lengths(ll))
-  #   rep_floor <- floor(nexp / (ntrt * nblocks))
-  #   rep_left <- nexp - rep_floor * ntrt * nblocks
-  #
-  #   reps <- rep(rep_floor, ntrt * nblocks)
-  #
-  #   # assume rep_left = 0 for now
-  #
-  #   ll <- c(ll, get_trt_levels(.design))
-  #   rpbl <- replicabble(ll, .replicate = reps)
-  # } else if(length(parent_units) > 1) {
-  #
-  # }
-
-  #out <- igraph::set_graph_attr(.design, "replicabble", rpbl)
-  structure(out, class = class(.design))
+  reinstate_graph_attrs(graph, .design$graph)
 }

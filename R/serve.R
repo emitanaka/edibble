@@ -9,40 +9,39 @@
 #' @importFrom rlang set_names
 #' @export
 serve_table <- function(.design, ...) {
-  graph <- .design$graph
-  lgraph <- .design$subset_graph(type = "level")
+  lgraph <- subset_levels(.design$graph)
   if(!is_connected(lgraph)) {
-    lout <- serve_vars_not_reconciled(graph)
+    lout <- serve_vars_not_reconciled(.design)
   } else {
-    classes <- .design$var_class()
+    classes <- var_class(.design$graph)
     lunit <- ltrt <- lresp <- list()
-    if("edbl_unit" %in% classes) lunit <- serve_units(graph)
-    if("edbl_trt" %in% classes) ltrt <- serve_trts(graph, lunit)
-    if("edbl_resp" %in% classes) lresp <- serve_resps(graph, lunit)
+    if("edbl_unit" %in% classes) lunit <- serve_units(.design$graph)
+    if("edbl_trt" %in% classes) ltrt <- serve_trts(.design$graph, lunit)
+    if("edbl_resp" %in% classes) lresp <- serve_resps(.design$graph, lunit)
     lout <- c(lunit, ltrt, lresp)
   }
 
-  vnames <- .design$var_names()
+  vnames <- names_vars(.design)
   new_edibble(lout[vnames], design = .design)
 }
 
 
 # Returns list of edibble variables
 serve_vars_not_reconciled <- function(.design) {
-  ugraph <- subset_vars(.design)
-  vnames <- V(ugraph)$name
+  graph <- .design$graph
+  vnames <- names_vars(.design)
   res <- lapply(vnames,
                 function(avar) {
-                  new_edibble_var(levels = var_levels(.design, avar),
+                  new_edibble_var(levels = var_levels(graph, avar),
                                   name = avar,
-                                  class = var_class(.design, avar))
+                                  class = var_class(graph, avar))
                 })
   names(res) <- vnames
   res
 }
 
-child_to_parent_dict <- function(.design, parent_vname, child_vname, etype = "l2l") {
-  lgraph <- subset(.design,
+child_to_parent_dict <- function(.graph, parent_vname, child_vname, etype = "l2l") {
+  lgraph <- subset(.graph,
                    vname %in% c(parent_vname, child_vname),
                    .vtype = "level")
   df <- endpoints(lgraph, etype, "level")
@@ -51,29 +50,29 @@ child_to_parent_dict <- function(.design, parent_vname, child_vname, etype = "l2
 
 
 # Return edibble unit
-serve_unit_with_child <- function(.design, parent_vname, child_vname, child_labels) {
-  dict <- child_to_parent_dict(.design, parent_vname, child_vname)
+serve_unit_with_child <- function(.graph, parent_vname, child_vname, child_labels) {
+  dict <- child_to_parent_dict(.graph, parent_vname, child_vname)
   child_vnames <- vertex_level_names(child_vname, child_labels)
   parent_vnames <- unname(dict[child_vnames])
 
-  new_edibble_var(levels = unname(var_levels(.design, parent_vname, label = TRUE)),
-                  labels = names_to_lnames(.design, parent_vnames),
+  new_edibble_var(levels = unname(var_levels(.graph, parent_vname, label = TRUE)),
+                  labels = names_to_lnames(.graph, parent_vnames),
                   name = parent_vname,
-                  class = var_class(.design, parent_vname))
+                  class = var_class(.graph, parent_vname))
 
 }
 
-serve_unit_with_no_child <- function(.design, vname) {
-  new_edibble_var(levels = unname(var_levels(.design, vname, label = TRUE)),
-                  labels = unname(var_levels(.design, vname, label = TRUE)),
+serve_unit_with_no_child <- function(.graph, vname) {
+  new_edibble_var(levels = unname(var_levels(.graph, vname, label = TRUE)),
+                  labels = unname(var_levels(.graph, vname, label = TRUE)),
                   name = vname,
-                  class = var_class(.design, vname))
+                  class = var_class(.graph, vname))
 }
 
 #' @importFrom igraph neighbors V
-get_vertex_child <- function(.design, vname) {
-  vidx <- which(V(.design)$name==vname)
-  res <- setdiff(neighbors(.design, vidx, mode = "out"), vidx)
+get_vertex_child <- function(graph, vname) {
+  vidx <- which(V(graph)$name==vname)
+  res <- setdiff(neighbors(graph, vidx, mode = "out"), vidx)
   if(length(res)) return(res)
   NULL
 }
@@ -83,8 +82,8 @@ serve_resps <- function(.design, lunits) {
 }
 
 #' @importFrom igraph degree V delete_vertices
-serve_units <- function(.design) {
-  ugraph <- subset(.design, class=="edbl_unit", .vtype = "var")
+serve_units <- function(graph) {
+  ugraph <- subset(graph, class=="edbl_unit", .vtype = "var")
   leaves <- V(ugraph)$vname[degree(ugraph, mode = "out")==0]
   wgraph <- ugraph
   res <- list()
@@ -92,10 +91,10 @@ serve_units <- function(.design) {
     lvs <- lapply(leaves, function(aleaf) {
             child_vertex <- get_vertex_child(ugraph, aleaf)
             if(length(child_vertex) > 0) {
-              child_name <- var_names(ugraph, child_vertex)
-              serve_unit_with_child(.design, aleaf, child_name, res[[child_name]])
+              child_name <- V(ugraph)$name[child_vertex]
+              serve_unit_with_child(graph, aleaf, child_name, res[[child_name]])
             } else {
-              serve_unit_with_no_child(.design, aleaf)
+              serve_unit_with_no_child(graph, aleaf)
             }
       })
     names(lvs) <- leaves
@@ -107,26 +106,26 @@ serve_units <- function(.design) {
 }
 
 #' @importFrom igraph V
-serve_trts <- function(.design, lunits) {
-  ugraph <- subset(.design, class=="edbl_trt", .vtype = "var")
+serve_trts <- function(graph, lunits) {
+  ugraph <- subset(graph, class=="edbl_trt", .vtype = "var")
   vnames <- V(ugraph)$vname
   lvs <- lapply(vnames, function(aname) {
-    serve_trt(.design, aname, lunits)
+    serve_trt(graph, aname, lunits)
   })
   names(lvs) <- vnames
   lvs
 }
 
-serve_trt <- function(.design, vname, lunits) {
-  ugraph <- subset_vars(.design)
+serve_trt <- function(graph, vname, lunits) {
+  ugraph <- subset_vars(graph)
   child_vertex <- get_vertex_child(ugraph, vname)
-  child_vname <- var_names(ugraph, child_vertex)
-  dict <- child_to_parent_dict(.design, vname, child_vname, etype = "t2v")
+  child_vname <- V(ugraph)$name[child_vertex]
+  dict <- child_to_parent_dict(graph, vname, child_vname, etype = "t2v")
   child_vnames <- vertex_level_names(child_vname, lunits[[child_vname]])
   parent_vnames <- unname(dict[child_vnames])
 
-  new_edibble_var(levels = unname(var_levels(.design, vname, label = TRUE)),
-                  labels = names_to_lnames(.design, parent_vnames),
+  new_edibble_var(levels = unname(var_levels(graph, vname, label = TRUE)),
+                  labels = names_to_lnames(graph, parent_vnames),
                   name = vname,
-                  class = var_class(.design, vname))
+                  class = var_class(graph, vname))
 }

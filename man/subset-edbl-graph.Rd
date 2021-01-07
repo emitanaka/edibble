@@ -7,14 +7,14 @@
 \alias{subset_levels}
 \title{Subset an edibble graph}
 \usage{
-\method{subset}{edbl_graph}(.data, ..., .vtype = c("all", "var", "level"))
+\method{subset}{edbl_graph}(.graph, ..., .vtype = c("all", "var", "level"))
 
-subset_vars(.data)
+subset_vars(.graph)
 
-subset_levels(.data)
+subset_levels(.graph)
 }
 \arguments{
-\item{.data}{An edibble graph.}
+\item{.graph}{An edibble graph.}
 
 \item{...}{Expressions that return a logical value.}
 

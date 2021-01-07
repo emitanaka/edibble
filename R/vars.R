@@ -11,6 +11,7 @@
 #' @seealso [set_units()] and [set_trts()] for setting special types of nodes.
 #' @export
 #' @importFrom vctrs vec_as_names
+#' @importFrom rlang quo_get_expr
 set_vars <- function(.design, ..., .class = "edbl_var",
                      .name_repair = c("check_unique", "unique", "universal", "minimal")) {
   .name_repair <- match.arg(.name_repair)
@@ -18,20 +19,15 @@ set_vars <- function(.design, ..., .class = "edbl_var",
 
   if(.design$active == "graph") {
     vnames_new <- names(dots)
-    vnames_old <- .design$var_names()
+    vnames_old <- names_vars(.design)
     vnames <- vec_as_names(c(vnames_old, vnames_new), repair = .name_repair)
     attr <- vertex_attr_opt(gsub("edbl_", "", .class))
 
-    out <- .design$graph
     for(i in seq_along(dots)) {
       vname <- vnames[i + length(vnames_old)]
-      x <- eval_traits(dots[[i]], vname, out)
-      out <- add_edibble_vertex(x, vname, out, attr)
+      value <- eval_rhs_attr(dots[[i]], vname, .design)
+      .design$add_variable(value, vname, attr)
     }
-
-    # since igraph operations seem to wipe out class info
-    .design$graph <- structure(out, class = class(.design$graph))
-
 
   } else if(.design$active == "table") {
     #loc <- tidyselect::eval_select(expr(c(...)), .data)
@@ -39,33 +35,87 @@ set_vars <- function(.design, ..., .class = "edbl_var",
   .design
 }
 
-
-### DELETE below when ready
-
-var_class <- function(.data, vname) {
-  V(.data)$class[var_index(.data, vname)]
+eval_rhs_attr <- function(.x, vname, .design = NULL) {
+  q <- quo_get_expr(.x)
+  # At the moment if it fails, this is because
+  # it's `nested_in`.
+  # it adds the extra bit needed to make sure nested works
+  tryCatch(eval(q), error = function(.error) {
+    vlevels <- vars_levels(.design$graph)
+    q$.vname <- vname
+    eval_tidy(q, data = vlevels)
+  })
 }
 
-var_index <- function(.data, vname, var = FALSE) {
-  if(var) {
-    which(V(.data)$vname %in% vname)
-  } else {
-    which(V(.data)$name %in% vname)
-  }
-}
-
+#' Add an edibble vertex
+#'
+#' @description
+#' In edibble, a short hand is used to assign new edibble variables/nodes.
+#' This function converts the short hand to make the minimal edibble node
+#' and returns an edibble graph with that additional node.
+#'
+#' @name add_edibble_vertex
+#' @return Returns an evaluated expression.
 #' @export
-var_names <- function(.data, vindex) {
-  if(any(w <- V(.data)$vtype[vindex]!="var")) {
-    abort(paste0("The vertex index ", vindex[w], " is not an edibble variable node."))
-  }
-  V(.data)$name[vindex]
+add_edibble_vertex <- function(.data, ...) {
+  UseMethod("add_edibble_vertex")
 }
 
+#' @param value A value that may be a single number, unnamed vector,
+#' a one sided formula or linkabble.
+#' @param name Name of the edibble variable as string.
+#' @param design An edibble graph with levels converted as list used
+#' for evaluation in any expressions.
+#' @rdname add_edibble_vertex
+#' @export
+add_edibble_vertex.default <- function(value, name, design = NULL, attr) {
+  type <- get_value_type(value)
+  levels <- switch(type,
+                   "numeric" = traits_levels(prefix = name, size = value),
+                   "unnamed_vector" = value,
+                   "formula" = {
+                     vlevels <- design$vars_levels()
+                     tt <- terms(value)
+                     vars <- rownames(attr(tt, "factor"))
+                     n <- prod(lengths(vlevels[vars]))
+                     traits_levels(prefix = name, size = n)},
+                   "unimplemented" = character())
 
+  out <- add_edibble_vertex_common(design$graph, name, levels, attr)
+  # extra modifications
+  switch(type,
+         formula = {
+           tt <- terms(value)
+           vars <- rownames(attr(tt, "factor"))
+           out <- out %>%
+             add_edges(cross_edge_seq(vars, name))
+         })
 
+  class(out) <- class(design$graph)
+  return(out)
+}
 
+#' @rdname add_edibble_vertex
+#' @importFrom igraph graph_attr delete_graph_attr add_edges delete_vertex_attr
+#' @export
+add_edibble_vertex.lkbl_graph <- function(.lgraph, name, design = NULL, attr) {
+  levels <- gsub(paste0(name, ":"), "", V(.lgraph)$name[V(.lgraph)$ltype=="child"])
+  #.data <- igraph::set_vertex_attr(.data, "name", value = V(.data)$name)
 
+  agraph <- add_edibble_vertex_common(design$graph, name, levels, attr)
+
+  child_name <- name
+  parent_name <- graph_attr(.lgraph, "parent_name")
+  lgraph <- delete_graph_attr(.lgraph, "parent_name")
+  lgraph <- delete_vertex_attr(lgraph, "ltype")
+
+  cgraph <- combine_graphs(agraph, lgraph)
+  out <- add_edges(cgraph,
+                   cross_edge_seq(cgraph, parent_name, child_name),
+                   attr = edge_attr_opt("v2v"))
+
+  return(reinstate_graph_attrs(out, design$graph))
+}
 
 
 #' Helper to set the traits for edibble variable
@@ -125,35 +175,47 @@ new_edibble_var <- function(labels = character(), levels = unique(labels),
 }
 
 
-#' Evaluate traits
-#'
-#' @param x A value that may be a single number, unnamed vector,
-#' a one sided formula or linkabble.
-#' @param vname The name of the variable.
-#' @param graph An edibble graph with levels converted as list used
-#' for evaluation in any expressions.
-#' @return Returns an evaluated expression.
-eval_traits <- function(x, vname, graph = NULL) {
-  lvls <- ed_levels(graph)
-  q <- quo_get_expr(x)
-  tryCatch(eval(q), error = function(.error) {
-    q$.vname <- vname
-    eval_tidy(q, data = lvls)
-  })
+
+var_class <- function(.graph, vname) {
+  if(missing(vname)) {
+    V(.graph)$class
+  } else {
+    V(.graph)$class[var_index(.graph, vname)]
+  }
 }
 
-#' Add an edibble vertex
-#'
-#' @description
-#' In edibble, a short hand is used to assign new edibble variables/nodes.
-#' This function converts the short hand to make the minimal edibble node
-#' and returns an edibble graph with that additional node.
-#'
-#' @name add_edibble_vertex
-#' @return Returns an evaluated expression.
+var_index <- function(.graph, vname, var = FALSE) {
+  if(var) {
+    which(V(.graph)$vname %in% vname)
+  } else {
+    which(V(.graph)$name %in% vname)
+  }
+}
+
 #' @export
-add_edibble_vertex <- function(.data, ...) {
-  UseMethod("add_edibble_vertex")
+var_names <- function(.graph, vindex) {
+  if(any(w <- V(.graph)$vtype[vindex]!="var")) {
+    abort(paste0("The vertex index ", vindex[w], " is not an edibble variable node."))
+  }
+  V(.graph)$name[vindex]
+}
+
+var_levels <- function(.graph, vname, label = FALSE) {
+  sgraph <- subset_levels(.graph)
+  vindex <- var_index(sgraph, vname, var = TRUE)
+  if(label) {
+    set_names(V(sgraph)$label[vindex], V(sgraph)$name[vindex])
+  } else {
+    V(sgraph)$name[vindex]
+  }
+}
+
+vars_levels <- function(.graph, vnames) {
+  if(missing(vnames)) {
+    vnames <- names_vars(.graph)
+  }
+  structure(lapply(vnames, function(vname) var_levels(.graph, vname)),
+            names = vnames)
 }
 
 vertex_var_label <- function(name, nlevels) {
@@ -165,10 +227,10 @@ vertex_level_names <- function(vname, lnames) {
 }
 
 #' @importFrom igraph add_vertices add_edges
-add_edibble_vertex_common <- function(.data, name, levels, attr) {
+add_edibble_vertex_common <- function(graph, name, levels, attr) {
   label <-  vertex_var_label(name, length(levels))
   lnames <- vertex_level_names(name, levels)
-  var_node_added <- add_vertices(.data, 1,
+  var_node_added <- add_vertices(graph, 1,
                                          name = name,
                                          vtype = "var", vname = name,
                                          label = label,
@@ -188,15 +250,15 @@ add_edibble_vertex_common <- function(.data, name, levels, attr) {
 }
 
 #' @importFrom igraph union
-combine_graphs <- function(.data1, .data2) {
-  cgraph <- union(.data1, .data2, byname = TRUE)
+combine_graphs <- function(g1, g2) {
+  cgraph <- union(g1, g2, byname = TRUE)
   # union has issues combining attributes
   for(comp in c("graph", "edge", "vertex")) {
     fnames <- getFromNamespace(paste0(comp, "_attr_names"), "igraph")
     fattr <- getFromNamespace(paste0(comp, "_attr"), "igraph")
     dattr <- getFromNamespace(paste0("delete_", comp, "_attr"), "igraph")
     sattr <- getFromNamespace(paste0("set_", comp, "_attr"), "igraph")
-    nattrs <- union(fnames(.data1), fnames(.data2))
+    nattrs <- union(fnames(g1), fnames(g2))
     cattrs <- fnames(cgraph)
     fix_names <- nattrs[!(nattrs %in% cattrs)]
     for(aname in fix_names) {
@@ -212,63 +274,6 @@ combine_graphs <- function(.data1, .data2) {
   cgraph
 }
 
-#' @rdname add_edibble_vertex
-#' @importFrom igraph graph_attr delete_graph_attr add_edges delete_vertex_attr
-#' @export
-add_edibble_vertex.lkbl_graph <- function(.lgraph, name, graph = NULL, attr) {
-  levels <- gsub(paste0(name, ":"), "", V(.lgraph)$name[V(.lgraph)$ltype=="child"])
-  #.data <- igraph::set_vertex_attr(.data, "name", value = V(.data)$name)
-
-  agraph <- add_edibble_vertex_common(graph, name, levels, attr)
-
-  child_name <- name
-  parent_name <- graph_attr(.lgraph, "parent_name")
-  lgraph <- delete_graph_attr(.lgraph, "parent_name")
-  lgraph <- delete_vertex_attr(lgraph, "ltype")
-
-  cgraph <- combine_graphs(agraph, lgraph)
-  out <- add_edges(cgraph,
-                           cross_edge_seq(cgraph, parent_name, child_name),
-                           attr = edge_attr_opt("v2v"))
-
-  class(out) <- class(graph)
-  return(out)
-}
-
-#' @param x A value that may be a single number, unnamed vector,
-#' a one sided formula or linkabble.
-#' @param name Name of the edibble variable as string.
-#' @param graph An edibble graph with levels converted as list used
-#' for evaluation in any expressions.
-#' @rdname add_edibble_vertex
-#' @export
-add_edibble_vertex.default <- function(x, name, graph = NULL, attr) {
-  type <- get_value_type(x)
-  levels <- switch(type,
-                   "numeric" = traits_levels(prefix = name, size = x),
-                   "unnamed_vector" = x,
-                   "formula" = {
-                     lvls <- ed_levels(graph)
-                     tt <- terms(x)
-                     vars <- rownames(attr(tt, "factor"))
-                     n <- prod(lengths(lvls[vars]))
-                     traits_levels(prefix = name, size = n)},
-                   "unimplemented" = character())
-
-  out <- add_edibble_vertex_common(graph, name, levels, attr)
-  vindex <- which(V(out)$name==name)
-  # extra modifications
-  switch(type,
-         formula = {
-           tt <- terms(x)
-           vars <- rownames(attr(tt, "factor"))
-           out <- out %>%
-             add_edges(cross_edge_seq(vars, name))
-         })
-
-  class(out) <- class(graph)
-  return(out)
-}
 
 #' Evaluate input value type
 get_value_type <- function(x) {
@@ -309,29 +314,6 @@ levels.edbl_unit <- function(x) {
 levels.edbl_trt <- function(x) {
   attr(x, "levels")
 }
-
-
-# currently vname has to be character.
-# [TODO] make NSE compatible
-# unfortunately levels only accepts one argument so it doesn't work T_T
-#' @export
-var_levels <- function(.data, vname, label = FALSE) {
-  sgraph <- subset_levels(.data)
-  vindex <- var_index(sgraph, vname, var = TRUE)
-  if(label) {
-    set_names(V(sgraph)$label[vindex], V(sgraph)$name[vindex])
-  } else {
-    V(sgraph)$name[vindex]
-  }
-}
-
-
-#' @export
-vars_levels <- function(.data, vnames) {
-  structure(lapply(vnames, function(vname) var_levels(.data, vname)),
-            names = vnames)
-}
-
 
 #' @rdname utility-edibble-var
 #' @export

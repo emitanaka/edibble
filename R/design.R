@@ -10,7 +10,6 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
 
   public = list(
 
-
       #' @description
       #' Initialise the edibble design. See also [start_design()].
       #' @param name The name or title of the project. The title
@@ -26,7 +25,7 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
       #' @description
       #' Invoked when the EdibbleDesign object is deleted.
       finalize = function() {
-        cli_alert_info("Cleaning up {.field {private$.name}}")
+        #cli_alert_info("Cleaning up {.field {private$.name}}")
       },
 
       #' @description
@@ -40,8 +39,8 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
         main <- main %||% private$.name
         view <- match.arg(view)
         out <- switch(view,
-                      high = self$subset_graph("var"),
-                      low = self$subset_graph("level"))
+                      high = subset_vars(private$.graph),
+                      low = subset_levels(private$.graph))
         plot.igraph(out, ...,
                     annotate.plot = TRUE,
                     main = main)
@@ -106,81 +105,87 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
       },
 
       #' @description
-      #' Subset graph.
-      #' @param type A variable or level.
-      #' @importFrom igraph induced_subgraph
-      subset_graph = function(type = c("level", "var")) {
-        type <- match.arg(type)
+      #' Rename the variables
+      #' @param ... Similar to `dplyr::rename`, use `new_name = old_name` to
+      #'  rename variables.
+      #' @importFrom tidyselect eval_rename
+      rename = function(...) {
+        table <- serve_table(self)
+        loc <- eval_rename(expr(c(...)), table)
+        old_names <- new_names <- names(table)
+        new_names[loc] <- names(loc)
+        dict <- set_names(new_names, old_names)
+
         graph <- private$.graph
-        structure(induced_subgraph(graph, V(graph)$vtype==type),
-                  class = class(graph))
+        vnames <- vertex_attr(graph, "vname")
+        graph <- set_vertex_attr(graph, "vname",
+                                          value = dict[vnames])
+        vindex <- which(V(graph)$vtype == "var")
+        graph <- set_vertex_attr(graph, "name", vindex,
+                                 dict[vnames[vindex]])
+        # need to refresh the level names.
+        private$.graph <- private$reinstate(graph)
+      },
+
+
+
+      #' @description
+      #' Add the variable to the graph.
+      #' @param value Short hand value of what to add.
+      #' @param vname The variable name
+      #' @param attr The vertex attributes.
+      add_variable = function(value, vname, attr) {
+        private$.graph <- add_edibble_vertex(value, vname, self, attr)
       },
 
       #' @description
-      #' Get the variable names.
-      #' @param vindex Optional vertex index from graph object.
-      var_names = function(vindex) {
-        if(missing(vindex)) {
-          vgraph <- self$subset_graph(type = "var")
-          V(vgraph)$name
+      #' This adds edges that connect treatment to unit.
+      #' @param trts The name of the treatments.
+      #' @param unit The name of the unit. There should be only one unit.
+      add_allocation = function(trts, unit) {
+        if(length(trts)) {
+          # there should be an error if .trt is not within vars
+          # maybe there should be a check that .trt is edbl_trt
+          vnames_from <- trts
         } else {
-          if(any(w <- V(private$.graph)$vtype[vindex]!="var")) {
-            abort(paste0("The vertex index ", vindex[w], " is not an edibble variable node."))
-          }
-          V(private$.graph)$name[vindex]
+          vnames_from <- names(subset(private$.graph, class=="edbl_trt", .vtype = "var"))
         }
+        graph <- private$.graph
+        graph <- add_edges(graph,
+                         cross_edge_seq(graph,
+                                        var_levels(graph, vnames_from),
+                                        var_levels(graph, unit)),
+                         attr = edge_attr_opt("t2vmay"))
+        graph <- add_edges(graph,
+                         cross_edge_seq(graph,
+                                        vnames_from,
+                                        vnames_to = unit),
+                         attr = edge_attr_opt("t2v"))
+        private$.graph <- private$reinstate(graph)
       },
 
       #' @description
-      #' Get the variable class.
-      #' @param vname The name of the variable node.
-      var_class = function(vname) {
-        if(missing(vname)) {
-          vgraph <- self$subset_graph(type = "var")
-          V(vgraph)$class
-        } else {
-          ind <- self$var_index(vname)
-          V(private$.graph)$class[ind]
-        }
-      },
-
-      #' @description
-      #' Get the variable vertex index given the name.
-      #' @param vname The name of the variable (or label).
-      #' @param var TRUE or FALSE.
-      var_index = function(vname, var = FALSE) {
-        if(var) {
-          which(V(private$.graph)$vname %in% vname)
-        } else {
-          which(V(private$.graph)$name %in% vname)
-        }
-      },
-
-      #' @description
-      #' Vertex labels.
-      #' @param name The name of the variable.
-      #' @param nlevels The total number of levels.
-      vertex_var_label = function(name, nlevels) {
-        paste0(name, "\n(", nlevels, " levels)")
-      },
-
-      #' @description
-      #' Vertex levels.
-      #' @param vname The name of the variable.
-      #' @param lnames The level names.
-      vertex_level_names = function(vname, lnames) {
-        paste0(vname, ":", lnames)
+      #' This removes "t2vmay" edges and assigns edges from treatment to variable.
+      assign_allocation = function() {
+        graph <- randomise_trts_internal(self)
+        private$.graph <- private$reinstate(graph)
       }
+
     ),
 
     active  = list(
 
       #' @field active get the active view
-      active = function() {
-        private$.active
+      active = function(value) {
+        if(missing(value)) {
+          private$.active
+        } else {
+          abort("You must use `$activate_to_table()` or `$activate_to_graph()`
+                to change active view.")
+        }
       },
 
-      #' @field name the name
+      #' @field name The name of the design or project
       name = function(value) {
         if(missing(value)) {
           private$.name
@@ -190,13 +195,32 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
         }
       },
 
+      #' @field names_trts The treatment names.
+      names_trts = function(value) {
+        private$getting_names_by_class(value, "edbl_trt")
+      },
+
+      #' @field names_units The unit variable names.
+      names_units = function(value) {
+        private$getting_names_by_class(value, "edbl_unit")
+      },
+
+      #' @field names_resp The unit variable names.
+      names_resp = function(value) {
+        private$getting_names_by_class(value, "edbl_resp")
+      },
+
+      #' @field names_vars The name of all variables.
+      names_vars = function(value) {
+        private$getting_names_by_class(value)
+      },
+      # I shouldn't allow people to modify graph outside
       #' @field graph the name
       graph = function(value) {
         if(missing(value)) {
           private$.graph
         } else {
-          not_edibble_graph(value)
-          private$.graph <- value
+          abort("You cannot modify the edibble graph directly.")
         } },
 
 
@@ -206,7 +230,7 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
           private$.table <- serve_table(self)
           private$.table
         } else {
-          abort("cannot modify table")
+          abort("You cannot modify the edibble table directly.")
         } },
 
       #' @field context the name
@@ -229,6 +253,7 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
       .seed = NULL,
       .method = NULL,
 
+      # possibly delete
       use_method = function(.x, .f, ...) {
         x <- .x
         class(x) <- c(private$.method, class(.x))
@@ -236,6 +261,23 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
         # if method included in returning class, remove it
         class(res) <- setdiff(class(res), private$.method)
         res
+      },
+
+      # A helper function to getting names.
+      getting_names_by_class = function(value, class) {
+        if(missing(value)) {
+          if(missing(class)) {
+            names_vars(private$.graph)
+          } else {
+            names_by_class(private$.graph, class = class)
+          }
+        } else {
+          abort("Use `$rename` to change names instead.")
+        }
+      },
+
+      reinstate = function(g) {
+        reinstate_graph_attrs(g, private$.graph)
       }
     ))
 
@@ -250,4 +292,5 @@ reset_method <- function(.data) {
   .data$method <- NULL
   .data
 }
+
 

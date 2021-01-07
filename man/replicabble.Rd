@@ -4,7 +4,7 @@
 \alias{replicabble}
 \title{Make a replicabble}
 \usage{
-replicabble(.data, unit, trts)
+replicabble(.design, unit, trts)
 }
 \arguments{
 \item{flist}{list of treatment variables with their levels}

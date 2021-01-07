@@ -74,19 +74,19 @@ serve_table(spdes)
 #>    wholeplot  subplot    fertilizer variety 
 #>    <unit(4)>  <unit(16)> <trt(2)>   <trt(2)>
 #>  1 wholeplot1 subplot1   A          V2      
-#>  2 wholeplot1 subplot2   A          V2      
+#>  2 wholeplot1 subplot2   A          V1      
 #>  3 wholeplot1 subplot3   A          V1      
-#>  4 wholeplot1 subplot4   A          V1      
+#>  4 wholeplot1 subplot4   A          V2      
 #>  5 wholeplot2 subplot5   B          V2      
 #>  6 wholeplot2 subplot6   B          V1      
 #>  7 wholeplot2 subplot7   B          V1      
 #>  8 wholeplot2 subplot8   B          V2      
-#>  9 wholeplot3 subplot9   A          V1      
-#> 10 wholeplot3 subplot10  A          V2      
-#> 11 wholeplot3 subplot11  A          V2      
-#> 12 wholeplot3 subplot12  A          V1      
-#> 13 wholeplot4 subplot13  B          V1      
-#> 14 wholeplot4 subplot14  B          V2      
+#>  9 wholeplot3 subplot9   A          V2      
+#> 10 wholeplot3 subplot10  A          V1      
+#> 11 wholeplot3 subplot11  A          V1      
+#> 12 wholeplot3 subplot12  A          V2      
+#> 13 wholeplot4 subplot13  B          V2      
+#> 14 wholeplot4 subplot14  B          V1      
 #> 15 wholeplot4 subplot15  B          V1      
 #> 16 wholeplot4 subplot16  B          V2
 ```
@@ -173,13 +173,13 @@ make_classical("crd", n = 30, t = 5)
 #> ● This experimental design is often called Completely Randomised Design.
 #> ● You can change the number in `set.seed` to get another random instance of
 #>   the same design.
-#> ● This design has a total of units testing a total of 5 treatments.
+#> ● This design has a total of 30 units testing a total of 5 treatments.
 #> The following information is only true for the chosen parameters and not
 #> necessary true for all Completely Randomised Designs.
 #>   ◯ This design is balanced for the given numbers.
 #> 
 #>   ── edibble code ────────────────────────────────────────────────────────────────
-#> set.seed(1609920876)
+#> set.seed(1610000654)
 #> start_design("crd") %>%
 #>   set_units(unit = 30) %>%
 #>   set_trts(treat = 5) %>%
@@ -191,22 +191,22 @@ make_classical("crd", n = 30, t = 5)
 #> # An edibble: 30 x 2
 #>    unit       treat   
 #>    <unit(30)> <trt(5)>
-#>  1 unit1      treat1  
-#>  2 unit2      treat5  
-#>  3 unit3      treat5  
-#>  4 unit4      treat2  
+#>  1 unit1      treat3  
+#>  2 unit2      treat4  
+#>  3 unit3      treat4  
+#>  4 unit4      treat3  
 #>  5 unit5      treat2  
-#>  6 unit6      treat5  
-#>  7 unit7      treat2  
-#>  8 unit8      treat1  
+#>  6 unit6      treat4  
+#>  7 unit7      treat5  
+#>  8 unit8      treat2  
 #>  9 unit9      treat2  
 #> 10 unit10     treat3  
 #> # … with 20 more rows
 
 code_classical("rcbd", t = 4, n = 40)
-#> set.seed(1609920876)
+#> set.seed(1610000654)
 #> start_design("rcbd") %>%
-#>   set_units(block = 3,
+#>   set_units(block = 9,
 #>             unit = nested_in(block, 4)) %>%
 #>   set_trts(treat = 4) %>%
 #>   allocate_trts(treat ~ unit) %>%

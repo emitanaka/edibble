@@ -34,17 +34,29 @@ names_vars <- function(.data, ...) {
   UseMethod("names_vars")
 }
 
+#' Get names by vertex class
+#' @description
+#' Get the name of variables by class.
+#' @param class The class name.
+names_by_class <- function(.graph, class = NULL) {
+  vgraph <- subset_vars(.graph)
+  class <- class %||% V(vgraph)$class
+  return(V(vgraph)$name[V(vgraph)$class %in% class])
+}
+
+names_vars.EdibbleDesign <- function(.design, class = NULL) {
+  names_vars.edbl_graph(.design$graph, class = class)
+}
+
 #' @rdname names-ed-vars
 #' @importFrom igraph V
-#' @export
-names_vars.edbl_graph <- function(.data, class = NULL) {
-  vgraph <- subset_vars(.data)
+names_vars.edbl_graph <- function(.graph, class = NULL) {
+  vgraph <- subset_vars(.graph)
   class <- class %||% V(vgraph)$class
   return(V(vgraph)$name[V(vgraph)$class %in% class])
 }
 
 #' @rdname names-ed-vars
-#' @export
 names_vars.edbl_df <- function(.data, class = NULL) {
   class <- class %||% map_chr(.data, class)
   ind <- map_lgl(.data, function(var) any(class %in% class(var)))
@@ -53,7 +65,6 @@ names_vars.edbl_df <- function(.data, class = NULL) {
 
 #' @rdname names-ed-vars
 #' @importFrom igraph V
-#' @export
 names.edbl_graph <- function(.data, label = TRUE) {
   if(label) return(V(.data)$vname)
   V(.data)$name
@@ -61,9 +72,8 @@ names.edbl_graph <- function(.data, label = TRUE) {
 
 #' @rdname names-ed-vars
 #' @importFrom igraph set_vertex_attr
-#' @export
 `names<-.edbl_graph` <- function(x, value) {
-  set_vertex_attr(x, "vname", value = value)
+  abort("You should not change the name of the edibble graph outside EdibbleDesign.")
 }
 
 
