@@ -81,8 +81,8 @@ to_be_character <- function(length) {
 }
 
 #' @rdname expect-vars
-to_be_one_of <- function(values) {
-  list(type = "list", values = values)
+to_be_selected <- function(from) {
+  list(type = "list", values = from)
 }
 
 
@@ -95,7 +95,7 @@ to_be_one_of <- function(values) {
 #'  For `between`, the value is valid if within the range of minimum and maximum
 #'  value inclusive. For `not_between`, the value must lie outside of these values.
 #'  @return A list with two elements `operator` and `value`.
-as_value <- function(operator = c("=", "==", ">=", "<=", "<", ">", "!="),
+with_value <- function(operator = c("=", "==", ">=", "<=", "<", ">", "!="),
                      value, between, not_between) {
   operator <- match.arg(operator)
   if(!missing(between) & !missing(not_between)) {
