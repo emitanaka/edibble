@@ -46,6 +46,7 @@ the experimental design.
 \item \href{#method-activate_graph}{\code{EdibbleDesign$activate_graph()}}
 \item \href{#method-rename}{\code{EdibbleDesign$rename()}}
 \item \href{#method-add_variable}{\code{EdibbleDesign$add_variable()}}
+\item \href{#method-add_variable_node}{\code{EdibbleDesign$add_variable_node()}}
 \item \href{#method-add_allocation}{\code{EdibbleDesign$add_allocation()}}
 \item \href{#method-assign_allocation}{\code{EdibbleDesign$assign_allocation()}}
 \item \href{#method-clone}{\code{EdibbleDesign$clone()}}
@@ -203,6 +204,27 @@ Add the variable to the graph.
 \item{\code{value}}{Short hand value of what to add.}
 
 \item{\code{vname}}{The variable name}
+
+\item{\code{attr}}{The vertex attributes.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-add_variable_node"></a>}}
+\if{latex}{\out{\hypertarget{method-add_variable_node}{}}}
+\subsection{Method \code{add_variable_node()}}{
+Add the variable to the graph.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$add_variable_node(vnames_new, vname_unit, attr)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{vnames_new}}{The names of new variables to add.}
+
+\item{\code{vname_unit}}{The unit variable that measurement is taken on.}
 
 \item{\code{attr}}{The vertex attributes.}
 }

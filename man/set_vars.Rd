@@ -7,7 +7,7 @@
 set_vars(
   .design,
   ...,
-  .class = "edbl_var",
+  .class = NULL,
   .name_repair = c("check_unique", "unique", "universal", "minimal")
 )
 }

@@ -12,7 +12,7 @@
 #' @export
 #' @importFrom vctrs vec_as_names
 #' @importFrom rlang quo_get_expr
-set_vars <- function(.design, ..., .class = "edbl_var",
+set_vars <- function(.design, ..., .class = NULL,
                      .name_repair = c("check_unique", "unique", "universal", "minimal")) {
   .name_repair <- match.arg(.name_repair)
   dots <- enquos(...)
@@ -21,7 +21,11 @@ set_vars <- function(.design, ..., .class = "edbl_var",
     vnames_new <- names(dots)
     vnames_old <- names_vars(.design)
     vnames <- vec_as_names(c(vnames_old, vnames_new), repair = .name_repair)
-    attr <- vertex_attr_opt(gsub("edbl_", "", .class))
+    type <- switch(.class,
+                   edbl_unit = "unit",
+                    edbl_trt = "trt",
+                               "default")
+    attr <- vertex_attr_opt(type)
 
     for(i in seq_along(dots)) {
       vname <- vnames[i + length(vnames_old)]

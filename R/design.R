@@ -140,6 +140,25 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
       },
 
       #' @description
+      #' Add the variable to the graph.
+      #' @param vnames_new The names of new variables to add.
+      #' @param vname_unit The unit variable that measurement is taken on.
+      #' @param attr The vertex attributes.
+      add_variable_node = function(vnames_new, vname_unit, attr) {
+        graph <- private$.graph
+        graph <- add_vertices(graph, length(vnames_new),
+                                       name = vnames_new,
+                                       vtype = "var",
+                                       vname = vnames_new,
+                                       label = vnames_new,
+                                       attr = attr)
+        graph <- add_edges(graph,
+                                    cross_edge_seq(graph, vnames_new, vname_unit),
+                                    attr = edge_attr_opt("r2v"))
+        private$.graph <- reinstate_graph_attrs(graph, private$.graph)
+      },
+
+      #' @description
       #' This adds edges that connect treatment to unit.
       #' @param trts The name of the treatments.
       #' @param unit The name of the unit. There should be only one unit.
@@ -170,6 +189,16 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
       assign_allocation = function() {
         graph <- randomise_trts_internal(self)
         private$.graph <- private$reinstate(graph)
+      },
+
+      #' @description
+      #' Appending validation rule
+      #' @param validation A new list of validation. The name of the list
+      #' should correspond to a record variable. The elements of the list
+      #' should be a named list with "operator", "value" and "type". If
+      #' type is list then it is will contain only "type" and "values".
+      append_validation = function(validation) {
+        private$.validation <- c(private$.validation, validation)
       }
 
     ),

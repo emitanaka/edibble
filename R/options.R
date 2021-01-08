@@ -38,29 +38,34 @@ op.edibble <- list(
   edibble.edge.color.v2l = "gray",
   edibble.edge.color.l2lseq = "gray",
   edibble.edge.color.v2v = "black",
+  edibble.edge.color.r2v = "black", # record to var
   edibble.edge.color.l2l = "black",
   edibble.edge.color.t2v = "#56B4E9", # blue
   edibble.edge.color.t2vmay = "#56B4E9",
   edibble.edge.arrow.mode.v2l = "-",
   edibble.edge.arrow.mode.l2lseq = "-",
   edibble.edge.arrow.mode.v2v = "->",
+  edibble.edge.arrow.mode.r2v = "->",
   edibble.edge.arrow.mode.l2l = "->",
   edibble.edge.arrow.mode.t2v = "->",
   edibble.edge.arrow.mode.t2vmay = "->",
   edibble.edge.arrow.size.v2l = 0.3,
   edibble.edge.arrow.size.l2lseq = 0.3,
   edibble.edge.arrow.size.v2v = 0.3,
+  edibble.edge.arrow.size.r2v = 0.3,
   edibble.edge.arrow.size.l2l = 0.3,
   edibble.edge.arrow.size.t2v = 0.3,
   edibble.edge.arrow.size.t2vmay = 0.3,
   edibble.edge.width.v2l = 1,
   edibble.edge.width.l2lseq = 1,
   edibble.edge.width.v2v = 1,
+  edibble.edge.width.r2v = 1,
   edibble.edge.width.l2l = 1,
   edibble.edge.width.t2v = 1,
   edibble.edge.width.t2vmay = 1,
   edibble.edge.lty.v2l = 3, # vertex to level
   edibble.edge.lty.l2lseq = 3, # level to level sequence
+  edibble.edge.lty.r2v = 2, # vertex to vertex nesting
   edibble.edge.lty.v2v = 1, # vertex to vertex nesting
   edibble.edge.lty.l2l = 1, # level to level nesting
   edibble.edge.lty.t2v = 1, # treatment to variable
@@ -92,8 +97,7 @@ edibble_labels_opt <- function(x) {
 }
 
 
-vertex_attr_opt <- function(vtype) {
-  type <- ifelse(vtype=="var", "default", vtype)
+vertex_attr_opt <- function(type) {
   attr <- list(class = paste0("edbl_", type),
                color = edibble_opt(paste0("vertex.fill.", type)),
                shape = edibble_opt(paste0("vertex.shape.", type)),
@@ -104,7 +108,7 @@ vertex_attr_opt <- function(vtype) {
   attr
 }
 
-edge_attr_opt <- function(type = c("v2l", "l2lseq", "v2v", "l2l", "t2v", "t2vmay")) {
+edge_attr_opt <- function(type = c("v2l", "l2lseq", "v2v", "l2l", "t2v", "t2vmay", "r2v")) {
   type <- match.arg(type)
   attr <- list(etype = type,
                color = edibble_opt(paste0("edge.color.", type)),
