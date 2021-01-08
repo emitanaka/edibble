@@ -81,8 +81,8 @@ to_be_character <- function(length) {
 }
 
 #' @rdname expect-vars
-to_be_list <- function(value) {
-  list(type = "list", values = value)
+to_be_one_of <- function(values) {
+  list(type = "list", values = values)
 }
 
 
