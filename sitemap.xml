@@ -19,6 +19,9 @@
     <loc>https://edibble.emitanaka.org/reference/allocate_trts.html</loc>
   </url>
   <url>
+    <loc>https://edibble.emitanaka.org/reference/as_value.html</loc>
+  </url>
+  <url>
     <loc>https://edibble.emitanaka.org/reference/context-manipulations.html</loc>
   </url>
   <url>
@@ -29,6 +32,12 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/edibble.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/expect-vars.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/expect_vars.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/find_classical_names.html</loc>
@@ -47,9 +56,6 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/match_edge_seq.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/measure_responses.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/n_units.html</loc>
@@ -92,6 +98,9 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/randomise_trts.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/record_vars.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/reexports.html</loc>
