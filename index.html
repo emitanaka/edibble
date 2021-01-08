@@ -211,7 +211,7 @@
 <span class="co">#&gt;   ◯ This design is balanced for the given numbers.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;   ── edibble code ────────────────────────────────────────────────────────────────</span>
-<span class="co">#&gt; set.seed(1610000654)</span>
+<span class="co">#&gt; set.seed(1610100205)</span>
 <span class="co">#&gt; start_design("crd") %&gt;%</span>
 <span class="co">#&gt;   set_units(unit = 30) %&gt;%</span>
 <span class="co">#&gt;   set_trts(treat = 5) %&gt;%</span>
@@ -223,22 +223,22 @@
 <span class="co">#&gt; # An edibble: 30 x 2</span>
 <span class="co">#&gt;    unit       treat   </span>
 <span class="co">#&gt;    &lt;unit(30)&gt; &lt;trt(5)&gt;</span>
-<span class="co">#&gt;  1 unit1      treat3  </span>
-<span class="co">#&gt;  2 unit2      treat4  </span>
-<span class="co">#&gt;  3 unit3      treat4  </span>
-<span class="co">#&gt;  4 unit4      treat3  </span>
-<span class="co">#&gt;  5 unit5      treat2  </span>
+<span class="co">#&gt;  1 unit1      treat1  </span>
+<span class="co">#&gt;  2 unit2      treat3  </span>
+<span class="co">#&gt;  3 unit3      treat5  </span>
+<span class="co">#&gt;  4 unit4      treat5  </span>
+<span class="co">#&gt;  5 unit5      treat5  </span>
 <span class="co">#&gt;  6 unit6      treat4  </span>
-<span class="co">#&gt;  7 unit7      treat5  </span>
-<span class="co">#&gt;  8 unit8      treat2  </span>
-<span class="co">#&gt;  9 unit9      treat2  </span>
-<span class="co">#&gt; 10 unit10     treat3  </span>
+<span class="co">#&gt;  7 unit7      treat2  </span>
+<span class="co">#&gt;  8 unit8      treat1  </span>
+<span class="co">#&gt;  9 unit9      treat5  </span>
+<span class="co">#&gt; 10 unit10     treat1  </span>
 <span class="co">#&gt; # … with 20 more rows</span>
 
 <span class="fu"><a href="reference/make_classical.html">code_classical</a></span><span class="op">(</span><span class="st">"rcbd"</span>, t <span class="op">=</span> <span class="fl">4</span>, n <span class="op">=</span> <span class="fl">40</span><span class="op">)</span>
-<span class="co">#&gt; set.seed(1610000654)</span>
+<span class="co">#&gt; set.seed(1610100205)</span>
 <span class="co">#&gt; start_design("rcbd") %&gt;%</span>
-<span class="co">#&gt;   set_units(block = 9,</span>
+<span class="co">#&gt;   set_units(block = 10,</span>
 <span class="co">#&gt;             unit = nested_in(block, 4)) %&gt;%</span>
 <span class="co">#&gt;   set_trts(treat = 4) %&gt;%</span>
 <span class="co">#&gt;   allocate_trts(treat ~ unit) %&gt;%</span>
@@ -270,6 +270,49 @@ des</code></pre>
 <span class="co">#&gt; COVID-19</span>
 <span class="co">#&gt; ├─rat (20 levels)</span>
 <span class="co">#&gt; └─treat (2 levels)</span></code></pre></div>
+</div>
+<div id="recording-responses-and-other-variables" class="section level2">
+<h2 class="hasAnchor">
+<a href="#recording-responses-and-other-variables" class="anchor"></a>Recording responses and other variables</h2>
+<p>Now you can write out what you plan to record for the experiment with <code>record_vars</code>. The record should be made on a unit defined in <code>set_units</code>. You can add data validation rules with <code>expect_vars</code> which is used when the data are exported. This means that data entry is restricted according to the rules you specify.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">des</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="reference/start_design.html">start_design</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Effective teaching"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="reference/set_units.html">set_units</a></span><span class="op">(</span>class <span class="op">=</span> <span class="fl">4</span>,
+              student <span class="op">=</span> <span class="fu"><a href="reference/nested_in.html">nested_in</a></span><span class="op">(</span><span class="va">class</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="reference/set_trts.html">set_trts</a></span><span class="op">(</span>style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"flipped"</span>, <span class="st">"traditional"</span><span class="op">)</span>,
+             exam <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"take-home"</span>, <span class="st">"open-book"</span>, <span class="st">"closed-book"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="reference/allocate_trts.html">allocate_trts</a></span><span class="op">(</span><span class="va">style</span> <span class="op">~</span> <span class="va">class</span>,
+                  <span class="va">exam</span> <span class="op">~</span> <span class="va">student</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="reference/randomise_trts.html">randomise_trts</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="reference/record_vars.html">record_vars</a></span><span class="op">(</span>student <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">exam_mark</span>,
+                            <span class="va">quiz1_mark</span>,
+                            <span class="va">quiz2_mark</span>,
+                            <span class="va">gender</span><span class="op">)</span>,
+                 class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">room</span>,
+                           <span class="va">teacher</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="reference/expect_vars.html">expect_vars</a></span><span class="op">(</span> exam_mark <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_numeric</a></span><span class="op">(</span><span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
+                quiz1_mark <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_integer</a></span><span class="op">(</span><span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">15</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
+                quiz2_mark <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_integer</a></span><span class="op">(</span><span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
+                    gender <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_selected</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="st">"male"</span>, <span class="st">"non-binary"</span><span class="op">)</span><span class="op">)</span>,
+                   teacher <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_character</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span><span class="st">"&lt;="</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span>,
+                      room <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_character</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span><span class="st">"&gt;="</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu"><a href="reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="va">des</span><span class="op">)</span>
+<span class="co">#&gt; # An edibble: 120 x 10</span>
+<span class="co">#&gt;    class     student     style    exam        exam_mark quiz1_mark quiz2_mark gender   room teacher</span>
+<span class="co">#&gt;    &lt;unit(4)&gt; &lt;unit(120)&gt; &lt;trt(2)&gt; &lt;trt(3)&gt;       &lt;rcrd&gt;     &lt;rcrd&gt;     &lt;rcrd&gt; &lt;rcrd&gt; &lt;rcrd&gt;  &lt;rcrd&gt;</span>
+<span class="co">#&gt;  1 class1    student1    flipped  open-book           ■          ■          ■      ■      ■       ■</span>
+<span class="co">#&gt;  2 class1    student2    flipped  closed-book         ■          ■          ■      ■      x       x</span>
+<span class="co">#&gt;  3 class1    student3    flipped  open-book           ■          ■          ■      ■      x       x</span>
+<span class="co">#&gt;  4 class1    student4    flipped  take-home           ■          ■          ■      ■      x       x</span>
+<span class="co">#&gt;  5 class1    student5    flipped  take-home           ■          ■          ■      ■      x       x</span>
+<span class="co">#&gt;  6 class1    student6    flipped  open-book           ■          ■          ■      ■      x       x</span>
+<span class="co">#&gt;  7 class1    student7    flipped  open-book           ■          ■          ■      ■      x       x</span>
+<span class="co">#&gt;  8 class1    student8    flipped  take-home           ■          ■          ■      ■      x       x</span>
+<span class="co">#&gt;  9 class1    student9    flipped  open-book           ■          ■          ■      ■      x       x</span>
+<span class="co">#&gt; 10 class1    student10   flipped  open-book           ■          ■          ■      ■      x       x</span>
+<span class="co">#&gt; # … with 110 more rows</span></code></pre></div>
 </div>
 <div id="related-work" class="section level2">
 <h2 class="hasAnchor">

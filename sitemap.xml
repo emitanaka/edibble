@@ -19,9 +19,6 @@
     <loc>https://edibble.emitanaka.org/reference/allocate_trts.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/as_value.html</loc>
-  </url>
-  <url>
     <loc>https://edibble.emitanaka.org/reference/context-manipulations.html</loc>
   </url>
   <url>
@@ -146,6 +143,9 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/utility-edibble-var.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/with_value.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/articles/edbl-output.html</loc>

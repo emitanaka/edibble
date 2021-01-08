@@ -218,6 +218,7 @@ the experimental design.</p>
 <li><p><a href='#method-add_variable_node'><code>EdibbleDesign$add_variable_node()</code></a></p></li>
 <li><p><a href='#method-add_allocation'><code>EdibbleDesign$add_allocation()</code></a></p></li>
 <li><p><a href='#method-assign_allocation'><code>EdibbleDesign$assign_allocation()</code></a></p></li>
+<li><p><a href='#method-append_validation'><code>EdibbleDesign$append_validation()</code></a></p></li>
 <li><p><a href='#method-clone'><code>EdibbleDesign$clone()</code></a></p></li>
 </ul>
 <p><hr>
@@ -344,6 +345,19 @@ rename variables.</p></dd>
 <p>This removes "t2vmay" edges and assigns edges from treatment to variable.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>assign_allocation</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
+<p><hr>
+<a id="method-append_validation"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>append_validation()</code></h3>
+<p>Appending validation rule</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>append_validation</span><span class='op'>(</span><span class='va'>validation</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>validation</code></dt><dd><p>A new list of validation. The name of the list
+should correspond to a record variable. The elements of the list
+should be a named list with "operator", "value" and "type". If
+type is list then it is will contain only "type" and "values".</p></dd>
+
+</dl><p></div></p>
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
