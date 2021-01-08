@@ -179,7 +179,7 @@ make_classical("crd", n = 30, t = 5)
 #>   ◯ This design is balanced for the given numbers.
 #> 
 #>   ── edibble code ────────────────────────────────────────────────────────────────
-#> set.seed(1610000654)
+#> set.seed(1610100205)
 #> start_design("crd") %>%
 #>   set_units(unit = 30) %>%
 #>   set_trts(treat = 5) %>%
@@ -191,22 +191,22 @@ make_classical("crd", n = 30, t = 5)
 #> # An edibble: 30 x 2
 #>    unit       treat   
 #>    <unit(30)> <trt(5)>
-#>  1 unit1      treat3  
-#>  2 unit2      treat4  
-#>  3 unit3      treat4  
-#>  4 unit4      treat3  
-#>  5 unit5      treat2  
+#>  1 unit1      treat1  
+#>  2 unit2      treat3  
+#>  3 unit3      treat5  
+#>  4 unit4      treat5  
+#>  5 unit5      treat5  
 #>  6 unit6      treat4  
-#>  7 unit7      treat5  
-#>  8 unit8      treat2  
-#>  9 unit9      treat2  
-#> 10 unit10     treat3  
+#>  7 unit7      treat2  
+#>  8 unit8      treat1  
+#>  9 unit9      treat5  
+#> 10 unit10     treat1  
 #> # … with 20 more rows
 
 code_classical("rcbd", t = 4, n = 40)
-#> set.seed(1610000654)
+#> set.seed(1610100205)
 #> start_design("rcbd") %>%
-#>   set_units(block = 9,
+#>   set_units(block = 10,
 #>             unit = nested_in(block, 4)) %>%
 #>   set_trts(treat = 4) %>%
 #>   allocate_trts(treat ~ unit) %>%
@@ -269,6 +269,54 @@ suppress_context(des)
 #> COVID-19
 #> ├─rat (20 levels)
 #> └─treat (2 levels)
+```
+
+## Recording responses and other variables
+
+Now you can write out what you plan to record for the experiment with
+`record_vars`. The record should be made on a unit defined in
+`set_units`. You can add data validation rules with `expect_vars` which
+is used when the data are exported. This means that data entry is
+restricted according to the rules you specify.
+
+``` r
+des <-
+  start_design(name = "Effective teaching") %>%
+    set_units(class = 4,
+              student = nested_in(class, 30)) %>%
+    set_trts(style = c("flipped", "traditional"),
+             exam = c("take-home", "open-book", "closed-book")) %>%
+    allocate_trts(style ~ class,
+                  exam ~ student) %>%
+    randomise_trts() %>%
+    record_vars(student = c(exam_mark,
+                            quiz1_mark,
+                            quiz2_mark,
+                            gender),
+                 class = c(room,
+                           teacher)) %>%
+    expect_vars( exam_mark = to_be_numeric(with_value(between = c(0, 100))),
+                quiz1_mark = to_be_integer(with_value(between = c(0, 15))),
+                quiz2_mark = to_be_integer(with_value(between = c(0, 30))),
+                    gender = to_be_selected(from = c("female", "male", "non-binary")),
+                   teacher = to_be_character(length = with_value("<=", 100)),
+                      room = to_be_character(length = with_value(">=", 1)))
+
+serve_table(des)
+#> # An edibble: 120 x 10
+#>    class     student     style    exam        exam_mark quiz1_mark quiz2_mark gender   room teacher
+#>    <unit(4)> <unit(120)> <trt(2)> <trt(3)>       <rcrd>     <rcrd>     <rcrd> <rcrd> <rcrd>  <rcrd>
+#>  1 class1    student1    flipped  open-book           ■          ■          ■      ■      ■       ■
+#>  2 class1    student2    flipped  closed-book         ■          ■          ■      ■      x       x
+#>  3 class1    student3    flipped  open-book           ■          ■          ■      ■      x       x
+#>  4 class1    student4    flipped  take-home           ■          ■          ■      ■      x       x
+#>  5 class1    student5    flipped  take-home           ■          ■          ■      ■      x       x
+#>  6 class1    student6    flipped  open-book           ■          ■          ■      ■      x       x
+#>  7 class1    student7    flipped  open-book           ■          ■          ■      ■      x       x
+#>  8 class1    student8    flipped  take-home           ■          ■          ■      ■      x       x
+#>  9 class1    student9    flipped  open-book           ■          ■          ■      ■      x       x
+#> 10 class1    student10   flipped  open-book           ■          ■          ■      ■      x       x
+#> # … with 110 more rows
 ```
 
 ## Related Work

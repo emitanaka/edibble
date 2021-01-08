@@ -23,7 +23,7 @@ record_vars <- function(.design, ...,
     if(!all(ind <- vnames_unit %in% vnames_now)) {
       abort("The units", vnames_unit[!ind], "are not defined in the design.")
     }
-    attr <- vertex_attr_opt("default")
+    attr <- vertex_attr_opt("rcrd")
 
     for(i in seq_along(dots)) {
       vnames_new <- all.vars(dots[[i]])
@@ -56,31 +56,37 @@ expect_vars <- function(.design, ...) {
 #'  provided by helper `as_value()` that gives the possible range of values
 #'  that the expected type can take.
 #' @name expect-vars
+#' @export
 to_be_numeric <- function(range) {
   c(list(type = "decimal"), range)
 }
 
 #' @rdname expect-vars
+#' @export
 to_be_integer <- function(range) {
   c(list(type = "whole"), range)
 }
 
 #' @rdname expect-vars
+#' @export
 to_be_date <- function(range) {
   c(list(type = "date"), range)
 }
 
 #' @rdname expect-vars
+#' @export
 to_be_time <- function(range) {
   c(list(type = "time"), range)
 }
 
 #' @rdname expect-vars
+#' @export
 to_be_character <- function(length) {
   c(list(type = "textLength"), length)
 }
 
 #' @rdname expect-vars
+#' @export
 to_be_selected <- function(from) {
   list(type = "list", values = from)
 }
@@ -88,13 +94,18 @@ to_be_selected <- function(from) {
 
 
 #' Validation values
-#' @param operator
+#'
+#' This creates a list that is used later for creating data validation rules
+#' when the data is exported.
+#'
+#' @param operator Operator to apply.
 #' @param value An optional value related to operator
 #' @param between,not_between An optional numerical vector of size two where the
 #'  first entry is the minimum value and the second entry is the maximum value.
 #'  For `between`, the value is valid if within the range of minimum and maximum
 #'  value inclusive. For `not_between`, the value must lie outside of these values.
-#'  @return A list with two elements `operator` and `value`.
+#' @return A list with two elements `operator` and `value`.
+#' @export
 with_value <- function(operator = c("=", "==", ">=", "<=", "<", ">", "!="),
                      value, between, not_between) {
   operator <- match.arg(operator)

@@ -163,6 +163,37 @@ options(crayon.enabled = FALSE)
 suppress_context(des)
 ```
 
+## Recording responses and other variables
+
+Now you can write out what you plan to record for the experiment with `record_vars`. The record should be made on a unit defined in `set_units`. You can add data validation rules 
+with `expect_vars` which is used when the data are exported. This means that data entry is restricted according to the rules you specify.
+
+```{r}
+des <-
+  start_design(name = "Effective teaching") %>%
+    set_units(class = 4,
+              student = nested_in(class, 30)) %>%
+    set_trts(style = c("flipped", "traditional"),
+             exam = c("take-home", "open-book", "closed-book")) %>%
+    allocate_trts(style ~ class,
+                  exam ~ student) %>%
+    randomise_trts() %>%
+    record_vars(student = c(exam_mark,
+                            quiz1_mark,
+                            quiz2_mark,
+                            gender),
+                 class = c(room,
+                           teacher)) %>%
+    expect_vars( exam_mark = to_be_numeric(with_value(between = c(0, 100))),
+                quiz1_mark = to_be_integer(with_value(between = c(0, 15))),
+                quiz2_mark = to_be_integer(with_value(between = c(0, 30))),
+                    gender = to_be_selected(from = c("female", "male", "non-binary")),
+                   teacher = to_be_character(length = with_value("<=", 100)),
+                      room = to_be_character(length = with_value(">=", 1)))
+
+serve_table(des)
+```
+
 
 
 ## Related Work

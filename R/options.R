@@ -1,7 +1,7 @@
 op.edibble <- list(
   edibble.tree.decorate.trts = cli::col_blue,
   edibble.tree.decorate.units = cli::combine_ansi_styles(cli::bg_black, cli::col_yellow),
-  edibble.tree.decorate.resp = cli::col_green,
+  edibble.tree.decorate.rcrd = cli::col_green,
   edibble.tree.decorate.levels = function(x) cli::col_grey(cli::pluralize("({x} level{?s})")),
   edibble.tree.decorate.main = cli::combine_ansi_styles("cyan", "italic"),
   # vector labels
@@ -13,27 +13,27 @@ op.edibble <- list(
   edibble.vertex.label.color.default = "black",
   edibble.vertex.label.color.unit = "#E69F00", # orange
   edibble.vertex.label.color.trt = "#56B4E9", # blue
-  edibble.vertex.label.color.resp = "#009E73", # green
+  edibble.vertex.label.color.rcrd = "#009E73", # green
   edibble.vertex.shape.default = "none",
   edibble.vertex.shape.unit = "none",
   edibble.vertex.shape.trt = "none",
-  edibble.vertex.shape.resp = "none",
+  edibble.vertex.shape.rcrd = "none",
   edibble.vertex.fill.default = NA,
   edibble.vertex.fill.unit = NA,
   edibble.vertex.fill.trt = NA,
-  edibble.vertex.fill.resp = NA,
+  edibble.vertex.fill.rcrd = NA,
   edibble.vertex.label.family.default = "mono",
   edibble.vertex.label.family.unit = "mono",
   edibble.vertex.label.family.trt = "mono",
-  edibble.vertex.label.family.resp = "mono",
+  edibble.vertex.label.family.rcrd = "mono",
   edibble.vertex.label.font.default = 2,
   edibble.vertex.label.font.unit = 2,
   edibble.vertex.label.font.trt = 2,
-  edibble.vertex.label.font.resp = 2,
+  edibble.vertex.label.font.rcrd = 2,
   edibble.vertex.label.cex.default = 1,
   edibble.vertex.label.cex.unit = 1,
   edibble.vertex.label.cex.trt = 1,
-  edibble.vertex.label.cex.resp = 1,
+  edibble.vertex.label.cex.rcrd = 1,
   # edge
   edibble.edge.color.v2l = "gray",
   edibble.edge.color.l2lseq = "gray",

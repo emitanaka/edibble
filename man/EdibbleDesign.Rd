@@ -49,6 +49,7 @@ the experimental design.
 \item \href{#method-add_variable_node}{\code{EdibbleDesign$add_variable_node()}}
 \item \href{#method-add_allocation}{\code{EdibbleDesign$add_allocation()}}
 \item \href{#method-assign_allocation}{\code{EdibbleDesign$assign_allocation()}}
+\item \href{#method-append_validation}{\code{EdibbleDesign$append_validation()}}
 \item \href{#method-clone}{\code{EdibbleDesign$clone()}}
 }
 }
@@ -259,6 +260,26 @@ This removes "t2vmay" edges and assigns edges from treatment to variable.
 \if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$assign_allocation()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-append_validation"></a>}}
+\if{latex}{\out{\hypertarget{method-append_validation}{}}}
+\subsection{Method \code{append_validation()}}{
+Appending validation rule
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$append_validation(validation)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{validation}}{A new list of validation. The name of the list
+should correspond to a record variable. The elements of the list
+should be a named list with "operator", "value" and "type". If
+type is list then it is will contain only "type" and "values".}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

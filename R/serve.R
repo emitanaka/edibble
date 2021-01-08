@@ -14,15 +14,29 @@ serve_table <- function(.design, ...) {
     lout <- serve_vars_not_reconciled(.design)
   } else {
     classes <- var_class(.design$graph)
-    lunit <- ltrt <- lresp <- list()
+    lunit <- ltrt <- lvar <- list()
     if("edbl_unit" %in% classes) lunit <- serve_units(.design$graph)
     if("edbl_trt" %in% classes) ltrt <- serve_trts(.design$graph, lunit)
-    if("edbl_resp" %in% classes) lresp <- serve_resps(.design$graph, lunit)
-    lout <- c(lunit, ltrt, lresp)
+    if("edbl_rcrd" %in% classes) lvar <- serve_rcrd(.design$graph, lunit)
+    lout <- c(lunit, ltrt, lvar)
   }
 
   vnames <- names_vars(.design)
   new_edibble(lout[vnames], design = .design)
+}
+
+serve_rcrd <- function(.graph, lunits) {
+  vgraph <- subset_vars(.graph)
+  N <- max(lengths(lunits))
+  rcrd2unit <- endpoints(.graph, "r2v", "var")
+  dict_rcrd2unit <- setNames(rcrd2unit$to, rcrd2unit$from)
+  rnames <- rcrd2unit$from
+  res <- lapply(rnames,
+                function(avar) {
+                  new_edibble_rcrd(N, lunits[[dict_rcrd2unit[avar]]])
+                })
+  names(res) <- rnames
+  res
 }
 
 
@@ -77,9 +91,7 @@ get_vertex_child <- function(graph, vname) {
   NULL
 }
 
-serve_resps <- function(.design, lunits) {
 
-}
 
 #' @importFrom igraph degree V delete_vertices
 serve_units <- function(graph) {
