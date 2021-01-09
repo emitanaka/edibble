@@ -194,6 +194,17 @@ des <-
 serve_table(des)
 ```
 
+```{r, eval = FALSE}
+export_design(des, "/PATH/TO/FILE.xlsx")
+```
+
+Now you have an excel file that separates out observational units to their 
+own sheet and data entering is now restricted to what you set out in `expect_vars`. 
+
+```{r, echo = FALSE}
+knitr::include_graphics("man/figures/README-export.png")
+```
+
 
 
 ## Related Work

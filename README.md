@@ -179,7 +179,7 @@ make_classical("crd", n = 30, t = 5)
 #>   ◯ This design is balanced for the given numbers.
 #> 
 #>   ── edibble code ────────────────────────────────────────────────────────────────
-#> set.seed(1610100205)
+#> set.seed(1610185058)
 #> start_design("crd") %>%
 #>   set_units(unit = 30) %>%
 #>   set_trts(treat = 5) %>%
@@ -191,22 +191,22 @@ make_classical("crd", n = 30, t = 5)
 #> # An edibble: 30 x 2
 #>    unit       treat   
 #>    <unit(30)> <trt(5)>
-#>  1 unit1      treat1  
-#>  2 unit2      treat3  
-#>  3 unit3      treat5  
-#>  4 unit4      treat5  
-#>  5 unit5      treat5  
+#>  1 unit1      treat4  
+#>  2 unit2      treat2  
+#>  3 unit3      treat1  
+#>  4 unit4      treat1  
+#>  5 unit5      treat1  
 #>  6 unit6      treat4  
-#>  7 unit7      treat2  
-#>  8 unit8      treat1  
-#>  9 unit9      treat5  
-#> 10 unit10     treat1  
+#>  7 unit7      treat3  
+#>  8 unit8      treat3  
+#>  9 unit9      treat1  
+#> 10 unit10     treat2  
 #> # … with 20 more rows
 
 code_classical("rcbd", t = 4, n = 40)
-#> set.seed(1610100205)
+#> set.seed(1610185058)
 #> start_design("rcbd") %>%
-#>   set_units(block = 10,
+#>   set_units(block = 5,
 #>             unit = nested_in(block, 4)) %>%
 #>   set_trts(treat = 4) %>%
 #>   allocate_trts(treat ~ unit) %>%
@@ -307,17 +307,27 @@ serve_table(des)
 #>    class     student     style    exam        exam_mark quiz1_mark quiz2_mark gender   room teacher
 #>    <unit(4)> <unit(120)> <trt(2)> <trt(3)>       <rcrd>     <rcrd>     <rcrd> <rcrd> <rcrd>  <rcrd>
 #>  1 class1    student1    flipped  open-book           ■          ■          ■      ■      ■       ■
-#>  2 class1    student2    flipped  closed-book         ■          ■          ■      ■      x       x
-#>  3 class1    student3    flipped  open-book           ■          ■          ■      ■      x       x
-#>  4 class1    student4    flipped  take-home           ■          ■          ■      ■      x       x
-#>  5 class1    student5    flipped  take-home           ■          ■          ■      ■      x       x
+#>  2 class1    student2    flipped  open-book           ■          ■          ■      ■      x       x
+#>  3 class1    student3    flipped  take-home           ■          ■          ■      ■      x       x
+#>  4 class1    student4    flipped  open-book           ■          ■          ■      ■      x       x
+#>  5 class1    student5    flipped  open-book           ■          ■          ■      ■      x       x
 #>  6 class1    student6    flipped  open-book           ■          ■          ■      ■      x       x
 #>  7 class1    student7    flipped  open-book           ■          ■          ■      ■      x       x
 #>  8 class1    student8    flipped  take-home           ■          ■          ■      ■      x       x
-#>  9 class1    student9    flipped  open-book           ■          ■          ■      ■      x       x
-#> 10 class1    student10   flipped  open-book           ■          ■          ■      ■      x       x
+#>  9 class1    student9    flipped  closed-book         ■          ■          ■      ■      x       x
+#> 10 class1    student10   flipped  take-home           ■          ■          ■      ■      x       x
 #> # … with 110 more rows
 ```
+
+``` r
+export_design(des, "/PATH/TO/FILE.xlsx")
+```
+
+Now you have an excel file that separates out observational units to
+their own sheet and data entering is now restricted to what you set out
+in `expect_vars`.
+
+<img src="man/figures/README-export.png" width="1400" />
 
 ## Related Work
 

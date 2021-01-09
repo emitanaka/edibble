@@ -63,37 +63,37 @@ has_record <- function(.design) {
 #' @name expect-vars
 #' @export
 to_be_numeric <- function(range) {
-  c(list(type = "decimal"), range)
+  c(list(type = "decimal", record = "numeric"), range)
 }
 
 #' @rdname expect-vars
 #' @export
 to_be_integer <- function(range) {
-  c(list(type = "whole"), range)
+  c(list(type = "whole", record = "integer"), range)
 }
 
 #' @rdname expect-vars
 #' @export
 to_be_date <- function(range) {
-  c(list(type = "date"), range)
+  c(list(type = "date", record = "date"), range)
 }
 
 #' @rdname expect-vars
 #' @export
 to_be_time <- function(range) {
-  c(list(type = "time"), range)
+  c(list(type = "time", record = "time"), range)
 }
 
 #' @rdname expect-vars
 #' @export
 to_be_character <- function(length) {
-  c(list(type = "textLength"), length)
+  c(list(type = "textLength", record = "text"), length)
 }
 
 #' @rdname expect-vars
 #' @export
 to_be_selected <- function(from) {
-  list(type = "list", values = from)
+  list(type = "list", record = "select", values = from)
 }
 
 

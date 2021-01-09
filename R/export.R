@@ -33,12 +33,16 @@ make_cell_styles <- function() {
                                           textDecoration = "bold",
                                           border = "Bottom"),
                      body = createStyle(fontSize = 12)),
-       variables = list(names = createStyle(fontSize = 14,
+       variables = list(header = createStyle(fgFill = "#DCE6F1",
+                                             halign = "left",
+                                             textDecoration = "bold",
+                                             border = "Bottom"),
+                        names = createStyle(fontSize = 14,
                                               textDecoration = "bold"),
-                          type = createStyle(fontSize = 14,
-                                             fontColour = "blue"),
-                          what = createStyle(fontSize = 14),
-                          validation = createStyle(fontSize = 14)))
+                        type = createStyle(fontSize = 14,
+                                           fontColour = "blue"),
+                        what = createStyle(fontSize = 14),
+                        validation = createStyle(fontSize = 14)))
 }
 
 add_creator <- function(wb, authors) {
@@ -114,7 +118,9 @@ write_data_sheet <- function(wb, sheet_names, cell_styles, .design, .data) {
       for(aunit in units) {
         vertex_delete <- neighbors(vgraph, var_index(vgraph, aunit), mode = "out")
         if(length(vertex_delete) == 0) {
-          data <- cbind(.rowNumber = 1:nrow(.data), as_data_frame(.data))
+          records_to_delete <- names(rcrds)[rcrds != aunit]
+          w <- which(names(.data) %in% records_to_delete)
+          data <- cbind(.rowNumber = 1:nrow(.data), as_data_frame(.data)[-w])
         } else {
           units_to_delete <- var_names(vgraph, vertex_delete)
           subdesign <- .design$clone()
@@ -130,12 +136,16 @@ write_data_sheet <- function(wb, sheet_names, cell_styles, .design, .data) {
                   x = data, startCol = 1,
                   headerStyle = cell_styles$header,
                   name = data_sheet_name(aunit))
+        addStyle(wb, sheet = data_sheet_name(aunit),
+                 rows = 2:(nrow(data) + 1),
+                 cols = 1:ncol(data), gridExpand = TRUE, stack = TRUE,
+                 style = cell_styles$body)
       }
     } else {
       data <- cbind(.rowNumber = 1:nrow(.data), as_data_frame(.data))
       writeData(wb, sheet = sheet_names, x = data, startCol = 1,
                 headerStyle = cell_styles$header,
-                name = "data")
+                name = "Data")
       addStyle(wb, sheet = sheet_names, rows = 2:(nrow(data) + 1),
                cols = 1:ncol(data), gridExpand = TRUE, stack = TRUE,
                style = cell_styles$body)
@@ -145,12 +155,76 @@ write_data_sheet <- function(wb, sheet_names, cell_styles, .design, .data) {
 }
 
 
-write_variables_sheet <- function(wb, sheet_name, cell_styles, .design) {
-  #if(!is_null(.design$validation)) {
-    # TO DO
-   # dataValidation(wb, sheet = sheet_name, ...)
-  #}
+write_variables_sheet <- function(wb, sheet_name, cell_styles, .design, .data) {
 
+  type <- map_chr(.data, function(var) {
+      cls <- class(var)
+      if("edbl_unit" %in% cls) return("unit")
+      if("edbl_trt" %in% cls) return("trt")
+      if("edbl_rcrd" %in% cls) return("rcrd")
+      "var"
+    })
+  data <- data.frame(variable = names(.data),
+                    type = unname(type),
+                    stringsAsFactors = FALSE)
+  if(!is_null(.design$validation)) {
+    data$record <- ""
+    data$value <- ""
+    valid <- .design$validation
+    valid_names <- names(valid)
+    rcrds <- rcrd_to_unit_dict(.design$graph)
+    n_ounits <- length(unique(rcrds))
+    for(i in seq_along(valid)) {
+      unit <- rcrds[valid_names[i]]
+      data_sheet <- ifelse(n_ounits > 1,
+                           data_sheet_name(unit),
+                           "Data")
+      dat <- openxlsx::read.xlsx(wb, namedRegion = data_sheet)
+      j <- which(data$variable == valid_names[i])
+      data$record[j] <- valid[[i]]$record
+      if(valid[[i]]$type != "list") {
+        data$value[j] <- restriction_for_human(valid[[i]]$operator, valid[[i]]$value)
+        dataValidation(wb, sheet = data_sheet,
+                       rows = 1:nrow(dat) + 1,
+                       cols = j + 1,
+                       type = valid[[i]]$type,
+                       operator = valid[[i]]$operator,
+                       value = valid[[i]]$value)
+      } else {
+        k <- which(names(data) == "value")
+        values <- valid[[i]]$values
+        data$value[j] <- values[1]
+        L <- LETTERS[c(k, k + length(values) - 1)]
+        writeData(wb, sheet = sheet_name, x = data.frame(t(values), stringsAsFactors = FALSE),
+                  startCol = k,
+                  startRow = j + 1, colNames = FALSE)
+        dataValidation(wb, sheet = data_sheet,
+                       rows = 1:nrow(dat) + 1,
+                       cols = j + 1,
+                       type = "list", operator = NULL,
+                       value = paste0("'", sheet_name, "'!$",
+                                      L[1], "$", j + 1, ":$", L[2], "$", j + 1))
+      }
+
+    }
+  }
+  writeData(wb, sheet = sheet_name, x = data, startCol = 1,
+            headerStyle = cell_styles$header,
+            name = "Variables")
+
+}
+
+restriction_for_human <- function(operator, value) {
+  switch(operator,
+         equal = paste0("= ", value),
+         greaterThanOrEqual = paste0(">= ", value),
+         greaterThan = paste0("> ", value),
+         lessThanOrEqual = paste0("<= ", value),
+         lessThan = paste0("< ", value),
+         notEqual = paste0("not equal to ", value),
+         between = paste0("between ", value[1], " and ", value[2], " inclusive"),
+         notBetween = paste0("< ", value[1], " and > ", value[2]),
+         "")
 }
 
 
@@ -190,7 +264,7 @@ export_design <- function(.data, file, author, date = Sys.Date(), overwrite = FA
   write_data_sheet(wb, sheet_names[-c(1, length(sheet_names))],
                      cell_styles_list$data, .design, .data)
   write_variables_sheet(wb, sheet_names[length(sheet_names)],
-                        cell_styles_list$variables, .design)
+                        cell_styles_list$variables, .design, .data)
 
   save_workbook(wb, file, overwrite, .design)
   invisible(.data)
