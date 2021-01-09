@@ -49,6 +49,11 @@ expect_vars <- function(.design, ...) {
   .design
 }
 
+has_record <- function(.design) {
+  "edbl_rcrd" %in% V(.design$graph)$class
+}
+
+
 #' Expected type of entry
 #'
 #' @param value A vector of possible values for entry.

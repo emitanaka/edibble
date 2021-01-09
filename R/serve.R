@@ -28,15 +28,19 @@ serve_table <- function(.design, ...) {
 serve_rcrd <- function(.graph, lunits) {
   vgraph <- subset_vars(.graph)
   N <- max(lengths(lunits))
-  rcrd2unit <- endpoints(.graph, "r2v", "var")
-  dict_rcrd2unit <- setNames(rcrd2unit$to, rcrd2unit$from)
-  rnames <- rcrd2unit$from
+  rcrd2unit <- rcrd_to_unit_dict(.graph)
+  rnames <- names(rcrd2unit)
   res <- lapply(rnames,
                 function(avar) {
-                  new_edibble_rcrd(N, lunits[[dict_rcrd2unit[avar]]])
+                  new_edibble_rcrd(N, lunits[[rcrd2unit[avar]]])
                 })
   names(res) <- rnames
   res
+}
+
+rcrd_to_unit_dict <- function(.graph) {
+  rcrd2unit <- endpoints(.graph, "r2v", "var")
+  setNames(rcrd2unit$to, rcrd2unit$from)
 }
 
 

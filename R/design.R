@@ -199,6 +199,15 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
       #' type is list then it is will contain only "type" and "values".
       append_validation = function(validation) {
         private$.validation <- c(private$.validation, validation)
+      },
+
+      #' @description
+      #' Delete variable
+      #' @param vnames The name of the variable to delete.
+      delete_variable = function(vnames) {
+        vindex <- which(V(private$.graph)$vname %in% vnames)
+        graph <- delete_vertices(private$.graph, vindex)
+        private$.graph <- reinstate_graph_attrs(graph, private$.graph)
       }
 
     ),
@@ -333,3 +342,6 @@ reset_method <- function(.data) {
 }
 
 
+is_edibble_design <- function(x) {
+  inherits(x, "EdibbleDesign")
+}
