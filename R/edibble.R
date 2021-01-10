@@ -29,7 +29,7 @@ start_design <- function(name = NULL) {
 #'
 #' * `is_edibble_design` checks if it inherits `EdibbleDesign`.
 #' * `is_edibble_graph` checks if it inherits `edbl_graph`.
-#' * `is_edibble_df` checks if it inherits `edbl_df`
+#' * `is_edibble_df`, `is_edibble_table` checks if it inherits `edbl_df`
 #' * `is_edibble` checks if the object contains `EdibbleDesign`.
 #'  The search is quite simple, it checks if
 #' the object is `EdibbleDesign`, failing that it looks to see if the
@@ -64,6 +64,12 @@ is_named_design <- function(x) {
 #' @export
 is_edibble_df <- function(x) {
   inherits(x, "edbl_df")
+}
+
+#' @rdname design-helpers
+#' @export
+is_edibble_table <- function(x) {
+  is_edibble_df(x)
 }
 
 #' @rdname design-helpers
@@ -157,18 +163,35 @@ not_edibble_table <- function(x) {
 #' **(WIP)** If variables are already defined as external data then you can import this
 #' data as edibble.
 #'
-#' @param .data A named list of edibble variables or data frame.
+#' @param .data A named list of variables or data frame.
 #' @param ... Passed to `new_tibble`.
-#' @param units A character vector.
-#' @param trts A character vector.
+#' @param units A character vector specifying variables names in `.data`
+#'   which are the unit variables.
+#' @param trts A character vector specifying variables names in `.data`
+#'   which are the treatment variables.
 #' @seealso See [start_design()] for initiating design from scratch.
 #'
 #' @export
-edibble <- function(.data, ..., units = NULL, trts = NULL) {
-  new_edibble(.data, ...) #%>%
-    #set_units(units) %>%
+edibble <- function(.data, name = NULL, ..., units = NULL, trts = NULL) {
+  stopifnot(is.list(.data))
+
+  name <- name %||% "An edibble design"
+
+  new_edibble(.data, ..., design = start_design(name =  name)) #%>%
+    #set_units(!!!units) # %>%
     #set_trts(trts)
 }
+
+#' Restart the edibble design
+#'
+#' @description
+#' This restarts the edibble design after initiating the design using
+#' [edibble()].
+restart_design <- function(.data) {
+  not_edibble_table(.data)
+  attr(.data, "design")
+}
+
 
 #' An edibble table constructor
 #'

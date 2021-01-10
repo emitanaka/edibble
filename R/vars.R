@@ -3,29 +3,37 @@
 #' @description
 #' Adds variable and their level nodes in an edibble graph.
 #'
-#' @param .design An `EddibleDesign` object.
-#' @param ... <[`dynamic-dots`][rlang::dyn-dots]><[`tidy-select`][dplyr::dplyr_tidy_select]>
-#' Name-value pair.
+#' @inheritParams set_units
 #' @param .name_repair Specify how to deal when there are duplicated name
 #' entries. The repair follows the same argument in [tibble::tibble()].
 #' @seealso [set_units()] and [set_trts()] for setting special types of nodes.
-#' @export
 #' @importFrom vctrs vec_as_names
-#' @importFrom rlang quo_get_expr
-set_vars <- function(.design, ..., .class = NULL,
+#' @importFrom rlang quo_get_expr have_name expr
+#' @importFrom cli col_grey
+#' @importFrom tidyselect eval_select
+set_vars <- function(.edibble, ..., .class = NULL,
                      .name_repair = c("check_unique", "unique", "universal", "minimal")) {
-  .name_repair <- match.arg(.name_repair)
-  dots <- enquos(...)
 
-  if(.design$active == "graph") {
+  not_edibble(.edibble)
+
+  .name_repair <- match.arg(.name_repair)
+
+  .design <- get_edibble_design(.edibble)
+
+  type <- switch(.class,
+                 edbl_unit = "unit",
+                 edbl_trt = "trt",
+                 "default")
+  attr <- vertex_attr_opt(type)
+
+  if(is_edibble_design(.edibble)) {
+    dots <- enquos(..., .named = TRUE, .homonyms = "error",
+                   .ignore_empty = "trailing",
+                   .check_assign = TRUE)
     vnames_new <- names(dots)
     vnames_old <- names_vars(.design)
     vnames <- vec_as_names(c(vnames_old, vnames_new), repair = .name_repair)
-    type <- switch(.class,
-                   edbl_unit = "unit",
-                    edbl_trt = "trt",
-                               "default")
-    attr <- vertex_attr_opt(type)
+
 
     for(i in seq_along(dots)) {
       vname <- vnames[i + length(vnames_old)]
@@ -33,10 +41,37 @@ set_vars <- function(.design, ..., .class = NULL,
       .design$add_variable(value, vname, attr)
     }
 
-  } else if(.design$active == "table") {
-    #loc <- tidyselect::eval_select(expr(c(...)), .data)
+  } else if(is_edibble_df(.edibble)) {
+    .data <- get_edibble_table(.edibble)
+
+    ## might need to change this
+    # so it can take nested_in
+    dots <- enquos(..., .named = FALSE, .homonyms = "last",
+                   .ignore_empty = "trailing",
+                   .check_assign = TRUE)
+    if(any(named <- have_name(dots))) {
+      warn(sprintf("The arguments %s are named. Did you need to `restart_design`?",
+                   .combine_words(names(dots)[named],
+                                  sep = ", ", and = " and ",
+                                  fun = col_grey)))
+    }
+    ##
+
+    loc <- eval_select(expr(c(...)), .data)
+    for(i in seq_along(loc)) {
+      var <- .data[[loc[i]]]
+      lvls <- unique(as.character(var))
+      vname <- names(loc)[i]
+      .data[[loc[i]]] <- new_edibble_var(labels = as.character(var),
+                                         levels = lvls,
+                                         name = vname,
+                                         class = .class)
+      .design$add_variable(lvls, vname, attr)
+      .edibble <- .data
+    }
   }
-  .design
+
+  update_design(.edibble, .design)
 }
 
 eval_rhs_attr <- function(.x, vname, .design = NULL) {

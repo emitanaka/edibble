@@ -5,19 +5,18 @@
 \title{Set units used in experiment}
 \usage{
 set_units(
-  .design,
+  .edibble,
   ...,
   .name_repair = c("check_unique", "unique", "universal", "minimal")
 )
 }
 \arguments{
-\item{.design}{An \code{EddibleDesign} object.}
+\item{.edibble}{An edibble design (\code{EdibbleDesign}), an edibble data frame (\code{edbl_df}) or an
+object that contains the edibble data frame in the attribute
+\code{design}.}
 
 \item{...}{<\code{\link[rlang:dyn-dots]{dynamic-dots}}><\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
 Name-value pair.}
-
-\item{.name_repair}{Specify how to deal when there are duplicated name
-entries. The repair follows the same argument in \code{\link[tibble:tibble]{tibble::tibble()}}.}
 }
 \description{
 This function creates new edibble variables of class \code{edbl_unit}.

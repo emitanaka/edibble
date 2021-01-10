@@ -11,6 +11,43 @@
 A system to facilitate statistical thinking of 
     adapting experimental designs to different conditions.
 }
+\details{
+\ifelse{html}{\out{<a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a>}}{\strong{Experimental}}
+
+\strong{(WIP)}
+}
+\section{Website}{
+
+\itemize{
+\item The website for the package is at \url{https://edibble.emitanaka.org}
+}
+\itemize{
+\item Discussion is at \url{https://github.com/emitanaka/edibble/discussions}
+}
+}
+
+\section{Package options}{
+
+The following options are used for changing the default view for edibble
+graph or edibble design plot:
+\itemize{
+\item \code{edibble.vertex.label.color.default}
+\item \code{edibble.vertex.label.color.unit}
+}
+
+The following options are used for changing the default view for the print
+out of edibble design or edibble graph.
+\itemize{
+\item \code{edibble.tree.decorate.trts}
+\item \code{edibble.tree.decorate.units}
+\item \code{edibble.tree.decorate.rcrd}
+\item \code{edibble.tree.decorate.levels}
+\item \code{edibble.tree.decorate.main}
+}
+
+TODO
+}
+
 \seealso{
 Useful links:
 \itemize{
@@ -24,4 +61,3 @@ Useful links:
 \strong{Maintainer}: Emi Tanaka \email{dr.emi.tanaka@gmail.com} (\href{https://orcid.org/0000-0002-1455-259X}{ORCID})
 
 }
-\keyword{internal}

@@ -27,7 +27,6 @@ Imports:
     pillar,
     tidyselect (>= 1.0.0),
     dae,
-    glue,
     R6,
     openxlsx
 Suggests: 

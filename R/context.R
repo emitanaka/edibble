@@ -41,7 +41,7 @@
 #' @importFrom cli style_bold style_italic
 #' @export
 set_context <- function(.edibble, ...) {
-  .design <- get_design(.edibble)
+  .design <- get_edibble_design(.edibble)
 
   new_context <- lapply(list2(...), function(x) {
       capture.output(cli_text(x), type = "message")
@@ -76,7 +76,7 @@ set_context <- function(.edibble, ...) {
 #' @export
 sort_context <- function(.edibble, descending = FALSE,
                          method = c("auto", "shell", "radix")) {
-  .design <- get_design(.edibble)
+  .design <- get_edibble_design(.edibble)
 
   context <- .design$context
   context_names <- names(context)
@@ -90,7 +90,7 @@ sort_context <- function(.edibble, descending = FALSE,
 #' @rdname design-context
 #' @export
 suppress_context <- function(.edibble) {
-  .design <- get_design(.edibble)
+  .design <- get_edibble_design(.edibble)
   .design$muffle()
   update_design(.edibble, .design)
 }

@@ -4,16 +4,18 @@
 \alias{edibble}
 \title{Make input edibble}
 \usage{
-edibble(.data, ..., units = NULL, trts = NULL)
+edibble(.data, name = NULL, ..., units = NULL, trts = NULL)
 }
 \arguments{
-\item{.data}{A named list of edibble variables or data frame.}
+\item{.data}{A named list of variables or data frame.}
 
 \item{...}{Passed to \code{new_tibble}.}
 
-\item{units}{A character vector.}
+\item{units}{A character vector specifying variables names in \code{.data}
+which are the unit variables.}
 
-\item{trts}{A character vector.}
+\item{trts}{A character vector specifying variables names in \code{.data}
+which are the treatment variables.}
 }
 \description{
 \strong{(WIP)} If variables are already defined as external data then you can import this

@@ -5,6 +5,7 @@
 \alias{is_edibble_design}
 \alias{is_named_design}
 \alias{is_edibble_df}
+\alias{is_edibble_table}
 \alias{is_edibble_graph}
 \alias{is_edibble}
 \alias{get_edibble_design}
@@ -17,6 +18,8 @@ is_edibble_design(x)
 is_named_design(x)
 
 is_edibble_df(x)
+
+is_edibble_table(x)
 
 is_edibble_graph(x)
 
@@ -37,7 +40,7 @@ inherits particular class and returns \code{TRUE} if it does, otherwise \code{FA
 \itemize{
 \item \code{is_edibble_design} checks if it inherits \code{EdibbleDesign}.
 \item \code{is_edibble_graph} checks if it inherits \code{edbl_graph}.
-\item \code{is_edibble_df} checks if it inherits \code{edbl_df}
+\item \code{is_edibble_df}, \code{is_edibble_table} checks if it inherits \code{edbl_df}
 \item \code{is_edibble} checks if the object contains \code{EdibbleDesign}.
 The search is quite simple, it checks if
 the object is \code{EdibbleDesign}, failing that it looks to see if the

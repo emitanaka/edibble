@@ -5,14 +5,16 @@
 \title{Set edibble variables}
 \usage{
 set_vars(
-  .design,
+  .edibble,
   ...,
   .class = NULL,
   .name_repair = c("check_unique", "unique", "universal", "minimal")
 )
 }
 \arguments{
-\item{.design}{An \code{EddibleDesign} object.}
+\item{.edibble}{An edibble design (\code{EdibbleDesign}), an edibble data frame (\code{edbl_df}) or an
+object that contains the edibble data frame in the attribute
+\code{design}.}
 
 \item{...}{<\code{\link[rlang:dyn-dots]{dynamic-dots}}><\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
 Name-value pair.}

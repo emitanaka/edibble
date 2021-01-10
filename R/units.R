@@ -3,7 +3,9 @@
 #' @description
 #' This function creates new edibble variables of class `edbl_unit`.
 #'
-#' @inheritParams set_vars
+#' @inheritParams design-context
+#' @param ... <[`dynamic-dots`][rlang::dyn-dots]><[`tidy-select`][dplyr::dplyr_tidy_select]>
+#' Name-value pair.
 #' @section Definition of _unit_:
 #' A _unit_, much like _factor_, is an over-used word but due to lack of a
 #' better word, edibble uses the word "unit" to refer to any entity, physical
@@ -20,10 +22,10 @@
 #'   set_units(block = 3)
 #' @family user-facing functions
 #' @export
-set_units <- function(.design, ...,
+set_units <- function(.edibble, ...,
                       .name_repair = c("check_unique", "unique", "universal", "minimal")) {
 
-  set_vars(.design, ..., .name_repair = .name_repair, .class = "edbl_unit")
+  set_vars(.edibble, ..., .name_repair = .name_repair, .class = "edbl_unit")
 }
 
 
