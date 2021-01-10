@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Set units used in experiment — set_units • edibble</title>
+<title>Test and get edibble objects — design-helpers • edibble</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -54,8 +54,26 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Set units used in experiment — set_units" />
-<meta property="og:description" content="This function creates new edibble variables of class edbl_unit." />
+<meta property="og:title" content="Test and get edibble objects — design-helpers" />
+<meta property="og:description" content="The is functions tests if an object (or an object in its attribute)
+inherits particular class and returns TRUE if it does, otherwise FALSE.
+is_edibble_design checks if it inherits EdibbleDesign.
+is_edibble_graph checks if it inherits edbl_graph.
+is_edibble_df checks if it inherits edbl_df
+is_edibble checks if the object contains EdibbleDesign.
+The search is quite simple, it checks if
+the object is EdibbleDesign, failing that it looks to see if the
+attribute &quot;design&quot; of the object is EdibbleDesign.
+is_named_design check if it inherits NamedDesign.
+
+
+The get functions extracts the requested edibble component (table, graph,
+or design) from the object if possible.
+get_edibble_design tries to get EdibbleDesign.
+get_edibble_table tries to get edbl_df with no design attribute.
+get_edibble_graph tries to get edbl_graph.
+
+" />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@emitanaka" />
@@ -161,72 +179,63 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Set units used in experiment</h1>
-    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/units.R'><code>R/units.R</code></a></small>
-    <div class="hidden name"><code>set_units.Rd</code></div>
+    <h1>Test and get edibble objects</h1>
+    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/edibble.R'><code>R/edibble.R</code></a></small>
+    <div class="hidden name"><code>design-helpers.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function creates new edibble variables of class <code>edbl_unit</code>.</p>
+    <p>The <code>is</code> functions tests if an object (or an object in its attribute)
+inherits particular class and returns <code>TRUE</code> if it does, otherwise <code>FALSE</code>.</p><ul>
+<li><p><code>is_edibble_design</code> checks if it inherits <code>EdibbleDesign</code>.</p></li>
+<li><p><code>is_edibble_graph</code> checks if it inherits <code>edbl_graph</code>.</p></li>
+<li><p><code>is_edibble_df</code> checks if it inherits <code>edbl_df</code></p></li>
+<li><p><code>is_edibble</code> checks if the object contains <code>EdibbleDesign</code>.
+The search is quite simple, it checks if
+the object is <code>EdibbleDesign</code>, failing that it looks to see if the
+attribute "design" of the object is <code>EdibbleDesign</code>.</p></li>
+<li><p><code>is_named_design</code> check if it inherits <code>NamedDesign</code>.</p></li>
+</ul>
+
+<p>The <code>get</code> functions extracts the requested edibble component (table, graph,
+or design) from the object if possible.</p><ul>
+<li><p><code>get_edibble_design</code> tries to get <code>EdibbleDesign</code>.</p></li>
+<li><p><code>get_edibble_table</code> tries to get <code>edbl_df</code> with no design attribute.</p></li>
+<li><p><code>get_edibble_graph</code> tries to get <code>edbl_graph</code>.</p></li>
+</ul>
+
     </div>
 
-    <pre class="usage"><span class='fu'>set_units</span><span class='op'>(</span>
-  <span class='va'>.design</span>,
-  <span class='va'>...</span>,
-  .name_repair <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"check_unique"</span>, <span class='st'>"unique"</span>, <span class='st'>"universal"</span>, <span class='st'>"minimal"</span><span class='op'>)</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>is_edibble_design</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+
+<span class='fu'>is_named_design</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+
+<span class='fu'>is_edibble_df</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+
+<span class='fu'>is_edibble_graph</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+
+<span class='fu'>is_edibble</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+
+<span class='fu'>get_edibble_design</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+
+<span class='fu'>get_edibble_table</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+
+<span class='fu'>get_edibble_graph</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.design</th>
-      <td><p>An <code>EddibleDesign</code> object.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>&lt;<code><a href='https://rlang.r-lib.org/reference/dyn-dots.html'>dynamic-dots</a></code>&gt;&lt;<code><a href='https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html'>tidy-select</a></code>&gt;
-Name-value pair.</p></td>
-    </tr>
-    <tr>
-      <th>.name_repair</th>
-      <td><p>Specify how to deal when there are duplicated name
-entries. The repair follows the same argument in <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code>.</p></td>
+      <th>x</th>
+      <td><p>An object.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="definition-of-unit"><a class="anchor" href="#definition-of-unit"></a>Definition of <em>unit</em></h2>
-
-    
-
-<p>A <em>unit</em>, much like <em>factor</em>, is an over-used word but due to lack of a
-better word, edibble uses the word "unit" to refer to any entity, physical
-or otherwise, that pertain to the experiment. This function doen't
-explicitly distinguish between experimental or observational units,
-nor is a unit limited to these type of units.
-A unit in edibble can be a blocking factor or discrete time unit.</p>
-    <h2 class="hasAnchor" id="limitations"><a class="anchor" href="#limitations"></a>Limitations</h2>
-
-    
-
-<p>Currently a unit should only have a discrete set of levels.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other user-facing functions: 
-<code><a href='allocate_trts.html'>allocate_trts</a>()</code>,
-<code><a href='design-context.html'>design-context</a></code>,
-<code><a href='expect_vars.html'>expect_vars</a>()</code>,
-<code><a href='export_design.html'>export_design</a>()</code>,
-<code><a href='randomise_trts.html'>randomise_trts</a>()</code>,
-<code><a href='record_vars.html'>record_vars</a>()</code>,
-<code><a href='serve_table.html'>serve_table</a>()</code>,
-<code><a href='set_trts.html'>set_trts</a>()</code>,
-<code><a href='start_design.html'>start_design</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>initiate_design</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>set_units</span><span class='op'>(</span>block <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in initiate_design(): could not find function "initiate_design"</span></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>is_edibble_df</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span> <span class='co'># FALSE</span>
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>is_named_design</span><span class='op'>(</span><span class='fu'>code_classical_rcbd</span><span class='op'>(</span>.quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># TRUE</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in code_classical_rcbd(.quiet = TRUE): could not find function "code_classical_rcbd"</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

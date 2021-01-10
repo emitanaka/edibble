@@ -251,7 +251,7 @@
 <div id="context-of-the-experiment" class="section level2">
 <h2 class="hasAnchor">
 <a href="#context-of-the-experiment" class="anchor"></a>Context of the experiment</h2>
-<p>In designing an experiment, there may be certain context of the experiment that are important but aren’t utilised in the design of the experiment. You can add notes about the experiment in the <code><a href="reference/set_context.html">set_context()</a></code>.</p>
+<p>In designing an experiment, there may be certain context of the experiment that are important but aren’t utilised in the design of the experiment. You can add notes about the experiment in the <code><a href="reference/design-context.html">set_context()</a></code>.</p>
 <p>These are shown when you print your intermediate construct of the design to remind you about some context of the experiment. I think these steps are important since you may come to realise later some of the context may need to be properly accounted for in the design later, or if there are unexpected results in the experiment, these notes may aid you in uncovering some unexpected sources of variation. For longer form contexts, it’s better to write them to an external file and you can write the name of the file in context.</p>
 <p>The idea here is that the user is reminded about the experimental context but also these contexts can also be exported out together with the design table. Many experimental design software assume that the user knows what experimental design to implement from the get-go, but in practice there may be a lot of back-and-forth with the domain experts or others involved in the experiment. edibble tries to aid in the whole workflow and not just the design generation process.</p>
 <pre class="asciicast"><code>des &lt;- start_design("COVID-19") %&gt;%
@@ -266,7 +266,7 @@ des</code></pre>
 <p><img src="reference/figures/README-/exp-context.svg"><!-- --></p>
 <p>You can muffle these messages by using <code>suppress_context</code>. <br><span class="math display"><em>T</em><em>O</em><em>D</em><em>O</em> : <em>a</em><em>d</em><em>d</em><em>o</em><em>p</em><em>t</em><em>i</em><em>o</em><em>n</em><em>t</em><em>o</em><em>m</em><em>u</em><em>f</em><em>f</em><em>l</em><em>e</em><em>t</em><em>h</em><em>e</em><em>s</em><em>e</em><em>a</em><em>n</em><em>d</em><em>s</em><em>h</em><em>o</em><em>r</em><em>t</em><em>e</em><em>n</em><em>s</em><em>o</em><em>m</em><em>e</em><em>l</em><em>o</em><em>n</em><em>g</em><em>c</em><em>o</em><em>n</em><em>t</em><em>e</em><em>x</em><em>t</em><em>s</em>.</span><br></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/context-manipulations.html">suppress_context</a></span><span class="op">(</span><span class="va">des</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="reference/design-context.html">suppress_context</a></span><span class="op">(</span><span class="va">des</span><span class="op">)</span>
 <span class="co">#&gt; COVID-19</span>
 <span class="co">#&gt; ├─rat (20 levels)</span>
 <span class="co">#&gt; └─treat (2 levels)</span></code></pre></div>

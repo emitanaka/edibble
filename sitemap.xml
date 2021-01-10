@@ -16,10 +16,13 @@
     <loc>https://edibble.emitanaka.org/reference/allocate_trts.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/context-manipulations.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/cross_edge_seq.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/cross_edge_seq.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/design-context.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/design-helpers.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/edibble-package.html</loc>
@@ -41,12 +44,6 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/get_value_type.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/is_edibble.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/is_edibble_graph.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/make_classical.html</loc>
@@ -112,9 +109,6 @@
     <loc>https://edibble.emitanaka.org/reference/serve_table.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/set_context.html</loc>
-  </url>
-  <url>
     <loc>https://edibble.emitanaka.org/reference/set_trts.html</loc>
   </url>
   <url>
@@ -130,9 +124,6 @@
     <loc>https://edibble.emitanaka.org/reference/subset-edbl-graph.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/tbl_sum.edbl_df.html</loc>
-  </url>
-  <url>
     <loc>https://edibble.emitanaka.org/reference/traits.html</loc>
   </url>
   <url>
@@ -140,9 +131,6 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/unit_to_trts.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/use_method.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/utility-edibble-var.html</loc>

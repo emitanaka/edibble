@@ -56,7 +56,10 @@
 
 <meta property="og:title" content="An R6 Class for an edibble design — EdibbleDesign" />
 <meta property="og:description" content="An object with EdibbleDesign holds the core information related to
-the experimental design." />
+the experimental design. Typically the user should not be interacting
+with the EdibbleDesign methods directly but should be invoking the methods
+using the friendlier user-facing family of functions instead, beginning
+with start_design() or edibble()." />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@emitanaka" />
@@ -168,8 +171,11 @@ the experimental design." />
     </div>
 
     <div class="ref-description">
-    <p>An object with EdibbleDesign holds the core information related to
-the experimental design.</p>
+    <p>An object with <code>EdibbleDesign</code> holds the core information related to
+the experimental design. Typically the user should not be interacting
+with the <code>EdibbleDesign</code> methods directly but should be invoking the methods
+using the friendlier user-facing family of functions instead, beginning
+with <code><a href='start_design.html'>start_design()</a></code> or <code><a href='edibble.html'>edibble()</a></code>.</p>
     </div>
 
 
@@ -205,7 +211,6 @@ the experimental design.</p>
 
 <ul>
 <li><p><a href='#method-new'><code>EdibbleDesign$new()</code></a></p></li>
-<li><p><a href='#method-finalize'><code>EdibbleDesign$finalize()</code></a></p></li>
 <li><p><a href='#method-plot'><code>EdibbleDesign$plot()</code></a></p></li>
 <li><p><a href='#method-print'><code>EdibbleDesign$print()</code></a></p></li>
 <li><p><a href='#method-save_seed'><code>EdibbleDesign$save_seed()</code></a></p></li>
@@ -234,11 +239,6 @@ should be informative and not overly long.
 If not supplied the default is "An edibble design".</p></dd>
 
 </dl><p></div></p>
-<p><hr>
-<a id="method-finalize"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>finalize()</code></h3>
-<p>Invoked when the EdibbleDesign object is deleted.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>finalize</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
-
 <p><hr>
 <a id="method-plot"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code></h3>
 <p>Plot the intermediate contruct.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>

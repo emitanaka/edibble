@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Set units used in experiment — set_units • edibble</title>
+<title>Describe context related to experiment — design-context • edibble</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -54,8 +54,16 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Set units used in experiment — set_units" />
-<meta property="og:description" content="This function creates new edibble variables of class edbl_unit." />
+<meta property="og:title" content="Describe context related to experiment — design-context" />
+<meta property="og:description" content="set_context stores a simple context about the experiment.
+The context is printed when the return object is printed as well
+as exported in the title sheet (see export_design()). If the context
+already exists then it will be overwritten.
+You can use sort_context to reorder named context alphabetically. If
+you don't want to see the context printed out each time, use suppress_context
+to muffle the context and express_context to turn on the context print out.
+Use switch_context to turn on print out of context if it was switched off,
+or turn off print out if it was switched on." />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@emitanaka" />
@@ -161,72 +169,92 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Set units used in experiment</h1>
-    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/units.R'><code>R/units.R</code></a></small>
-    <div class="hidden name"><code>set_units.Rd</code></div>
+    <h1>Describe context related to experiment</h1>
+    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/context.R'><code>R/context.R</code></a></small>
+    <div class="hidden name"><code>design-context.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function creates new edibble variables of class <code>edbl_unit</code>.</p>
+    <p><code>set_context</code> stores a simple context about the experiment.
+The context is printed when the return object is printed as well
+as exported in the title sheet (see <code><a href='export_design.html'>export_design()</a></code>). If the context
+already exists then it will be overwritten.</p>
+<p>You can use <code>sort_context</code> to reorder named context alphabetically. If
+you don't want to see the context printed out each time, use <code>suppress_context</code>
+to muffle the context and <code>express_context</code> to turn on the context print out.
+Use <code>switch_context</code> to turn on print out of context if it was switched off,
+or turn off print out if it was switched on.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>set_units</span><span class='op'>(</span>
-  <span class='va'>.design</span>,
-  <span class='va'>...</span>,
-  .name_repair <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"check_unique"</span>, <span class='st'>"unique"</span>, <span class='st'>"universal"</span>, <span class='st'>"minimal"</span><span class='op'>)</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>set_context</span><span class='op'>(</span><span class='va'>.edibble</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>sort_context</span><span class='op'>(</span>
+  <span class='va'>.edibble</span>,
+  descending <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"auto"</span>, <span class='st'>"shell"</span>, <span class='st'>"radix"</span><span class='op'>)</span>
+<span class='op'>)</span>
+
+<span class='fu'>suppress_context</span><span class='op'>(</span><span class='va'>.edibble</span><span class='op'>)</span>
+
+<span class='fu'>express_context</span><span class='op'>(</span><span class='va'>.edibble</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.design</th>
-      <td><p>An <code>EddibleDesign</code> object.</p></td>
+      <th>.edibble</th>
+      <td><p>An edibble design (<code>EdibbleDesign</code>), an edibble data frame (<code>edbl_df</code>) or an
+object that contains the edibble data frame in the attribute
+<code>design</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>&lt;<code><a href='https://rlang.r-lib.org/reference/dyn-dots.html'>dynamic-dots</a></code>&gt;&lt;<code><a href='https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html'>tidy-select</a></code>&gt;
-Name-value pair.</p></td>
+      <td><p>Strings of contexts or notes for the experiment. The context
+maybe named. If you context it is wrong, consider writing the context
+in an external file then write the reference to the file in context
+instead. Input strings support inline markup that use <a href='https://github.com/tidyverse/glue'>glue braces</a>
+as well <a href='https://cli.r-lib.org/articles/semantic-cli.html#inline-text-formatting'>cli markup formatter</a>.
+The formatting is evaluated and stored in <code>EdibbleDesign</code>.</p></td>
     </tr>
     <tr>
-      <th>.name_repair</th>
-      <td><p>Specify how to deal when there are duplicated name
-entries. The repair follows the same argument in <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code>.</p></td>
+      <th>descending</th>
+      <td><p>Whether to sort it in ascending or descending alphabetical
+order.</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>the method to use for ordering. See <code><a href='https://rdrr.io/r/base/order.html'>base::order()</a></code> for
+explanation.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="definition-of-unit"><a class="anchor" href="#definition-of-unit"></a>Definition of <em>unit</em></h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-
-<p>A <em>unit</em>, much like <em>factor</em>, is an over-used word but due to lack of a
-better word, edibble uses the word "unit" to refer to any entity, physical
-or otherwise, that pertain to the experiment. This function doen't
-explicitly distinguish between experimental or observational units,
-nor is a unit limited to these type of units.
-A unit in edibble can be a blocking factor or discrete time unit.</p>
-    <h2 class="hasAnchor" id="limitations"><a class="anchor" href="#limitations"></a>Limitations</h2>
-
-    
-
-<p>Currently a unit should only have a discrete set of levels.</p>
+    <p>Same as original except <code>EdibbleDesign</code> updated with context.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other user-facing functions: 
 <code><a href='allocate_trts.html'>allocate_trts</a>()</code>,
-<code><a href='design-context.html'>design-context</a></code>,
 <code><a href='expect_vars.html'>expect_vars</a>()</code>,
 <code><a href='export_design.html'>export_design</a>()</code>,
 <code><a href='randomise_trts.html'>randomise_trts</a>()</code>,
 <code><a href='record_vars.html'>record_vars</a>()</code>,
 <code><a href='serve_table.html'>serve_table</a>()</code>,
 <code><a href='set_trts.html'>set_trts</a>()</code>,
+<code><a href='set_units.html'>set_units</a>()</code>,
 <code><a href='start_design.html'>start_design</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>initiate_design</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>set_units</span><span class='op'>(</span>block <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in initiate_design(): could not find function "initiate_design"</span></div></pre>
+    <pre class="examples"><div class='input'><span class='va'>files</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"details.txt"</span>, <span class='st'>"about.docx"</span><span class='op'>)</span>
+<span class='fu'><a href='start_design.html'>start_design</a></span><span class='op'>(</span><span class='st'>"COVID-19"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>set_context</span><span class='op'>(</span>question <span class='op'>=</span> <span class='st'>"Does {.field Pfizer vaccine} work?"</span>,
+              where <span class='op'>=</span> <span class='st'>"Tested in {.emph lab}"</span>,
+              contact <span class='op'>=</span> <span class='st'>"{.strong Jane Doe} ({.email jane.doe@fakeaddress.com}) for domain knowledge"</span>,
+              <span class='st'>"Context do not have to be named"</span>,
+              <span class='st'>"The function {.fn designRandomise} from {.pkg dae} randomises allocation of treatments"</span>,
+              <span class='st'>"Other detailed information in {.file {files}}"</span>,
+              <span class='st'>"Check more details at {.url https://covid-19-au.com/}"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in get_design(.edibble): could not find function "get_design"</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
