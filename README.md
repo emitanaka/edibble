@@ -179,7 +179,7 @@ make_classical("crd", n = 30, t = 5)
 #>   ◯ This design is balanced for the given numbers.
 #> 
 #>   ── edibble code ────────────────────────────────────────────────────────────────
-#> set.seed(1610185058)
+#> set.seed(345)
 #> start_design("crd") %>%
 #>   set_units(unit = 30) %>%
 #>   set_trts(treat = 5) %>%
@@ -191,22 +191,22 @@ make_classical("crd", n = 30, t = 5)
 #> # An edibble: 30 x 2
 #>    unit       treat   
 #>    <unit(30)> <trt(5)>
-#>  1 unit1      treat4  
-#>  2 unit2      treat2  
-#>  3 unit3      treat1  
-#>  4 unit4      treat1  
+#>  1 unit1      treat5  
+#>  2 unit2      treat1  
+#>  3 unit3      treat5  
+#>  4 unit4      treat5  
 #>  5 unit5      treat1  
-#>  6 unit6      treat4  
-#>  7 unit7      treat3  
-#>  8 unit8      treat3  
+#>  6 unit6      treat3  
+#>  7 unit7      treat4  
+#>  8 unit8      treat2  
 #>  9 unit9      treat1  
-#> 10 unit10     treat2  
+#> 10 unit10     treat1  
 #> # … with 20 more rows
 
 code_classical("rcbd", t = 4, n = 40)
-#> set.seed(1610185058)
+#> set.seed(404)
 #> start_design("rcbd") %>%
-#>   set_units(block = 5,
+#>   set_units(block = 8,
 #>             unit = nested_in(block, 4)) %>%
 #>   set_trts(treat = 4) %>%
 #>   allocate_trts(treat ~ unit) %>%
@@ -228,7 +228,7 @@ make_classical("split", t1 = 4, t2  = 2, r = 4)
 In designing an experiment, there may be certain context of the
 experiment that are important but aren’t utilised in the design of the
 experiment. You can add notes about the experiment in the
-`add_context()`.
+`set_context()`.
 
 These are shown when you print your intermediate construct of the design
 to remind you about some context of the experiment. I think these steps
@@ -249,7 +249,7 @@ workflow and not just the design generation process.
 
 ``` asciicast
 des <- start_design("COVID-19") %>%
-  add_context(question = "Is the vaccine effective?",
+  set_context(question = "Is the vaccine effective?",
               where = "Tested in the lab",
               "experiment is blinded",
               "experiment is carried out by one technician",
@@ -298,7 +298,7 @@ des <-
     expect_vars( exam_mark = to_be_numeric(with_value(between = c(0, 100))),
                 quiz1_mark = to_be_integer(with_value(between = c(0, 15))),
                 quiz2_mark = to_be_integer(with_value(between = c(0, 30))),
-                    gender = to_be_selected(from = c("female", "male", "non-binary")),
+                    gender = to_be_factor(levels = c("female", "male", "non-binary")),
                    teacher = to_be_character(length = with_value("<=", 100)),
                       room = to_be_character(length = with_value(">=", 1)))
 
@@ -306,15 +306,15 @@ serve_table(des)
 #> # An edibble: 120 x 10
 #>    class     student     style    exam        exam_mark quiz1_mark quiz2_mark gender   room teacher
 #>    <unit(4)> <unit(120)> <trt(2)> <trt(3)>       <rcrd>     <rcrd>     <rcrd> <rcrd> <rcrd>  <rcrd>
-#>  1 class1    student1    flipped  open-book           ■          ■          ■      ■      ■       ■
+#>  1 class1    student1    flipped  take-home           ■          ■          ■      ■      ■       ■
 #>  2 class1    student2    flipped  open-book           ■          ■          ■      ■      x       x
-#>  3 class1    student3    flipped  take-home           ■          ■          ■      ■      x       x
-#>  4 class1    student4    flipped  open-book           ■          ■          ■      ■      x       x
-#>  5 class1    student5    flipped  open-book           ■          ■          ■      ■      x       x
-#>  6 class1    student6    flipped  open-book           ■          ■          ■      ■      x       x
-#>  7 class1    student7    flipped  open-book           ■          ■          ■      ■      x       x
-#>  8 class1    student8    flipped  take-home           ■          ■          ■      ■      x       x
-#>  9 class1    student9    flipped  closed-book         ■          ■          ■      ■      x       x
+#>  3 class1    student3    flipped  open-book           ■          ■          ■      ■      x       x
+#>  4 class1    student4    flipped  take-home           ■          ■          ■      ■      x       x
+#>  5 class1    student5    flipped  take-home           ■          ■          ■      ■      x       x
+#>  6 class1    student6    flipped  take-home           ■          ■          ■      ■      x       x
+#>  7 class1    student7    flipped  closed-book         ■          ■          ■      ■      x       x
+#>  8 class1    student8    flipped  open-book           ■          ■          ■      ■      x       x
+#>  9 class1    student9    flipped  open-book           ■          ■          ■      ■      x       x
 #> 10 class1    student10   flipped  take-home           ■          ■          ■      ■      x       x
 #> # … with 110 more rows
 ```

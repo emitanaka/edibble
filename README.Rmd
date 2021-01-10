@@ -132,7 +132,7 @@ make_classical("split", t1 = 4, t2  = 2, r = 4)
 
 ## Context of the experiment
 
-In designing an experiment, there may be certain context of the experiment that are important but aren't utilised in the design of the experiment. You can add notes about the experiment in the `add_context()`. 
+In designing an experiment, there may be certain context of the experiment that are important but aren't utilised in the design of the experiment. You can add notes about the experiment in the `set_context()`. 
 
 These are shown when you print your intermediate construct of the design to remind you about some context of the experiment. I think these steps are important since you may come to realise later some of the context may need to be properly accounted for in the design later, or if there are unexpected results in the experiment, these notes may aid you in uncovering some unexpected sources of variation. For longer form contexts, it's better to write them to an external file and you can write the name of the file in context.
 
@@ -140,7 +140,7 @@ The idea here is that the user is reminded about the experimental context but al
 
 ```{asciicast exp-context}
 des <- start_design("COVID-19") %>%
-  add_context(question = "Is the vaccine effective?",
+  set_context(question = "Is the vaccine effective?",
               where = "Tested in the lab",
               "experiment is blinded",
               "experiment is carried out by one technician",
@@ -187,7 +187,7 @@ des <-
     expect_vars( exam_mark = to_be_numeric(with_value(between = c(0, 100))),
                 quiz1_mark = to_be_integer(with_value(between = c(0, 15))),
                 quiz2_mark = to_be_integer(with_value(between = c(0, 30))),
-                    gender = to_be_selected(from = c("female", "male", "non-binary")),
+                    gender = to_be_factor(levels = c("female", "male", "non-binary")),
                    teacher = to_be_character(length = with_value("<=", 100)),
                       room = to_be_character(length = with_value(">=", 1)))
 

@@ -92,8 +92,8 @@ to_be_character <- function(length) {
 
 #' @rdname expect-vars
 #' @export
-to_be_selected <- function(from) {
-  list(type = "list", record = "select", values = from)
+to_be_factor <- function(levels) {
+  list(type = "list", record = "factor", values = levels)
 }
 
 
@@ -112,15 +112,15 @@ to_be_selected <- function(from) {
 #' @return A list with two elements `operator` and `value`.
 #' @export
 with_value <- function(operator = c("=", "==", ">=", "<=", "<", ">", "!="),
-                     value, between, not_between) {
+                     value = NULL, between = NULL, not_between = NULL) {
   operator <- match.arg(operator)
-  if(!missing(between) & !missing(not_between)) {
+  if(!is_null(between) & !is_null(not_between)) {
     abort("You cannot define `between` and `not_between` simultaneously.")
   }
-  if(!missing(between)) {
+  if(!is_null(between)) {
     return(list(operator = "between", value = between))
   }
-  if(!missing(not_between)) {
+  if(!is_null(not_between)) {
     return(list(operator = "notBetween", value = not_between))
   }
   list(operator = switch(operator,

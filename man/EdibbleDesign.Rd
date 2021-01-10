@@ -50,6 +50,7 @@ the experimental design.
 \item \href{#method-add_allocation}{\code{EdibbleDesign$add_allocation()}}
 \item \href{#method-assign_allocation}{\code{EdibbleDesign$assign_allocation()}}
 \item \href{#method-append_validation}{\code{EdibbleDesign$append_validation()}}
+\item \href{#method-delete_variable}{\code{EdibbleDesign$delete_variable()}}
 \item \href{#method-clone}{\code{EdibbleDesign$clone()}}
 }
 }
@@ -277,6 +278,23 @@ Appending validation rule
 should correspond to a record variable. The elements of the list
 should be a named list with "operator", "value" and "type". If
 type is list then it is will contain only "type" and "values".}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-delete_variable"></a>}}
+\if{latex}{\out{\hypertarget{method-delete_variable}{}}}
+\subsection{Method \code{delete_variable()}}{
+Delete variable
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$delete_variable(vnames)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{vnames}}{The name of the variable to delete.}
 }
 \if{html}{\out{</div>}}
 }

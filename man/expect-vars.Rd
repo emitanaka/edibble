@@ -7,7 +7,7 @@
 \alias{to_be_date}
 \alias{to_be_time}
 \alias{to_be_character}
-\alias{to_be_selected}
+\alias{to_be_factor}
 \title{Expected type of entry}
 \usage{
 to_be_numeric(range)
@@ -20,7 +20,7 @@ to_be_time(range)
 
 to_be_character(length)
 
-to_be_selected(from)
+to_be_factor(levels)
 }
 \arguments{
 \item{range, length}{A named list with two elements: "operator" and "value" as

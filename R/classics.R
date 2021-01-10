@@ -5,17 +5,18 @@
 #' The function `make_classical` generates a classical named experimental
 #' design by supplying its short name and prints out, by default:
 #'
-#' * `.info`: information about the named experimental design,
-#' * `.code`: code to create the design using edibble, and
-#' * `.table`: an edibble data frame for the generated design.
+#' * `info`: information about the named experimental design,
+#' * `code`: code to create the design using edibble, and
+#' * `table`: an edibble data frame for the generated design.
 #'
 #' You can find the available short names with `find_classical_names()`.
 #'
 #'
 #' @param .name The short name of the classical named experimental design. See
 #'   under Details for the available named designs.
-#' @param .output A short hand to turn all printing on or off. Default is TRUE.
-#' @param .info,.code,.table A logical to turn on or off for their respective parts.
+#' @param .output A logical value to indicate whether all output should be
+#'  printed or not or a vector of character (e.g. `c("info", "code", "table")`) specifying which of the three
+#'  outputs should be printed. Default is TRUE.
 #' @param ... Parameters passed into the `prep_classical_*` functions.
 #' @param .quiet Opposite of `.code`. Whether to suppress code output.
 #' @details
@@ -38,16 +39,15 @@
 #'
 #' @importFrom cli cli_h1 cli_ul cli_end cli_h2 col_grey style_italic ansi_strip
 #' @export
-make_classical <- function(.name = "", ..., .seed = as.integer(Sys.time()),
-                            .output = TRUE, .code = .output, .info = .output,
-                            .table = .output) {
+make_classical <- function(.name = "", ..., .seed = sample(1000, 1),
+                           .output = TRUE) {
 
   des <- do.call(code_classical, c(list(.name = .name, .seed = .seed,
-                                        .quiet = .code), list2(...)))
+                                        .quiet = TRUE), list2(...)))
 
   df <- eval(parse(text = ansi_strip(des$code)))
 
-  if(.info) {
+  if(isTRUE(.output) | "info" %in% .output) {
     cli_h1("experimental design details")
     cli_ul()
     cli_li("This experimental design is often called
@@ -71,13 +71,13 @@ make_classical <- function(.name = "", ..., .seed = as.integer(Sys.time()),
     cli_end()
   }
 
-  if(.code) {
+  if(isTRUE(.output) | "code" %in% .output) {
     cli_h1("edibble code")
     cat(des$code, "\n")
   }
 
 
-  if(.table) {
+  if(isTRUE(.output) | "table" %in% .output) {
     cli_h1("edibble data frame")
     print(df)
   }
@@ -87,7 +87,7 @@ make_classical <- function(.name = "", ..., .seed = as.integer(Sys.time()),
 
 #' @rdname make_classical
 #' @export
-code_classical <- function(.name = "", .seed = as.integer(Sys.time()),
+code_classical <- function(.name = "", .seed = sample(1000, 1),
                            ..., .quiet = FALSE) {
 
   des <- do.call(paste0("prep_classical_", .name), list2(...))

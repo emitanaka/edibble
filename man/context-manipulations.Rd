@@ -7,14 +7,14 @@
 \alias{express_context}
 \title{Context manipulations}
 \usage{
-sort_context(.data, descending = FALSE, method = c("auto", "shell", "radix"))
+sort_context(.design, descending = FALSE, method = c("auto", "shell", "radix"))
 
-suppress_context(.data)
+suppress_context(.design)
 
-express_context(.data)
+express_context(.design)
 }
 \arguments{
-\item{.data}{An edibble design object.}
+\item{.design}{An edibble design object.}
 
 \item{descending}{Whether to sort it in ascending or descending alphabetical
 order.}

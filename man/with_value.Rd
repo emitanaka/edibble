@@ -6,9 +6,9 @@
 \usage{
 with_value(
   operator = c("=", "==", ">=", "<=", "<", ">", "!="),
-  value,
-  between,
-  not_between
+  value = NULL,
+  between = NULL,
+  not_between = NULL
 )
 }
 \arguments{
