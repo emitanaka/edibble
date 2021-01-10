@@ -16,4 +16,16 @@ Randomise treatments
 Set the treatments by \code{\link[=set_trts]{set_trts()}}, set units by \code{\link[=set_units]{set_units()}},
 and specify which treatment factors are applied to which units by using
 \code{\link[=apply_trts]{apply_trts()}}.
+
+Other user-facing functions: 
+\code{\link{allocate_trts}()},
+\code{\link{design-context}},
+\code{\link{expect_vars}()},
+\code{\link{export_design}()},
+\code{\link{record_vars}()},
+\code{\link{serve_table}()},
+\code{\link{set_trts}()},
+\code{\link{set_units}()},
+\code{\link{start_design}()}
 }
+\concept{user-facing functions}

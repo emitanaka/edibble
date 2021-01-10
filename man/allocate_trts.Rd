@@ -18,3 +18,16 @@ then the whole treatment is applied to the specified unit.}
 \description{
 Define which unit to apply treatment
 }
+\seealso{
+Other user-facing functions: 
+\code{\link{design-context}},
+\code{\link{expect_vars}()},
+\code{\link{export_design}()},
+\code{\link{randomise_trts}()},
+\code{\link{record_vars}()},
+\code{\link{serve_table}()},
+\code{\link{set_trts}()},
+\code{\link{set_units}()},
+\code{\link{start_design}()}
+}
+\concept{user-facing functions}

@@ -41,3 +41,16 @@ Currently a unit should only have a discrete set of levels.
 initiate_design() \%>\%
   set_units(block = 3)
 }
+\seealso{
+Other user-facing functions: 
+\code{\link{allocate_trts}()},
+\code{\link{design-context}},
+\code{\link{expect_vars}()},
+\code{\link{export_design}()},
+\code{\link{randomise_trts}()},
+\code{\link{record_vars}()},
+\code{\link{serve_table}()},
+\code{\link{set_trts}()},
+\code{\link{start_design}()}
+}
+\concept{user-facing functions}

@@ -1,8 +1,11 @@
 #' An R6 Class for an edibble design
 #'
 #' @description
-#' An object with EdibbleDesign holds the core information related to
-#' the experimental design.
+#' An object with `EdibbleDesign` holds the core information related to
+#' the experimental design. Typically the user should not be interacting
+#' with the `EdibbleDesign` methods directly but should be invoking the methods
+#' using the friendlier user-facing family of functions instead, beginning
+#' with [start_design()] or [edibble()].
 #'
 #' @importFrom igraph make_empty_graph
 #' @importFrom cli cli_rule cli_text cli_ul cli_li cli_alert_info
@@ -20,12 +23,6 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
         private$.active <- "graph"
         private$.graph <- structure(make_empty_graph(),
                                     class = c("edbl_graph", "igraph"))
-      },
-
-      #' @description
-      #' Invoked when the EdibbleDesign object is deleted.
-      finalize = function() {
-        #cli_alert_info("Cleaning up {.field {private$.name}}")
       },
 
       #' @description
@@ -330,18 +327,26 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
     ))
 
 
-#' This sets a class.
+# This sets a class.
+# Maybe delete
 use_method <- function(.data, class = NULL) {
   .data$method <- class
   .data
 }
 
+# Maybe delete
 reset_method <- function(.data) {
   .data$method <- NULL
   .data
 }
 
 
-is_edibble_design <- function(x) {
-  inherits(x, "EdibbleDesign")
+
+update_design <- function(old, new) {
+  if(is_edibble_design(old)) {
+    new
+  } else {
+    attr(old, "design") <- new
+    old
+  }
 }

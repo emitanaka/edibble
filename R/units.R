@@ -18,6 +18,7 @@
 #' @examples
 #' initiate_design() %>%
 #'   set_units(block = 3)
+#' @family user-facing functions
 #' @export
 set_units <- function(.design, ...,
                       .name_repair = c("check_unique", "unique", "universal", "minimal")) {

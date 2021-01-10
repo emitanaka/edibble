@@ -7,6 +7,7 @@
 #' rows displayed only if the vertices are connected and reconcile for output.
 #' @importFrom igraph is_connected
 #' @importFrom rlang set_names
+#' @family user-facing functions
 #' @export
 serve_table <- function(.design, ...) {
   lgraph <- subset_levels(.design$graph)

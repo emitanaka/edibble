@@ -9,7 +9,7 @@
 #' @param ... Name-value pair. The name should correspond to the name of the
 #'  unit defined in `set_units`. The value should be a vector of new variables
 #'  names.
-#'
+#' @family user-facing functions
 #' @export
 record_vars <- function(.design, ...,
                          .name_repair = c("check_unique", "unique", "universal", "minimal")) {
@@ -43,6 +43,7 @@ record_vars <- function(.design, ...,
 #' @param ... Name-value pairs with the name belonging to the variable
 #'  that are plan to be recorded from `record_vars()` and the values are
 #'  the expected types and values set by helper functions, see `?expect-vars`.
+#' @family user-facing functions
 #' @export
 expect_vars <- function(.design, ...) {
   .design$append_validation(list2(...))

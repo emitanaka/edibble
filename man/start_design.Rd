@@ -2,7 +2,7 @@
 % Please edit documentation in R/edibble.R
 \name{start_design}
 \alias{start_design}
-\title{Initiate the edibble design}
+\title{Start the edibble design}
 \usage{
 start_design(name = NULL)
 }
@@ -21,4 +21,16 @@ start_design("My design")
 \seealso{
 Add variables to this design with \code{\link[=set_units]{set_units()}}, \code{\link[=set_trts]{set_trts()}}, and
 \code{\link[=measure_units]{measure_units()}}.
+
+Other user-facing functions: 
+\code{\link{allocate_trts}()},
+\code{\link{design-context}},
+\code{\link{expect_vars}()},
+\code{\link{export_design}()},
+\code{\link{randomise_trts}()},
+\code{\link{record_vars}()},
+\code{\link{serve_table}()},
+\code{\link{set_trts}()},
+\code{\link{set_units}()}
 }
+\concept{user-facing functions}

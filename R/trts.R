@@ -12,7 +12,7 @@
 #' Treatment is the whole description of what is applied in an experiment.
 #'
 #' @inheritParams set_vars
-#' @seealso See [set_units()] for setting units.
+#' @family user-facing functions
 #' @export
 set_trts <- function(.design, ...,
                       .name_repair = c("check_unique", "unique", "universal", "minimal")) {
@@ -28,6 +28,7 @@ set_trts <- function(.design, ...,
 #' `randomise_trts.class`.
 #' @importFrom rlang f_lhs f_rhs
 #' @importFrom igraph add_edges
+#' @family user-facing functions
 #' @export
 allocate_trts <- function(.design, ...) {
   dots <- enquos(...)
@@ -48,7 +49,7 @@ get_trt_vars <- function(x) {
   if(is_edibble_graph(x)) {
     return(V(x)$vname[V(x)$class=="edbl_trt"])
   }
-  if(is_edibble(x)) {
+  if(is_edibble_df(x)) {
     ind <- unlist(lapply(x, function(var) "edbl_trt" %in% class(var)))
     return(names(x)[ind])
   }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/edibble.R
 \name{new_edibble}
 \alias{new_edibble}
-\title{An edibble constructor}
+\title{An edibble table constructor}
 \usage{
 new_edibble(.data, ..., graph = NULL, class = NULL)
 }
@@ -13,8 +13,9 @@ new_edibble(.data, ..., graph = NULL, class = NULL)
 
 \item{graph}{An edibble graph object.}
 
-\item{class}{Subclasses for edibble. The default is NULL.}
+\item{class}{Subclasses for edibble table. The default is NULL.}
 }
 \description{
-
+This helps to construct a new edibble table which is a special type
+of tibble.
 }

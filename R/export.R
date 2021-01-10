@@ -242,6 +242,7 @@ restriction_for_human <- function(operator, value) {
 #'
 #' @importFrom cli cli_alert_success
 #' @importFrom openxlsx addStyle createNamedRegion createStyle createWorkbook addWorksheet writeData dataValidation saveWorkbook
+#' @family user-facing functions
 #' @export
 export_design <- function(.data, file, author, date = Sys.Date(), overwrite = FALSE) {
   if(is_edibble(.data)) {

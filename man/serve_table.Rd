@@ -16,3 +16,16 @@ rows displayed only if the vertices are connected and reconcile for output.
 \description{
 This converts an edibble graph object to a data frame called edibble.
 }
+\seealso{
+Other user-facing functions: 
+\code{\link{allocate_trts}()},
+\code{\link{design-context}},
+\code{\link{expect_vars}()},
+\code{\link{export_design}()},
+\code{\link{randomise_trts}()},
+\code{\link{record_vars}()},
+\code{\link{set_trts}()},
+\code{\link{set_units}()},
+\code{\link{start_design}()}
+}
+\concept{user-facing functions}

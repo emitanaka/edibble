@@ -22,3 +22,16 @@ for where there are multiple authors.}
 This function is designed to export the design made using edibble to an
 external xlsx file.
 }
+\seealso{
+Other user-facing functions: 
+\code{\link{allocate_trts}()},
+\code{\link{design-context}},
+\code{\link{expect_vars}()},
+\code{\link{randomise_trts}()},
+\code{\link{record_vars}()},
+\code{\link{serve_table}()},
+\code{\link{set_trts}()},
+\code{\link{set_units}()},
+\code{\link{start_design}()}
+}
+\concept{user-facing functions}

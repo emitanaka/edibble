@@ -14,3 +14,16 @@ the expected types and values set by helper functions, see \code{?expect-vars}.}
 \description{
 Set the expected values for variables
 }
+\seealso{
+Other user-facing functions: 
+\code{\link{allocate_trts}()},
+\code{\link{design-context}},
+\code{\link{export_design}()},
+\code{\link{randomise_trts}()},
+\code{\link{record_vars}()},
+\code{\link{serve_table}()},
+\code{\link{set_trts}()},
+\code{\link{set_units}()},
+\code{\link{start_design}()}
+}
+\concept{user-facing functions}

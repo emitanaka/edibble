@@ -40,6 +40,7 @@ endpoints <- function(graph, etype, vtype_entry) {
 #' @seealso Set the treatments by [set_trts()], set units by [set_units()],
 #' and specify which treatment factors are applied to which units by using
 #' [apply_trts()].
+#' @family user-facing functions
 #' @export
 randomise_trts <- function(.design, ...) {
   UseMethod("randomise_trts")

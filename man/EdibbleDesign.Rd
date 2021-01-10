@@ -4,8 +4,11 @@
 \alias{EdibbleDesign}
 \title{An R6 Class for an edibble design}
 \description{
-An object with EdibbleDesign holds the core information related to
-the experimental design.
+An object with \code{EdibbleDesign} holds the core information related to
+the experimental design. Typically the user should not be interacting
+with the \code{EdibbleDesign} methods directly but should be invoking the methods
+using the friendlier user-facing family of functions instead, beginning
+with \code{\link[=start_design]{start_design()}} or \code{\link[=edibble]{edibble()}}.
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -36,7 +39,6 @@ the experimental design.
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{EdibbleDesign$new()}}
-\item \href{#method-finalize}{\code{EdibbleDesign$finalize()}}
 \item \href{#method-plot}{\code{EdibbleDesign$plot()}}
 \item \href{#method-print}{\code{EdibbleDesign$print()}}
 \item \href{#method-save_seed}{\code{EdibbleDesign$save_seed()}}
@@ -72,16 +74,6 @@ If not supplied the default is "An edibble design".}
 }
 \if{html}{\out{</div>}}
 }
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-finalize"></a>}}
-\if{latex}{\out{\hypertarget{method-finalize}{}}}
-\subsection{Method \code{finalize()}}{
-Invoked when the EdibbleDesign object is deleted.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$finalize()}\if{html}{\out{</div>}}
-}
-
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-plot"></a>}}

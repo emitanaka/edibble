@@ -5,10 +5,16 @@
 #' Describe context related to experiment
 #'
 #' @description
-#' This is a function that stores a simple context about the experiment.
+#' `set_context` stores a simple context about the experiment.
 #' The context is printed when the return object is printed as well
 #' as exported in the title sheet (see [export_design()]). If the context
 #' already exists then it will be overwritten.
+#'
+#' You can use `sort_context` to reorder named context alphabetically. If
+#' you don't want to see the context printed out each time, use `suppress_context`
+#' to muffle the context and `express_context` to turn on the context print out.
+#' Use `switch_context` to turn on print out of context if it was switched off,
+#' or turn off print out if it was switched on.
 #'
 #' @param .edibble An edibble design (`EdibbleDesign`), an edibble data frame (`edbl_df`) or an
 #'   object that contains the edibble data frame in the attribute
@@ -21,11 +27,17 @@
 #'  The formatting is evaluated and stored in `EdibbleDesign`.
 #' @return Same as original except `EdibbleDesign` updated with context.
 #' @examples
+#' files <- c("details.txt", "about.docx")
 #' start_design("COVID-19") %>%
-#'   set_context(question = "Does Pfizer vaccine work?",
-#'                  where = "Tested in lab",
-#'                  "Context do not have to be named")
-#' @seealso [sort_context()] for sorting context alphabetically.
+#'   set_context(question = "Does {.field Pfizer vaccine} work?",
+#'               where = "Tested in {.emph lab}",
+#'               contact = "{.strong Jane Doe} ({.email jane.doe@fakeaddress.com}) for domain knowledge",
+#'               "Context do not have to be named",
+#'               "The function {.fn designRandomise} from {.pkg dae} randomises allocation of treatments",
+#'               "Other detailed information in {.file {files}}",
+#'               "Check more details at {.url https://covid-19-au.com/}")
+#' @name design-context
+#' @family user-facing functions
 #' @importFrom cli style_bold style_italic
 #' @export
 set_context <- function(.edibble, ...) {
@@ -56,65 +68,41 @@ set_context <- function(.edibble, ...) {
 }
 
 
-#' Context manipulations
-#'
-#' @description
-#' You can use `sort_context` to reorder named context alphabetically. If
-#' you don't want to see the context printed out each time, use `suppress_context`
-#' to muffle the context and `express_context` to turn on the context print out.
-#' Use `switch_context` to turn on print out of context if it was switched off,
-#' or turn off print out if it was switched on.
-#'
-#' @param .design An edibble design object.
+#' @rdname design-context
 #' @param descending Whether to sort it in ascending or descending alphabetical
 #' order.
 #' @param method the method to use for ordering. See [base::order()] for
 #' explanation.
-#' @name context-manipulations
-NULL
-
-#' @rdname context-manipulations
 #' @export
-sort_context <- function(.design, descending = FALSE,
+sort_context <- function(.edibble, descending = FALSE,
                          method = c("auto", "shell", "radix")) {
+  .design <- get_design(.edibble)
+
   context <- .design$context
   context_names <- names(context)
   if(!is_empty(context_names)) {
     .design$context <- context[order(context_names, decreasing = descending,
                                    method = method)]
   }
-  .design
+  update_design(.edibble, .design)
 }
 
-#' @rdname context-manipulations
+#' @rdname design-context
 #' @export
-suppress_context <- function(.design) {
+suppress_context <- function(.edibble) {
+  .design <- get_design(.edibble)
   .design$muffle()
-  .design
+  update_design(.edibble, .design)
 }
 
-#' @rdname context-manipulations
+#' @rdname design-context
 #' @export
-express_context <- function(.design) {
+express_context <- function(.edibble) {
+  .design <- get_desgin(.edibble)
   .design$chatty()
-  .design
+  update_design(.edibble, .design)
 }
 
 
 
-get_design <- function(.edibble) {
-  if(is_edibble_design(.edibble)) {
-    .edibble
-  } else {
-    attr(.edibble, "design")
-  }
-}
 
-update_design <- function(old, new) {
-  if(is_edibble_design(old)) {
-    new
-  } else {
-    attr(old, "design") <- new
-    old
-  }
-}
