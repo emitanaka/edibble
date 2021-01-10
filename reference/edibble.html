@@ -172,14 +172,14 @@ data as edibble." />
 data as edibble.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>edibble</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span>, units <span class='op'>=</span> <span class='cn'>NULL</span>, trts <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>edibble</span><span class='op'>(</span><span class='va'>.data</span>, name <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span>, units <span class='op'>=</span> <span class='cn'>NULL</span>, trts <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>.data</th>
-      <td><p>A named list of edibble variables or data frame.</p></td>
+      <td><p>A named list of variables or data frame.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -187,11 +187,13 @@ data as edibble.</p>
     </tr>
     <tr>
       <th>units</th>
-      <td><p>A character vector.</p></td>
+      <td><p>A character vector specifying variables names in <code>.data</code>
+which are the unit variables.</p></td>
     </tr>
     <tr>
       <th>trts</th>
-      <td><p>A character vector.</p></td>
+      <td><p>A character vector specifying variables names in <code>.data</code>
+which are the treatment variables.</p></td>
     </tr>
     </table>
 

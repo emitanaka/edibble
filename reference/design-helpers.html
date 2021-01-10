@@ -59,7 +59,7 @@
 inherits particular class and returns TRUE if it does, otherwise FALSE.
 is_edibble_design checks if it inherits EdibbleDesign.
 is_edibble_graph checks if it inherits edbl_graph.
-is_edibble_df checks if it inherits edbl_df
+is_edibble_df, is_edibble_table checks if it inherits edbl_df
 is_edibble checks if the object contains EdibbleDesign.
 The search is quite simple, it checks if
 the object is EdibbleDesign, failing that it looks to see if the
@@ -189,7 +189,7 @@ get_edibble_graph tries to get edbl_graph.
 inherits particular class and returns <code>TRUE</code> if it does, otherwise <code>FALSE</code>.</p><ul>
 <li><p><code>is_edibble_design</code> checks if it inherits <code>EdibbleDesign</code>.</p></li>
 <li><p><code>is_edibble_graph</code> checks if it inherits <code>edbl_graph</code>.</p></li>
-<li><p><code>is_edibble_df</code> checks if it inherits <code>edbl_df</code></p></li>
+<li><p><code>is_edibble_df</code>, <code>is_edibble_table</code> checks if it inherits <code>edbl_df</code></p></li>
 <li><p><code>is_edibble</code> checks if the object contains <code>EdibbleDesign</code>.
 The search is quite simple, it checks if
 the object is <code>EdibbleDesign</code>, failing that it looks to see if the
@@ -211,6 +211,8 @@ or design) from the object if possible.</p><ul>
 <span class='fu'>is_named_design</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
 <span class='fu'>is_edibble_df</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+
+<span class='fu'>is_edibble_table</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
 <span class='fu'>is_edibble_graph</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
