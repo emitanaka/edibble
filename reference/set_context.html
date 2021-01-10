@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Validation values — with_value • edibble</title>
+<title>Describe context related to experiment — set_context • edibble</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -54,9 +54,11 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Validation values — with_value" />
-<meta property="og:description" content="This creates a list that is used later for creating data validation rules
-when the data is exported." />
+<meta property="og:title" content="Describe context related to experiment — set_context" />
+<meta property="og:description" content="This is a function that stores a simple context about the experiment.
+The context is printed when the return object is printed as well
+as exported in the title sheet (see export_design()). If the context
+already exists then it will be overwritten." />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@emitanaka" />
@@ -162,47 +164,53 @@ when the data is exported." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Validation values</h1>
-    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/resp.R'><code>R/resp.R</code></a></small>
-    <div class="hidden name"><code>with_value.Rd</code></div>
+    <h1>Describe context related to experiment</h1>
+    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/context.R'><code>R/context.R</code></a></small>
+    <div class="hidden name"><code>set_context.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This creates a list that is used later for creating data validation rules
-when the data is exported.</p>
+    <p>This is a function that stores a simple context about the experiment.
+The context is printed when the return object is printed as well
+as exported in the title sheet (see <code><a href='export_design.html'>export_design()</a></code>). If the context
+already exists then it will be overwritten.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>with_value</span><span class='op'>(</span>
-  operator <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"="</span>, <span class='st'>"=="</span>, <span class='st'>"&gt;="</span>, <span class='st'>"&lt;="</span>, <span class='st'>"&lt;"</span>, <span class='st'>"&gt;"</span>, <span class='st'>"!="</span><span class='op'>)</span>,
-  value <span class='op'>=</span> <span class='cn'>NULL</span>,
-  between <span class='op'>=</span> <span class='cn'>NULL</span>,
-  not_between <span class='op'>=</span> <span class='cn'>NULL</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>set_context</span><span class='op'>(</span><span class='va'>.edibble</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>operator</th>
-      <td><p>Operator to apply.</p></td>
+      <th>.edibble</th>
+      <td><p>An edibble design (<code>EdibbleDesign</code>), an edibble data frame (<code>edbl_df</code>) or an
+object that contains the edibble data frame in the attribute
+<code>design</code>.</p></td>
     </tr>
     <tr>
-      <th>value</th>
-      <td><p>An optional value related to operator</p></td>
-    </tr>
-    <tr>
-      <th>between, not_between</th>
-      <td><p>An optional numerical vector of size two where the
-first entry is the minimum value and the second entry is the maximum value.
-For <code>between</code>, the value is valid if within the range of minimum and maximum
-value inclusive. For <code>not_between</code>, the value must lie outside of these values.</p></td>
+      <th>...</th>
+      <td><p>Strings of contexts or notes for the experiment. The context
+maybe named. If you context it is wrong, consider writing the context
+in an external file then write the reference to the file in context
+instead. Input strings support inline markup that use <a href='https://github.com/tidyverse/glue'>glue braces</a>
+as well <a href='https://cli.r-lib.org/articles/semantic-cli.html#inline-text-formatting'>cli markup formatter</a>.
+The formatting is evaluated and stored in <code>EdibbleDesign</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list with two elements <code>operator</code> and <code>value</code>.</p>
+    <p>Same as original except <code>EdibbleDesign</code> updated with context.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
+    <div class='dont-index'><p><code><a href='context-manipulations.html'>sort_context()</a></code> for sorting context alphabetically.</p></div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='start_design.html'>start_design</a></span><span class='op'>(</span><span class='st'>"COVID-19"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>set_context</span><span class='op'>(</span>question <span class='op'>=</span> <span class='st'>"Does Pfizer vaccine work?"</span>,
+                 where <span class='op'>=</span> <span class='st'>"Tested in lab"</span>,
+                 <span class='st'>"Context do not have to be named"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Does Pfizer vaccine work?</span></div><div class='output co'>#&gt; <span class='message'>Tested in lab</span></div><div class='output co'>#&gt; <span class='message'>Context do not have to be named</span></div><div class='output co'>#&gt; <span class='message'>── <span style='font-style: italic;'>Context of the experiment</span><span> ───────────────────────────────────────────────────</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>  ◯ </span><span style='font-style: italic;'>question</span><span>: character(0)</span></div><div class='output co'>#&gt; <span class='message'>  ◯ </span><span style='font-style: italic;'>where</span><span>: character(0)</span></div><div class='output co'>#&gt; <span class='message'>  ◯ character(0)</span></div><div class='output co'>#&gt; <span class='message'>  </span></div><div class='output co'>#&gt; <span class='message'>  ────────────────────────────────────────────────────────────────────────────────</span></div><div class='output co'>#&gt; </span><span style='color: #00BBBB;font-style: italic;'>COVID-19</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

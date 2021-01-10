@@ -10,9 +10,6 @@
     <loc>https://edibble.emitanaka.org/reference/NamedDesign.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/add_context.html</loc>
-  </url>
-  <url>
     <loc>https://edibble.emitanaka.org/reference/add_edibble_vertex.html</loc>
   </url>
   <url>
@@ -35,6 +32,9 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/expect_vars.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/export_design.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/find_classical_names.html</loc>
@@ -110,6 +110,9 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/serve_table.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/set_context.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/set_trts.html</loc>

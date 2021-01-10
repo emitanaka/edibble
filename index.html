@@ -211,7 +211,7 @@
 <span class="co">#&gt;   ◯ This design is balanced for the given numbers.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;   ── edibble code ────────────────────────────────────────────────────────────────</span>
-<span class="co">#&gt; set.seed(1610185058)</span>
+<span class="co">#&gt; set.seed(345)</span>
 <span class="co">#&gt; start_design("crd") %&gt;%</span>
 <span class="co">#&gt;   set_units(unit = 30) %&gt;%</span>
 <span class="co">#&gt;   set_trts(treat = 5) %&gt;%</span>
@@ -223,22 +223,22 @@
 <span class="co">#&gt; # An edibble: 30 x 2</span>
 <span class="co">#&gt;    unit       treat   </span>
 <span class="co">#&gt;    &lt;unit(30)&gt; &lt;trt(5)&gt;</span>
-<span class="co">#&gt;  1 unit1      treat4  </span>
-<span class="co">#&gt;  2 unit2      treat2  </span>
-<span class="co">#&gt;  3 unit3      treat1  </span>
-<span class="co">#&gt;  4 unit4      treat1  </span>
+<span class="co">#&gt;  1 unit1      treat5  </span>
+<span class="co">#&gt;  2 unit2      treat1  </span>
+<span class="co">#&gt;  3 unit3      treat5  </span>
+<span class="co">#&gt;  4 unit4      treat5  </span>
 <span class="co">#&gt;  5 unit5      treat1  </span>
-<span class="co">#&gt;  6 unit6      treat4  </span>
-<span class="co">#&gt;  7 unit7      treat3  </span>
-<span class="co">#&gt;  8 unit8      treat3  </span>
+<span class="co">#&gt;  6 unit6      treat3  </span>
+<span class="co">#&gt;  7 unit7      treat4  </span>
+<span class="co">#&gt;  8 unit8      treat2  </span>
 <span class="co">#&gt;  9 unit9      treat1  </span>
-<span class="co">#&gt; 10 unit10     treat2  </span>
+<span class="co">#&gt; 10 unit10     treat1  </span>
 <span class="co">#&gt; # … with 20 more rows</span>
 
 <span class="fu"><a href="reference/make_classical.html">code_classical</a></span><span class="op">(</span><span class="st">"rcbd"</span>, t <span class="op">=</span> <span class="fl">4</span>, n <span class="op">=</span> <span class="fl">40</span><span class="op">)</span>
-<span class="co">#&gt; set.seed(1610185058)</span>
+<span class="co">#&gt; set.seed(404)</span>
 <span class="co">#&gt; start_design("rcbd") %&gt;%</span>
-<span class="co">#&gt;   set_units(block = 5,</span>
+<span class="co">#&gt;   set_units(block = 8,</span>
 <span class="co">#&gt;             unit = nested_in(block, 4)) %&gt;%</span>
 <span class="co">#&gt;   set_trts(treat = 4) %&gt;%</span>
 <span class="co">#&gt;   allocate_trts(treat ~ unit) %&gt;%</span>
@@ -251,11 +251,11 @@
 <div id="context-of-the-experiment" class="section level2">
 <h2 class="hasAnchor">
 <a href="#context-of-the-experiment" class="anchor"></a>Context of the experiment</h2>
-<p>In designing an experiment, there may be certain context of the experiment that are important but aren’t utilised in the design of the experiment. You can add notes about the experiment in the <code><a href="reference/add_context.html">add_context()</a></code>.</p>
+<p>In designing an experiment, there may be certain context of the experiment that are important but aren’t utilised in the design of the experiment. You can add notes about the experiment in the <code><a href="reference/set_context.html">set_context()</a></code>.</p>
 <p>These are shown when you print your intermediate construct of the design to remind you about some context of the experiment. I think these steps are important since you may come to realise later some of the context may need to be properly accounted for in the design later, or if there are unexpected results in the experiment, these notes may aid you in uncovering some unexpected sources of variation. For longer form contexts, it’s better to write them to an external file and you can write the name of the file in context.</p>
 <p>The idea here is that the user is reminded about the experimental context but also these contexts can also be exported out together with the design table. Many experimental design software assume that the user knows what experimental design to implement from the get-go, but in practice there may be a lot of back-and-forth with the domain experts or others involved in the experiment. edibble tries to aid in the whole workflow and not just the design generation process.</p>
 <pre class="asciicast"><code>des &lt;- start_design("COVID-19") %&gt;%
-  add_context(question = "Is the vaccine effective?",
+  set_context(question = "Is the vaccine effective?",
               where = "Tested in the lab",
               "experiment is blinded",
               "experiment is carried out by one technician",
@@ -294,7 +294,7 @@ des</code></pre>
     <span class="fu"><a href="reference/expect_vars.html">expect_vars</a></span><span class="op">(</span> exam_mark <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_numeric</a></span><span class="op">(</span><span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
                 quiz1_mark <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_integer</a></span><span class="op">(</span><span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">15</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
                 quiz2_mark <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_integer</a></span><span class="op">(</span><span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
-                    gender <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_selected</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="st">"male"</span>, <span class="st">"non-binary"</span><span class="op">)</span><span class="op">)</span>,
+                    gender <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_factor</a></span><span class="op">(</span>levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="st">"male"</span>, <span class="st">"non-binary"</span><span class="op">)</span><span class="op">)</span>,
                    teacher <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_character</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span><span class="st">"&lt;="</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span>,
                       room <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_character</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span><span class="st">"&gt;="</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
@@ -302,19 +302,19 @@ des</code></pre>
 <span class="co">#&gt; # An edibble: 120 x 10</span>
 <span class="co">#&gt;    class     student     style    exam        exam_mark quiz1_mark quiz2_mark gender   room teacher</span>
 <span class="co">#&gt;    &lt;unit(4)&gt; &lt;unit(120)&gt; &lt;trt(2)&gt; &lt;trt(3)&gt;       &lt;rcrd&gt;     &lt;rcrd&gt;     &lt;rcrd&gt; &lt;rcrd&gt; &lt;rcrd&gt;  &lt;rcrd&gt;</span>
-<span class="co">#&gt;  1 class1    student1    flipped  open-book           ■          ■          ■      ■      ■       ■</span>
+<span class="co">#&gt;  1 class1    student1    flipped  take-home           ■          ■          ■      ■      ■       ■</span>
 <span class="co">#&gt;  2 class1    student2    flipped  open-book           ■          ■          ■      ■      x       x</span>
-<span class="co">#&gt;  3 class1    student3    flipped  take-home           ■          ■          ■      ■      x       x</span>
-<span class="co">#&gt;  4 class1    student4    flipped  open-book           ■          ■          ■      ■      x       x</span>
-<span class="co">#&gt;  5 class1    student5    flipped  open-book           ■          ■          ■      ■      x       x</span>
-<span class="co">#&gt;  6 class1    student6    flipped  open-book           ■          ■          ■      ■      x       x</span>
-<span class="co">#&gt;  7 class1    student7    flipped  open-book           ■          ■          ■      ■      x       x</span>
-<span class="co">#&gt;  8 class1    student8    flipped  take-home           ■          ■          ■      ■      x       x</span>
-<span class="co">#&gt;  9 class1    student9    flipped  closed-book         ■          ■          ■      ■      x       x</span>
+<span class="co">#&gt;  3 class1    student3    flipped  open-book           ■          ■          ■      ■      x       x</span>
+<span class="co">#&gt;  4 class1    student4    flipped  take-home           ■          ■          ■      ■      x       x</span>
+<span class="co">#&gt;  5 class1    student5    flipped  take-home           ■          ■          ■      ■      x       x</span>
+<span class="co">#&gt;  6 class1    student6    flipped  take-home           ■          ■          ■      ■      x       x</span>
+<span class="co">#&gt;  7 class1    student7    flipped  closed-book         ■          ■          ■      ■      x       x</span>
+<span class="co">#&gt;  8 class1    student8    flipped  open-book           ■          ■          ■      ■      x       x</span>
+<span class="co">#&gt;  9 class1    student9    flipped  open-book           ■          ■          ■      ■      x       x</span>
 <span class="co">#&gt; 10 class1    student10   flipped  take-home           ■          ■          ■      ■      x       x</span>
 <span class="co">#&gt; # … with 110 more rows</span></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">export_design</span><span class="op">(</span><span class="va">des</span>, <span class="st">"/PATH/TO/FILE.xlsx"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="reference/export_design.html">export_design</a></span><span class="op">(</span><span class="va">des</span>, <span class="st">"/PATH/TO/FILE.xlsx"</span><span class="op">)</span></code></pre></div>
 <p>Now you have an excel file that separates out observational units to their own sheet and data entering is now restricted to what you set out in <code>expect_vars</code>.</p>
 <p><img src="reference/figures/README-export.png" width="1400"></p>
 </div>
