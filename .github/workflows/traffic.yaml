@@ -1,14 +1,20 @@
 # latest at emitanaka/actions/repo-traffic.yaml
 
+# Note: the data will likely have duplicate entries since
+# the data is last 14 days but the job is run everyday.
+# When plotting it doesn't show, so I don't consider this a big deal.
+# The referal and paths information is summarised over 14 days, so getting it
+# everyday might show the difference of a day (hence using everyday instead)
+
 on:
   workflow_dispatch:
     inputs:
       name:
         description: 'Manual dispatch'
   schedule:
-    - cron: "55 12 * * 0" # run Sunday 12:55 UTC (equivalent to 23:55 AEDT)
+    - cron: "55 12 * * *" # run everyday 12:55 UTC (equivalent to 23:55 AEDT)
 
-name: Collect github traffic information on a repo
+name: traffic
 
 jobs:
   traffic:
