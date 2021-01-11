@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Skittles experiment — skittles • edibble</title>
+<title>Lady tasting tea — lady_tasting_tea • edibble</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -54,18 +54,19 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Skittles experiment — skittles" />
-<meta property="og:description" content="This contains the data from the skittle experiment conducted by
-Nick Tierney. The goal of the experiment was to assess if people
-can discern the flavour of the skittle (indicated by color of the skittle)
-based on taste alone. The participants are blindfolded.
-The experiment had 3 participants with each participant
-tasting 10 skittles, 2 of each 5 color, in a random order.
-skittle_typeThe type of skittle. Coincides with real_skittle.
-personThe participant.
-orderThe order the skittle was tasted.
-choiceThe participant's choice.
-real_skittleThe actual skittle color.
+<meta property="og:title" content="Lady tasting tea — lady_tasting_tea" />
+<meta property="og:description" content="Lady tasting tea experiment was described in Fisher (1935) to test
+the ability of a lady who said she tell whether the tea or milk was added
+first to a cup of tea.
+The experiment consisted of preparing eight cups of tea, four with milk poured
+first and the other four with tea poured first. The lady has been told in
+advance that there are four of each kind of preparation.
+This data consists of the same experimental structure and result but
+the order presented in practice is unknown.
+cupThe cup number.
+firstThe cup of tea prepared with milk or tea first.
+guessThe guess by lady which one was poured first.
+correctWhether the lady's guess was correct.
 
 
 " />
@@ -174,41 +175,42 @@ real_skittleThe actual skittle color.
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Skittles experiment</h1>
+    <h1>Lady tasting tea</h1>
     <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>skittles.Rd</code></div>
+    <div class="hidden name"><code>lady_tasting_tea.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This contains the data from the skittle experiment conducted by
-Nick Tierney. The goal of the experiment was to assess if people
-can discern the flavour of the skittle (indicated by color of the skittle)
-based on taste alone. The participants are blindfolded.</p>
-<p>The experiment had 3 participants with each participant
-tasting 10 skittles, 2 of each 5 color, in a random order.</p><dl>
-<dt>skittle_type</dt><dd><p>The type of skittle. Coincides with <code>real_skittle</code>.</p></dd>
-<dt>person</dt><dd><p>The participant.</p></dd>
-<dt>order</dt><dd><p>The order the skittle was tasted.</p></dd>
-<dt>choice</dt><dd><p>The participant's choice.</p></dd>
-<dt>real_skittle</dt><dd><p>The actual skittle color.</p></dd>
+    <p>Lady tasting tea experiment was described in Fisher (1935) to test
+the ability of a lady who said she tell whether the tea or milk was added
+first to a cup of tea.</p>
+<p>The experiment consisted of preparing eight cups of tea, four with milk poured
+first and the other four with tea poured first. The lady has been told in
+advance that there are four of each kind of preparation.</p>
+<p>This data consists of the same experimental structure and result but
+the order presented in practice is unknown.</p><dl>
+<dt>cup</dt><dd><p>The cup number.</p></dd>
+<dt>first</dt><dd><p>The cup of tea prepared with milk or tea first.</p></dd>
+<dt>guess</dt><dd><p>The guess by lady which one was poured first.</p></dd>
+<dt>correct</dt><dd><p>Whether the lady's guess was correct.</p></dd>
 
 </dl>
 
     </div>
 
-    <pre class="usage"><span class='va'>skittles</span></pre>
+    <pre class="usage"><span class='va'>lady_tasting_tea</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>An object of class <code>spec_tbl_df</code> (inherits from <code>tbl_df</code>, <code>tbl</code>, <code>data.frame</code>) with 30 rows and 6 columns.</p>
+    <p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 8 rows and 4 columns.</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>https://github.com/njtierney/skittles</p>
+    <p>Fisher, Ronald (1935) The Design of Experiments.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other experimental data: 
-<code><a href='lady_tasting_tea.html'>lady_tasting_tea</a></code></p></div>
+<code><a href='skittles.html'>skittles</a></code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
