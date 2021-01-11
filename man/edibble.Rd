@@ -2,9 +2,12 @@
 % Please edit documentation in R/edibble.R
 \name{edibble}
 \alias{edibble}
+\alias{as_edibble}
 \title{Make input edibble}
 \usage{
 edibble(.data, name = NULL, ..., units = NULL, trts = NULL)
+
+as_edibble(.data, ...)
 }
 \arguments{
 \item{.data}{A named list of variables or data frame.}

@@ -241,7 +241,7 @@ restriction_for_human <- function(operator, value) {
 #' @param overwrite A logical indicating whether to overwrite exisitng file or not.
 #'
 #' @importFrom cli cli_alert_success
-#' @importFrom openxlsx addStyle createNamedRegion createStyle createWorkbook addWorksheet writeData dataValidation saveWorkbook
+#' @importFrom openxlsx addCreator addStyle createNamedRegion createStyle createWorkbook addWorksheet writeData dataValidation saveWorkbook
 #' @family user-facing functions
 #' @export
 export_design <- function(.data, file, author, date = Sys.Date(), overwrite = FALSE) {
