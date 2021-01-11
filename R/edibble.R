@@ -177,10 +177,24 @@ edibble <- function(.data, name = NULL, ..., units = NULL, trts = NULL) {
 
   name <- name %||% "An edibble design"
 
-  new_edibble(.data, ..., design = start_design(name =  name)) #%>%
-    #set_units(!!!units) # %>%
-    #set_trts(trts)
+  out <- new_edibble(.data, ..., design = start_design(name =  name))
+  if(!is_null(units)) out <- set_units(out, expr(units))
+  if(!is_null(trts)) out <- set_trts(out, expr(trts))
+  out
 }
+
+#' @rdname edibble
+#' @export
+as_edibble <- function(.data, ...) {
+  UseMethod("as_edibble")
+}
+
+as_edibble.default <- function(.data, ...) {
+  edibble(.data, ...)
+}
+
+
+
 
 #' Restart the edibble design
 #'

@@ -27,9 +27,7 @@ set_vars <- function(.edibble, ..., .class = NULL,
   attr <- vertex_attr_opt(type)
 
   if(is_edibble_design(.edibble)) {
-    dots <- enquos(..., .named = TRUE, .homonyms = "error",
-                   .ignore_empty = "trailing",
-                   .check_assign = TRUE)
+    dots <- enquos(..., .named = TRUE, .homonyms = "error")
     vnames_new <- names(dots)
     vnames_old <- names_vars(.design)
     vnames <- vec_as_names(c(vnames_old, vnames_new), repair = .name_repair)
@@ -43,21 +41,9 @@ set_vars <- function(.edibble, ..., .class = NULL,
 
   } else if(is_edibble_df(.edibble)) {
     .data <- get_edibble_table(.edibble)
+    dots <- enquos(..., .named = TRUE)
 
-    ## might need to change this
-    # so it can take nested_in
-    dots <- enquos(..., .named = FALSE, .homonyms = "last",
-                   .ignore_empty = "trailing",
-                   .check_assign = TRUE)
-    if(any(named <- have_name(dots))) {
-      warn(sprintf("The arguments %s are named. Did you need to `restart_design`?",
-                   .combine_words(names(dots)[named],
-                                  sep = ", ", and = " and ",
-                                  fun = col_grey)))
-    }
-    ##
-
-    loc <- eval_select(expr(c(...)), .data)
+    loc <- eval_select(expr(!!names(dots)), .data)
     for(i in seq_along(loc)) {
       var <- .data[[loc[i]]]
       lvls <- unique(as.character(var))
@@ -67,6 +53,7 @@ set_vars <- function(.edibble, ..., .class = NULL,
                                          name = vname,
                                          class = .class)
       .design$add_variable(lvls, vname, attr)
+      # adding nesting
       .edibble <- .data
     }
   }

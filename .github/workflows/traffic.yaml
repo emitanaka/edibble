@@ -1,0 +1,118 @@
+# latest at emitanaka/actions/repo-traffic.yaml
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Manual dispatch'
+  schedule:
+    - cron: "55 12 * * 0" # run Sunday 12:55 UTC (equivalent to 23:55 AEDT)
+
+name: Collect github traffic information on a repo
+
+jobs:
+  traffic:
+    name: Collect github traffic info
+    runs-on: macOS-latest
+    env:
+      GITHUB_PAT: ${{ secrets.TRAFFICS_TOKEN }}
+      TRAFFIC_BRANCH: "traffic"
+    steps:
+      - uses: actions/checkout@v2
+      - uses: r-lib/actions/setup-r@v1
+      - uses: r-lib/actions/setup-pandoc@v1
+
+      - name: Register user
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "Github Actions"
+          git config pull.rebase false
+          git pull --all
+
+
+      - name: Install R packages for getting the data
+        run: |
+          install.packages("remotes")
+          remotes::install_cran("httr")
+        shell: Rscript {0}
+
+      - name: Switch or create branch
+        run: |
+          branch <- Sys.getenv("TRAFFIC_BRANCH")
+          branch_exists <- system(paste0("git show-branch origin/", branch))==0
+          if(branch_exists) {
+            system(paste("git checkout", branch))
+          } else {
+            system(paste("git checkout --orphan", branch))
+            system("git rm -rf .")
+          }
+        shell: Rscript {0}
+
+      - name: Get the traffic data and make md file
+        run: |
+          base_path <- Sys.getenv("GITHUB_WORKSPACE")
+          if(!dir.exists(data_path <- paste0(base_path, "/data"))) {
+            dir.create(data_path)
+          }
+
+          if(!file.exists(readme_fn <- paste0(base_path, "/README.md"))) {
+            writeLines("# Traffic Information\n![](latest-views-plot.png)\n![](latest-clones-plot.png)",
+                       readme_fn)
+          }
+
+
+          library(httr)
+          base_url <- sprintf("https://api.github.com/repos/%s/traffic/", Sys.getenv("GITHUB_REPOSITORY"))
+
+          for(acontent in c("views", "clones", "popular/paths", "popular/referrers")) {
+            res <- content(GET(paste0(base_url, acontent),
+                               add_headers(Authorization = paste("token", Sys.getenv("GITHUB_PAT")),
+                                           Accept = "application/vnd.github.v3+json")))
+            if(grepl("popular", acontent)) {
+              new_data <- do.call(rbind, lapply(res, function(x) do.call(data.frame, x)))
+              new_data$date_to <- Sys.Date() - 1
+              new_data$date_from <- Sys.Date() - 14
+
+            } else {
+              new_data <- do.call(rbind, lapply(res[[acontent]], function(x) do.call(data.frame, x)))
+            }
+            new_data$date_retrieved <- Sys.Date()
+
+            fn <- paste0(base_path, "/data/", gsub("popular/", "", acontent), ".csv")
+            write.table(new_data, file = fn, append = file.exists(fn),
+                         row.names = FALSE, sep = ",", col.names = !file.exists(fn))
+          }
+        shell: Rscript {0}
+
+      - name: Plot the data
+        run: |
+          remotes::install_cran("ggplot2")
+          library(ggplot2)
+          base_path <- Sys.getenv("GITHUB_WORKSPACE")
+
+          dviews <- read.csv(paste0(base_path, "/data/views.csv"))
+          data_views <- data.frame(day = rep(as.Date(dviews$timestamp), times = 2),
+                                   count = c(dviews$count, dviews$uniques),
+                                   type = rep(c("total", "unique"), each = nrow(dviews)))
+          dclones <- read.csv(paste0(base_path, "/data/clones.csv"))
+          data_clones <- data.frame(day = rep(as.Date(dclones$timestamp), times = 2),
+                                   count = c(dclones$count, dclones$uniques),
+                                   type = rep(c("total", "unique"), each = nrow(dclones)))
+          g1 <- ggplot(data_views, aes(day, count, color = type)) +
+            geom_point() +
+            geom_line() +
+            scale_color_manual(values = c("#264653", "#E76F51")) +
+            ggtitle("Views")
+          g2 <- (g1 %+% data_clones) + ggtitle("Clones")
+
+          ggsave(paste0(base_path, "/latest-views-plot.png"), g1)
+          ggsave(paste0(base_path, "/latest-clones-plot.png"), g2)
+        shell: Rscript {0}
+
+      - name: Git push the new data
+        run: |
+          git add .
+          git commit -m 'New traffic information'
+          git push origin $TRAFFIC_BRANCH
+
+

@@ -5,7 +5,7 @@
 \alias{skittles}
 \title{Skittles experiment}
 \format{
-An object of class \code{data.frame} with 30 rows and 6 columns.
+An object of class \code{spec_tbl_df} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 30 rows and 6 columns.
 }
 \source{
 https://github.com/njtierney/skittles
@@ -29,4 +29,9 @@ tasting 10 skittles, 2 of each 5 color, in a random order.
 \item{real_skittle}{The actual skittle color.}
 }
 }
+\seealso{
+Other experimental data: 
+\code{\link{lady_tasting_tea}}
+}
+\concept{experimental data}
 \keyword{datasets}
