@@ -16,7 +16,7 @@
 #' Use `switch_context` to turn on print out of context if it was switched off,
 #' or turn off print out if it was switched on.
 #'
-#' @param .edibble An edibble design (`EdibbleDesign`), an edibble data frame (`edbl_df`) or an
+#' @param .edibble An edibble design (`EdibbleDesign`), an edibble data frame (`edbl_table`) or an
 #'   object that contains the edibble data frame in the attribute
 #'   `design`.
 #' @param ... Strings of contexts or notes for the experiment. The context

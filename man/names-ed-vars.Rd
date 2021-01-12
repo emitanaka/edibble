@@ -7,7 +7,7 @@
 \alias{names_resp}
 \alias{names_vars}
 \alias{names_vars.edbl_graph}
-\alias{names_vars.edbl_df}
+\alias{names_vars.edbl_table}
 \alias{names.edbl_graph}
 \alias{names<-.edbl_graph}
 \title{Names of variables}
@@ -22,7 +22,7 @@ names_vars(.data, ...)
 
 \method{names_vars}{edbl_graph}(.graph, class = NULL)
 
-\method{names_vars}{edbl_df}(.data, class = NULL)
+\method{names_vars}{edbl_table}(.data, class = NULL)
 
 \method{names}{edbl_graph}(.data, label = TRUE)
 

@@ -26,25 +26,6 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
       },
 
       #' @description
-      #' Plot the intermediate contruct.
-      #' @param view A high- or -low level view.
-      #' @param ... Arguments passed into `plot.igraph`.
-      #' @param main The title of the plot. By default it is the
-      #'  name of the EdibbleDesign object.
-      #' @importFrom igraph plot.igraph
-      plot = function(view = c("high", "low"), ..., main = NULL) {
-        main <- main %||% private$.name
-        view <- match.arg(view)
-        out <- switch(view,
-                      high = subset_vars(private$.graph),
-                      low = subset_levels(private$.graph))
-        plot.igraph(out, ...,
-                    annotate.plot = TRUE,
-                    main = main)
-        invisible(self)
-      },
-
-      #' @description
       #' Print the intermediate construct.
       #' @param ... Arguments passed into `print`.
       print = function(...) {
@@ -349,4 +330,84 @@ update_design <- function(old, new) {
     attr(old, "design") <- new
     old
   }
+}
+
+
+# print -------------------------------------------------------------------
+
+
+#' Print edibble graph to terminal
+#'
+#' @description
+#' This function prints an `edbl_graph` object as a tree to terminal.
+#' The variables are color coded (or decorated) with the given options.
+#' Any ANSI coloring or styling are only visible in the console or terminal
+#' outputs that support it. The print output is best used interactively since
+#' any text styling are lost in text or R Markdown output. More details can
+#' be found in `vignette("edbl-output", package = "edibble")`.
+#'
+#' @param .data An edibble graph.
+#' @param decorate_trts,decorate_units,decorate_resp,decorate_levels,decorate_title
+#' A function applied to the name of treatment, unit, response factors or
+#' design title. The function should return a string. Most often this wraps the name with
+#' ANSI colored text. Run [edibble_opt()] to see the list of default
+#' values for the options.
+#'
+#' @examples
+#' # stylizing are only visible in terminal output that supports it
+#' print(nclassics$split)
+#' ## Split plot design
+#' ## ├─mainplot (4 levels)
+#' ## │ └─subplot (8 levels)
+#' ## ├─subplot (8 levels)
+#' ## ├─variety (2 levels)
+#' ## └─irrigation (2 levels)
+#' @importFrom igraph V vertex_attr neighbors
+#' @importFrom cli tree
+#'
+#' @export
+print.edbl_graph <- function(.graph,
+                             decorate_units  = edibble_decorate("units"),
+                             decorate_trts   = edibble_decorate("trts"),
+                             decorate_resp   = edibble_decorate("resp"),
+                             decorate_levels = edibble_decorate("levels"),
+                             decorate_main  = edibble_decorate("main"),
+                             main = NULL) {
+
+  main <- main %||% "An edibble design"
+  vgraph <- subset_vars(.graph)
+  gnames <- V(vgraph)$name
+
+  if(is_empty(gnames)) {
+    data <- data.frame(var = "root", child = NA,
+                       label = as.character(decorate_main(main)))
+  } else {
+
+    classes <- V(vgraph)$class
+    label_names <- decorate_vars(gnames,
+                                 decorate_units,
+                                 decorate_trts,
+                                 decorate_resp,
+                                 classes)
+
+
+    var_nlevels <- lengths(vars_levels(.graph, gnames))
+    nvar <- length(gnames)
+    ll <- lapply(V(vgraph),
+                 function(v) {
+                   class <- vertex_attr(vgraph, "class", v)
+                   children <- neighbors(vgraph, v, mode = "out")
+                   if(class!="edbl_trt" & !is_empty(children)) {
+                     gnames[children]
+                   } else {
+                     character()
+                   }
+                 })
+
+    data <- data.frame(var = c("root", gnames),
+                       child = I(c(list(gnames), ll)),
+                       label = c(decorate_main(main),
+                                 paste(label_names, map_chr(var_nlevels, decorate_levels))))
+  }
+  cat(tree(data, root = "root"), sep = "\n")
 }

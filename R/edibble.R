@@ -29,7 +29,7 @@ start_design <- function(name = NULL) {
 #'
 #' * `is_edibble_design` checks if it inherits `EdibbleDesign`.
 #' * `is_edibble_graph` checks if it inherits `edbl_graph`.
-#' * `is_edibble_df`, `is_edibble_table` checks if it inherits `edbl_df`
+#' * `is_edibble_df`, `is_edibble_table` checks if it inherits `edbl_table`
 #' * `is_edibble` checks if the object contains `EdibbleDesign`.
 #'  The search is quite simple, it checks if
 #' the object is `EdibbleDesign`, failing that it looks to see if the
@@ -40,7 +40,7 @@ start_design <- function(name = NULL) {
 #' or design) from the object if possible.
 #'
 #' * `get_edibble_design` tries to get `EdibbleDesign`.
-#' * `get_edibble_table` tries to get `edbl_df` with no design attribute.
+#' * `get_edibble_table` tries to get `edbl_table` with no design attribute.
 #' * `get_edibble_graph` tries to get `edbl_graph`.
 #'
 #' @param x An object.
@@ -59,17 +59,10 @@ is_named_design <- function(x) {
   inherits(x, "NamedDesign")
 }
 
-
-#' @rdname design-helpers
-#' @export
-is_edibble_df <- function(x) {
-  inherits(x, "edbl_df")
-}
-
 #' @rdname design-helpers
 #' @export
 is_edibble_table <- function(x) {
-  is_edibble_df(x)
+  inherits(x, "edbl_table")
 }
 
 #' @rdname design-helpers
@@ -224,89 +217,15 @@ restart_design <- function(.data) {
 #' @export
 new_edibble <- function(.data, ..., graph = NULL, class = NULL) {
   new_tibble(.data, ..., nrow = vec_size_common(!!!.data),
-                     class = "edbl_df", graph = graph)
+                     class = "edbl_table", graph = graph)
 }
 
 #' @importFrom tibble tbl_sum
 #' @export
-tbl_sum.edbl_df <- function(.data) {
+tbl_sum.edbl_table <- function(.data) {
   head_meta <- c("An edibble" = dim_desc(.data))
   head_meta
 }
 
 
-#' Print edibble graph to terminal
-#'
-#' @description
-#' This function prints an `edbl_graph` object as a tree to terminal.
-#' The variables are color coded (or decorated) with the given options.
-#' Any ANSI coloring or styling are only visible in the console or terminal
-#' outputs that support it. The print output is best used interactively since
-#' any text styling are lost in text or R Markdown output. More details can
-#' be found in `vignette("edbl-output")`.
-#'
-#' @param .data An edibble graph.
-#' @param decorate_trts,decorate_units,decorate_resp,decorate_levels,decorate_title
-#' A function applied to the name of treatment, unit, response factors or
-#' design title. The function should return a string. Most often this wraps the name with
-#' ANSI colored text. Run [edibble_opt()] to see the list of default
-#' values for the options.
-#'
-#' @examples
-#' # stylizing are only visible in terminal output that supports it
-#' print(nclassics$split)
-#' ## Split plot design
-#' ## ├─mainplot (4 levels)
-#' ## │ └─subplot (8 levels)
-#' ## ├─subplot (8 levels)
-#' ## ├─variety (2 levels)
-#' ## └─irrigation (2 levels)
-#' @importFrom igraph V vertex_attr neighbors
-#' @importFrom cli tree
-#'
-#' @export
-print.edbl_graph <- function(.graph,
-                             decorate_units  = edibble_decorate("units"),
-                             decorate_trts   = edibble_decorate("trts"),
-                             decorate_resp   = edibble_decorate("resp"),
-                             decorate_levels = edibble_decorate("levels"),
-                             decorate_main  = edibble_decorate("main"),
-                             main = NULL) {
 
-  main <- main %||% "An edibble design"
-  vgraph <- subset_vars(.graph)
-  gnames <- V(vgraph)$name
-
-  if(is_empty(gnames)) {
-    data <- data.frame(var = "root", child = NA,
-                       label = as.character(decorate_main(main)))
-  } else {
-
-    classes <- V(vgraph)$class
-    label_names <- decorate_vars(gnames,
-                                 decorate_units,
-                                 decorate_trts,
-                                 decorate_resp,
-                                 classes)
-
-
-    var_nlevels <- lengths(vars_levels(.graph, gnames))
-    nvar <- length(gnames)
-    ll <- lapply(V(vgraph),
-                 function(v) {
-                   class <- vertex_attr(vgraph, "class", v)
-                   children <- neighbors(vgraph, v, mode = "out")
-                   if(class!="edbl_trt" & !is_empty(children)) {
-                     gnames[children]
-                   } else {
-                     character()
-                   }
-                 })
-
-    data <- data.frame(var = c("root", gnames),
-                       child = I(c(list(gnames), ll)),
-                       label = c(decorate_main(main),
-                                 paste(label_names, map_chr(var_nlevels, decorate_levels))))
-  }
-  cat(tree(data, root = "root"), sep = "\n")
-}

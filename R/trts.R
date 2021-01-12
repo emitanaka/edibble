@@ -77,7 +77,7 @@ n_trts.edbl_graph <- function(.data) {
   return(prod(lengths(get_trt_levels(.data))))
 }
 
-n_trts.edbl_df <- function(.data) {
+n_trts.edbl_table <- function(.data) {
   ind <- unlist(lapply(.data, function(var) "edbl_trt" %in% class(var)))
   return(prod(lengths(lapply(.data, levels)[ind])))
 }
@@ -88,7 +88,7 @@ n_vars <- function(.data, class = NULL) {
 }
 
 #' @export
-n_vars.edbl_df <- function(.data, class = NULL) {
+n_vars.edbl_table <- function(.data, class = NULL) {
   if(is_null(class)) return(ncol(.data))
   sum(map_lgl(.data, function(x) any(class(x) %in% class)))
 }

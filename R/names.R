@@ -57,7 +57,7 @@ names_vars.edbl_graph <- function(.graph, class = NULL) {
 }
 
 #' @rdname names-ed-vars
-names_vars.edbl_df <- function(.data, class = NULL) {
+names_vars.edbl_table <- function(.data, class = NULL) {
   class <- class %||% map_chr(.data, class)
   ind <- map_lgl(.data, function(var) any(class %in% class(var)))
   return(names(.data)[ind])

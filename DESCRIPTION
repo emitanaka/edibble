@@ -30,9 +30,10 @@ Imports:
     R6,
     openxlsx
 Suggests: 
-    testthat,
+    testthat (>= 3.0.0),
     knitr,
-    rmarkdown
+    rmarkdown,
+    vdiffr
 VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)

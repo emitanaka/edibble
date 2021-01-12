@@ -12,7 +12,7 @@ set_vars(
 )
 }
 \arguments{
-\item{.edibble}{An edibble design (\code{EdibbleDesign}), an edibble data frame (\code{edbl_df}) or an
+\item{.edibble}{An edibble design (\code{EdibbleDesign}), an edibble data frame (\code{edbl_table}) or an
 object that contains the edibble data frame in the attribute
 \code{design}.}
 

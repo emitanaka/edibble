@@ -47,7 +47,7 @@ edibble unit | `edbl_unit` | any entity, except treatment factors, that pertains
 edibble treatment | `edbl_trt` | treatment factor in the experiment such that the factorial combination describes the whole treatment levels | `?set_trts`
 edibble response | `edbl_resp` | the intended response to be measured during the experiment | `?measure_resp`
 edibble graph | `edbl_graph` | an intermediate construct of the experimental design | this vignette
-edibble table/data frame | `edbl_df` | a tibble output for experimental design | this vignette
+edibble table/data frame | `edbl_table` | a tibble output for experimental design | this vignette
 replicabble | `rpbl_df` | a tibble that contains replication for treatment levels | `?replicabble`
 linkabble | `lkbl_graph` or `lkbl_df` | a transitional component storing information about how levels across variables are linked | none
 
@@ -136,10 +136,10 @@ Some information in the edibble graph object is illustrated below. There are edg
 knitr::include_graphics("figures/vignette-edibble-nexus-all.png")
 ```
 
-## An edibble table or data frame
+## An edibble table (or data frame)
 
-An edibble, or `edbl_df` object, is a special class of [`tibble`](https://tibble.tidyverse.org/). The word "edibble"
-itself already implies that it is a table so appending the word with table or data frame seems superfluous. However, edibble can refer to the package, object, or used as an adjective to other objects, so appending edibble with table or data frame is to make explicit emphasis it refers to the `edbl_df` object, otherwise the reader is expected to infer its meaning by context.
+An edibble, or `edbl_table` object, is a special class of [`tibble`](https://tibble.tidyverse.org/). The word "edibble"
+itself already implies that it is a table so appending the word with table or data frame seems superfluous. However, edibble can refer to the package, object, or used as an adjective to other objects, so appending edibble with table or data frame is to make explicit emphasis it refers to the `edbl_table` object, otherwise the reader is expected to infer its meaning by context.
 
 An edibble data frame is produced when the variables can be laid out in a [tidy data](https://www.jstatsoft.org/article/view/v059i10) format. An edibble is constructed from two possible ways: 
 

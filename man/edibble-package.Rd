@@ -6,8 +6,6 @@
 \alias{_PACKAGE}
 \title{edibble: Generate experimental designs using the grammar of experimental design}
 \description{
-\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
-
 A system to facilitate statistical thinking of 
     adapting experimental designs to different conditions.
 }

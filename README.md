@@ -64,9 +64,9 @@ spdes <- start_design("Split-plot Design") %>%
 ```
 
 Above object contains the intermediate construct of an experimental
-design (called `edbl_nexus`). When you are ready to serve your design,
-you can get the table output (called `edbl_df`) by using `serve_table`
-as below.
+design (called `edbl_graph`). When you are ready to serve your design,
+you can get the table output (called `edbl_table`) by using
+`serve_table` as below.
 
 ``` r
 serve_table(spdes)
@@ -146,8 +146,7 @@ The low-level view is often a bit cluttered so you may like to use the
 interactive version as below instead.
 
 ``` r
-subset_levels(rcbd$graph) %>% 
-  igraph::tkplot()
+iplot(rcbd)
 ```
 
 ⚠️ Please note that edibble is currently fragile. That means that the

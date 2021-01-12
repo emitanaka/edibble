@@ -128,9 +128,9 @@ rcbd2 <- new_rcbd()
 plot(rcbd2)
 ```
 
-## Print for `edbl_df`
+## Print for `edbl_table`
 
-When you `serve_table` to signal that you want the table, the default view for `EdibbleDesign` changs to the print out for `edbl_df`. 
+When you `serve_table` to signal that you want the table, the default view for `EdibbleDesign` changes to the print out for `edbl_table`. 
 
 ```{r, include = FALSE}
 options(crayon.enabled = FALSE)

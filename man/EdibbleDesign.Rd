@@ -39,7 +39,6 @@ with \code{\link[=start_design]{start_design()}} or \code{\link[=edibble]{edibbl
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{EdibbleDesign$new()}}
-\item \href{#method-plot}{\code{EdibbleDesign$plot()}}
 \item \href{#method-print}{\code{EdibbleDesign$print()}}
 \item \href{#method-save_seed}{\code{EdibbleDesign$save_seed()}}
 \item \href{#method-muffle}{\code{EdibbleDesign$muffle()}}
@@ -71,28 +70,6 @@ Initialise the edibble design. See also \code{\link[=start_design]{start_design(
 \item{\code{name}}{The name or title of the project. The title
 should be informative and not overly long.
 If not supplied the default is "An edibble design".}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-plot"></a>}}
-\if{latex}{\out{\hypertarget{method-plot}{}}}
-\subsection{Method \code{plot()}}{
-Plot the intermediate contruct.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$plot(view = c("high", "low"), ..., main = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{view}}{A high- or -low level view.}
-
-\item{\code{...}}{Arguments passed into \code{plot.igraph}.}
-
-\item{\code{main}}{The title of the plot. By default it is the
-name of the EdibbleDesign object.}
 }
 \if{html}{\out{</div>}}
 }
