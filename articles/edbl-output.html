@@ -162,7 +162,7 @@
 
 rcbd</a></code></pre>
 <p><img src="edbl-output_files/figure-html/rcbd2.svg" width="100%"></p>
-<p>Instead of overwriting the options each time, you can set your <code>.Rprofile</code> so that when you load R, it will load the options in your profile. You can easily open <code>.Rprofile</code> with <code>usethis::edit_r_profile()</code>. I normally don’t recommend to do this as it makes your output non-reproducible by others but the print output is made more for interactive use rather than reports so it doesn’t matter much in this case.</p>
+<p>Instead of overwriting the options each time, you can set your <code>.Rprofile</code> so that when you load R, it will load the options in your profile. You can easily open <code>.Rprofile</code> with <code><a href="https://usethis.r-lib.org/reference/edit.html">usethis::edit_r_profile()</a></code>. I normally don’t recommend to do this as it makes your output non-reproducible by others but the print output is made more for interactive use rather than reports so it doesn’t matter much in this case.</p>
 </div>
 </div>
 <div id="plot-for-edbl_graph" class="section level2">
@@ -198,11 +198,11 @@ rcbd</a></code></pre>
 <p><img src="edbl-output_files/figure-html/rcbd-high-plot-v2-1.png" width="384"></p>
 </div>
 </div>
-<div id="print-for-edbl_df" class="section level2">
+<div id="print-for-edbl_table" class="section level2">
 <h2 class="hasAnchor">
-<a href="#print-for-edbl_df" class="anchor"></a>Print for <code>edbl_df</code>
+<a href="#print-for-edbl_table" class="anchor"></a>Print for <code>edbl_table</code>
 </h2>
-<p>When you <code>serve_table</code> to signal that you want the table, the default view for <code>EdibbleDesign</code> changs to the print out for <code>edbl_df</code>.</p>
+<p>When you <code>serve_table</code> to signal that you want the table, the default view for <code>EdibbleDesign</code> changes to the print out for <code>edbl_table</code>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="fu">new_rcbd</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # An edibble: 12 x 3</span>
