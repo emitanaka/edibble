@@ -22,5 +22,14 @@ subset_levels(.graph)
 For \code{"var"}, only vertices that have attribute \code{vtype} as "var" is returned.}
 }
 \description{
-This function subsets vertices of edibble graph based on vertex attributes.
+The \code{subset} method subsets vertices of edibble graph based on vertex attributes.
+The \code{subset_vars} and \code{subset_levels} subsets the edibble graph to
+variable node or level nodes, respectively. This is essentially what we
+refer to as high-level view or low-level view of the edibble graph respectively.
+}
+\examples{
+graph <- get_edibble_graph(rye_grass)
+subset(graph, vname \%in\% c("strip", "plot"))
+subset_vars(graph)
+susbet_levels(graph)
 }

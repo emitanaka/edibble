@@ -15,11 +15,11 @@ set_units(
 object that contains the edibble data frame in the attribute
 \code{design}.}
 
-\item{...}{<\code{\link[rlang:dyn-dots]{dynamic-dots}}><\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
-Name-value pair.}
+\item{...}{Either a name-value pair or a series of the names}
 }
 \description{
-This function creates new edibble variables of class \code{edbl_unit}.
+This function sets new edibble variables of class \code{edbl_unit}. More
+specifically, this means that new nodes are added to the \code{edbl_graph}.
 }
 \section{Definition of \emph{unit}}{
 
@@ -28,17 +28,31 @@ better word, edibble uses the word "unit" to refer to any entity, physical
 or otherwise, that pertain to the experiment. This function doen't
 explicitly distinguish between experimental or observational units,
 nor is a unit limited to these type of units.
-A unit in edibble can be a blocking factor or discrete time unit.
+A unit in edibble can be a blocking factor or even a discrete time unit.
 }
 
 \section{Limitations}{
 
-Currently a unit should only have a discrete set of levels.
+Currently a unit should only have a discrete set of levels and
+you need to know the number of levels prior to setting the units.
 }
 
 \examples{
-initiate_design() \%>\%
-  set_units(block = 3)
+# 30 rats
+start_design() \%>\%
+  set_units(rat = 30) \%>\%
+  serve_table()
+
+# 4 girls named "Anna", "Betty", "Carol", "Diana"
+start_design() \%>\%
+  set_units(girl = c("Anna", "Betty", "Carol", "Diana")) \%>\%
+  serve_table()
+
+# 3 companies, with 10 boxes each
+start_design() \%>\%
+  set_units(company = c("A", "B", "C"),
+                box = nested_in(company, 10))
+
 }
 \seealso{
 Other user-facing functions: 

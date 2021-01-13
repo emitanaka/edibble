@@ -37,8 +37,8 @@
 #'               "Other detailed information in {.file {files}}",
 #'               "Check more details at {.url https://covid-19-au.com/}")
 #' @name design-context
-#' @family user-facing functions
 #' @importFrom cli style_bold style_italic
+#' @family user-facing functions
 #' @export
 set_context <- function(.edibble, ...) {
   .design <- get_edibble_design(.edibble)

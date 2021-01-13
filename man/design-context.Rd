@@ -28,7 +28,7 @@ object that contains the edibble data frame in the attribute
 \item{...}{Strings of contexts or notes for the experiment. The context
 maybe named. If you context it is wrong, consider writing the context
 in an external file then write the reference to the file in context
-instead. Input strings support inline markup that use \href{https://github.com/tidyverse/glue}{glue braces}
+instead. Input strings support inline markup tha \%>\% \%>\% t use \href{https://github.com/tidyverse/glue}{glue braces}
 as well \href{https://cli.r-lib.org/articles/semantic-cli.html#inline-text-formatting}{cli markup formatter}.
 The formatting is evaluated and stored in \code{EdibbleDesign}.}
 

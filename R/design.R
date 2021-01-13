@@ -5,7 +5,7 @@
 #' the experimental design. Typically the user should not be interacting
 #' with the `EdibbleDesign` methods directly but should be invoking the methods
 #' using the friendlier user-facing family of functions instead, beginning
-#' with [start_design()] or [edibble()].
+#' with [start_design()] or [restart_design()].
 #'
 #' @importFrom igraph make_empty_graph
 #' @importFrom cli cli_rule cli_text cli_ul cli_li cli_alert_info

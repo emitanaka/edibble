@@ -1,25 +1,39 @@
 #' Set units used in experiment
 #'
 #' @description
-#' This function creates new edibble variables of class `edbl_unit`.
+#' This function sets new edibble variables of class `edbl_unit`. More
+#' specifically, this means that new nodes are added to the `edbl_graph`.
 #'
 #' @inheritParams design-context
-#' @param ... <[`dynamic-dots`][rlang::dyn-dots]><[`tidy-select`][dplyr::dplyr_tidy_select]>
-#' Name-value pair.
+#' @param ... Either a name-value pair or a series of the names
 #' @section Definition of _unit_:
 #' A _unit_, much like _factor_, is an over-used word but due to lack of a
 #' better word, edibble uses the word "unit" to refer to any entity, physical
 #' or otherwise, that pertain to the experiment. This function doen't
 #' explicitly distinguish between experimental or observational units,
 #' nor is a unit limited to these type of units.
-#' A unit in edibble can be a blocking factor or discrete time unit.
+#' A unit in edibble can be a blocking factor or even a discrete time unit.
 #'
 #' @section Limitations:
-#' Currently a unit should only have a discrete set of levels.
+#' Currently a unit should only have a discrete set of levels and
+#' you need to know the number of levels prior to setting the units.
 #'
 #' @examples
-#' initiate_design() %>%
-#'   set_units(block = 3)
+#' # 30 rats
+#' start_design() %>%
+#'   set_units(rat = 30) %>%
+#'   serve_table()
+#'
+#' # 4 girls named "Anna", "Betty", "Carol", "Diana"
+#' start_design() %>%
+#'   set_units(girl = c("Anna", "Betty", "Carol", "Diana")) %>%
+#'   serve_table()
+#'
+#' # 3 companies, with 10 boxes each
+#' start_design() %>%
+#'   set_units(company = c("A", "B", "C"),
+#'                 box = nested_in(company, 10))
+#'
 #' @family user-facing functions
 #' @export
 set_units <- function(.edibble, ...,

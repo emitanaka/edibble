@@ -8,7 +8,7 @@ An object with \code{EdibbleDesign} holds the core information related to
 the experimental design. Typically the user should not be interacting
 with the \code{EdibbleDesign} methods directly but should be invoking the methods
 using the friendlier user-facing family of functions instead, beginning
-with \code{\link[=start_design]{start_design()}} or \code{\link[=edibble]{edibble()}}.
+with \code{\link[=start_design]{start_design()}} or \code{\link[=restart_design]{restart_design()}}.
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

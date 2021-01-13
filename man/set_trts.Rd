@@ -11,8 +11,7 @@ set_trts(
 )
 }
 \arguments{
-\item{...}{<\code{\link[rlang:dyn-dots]{dynamic-dots}}><\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
-Name-value pair.}
+\item{...}{Either a name-value pair or a series of the names}
 
 \item{.name_repair}{Specify how to deal when there are duplicated name
 entries. The repair follows the same argument in \code{\link[tibble:tibble]{tibble::tibble()}}.}
