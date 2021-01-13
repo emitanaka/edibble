@@ -32,6 +32,7 @@ reference:
 - title: "Exporting the experimental design"
   desc: >
     These help to create data validation rules and export the experimental layout as xlsx file.
+- contents:
   - record_vars
   - expect_vars
   - contains("to_be")
