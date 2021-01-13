@@ -2,10 +2,10 @@
 #' Start the edibble design
 #'
 #' @description
-#' This function doesn't really do much besides create a new EdibbleDesign.
+#' This function doesn't really do much besides create a new `EdibbleDesign`.
 #'
 #' @param name Optional name used as title for printing the design.
-#' @return An `EdibbleGraph` object which is a special type of `R6` class.
+#' @return An `EdibbleDesign` object which is a special type of `R6` class.
 #' @examples
 #' start_design("My design")
 #' @seealso Add variables to this design with [set_units()], [set_trts()], and
@@ -29,7 +29,7 @@ start_design <- function(name = NULL) {
 #'
 #' * `is_edibble_design` checks if it inherits `EdibbleDesign`.
 #' * `is_edibble_graph` checks if it inherits `edbl_graph`.
-#' * `is_edibble_df`, `is_edibble_table` checks if it inherits `edbl_table`
+#' * `is_edibble_table` checks if it inherits `edbl_table`
 #' * `is_edibble` checks if the object contains `EdibbleDesign`.
 #'  The search is quite simple, it checks if
 #' the object is `EdibbleDesign`, failing that it looks to see if the
@@ -97,7 +97,7 @@ get_edibble_design <- function(x) {
 get_edibble_table <- function(x) {
   if(is_edibble_design(x)) {
     x$table
-  } else if(is_edibble_df(x)) {
+  } else if(is_edibble_table(x)) {
     attr(x, "design") <- NULL
     x
   } else {
@@ -153,26 +153,39 @@ not_edibble_table <- function(x) {
 #' Make input edibble
 #'
 #' @description
-#' **(WIP)** If variables are already defined as external data then you can import this
-#' data as edibble.
+#' If variables are already defined as external data then you can import this
+#' data as edibble. You will need to set what the variables are subsequently
+#' after making it an edibble table by calling on functions like `set_units`.
+#' `set_trts` and `record_vars`.
 #'
 #' @param .data A named list of variables or data frame.
-#' @param ... Passed to `new_tibble`.
-#' @param units A character vector specifying variables names in `.data`
-#'   which are the unit variables.
-#' @param trts A character vector specifying variables names in `.data`
-#'   which are the treatment variables.
-#' @seealso See [start_design()] for initiating design from scratch.
+#' @param name An optional name of the design.
+#' @param ... Passed to `new_edibble`.
+#' @seealso See [start_design()] for initiating design from scratch. When
+#'  the variables are made edibble, you can [`restart_design()`].
+#' @examples
+#' # regenerating a new design for lady tasting tea
+#' lady_tasting_tea %>%
+#'   edibble(name = "Lady tasting tea") %>%
+#'   set_units(cup) %>%
+#'   set_trts(first) %>%
+#'   restart_design() %>%
+#'   allocate_trts(~ cup) %>%
+#'   randomise_trts() %>%
+#'   serve_table()
 #'
+#' skittles %>%
+#'   edibble(name = "Nick's skittle experiment") %>%
+#'   set_units(person,
+#'             order = nested_in(person)) %>%
+#'   set_trts(skittle_type) %>%
+#'   allocate_trts()
 #' @export
-edibble <- function(.data, name = NULL, ..., units = NULL, trts = NULL) {
+edibble <- function(.data, name = NULL, ...) {
   stopifnot(is.list(.data))
 
   name <- name %||% "An edibble design"
-
   out <- new_edibble(.data, ..., design = start_design(name =  name))
-  if(!is_null(units)) out <- set_units(out, expr(units))
-  if(!is_null(trts)) out <- set_trts(out, expr(trts))
   out
 }
 

@@ -10,10 +10,10 @@ start_design(name = NULL)
 \item{name}{Optional name used as title for printing the design.}
 }
 \value{
-An \code{EdibbleGraph} object which is a special type of \code{R6} class.
+An \code{EdibbleDesign} object which is a special type of \code{R6} class.
 }
 \description{
-This function doesn't really do much besides create a new EdibbleDesign.
+This function doesn't really do much besides create a new \code{EdibbleDesign}.
 }
 \examples{
 start_design("My design")

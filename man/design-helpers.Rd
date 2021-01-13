@@ -37,7 +37,7 @@ inherits particular class and returns \code{TRUE} if it does, otherwise \code{FA
 \itemize{
 \item \code{is_edibble_design} checks if it inherits \code{EdibbleDesign}.
 \item \code{is_edibble_graph} checks if it inherits \code{edbl_graph}.
-\item \code{is_edibble_df}, \code{is_edibble_table} checks if it inherits \code{edbl_table}
+\item \code{is_edibble_table} checks if it inherits \code{edbl_table}
 \item \code{is_edibble} checks if the object contains \code{EdibbleDesign}.
 The search is quite simple, it checks if
 the object is \code{EdibbleDesign}, failing that it looks to see if the

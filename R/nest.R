@@ -89,7 +89,7 @@ nested_in <- function(.var, ..., .vname) {
 
       g <- add_vertices(g, nv = length(child_levels),
                         name = child_levels,
-                        label2 = rep(child_non_distinct_levels, each = parent_nlevels),
+                        label2 = rep(child_non_distinct_levels, times = parent_nlevels),
                         ltype = "child", group = rep(1:parent_nlevels, each = nrep))
       es <- unname(unlist(lapply(seq_along(parent_vlevels), function(i) {
           cross_edge_seq(g, parent_vlevels[i], child_levels[seq((i - 1) * nrep + 1, i * nrep)])

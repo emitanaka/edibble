@@ -280,12 +280,12 @@ save_workbook <- function(wb, file, overwrite, .design) {
   }
 }
 
-
+# .data can be a list or data frame
 as_data_frame <- function(.data) {
   rcrd_names <- names(.data)[map_lgl(.data, function(x) "edbl_rcrd" %in% class(x))]
   .data[rcrd_names] <- ""
   structure(lapply(.data, as.character),
             names = names(.data),
             class = "data.frame",
-            row.names = 1:nrow(.data))
+            row.names = 1:vec_size_common(!!!.data))
 }

@@ -19,28 +19,52 @@ set_trts <- function(.design, ...,
   set_vars(.design, ..., .name_repair = .name_repair, .class = "edbl_trt")
 }
 
-#' Define which unit to apply treatment
+#' Define the possible allocation of treatments to units
+#'
+#' This function adds the edges between level nodes in
+#' an edibble graph that outlines the possible ways that
+#' the treatment may be allocated to the recipient units.
 #'
 #' @param .data An `edbl_graph` object.
 #' @param ... One-sided or two-sided formula. If the input is a one-sided formula
 #' then the whole treatment is applied to the specified unit.
 #' @param class A sub-class. This is meant so that it can invoke the method
 #' `randomise_trts.class`.
-#' @importFrom rlang f_lhs f_rhs
+#' @importFrom rlang enexprs f_lhs f_rhs
 #' @importFrom igraph add_edges
 #' @family user-facing functions
+#' @examples
+#' start_design() %>%
+#'   set_units(block = 10,
+#'             plot = nested_in(block, 3)) %>%
+#'   set_trts(treat = c("A", "B", "C"),
+#'            pest = c("a", "b")) %>%
+#'   allocate_trts(treat ~ plot,
+#'                 pest ~ block)
+#'
+#' # allocation works on edibble table too
+#' lady_tasting_tea %>%
+#'   edibble() %>%
+#'   set_units(cup) %>%
+#'   set_trts(first) %>%
+#'   allocate_trts(first ~ cup)
+#'
 #' @export
-allocate_trts <- function(.design, ...) {
-  dots <- enquos(...)
-  specials <- c(":", "*")
+allocate_trts <- function(.edibble, ...) {
+
+  not_edibble(.edibble)
+
+  .design <- get_edibble_design(.edibble)
+
+  dots <- enexprs(...)
   for(i in seq_along(dots)) {
-    expr <- quo_get_expr(dots[[i]])
-    .trt <- setdiff(as.character(f_lhs(expr)), specials)
-    # there should be only one unit
-    .EU <- as.character(f_rhs(expr)) #setdiff(as.character(f_rhs(expr)), specials)
-    .design$add_allocation(.trt, .EU)
+      trts <- all.vars(f_lhs(dots[[i]]))
+      # there should be only one unit
+      unit <- all.vars(f_rhs(dots[[i]]))
+      .design$add_allocation(trts, unit)
   }
-  .design
+
+  update_design(.edibble, .design)
 }
 
 

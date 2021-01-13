@@ -2,9 +2,9 @@
 % Please edit documentation in R/trts.R
 \name{allocate_trts}
 \alias{allocate_trts}
-\title{Define which unit to apply treatment}
+\title{Define the possible allocation of treatments to units}
 \usage{
-allocate_trts(.design, ...)
+allocate_trts(.edibble, ...)
 }
 \arguments{
 \item{...}{One-sided or two-sided formula. If the input is a one-sided formula
@@ -16,7 +16,26 @@ then the whole treatment is applied to the specified unit.}
 \code{randomise_trts.class}.}
 }
 \description{
-Define which unit to apply treatment
+This function adds the edges between level nodes in
+an edibble graph that outlines the possible ways that
+the treatment may be allocated to the recipient units.
+}
+\examples{
+start_design() \%>\%
+  set_units(block = 10,
+            plot = nested_in(block, 3)) \%>\%
+  set_trts(treat = c("A", "B", "C"),
+           pest = c("a", "b")) \%>\%
+  allocate_trts(treat ~ plot,
+                pest ~ block)
+
+# allocation works on edibble table too
+lady_tasting_tea \%>\%
+  edibble() \%>\%
+  set_units(cup) \%>\%
+  set_trts(first) \%>\%
+  allocate_trts(first ~ cup)
+
 }
 \seealso{
 Other user-facing functions: 

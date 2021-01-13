@@ -2,12 +2,19 @@
 % Please edit documentation in R/randomise.R
 \name{randomise_trts}
 \alias{randomise_trts}
+\alias{randomise_trts.EdibbleDesign}
 \title{Randomise treatments}
 \usage{
-randomise_trts(.design, ...)
+randomise_trts(.edibble, ...)
+
+\method{randomise_trts}{EdibbleDesign}(.edibble)
 }
 \arguments{
-\item{.design}{AN edibble graph object.}
+\item{.edibble}{An edibble design (\code{EdibbleDesign}), an edibble data frame (\code{edbl_table}) or an
+object that contains the edibble data frame in the attribute
+\code{design}.}
+
+\item{...}{Currently unused.}
 }
 \description{
 Randomise treatments
@@ -15,7 +22,7 @@ Randomise treatments
 \seealso{
 Set the treatments by \code{\link[=set_trts]{set_trts()}}, set units by \code{\link[=set_units]{set_units()}},
 and specify which treatment factors are applied to which units by using
-\code{\link[=apply_trts]{apply_trts()}}.
+\code{\link[=allocate_trts]{allocate_trts()}}.
 
 Other user-facing functions: 
 \code{\link{allocate_trts}()},

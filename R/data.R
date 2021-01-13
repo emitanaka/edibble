@@ -49,3 +49,26 @@
 #' @source Fisher, Ronald (1935) The Design of Experiments.
 #'
 "lady_tasting_tea"
+
+
+#' Rye-grass experiment
+#'
+#' An experiment conducted to compare three different cultivars of rye-grass
+#' (Cropper, Melba, Melle) in combination with four quantities of
+#' nitrogen fertilizer (0 kg/ha, 80 kg/ha, 160 kg/ha, 240 kg/ha).
+#'
+#' The experiment utilised two fields with each divided into three strips of
+#' land. Each strip consisted of four plots.
+#'
+#' \describe{
+#' \item{strip}{A strip of land.}
+#' \item{plot}{A plot within the strip.}
+#' \item{cultivar}{The cultivars tested.}
+#' \item{fertilizer}{The quantitites of nitrogen fertilizer used in kg/ha.}
+#' \item{weight}{The total weight of dry mass after harvest.}
+#' \item{perc}{The percentage of water-soluble carbohydrate in the crop.}
+#' }
+#' @family experimental data
+#' @source Bailey, Rosemary (2008) Design of Comparative Experiments.
+#'
+"rye_grass"

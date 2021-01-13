@@ -17,9 +17,7 @@ set_vars <- function(.edibble, ..., .class = NULL,
   not_edibble(.edibble)
 
   .name_repair <- match.arg(.name_repair)
-
   .design <- get_edibble_design(.edibble)
-
   type <- switch(.class,
                  edbl_unit = "unit",
                  edbl_trt = "trt",
@@ -31,31 +29,30 @@ set_vars <- function(.edibble, ..., .class = NULL,
     vnames_new <- names(dots)
     vnames_old <- names_vars(.design)
     vnames <- vec_as_names(c(vnames_old, vnames_new), repair = .name_repair)
-
-
     for(i in seq_along(dots)) {
       vname <- vnames[i + length(vnames_old)]
       value <- eval_rhs_attr(dots[[i]], vname, .design)
       .design$add_variable(value, vname, attr)
     }
 
-  } else if(is_edibble_df(.edibble)) {
-    .data <- get_edibble_table(.edibble)
+  } else if(is_edibble_table(.edibble)) {
+    .table <- get_edibble_table(.edibble)
     dots <- enquos(..., .named = TRUE)
 
-    loc <- eval_select(expr(!!names(dots)), .data)
+    loc <- eval_select(expr(!!names(dots)), .table)
     for(i in seq_along(loc)) {
-      var <- .data[[loc[i]]]
+      var <- .table[[loc[i]]]
       lvls <- unique(as.character(var))
       vname <- names(loc)[i]
-      .data[[loc[i]]] <- new_edibble_var(labels = as.character(var),
+      .table[[loc[i]]] <- new_edibble_var(labels = as.character(var),
                                          levels = lvls,
                                          name = vname,
                                          class = .class)
       .design$add_variable(lvls, vname, attr)
       # adding nesting
-      .edibble <- .data
+
     }
+    .edibble <- .table
   }
 
   update_design(.edibble, .design)
