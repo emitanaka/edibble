@@ -9,7 +9,6 @@
 #' @family edge-seq
 #' @return An edge sequence (vector of vertex indices) that connects every node
 #' from first vector to every node in the second vector.V()
-#' @export
 cross_edge_seq <- function(.graph, vnames_from, vnames_to) {
   vindex_from <- which(V(.graph)$name %in% vnames_from)
   vindex_to <- which(V(.graph)$name %in% vnames_to)
@@ -29,7 +28,6 @@ cross_edge_seq <- function(.graph, vnames_from, vnames_to) {
 #' @param vnames_to The vertex name to end the edge.
 #' @return An edge sequence.
 #' @family edge-seq
-#' @export
 match_edge_seq <- function(.data, vnames_from, vnames_to) {
   vindex_from <- map_int(vnames_from, function(vname) var_index(.data, vname))
   vindex_to <- map_int(vnames_to, function(vname) var_index(.data, vname))

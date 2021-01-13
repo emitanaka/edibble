@@ -79,7 +79,6 @@ eval_rhs_attr <- function(.x, vname, .design = NULL) {
 #'
 #' @name add_edibble_vertex
 #' @return Returns an evaluated expression.
-#' @export
 add_edibble_vertex <- function(.data, ...) {
   UseMethod("add_edibble_vertex")
 }
@@ -332,7 +331,7 @@ combine_graphs <- function(g1, g2) {
 }
 
 
-#' Evaluate input value type
+# Evaluate input value type
 get_value_type <- function(x) {
   if(is.numeric(x) && length(x)==1) return("numeric")
   if(is.vector(x) && !is_named(x)) return("unnamed_vector")

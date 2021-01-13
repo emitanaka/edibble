@@ -11,25 +11,21 @@
 #' @examples
 #' names_units(nclassics$split)
 #' names_trts(nclassics$split)
-#' @export
 names_units <- function(.data) {
   names_vars(.data, class = "edbl_unit")
 }
 
 #' @rdname names-ed-vars
-#' @export
 names_trts <- function(.data) {
   names_vars(.data, class = "edbl_trt")
 }
 
 #' @rdname names-ed-vars
-#' @export
 names_resp <- function(.data) {
   names_vars(.data, class = "edbl_resp")
 }
 
 #' @rdname names-ed-vars
-#' @export
 names_vars <- function(.data, ...) {
   UseMethod("names_vars")
 }
