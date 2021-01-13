@@ -174,8 +174,8 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
+          <h2 id="section-constructing-an-experiment" class="hasAnchor"><a href="#section-constructing-an-experiment" class="anchor"></a>Constructing an experiment</h2>
+          <p class="section-desc"><p>These are the main functions used to set experiments from scratch.</p></p>
         </th>
       </tr>
       
@@ -186,21 +186,21 @@
       <tr>
         
         <td>
-          <p><code><a href="EdibbleDesign.html">EdibbleDesign</a></code> </p>
+          <p><code><a href="start_design.html">start_design()</a></code> </p>
         </td>
-        <td><p>An R6 Class for an edibble design</p></td>
+        <td><p>Start the edibble design</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="NamedDesign.html">NamedDesign</a></code> </p>
+          <p><code><a href="set_units.html">set_units()</a></code> </p>
         </td>
-        <td><p>An R6 Class for a named experimental design</p></td>
+        <td><p>Set units used in experiment</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="add_edibble_vertex.html">add_edibble_vertex()</a></code> </p>
+          <p><code><a href="set_trts.html">set_trts()</a></code> </p>
         </td>
-        <td><p>Add an edibble vertex</p></td>
+        <td><p>Set the treatment variables</p></td>
       </tr><tr>
         
         <td>
@@ -210,39 +210,34 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="cross_edge_seq.html">cross_edge_seq()</a></code> </p>
+          <p><code><a href="randomise_trts.html">randomise_trts()</a></code> </p>
         </td>
-        <td><p>Make an edge sequence for every pair from two vectors</p></td>
+        <td><p>Randomise treatments</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="design-context.html">set_context()</a></code> <code><a href="design-context.html">sort_context()</a></code> <code><a href="design-context.html">suppress_context()</a></code> <code><a href="design-context.html">express_context()</a></code> </p>
+          <p><code><a href="serve_table.html">serve_table()</a></code> </p>
         </td>
-        <td><p>Describe context related to experiment</p></td>
-      </tr><tr>
+        <td><p>Serve edibble table</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-exporting-the-experimental-design" class="hasAnchor"><a href="#section-exporting-the-experimental-design" class="anchor"></a>Exporting the experimental design</h2>
+          <p class="section-desc"><p>These help to create data validation rules and export the experimental layout as xlsx file.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
         
         <td>
-          <p><code><a href="design-helpers.html">is_edibble_design()</a></code> <code><a href="design-helpers.html">is_named_design()</a></code> <code><a href="design-helpers.html">is_edibble_table()</a></code> <code><a href="design-helpers.html">is_edibble_graph()</a></code> <code><a href="design-helpers.html">is_edibble()</a></code> <code><a href="design-helpers.html">get_edibble_design()</a></code> <code><a href="design-helpers.html">get_edibble_table()</a></code> <code><a href="design-helpers.html">get_edibble_graph()</a></code> </p>
+          <p><code><a href="record_vars.html">record_vars()</a></code> </p>
         </td>
-        <td><p>Test and get edibble objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="edibble-package.html">edibble-package</a></code> </p>
-        </td>
-        <td><p>edibble: Generate experimental designs using the grammar of experimental design</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="edibble.html">edibble()</a></code> <code><a href="edibble.html">as_edibble()</a></code> </p>
-        </td>
-        <td><p>Make input edibble</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="expect-vars.html">to_be_numeric()</a></code> <code><a href="expect-vars.html">to_be_integer()</a></code> <code><a href="expect-vars.html">to_be_date()</a></code> <code><a href="expect-vars.html">to_be_time()</a></code> <code><a href="expect-vars.html">to_be_character()</a></code> <code><a href="expect-vars.html">to_be_factor()</a></code> </p>
-        </td>
-        <td><p>Expected type of entry</p></td>
+        <td><p>Measure response of given units</p></td>
       </tr><tr>
         
         <td>
@@ -252,105 +247,78 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="export_design.html">export_design()</a></code> </p>
+          <p><code><a href="expect-vars.html">to_be_numeric()</a></code> <code><a href="expect-vars.html">to_be_integer()</a></code> <code><a href="expect-vars.html">to_be_date()</a></code> <code><a href="expect-vars.html">to_be_time()</a></code> <code><a href="expect-vars.html">to_be_character()</a></code> <code><a href="expect-vars.html">to_be_factor()</a></code> </p>
         </td>
-        <td><p>Export the design to xlsx</p></td>
+        <td><p>Expected type of entry</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="find_classical_names.html">find_classical_names()</a></code> </p>
+          <p><code><a href="with_value.html">with_value()</a></code> </p>
         </td>
-        <td><p>Find the short names of the classical named designs</p></td>
+        <td><p>Validation values</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-experiment-from-existing-data" class="hasAnchor"><a href="#section-experiment-from-existing-data" class="anchor"></a>Experiment from existing data</h2>
+          <p class="section-desc"><p>These are functions relevant when making an experiment from existing data</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="edibble.html">edibble()</a></code> <code><a href="edibble.html">as_edibble()</a></code> </p>
+        </td>
+        <td><p>Make input edibble</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="get_value_type.html">get_value_type()</a></code> </p>
+          <p><code><a href="restart_design.html">restart_design()</a></code> </p>
         </td>
-        <td><p>Evaluate input value type</p></td>
-      </tr><tr>
+        <td><p>Restart the edibble design</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-adding-context" class="hasAnchor"><a href="#section-adding-context" class="anchor"></a>Adding context</h2>
+          <p class="section-desc"><p>These are functions to add notes and context about the experiment</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="design-context.html">set_context()</a></code> <code><a href="design-context.html">sort_context()</a></code> <code><a href="design-context.html">suppress_context()</a></code> <code><a href="design-context.html">express_context()</a></code> </p>
+        </td>
+        <td><p>Describe context related to experiment</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-plot-and-print" class="hasAnchor"><a href="#section-plot-and-print" class="anchor"></a>Plot and print</h2>
+          <p class="section-desc"><p>These functions plot or print intermediate constructs of the design.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
         
         <td>
           <p><code><a href="iplot.html">iplot()</a></code> </p>
         </td>
         <td><p>Interactive plot of the graph of an edibble design</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="lady_tasting_tea.html">lady_tasting_tea</a></code> </p>
-        </td>
-        <td><p>Lady tasting tea</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="make_classical.html">make_classical()</a></code> <code><a href="make_classical.html">code_classical()</a></code> </p>
-        </td>
-        <td><p>Create a classical named experimental design</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="match_edge_seq.html">match_edge_seq()</a></code> </p>
-        </td>
-        <td><p>Make an edge sequence from two vectors of vertex names</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="n_units.html">n_units()</a></code> </p>
-        </td>
-        <td><p>Number of units associated with the given variable</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="names-ed-vars.html">names_units()</a></code> <code><a href="names-ed-vars.html">names_trts()</a></code> <code><a href="names-ed-vars.html">names_resp()</a></code> <code><a href="names-ed-vars.html">names_vars()</a></code> <code><a href="names-ed-vars.html">names(<i>&lt;edbl_graph&gt;</i>)</a></code> <code><a href="names-ed-vars.html">`names&lt;-`(<i>&lt;edbl_graph&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Names of variables</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="names_by_class.html">names_by_class()</a></code> </p>
-        </td>
-        <td><p>Get names by vertex class</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="names_to_vnames.html">names_to_vnames()</a></code> </p>
-        </td>
-        <td><p>Get the variable names given the vertex name of edibble graph</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ndigits.html">ndigits()</a></code> </p>
-        </td>
-        <td><p>Find how many digits</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="nested_in.html">nested_in()</a></code> </p>
-        </td>
-        <td><p>Specify the nesting structure for units</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="new_edibble.html">new_edibble()</a></code> </p>
-        </td>
-        <td><p>An edibble table constructor</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="new_edibble_var.html">new_edibble_var()</a></code> </p>
-        </td>
-        <td><p>Constructor for an edibble variable</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="number_si_prefix.html">number_si_prefix()</a></code> </p>
-        </td>
-        <td><p>Numbers with SI prefix</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="path_seq.html">path_seq()</a></code> </p>
-        </td>
-        <td><p>Get the edge sequence that draws the apth.</p></td>
       </tr><tr>
         
         <td>
@@ -363,66 +331,25 @@
           <p><code><a href="print.edbl_graph.html">print(<i>&lt;edbl_graph&gt;</i>)</a></code> </p>
         </td>
         <td><p>Print edibble graph to terminal</p></td>
-      </tr><tr>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-experiments" class="hasAnchor"><a href="#section-experiments" class="anchor"></a>Experiments</h2>
+          <p class="section-desc"><p>These are some example experiments.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
         
         <td>
-          <p><code><a href="randomise_trts.html">randomise_trts()</a></code> </p>
+          <p><code><a href="lady_tasting_tea.html">lady_tasting_tea</a></code> </p>
         </td>
-        <td><p>Randomise treatments</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="record_vars.html">record_vars()</a></code> </p>
-        </td>
-        <td><p>Measure response of given units</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="replicabble.html">replicabble()</a></code> </p>
-        </td>
-        <td><p>Make a replicabble</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="restart_design.html">restart_design()</a></code> </p>
-        </td>
-        <td><p>Restart the edibble design</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rye_grass.html">rye_grass</a></code> </p>
-        </td>
-        <td><p>Rye-grass experiment</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="sample_levels.html">sample_levels()</a></code> </p>
-        </td>
-        <td><p>Sample a subset of the levels for the given variable</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="serve_table.html">serve_table()</a></code> </p>
-        </td>
-        <td><p>Serve edibble table</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="set_trts.html">set_trts()</a></code> </p>
-        </td>
-        <td><p>Set the treatment variables</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="set_units.html">set_units()</a></code> </p>
-        </td>
-        <td><p>Set units used in experiment</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="set_vars.html">set_vars()</a></code> </p>
-        </td>
-        <td><p>Set edibble variables</p></td>
+        <td><p>Lady tasting tea</p></td>
       </tr><tr>
         
         <td>
@@ -432,45 +359,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="start_design.html">start_design()</a></code> </p>
+          <p><code><a href="rye_grass.html">rye_grass</a></code> </p>
         </td>
-        <td><p>Start the edibble design</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="subset-edbl-graph.html">subset(<i>&lt;edbl_graph&gt;</i>)</a></code> <code><a href="subset-edbl-graph.html">subset_vars()</a></code> <code><a href="subset-edbl-graph.html">subset_levels()</a></code> </p>
-        </td>
-        <td><p>Subset an edibble graph</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="traits.html">traits()</a></code> </p>
-        </td>
-        <td><p>Helper to set the traits for edibble variable</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="traits_levels.html">traits_levels()</a></code> </p>
-        </td>
-        <td><p>Helper function to create level names</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="unit_to_trts.html">unit_to_trts()</a></code> </p>
-        </td>
-        <td><p>Get the treatment variables for every unit</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="utility-edibble-var.html">as.character(<i>&lt;edbl_var&gt;</i>)</a></code> <code><a href="utility-edibble-var.html">is_edibble_var()</a></code> </p>
-        </td>
-        <td><p>Utility functions for edibble variable</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="with_value.html">with_value()</a></code> </p>
-        </td>
-        <td><p>Validation values</p></td>
+        <td><p>Rye-grass experiment</p></td>
       </tr>
     </tbody>
     </table>
