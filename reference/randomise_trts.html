@@ -170,14 +170,23 @@
     <p>Randomise treatments</p>
     </div>
 
-    <pre class="usage"><span class='fu'>randomise_trts</span><span class='op'>(</span><span class='va'>.design</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>randomise_trts</span><span class='op'>(</span><span class='va'>.edibble</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for EdibbleDesign</span>
+<span class='fu'>randomise_trts</span><span class='op'>(</span><span class='va'>.edibble</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.design</th>
-      <td><p>AN edibble graph object.</p></td>
+      <th>.edibble</th>
+      <td><p>An edibble design (<code>EdibbleDesign</code>), an edibble data frame (<code>edbl_table</code>) or an
+object that contains the edibble data frame in the attribute
+<code>design</code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Currently unused.</p></td>
     </tr>
     </table>
 
@@ -185,7 +194,7 @@
 
     <div class='dont-index'><p>Set the treatments by <code><a href='set_trts.html'>set_trts()</a></code>, set units by <code><a href='set_units.html'>set_units()</a></code>,
 and specify which treatment factors are applied to which units by using
-<code>apply_trts()</code>.</p>
+<code><a href='allocate_trts.html'>allocate_trts()</a></code>.</p>
 <p>Other user-facing functions: 
 <code><a href='allocate_trts.html'>allocate_trts</a>()</code>,
 <code><a href='design-context.html'>design-context</a></code>,

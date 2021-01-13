@@ -55,8 +55,10 @@
   
 
 <meta property="og:title" content="Make input edibble — edibble" />
-<meta property="og:description" content="(WIP) If variables are already defined as external data then you can import this
-data as edibble." />
+<meta property="og:description" content="If variables are already defined as external data then you can import this
+data as edibble. You will need to set what the variables are subsequently
+after making it an edibble table by calling on functions like set_units.
+set_trts and record_vars." />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@emitanaka" />
@@ -168,11 +170,13 @@ data as edibble." />
     </div>
 
     <div class="ref-description">
-    <p><strong>(WIP)</strong> If variables are already defined as external data then you can import this
-data as edibble.</p>
+    <p>If variables are already defined as external data then you can import this
+data as edibble. You will need to set what the variables are subsequently
+after making it an edibble table by calling on functions like <code>set_units</code>.
+<code>set_trts</code> and <code>record_vars</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>edibble</span><span class='op'>(</span><span class='va'>.data</span>, name <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span>, units <span class='op'>=</span> <span class='cn'>NULL</span>, trts <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>edibble</span><span class='op'>(</span><span class='va'>.data</span>, name <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>as_edibble</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
@@ -184,25 +188,51 @@ data as edibble.</p>
       <td><p>A named list of variables or data frame.</p></td>
     </tr>
     <tr>
+      <th>name</th>
+      <td><p>An optional name of the design.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
-      <td><p>Passed to <code>new_tibble</code>.</p></td>
-    </tr>
-    <tr>
-      <th>units</th>
-      <td><p>A character vector specifying variables names in <code>.data</code>
-which are the unit variables.</p></td>
-    </tr>
-    <tr>
-      <th>trts</th>
-      <td><p>A character vector specifying variables names in <code>.data</code>
-which are the treatment variables.</p></td>
+      <td><p>Passed to <code>new_edibble</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>See <code><a href='start_design.html'>start_design()</a></code> for initiating design from scratch.</p></div>
+    <div class='dont-index'><p>See <code><a href='start_design.html'>start_design()</a></code> for initiating design from scratch. When
+the variables are made edibble, you can <code><a href='restart_design.html'>restart_design()</a></code>.</p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># regenerating a new design for lady tasting tea</span>
+<span class='va'>lady_tasting_tea</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>edibble</span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"Lady tasting tea"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='set_units.html'>set_units</a></span><span class='op'>(</span><span class='va'>cup</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='set_trts.html'>set_trts</a></span><span class='op'>(</span><span class='va'>first</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='restart_design.html'>restart_design</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='allocate_trts.html'>allocate_trts</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>cup</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='randomise_trts.html'>randomise_trts</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='serve_table.html'>serve_table</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in restart_design(.): could not find function "restart_design"</span></div><div class='input'>
+<span class='va'>skittles</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>edibble</span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"Nick's skittle experiment"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='set_units.html'>set_units</a></span><span class='op'>(</span><span class='va'>person</span>,
+            order <span class='op'>=</span> <span class='fu'><a href='nested_in.html'>nested_in</a></span><span class='op'>(</span><span class='va'>person</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='set_trts.html'>set_trts</a></span><span class='op'>(</span><span class='va'>skittle_type</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='allocate_trts.html'>allocate_trts</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># An edibble: 30 x 6</span><span>
+#&gt;    skittle_type person    order      choice real_skittle correct
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;trt(5)&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;unit(3)&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;unit(10)&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>  
+#&gt; </span><span style='color: #555555;'> 1</span><span> 1            a         4          purple red          FALSE  
+#&gt; </span><span style='color: #555555;'> 2</span><span> 1            b         9          red    red          TRUE   
+#&gt; </span><span style='color: #555555;'> 3</span><span> 1            c         6          purple red          FALSE  
+#&gt; </span><span style='color: #555555;'> 4</span><span> 1            a         10         red    red          TRUE   
+#&gt; </span><span style='color: #555555;'> 5</span><span> 1            b         10         green  red          FALSE  
+#&gt; </span><span style='color: #555555;'> 6</span><span> 1            c         10         red    red          TRUE   
+#&gt; </span><span style='color: #555555;'> 7</span><span> 2            a         2          yellow orange       FALSE  
+#&gt; </span><span style='color: #555555;'> 8</span><span> 2            b         4          orange orange       TRUE   
+#&gt; </span><span style='color: #555555;'> 9</span><span> 2            c         1          orange orange       TRUE   
+#&gt; </span><span style='color: #555555;'>10</span><span> 2            a         5          orange orange       TRUE   
+#&gt; </span><span style='color: #555555;'># … with 20 more rows</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

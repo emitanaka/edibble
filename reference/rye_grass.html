@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Test and get edibble objects — design-helpers • edibble</title>
+<title>Rye-grass experiment — rye_grass • edibble</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -54,26 +54,10 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Test and get edibble objects — design-helpers" />
-<meta property="og:description" content="The is functions tests if an object (or an object in its attribute)
-inherits particular class and returns TRUE if it does, otherwise FALSE.
-is_edibble_design checks if it inherits EdibbleDesign.
-is_edibble_graph checks if it inherits edbl_graph.
-is_edibble_table checks if it inherits edbl_table
-is_edibble checks if the object contains EdibbleDesign.
-The search is quite simple, it checks if
-the object is EdibbleDesign, failing that it looks to see if the
-attribute &quot;design&quot; of the object is EdibbleDesign.
-is_named_design check if it inherits NamedDesign.
-
-
-The get functions extracts the requested edibble component (table, graph,
-or design) from the object if possible.
-get_edibble_design tries to get EdibbleDesign.
-get_edibble_table tries to get edbl_table with no design attribute.
-get_edibble_graph tries to get edbl_graph.
-
-" />
+<meta property="og:title" content="Rye-grass experiment — rye_grass" />
+<meta property="og:description" content="An experiment conducted to compare three different cultivars of rye-grass
+(Cropper, Melba, Melle) in combination with four quantities of
+nitrogen fertilizer (0 kg/ha, 80 kg/ha, 160 kg/ha, 240 kg/ha)." />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@emitanaka" />
@@ -179,63 +163,46 @@ get_edibble_graph tries to get edbl_graph.
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Test and get edibble objects</h1>
-    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/edibble.R'><code>R/edibble.R</code></a></small>
-    <div class="hidden name"><code>design-helpers.Rd</code></div>
+    <h1>Rye-grass experiment</h1>
+    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/data.R'><code>R/data.R</code></a></small>
+    <div class="hidden name"><code>rye_grass.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The <code>is</code> functions tests if an object (or an object in its attribute)
-inherits particular class and returns <code>TRUE</code> if it does, otherwise <code>FALSE</code>.</p><ul>
-<li><p><code>is_edibble_design</code> checks if it inherits <code>EdibbleDesign</code>.</p></li>
-<li><p><code>is_edibble_graph</code> checks if it inherits <code>edbl_graph</code>.</p></li>
-<li><p><code>is_edibble_table</code> checks if it inherits <code>edbl_table</code></p></li>
-<li><p><code>is_edibble</code> checks if the object contains <code>EdibbleDesign</code>.
-The search is quite simple, it checks if
-the object is <code>EdibbleDesign</code>, failing that it looks to see if the
-attribute "design" of the object is <code>EdibbleDesign</code>.</p></li>
-<li><p><code>is_named_design</code> check if it inherits <code>NamedDesign</code>.</p></li>
-</ul>
-
-<p>The <code>get</code> functions extracts the requested edibble component (table, graph,
-or design) from the object if possible.</p><ul>
-<li><p><code>get_edibble_design</code> tries to get <code>EdibbleDesign</code>.</p></li>
-<li><p><code>get_edibble_table</code> tries to get <code>edbl_table</code> with no design attribute.</p></li>
-<li><p><code>get_edibble_graph</code> tries to get <code>edbl_graph</code>.</p></li>
-</ul>
-
+    <p>An experiment conducted to compare three different cultivars of rye-grass
+(Cropper, Melba, Melle) in combination with four quantities of
+nitrogen fertilizer (0 kg/ha, 80 kg/ha, 160 kg/ha, 240 kg/ha).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>is_edibble_design</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
-<span class='fu'>is_named_design</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
-<span class='fu'>is_edibble_table</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
-<span class='fu'>is_edibble_graph</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
-<span class='fu'>is_edibble</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
-<span class='fu'>get_edibble_design</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
-<span class='fu'>get_edibble_table</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
-<span class='fu'>get_edibble_graph</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
-
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>An object.</p></td>
-    </tr>
-    </table>
+    <pre class="usage"><span class='va'>rye_grass</span></pre>
 
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>is_edibble_df</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span> <span class='co'># FALSE</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in is_edibble_df(mtcars): could not find function "is_edibble_df"</span></div><div class='input'><span class='fu'>is_named_design</span><span class='op'>(</span><span class='fu'>code_classical_rcbd</span><span class='op'>(</span>.quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># TRUE</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in code_classical_rcbd(.quiet = TRUE): could not find function "code_classical_rcbd"</span></div></pre>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>An object of class <code>edbl_table</code> (inherits from <code>tbl_df</code>, <code>tbl</code>, <code>data.frame</code>) with 24 rows and 6 columns.</p>
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p>Bailey, Rosemary (2008) Design of Comparative Experiments.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The experiment utilised two fields with each divided into three strips of
+land. Each strip consisted of four plots.</p>
+<dl>
+<dt>strip</dt><dd><p>A strip of land.</p></dd>
+<dt>plot</dt><dd><p>A plot within the strip.</p></dd>
+<dt>cultivar</dt><dd><p>The cultivars tested.</p></dd>
+<dt>fertilizer</dt><dd><p>The quantitites of nitrogen fertilizer used in kg/ha.</p></dd>
+<dt>weight</dt><dd><p>The total weight of dry mass after harvest.</p></dd>
+<dt>perc</dt><dd><p>The percentage of water-soluble carbohydrate in the crop.</p></dd>
+
+</dl>
+
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other experimental data: 
+<code><a href='lady_tasting_tea.html'>lady_tasting_tea</a></code>,
+<code><a href='skittles.html'>skittles</a></code></p></div>
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
