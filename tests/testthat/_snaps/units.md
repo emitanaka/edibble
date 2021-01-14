@@ -11,10 +11,6 @@
 
 ---
 
-    [1] "A" "B" "C"
-
----
-
     # An edibble: 6 x 2
       block     plot     
       <unit(3)> <unit(6)>
