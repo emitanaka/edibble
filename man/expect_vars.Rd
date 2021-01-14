@@ -4,9 +4,13 @@
 \alias{expect_vars}
 \title{Set the expected values for variables}
 \usage{
-expect_vars(.design, ...)
+expect_vars(.edibble, ...)
 }
 \arguments{
+\item{.edibble}{An edibble design (\code{EdibbleDesign}), an edibble data frame (\code{edbl_table}) or an
+object that contains the edibble data frame in the attribute
+\code{design}.}
+
 \item{...}{Name-value pairs with the name belonging to the variable
 that are plan to be recorded from \code{record_vars()} and the values are
 the expected types and values set by helper functions, see \code{?expect-vars}.}

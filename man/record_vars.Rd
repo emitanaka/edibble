@@ -5,13 +5,15 @@
 \title{Measure response of given units}
 \usage{
 record_vars(
-  .design,
+  .edibble,
   ...,
   .name_repair = c("check_unique", "unique", "universal", "minimal")
 )
 }
 \arguments{
-\item{.design}{An \code{EdibbleDesign} object}
+\item{.edibble}{An edibble design (\code{EdibbleDesign}), an edibble data frame (\code{edbl_table}) or an
+object that contains the edibble data frame in the attribute
+\code{design}.}
 
 \item{...}{Name-value pair. The name should correspond to the name of the
 unit defined in \code{set_units}. The value should be a vector of new variables
@@ -20,6 +22,9 @@ names.}
 \description{
 This function creates new nodes to edibble graph with the name
 corresponding to the intended response that will be measured.
+}
+\examples{
+
 }
 \seealso{
 Other user-facing functions: 

@@ -5,19 +5,25 @@
 #' This function creates new nodes to edibble graph with the name
 #' corresponding to the intended response that will be measured.
 #'
-#' @param .design An `EdibbleDesign` object
+#' @inheritParams design-context
 #' @param ... Name-value pair. The name should correspond to the name of the
 #'  unit defined in `set_units`. The value should be a vector of new variables
 #'  names.
 #' @family user-facing functions
+#' @examples
+#'
 #' @export
-record_vars <- function(.design, ...,
+record_vars <- function(.edibble, ...,
                          .name_repair = c("check_unique", "unique", "universal", "minimal")) {
+
+  not_edibble(.edibble)
 
   .name_repair <- match.arg(.name_repair)
   dots <- enquos(...)
 
-  if(.design$active == "graph") {
+  .design <- get_edibble_design(.edibble)
+
+  if(is_edibble_design(.edibble)) {
     vnames_unit <- names(dots)
     vnames_now <- names_vars(.design)
     if(!all(ind <- vnames_unit %in% vnames_now)) {
@@ -29,25 +35,26 @@ record_vars <- function(.design, ...,
       vnames_new <- all.vars(dots[[i]])
       .design$add_variable_node(vnames_new, vnames_unit[i], attr)
     }
-
-
-  } else if(.design$active == "table") {
-
   }
 
-  .design
+  # TODO add for edibble_table method
+
+  update_design(.edibble, .design)
 }
 
 #' Set the expected values for variables
 #'
+#' @inheritParams design-context
 #' @param ... Name-value pairs with the name belonging to the variable
 #'  that are plan to be recorded from `record_vars()` and the values are
 #'  the expected types and values set by helper functions, see `?expect-vars`.
 #' @family user-facing functions
 #' @export
-expect_vars <- function(.design, ...) {
+expect_vars <- function(.edibble, ...) {
+  not_edibble(.edibble)
+  .design <- get_edibble_design(.edibble)
   .design$append_validation(list2(...))
-  .design
+  update_design(.edibble, .design)
 }
 
 has_record <- function(.design) {
@@ -55,11 +62,18 @@ has_record <- function(.design) {
 }
 
 
-#' Expected type of entry
+#' Expected type of data entry
+#'
+#' @description
+#' These functions should be used within `expect_vars` where variables that
+#' are to be recorded are constraint to the expected values when exported
+#' as an xlsx file by `export_design().` The functions to set a particular
+#' value type (numeric, integer, date, time and character) are preceded by
+#' "to_be_" where the corresponding restriction set by `with_value()`.
 #'
 #' @param value A vector of possible values for entry.
 #' @param range,length A named list with two elements: "operator" and "value" as
-#'  provided by helper `as_value()` that gives the possible range of values
+#'  provided by helper `with_value()` that gives the possible range of values
 #'  that the expected type can take.
 #' @name expect-vars
 #' @export
@@ -136,7 +150,37 @@ with_value <- function(operator = c("=", "==", ">=", "<=", "<", ">", "!="),
 }
 
 
-fill_responses <- function() {
-
+new_edibble_rcrd <- function(n, unit, class = NULL) {
+  v <- rep("x", n)
+  loc <- match(unique(unit), unit)
+  v[loc] <- "■"
+  x <- new_vctr(v, class = "edbl_rcrd")
+  class(x) <- c(class, class(x))
+  x
 }
 
+#' @importFrom pillar pillar_shaft new_pillar_shaft_simple style_subtle
+#' @export
+pillar_shaft.edbl_rcrd <- function(x, ...) {
+  out <- as.character(x)
+  out <- ifelse(out=="x", style_subtle("x"), out)
+  new_pillar_shaft_simple(out, align = "right")
+}
+
+#' @export
+as.character.edbl_rcrd <- function(x, ...) {
+  out <- unclass(x)
+  attributes(out) <- NULL
+  out
+}
+
+
+#' @importFrom vctrs vec_ptype_abbr
+#' @export
+vec_ptype_abbr.edbl_rcrd <- function(x, ...)  {
+  "rcrd"
+}
+
+#' @importFrom vctrs vec_ptype_full
+#' @export
+vec_ptype_full.edbl_rcrd <- function(x, ...) "rcrd"

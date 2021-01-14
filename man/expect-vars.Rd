@@ -8,7 +8,7 @@
 \alias{to_be_time}
 \alias{to_be_character}
 \alias{to_be_factor}
-\title{Expected type of entry}
+\title{Expected type of data entry}
 \usage{
 to_be_numeric(range)
 
@@ -24,11 +24,15 @@ to_be_factor(levels)
 }
 \arguments{
 \item{range, length}{A named list with two elements: "operator" and "value" as
-provided by helper \code{as_value()} that gives the possible range of values
+provided by helper \code{with_value()} that gives the possible range of values
 that the expected type can take.}
 
 \item{value}{A vector of possible values for entry.}
 }
 \description{
-Expected type of entry
+These functions should be used within \code{expect_vars} where variables that
+are to be recorded are constraint to the expected values when exported
+as an xlsx file by \verb{export_design().} The functions to set a particular
+value type (numeric, integer, date, time and character) are preceded by
+"to_be_" where the corresponding restriction set by \code{with_value()}.
 }

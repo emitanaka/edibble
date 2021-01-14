@@ -196,40 +196,7 @@ new_edibble_var <- function(labels = character(), levels = unique(labels),
   x
 }
 
-new_edibble_rcrd <- function(n, unit, class = NULL) {
-  v <- rep("x", n)
-  loc <- match(unique(unit), unit)
-  v[loc] <- "■"
-  x <- new_vctr(v, class = "edbl_rcrd")
-  class(x) <- c(class, class(x))
-  x
-}
 
-#' @importFrom pillar pillar_shaft new_pillar_shaft_simple style_subtle
-#' @export
-pillar_shaft.edbl_rcrd <- function(x, ...) {
-  out <- as.character(x)
-  out <- ifelse(out=="x", style_subtle("x"), out)
-  new_pillar_shaft_simple(out, align = "right")
-}
-
-#' @export
-as.character.edbl_rcrd <- function(x, ...) {
-  out <- unclass(x)
-  attributes(out) <- NULL
-  out
-}
-
-
-#' @importFrom vctrs vec_ptype_abbr
-#' @export
-vec_ptype_abbr.edbl_rcrd <- function(x, ...)  {
-  "rcrd"
-}
-
-#' @importFrom vctrs vec_ptype_full
-#' @export
-vec_ptype_full.edbl_rcrd <- function(x, ...) "rcrd"
 
 
 var_class <- function(.graph, vname) {
@@ -376,31 +343,3 @@ levels.edbl_trt <- function(x) {
 is_edibble_var <- function(x) {
   inherits(x, "edbl_var")
 }
-
-
-# Alias required for help links in downstream packages
-#' @aliases select_helpers
-#' @importFrom tidyselect contains
-#' @export
-tidyselect::contains
-#' @importFrom tidyselect ends_with
-#' @export
-tidyselect::ends_with
-#' @importFrom tidyselect everything
-#' @export
-tidyselect::everything
-#' @importFrom tidyselect matches
-#' @export
-tidyselect::matches
-#' @importFrom tidyselect num_range
-#' @export
-tidyselect::num_range
-#' @importFrom tidyselect one_of
-#' @export
-tidyselect::one_of
-#' @importFrom tidyselect starts_with
-#' @export
-tidyselect::starts_with
-#' @importFrom tidyselect last_col
-#' @export
-tidyselect::last_col

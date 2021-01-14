@@ -57,21 +57,22 @@ path_seq <- function(.data, vnames) {
 #' and the right-hand side is the levels of the new unit OR the number of levels
 #' @param .vname an optional variable name
 #' @return Returns an isolated graph
-#' @importFrom rlang enquos enquo quo_get_expr as_string f_lhs f_rhs
+#' @importFrom rlang enexpr enquos is_symbol as_string f_lhs f_rhs
 #' @importFrom igraph add_vertices make_empty_graph add_edges set_graph_attr
 #' @export
 nested_in <- function(.var, ..., .vname) {
-  parent_name <- as_string(quo_get_expr(enquo(.var)))
+  parent_name <- as_string(enexpr(.var))
   parent_vlevels <- .var
   parent_nlevels <- length(parent_vlevels)
 
   g <- add_vertices(make_empty_graph(),
-                            nv = parent_nlevels,
-                            name = parent_vlevels,
-                            ltype = "parent")
+                    nv = parent_nlevels,
+                    name = parent_vlevels,
+                    ltype = "parent")
 
   dots <- enquos(...)
   levels_left <- parent_vlevels
+  nchild <- 1
 
   for(i in seq_along(dots)) {
     expr <- quo_get_expr(dots[[i]])
@@ -85,39 +86,79 @@ nested_in <- function(.var, ..., .vname) {
       child_non_distinct_levels <- traits_levels(prefix = ifelse(missing(.vname), "", .vname),
                                                  size = nrep)
 
-      g <- add_vertices(g, nv = length(child_levels),
+      g <- add_vertices(g,
+                        nv = length(child_levels),
                         name = child_levels,
                         label2 = rep(child_non_distinct_levels, times = parent_nlevels),
-                        ltype = "child", group = rep(1:parent_nlevels, each = nrep))
+                        ltype = "child",
+                        group = rep(1:parent_nlevels, each = nrep))
+      # I will clean all this vomit-worthy code one day...
       es <- unname(unlist(lapply(seq_along(parent_vlevels), function(i) {
           cross_edge_seq(g, parent_vlevels[i], child_levels[seq((i - 1) * nrep + 1, i * nrep)])
         })))
-      g <- add_edges(g, es, attr = edge_attr_opt("l2l"))
-      g <- set_graph_attr(g, "parent_name", parent_name)
 
-      class(g) <- c("lkbl_graph", class(g))
-      return(g)
-    }
-
-    # nested_in(unit, . ~ 2)
-    # support for single nesting unit only
-    lhs <- f_lhs(expr)
-    rhs <- f_rhs(expr)
-    erhs <- eval(rhs)
-    if(is_symbol(lhs, name = ".")) {
-      df <- set_lkbl(df, parent_vlevels %in% levels_left, erhs)
     } else {
-      elhs <- eval(lhs)
-      if(is.numeric(elhs)) {
-        df <- set_lkbl(df, elhs, erhs)
-        levels_left <- setdiff(levels_left, parent_vlevels[elhs])
-      } else if(is.character(elhs)) {
-        df <- set_lkbl(df, parent_vlevels %in% elhs, erhs)
-        levels_left <- setdiff(levels_left, elhs)
+      # nested_in(unit, . ~ 2)
+      # support for single nesting unit only
+      lhs <- f_lhs(expr)
+      rhs <- f_rhs(expr)
+      nc <- eval(rhs) # only numeric value supported for now
+      if(is_symbol(lhs, name = ".")) {
+        np_left <- length(levels_left)
+        child_levels <- traits_levels(prefix = ifelse(missing(.vname), "", .vname),
+                                      from = nchild, to = nchild + nc * np_left - 1)
+        child_levels <- vertex_level_names(.vname, child_levels)
+        child_non_distinct_levels <- traits_levels(prefix = ifelse(missing(.vname), "", .vname),
+                                                   size = nc)
+
+        g <- add_vertices(g,
+                          nv = length(child_levels),
+                          name = child_levels,
+                          label2 = rep(child_non_distinct_levels, times = np_left),
+                          ltype = "child",
+                          group = rep(sapply(levels_left, function(x) match(x, parent_vlevels)),
+                                      each = nc))
+        # I will clean all this vomit-worthy code one day...
+        es <- unname(unlist(lapply(seq_along(levels_left), function(i) {
+          cross_edge_seq(g, levels_left[i], child_levels[seq((i - 1) * nc + 1, i * nc)])
+        })))
+
+      } else {
+        child_levels <- traits_levels(prefix = ifelse(missing(.vname), "", .vname),
+                                      from = nchild, to = nchild + nc - 1)
+        child_levels <- vertex_level_names(.vname, child_levels)
+        child_non_distinct_levels <- traits_levels(prefix = ifelse(missing(.vname), "", .vname),
+                                                   size = nc)
+        nchild <- nchild + nc
+        elhs <- eval(lhs)
+        plevel <- switch(class(elhs),
+                         integer = parent_vlevels[elhs],
+                         numeric = parent_vlevels[elhs],
+                         character = elhs,
+                         abort("LHS currently needs to be integer, numeric, or character"))
+        group <- switch(class(elhs),
+                        integer = elhs,
+                        numeric = elhs,
+                        character = match(elhs, parent_vlevels))
+
+        g <- add_vertices(g,
+                          nv = nc,
+                          name = child_levels,
+                          label2 = child_non_distinct_levels,
+                          ltype = "child",
+                          group = group)
+        es <- cross_edge_seq(g, plevel, child_levels)
+
+        levels_left <- setdiff(levels_left, plevel)
+
       }
     }
+    g <- add_edges(g, es, attr = edge_attr_opt("l2l"))
   }
-  return(df)
+
+  g <- set_graph_attr(g, "parent_name", parent_name)
+  class(g) <- c("lkbl_graph", class(g))
+  return(g)
 
 }
 
