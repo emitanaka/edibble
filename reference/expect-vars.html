@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Expected type of entry — expect-vars • edibble</title>
+<title>Expected type of data entry — expect-vars • edibble</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -54,8 +54,12 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Expected type of entry — expect-vars" />
-<meta property="og:description" content="Expected type of entry" />
+<meta property="og:title" content="Expected type of data entry — expect-vars" />
+<meta property="og:description" content="These functions should be used within expect_vars where variables that
+are to be recorded are constraint to the expected values when exported
+as an xlsx file by export_design(). The functions to set a particular
+value type (numeric, integer, date, time and character) are preceded by
+&quot;to_be_&quot; where the corresponding restriction set by with_value()." />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@emitanaka" />
@@ -161,13 +165,17 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Expected type of entry</h1>
+    <h1>Expected type of data entry</h1>
     <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/rcrd.R'><code>R/rcrd.R</code></a></small>
     <div class="hidden name"><code>expect-vars.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Expected type of entry</p>
+    <p>These functions should be used within <code>expect_vars</code> where variables that
+are to be recorded are constraint to the expected values when exported
+as an xlsx file by <code>export_design().</code> The functions to set a particular
+value type (numeric, integer, date, time and character) are preceded by
+"to_be_" where the corresponding restriction set by <code><a href='with_value.html'>with_value()</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>to_be_numeric</span><span class='op'>(</span><span class='va'>range</span><span class='op'>)</span>
@@ -188,7 +196,7 @@
     <tr>
       <th>range, length</th>
       <td><p>A named list with two elements: "operator" and "value" as
-provided by helper <code>as_value()</code> that gives the possible range of values
+provided by helper <code><a href='with_value.html'>with_value()</a></code> that gives the possible range of values
 that the expected type can take.</p></td>
     </tr>
     <tr>
