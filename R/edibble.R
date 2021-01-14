@@ -9,7 +9,7 @@
 #' @examples
 #' start_design("My design")
 #' @seealso Add variables to this design with [set_units()], [set_trts()], and
-#' [measure_units()].
+#' [record_vars()].
 #' @family user-facing functions
 #' @export
 start_design <- function(name = NULL) {

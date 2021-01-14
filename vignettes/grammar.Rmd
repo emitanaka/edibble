@@ -1,8 +1,8 @@
 ---
-title: "Terminology in edibble"
+title: "Grammar of experimental design"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Terminology in edibble}
+  %\VignetteIndexEntry{Grammar of experimental design}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -32,11 +32,11 @@ create_graph() %>%
 
 [WIP]
 
-If you are looking to get started with _code_, look at `vignette("edibble")` instead. This vignette is a bit wordy and at times serves as the dumping ground of my own thoughts. 
+If you are looking to get started with _code_, look at `vignette("edibble")` instead. This vignette is a bit wordy and at times serves as the dumping ground of my own thoughts. Some parts of this vignette may be out of date.
 
 In this vignette, I introduce terms that refer to special objects and concepts in edibble as an attempt to deconstruct an experimental design to its bare components. I can't say it has been an easy (let alone successful) attempt when the world of experimental design is so vast that sometimes such an attempt felt too ambitious and difficult, if not impossible, for me. Nonetheless, I gave it a try from the little knowledge I have on experimental design that stem mostly from working with plant breeding experiments and equally little skill I have in software development. Consequently, you might find (and rightly so) edibble subpar on many fronts compared to its grand goal. edibble will evolve, and hopefully also expand, as I come to understand better both the world of experimental design and the world of software development.
 
-In edibble, the objects are governed by their respective structures and rules. The government isn't strict yet so there isn't much check put in place so you probably can get away with violations of the structures and rules. If I can think better, some of these may be converted to `R6` class (in fact edibble graph was using `R6` before I decided that `igraph` might be better!). This just means that there's some drastic evolution that might happen. The code itself has already undergone a number of major structural changes before I finally decided to release it publicly.   
+In edibble, the objects are governed by their respective structures and rules. The government isn't strict yet so there isn't much check put in place so you probably can get away with violations of the structures and rules. If I can think better, some of these may be converted to `R6` class (in fact edibble graph was using `R6` before I decided that `igraph` might be better! And in the latest, I went back to `R6`...). This just means that there's some drastic evolution that might happen. The code itself has already undergone a number of major structural changes before I finally decided to release it publicly.   
 
 The key objects are summarised in the table below with more details under their respective sections. For some objects, further details can be found in the help documentation of functions given under the documentation column in the table below.
 
@@ -45,11 +45,11 @@ object | class | purpose | documentation
 edibble variable | `edbl_var` | a variable pertaining to the experimental design | `?set_vars`
 edibble unit | `edbl_unit` | any entity, except treatment factors, that pertains to the experiment | `?set_units`
 edibble treatment | `edbl_trt` | treatment factor in the experiment such that the factorial combination describes the whole treatment levels | `?set_trts`
-edibble response | `edbl_resp` | the intended response to be measured during the experiment | `?measure_resp`
+edibble response | `edbl_rcrd` | the intended response to be measured during the experiment | `?record_vars`
 edibble graph | `edbl_graph` | an intermediate construct of the experimental design | this vignette
 edibble table/data frame | `edbl_table` | a tibble output for experimental design | this vignette
-replicabble | `rpbl_df` | a tibble that contains replication for treatment levels | `?replicabble`
-linkabble | `lkbl_graph` or `lkbl_df` | a transitional component storing information about how levels across variables are linked | none
+replicabble | `rpbl_df` | a tibble that contains replication for treatment levels | questioning
+linkabble | `lkbl_graph` or `lkbl_df` | a transitional component storing information about how levels across variables are linked | questioning
 
 ## An edibble variable
 
@@ -88,9 +88,9 @@ You can find more specific information in the documentation for `?set_units`.
 
 You can find more specific information in the documentation for `?set_trts`.
 
-### An edibble response
+### An edibble record
 
-You can find more specific information in the documentation for `?measure_resp`.
+You can find more specific information in the documentation for `?record_vars`.
 
 ## An edibble graph
 
@@ -140,6 +140,8 @@ knitr::include_graphics("figures/vignette-edibble-nexus-all.png")
 
 An edibble, or `edbl_table` object, is a special class of [`tibble`](https://tibble.tidyverse.org/). The word "edibble"
 itself already implies that it is a table so appending the word with table or data frame seems superfluous. However, edibble can refer to the package, object, or used as an adjective to other objects, so appending edibble with table or data frame is to make explicit emphasis it refers to the `edbl_table` object, otherwise the reader is expected to infer its meaning by context.
+
+An `edbl_table` was originally called `edbl_df` following convention from tibble but I decided to break away from this since other edibble components are _graph_ and _design_, so a two letter word felt too short in contrast. 
 
 An edibble data frame is produced when the variables can be laid out in a [tidy data](https://www.jstatsoft.org/article/view/v059i10) format. An edibble is constructed from two possible ways: 
 

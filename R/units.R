@@ -5,7 +5,8 @@
 #' specifically, this means that new nodes are added to the `edbl_graph`.
 #'
 #' @inheritParams design-context
-#' @param ... Either a name-value pair or a series of the names
+#' @param ... Either a name-value pair or a series of the names.
+#' @param .name_repair Same as the argument in `tibble::tibble()`.
 #' @section Definition of _unit_:
 #' A _unit_, much like _factor_, is an over-used word but due to lack of a
 #' better word, edibble uses the word "unit" to refer to any entity, physical
@@ -33,6 +34,25 @@
 #' start_design() %>%
 #'   set_units(company = c("A", "B", "C"),
 #'                 box = nested_in(company, 10))
+#'
+#' # 2 classes, one with 10 students, the other with 20 students
+#' start_design() %>%
+#'   set_units(class = 2,
+#'             student = nested_in(class,
+#'                                 1 ~ 10,
+#'                                 2 ~ 20))
+#'
+#' # 4 countries with 10 people from Australia & New Zealand and 20 from the rest
+#' start_design() %>%
+#'   set_units(country = c("AU", "NZ", "USA", "JPN"),
+#'             person = nested_in(country,
+#'                                c("AU", "NZ") ~ 10,
+#'                                            . ~ 20)) %>%
+#'   serve_table()
+#'
+#' # if using existing data then it specifies which variables are units
+#' lady_tasting_tea %>%
+#'   set_units(cup)
 #'
 #' @family user-facing functions
 #' @export

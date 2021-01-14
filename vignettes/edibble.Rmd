@@ -1,0 +1,181 @@
+---
+title: "Getting started with `edibble`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting started with `edibble`}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = TRUE
+)
+```
+
+```{r setup}
+library(edibble)
+```
+
+This vignette explains how to get started with using `edibble`. To understand some terminology, it might be helpful to look at `vignette("grammar")` instead. 
+
+⚠️ Before you read further, edibble still has a lot of limitations. Currently, it is better catered for the design of comparative experiments where the experimental resources are well defined. Survey or sampling designs, many of which require sample size calculations, are not the current focus.
+
+💡 The big idea with edibble is that you specify an experimental design by expressing the experimental structure in a natural language of an everyday analyst. Some barriers in constructing an experimental design are
+
+* the use of jargon, e.g. named experimental designs,
+* software limitation.
+
+To construct an effective experimental design, **domain knowledge** must be incorporated. You cannot form a question, know what available resources are, limitation in conducting the experiment, etc, without knowing the subject matter. A person who constructs the experimental design 👩‍💻 does not necessarily have the domain knowledge 👵. A person who conducts the experiment 👩‍🔬 is likely not the person who constructed the design of experiment. How many people are involved in carrying out an experiment? A typical experiment will involve a diverse set of people - not all with statistical knowledge about experimental designs. You'd want everyone on the same page about the experiment, otherwise *you could end up wasting precious resources*! The cost of redoing an experiment is generally a lot more than redoing an analysis - you want to get it right in the first instance.
+
+💬 **Think of specifying experimental design as a conversation with collaborators**.
+
+Take for an example, the classic split-plot design that contains 4 wholeplots with 4 sub plots within each wholeplot (so 16 subplots in total). There are 2 treatment factors: fertilizer (with levels A and B) and variety (with levels V1 and V2). Each level of the fertilizer is randomly applied to two wholeplots. Each level of variety is randomly applied to two subplots within each wholeplot. 
+
+In edibble, we can code the above split-plot design as below. Each function below creates an intermediate construct of the experimental design.
+
+
+```{r}
+set.seed(2020) 
+spdes <- start_design("Split-plot Design") %>% 
+  set_units(wholeplot = 4,
+            subplot = nested_in(wholeplot, 4)) %>% 
+  set_trts(fertilizer = c("A", "B"),
+           variety    = c("V1", "V2")) %>% 
+  allocate_trts(fertilizer ~ wholeplot, 
+                   variety ~ subplot) %>% 
+  randomise_trts()
+```
+There are a number of ways to visualise this intermediate construct. Just printing it gives a tree structure print out.
+
+```{r}
+spdes
+```
+
+You can also plot it to understand the relationship between the variables. 
+
+```{r, fig.height = 5, fig.width = 5}
+plot(spdes)
+```
+```{r, fig.height = 5, fig.width = 5}
+plot(spdes, view = "low")
+```
+
+The low-level view of the edibble graph is often a bit cluttered so you may like to use the interactive version as below instead. 
+
+```{r, eval = FALSE}
+iplot(spdes)
+```
+
+If the design can be reconciled, you can also convert into a table. You typically use the step below when you are ready to serve your design.
+
+```{r}
+serve_table(spdes)
+```
+
+You can see it outputs a data frame (or tibble) called edibble. The name origin of `edibble` is a play on [`tibble`](https://tibble.tidyverse.org/) and can be thought of as tibble output for experimental design.
+
+
+Once you get the rough idea of how edibble specifies design, you should be roughly be able to visualise what the experimental design layout is just from looking at the code alone. Take another example below. Can you see what the design is?
+
+```{r rcbd, fig.height = 5, fig.width = 5}
+rcbd <- start_design("RCBD") %>% 
+  set_units(block = 4,
+            plot  = nested_in(block, 4)) %>% 
+  set_trts(fertilizer = c("A", "B"),
+           variety    = c("V1", "V2")) %>% 
+  allocate_trts(fertilizer:variety ~ plot) %>% 
+  randomise_trts()
+```
+
+The above design is an example of a Randomised Complete Block Design. If you change the unit names from `block` to `wholeplot` and `plot` to `subplot`, it looks like the Split-plot Design, so what differs here aside from the unit names? Yes, the allocation of treatment is more restrictive in the Split-plot Design. This is one of the key benefits of using edibble to construct your experimental design; it makes you think about your experiment in bare terms.
+
+
+
+⚠️ Please note that edibble is currently fragile. That means that the code is likely to break when you deviate from example code. Even it it works, you should diagnose the output to make sure it did what you expected.
+
+
+
+## Context of the experiment
+
+In designing an experiment, there may be certain context of the experiment that are important but aren't utilised in the design of the experiment. You can add notes about the experiment in the `set_context()`. 
+
+These are shown when you print your intermediate construct of the design to remind you about some context of the experiment. I think these steps are important since you may come to realise later some of the context may need to be properly accounted for in the design later, or if there are unexpected results in the experiment, these notes may aid you in uncovering some unexpected sources of variation. For longer form contexts, it's better to write them to an external file and you can write the name of the file in context.
+
+The idea here is that the user is reminded about the experimental context but also these contexts can also be exported out together with the design table. Many experimental design software assume that the user knows what experimental design to implement from the get-go, but in practice there may be a lot of back-and-forth with the domain experts or others involved in the experiment. edibble tries to aid in the whole workflow and not just the design generation process.
+
+```{r, include = FALSE}
+options(cli.num_colors = 256L)
+options(asciicast_knitr_svg = TRUE)
+asciicast::init_knitr_engine(
+  startup = quote({
+      library(edibble)
+    }),
+  echo = TRUE,
+  echo_input = FALSE)
+```
+
+```{asciicast exp-context}
+des <- start_design("COVID-19") %>%
+  set_context(question = "Is the vaccine effective?",
+              where = "Tested in the lab",
+              "experiment is blinded",
+              "experiment is carried out by one technician",
+              "More details are in {.file experimental-details.txt}.") %>% 
+  set_units(rat = 20) %>% 
+  set_trts(treat = c("A", "B")) 
+des
+```
+
+You can muffle these messages by using `suppress_context`. [TODO: add option to muffle these and shorten some long contexts.]
+
+```{r, include = FALSE}
+options(crayon.enabled = FALSE)
+```
+
+```{r exp-context, include = FALSE}
+```
+
+```{r}
+suppress_context(des)
+```
+
+## Recording responses and other variables
+
+You can write out what you plan to record for the experiment with `record_vars`. The record should be made on a unit defined in `set_units`. You can add data validation rules 
+with `expect_vars` which is used when the data are exported. This means that data entry is restricted according to the rules you specify.
+
+```{r}
+des <-
+  start_design(name = "Effective teaching") %>%
+    set_units(class = 4,
+              student = nested_in(class, 30)) %>%
+    set_trts(style = c("flipped", "traditional"),
+             exam = c("take-home", "open-book", "closed-book")) %>%
+    allocate_trts(style ~ class,
+                  exam ~ student) %>%
+    randomise_trts() %>%
+    record_vars(student = c(exam_mark,
+                            quiz1_mark,
+                            quiz2_mark,
+                            gender),
+                 class = c(room,
+                           teacher)) %>%
+    expect_vars( exam_mark = to_be_numeric(with_value(between = c(0, 100))),
+                quiz1_mark = to_be_integer(with_value(between = c(0, 15))),
+                quiz2_mark = to_be_integer(with_value(between = c(0, 30))),
+                    gender = to_be_factor(levels = c("female", "male", "non-binary")),
+                   teacher = to_be_character(length = with_value("<=", 100)),
+                      room = to_be_character(length = with_value(">=", 1)))
+
+serve_table(des)
+```
+
+```{r, eval = FALSE}
+export_design(des, "/PATH/TO/FILE.xlsx")
+```
+
+Now you have an excel file that separates out observational units to their 
+own sheet and data entering is now restricted to what you set out in `expect_vars`. 

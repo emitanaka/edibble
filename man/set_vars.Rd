@@ -16,7 +16,7 @@ set_vars(
 object that contains the edibble data frame in the attribute
 \code{design}.}
 
-\item{...}{Either a name-value pair or a series of the names}
+\item{...}{Either a name-value pair or a series of the names.}
 
 \item{.name_repair}{Specify how to deal when there are duplicated name
 entries. The repair follows the same argument in \code{\link[tibble:tibble]{tibble::tibble()}}.}

@@ -51,18 +51,20 @@ path_seq <- function(.data, vnames) {
 
 #' Specify the nesting structure for units
 #'
-#' @param x A vector with the levels of the list with the name corresponding to
-#'   the name of the unit to nest under.
-#' @param ... a single number OR a sequence of two-sided formula where the left-hand side corresponds to the level of `unit`
-#' and the right-hand side is the levels of the new unit OR the number of levels
-#' @param .vname an optional variable name
+#' @param .unit The name of the parent unit to nest under.
+#' @param ... a single number OR a sequence of two-sided formula where the
+#' left-hand side corresponds to the name of the level (or the level number) of `.unit`
+#' and the right-hand side is an integer specifying the number of levels nested under the
+#' corresponding levels.
+#' @param .vname the child variable name
 #' @return Returns an isolated graph
+#' @seealso See [set_units()] for examples of how to use this.
 #' @importFrom rlang enexpr enquos is_symbol as_string f_lhs f_rhs
 #' @importFrom igraph add_vertices make_empty_graph add_edges set_graph_attr
 #' @export
-nested_in <- function(.var, ..., .vname) {
-  parent_name <- as_string(enexpr(.var))
-  parent_vlevels <- .var
+nested_in <- function(.unit, ..., .vname) {
+  parent_name <- as_string(enexpr(.unit))
+  parent_vlevels <- .unit
   parent_nlevels <- length(parent_vlevels)
 
   g <- add_vertices(make_empty_graph(),

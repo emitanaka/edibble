@@ -4,20 +4,24 @@
 \alias{nested_in}
 \title{Specify the nesting structure for units}
 \usage{
-nested_in(.var, ..., .vname)
+nested_in(.unit, ..., .vname)
 }
 \arguments{
-\item{...}{a single number OR a sequence of two-sided formula where the left-hand side corresponds to the level of \code{unit}
-and the right-hand side is the levels of the new unit OR the number of levels}
+\item{.unit}{The name of the parent unit to nest under.}
 
-\item{.vname}{an optional variable name}
+\item{...}{a single number OR a sequence of two-sided formula where the
+left-hand side corresponds to the name of the level (or the level number) of \code{.unit}
+and the right-hand side is an integer specifying the number of levels nested under the
+corresponding levels.}
 
-\item{x}{A vector with the levels of the list with the name corresponding to
-the name of the unit to nest under.}
+\item{.vname}{the child variable name}
 }
 \value{
 Returns an isolated graph
 }
 \description{
 Specify the nesting structure for units
+}
+\seealso{
+See \code{\link[=set_units]{set_units()}} for examples of how to use this.
 }

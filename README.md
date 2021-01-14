@@ -18,276 +18,88 @@ Install the development version with:
 
 ## Overview
 
-Software for constructing experimental design generally utilise: (1)
-functions that are specific for creating particular experimental designs
-(e.g. `agricolae::design.lsd()` creates a Latin Square Design) or (2)
-where it is general, requires an input (usually a data frame) with the
-initial experimental design structure (e.g. `AlgDesign::optBlock()` or
-most optimal designs). Both of these approaches assume that the user is
-well acquainted with the experimental structure and objective, but in
-practice these are the greatest bottleneck before even getting to think
-about the randomisation process.
+There are two intermixing goals for edibble:
 
-💡 The big idea with the edibble R-package is that you specify an
-experimental design by being more expressive about the experiment. The
-edibble code for constructing experimental design should evoke a rough
-idea about the experimental layout even to a layperson.
+  - defining the **grammar of experimental design**, and
+  - provide an R-package that aids in the workflow of constructing an
+    experimental design and serves as an implementation of the so-called
+    grammar of experimental design.
 
-🎯 The grand goal for the edibble project is to define the *grammar of
-experimental design* and implement it.
+The self-proclaimed *grammar of experimental design* attempts to define
+rules and structures that govern the specification of an experimental
+design. Some (work-in-progress) details can be found in
+`vignette("grammar")` where it is serving as the dumping ground of my
+thoughts for now. The use of the word “grammar” pay homage to the
+[*grammar of graphics*](https://ggplot2.tidyverse.org/) and [*grammar of
+data manipulation*](https://dplyr.tidyverse.org/) which this work is
+heavily inspired from.
 
-Take for an example, the classic split-plot design that contains 4
-wholeplots with 4 sub plots within each wholeplot (so 16 subplots in
-total). There are 2 treatment factors: fertilizer (with levels A and B)
-and variety (with levels V1 and V2). Each level of the fertilizer is
-randomly applied to two wholeplots. Each level of variety is randomly
-applied to two subplots within each wholeplot.
+The edibble R-package differ considerably to other packages for
+constructing experimental design with a focus on the whole process and
+less on the randomisation process (which the other software generally
+focus and do well on). Some features include:
 
-In edibble, we can code the above split-plot design as below. You can
-see it outputs a data frame (or tibble) called edibble. The name origin
-of `edibble` is a play on [`tibble`](https://tibble.tidyverse.org/) and
-can be thought of as tibble output for experimental design.
+  - declaratively create experimental designs based on experimental
+    components (e.g. units and treatments),
+  - explicitly specify variables that are to be recorded
+    (e.g. response), and
+  - set expected values for variables to be recorded which restrict the
+    data entry when the design is exported as an xlsx file,
+  - plot and print outputs for intermediate constructs of the
+    experimental design with configurations for most graphical elements
+    (see `vignette("output")`),
+  - make classical named designs (see `vignette("named-designs")`),
+  - add context that also serves as notes about experiment (see
+    `vignette("edibble")`).
+
+## Examples
+
+Consider an experiment where you want to know what is an effective way
+of teaching (flipped or traditional style) for teaching a particular
+subject and how different forms of exams (take-home, open-book or
+closed-book) affect student’s marks.
+
+There are four classes for this subject with each class holding 30
+students. The teaching style can only be applied to the whole class but
+exam can be different for individual students.
 
 ``` r
 library(edibble)
 
-set.seed(2020) # 🔥🦠🏠😱
+set.seed(2020)
 
-spdes <- start_design("Split-plot Design") %>% 
-  set_units(wholeplot = 4,
-            subplot = nested_in(wholeplot, 4)) %>% 
-  set_trts(fertilizer = c("A", "B"),
-           variety    = c("V1", "V2")) %>% 
-  allocate_trts(fertilizer ~ wholeplot, 
-                   variety ~ subplot) %>% 
-  randomise_trts()
-```
-
-Above object contains the intermediate construct of an experimental
-design (called `edbl_graph`). When you are ready to serve your design,
-you can get the table output (called `edbl_table`) by using
-`serve_table` as below.
-
-``` r
-serve_table(spdes)
-#> # An edibble: 16 x 4
-#>    wholeplot  subplot    fertilizer variety 
-#>    <unit(4)>  <unit(16)> <trt(2)>   <trt(2)>
-#>  1 wholeplot1 subplot1   A          V2      
-#>  2 wholeplot1 subplot2   A          V1      
-#>  3 wholeplot1 subplot3   A          V1      
-#>  4 wholeplot1 subplot4   A          V2      
-#>  5 wholeplot2 subplot5   B          V2      
-#>  6 wholeplot2 subplot6   B          V1      
-#>  7 wholeplot2 subplot7   B          V1      
-#>  8 wholeplot2 subplot8   B          V2      
-#>  9 wholeplot3 subplot9   A          V2      
-#> 10 wholeplot3 subplot10  A          V1      
-#> 11 wholeplot3 subplot11  A          V1      
-#> 12 wholeplot3 subplot12  A          V2      
-#> 13 wholeplot4 subplot13  B          V2      
-#> 14 wholeplot4 subplot14  B          V1      
-#> 15 wholeplot4 subplot15  B          V1      
-#> 16 wholeplot4 subplot16  B          V2
-```
-
-Once you get the rough idea of how edibble specifies design, you should
-be roughly be able to visualise what the experimental design layout is
-just from looking at the code alone. Take another example below. Can you
-see what the design is?
-
-``` r
-rcbd <- start_design("RCBD") %>% 
-  set_units(block = 4,
-            plot  = nested_in(block, 4)) %>% 
-  set_trts(fertilizer = c("A", "B"),
-           variety    = c("V1", "V2")) %>% 
-  allocate_trts(fertilizer:variety ~ plot) %>% 
-  randomise_trts()
-```
-
-The above design is an example of a Randomised Complete Block Design. If
-you change the unit names from `block` to `wholeplot` and `plot` to
-`subplot`, it looks like the Split-plot Design, so what differs here
-aside from the unit names? Yes, the allocation of treatment is more
-restrictive in the Split-plot Design. This is one of the key benefits of
-using edibble to construct your experimental design; it makes you think
-about your experiment in bare terms.
-
-If you have trouble understanding the layout, there are a number of
-considerations that are designed to help you to form a better
-understanding of what you have specified. I outline just a couple here
-with more details and explanations to come (writing takes a lot of
-time…).
-
-You can see a high-level overview of the variables and its relation by
-using `plot` on the intermediate construct of the design.
-
-``` r
-par(mfrow = c(1, 2))
-plot(rcbd)
-plot(spdes)
-```
-
-![](man/figures/README-high-view-1.png)<!-- -->
-
-If you want to see the connections in terms of the actual units, then
-you can change the view to a low-level view.
-
-``` r
-par(mfrow = c(1, 2))
-plot(rcbd, view = "low")
-plot(spdes, view = "low")
-```
-
-![](man/figures/README-low-view-1.png)<!-- -->
-
-The low-level view is often a bit cluttered so you may like to use the
-interactive version as below instead.
-
-``` r
-iplot(rcbd)
-```
-
-⚠️ Please note that edibble is currently fragile. That means that the
-code is likely to break when you deviate from example code. Even it it
-works, you should diagnose the output to make sure it did what you
-expected.
-
-## Named experimental designs
-
-While named experimental designs can be muddling to understanding the
-experimental structure, it is still convenient to be able to concisely
-describe common structures. I take a compromising approach where named
-experimental designs can be generated concisely using the
-`make_classical` function. The output contains information about the
-design, the code to generate the design using edibble that can be easily
-copy-and-pasted and the output data frame. If you want the edibble code
-alone then you can just use `code_classical`.
-
-``` r
-make_classical("crd", n = 30, t = 5)
-#> 
-#> ── experimental design details ─────────────────────────────────────────────────
-#> ● This experimental design is often called Completely Randomised Design.
-#> ● You can change the number in `set.seed` to get another random instance of
-#>   the same design.
-#> ● This design has a total of 30 units testing a total of 5 treatments.
-#> The following information is only true for the chosen parameters and not
-#> necessary true for all Completely Randomised Designs.
-#>   ◯ This design is balanced for the given numbers.
-#> 
-#>   ── edibble code ────────────────────────────────────────────────────────────────
-#> set.seed(345)
-#> start_design("crd") %>%
-#>   set_units(unit = 30) %>%
-#>   set_trts(treat = 5) %>%
-#>   allocate_trts(treat ~ unit) %>%
-#>   randomise_trts() %>%
-#>   serve_table()
-#> 
-#>   ── edibble data frame ──────────────────────────────────────────────────────────
-#> # An edibble: 30 x 2
-#>    unit       treat   
-#>    <unit(30)> <trt(5)>
-#>  1 unit1      treat5  
-#>  2 unit2      treat1  
-#>  3 unit3      treat5  
-#>  4 unit4      treat5  
-#>  5 unit5      treat1  
-#>  6 unit6      treat3  
-#>  7 unit7      treat4  
-#>  8 unit8      treat2  
-#>  9 unit9      treat1  
-#> 10 unit10     treat1  
-#> # … with 20 more rows
-
-code_classical("rcbd", t = 4, n = 40)
-#> set.seed(404)
-#> start_design("rcbd") %>%
-#>   set_units(block = 8,
-#>             unit = nested_in(block, 4)) %>%
-#>   set_trts(treat = 4) %>%
-#>   allocate_trts(treat ~ unit) %>%
-#>   randomise_trts() %>%
-#>   serve_table()
-```
-
-The terminal output has color. You can see the terminal output below for
-the Split-plot design.
-
-``` asciicast
-make_classical("split", t1 = 4, t2  = 2, r = 4)
-```
-
-![](man/figures/README-/split-plot-print.svg)<!-- -->
-
-## Context of the experiment
-
-In designing an experiment, there may be certain context of the
-experiment that are important but aren’t utilised in the design of the
-experiment. You can add notes about the experiment in the
-`set_context()`.
-
-These are shown when you print your intermediate construct of the design
-to remind you about some context of the experiment. I think these steps
-are important since you may come to realise later some of the context
-may need to be properly accounted for in the design later, or if there
-are unexpected results in the experiment, these notes may aid you in
-uncovering some unexpected sources of variation. For longer form
-contexts, it’s better to write them to an external file and you can
-write the name of the file in context.
-
-The idea here is that the user is reminded about the experimental
-context but also these contexts can also be exported out together with
-the design table. Many experimental design software assume that the user
-knows what experimental design to implement from the get-go, but in
-practice there may be a lot of back-and-forth with the domain experts or
-others involved in the experiment. edibble tries to aid in the whole
-workflow and not just the design generation process.
-
-``` asciicast
-des <- start_design("COVID-19") %>%
-  set_context(question = "Is the vaccine effective?",
-              where = "Tested in the lab",
-              "experiment is blinded",
-              "experiment is carried out by one technician",
-              "More details are in {.file experimental-details.txt}.") %>% 
-  set_units(rat = 20) %>% 
-  set_trts(treat = c("A", "B")) 
-des
-```
-
-![](man/figures/README-/exp-context.svg)<!-- -->
-
-You can muffle these messages by using `suppress_context`. \[TODO: add
-option to muffle these and shorten some long contexts.\]
-
-``` r
-suppress_context(des)
-#> COVID-19
-#> ├─rat (20 levels)
-#> └─treat (2 levels)
-```
-
-## Recording responses and other variables
-
-Now you can write out what you plan to record for the experiment with
-`record_vars`. The record should be made on a unit defined in
-`set_units`. You can add data validation rules with `expect_vars` which
-is used when the data are exported. This means that data entry is
-restricted according to the rules you specify.
-
-``` r
-des <-
-  start_design(name = "Effective teaching") %>%
+des <- start_design(name = "Effective teaching") %>%
     set_units(class = 4,
               student = nested_in(class, 30)) %>%
     set_trts(style = c("flipped", "traditional"),
              exam = c("take-home", "open-book", "closed-book")) %>%
     allocate_trts(style ~ class,
                   exam ~ student) %>%
-    randomise_trts() %>%
+    randomise_trts()
+
+serve_table(des)
+#> # An edibble: 120 x 4
+#>    class     student     style       exam       
+#>    <unit(4)> <unit(120)> <trt(2)>    <trt(3)>   
+#>  1 class1    student1    traditional take-home  
+#>  2 class1    student2    traditional take-home  
+#>  3 class1    student3    traditional open-book  
+#>  4 class1    student4    traditional take-home  
+#>  5 class1    student5    traditional closed-book
+#>  6 class1    student6    traditional closed-book
+#>  7 class1    student7    traditional closed-book
+#>  8 class1    student8    traditional open-book  
+#>  9 class1    student9    traditional take-home  
+#> 10 class1    student10   traditional take-home  
+#> # … with 110 more rows
+```
+
+Before constructing the experiment, you might want to think about what
+you are recording for which level of unit and what values these
+variables can be recorded as.
+
+``` r
+out <- des %>% 
     record_vars(student = c(exam_mark,
                             quiz1_mark,
                             quiz2_mark,
@@ -297,36 +109,108 @@ des <-
     expect_vars( exam_mark = to_be_numeric(with_value(between = c(0, 100))),
                 quiz1_mark = to_be_integer(with_value(between = c(0, 15))),
                 quiz2_mark = to_be_integer(with_value(between = c(0, 30))),
-                    gender = to_be_factor(levels = c("female", "male", "non-binary")),
+                    gender = to_be_factor(levels = c("female", "male", "non-binary", "unknown")),
                    teacher = to_be_character(length = with_value("<=", 100)),
-                      room = to_be_character(length = with_value(">=", 1)))
+                      room = to_be_character(length = with_value(">=", 1))) %>% 
+  serve_table()
 
-serve_table(des)
+out
 #> # An edibble: 120 x 10
-#>    class     student     style    exam        exam_mark quiz1_mark quiz2_mark gender   room teacher
-#>    <unit(4)> <unit(120)> <trt(2)> <trt(3)>       <rcrd>     <rcrd>     <rcrd> <rcrd> <rcrd>  <rcrd>
-#>  1 class1    student1    flipped  take-home           ■          ■          ■      ■      ■       ■
-#>  2 class1    student2    flipped  open-book           ■          ■          ■      ■      x       x
-#>  3 class1    student3    flipped  open-book           ■          ■          ■      ■      x       x
-#>  4 class1    student4    flipped  take-home           ■          ■          ■      ■      x       x
-#>  5 class1    student5    flipped  take-home           ■          ■          ■      ■      x       x
-#>  6 class1    student6    flipped  take-home           ■          ■          ■      ■      x       x
-#>  7 class1    student7    flipped  closed-book         ■          ■          ■      ■      x       x
-#>  8 class1    student8    flipped  open-book           ■          ■          ■      ■      x       x
-#>  9 class1    student9    flipped  open-book           ■          ■          ■      ■      x       x
-#> 10 class1    student10   flipped  take-home           ■          ■          ■      ■      x       x
-#> # … with 110 more rows
+#>    class  student   style       exam        exam_mark quiz1_mark quiz2_mark
+#>    <unit> <unit(12> <trt(2)>    <trt(3)>       <rcrd>     <rcrd>     <rcrd>
+#>  1 class1 student1  traditional take-home           ■          ■          ■
+#>  2 class1 student2  traditional take-home           ■          ■          ■
+#>  3 class1 student3  traditional open-book           ■          ■          ■
+#>  4 class1 student4  traditional take-home           ■          ■          ■
+#>  5 class1 student5  traditional closed-book         ■          ■          ■
+#>  6 class1 student6  traditional closed-book         ■          ■          ■
+#>  7 class1 student7  traditional closed-book         ■          ■          ■
+#>  8 class1 student8  traditional open-book           ■          ■          ■
+#>  9 class1 student9  traditional take-home           ■          ■          ■
+#> 10 class1 student10 traditional take-home           ■          ■          ■
+#> # … with 110 more rows, and 3 more variables: gender <rcrd>, room <rcrd>,
+#> #   teacher <rcrd>
 ```
+
+When you export the above edibble design using the `export_design`
+function, the variables you are recording are constraint to the values
+you expect, e.g. for factors, the cells have a drop-down menu to select
+from possible values.
 
 ``` r
-export_design(des, "/PATH/TO/FILE.xlsx")
+export_design(out, file = "/PATH/TO/FILE.xlsx")
 ```
 
-Now you have an excel file that separates out observational units to
-their own sheet and data entering is now restricted to what you set out
-in `expect_vars`.
+<img src="man/figures/README-excel_factor_output.png" width="1266" />
 
-<img src="man/figures/README-export.png" width="1400" />
+In addition, there is a spreadsheet for every observational level. E.g.
+here `room` and `teacher` is the same for all students in one class so
+rather than entering duplicate information, these are exported to
+another sheet for data entry.
+
+<img src="man/figures/README-excel_sheet_output.png" width="400px" />
+
+There is also support for more complex nesting structures however
+randomisation is yet to be supported for this. You can always make the
+structure using edibble and take the resulting data frame to use in
+other experimental design software. It’s also possible to bring existing
+data frame into edibble if you want to take advantage of the exporting
+feature in edibble.
+
+``` r
+start_design("nesting structure") %>% 
+  # there are 3 sites labelled A, B, C
+  set_units(site = c("A", "B", "C"),
+            # each site has 2 blocks except B with 3 sites
+            block = nested_in(site, 
+                              "B" ~ 3,
+                                . ~ 2),
+            # levels can be specified by their number instead
+            # so for below "block1" has 30 plots, 
+            # "block2" and "block3" has 40 plots,
+            # the rest of blocks have 20 plots.
+            plot = nested_in(block, 
+                              1 ~ 30,
+                        c(2, 3) ~ 40,
+                              . ~ 20)) %>% 
+  serve_table()
+#> # An edibble: 190 x 3
+#>    site      block     plot       
+#>    <unit(3)> <unit(7)> <unit(190)>
+#>  1 A         block1    plot1      
+#>  2 A         block1    plot2      
+#>  3 A         block1    plot3      
+#>  4 A         block1    plot4      
+#>  5 A         block1    plot5      
+#>  6 A         block1    plot6      
+#>  7 A         block1    plot7      
+#>  8 A         block1    plot8      
+#>  9 A         block1    plot9      
+#> 10 A         block1    plot10     
+#> # … with 180 more rows
+```
+
+## Limitations
+
+Currently, edibble:
+
+  - expects you to know the number of units available from the start.
+    Unknown numbers will be supported in future versions.
+  - does not support designs where the size of the block is less than
+    the total number of treatments (e.g. incomplete block designs or
+    fractional factorial designs). This is to come.
+  - does not necessarily create the most efficient design. E.g. balanced
+    incomplete block designs have a special property and an adhoc
+    solution may be required to make sure you can generate a design with
+    this special property. This is just a nature of generalised tools
+    and edibble doesn’t aim to be the best for everything, but hopes
+    others developers can build on the edibble framework to create their
+    own specialist design.
+  - in theory, edibble should support experiments that are not
+    comparative experiments but this is not tested.
+  - does not do enough testing so design should be diagnosed after
+    construction (which should be done regardless of how much testing
+    edibble implements).
 
 ## Related Work
 
@@ -350,6 +234,40 @@ a whole collection.
   - `dae` for functions useful in the design and ANOVA of experiments
     (this is in fact powering the randomisation in edibble)
   - `plotdesignr` for designing agronomic field experiments
+
+## Acknowledgement
+
+edibble is hugely inspired by the work of [Tidyverse
+Team](https://joss.theoj.org/papers/10.21105/joss.01686). I’m grateful
+for the dedication and work by the Tidyverse Team, as well as [R
+Development Core Team](https://www.r-project.org/contributors.html) that
+supports the core R ecosystem, that made developing this package
+possible.
+
+## Tidyverse familiarity
+
+The implementation in edibble adopt a similar nomenclature and design
+philosophy as tidyverse (and where it does not, it’s likely my
+shortcoming) so that tidyverse users can leverage their familiarity of
+the tidyverse language when using edibble. Specifically, edibble follows
+the philosophy:
+
+  - main functions do one thing and have a consistent form of
+    `<verb>_<noun>` (e.g. `set_units` and `record_vars`) where the nouns
+    are generally plural. Exceptions are when the subject matter is
+    clearly singular (e.g. `start_design` and `set_context`);
+  - pipable functions;
+  - all dots arguments are [dynamic
+    dots](https://rlang.r-lib.org/reference/dyn-dots.html);
+  - duplicate names repaired with same option as `tibble` for additions
+    to edibble graph;
+  - (WIP) `tidyselect` approach to setting edibble variable types;
+  - ability for developers to extend certain components. Currently only
+    supported for others to contribute their own classical named
+    experimental designs via `prep_classical_`;
+  - the specification of complex nested structure drawing similarity to
+    `dplyr::case_when` (LHS is character or integer for edibble
+    however).
 
 ## Code of Conduct
 

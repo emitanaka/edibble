@@ -15,7 +15,9 @@ set_units(
 object that contains the edibble data frame in the attribute
 \code{design}.}
 
-\item{...}{Either a name-value pair or a series of the names}
+\item{...}{Either a name-value pair or a series of the names.}
+
+\item{.name_repair}{Same as the argument in \code{tibble::tibble()}.}
 }
 \description{
 This function sets new edibble variables of class \code{edbl_unit}. More
@@ -52,6 +54,25 @@ start_design() \%>\%
 start_design() \%>\%
   set_units(company = c("A", "B", "C"),
                 box = nested_in(company, 10))
+
+# 2 classes, one with 10 students, the other with 20 students
+start_design() \%>\%
+  set_units(class = 2,
+            student = nested_in(class,
+                                1 ~ 10,
+                                2 ~ 20))
+
+# 4 countries with 10 people from Australia & New Zealand and 20 from the rest
+start_design() \%>\%
+  set_units(country = c("AU", "NZ", "USA", "JPN"),
+            person = nested_in(country,
+                               c("AU", "NZ") ~ 10,
+                                           . ~ 20)) \%>\%
+  serve_table()
+
+# if using existing data then it specifies which variables are units
+lady_tasting_tea \%>\%
+  set_units(cup)
 
 }
 \seealso{

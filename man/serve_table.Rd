@@ -8,6 +8,8 @@ serve_table(.design, ...)
 }
 \arguments{
 \item{.design}{An \code{edbl_graph} object.}
+
+\item{...}{Ignored.}
 }
 \value{
 An \code{edbl} data frame with columns defined by vertices and
@@ -15,6 +17,10 @@ rows displayed only if the vertices are connected and reconcile for output.
 }
 \description{
 This converts an edibble graph object to a data frame called edibble.
+This function should be used when the design is in the final form
+(or close to the final form). The table can only be formed when the
+variables can be reconciled, otherwise it will be a data frame with
+zero rows.
 }
 \seealso{
 Other user-facing functions: 

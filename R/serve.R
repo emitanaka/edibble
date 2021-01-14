@@ -1,8 +1,13 @@
 #' Serve edibble table
 #' @description
 #' This converts an edibble graph object to a data frame called edibble.
+#' This function should be used when the design is in the final form
+#' (or close to the final form). The table can only be formed when the
+#' variables can be reconciled, otherwise it will be a data frame with
+#' zero rows.
 #'
 #' @param .design An `edbl_graph` object.
+#' @param ... Ignored.
 #' @return An `edbl` data frame with columns defined by vertices and
 #' rows displayed only if the vertices are connected and reconcile for output.
 #' @importFrom igraph is_connected

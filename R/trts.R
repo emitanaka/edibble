@@ -1,7 +1,7 @@
 #' Set the treatment variables
 #'
 #' @description
-#' This function creates a special class, called `edbl_trt`, of edibble variables.
+#' This function add a special class, called `edbl_trt`, of edibble variables.
 #'
 #' @section Definition of _treatment_:
 #' The word _treatment_ is sometimes used to refer to one of these variables.
@@ -11,8 +11,18 @@
 #'
 #' Treatment is the whole description of what is applied in an experiment.
 #'
-#' @inheritParams set_vars
+#' @inheritParams set_units
 #' @family user-facing functions
+#' @examples
+#'
+#' start_design() %>%
+#'   set_trts(pesticide = c("A", "B", "C"),
+#'            dosage = c(0, 10, 20, 30, 40))
+#'
+#' # you can set treatments to existing edibble
+#' lady_tasting_tea %>%
+#'   edibble() %>%
+#'   set_trts(first)
 #' @export
 set_trts <- function(.design, ...,
                       .name_repair = c("check_unique", "unique", "universal", "minimal")) {
@@ -21,6 +31,7 @@ set_trts <- function(.design, ...,
 
 #' Define the possible allocation of treatments to units
 #'
+#' @description
 #' This function adds the edges between level nodes in
 #' an edibble graph that outlines the possible ways that
 #' the treatment may be allocated to the recipient units.
@@ -68,7 +79,6 @@ allocate_trts <- function(.edibble, ...) {
 }
 
 
-#' @export
 get_trt_vars <- function(x) {
   if(is_edibble_graph(x)) {
     return(V(x)$vname[V(x)$class=="edbl_trt"])
@@ -79,7 +89,6 @@ get_trt_vars <- function(x) {
   }
 }
 
-#' @export
 get_trt_levels <- function(.data) {
   out <- list()
   vars <- get_trt_vars(.data)
@@ -92,7 +101,6 @@ get_trt_levels <- function(.data) {
 
 
 
-#' @export
 n_trts <- function(.data, ...) {
   UseMethod("n_trts")
 }
@@ -106,18 +114,16 @@ n_trts.edbl_table <- function(.data) {
   return(prod(lengths(lapply(.data, levels)[ind])))
 }
 
-#' @export
 n_vars <- function(.data, class = NULL) {
   UseMethod("n_vars")
 }
 
-#' @export
 n_vars.edbl_table <- function(.data, class = NULL) {
   if(is_null(class)) return(ncol(.data))
   sum(map_lgl(.data, function(x) any(class(x) %in% class)))
 }
 
-#' @export
+
 n_vars.edbl_graph <- function(.data, class = NULL) {
   vgraph <- subset(.data, class %in% class, .vtype = "var")
   if(is_null(class)) return(sum(V(.data)$vtype=="var"))

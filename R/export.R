@@ -230,6 +230,7 @@ restriction_for_human <- function(operator, value) {
 
 #' Export the design to xlsx
 #'
+#' @description
 #' This function is designed to export the design made using edibble to an
 #' external xlsx file.
 #'

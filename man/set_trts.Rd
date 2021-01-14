@@ -11,13 +11,12 @@ set_trts(
 )
 }
 \arguments{
-\item{...}{Either a name-value pair or a series of the names}
+\item{...}{Either a name-value pair or a series of the names.}
 
-\item{.name_repair}{Specify how to deal when there are duplicated name
-entries. The repair follows the same argument in \code{\link[tibble:tibble]{tibble::tibble()}}.}
+\item{.name_repair}{Same as the argument in \code{tibble::tibble()}.}
 }
 \description{
-This function creates a special class, called \code{edbl_trt}, of edibble variables.
+This function add a special class, called \code{edbl_trt}, of edibble variables.
 }
 \section{Definition of \emph{treatment}}{
 
@@ -29,6 +28,17 @@ all treatment variables.
 Treatment is the whole description of what is applied in an experiment.
 }
 
+\examples{
+
+start_design() \%>\%
+  set_trts(pesticide = c("A", "B", "C"),
+           dosage = c(0, 10, 20, 30, 40))
+
+# you can set treatments to existing edibble
+lady_tasting_tea \%>\%
+  edibble() \%>\%
+  set_trts(first)
+}
 \seealso{
 Other user-facing functions: 
 \code{\link{allocate_trts}()},

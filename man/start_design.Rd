@@ -20,7 +20,7 @@ start_design("My design")
 }
 \seealso{
 Add variables to this design with \code{\link[=set_units]{set_units()}}, \code{\link[=set_trts]{set_trts()}}, and
-\code{\link[=measure_units]{measure_units()}}.
+\code{\link[=record_vars]{record_vars()}}.
 
 Other user-facing functions: 
 \code{\link{allocate_trts}()},
