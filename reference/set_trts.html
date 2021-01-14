@@ -55,7 +55,7 @@
   
 
 <meta property="og:title" content="Set the treatment variables — set_trts" />
-<meta property="og:description" content="This function creates a special class, called edbl_trt, of edibble variables." />
+<meta property="og:description" content="This function add a special class, called edbl_trt, of edibble variables." />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@emitanaka" />
@@ -114,6 +114,9 @@
   </a>
 </li>
 <li>
+  <a href="../articles/edibble.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -124,10 +127,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/edbl-output.html">Output configurations in edibble</a>
+      <a href="../articles/grammar.html">Grammar of experimental design</a>
     </li>
     <li>
-      <a href="../articles/edbl-terms.html">Terminology in edibble</a>
+      <a href="../articles/named-designs.html">Named experimental designs</a>
+    </li>
+    <li>
+      <a href="../articles/output.html">Output configurations in edibble</a>
     </li>
   </ul>
 </li>
@@ -167,7 +173,7 @@
     </div>
 
     <div class="ref-description">
-    <p>This function creates a special class, called <code>edbl_trt</code>, of edibble variables.</p>
+    <p>This function add a special class, called <code>edbl_trt</code>, of edibble variables.</p>
     </div>
 
     <pre class="usage"><span class='fu'>set_trts</span><span class='op'>(</span>
@@ -181,12 +187,11 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>...</th>
-      <td><p>Either a name-value pair or a series of the names</p></td>
+      <td><p>Either a name-value pair or a series of the names.</p></td>
     </tr>
     <tr>
       <th>.name_repair</th>
-      <td><p>Specify how to deal when there are duplicated name
-entries. The repair follows the same argument in <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code>.</p></td>
+      <td><p>Same as the argument in <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code>.</p></td>
     </tr>
     </table>
 
@@ -212,6 +217,29 @@ all treatment variables.</p>
 <code><a href='set_units.html'>set_units</a>()</code>,
 <code><a href='start_design.html'>start_design</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='fu'><a href='start_design.html'>start_design</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>set_trts</span><span class='op'>(</span>pesticide <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span><span class='op'>)</span>,
+           dosage <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>10</span>, <span class='fl'>20</span>, <span class='fl'>30</span>, <span class='fl'>40</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #00BBBB;font-style: italic;'>An edibble design</span><span>
+#&gt; ├─</span><span style='color: #0000BB;'>pesticide</span><span> </span><span style='color: #555555;'>(3 levels)</span><span>
+#&gt; └─</span><span style='color: #0000BB;'>dosage</span><span> </span><span style='color: #555555;'>(5 levels)</span><span></div><div class='input'>
+<span class='co'># you can set treatments to existing edibble</span>
+<span class='va'>lady_tasting_tea</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='edibble.html'>edibble</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>set_trts</span><span class='op'>(</span><span class='va'>first</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># An edibble: 8 x 4</span><span>
+#&gt;   cup   first    guess correct
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;trt(2)&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>  
+#&gt; </span><span style='color: #555555;'>1</span><span> 1     milk     milk  TRUE   
+#&gt; </span><span style='color: #555555;'>2</span><span> 2     milk     milk  TRUE   
+#&gt; </span><span style='color: #555555;'>3</span><span> 3     milk     milk  TRUE   
+#&gt; </span><span style='color: #555555;'>4</span><span> 4     tea      tea   TRUE   
+#&gt; </span><span style='color: #555555;'>5</span><span> 5     tea      tea   TRUE   
+#&gt; </span><span style='color: #555555;'>6</span><span> 6     milk     milk  TRUE   
+#&gt; </span><span style='color: #555555;'>7</span><span> 7     tea      tea   TRUE   
+#&gt; </span><span style='color: #555555;'>8</span><span> 8     tea      tea   TRUE   </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

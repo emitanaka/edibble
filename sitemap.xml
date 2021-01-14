@@ -145,9 +145,15 @@
     <loc>https://edibble.emitanaka.org/reference/with_value.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/articles/edbl-output.html</loc>
+    <loc>https://edibble.emitanaka.org/articles/edibble.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/articles/edbl-terms.html</loc>
+    <loc>https://edibble.emitanaka.org/articles/grammar.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/articles/named-designs.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/articles/output.html</loc>
   </url>
 </urlset>

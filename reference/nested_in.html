@@ -114,6 +114,9 @@
   </a>
 </li>
 <li>
+  <a href="../articles/edibble.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -124,10 +127,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/edbl-output.html">Output configurations in edibble</a>
+      <a href="../articles/grammar.html">Grammar of experimental design</a>
     </li>
     <li>
-      <a href="../articles/edbl-terms.html">Terminology in edibble</a>
+      <a href="../articles/named-designs.html">Named experimental designs</a>
+    </li>
+    <li>
+      <a href="../articles/output.html">Output configurations in edibble</a>
     </li>
   </ul>
 </li>
@@ -170,30 +176,34 @@
     <p>Specify the nesting structure for units</p>
     </div>
 
-    <pre class="usage"><span class='fu'>nested_in</span><span class='op'>(</span><span class='va'>.var</span>, <span class='va'>...</span>, <span class='va'>.vname</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>nested_in</span><span class='op'>(</span><span class='va'>.unit</span>, <span class='va'>...</span>, <span class='va'>.vname</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>.unit</th>
+      <td><p>The name of the parent unit to nest under.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
-      <td><p>a single number OR a sequence of two-sided formula where the left-hand side corresponds to the level of <code>unit</code>
-and the right-hand side is the levels of the new unit OR the number of levels</p></td>
+      <td><p>a single number OR a sequence of two-sided formula where the
+left-hand side corresponds to the name of the level (or the level number) of <code>.unit</code>
+and the right-hand side is an integer specifying the number of levels nested under the
+corresponding levels.</p></td>
     </tr>
     <tr>
       <th>.vname</th>
-      <td><p>an optional variable name</p></td>
-    </tr>
-    <tr>
-      <th>x</th>
-      <td><p>A vector with the levels of the list with the name corresponding to
-the name of the unit to nest under.</p></td>
+      <td><p>the child variable name</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Returns an isolated graph</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>See <code><a href='set_units.html'>set_units()</a></code> for examples of how to use this.</p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
