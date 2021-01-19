@@ -24,6 +24,9 @@ By default it is "high".}
 \item{main}{The title of the plot. By default it is the
 name of the edibble design.}
 }
+\value{
+The return object is the original input.
+}
 \description{
 There are two available view for the graph of edibble variables:
 \itemize{
@@ -42,5 +45,6 @@ This plot is not optimal for a polished publication. It is designed more for
 a quick exploratory use.
 }
 \seealso{
-See \code{\link[=iplot]{iplot()}} for interactive plot of the graph of an edibble design.
+See \code{\link[=iplot]{iplot()}} for interactive plot of the graph of an edibble design
+or \code{\link[deggust]{autoplot}} for ggplot version of the plot.
 }

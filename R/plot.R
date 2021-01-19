@@ -25,7 +25,9 @@
 #'  name of the edibble design.
 #' @importFrom igraph plot.igraph
 #' @name plot.edibble
-#' @seealso See [iplot()] for interactive plot of the graph of an edibble design.
+#' @return The return object is the original input.
+#' @seealso See [iplot()] for interactive plot of the graph of an edibble design
+#' or \code{\link[deggust]{autoplot.edibble}} for ggplot version of the plot.
 NULL
 
 #' @rdname plot.edibble
@@ -46,7 +48,7 @@ plot.edbl_graph <- function(.edibble, view = c("high", "low"), ..., main = NULL)
                 high = subset_vars(.edibble),
                 low = subset_levels(.edibble))
   plot.igraph(out, ...,
-              annotate.plot = TRUE,
+              annotate.ploggt = TRUE,
               main = main)
   invisible(.edibble)
 }
