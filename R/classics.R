@@ -141,6 +141,48 @@ prep_classical_crd <- function(t = 1 + sample(10, 1), n = t + sample(100, 1),
   des
 }
 
+
+prep_classical_factorial <- function(trt = c(1 + sample(10, 1),
+                                             1 + sample(10, 1)),
+                                     n = prod(trt) + sample(100, 1),
+                                     r = n / prod(trt)) {
+
+  # checks
+  if(!missing(n) & !missing(r)) {
+    abort("You cannot define both `n` and `r`.")
+  }
+  if(missing(n) & !missing(r)) {
+    n <- r * prod(trt)
+  }
+
+  # des
+  des <- NamedDesign$new(name = "factorial",
+                         name_full = "Factorial Design",
+                         n = n,
+                         t = prod(trt))
+  if(r %% 1 == 0) {
+    des$add_info(paste0("This design is ", style_italic("balanced"),
+                        " for the given numbers."),
+                 always = FALSE)
+  }
+
+  des$add_code(paste0("set_units(",
+                      des$decorate_units("unit"),
+                      " = ", n, ")"))
+  des$add_code(paste0("set_trts(",
+                      paste0(map_chr(seq_along(trt), function(i)
+                              paste0(des$decorate_trts(paste0("treat", i)),
+                                     " = ", trt[i])),
+                              collapse = ",\n           "),
+                      ")"))
+  des$add_code(paste0("allocate_trts(",
+                      " ~ ", des$decorate_units("unit"), ")"))
+  des$final_code()
+
+  des
+}
+
+
 #' @importFrom cli style_italic
 prep_classical_rcbd <- function(t = 1 + sample(10, 1),
                                 b = 1 + sample(10, 1), r = b, n = b * t) {
