@@ -154,7 +154,7 @@ the total number of treatments (e.g. incomplete block designs or fractional fact
 The way that edibble specifies experimental design is largely novel (if I say so myself) and there are no work that resembles it. I'm concurrently working on two extension packages:
 
 * `deggust` - to visualise the designs constructed from edibble as ggplot2 objects (WIP). 
-* `sizzle` - for experiments that require sample size calculation (WIP).
+* `sizzled` - for experiments that require sample size calculation (WIP).
 
 
 Below are some other related work. You can also have a look at the [CRAN Task View for Design of Experiment and Analysis of Experimental Data](https://cran.r-project.org/web/views/ExperimentalDesign.html) for a whole collection. 
