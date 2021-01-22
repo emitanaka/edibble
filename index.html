@@ -137,6 +137,11 @@
 <li>provide an R-package that aids in the workflow of constructing an experimental design and serves as an implementation of the so-called grammar of experimental design.</li>
 </ul>
 <p>The self-proclaimed <em>grammar of experimental design</em> attempts to define rules and structures that govern the specification of an experimental design. Some (work-in-progress) details can be found in <code><a href="articles/grammar.html">vignette("grammar")</a></code> where it is serving as the dumping ground of my thoughts for now. The use of the word “grammar” pay homage to the <a href="https://ggplot2.tidyverse.org/"><em>grammar of graphics</em></a> and <a href="https://dplyr.tidyverse.org/"><em>grammar of data manipulation</em></a> which this work is heavily inspired from.</p>
+<div id="experimental-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#experimental-data" class="anchor"></a>Experimental data</h3>
+<p>tidyverse is well suited for the data science project workflow as illustrated below in (B) (from <a href="https://r4ds.had.co.nz/introduction.html">Grolemund and Wickham 2017</a>). For experimental data, the statistical aspect begins before obtaining data as depicted below in (A). The focus of <code>edibble</code> is to facilitate work in (A).</p>
+<p><img src="reference/figures/design-analysis-flow.png"></p>
 <p>The edibble R-package differ considerably to other packages for constructing experimental design with a focus on the whole process and less on the randomisation process (which the other software generally focus and do well on). Some features include:</p>
 <ul>
 <li>declaratively create experimental designs based on experimental components (e.g. units and treatments),</li>
@@ -146,6 +151,7 @@
 <li>make classical named designs (see <code><a href="articles/named-designs.html">vignette("named-designs")</a></code>),</li>
 <li>add context that also serves as notes about experiment (see <code><a href="articles/edibble.html">vignette("edibble")</a></code>).</li>
 </ul>
+</div>
 </div>
 <div id="examples" class="section level2">
 <h2 class="hasAnchor">
