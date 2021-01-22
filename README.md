@@ -34,6 +34,17 @@ thoughts for now. The use of the word “grammar” pay homage to the
 data manipulation*](https://dplyr.tidyverse.org/) which this work is
 heavily inspired from.
 
+### Experimental data
+
+tidyverse is well suited for the data science project workflow as
+illustrated below in (B) (from [Grolemund and
+Wickham 2017](https://r4ds.had.co.nz/introduction.html)). For
+experimental data, the statistical aspect begins before obtaining data
+as depicted below in (A). The focus of `edibble` is to facilitate work
+in (A).
+
+<img src="man/figures/design-analysis-flow.png">
+
 The edibble R-package differ considerably to other packages for
 constructing experimental design with a focus on the whole process and
 less on the randomisation process (which the other software generally
