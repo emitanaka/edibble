@@ -122,7 +122,7 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
       #' @param vnames_new The names of new variables to add.
       #' @param vname_unit The unit variable that measurement is taken on.
       #' @param attr The vertex attributes.
-      add_variable_node = function(vnames_new, vname_unit, attr) {
+      add_record_node = function(vnames_new, vname_unit, attr) {
         graph <- private$.graph
         graph <- add_vertices(graph, length(vnames_new),
                                        name = vnames_new,

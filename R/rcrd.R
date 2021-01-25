@@ -1,9 +1,10 @@
 
-#' Measure response of given units
+#' Specify variables to record from given units
 #'
 #' @description
 #' This function creates new nodes to edibble graph with the name
-#' corresponding to the intended response that will be measured.
+#' corresponding to either the intended response that will be measured or
+#' a variable to be recorded.
 #'
 #' @inheritParams design-context
 #' @param ... Name-value pair. The name should correspond to the name of the
@@ -33,7 +34,7 @@ record_vars <- function(.edibble, ...,
 
     for(i in seq_along(dots)) {
       vnames_new <- all.vars(dots[[i]])
-      .design$add_variable_node(vnames_new, vnames_unit[i], attr)
+      .design$add_record_node(vnames_new, vnames_unit[i], attr)
     }
   }
 
@@ -184,3 +185,89 @@ vec_ptype_abbr.edbl_rcrd <- function(x, ...)  {
 #' @importFrom vctrs vec_ptype_full
 #' @export
 vec_ptype_full.edbl_rcrd <- function(x, ...) "rcrd"
+
+# see scabbiness.R
+#' Derive variables from other variables.
+#'
+#' @description
+#' This is used to specify the excel formula for variables that
+#' are derived based on other variables.
+#'
+#' @seealso See [calculate()], [calculate2()] and [pcalculate()] to
+#' specify the excel formula.
+derive_vars <- function(.edibble, ...) {
+  dots <- enquos(...)
+  dots_names <- names(dots)
+
+  .design <- get_edibble_design(.edibble)
+
+  if(is_edibble_design(.edibble)) {
+    attr <- vertex_attr_opt("rcrd")
+    for(i in seq_along(dots)) {
+      vname_new <- dots_names[i]
+      vname_on <- dots[[i]] # TODO get first arguments
+      .design$add_record_node(vname_new, vname_on, attr)
+    }
+  }
+  update_design(.edibble, .design)
+}
+
+#' Specify the calculation to derive variables
+#'
+#' @description
+#' This function specifies the excel formula that should
+#' be stored when the design is exported with [export_design()].
+#' The functions must be translatable to excel formula. Mappings
+#' for some complex functions may not work.
+#'
+#' @param .x,.y Name of other variables in data.
+#' @param .f A function, formula, or excel formula.
+#' @param ... Arguments to be passed into `.f`.
+#' @param .l A vector of variable names.
+#' @return A special derivation class.
+calculate <- function(.x, .f, ..., .group_by = NULL) {
+  if(inherits(.f, "xlformula")) {
+    xlf <- .f
+  } else if(is.function(.f)) {
+    xlf <- map_to_xlf(.f, ...) # TODO
+  } else {
+    xlf <- map_to_xlf(rlang::as_function(.f))
+  }
+  return(structure(list(vars = as_label(enexpr(.x)),
+                        xlf = xlf,
+                        group_by = .group_by),
+                   class = "derivative"))
+}
+
+calculate2 <- function(.x, .y, .f, ..., .group_by = NULL) {
+  if(inherits(.f, "xlformula")) {
+    xlf <- .f
+  } else if(is.function(.f)) {
+    xlf <- map_to_xlf(.f, ...) # TODO
+  } else {
+    xlf <- map_to_xlf(rlang::as_function(.f))
+  }
+  return(structure(list(vars = c(as_label(enexpr(.x)),
+                                 as_label(enexpr(.y))),
+                        xlf = xlf,
+                        group_by = .group_by),
+                   class = "derivative"))
+}
+
+pcalculate <- function(.l, .f, ..., .group_by = NULL) {
+  if(inherits(.f, "xlformula")) {
+    xlf <- .f
+  } else if(is.function(.f)) {
+    xlf <- map_to_xlf(.f, ...) # TODO
+  } else {
+    xlf <- map_to_xlf(rlang::as_function(.f))
+  }
+  return(structure(list(vars = all.vars(enexprs(l)),
+                        xlf = xlf,
+                        group_by = .group_by),
+                   class = "derivative"))
+}
+
+xlf <- function(.f = NULL) {
+  structure(.f, class = "xlformula")
+}
