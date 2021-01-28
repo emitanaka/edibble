@@ -72,3 +72,16 @@
 #' @source Bailey, Rosemary (2008) Design of Comparative Experiments.
 #'
 "rye_grass"
+
+
+#' An experiment was conducted to compare seven treatments for
+#' their effectiveness in reducing scab disease in potatoes.
+#' The treatment is coded as 1-7. 100 potatoes are randomly
+#' sampled from each plot, for each one the percentage of the
+#' surface area infected with scabs was assessed by eye and recorded.
+#' The average of these 100 percentages was calculated to give the
+#' scabbiness index.
+#'
+#' @family experimental data
+#' @source Bailey, Rosemary (2008) Design of Comparative Experiments.
+NULL

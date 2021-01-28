@@ -231,7 +231,7 @@ concurrently working on two extension packages:
 
   - `deggust` - to visualise the designs constructed from edibble as
     ggplot2 objects (WIP).
-  - `sizzle` - for experiments that require sample size calculation
+  - `sizzled` - for experiments that require sample size calculation
     (WIP).
 
 Below are some other related work. You can also have a look at the [CRAN
