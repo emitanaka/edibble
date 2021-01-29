@@ -1,5 +1,5 @@
 
-#' Specify variables to record from given units
+#' Set records for given unit
 #'
 #' @description
 #' This function creates new nodes to edibble graph with the name
@@ -14,7 +14,7 @@
 #' @examples
 #'
 #' @export
-record_vars <- function(.edibble, ...,
+set_rcrds <- function(.edibble, ...,
                          .name_repair = c("check_unique", "unique", "universal", "minimal")) {
 
   not_edibble(.edibble)
@@ -43,19 +43,31 @@ record_vars <- function(.edibble, ...,
   update_design(.edibble, .design)
 }
 
-#' Set the expected values for variables
+# Maybe change this to set_rcrds
+#' @export
+record_vars <- function(.edibble, ...,
+                        .name_repair = c("check_unique", "unique", "universal", "minimal")) {
+  set_rcrds(.edibble, ..., .name_repair)
+}
+
+#' Set the expected values for recording variables
 #'
 #' @inheritParams design-context
 #' @param ... Name-value pairs with the name belonging to the variable
-#'  that are plan to be recorded from `record_vars()` and the values are
-#'  the expected types and values set by helper functions, see `?expect-vars`.
+#'  that are plan to be recorded from `set_rcrds()` and the values are
+#'  the expected types and values set by helper functions, see `?expect-rcrds`.
 #' @family user-facing functions
 #' @export
-expect_vars <- function(.edibble, ...) {
+expect_rcrds <- function(.edibble, ...) {
   not_edibble(.edibble)
   .design <- get_edibble_design(.edibble)
   .design$append_validation(list2(...))
   update_design(.edibble, .design)
+}
+
+#' @export
+expect_vars <- function(.edibble, ...) {
+  expect_rcrds(.edibble, ...)
 }
 
 has_record <- function(.design) {

@@ -79,11 +79,11 @@ lady_tasting_tea \%>\%
 Other user-facing functions: 
 \code{\link{allocate_trts}()},
 \code{\link{design-context}},
-\code{\link{expect_vars}()},
+\code{\link{expect_rcrds}()},
 \code{\link{export_design}()},
 \code{\link{randomise_trts}()},
-\code{\link{record_vars}()},
 \code{\link{serve_table}()},
+\code{\link{set_rcrds}()},
 \code{\link{set_trts}()},
 \code{\link{start_design}()}
 }

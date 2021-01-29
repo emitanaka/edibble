@@ -77,6 +77,13 @@ vec_cast.edbl_unit.edbl_unit <- function(x, to, ...) {
   x
 }
 
+#' @importFrom pillar pillar_shaft new_pillar_shaft_simple
+#' @export
+pillar_shaft.edbl_unit <- function(x, ...) {
+  out <- format(x)
+  new_pillar_shaft_simple(out, align = "right", min_width = 11)
+}
+
 #' Number of units associated with the given variable
 #' @export
 n_units <- function(.design) {

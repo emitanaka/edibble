@@ -67,11 +67,11 @@ start_design("COVID-19") \%>\%
 \seealso{
 Other user-facing functions: 
 \code{\link{allocate_trts}()},
-\code{\link{expect_vars}()},
+\code{\link{expect_rcrds}()},
 \code{\link{export_design}()},
 \code{\link{randomise_trts}()},
-\code{\link{record_vars}()},
 \code{\link{serve_table}()},
+\code{\link{set_rcrds}()},
 \code{\link{set_trts}()},
 \code{\link{set_units}()},
 \code{\link{start_design}()}

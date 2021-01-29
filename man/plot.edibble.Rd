@@ -46,5 +46,5 @@ a quick exploratory use.
 }
 \seealso{
 See \code{\link[=iplot]{iplot()}} for interactive plot of the graph of an edibble design
-or \code{\link[deggust]{autoplot}} for ggplot version of the plot.
+or \code{\link[deggust]{autoplot.edibble}} for ggplot version of the plot.
 }

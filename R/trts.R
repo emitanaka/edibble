@@ -130,6 +130,13 @@ n_vars.edbl_graph <- function(.data, class = NULL) {
   sum(V(.data)$class %in% class)
 }
 
+#' @importFrom pillar pillar_shaft new_pillar_shaft_simple
+#' @export
+pillar_shaft.edbl_trt <- function(x, ...) {
+  out <- format(x)
+  new_pillar_shaft_simple(out, align = "right", min_width = 10)
+}
+
 #' @importFrom vctrs vec_ptype_abbr
 #' @export
 vec_ptype_abbr.edbl_trt <- function(x, ...)  {

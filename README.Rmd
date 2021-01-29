@@ -81,13 +81,13 @@ Before constructing the experiment, you might want to think about what you are r
 
 ```{r}
 out <- des %>% 
-    record_vars(student = c(exam_mark,
-                            quiz1_mark,
-                            quiz2_mark,
-                            gender),
-                 class = c(room,
-                           teacher)) %>%
-    expect_vars( exam_mark = to_be_numeric(with_value(between = c(0, 100))),
+    set_rcrds(student = c(exam_mark,
+                          quiz1_mark,
+                          quiz2_mark,
+                          gender),
+              class = c(room,
+                        teacher)) %>%
+    expect_rcrds(exam_mark = to_be_numeric(with_value(between = c(0, 100))),
                 quiz1_mark = to_be_integer(with_value(between = c(0, 15))),
                 quiz2_mark = to_be_integer(with_value(between = c(0, 30))),
                     gender = to_be_factor(levels = c("female", "male", "non-binary", "unknown")),

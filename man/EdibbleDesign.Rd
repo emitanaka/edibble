@@ -47,7 +47,7 @@ with \code{\link[=start_design]{start_design()}} or \code{\link[=restart_design]
 \item \href{#method-activate_graph}{\code{EdibbleDesign$activate_graph()}}
 \item \href{#method-rename}{\code{EdibbleDesign$rename()}}
 \item \href{#method-add_variable}{\code{EdibbleDesign$add_variable()}}
-\item \href{#method-add_variable_node}{\code{EdibbleDesign$add_variable_node()}}
+\item \href{#method-add_record_node}{\code{EdibbleDesign$add_record_node()}}
 \item \href{#method-add_allocation}{\code{EdibbleDesign$add_allocation()}}
 \item \href{#method-assign_allocation}{\code{EdibbleDesign$assign_allocation()}}
 \item \href{#method-append_validation}{\code{EdibbleDesign$append_validation()}}
@@ -182,12 +182,12 @@ Add the variable to the graph.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-add_variable_node"></a>}}
-\if{latex}{\out{\hypertarget{method-add_variable_node}{}}}
-\subsection{Method \code{add_variable_node()}}{
+\if{html}{\out{<a id="method-add_record_node"></a>}}
+\if{latex}{\out{\hypertarget{method-add_record_node}{}}}
+\subsection{Method \code{add_record_node()}}{
 Add the variable to the graph.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$add_variable_node(vnames_new, vname_unit, attr)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$add_record_node(vnames_new, vname_unit, attr)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
