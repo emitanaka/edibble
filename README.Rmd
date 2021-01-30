@@ -53,6 +53,26 @@ The edibble R-package differ considerably to other packages for constructing exp
 * add context that also serves as notes about experiment (see `vignette("edibble")`).
 
 
+## Designing the *whole* experiment
+
+An experiment is likely to involve a number of people. For simplicity, let's suppose there are three actors (we'll use the pronoun them/they for each actor): 
+
+* the **domain expert** 🕵️‍♀️ drives the experimental objective and has the intricate knowledge about the subject area, 
+* the **statistician** 👩🏻‍💻 creates the design layout that contains the treatment-to-unit allocations after taking into account the statistical and practical constraints,
+* the **technician** 👨‍🔬 carries out the experiment and collects the data. 
+
+The actors are purely illustrative. In practice, multiple people can take on each role, one person can take on multiple roles, and/or a person in the role may not  specialise in that role (i.e. a statistician role can be acted out by a non-statistician).
+
+An experiment may begin with no data at all. The **domain expert** comes up with the experimental hypothesis or question and recruit a **statistician** to help design the experiment. Before a **statistician** can produce the design layout, they must converse with the **domain expert** to understand the experimental objective, resources, practical constraints and other possible nuances that might influence the outcome of the experiment. This _consultation phase_ an important information collection. 
+
+With **edibble**, the functions resemble a natural language that you may have in a consultation phase. You may take notes of context using `set_context()`; you write down what and how many units and treatments you have available using `set_units()` and `set_trts()`; you enquire about if there are any restrictions in allocation of treatments and set them using `allocate_trts()`; you may ask what responses are measured or what records will be kept and set them using `set_rcrds()`; you can solicit expected values for these records and encode them using `expect_rcrds()`. The last point is important to minimise the error in the data entry process. If the **technician** enters an invalid entry, then an error is produced. This concept is illustrated below using a UML sequence diagram. 
+
+<img src="man/figures/seq-diagram-eg.png">
+
+
+
+
+
 ## Examples
 
 Consider an experiment where you want to know what is an effective way of teaching (flipped or traditional style) for teaching a particular subject and how different forms of exams (take-home, open-book or closed-book) affect student's marks. 
