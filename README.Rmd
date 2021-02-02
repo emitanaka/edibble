@@ -35,7 +35,7 @@ There are two intermixing goals for edibble:
 * defining the **grammar of experimental design**, and 
 * provide an R-package that aids in the workflow of constructing an experimental design and serves as an implementation of the so-called grammar of experimental design.
 
-The self-proclaimed _grammar of experimental design_ attempts to define rules and structures that govern the specification of an experimental design. Some (work-in-progress) details can be found in `vignette("grammar")` where it is serving as the dumping ground of my thoughts for now. The use of the word "grammar" pay homage to the [_grammar of graphics_](https://ggplot2.tidyverse.org/) and [_grammar of data manipulation_](https://dplyr.tidyverse.org/) which this work is heavily inspired from.
+The _grammar of experimental design_ is a framework that functionally maps the fundamental components of an experiment to an object oriented system to build and modify the experimental design. Some (work-in-progress) details can be found in `vignette("grammar")` where it is serving as the dumping ground of my thoughts for now. The use of the word "grammar" pay homage to the [_grammar of graphics_](https://ggplot2.tidyverse.org/) and [_grammar of data manipulation_](https://dplyr.tidyverse.org/) which this work is heavily inspired from.
 
 ### Experimental data 
 
