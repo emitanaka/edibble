@@ -83,7 +83,7 @@ get_trt_vars <- function(x) {
   if(is_edibble_graph(x)) {
     return(V(x)$vname[V(x)$class=="edbl_trt"])
   }
-  if(is_edibble_df(x)) {
+  if(is_edibble_table(x)) {
     ind <- unlist(lapply(x, function(var) "edbl_trt" %in% class(var)))
     return(names(x)[ind])
   }

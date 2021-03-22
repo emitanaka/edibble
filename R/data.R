@@ -1,5 +1,3 @@
-
-
 #' Skittles experiment
 #'
 #' @description
@@ -53,6 +51,8 @@
 
 #' Rye-grass experiment
 #'
+#' @description
+#'
 #' An experiment conducted to compare three different cultivars of rye-grass
 #' (Cropper, Melba, Melle) in combination with four quantities of
 #' nitrogen fertilizer (0 kg/ha, 80 kg/ha, 160 kg/ha, 240 kg/ha).
@@ -73,7 +73,8 @@
 #'
 "rye_grass"
 
-
+#' Scab disease in pototoes
+#' @description
 #' An experiment was conducted to compare seven treatments for
 #' their effectiveness in reducing scab disease in potatoes.
 #' The treatment is coded as 1-7. 100 potatoes are randomly

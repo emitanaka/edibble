@@ -11,8 +11,6 @@
 #'  unit defined in `set_units`. The value should be a vector of new variables
 #'  names.
 #' @family user-facing functions
-#' @examples
-#'
 #' @export
 set_rcrds <- function(.edibble, ...,
                          .name_repair = c("check_unique", "unique", "universal", "minimal")) {

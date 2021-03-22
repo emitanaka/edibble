@@ -328,6 +328,14 @@ as.character.edbl_var <- function(x, ...) {
   out
 }
 
+#' @rdname utility-edibble-var
+#' @export
+as.integer.edbl_var <- function(x, ...) {
+  out <- as.integer(as.factor(as.character(x)))
+  attributes(out) <- NULL
+  out
+}
+
 #' @export
 levels.edbl_unit <- function(x) {
   attr(x, "levels")

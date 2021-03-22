@@ -157,7 +157,7 @@ des <-
     allocate_trts(style ~ class,
                   exam ~ student) %>%
     randomise_trts() %>%
-    record_vars(student = c(exam_mark,
+    set_rcrds(student = c(exam_mark,
                             quiz1_mark,
                             quiz2_mark,
                             gender),

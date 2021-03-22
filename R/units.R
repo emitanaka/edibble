@@ -90,6 +90,26 @@ n_units <- function(.design) {
   nrow(.design$table)
 }
 
+#' Get hte experimental unit names
+#'
+#' If there are more than one treatment factor applied to multiple units, then the
+#' return object will be a character vector.
+#'
+#' @export
+exp_unit_names <- function(.edibble) {
+  .graph <- get_edibble_graph(.edibble)
+  .vgraph <- subset_vars(.graph)
+  trt_names <- get_trt_vars(.vgraph)
+  attr(neighbors(.vgraph, V(.vgraph)$name==trt_names, "out"), "names")
+}
+
+#' @export
+unit_names <- function(.edibble) {
+  .graph <- get_edibble_graph(.edibble)
+  .vgraph <- subset_vars(.graph)
+  V(.vgraph)$vname[V(.vgraph)$class=="edbl_unit"]
+}
+
 
 
 
