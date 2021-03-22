@@ -3,10 +3,13 @@
 \name{utility-edibble-var}
 \alias{utility-edibble-var}
 \alias{as.character.edbl_var}
+\alias{as.integer.edbl_var}
 \alias{is_edibble_var}
 \title{Utility functions for edibble variable}
 \usage{
 \method{as.character}{edbl_var}(x, ...)
+
+\method{as.integer}{edbl_var}(x, ...)
 
 is_edibble_var(x)
 }

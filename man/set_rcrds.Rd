@@ -24,9 +24,6 @@ This function creates new nodes to edibble graph with the name
 corresponding to either the intended response that will be measured or
 a variable to be recorded.
 }
-\examples{
-
-}
 \seealso{
 Other user-facing functions: 
 \code{\link{allocate_trts}()},

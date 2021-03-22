@@ -17,8 +17,7 @@ rye_grass
 An experiment conducted to compare three different cultivars of rye-grass
 (Cropper, Melba, Melle) in combination with four quantities of
 nitrogen fertilizer (0 kg/ha, 80 kg/ha, 160 kg/ha, 240 kg/ha).
-}
-\details{
+
 The experiment utilised two fields with each divided into three strips of
 land. Each strip consisted of four plots.
 
