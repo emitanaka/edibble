@@ -62,7 +62,7 @@ using the friendlier user-facing family of functions instead, beginning
 with start_design() or restart_design()." />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:creator" content="@emitanaka" />
+<meta name="twitter:creator" content="@statsgen" />
 <meta name="twitter:site" content="@MonashEBS" />
 
 
@@ -225,7 +225,7 @@ with <code><a href='start_design.html'>start_design()</a></code> or <code><a hre
 <li><p><a href='#method-activate_graph'><code>EdibbleDesign$activate_graph()</code></a></p></li>
 <li><p><a href='#method-rename'><code>EdibbleDesign$rename()</code></a></p></li>
 <li><p><a href='#method-add_variable'><code>EdibbleDesign$add_variable()</code></a></p></li>
-<li><p><a href='#method-add_variable_node'><code>EdibbleDesign$add_variable_node()</code></a></p></li>
+<li><p><a href='#method-add_record_node'><code>EdibbleDesign$add_record_node()</code></a></p></li>
 <li><p><a href='#method-add_allocation'><code>EdibbleDesign$add_allocation()</code></a></p></li>
 <li><p><a href='#method-assign_allocation'><code>EdibbleDesign$assign_allocation()</code></a></p></li>
 <li><p><a href='#method-append_validation'><code>EdibbleDesign$append_validation()</code></a></p></li>
@@ -287,7 +287,7 @@ randomisation process.</p><h4 class='hasAnchor' id='arguments'><a class='anchor'
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>...</code></dt><dd><p>Similar to <code><a href='https://dplyr.tidyverse.org/reference/rename.html'>dplyr::rename</a></code>, use <code>new_name = old_name</code> to
+<dt><code>...</code></dt><dd><p>Similar to <code>dplyr::rename</code>, use <code>new_name = old_name</code> to
 rename variables.</p></dd>
 
 </dl><p></div></p>
@@ -306,9 +306,9 @@ rename variables.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-add_variable_node"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>add_variable_node()</code></h3>
+<a id="method-add_record_node"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>add_record_node()</code></h3>
 <p>Add the variable to the graph.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>add_variable_node</span><span class='op'>(</span><span class='va'>vnames_new</span>, <span class='va'>vname_unit</span>, <span class='va'>attr</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>EdibbleDesign</span><span class='op'>$</span><span class='fu'>add_record_node</span><span class='op'>(</span><span class='va'>vnames_new</span>, <span class='va'>vname_unit</span>, <span class='va'>attr</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>

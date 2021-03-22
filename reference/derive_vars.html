@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Numbers with SI prefix — number_si_prefix • edibble</title>
+<title>Derive variables from other variables. — derive_vars • edibble</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -54,9 +54,9 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Numbers with SI prefix — number_si_prefix" />
-<meta property="og:description" content="It's called SI prefix but the letter notation is added as a suffix.
-The largest prefix is yotta $10^24$." />
+<meta property="og:title" content="Derive variables from other variables. — derive_vars" />
+<meta property="og:description" content="This is used to specify the excel formula for variables that
+are derived based on other variables." />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@statsgen" />
@@ -168,30 +168,23 @@ The largest prefix is yotta $10^24$." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Numbers with SI prefix</h1>
-    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
-    <div class="hidden name"><code>number_si_prefix.Rd</code></div>
+    <h1>Derive variables from other variables.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/rcrd.R'><code>R/rcrd.R</code></a></small>
+    <div class="hidden name"><code>derive_vars.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>It's called SI prefix but the letter notation is added as a suffix.
-The largest prefix is yotta $10^24$.</p>
+    <p>This is used to specify the excel formula for variables that
+are derived based on other variables.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>number_si_prefix</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>derive_vars</span><span class='op'>(</span><span class='va'>.edibble</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>A numeric vector to format with SI prefix</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>https://en.wikipedia.org/wiki/Metric_prefix</p>
+    <div class='dont-index'><p>See <code><a href='calculate.html'>calculate()</a></code>, <code>calculate2()</code> and <code>pcalculate()</code> to
+specify the excel formula.</p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

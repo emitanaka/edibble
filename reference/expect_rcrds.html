@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Numbers with SI prefix — number_si_prefix • edibble</title>
+<title>Set the expected values for recording variables — expect_rcrds • edibble</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -54,9 +54,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Numbers with SI prefix — number_si_prefix" />
-<meta property="og:description" content="It's called SI prefix but the letter notation is added as a suffix.
-The largest prefix is yotta $10^24$." />
+<meta property="og:title" content="Set the expected values for recording variables — expect_rcrds" />
+<meta property="og:description" content="Set the expected values for recording variables" />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@statsgen" />
@@ -168,30 +167,46 @@ The largest prefix is yotta $10^24$." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Numbers with SI prefix</h1>
-    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
-    <div class="hidden name"><code>number_si_prefix.Rd</code></div>
+    <h1>Set the expected values for recording variables</h1>
+    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/rcrd.R'><code>R/rcrd.R</code></a></small>
+    <div class="hidden name"><code>expect_rcrds.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>It's called SI prefix but the letter notation is added as a suffix.
-The largest prefix is yotta $10^24$.</p>
+    <p>Set the expected values for recording variables</p>
     </div>
 
-    <pre class="usage"><span class='fu'>number_si_prefix</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>expect_rcrds</span><span class='op'>(</span><span class='va'>.edibble</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>A numeric vector to format with SI prefix</p></td>
+      <th>.edibble</th>
+      <td><p>An edibble design (<code>EdibbleDesign</code>), an edibble data frame (<code>edbl_table</code>) or an
+object that contains the edibble data frame in the attribute
+<code>design</code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Name-value pairs with the name belonging to the variable
+that are plan to be recorded from <code><a href='set_rcrds.html'>set_rcrds()</a></code> and the values are
+the expected types and values set by helper functions, see <code>?expect-rcrds</code>.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>https://en.wikipedia.org/wiki/Metric_prefix</p>
+    <div class='dont-index'><p>Other user-facing functions: 
+<code><a href='allocate_trts.html'>allocate_trts</a>()</code>,
+<code><a href='design-context.html'>design-context</a></code>,
+<code><a href='export_design.html'>export_design</a>()</code>,
+<code><a href='randomise_trts.html'>randomise_trts</a>()</code>,
+<code><a href='serve_table.html'>serve_table</a>()</code>,
+<code><a href='set_rcrds.html'>set_rcrds</a>()</code>,
+<code><a href='set_trts.html'>set_trts</a>()</code>,
+<code><a href='set_units.html'>set_units</a>()</code>,
+<code><a href='start_design.html'>start_design</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

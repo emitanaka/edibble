@@ -24,7 +24,7 @@
 <meta property="og:description" content="edibble">
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:creator" content="@emitanaka">
+<meta name="twitter:creator" content="@statsgen">
 <meta name="twitter:site" content="@MonashEBS">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -174,24 +174,24 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="va">spdes</span><span class="op">)</span>
 <span class="co">#&gt; # An edibble: 16 x 4</span>
-<span class="co">#&gt;    wholeplot  subplot    fertilizer variety </span>
-<span class="co">#&gt;    &lt;unit(4)&gt;  &lt;unit(16)&gt; &lt;trt(2)&gt;   &lt;trt(2)&gt;</span>
-<span class="co">#&gt;  1 wholeplot1 subplot1   A          V2      </span>
-<span class="co">#&gt;  2 wholeplot1 subplot2   A          V2      </span>
-<span class="co">#&gt;  3 wholeplot1 subplot3   A          V1      </span>
-<span class="co">#&gt;  4 wholeplot1 subplot4   A          V1      </span>
-<span class="co">#&gt;  5 wholeplot2 subplot5   B          V2      </span>
-<span class="co">#&gt;  6 wholeplot2 subplot6   B          V1      </span>
-<span class="co">#&gt;  7 wholeplot2 subplot7   B          V1      </span>
-<span class="co">#&gt;  8 wholeplot2 subplot8   B          V2      </span>
-<span class="co">#&gt;  9 wholeplot3 subplot9   A          V1      </span>
-<span class="co">#&gt; 10 wholeplot3 subplot10  A          V2      </span>
-<span class="co">#&gt; 11 wholeplot3 subplot11  A          V2      </span>
-<span class="co">#&gt; 12 wholeplot3 subplot12  A          V1      </span>
-<span class="co">#&gt; 13 wholeplot4 subplot13  B          V1      </span>
-<span class="co">#&gt; 14 wholeplot4 subplot14  B          V2      </span>
-<span class="co">#&gt; 15 wholeplot4 subplot15  B          V1      </span>
-<span class="co">#&gt; 16 wholeplot4 subplot16  B          V2</span></code></pre></div>
+<span class="co">#&gt;     wholeplot    subplot fertilizer  variety</span>
+<span class="co">#&gt;     &lt;unit(4)&gt; &lt;unit(16)&gt;   &lt;trt(2)&gt; &lt;trt(2)&gt;</span>
+<span class="co">#&gt;  1 wholeplot1  subplot1           A       V2</span>
+<span class="co">#&gt;  2 wholeplot1  subplot2           A       V2</span>
+<span class="co">#&gt;  3 wholeplot1  subplot3           A       V1</span>
+<span class="co">#&gt;  4 wholeplot1  subplot4           A       V1</span>
+<span class="co">#&gt;  5 wholeplot2  subplot5           B       V2</span>
+<span class="co">#&gt;  6 wholeplot2  subplot6           B       V1</span>
+<span class="co">#&gt;  7 wholeplot2  subplot7           B       V1</span>
+<span class="co">#&gt;  8 wholeplot2  subplot8           B       V2</span>
+<span class="co">#&gt;  9 wholeplot3  subplot9           A       V1</span>
+<span class="co">#&gt; 10 wholeplot3  subplot10          A       V2</span>
+<span class="co">#&gt; 11 wholeplot3  subplot11          A       V2</span>
+<span class="co">#&gt; 12 wholeplot3  subplot12          A       V1</span>
+<span class="co">#&gt; 13 wholeplot4  subplot13          B       V1</span>
+<span class="co">#&gt; 14 wholeplot4  subplot14          B       V2</span>
+<span class="co">#&gt; 15 wholeplot4  subplot15          B       V1</span>
+<span class="co">#&gt; 16 wholeplot4  subplot16          B       V2</span></code></pre></div>
 <p>You can see it outputs a data frame (or tibble) called edibble. The name origin of <code>edibble</code> is a play on <a href="https://tibble.tidyverse.org/"><code>tibble</code></a> and can be thought of as tibble output for experimental design.</p>
 <p>Once you get the rough idea of how edibble specifies design, you should be roughly be able to visualise what the experimental design layout is just from looking at the code alone. Take another example below. Can you see what the design is?</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -223,9 +223,9 @@ des</code></pre>
 <p>You can muffle these messages by using <code>suppress_context</code>. [TODO: add option to muffle these and shorten some long contexts.]</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/design-context.html">suppress_context</a></span><span class="op">(</span><span class="va">des</span><span class="op">)</span>
-<span class="co">#&gt; COVID-19</span>
-<span class="co">#&gt; ├─rat (20 levels)</span>
-<span class="co">#&gt; └─treat (2 levels)</span></code></pre></div>
+<span class="co">#&gt; [36m[3mCOVID-19[23m[39m</span>
+<span class="co">#&gt; ├─[40m[33mrat[39m[49m [90m(20 levels)[39m</span>
+<span class="co">#&gt; └─[34mtreat[39m [90m(2 levels)[39m</span></code></pre></div>
 </div>
 <div id="recording-responses-and-other-variables" class="section level2">
 <h2 class="hasAnchor">
@@ -241,13 +241,13 @@ des</code></pre>
     <span class="fu"><a href="../reference/allocate_trts.html">allocate_trts</a></span><span class="op">(</span><span class="va">style</span> <span class="op">~</span> <span class="va">class</span>,
                   <span class="va">exam</span> <span class="op">~</span> <span class="va">student</span><span class="op">)</span> <span class="op">%&gt;%</span>
     <span class="fu"><a href="../reference/randomise_trts.html">randomise_trts</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu"><a href="../reference/record_vars.html">record_vars</a></span><span class="op">(</span>student <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">exam_mark</span>,
+    <span class="fu"><a href="../reference/set_rcrds.html">set_rcrds</a></span><span class="op">(</span>student <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">exam_mark</span>,
                             <span class="va">quiz1_mark</span>,
                             <span class="va">quiz2_mark</span>,
                             <span class="va">gender</span><span class="op">)</span>,
                  class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">room</span>,
                            <span class="va">teacher</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu"><a href="../reference/expect_vars.html">expect_vars</a></span><span class="op">(</span> exam_mark <span class="op">=</span> <span class="fu"><a href="../reference/expect-vars.html">to_be_numeric</a></span><span class="op">(</span><span class="fu"><a href="../reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
+    <span class="fu">expect_vars</span><span class="op">(</span> exam_mark <span class="op">=</span> <span class="fu"><a href="../reference/expect-vars.html">to_be_numeric</a></span><span class="op">(</span><span class="fu"><a href="../reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
                 quiz1_mark <span class="op">=</span> <span class="fu"><a href="../reference/expect-vars.html">to_be_integer</a></span><span class="op">(</span><span class="fu"><a href="../reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">15</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
                 quiz2_mark <span class="op">=</span> <span class="fu"><a href="../reference/expect-vars.html">to_be_integer</a></span><span class="op">(</span><span class="fu"><a href="../reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
                     gender <span class="op">=</span> <span class="fu"><a href="../reference/expect-vars.html">to_be_factor</a></span><span class="op">(</span>levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="st">"male"</span>, <span class="st">"non-binary"</span><span class="op">)</span><span class="op">)</span>,
@@ -255,20 +255,20 @@ des</code></pre>
                       room <span class="op">=</span> <span class="fu"><a href="../reference/expect-vars.html">to_be_character</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="../reference/with_value.html">with_value</a></span><span class="op">(</span><span class="st">"&gt;="</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="va">des</span><span class="op">)</span>
-<span class="co">#&gt; # An edibble: 120 x 10</span>
-<span class="co">#&gt;    class    student     style       exam        exam_mark quiz1_mark quiz2_mark gender  room teacher</span>
-<span class="co">#&gt;    &lt;unit(4&gt; &lt;unit(120)&gt; &lt;trt(2)&gt;    &lt;trt(3)&gt;       &lt;rcrd&gt;     &lt;rcrd&gt;     &lt;rcrd&gt; &lt;rcrd&gt; &lt;rcr&gt;  &lt;rcrd&gt;</span>
-<span class="co">#&gt;  1 class1   student1    traditional open-book           ■          ■          ■      ■     ■       ■</span>
-<span class="co">#&gt;  2 class1   student2    traditional closed-book         ■          ■          ■      ■     x       x</span>
-<span class="co">#&gt;  3 class1   student3    traditional open-book           ■          ■          ■      ■     x       x</span>
-<span class="co">#&gt;  4 class1   student4    traditional take-home           ■          ■          ■      ■     x       x</span>
-<span class="co">#&gt;  5 class1   student5    traditional take-home           ■          ■          ■      ■     x       x</span>
-<span class="co">#&gt;  6 class1   student6    traditional closed-book         ■          ■          ■      ■     x       x</span>
-<span class="co">#&gt;  7 class1   student7    traditional closed-book         ■          ■          ■      ■     x       x</span>
-<span class="co">#&gt;  8 class1   student8    traditional open-book           ■          ■          ■      ■     x       x</span>
-<span class="co">#&gt;  9 class1   student9    traditional closed-book         ■          ■          ■      ■     x       x</span>
-<span class="co">#&gt; 10 class1   student10   traditional take-home           ■          ■          ■      ■     x       x</span>
-<span class="co">#&gt; # … with 110 more rows</span></code></pre></div>
+<span class="co">#&gt; [38;5;246m# An edibble: 120 x 10[39m</span>
+<span class="co">#&gt;        class     student       style        exam exam_mark quiz1_mark quiz2_mark gender   room</span>
+<span class="co">#&gt;    [3m[38;5;246m&lt;unit(4)&gt;[39m[23m [3m[38;5;246m&lt;unit(120)&gt;[39m[23m    [3m[38;5;246m&lt;trt(2)&gt;[39m[23m    [3m[38;5;246m&lt;trt(3)&gt;[39m[23m    [3m[38;5;246m&lt;rcrd&gt;[39m[23m     [3m[38;5;246m&lt;rcrd&gt;[39m[23m     [3m[38;5;246m&lt;rcrd&gt;[39m[23m [3m[38;5;246m&lt;rcrd&gt;[39m[23m [3m[38;5;246m&lt;rcrd&gt;[39m[23m</span>
+<span class="co">#&gt; [38;5;250m 1[39m    class1   student1  traditional open-book           ■          ■          ■      ■      ■</span>
+<span class="co">#&gt; [38;5;250m 2[39m    class1   student2  traditional closed-book         ■          ■          ■      ■      [38;5;246mx[39m</span>
+<span class="co">#&gt; [38;5;250m 3[39m    class1   student3  traditional open-book           ■          ■          ■      ■      [38;5;246mx[39m</span>
+<span class="co">#&gt; [38;5;250m 4[39m    class1   student4  traditional take-home           ■          ■          ■      ■      [38;5;246mx[39m</span>
+<span class="co">#&gt; [38;5;250m 5[39m    class1   student5  traditional take-home           ■          ■          ■      ■      [38;5;246mx[39m</span>
+<span class="co">#&gt; [38;5;250m 6[39m    class1   student6  traditional closed-book         ■          ■          ■      ■      [38;5;246mx[39m</span>
+<span class="co">#&gt; [38;5;250m 7[39m    class1   student7  traditional closed-book         ■          ■          ■      ■      [38;5;246mx[39m</span>
+<span class="co">#&gt; [38;5;250m 8[39m    class1   student8  traditional open-book           ■          ■          ■      ■      [38;5;246mx[39m</span>
+<span class="co">#&gt; [38;5;250m 9[39m    class1   student9  traditional closed-book         ■          ■          ■      ■      [38;5;246mx[39m</span>
+<span class="co">#&gt; [38;5;250m10[39m    class1   student10 traditional take-home           ■          ■          ■      ■      [38;5;246mx[39m</span>
+<span class="co">#&gt; [38;5;246m# … with 110 more rows, and 1 more variable: teacher &lt;rcrd&gt;[39m</span></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/export_design.html">export_design</a></span><span class="op">(</span><span class="va">des</span>, <span class="st">"/PATH/TO/FILE.xlsx"</span><span class="op">)</span></code></pre></div>
 <p>Now you have an excel file that separates out observational units to their own sheet and data entering is now restricted to what you set out in <code>expect_vars</code>.</p>

@@ -21,10 +21,10 @@
 <link href="docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><link href="extra.css" rel="stylesheet">
 <meta property="og:title" content="edibble - an R package that implements grammar of experimental design">
-<meta property="og:description" content="Bla bla">
+<meta property="og:description" content="Facilitate contruction of experimental designs.">
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:creator" content="@emitanaka">
+<meta name="twitter:creator" content="@statsgen">
 <meta name="twitter:site" content="@MonashEBS">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -136,7 +136,7 @@
 <li>defining the <strong>grammar of experimental design</strong>, and</li>
 <li>provide an R-package that aids in the workflow of constructing an experimental design and serves as an implementation of the so-called grammar of experimental design.</li>
 </ul>
-<p>The self-proclaimed <em>grammar of experimental design</em> attempts to define rules and structures that govern the specification of an experimental design. Some (work-in-progress) details can be found in <code><a href="articles/grammar.html">vignette("grammar")</a></code> where it is serving as the dumping ground of my thoughts for now. The use of the word “grammar” pay homage to the <a href="https://ggplot2.tidyverse.org/"><em>grammar of graphics</em></a> and <a href="https://dplyr.tidyverse.org/"><em>grammar of data manipulation</em></a> which this work is heavily inspired from.</p>
+<p>The <em>grammar of experimental design</em> is a framework that functionally maps the fundamental components of an experiment to an object oriented system to build and modify the experimental design. Some (work-in-progress) details can be found in <code><a href="articles/grammar.html">vignette("grammar")</a></code> where it is serving as the dumping ground of my thoughts for now. The use of the word “grammar” pay homage to the <a href="https://ggplot2.tidyverse.org/"><em>grammar of graphics</em></a> and <a href="https://dplyr.tidyverse.org/"><em>grammar of data manipulation</em></a> which this work is heavily inspired from.</p>
 <div id="experimental-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#experimental-data" class="anchor"></a>Experimental data</h3>
@@ -152,6 +152,20 @@
 <li>add context that also serves as notes about experiment (see <code><a href="articles/edibble.html">vignette("edibble")</a></code>).</li>
 </ul>
 </div>
+</div>
+<div id="designing-the-whole-experiment" class="section level2">
+<h2 class="hasAnchor">
+<a href="#designing-the-whole-experiment" class="anchor"></a>Designing the <em>whole</em> experiment</h2>
+<p>An experiment is likely to involve a number of people. For simplicity, let’s suppose there are three actors (we’ll use the pronoun them/they for each actor):</p>
+<ul>
+<li>the <strong>domain expert</strong> 🕵️‍♀️ drives the experimental objective and has the intricate knowledge about the subject area,</li>
+<li>the <strong>statistician</strong> 👩🏻‍💻 creates the design layout that contains the treatment-to-unit allocations after taking into account the statistical and practical constraints,</li>
+<li>the <strong>technician</strong> 👨‍🔬 carries out the experiment and collects the data.</li>
+</ul>
+<p>The actors are purely illustrative. In practice, multiple people can take on each role, one person can take on multiple roles, and/or a person in the role may not specialise in that role (i.e. a statistician role can be acted out by a non-statistician).</p>
+<p>An experiment may begin with no data at all. The <strong>domain expert</strong> comes up with the experimental hypothesis or question and recruit a <strong>statistician</strong> to help design the experiment. Before a <strong>statistician</strong> can produce the design layout, they must converse with the <strong>domain expert</strong> to understand the experimental objective, resources, practical constraints and other possible nuances that might influence the outcome of the experiment. This <em>consultation phase</em> an important information collection.</p>
+<p>With <strong>edibble</strong>, the functions resemble a natural language that you may have in a consultation phase. You may take notes of context using <code><a href="reference/design-context.html">set_context()</a></code>; you write down what and how many units and treatments you have available using <code><a href="reference/set_units.html">set_units()</a></code> and <code><a href="reference/set_trts.html">set_trts()</a></code>; you enquire about if there are any restrictions in allocation of treatments and set them using <code><a href="reference/allocate_trts.html">allocate_trts()</a></code>; you may ask what responses are measured or what records will be kept and set them using <code><a href="reference/set_rcrds.html">set_rcrds()</a></code>; you can solicit expected values for these records and encode them using <code><a href="reference/expect_rcrds.html">expect_rcrds()</a></code>. The last point is important to minimise the error in the data entry process. If the <strong>technician</strong> enters an invalid entry, then an error is produced. This concept is illustrated below using a UML sequence diagram.</p>
+<p><img src="reference/figures/seq-diagram-eg.png"></p>
 </div>
 <div id="examples" class="section level2">
 <h2 class="hasAnchor">
@@ -174,29 +188,29 @@
 
 <span class="fu"><a href="reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="va">des</span><span class="op">)</span>
 <span class="co">#&gt; # An edibble: 120 x 4</span>
-<span class="co">#&gt;    class     student     style       exam       </span>
-<span class="co">#&gt;    &lt;unit(4)&gt; &lt;unit(120)&gt; &lt;trt(2)&gt;    &lt;trt(3)&gt;   </span>
-<span class="co">#&gt;  1 class1    student1    traditional take-home  </span>
-<span class="co">#&gt;  2 class1    student2    traditional take-home  </span>
-<span class="co">#&gt;  3 class1    student3    traditional open-book  </span>
-<span class="co">#&gt;  4 class1    student4    traditional take-home  </span>
-<span class="co">#&gt;  5 class1    student5    traditional closed-book</span>
-<span class="co">#&gt;  6 class1    student6    traditional closed-book</span>
-<span class="co">#&gt;  7 class1    student7    traditional closed-book</span>
-<span class="co">#&gt;  8 class1    student8    traditional open-book  </span>
-<span class="co">#&gt;  9 class1    student9    traditional take-home  </span>
-<span class="co">#&gt; 10 class1    student10   traditional take-home  </span>
+<span class="co">#&gt;        class     student       style        exam</span>
+<span class="co">#&gt;    &lt;unit(4)&gt; &lt;unit(120)&gt;    &lt;trt(2)&gt;    &lt;trt(3)&gt;</span>
+<span class="co">#&gt;  1    class1   student1  traditional take-home  </span>
+<span class="co">#&gt;  2    class1   student2  traditional take-home  </span>
+<span class="co">#&gt;  3    class1   student3  traditional open-book  </span>
+<span class="co">#&gt;  4    class1   student4  traditional take-home  </span>
+<span class="co">#&gt;  5    class1   student5  traditional closed-book</span>
+<span class="co">#&gt;  6    class1   student6  traditional closed-book</span>
+<span class="co">#&gt;  7    class1   student7  traditional closed-book</span>
+<span class="co">#&gt;  8    class1   student8  traditional open-book  </span>
+<span class="co">#&gt;  9    class1   student9  traditional take-home  </span>
+<span class="co">#&gt; 10    class1   student10 traditional take-home  </span>
 <span class="co">#&gt; # … with 110 more rows</span></code></pre></div>
 <p>Before constructing the experiment, you might want to think about what you are recording for which level of unit and what values these variables can be recorded as.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">out</span> <span class="op">&lt;-</span> <span class="va">des</span> <span class="op">%&gt;%</span> 
-    <span class="fu"><a href="reference/record_vars.html">record_vars</a></span><span class="op">(</span>student <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">exam_mark</span>,
-                            <span class="va">quiz1_mark</span>,
-                            <span class="va">quiz2_mark</span>,
-                            <span class="va">gender</span><span class="op">)</span>,
-                 class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">room</span>,
-                           <span class="va">teacher</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu"><a href="reference/expect_vars.html">expect_vars</a></span><span class="op">(</span> exam_mark <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_numeric</a></span><span class="op">(</span><span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
+    <span class="fu"><a href="reference/set_rcrds.html">set_rcrds</a></span><span class="op">(</span>student <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">exam_mark</span>,
+                          <span class="va">quiz1_mark</span>,
+                          <span class="va">quiz2_mark</span>,
+                          <span class="va">gender</span><span class="op">)</span>,
+              class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">room</span>,
+                        <span class="va">teacher</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="reference/expect_rcrds.html">expect_rcrds</a></span><span class="op">(</span>exam_mark <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_numeric</a></span><span class="op">(</span><span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
                 quiz1_mark <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_integer</a></span><span class="op">(</span><span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">15</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
                 quiz2_mark <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_integer</a></span><span class="op">(</span><span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
                     gender <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_factor</a></span><span class="op">(</span>levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="st">"male"</span>, <span class="st">"non-binary"</span>, <span class="st">"unknown"</span><span class="op">)</span><span class="op">)</span>,
@@ -206,18 +220,18 @@
 
 <span class="va">out</span>
 <span class="co">#&gt; # An edibble: 120 x 10</span>
-<span class="co">#&gt;    class  student   style       exam        exam_mark quiz1_mark quiz2_mark</span>
-<span class="co">#&gt;    &lt;unit&gt; &lt;unit(12&gt; &lt;trt(2)&gt;    &lt;trt(3)&gt;       &lt;rcrd&gt;     &lt;rcrd&gt;     &lt;rcrd&gt;</span>
-<span class="co">#&gt;  1 class1 student1  traditional take-home           ■          ■          ■</span>
-<span class="co">#&gt;  2 class1 student2  traditional take-home           ■          ■          ■</span>
-<span class="co">#&gt;  3 class1 student3  traditional open-book           ■          ■          ■</span>
-<span class="co">#&gt;  4 class1 student4  traditional take-home           ■          ■          ■</span>
-<span class="co">#&gt;  5 class1 student5  traditional closed-book         ■          ■          ■</span>
-<span class="co">#&gt;  6 class1 student6  traditional closed-book         ■          ■          ■</span>
-<span class="co">#&gt;  7 class1 student7  traditional closed-book         ■          ■          ■</span>
-<span class="co">#&gt;  8 class1 student8  traditional open-book           ■          ■          ■</span>
-<span class="co">#&gt;  9 class1 student9  traditional take-home           ■          ■          ■</span>
-<span class="co">#&gt; 10 class1 student10 traditional take-home           ■          ■          ■</span>
+<span class="co">#&gt;          class     student      style       exam exam_mark quiz1_mark quiz2_mark</span>
+<span class="co">#&gt;      &lt;unit(4)&gt; &lt;unit(120)&gt;   &lt;trt(2)&gt;   &lt;trt(3)&gt;    &lt;rcrd&gt;     &lt;rcrd&gt;     &lt;rcrd&gt;</span>
+<span class="co">#&gt;  1      class1   student1  tradition… take-home…         ■          ■          ■</span>
+<span class="co">#&gt;  2      class1   student2  tradition… take-home…         ■          ■          ■</span>
+<span class="co">#&gt;  3      class1   student3  tradition… open-book…         ■          ■          ■</span>
+<span class="co">#&gt;  4      class1   student4  tradition… take-home…         ■          ■          ■</span>
+<span class="co">#&gt;  5      class1   student5  tradition… closed-bo…         ■          ■          ■</span>
+<span class="co">#&gt;  6      class1   student6  tradition… closed-bo…         ■          ■          ■</span>
+<span class="co">#&gt;  7      class1   student7  tradition… closed-bo…         ■          ■          ■</span>
+<span class="co">#&gt;  8      class1   student8  tradition… open-book…         ■          ■          ■</span>
+<span class="co">#&gt;  9      class1   student9  tradition… take-home…         ■          ■          ■</span>
+<span class="co">#&gt; 10      class1   student10 tradition… take-home…         ■          ■          ■</span>
 <span class="co">#&gt; # … with 110 more rows, and 3 more variables: gender &lt;rcrd&gt;, room &lt;rcrd&gt;,</span>
 <span class="co">#&gt; #   teacher &lt;rcrd&gt;</span></code></pre></div>
 <p>When you export the above edibble design using the <code>export_design</code> function, the variables you are recording are constraint to the values you expect, e.g. for factors, the cells have a drop-down menu to select from possible values.</p>
@@ -245,18 +259,18 @@
                               <span class="va">.</span> <span class="op">~</span> <span class="fl">20</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; # An edibble: 190 x 3</span>
-<span class="co">#&gt;    site      block     plot       </span>
+<span class="co">#&gt;         site     block        plot</span>
 <span class="co">#&gt;    &lt;unit(3)&gt; &lt;unit(7)&gt; &lt;unit(190)&gt;</span>
-<span class="co">#&gt;  1 A         block1    plot1      </span>
-<span class="co">#&gt;  2 A         block1    plot2      </span>
-<span class="co">#&gt;  3 A         block1    plot3      </span>
-<span class="co">#&gt;  4 A         block1    plot4      </span>
-<span class="co">#&gt;  5 A         block1    plot5      </span>
-<span class="co">#&gt;  6 A         block1    plot6      </span>
-<span class="co">#&gt;  7 A         block1    plot7      </span>
-<span class="co">#&gt;  8 A         block1    plot8      </span>
-<span class="co">#&gt;  9 A         block1    plot9      </span>
-<span class="co">#&gt; 10 A         block1    plot10     </span>
+<span class="co">#&gt;  1         A    block1      plot1 </span>
+<span class="co">#&gt;  2         A    block1      plot2 </span>
+<span class="co">#&gt;  3         A    block1      plot3 </span>
+<span class="co">#&gt;  4         A    block1      plot4 </span>
+<span class="co">#&gt;  5         A    block1      plot5 </span>
+<span class="co">#&gt;  6         A    block1      plot6 </span>
+<span class="co">#&gt;  7         A    block1      plot7 </span>
+<span class="co">#&gt;  8         A    block1      plot8 </span>
+<span class="co">#&gt;  9         A    block1      plot9 </span>
+<span class="co">#&gt; 10         A    block1      plot10</span>
 <span class="co">#&gt; # … with 180 more rows</span></code></pre></div>
 </div>
 <div id="limitations" class="section level2">
@@ -309,7 +323,7 @@
 <li>duplicate names repaired with same option as <code>tibble</code> for additions to edibble graph;</li>
 <li>(WIP) <code>tidyselect</code> approach to setting edibble variable types;</li>
 <li>ability for developers to extend certain components. Currently only supported for others to contribute their own classical named experimental designs via <code>prep_classical_</code>;</li>
-<li>the specification of complex nested structure drawing similarity to <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">dplyr::case_when</a></code> (LHS is character or integer for edibble however).</li>
+<li>the specification of complex nested structure drawing similarity to <code>dplyr::case_when</code> (LHS is character or integer for edibble however).</li>
 </ul>
 </div>
 <div id="code-of-conduct" class="section level2">
