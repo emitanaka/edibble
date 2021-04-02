@@ -147,9 +147,9 @@
 <li>declaratively create experimental designs based on experimental components (e.g. units and treatments),</li>
 <li>explicitly specify variables that are to be recorded (e.g. response), and</li>
 <li>set expected values for variables to be recorded which restrict the data entry when the design is exported as an xlsx file,</li>
-<li>plot and print outputs for intermediate constructs of the experimental design with configurations for most graphical elements (see <code><a href="articles/output.html">vignette("output")</a></code>),</li>
-<li>make classical named designs (see <code><a href="articles/named-designs.html">vignette("named-designs")</a></code>),</li>
-<li>add context that also serves as notes about experiment (see <code><a href="articles/edibble.html">vignette("edibble")</a></code>).</li>
+<li>plot and print outputs for intermediate constructs of the experimental design with configurations for most graphical elements (see <a href="https://edibble.emitanaka.org/articles/output.html"><code>vignette("output")</code></a>),</li>
+<li>make classical named designs (see <a href="https://edibble.emitanaka.org/articles/named-designs.html"><code>vignette("named-designs")</code></a>),</li>
+<li>add context that also serves as notes about experiment (see <a href="https://edibble.emitanaka.org/articles/grammar.html"><code>vignette("edibble")</code></a>).</li>
 </ul>
 </div>
 </div>
@@ -220,18 +220,18 @@
 
 <span class="va">out</span>
 <span class="co">#&gt; # An edibble: 120 x 10</span>
-<span class="co">#&gt;          class     student      style       exam exam_mark quiz1_mark quiz2_mark</span>
-<span class="co">#&gt;      &lt;unit(4)&gt; &lt;unit(120)&gt;   &lt;trt(2)&gt;   &lt;trt(3)&gt;    &lt;rcrd&gt;     &lt;rcrd&gt;     &lt;rcrd&gt;</span>
-<span class="co">#&gt;  1      class1   student1  tradition… take-home…         ■          ■          ■</span>
-<span class="co">#&gt;  2      class1   student2  tradition… take-home…         ■          ■          ■</span>
-<span class="co">#&gt;  3      class1   student3  tradition… open-book…         ■          ■          ■</span>
-<span class="co">#&gt;  4      class1   student4  tradition… take-home…         ■          ■          ■</span>
-<span class="co">#&gt;  5      class1   student5  tradition… closed-bo…         ■          ■          ■</span>
-<span class="co">#&gt;  6      class1   student6  tradition… closed-bo…         ■          ■          ■</span>
-<span class="co">#&gt;  7      class1   student7  tradition… closed-bo…         ■          ■          ■</span>
-<span class="co">#&gt;  8      class1   student8  tradition… open-book…         ■          ■          ■</span>
-<span class="co">#&gt;  9      class1   student9  tradition… take-home…         ■          ■          ■</span>
-<span class="co">#&gt; 10      class1   student10 tradition… take-home…         ■          ■          ■</span>
+<span class="co">#&gt;        class     student       style        exam exam_mark quiz1_mark quiz2_mark</span>
+<span class="co">#&gt;    &lt;unit(4)&gt; &lt;unit(120)&gt;    &lt;trt(2)&gt;    &lt;trt(3)&gt;    &lt;rcrd&gt;     &lt;rcrd&gt;     &lt;rcrd&gt;</span>
+<span class="co">#&gt;  1    class1   student1  traditional take-home           ■          ■          ■</span>
+<span class="co">#&gt;  2    class1   student2  traditional take-home           ■          ■          ■</span>
+<span class="co">#&gt;  3    class1   student3  traditional open-book           ■          ■          ■</span>
+<span class="co">#&gt;  4    class1   student4  traditional take-home           ■          ■          ■</span>
+<span class="co">#&gt;  5    class1   student5  traditional closed-book         ■          ■          ■</span>
+<span class="co">#&gt;  6    class1   student6  traditional closed-book         ■          ■          ■</span>
+<span class="co">#&gt;  7    class1   student7  traditional closed-book         ■          ■          ■</span>
+<span class="co">#&gt;  8    class1   student8  traditional open-book           ■          ■          ■</span>
+<span class="co">#&gt;  9    class1   student9  traditional take-home           ■          ■          ■</span>
+<span class="co">#&gt; 10    class1   student10 traditional take-home           ■          ■          ■</span>
 <span class="co">#&gt; # … with 110 more rows, and 3 more variables: gender &lt;rcrd&gt;, room &lt;rcrd&gt;,</span>
 <span class="co">#&gt; #   teacher &lt;rcrd&gt;</span></code></pre></div>
 <p>When you export the above edibble design using the <code>export_design</code> function, the variables you are recording are constraint to the values you expect, e.g. for factors, the cells have a drop-down menu to select from possible values.</p>
