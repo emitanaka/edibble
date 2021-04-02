@@ -230,7 +230,7 @@ restart_design <- function(.data) {
 #' @export
 new_edibble <- function(.data, ..., graph = NULL, class = NULL) {
   new_tibble(.data, ..., nrow = vec_size_common(!!!.data),
-                     class = "edbl_table", graph = graph)
+                     class = c("edbl_table", class), graph = graph)
 }
 
 #' @importFrom tibble tbl_sum
