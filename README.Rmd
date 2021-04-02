@@ -48,9 +48,9 @@ The edibble R-package differ considerably to other packages for constructing exp
 * declaratively create experimental designs based on experimental components (e.g. units and treatments),
 * explicitly specify variables that are to be recorded (e.g. response), and
 * set expected values for variables to be recorded which restrict the data entry when the design is exported as an xlsx file,
-* plot and print outputs for intermediate constructs of the experimental design with configurations for most graphical elements (see `vignette("output")`),
-* make classical named designs (see `vignette("named-designs")`),
-* add context that also serves as notes about experiment (see `vignette("edibble")`).
+* plot and print outputs for intermediate constructs of the experimental design with configurations for most graphical elements (see [`vignette("output")`](https://edibble.emitanaka.org/articles/output.html)),
+* make classical named designs (see [`vignette("named-designs")`](https://edibble.emitanaka.org/articles/named-designs.html)),
+* add context that also serves as notes about experiment (see [`vignette("edibble")`](https://edibble.emitanaka.org/articles/grammar.html)).
 
 
 ## Designing the *whole* experiment

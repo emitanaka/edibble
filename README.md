@@ -59,10 +59,12 @@ focus and do well on). Some features include:
     data entry when the design is exported as an xlsx file,
   - plot and print outputs for intermediate constructs of the
     experimental design with configurations for most graphical elements
-    (see `vignette("output")`),
-  - make classical named designs (see `vignette("named-designs")`),
+    (see
+    [`vignette("output")`](https://edibble.emitanaka.org/articles/output.html)),
+  - make classical named designs (see
+    [`vignette("named-designs")`](https://edibble.emitanaka.org/articles/named-designs.html)),
   - add context that also serves as notes about experiment (see
-    `vignette("edibble")`).
+    [`vignette("edibble")`](https://edibble.emitanaka.org/articles/grammar.html)).
 
 ## Designing the *whole* experiment
 
@@ -171,18 +173,18 @@ out <- des %>%
 
 out
 #> # An edibble: 120 x 10
-#>          class     student      style       exam exam_mark quiz1_mark quiz2_mark
-#>      <unit(4)> <unit(120)>   <trt(2)>   <trt(3)>    <rcrd>     <rcrd>     <rcrd>
-#>  1      class1   student1  tradition… take-home…         ■          ■          ■
-#>  2      class1   student2  tradition… take-home…         ■          ■          ■
-#>  3      class1   student3  tradition… open-book…         ■          ■          ■
-#>  4      class1   student4  tradition… take-home…         ■          ■          ■
-#>  5      class1   student5  tradition… closed-bo…         ■          ■          ■
-#>  6      class1   student6  tradition… closed-bo…         ■          ■          ■
-#>  7      class1   student7  tradition… closed-bo…         ■          ■          ■
-#>  8      class1   student8  tradition… open-book…         ■          ■          ■
-#>  9      class1   student9  tradition… take-home…         ■          ■          ■
-#> 10      class1   student10 tradition… take-home…         ■          ■          ■
+#>        class     student       style        exam exam_mark quiz1_mark quiz2_mark
+#>    <unit(4)> <unit(120)>    <trt(2)>    <trt(3)>    <rcrd>     <rcrd>     <rcrd>
+#>  1    class1   student1  traditional take-home           ■          ■          ■
+#>  2    class1   student2  traditional take-home           ■          ■          ■
+#>  3    class1   student3  traditional open-book           ■          ■          ■
+#>  4    class1   student4  traditional take-home           ■          ■          ■
+#>  5    class1   student5  traditional closed-book         ■          ■          ■
+#>  6    class1   student6  traditional closed-book         ■          ■          ■
+#>  7    class1   student7  traditional closed-book         ■          ■          ■
+#>  8    class1   student8  traditional open-book           ■          ■          ■
+#>  9    class1   student9  traditional take-home           ■          ■          ■
+#> 10    class1   student10 traditional take-home           ■          ■          ■
 #> # … with 110 more rows, and 3 more variables: gender <rcrd>, room <rcrd>,
 #> #   teacher <rcrd>
 ```
