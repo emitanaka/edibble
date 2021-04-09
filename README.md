@@ -318,7 +318,6 @@ the philosophy:
     dots](https://rlang.r-lib.org/reference/dyn-dots.html);
   - duplicate names repaired with same option as `tibble` for additions
     to edibble graph;
-  - (WIP) `tidyselect` approach to setting edibble variable types;
   - ability for developers to extend certain components. Currently only
     supported for others to contribute their own classical named
     experimental designs via `prep_classical_`;

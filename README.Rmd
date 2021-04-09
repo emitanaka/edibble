@@ -196,7 +196,6 @@ The implementation in edibble adopt a similar nomenclature and design philosophy
 - pipable functions;
 - all dots arguments are [dynamic dots](https://rlang.r-lib.org/reference/dyn-dots.html);
 - duplicate names repaired with same option as `tibble` for additions to edibble graph;
-- (WIP) `tidyselect` approach to setting edibble variable types;
 - ability for developers to extend certain components. Currently only supported for others to contribute their own classical named experimental designs via `prep_classical_`;
 - the specification of complex nested structure drawing similarity to `dplyr::case_when` (LHS is character or integer for edibble however).
 
