@@ -403,9 +403,11 @@ print.edbl_graph <- function(.graph,
                      character()
                    }
                  })
+    nodes_with_parents <- unname(unlist(ll))
+
 
     data <- data.frame(var = c("root", gnames),
-                       child = I(c(list(gnames), ll)),
+                       child = I(c(list(setdiff(gnames, nodes_with_parents)), ll)),
                        label = c(decorate_main(main),
                                  paste(label_names, map_chr(var_nlevels, decorate_levels))))
   }
