@@ -95,6 +95,7 @@ add_edibble_vertex.default <- function(value, name, design = NULL, attr) {
   levels <- switch(type,
                    "numeric" = traits_levels(prefix = name, size = value),
                    "unnamed_vector" = value,
+                   "named_vector" = value,
                    "formula" = {
                      vlevels <- design$vars_levels()
                      tt <- terms(value)
@@ -105,13 +106,13 @@ add_edibble_vertex.default <- function(value, name, design = NULL, attr) {
 
   out <- add_edibble_vertex_common(design$graph, name, levels, attr)
   # extra modifications
-  switch(type,
-         formula = {
-           tt <- terms(value)
-           vars <- rownames(attr(tt, "factor"))
-           out <- out %>%
-             add_edges(cross_edge_seq(vars, name))
-         })
+  # switch(type,
+  #        formula = {
+  #          tt <- terms(value)
+  #          vars <- rownames(attr(tt, "factor"))
+  #          out <- out %>%
+  #            add_edges(cross_edge_seq(vars, name))
+  #        })
 
   class(out) <- class(design$graph)
   return(out)
@@ -261,7 +262,8 @@ add_edibble_vertex_common <- function(graph, name, levels, attr) {
   lvl_nodes_added <- add_vertices(var_node_added, length(levels),
                                           name = lnames,
                                           vtype = "level", vname = name,
-                                          label = levels,
+                                          label = unname(levels),
+                                          value = names(levels),
                                           attr = attr)
   var2lvl_edges_added <- add_edges(lvl_nodes_added,
                                            cross_edge_seq(lvl_nodes_added, name, lnames),
@@ -299,9 +301,11 @@ combine_graphs <- function(g1, g2) {
 
 
 # Evaluate input value type
+#' @importFrom rlang is_formula
 get_value_type <- function(x) {
   if(is.numeric(x) && length(x)==1) return("numeric")
   if(is.vector(x) && !is_named(x)) return("unnamed_vector")
+  if(is.vector(x) && is_named(x)) return("named_vector")
   if(is_formula(x, lhs = FALSE)) return("formula")
   return("unimplemented")
 }
