@@ -23,7 +23,7 @@ library(edibble)
 In edibble, some named experimental designs can be constructed using the `make_classical` function.  The classical named designs that are supported now is:
 
 ```{r}
-find_classical_names()
+find_classical_design()
 ```
 
 The output contains information about the design, the code to generate the design using edibble that can be easily copy-and-pasted and the output data frame. If you want the edibble code alone then you can just use `code_classical`.
