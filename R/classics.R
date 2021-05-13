@@ -104,7 +104,13 @@ prep_classical_ <- function(...) {
   do.call(paste0("prep_classical_", .name), list2(...))
 }
 
+#' Completely randomised design
+#'
+#' @param t The number of treatment levels
+#' @param n The number of experimental units
+#' @param r (Optional) The number of replicates.
 #' @importFrom cli style_italic
+#' @export
 prep_classical_crd <- function(t = 1 + sample(10, 1), n = t + sample(100, 1),
                                r = n / t) {
 
@@ -300,6 +306,14 @@ NamedDesign <- R6::R6Class("NamedDesign",
         self$t <- t
        },
 
+       #' @description Print of named design.
+       #' @param ... Unused.
+       print = function(...) {
+         cat(cli::style_italic(self$name_full), "\n")
+         cat(self$code)
+         invisible(self)
+       },
+
        #' @description
        #' Append code.
        #' @param x A string specifying the code to append.
@@ -360,7 +374,7 @@ NamedDesign <- R6::R6Class("NamedDesign",
 #' named designs from. By default it will search edibble and other packages loaded.
 #'
 #' @export
-find_classical_names <- function(pkgs = NULL) {
+find_classical_designs <- function(pkgs = NULL) {
   # ignore searching in base pkgs
   base_pkgs <- c("stats", "graphics", "grDevices", "utils", "datasets",
                  "methods", "base")
