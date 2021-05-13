@@ -63,7 +63,7 @@ Every edibble variable comes in two forms:
 
 * a **vertex form** which contains:
    * `name`: variable name,
-   * `class`: `"edbl_unit"`, `"edbl_trt"`, or `"edbl_resp"`, 
+   * `class`: `"edbl_unit"`, `"edbl_trt"`, or `"edbl_rcrd"`, 
    * `vtype`: `"var"`, 
    * graphical attributes like `label`, and
    * connected to child level nodes which contain:
