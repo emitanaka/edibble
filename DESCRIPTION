@@ -33,7 +33,8 @@ Suggests:
     testthat (>= 3.0.0),
     knitr,
     rmarkdown,
-    vdiffr
+    vdiffr,
+    asciicast
 VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)
