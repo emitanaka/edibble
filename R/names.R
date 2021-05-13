@@ -30,10 +30,10 @@ names_vars <- function(.data, ...) {
   UseMethod("names_vars")
 }
 
-#' Get names by vertex class
-#' @description
-#' Get the name of variables by class.
-#' @param class The class name.
+# Get names by vertex class
+# @description
+# Get the name of variables by class.
+# @param class The class name.
 names_by_class <- function(.graph, class = NULL) {
   vgraph <- subset_vars(.graph)
   class <- class %||% V(vgraph)$class
