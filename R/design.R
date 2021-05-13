@@ -325,9 +325,9 @@ reset_method <- function(.data) {
 
 update_design <- function(old, new) {
   if(is_edibble_design(old)) {
-    new
+    new$clone(deep = TRUE)
   } else {
-    attr(old, "design") <- new
+    attr(old, "design") <- new$clone(deep = TRUE)
     old
   }
 }
