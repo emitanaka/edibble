@@ -35,6 +35,7 @@ that is true for this named design for the chosen parameters.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{NamedDesign$new()}}
+\item \href{#method-print}{\code{NamedDesign$print()}}
 \item \href{#method-add_code}{\code{NamedDesign$add_code()}}
 \item \href{#method-add_seed}{\code{NamedDesign$add_seed()}}
 \item \href{#method-add_info}{\code{NamedDesign$add_info()}}
@@ -65,6 +66,23 @@ Initialise the named design.
 \item{\code{t}}{Total number of treatments tested.}
 
 \item{\code{seed}}{The seed number.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
+\subsection{Method \code{print()}}{
+Print of named design.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{NamedDesign$print(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Unused.}
 }
 \if{html}{\out{</div>}}
 }
