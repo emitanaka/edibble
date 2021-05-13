@@ -86,9 +86,9 @@ is_edibble <- function(x) {
 #' @export
 get_edibble_design <- function(x) {
   if(is_edibble_design(x)) {
-    x
+    x$clone(deep = TRUE)
   } else {
-    attr(x, "design")
+    attr(x, "design")$clone(deep = TRUE)
   }
 }
 
