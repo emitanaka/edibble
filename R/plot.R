@@ -41,12 +41,13 @@ plot.EdibbleDesign <- function(.edibble, view = c("high", "low"), ..., main = NU
 
 #' @rdname plot.edibble
 #' @export
-plot.edbl_graph <- function(.edibble, view = c("high", "low"), ..., main = NULL) {
+plot.edbl_graph <- function(.edibble, view = c("high", "low", "all"), ..., main = NULL) {
   main <- main %||% "An edibble design" # note ebbl_graph doesn't have name
   view <- match.arg(view)
   out <- switch(view,
                 high = subset_vars(.edibble),
-                low = subset_levels(.edibble))
+                low = subset_levels(.edibble),
+                all = .edibble)
   plot.igraph(out, ...,
               annotate.ploggt = TRUE,
               main = main)

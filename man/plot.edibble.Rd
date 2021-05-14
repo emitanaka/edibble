@@ -9,7 +9,7 @@
 \usage{
 \method{plot}{EdibbleDesign}(.edibble, view = c("high", "low"), ..., main = NULL)
 
-\method{plot}{edbl_graph}(.edibble, view = c("high", "low"), ..., main = NULL)
+\method{plot}{edbl_graph}(.edibble, view = c("high", "low", "all"), ..., main = NULL)
 
 \method{plot}{edbl_table}(.edibble, view = c("high", "low"), ..., main = NULL)
 }
