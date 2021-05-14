@@ -163,10 +163,20 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
       },
 
       #' @description
+      #' This function assigns the allocation of treatments to units.
+      #' @param randomise whether the allocation should be random or not
       #' This removes "t2vmay" edges and assigns edges from treatment to variable.
-      assign_allocation = function() {
-        graph <- randomise_trts_internal(self)
-        private$.graph <- private$reinstate(graph)
+      assign_allocation = function(randomise = FALSE) {
+        if(randomise) {
+          graph <- randomise_trts_internal(self)
+          private$.graph <- private$reinstate(graph)
+          private$.allocation <- "randomised"
+        } else {
+          # systematic allocation
+          graph <- systematic_trts_allocation(self)
+          private$.graph <- private$reinstate(graph)
+          private$.allocation <- "systematic"
+        }
       },
 
       #' @description
@@ -177,6 +187,16 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
       #' type is list then it is will contain only "type" and "values".
       append_validation = function(validation) {
         private$.validation <- c(private$.validation, validation)
+      },
+
+      #' @description
+      #' Append treatments to graph. These will not be factorial structure.
+      #' @param value Short hand value of what to add.
+      #' @param vname The variable name
+      #' @param attr The vertex attributes.
+      append_trts = function(value, vname, attr) {
+        # [FIXME!!!]
+        # private$.graph <- add_edibble_vertex(value, vname, self, attr)
       },
 
       #' @description
@@ -199,6 +219,15 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
         } else {
           abort("You must use `$activate_to_table()` or `$activate_to_graph()`
                 to change active view.")
+        }
+      },
+
+      #' @field allocation systematic or random or null
+      allocation = function(value) {
+        if(missing(value)) {
+          private$.allocation
+        } else {
+          abort("You cannot modify allocation.")
         }
       },
 
@@ -278,6 +307,7 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
       .seed = NULL,
       .method = NULL,
       .validation = NULL,
+      .allocation = NULL,
 
       # possibly delete
       use_method = function(.x, .f, ...) {

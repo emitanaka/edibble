@@ -15,6 +15,7 @@
 #' @family user-facing functions
 #' @export
 serve_table <- function(.design, ...) {
+  .design <- get_edibble_design(.design)
   lgraph <- subset_levels(.design$graph)
   if(!is_connected(lgraph)) {
     lout <- serve_vars_not_reconciled(.design)
@@ -22,8 +23,13 @@ serve_table <- function(.design, ...) {
     classes <- var_class(.design$graph)
     lunit <- ltrt <- lvar <- list()
     if("edbl_unit" %in% classes) lunit <- serve_units(.design$graph)
-    if("edbl_trt" %in% classes) ltrt <- serve_trts(.design$graph, lunit)
-    if("edbl_rcrd" %in% classes) lvar <- serve_rcrd(.design$graph, lunit)
+    if("edbl_trt" %in% classes) {
+      if(is.null(.design$allocation)) {
+        .design$assign_allocation()
+      }
+      ltrt <- serve_trts(.design$graph, lunit)
+    }
+    if("edbl_rcrd" %in% classes) lvar <- serve_rcrds(.design$graph, lunit)
     lout <- c(lunit, ltrt, lvar)
   }
 
@@ -31,7 +37,7 @@ serve_table <- function(.design, ...) {
   new_edibble(lout[vnames], design = .design)
 }
 
-serve_rcrd <- function(.graph, lunits) {
+serve_rcrds <- function(.graph, lunits) {
   vgraph <- subset_vars(.graph)
   N <- max(lengths(lunits))
   rcrd2unit <- rcrd_to_unit_dict(.graph)

@@ -53,7 +53,7 @@ randomise_trts.EdibbleDesign <- function(.edibble) {
   not_edibble(.edibble)
   .design <- get_edibble_design(.edibble)
   .design$save_seed()
-  .design$assign_allocation()
+  .design$assign_allocation(randomise = TRUE)
   update_design(.edibble, .design)
 }
 
@@ -169,6 +169,51 @@ randomise_trts_internal <- function(.design) {
   reinstate_graph_attrs(.graph, .design$graph)
 }
 
+
+systematic_trts_allocation <- function(.design) {
+  unit_to_trts_list <- unit_to_trts(.design)
+  units_with_trts_applied <- names(unit_to_trts_list)
+  .graph <- .design$graph
+  for(i in seq_along(unit_to_trts_list)) {
+    unit <- units_with_trts_applied[i]
+    trts <- unit_to_trts_list[[i]]
+    ancestors <- find_unit_ancestors(.graph, unit)
+    units <- c(unit, ancestors)
+    sgraph <- subset(.graph, vname %in% units)
+    # need to fix below
+    reps <- replicabble(.design, unit, trts)
+
+    units_df <- as_data_frame(serve_units(sgraph))
+    units_nesting_df <- units_df
+    for(aunit in units) {
+      vnames <- vertex_level_names(aunit, units_df[[aunit]])
+      units_nesting_df[[aunit]] <- as.factor(names_to_nesting_names(sgraph, vnames))
+    }
+
+    nunit <- nrow(units_df)
+    ntrt <- nrow(reps)
+
+    trts_df <- as.data.frame(rep_rpbl(reps[1:nrow(reps), trts, drop = FALSE],
+                                      times = ceiling(nunit / ntrt),
+                                      length.out = nrow(units_df)))
+
+    nesting <- structure(lapply(units,
+                                function(aunit) find_unit_parents(sgraph, aunit)),
+                         names = units)
+    nesting <- remove_nulls(nesting)
+    des <- cbind(trts_df, units_df)
+
+    for(atrt in trts) {
+      es <- match_edge_seq(.design$graph, des[[atrt]], vertex_level_names(unit, units_df[[unit]]))
+      .graph <- add_edges(.graph, es, attr = edge_attr_opt("t2v"))
+    }
+    .graph <- reinstate_graph_attrs(.graph, .design$graph)
+  }
+
+  .graph <- delete_edges(.graph, which(E(.graph)$etype == "t2vmay"))
+
+  reinstate_graph_attrs(.graph, .design$graph)
+}
 
 
 # rethink replicabble

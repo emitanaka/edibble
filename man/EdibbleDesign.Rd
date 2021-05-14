@@ -15,6 +15,8 @@ with \code{\link[=start_design]{start_design()}} or \code{\link[=restart_design]
 \describe{
 \item{\code{active}}{get the active view}
 
+\item{\code{allocation}}{systematic or random or null}
+
 \item{\code{name}}{The name of the design or project}
 
 \item{\code{names_trts}}{The treatment names.}
@@ -51,6 +53,7 @@ with \code{\link[=start_design]{start_design()}} or \code{\link[=restart_design]
 \item \href{#method-add_allocation}{\code{EdibbleDesign$add_allocation()}}
 \item \href{#method-assign_allocation}{\code{EdibbleDesign$assign_allocation()}}
 \item \href{#method-append_validation}{\code{EdibbleDesign$append_validation()}}
+\item \href{#method-append_trts}{\code{EdibbleDesign$append_trts()}}
 \item \href{#method-delete_variable}{\code{EdibbleDesign$delete_variable()}}
 \item \href{#method-clone}{\code{EdibbleDesign$clone()}}
 }
@@ -225,11 +228,19 @@ This adds edges that connect treatment to unit.
 \if{html}{\out{<a id="method-assign_allocation"></a>}}
 \if{latex}{\out{\hypertarget{method-assign_allocation}{}}}
 \subsection{Method \code{assign_allocation()}}{
-This removes "t2vmay" edges and assigns edges from treatment to variable.
+This function assigns the allocation of treatments to units.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$assign_allocation()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$assign_allocation(randomise = FALSE)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{randomise}}{whether the allocation should be random or not
+This removes "t2vmay" edges and assigns edges from treatment to variable.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-append_validation"></a>}}
@@ -247,6 +258,27 @@ Appending validation rule
 should correspond to a record variable. The elements of the list
 should be a named list with "operator", "value" and "type". If
 type is list then it is will contain only "type" and "values".}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-append_trts"></a>}}
+\if{latex}{\out{\hypertarget{method-append_trts}{}}}
+\subsection{Method \code{append_trts()}}{
+Append treatments to graph. These will not be factorial structure.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{EdibbleDesign$append_trts(value, vname, attr)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{value}}{Short hand value of what to add.}
+
+\item{\code{vname}}{The variable name}
+
+\item{\code{attr}}{The vertex attributes.}
 }
 \if{html}{\out{</div>}}
 }
