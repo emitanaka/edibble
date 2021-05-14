@@ -32,7 +32,7 @@ NULL
 
 #' @rdname plot.edibble
 #' @export
-plot.EdibbleDesign <- function(.edibble, view = c("high", "low"), ..., main = NULL) {
+plot.EdibbleDesign <- function(.edibble, view = c("high", "low", "all"), ..., main = NULL) {
   main <- main %||% .edibble$name
   .graph <- get_edibble_graph(.edibble)
   plot(.graph, view = view, ..., main = main)
@@ -49,7 +49,7 @@ plot.edbl_graph <- function(.edibble, view = c("high", "low", "all"), ..., main 
                 low = subset_levels(.edibble),
                 all = .edibble)
   plot.igraph(out, ...,
-              annotate.ploggt = TRUE,
+              annotate.plot = TRUE,
               main = main)
   invisible(.edibble)
 }
