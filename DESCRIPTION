@@ -27,14 +27,14 @@ Imports:
     pillar,
     tidyselect (>= 1.0.0),
     dae,
-    R6,
-    openxlsx
+    R6
 Suggests: 
     testthat (>= 3.0.0),
     knitr,
     rmarkdown,
     vdiffr,
-    asciicast
+    asciicast,
+    openxlsx
 VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)

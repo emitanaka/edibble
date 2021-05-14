@@ -246,6 +246,9 @@ restriction_for_human <- function(operator, value) {
 #' @family user-facing functions
 #' @export
 export_design <- function(.data, file, author, date = Sys.Date(), overwrite = FALSE) {
+  if(!require("openxlsx")) {
+    stop("Please install the `openxlsx` package to use this function.")
+  }
   if(is_edibble(.data)) {
     .design <- attr(.data, "design")
   } else if(is_edibble_design(.data)) {
