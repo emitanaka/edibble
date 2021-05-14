@@ -15,7 +15,8 @@
 #' @family user-facing functions
 #' @export
 serve_table <- function(.design, ...) {
-  .design <- get_edibble_design(.design)
+  # this causes C stack error
+  #.design <- get_edibble_design(.design)
   lgraph <- subset_levels(.design$graph)
   if(!is_connected(lgraph)) {
     lout <- serve_vars_not_reconciled(.design)
@@ -25,7 +26,7 @@ serve_table <- function(.design, ...) {
     if("edbl_unit" %in% classes) lunit <- serve_units(.design$graph)
     if("edbl_trt" %in% classes) {
       if(is.null(.design$allocation)) {
-        .design$assign_allocation()
+         .design$assign_allocation()
       }
       ltrt <- serve_trts(.design$graph, lunit)
     }

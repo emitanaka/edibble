@@ -171,12 +171,12 @@ EdibbleDesign <- R6::R6Class("EdibbleDesign",
           graph <- randomise_trts_internal(self)
           private$.graph <- private$reinstate(graph)
           private$.allocation <- "randomised"
-        } else {
-          # systematic allocation
-          graph <- systematic_trts_allocation(self)
-          private$.graph <- private$reinstate(graph)
-          private$.allocation <- "systematic"
-        }
+         } else {
+           # systematic allocation
+           graph <- systematic_trts_allocation(self)
+           private$.graph <- private$reinstate(graph)
+           private$.allocation <- "systematic"
+         }
       },
 
       #' @description
