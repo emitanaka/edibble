@@ -285,6 +285,7 @@ save_workbook <- function(wb, file, overwrite, .design) {
 }
 
 # .data can be a list or data frame
+#' @export
 as_data_frame <- function(.data) {
   rcrd_names <- names(.data)[map_lgl(.data, function(x) "edbl_rcrd" %in% class(x))]
   .data[rcrd_names] <- ""
