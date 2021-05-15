@@ -111,9 +111,11 @@ get_edibble_table <- function(x) {
 get_edibble_graph <- function(x) {
   if(is_edibble_design(x)) {
     x$graph
-  } else {
+  } else if(is_edibble_table(x)) {
     .design <- attr(x, "design")
     .design$graph
+  } else if(is_edibble_graph(x)) {
+    x
   }
 }
 
