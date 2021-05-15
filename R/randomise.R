@@ -73,7 +73,9 @@ names_to_lnames <- function(.design, names) {
           function(i) gsub(paste0("^", vnames[i], ":"), "", names[i]))
 }
 
-names_to_nesting_names <- function(.design, names) {
+#' @export
+names_to_nesting_names <- function(.edibble, names) {
+  .design <- get_edibble_design(.edibble)
   labels <- V(.design)$label2
   if(is_null(labels)) return(names_to_lnames(.design, names))
   dict <- setNames(V(.design)$label2, V(.design)$name)
