@@ -73,7 +73,8 @@
 #'
 "rye_grass"
 
-#' Scab disease in pototoes
+#' Scab disease in potatoes
+#'
 #' @description
 #' An experiment was conducted to compare seven treatments for
 #' their effectiveness in reducing scab disease in potatoes.

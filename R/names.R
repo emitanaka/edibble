@@ -34,6 +34,7 @@ names_vars <- function(.data, ...) {
 # @description
 # Get the name of variables by class.
 # @param class The class name.
+#' @export
 names_by_class <- function(.graph, class = NULL) {
   vgraph <- subset_vars(.graph)
   class <- class %||% V(vgraph)$class
