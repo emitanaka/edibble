@@ -7,7 +7,7 @@
 \alias{plot.edbl_table}
 \title{Plot graph of an edibble design}
 \usage{
-\method{plot}{EdibbleDesign}(.edibble, view = c("high", "low"), ..., main = NULL)
+\method{plot}{EdibbleDesign}(.edibble, view = c("high", "low", "all"), ..., main = NULL)
 
 \method{plot}{edbl_graph}(.edibble, view = c("high", "low", "all"), ..., main = NULL)
 
