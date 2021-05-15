@@ -33,6 +33,25 @@ ndigits <- function(x) {
   max(c(floor(log10(abs(x))) + 1, edibble_labels_opt("min_ndigits")))
 }
 
+#' Count of child units per parent unit
+#' @param .edibble An edibble design or graph
+#' @param parent A string with the name of the parent.
+#' @param child A string with the child name.
+#' @export
+table_units <- function(.edibble, parent, child) {
+  graph <- get_edibble_graph(.edibble)
+  vgraph <- delete_edges(graph, which(E(graph)$etype!="l2l"))
+  # [FIXME] shouldn't match based on prefix to find parent and child level nodes
+  parent_names <- V(graph)$name[grepl(paste0(parent, ":"), V(graph)$name)]
+  child_names <- V(graph)$name[grepl(paste0(child, ":"), V(graph)$name)]
+  count <- setNames(rep(0, length(parent_names)), parent_names)
+  for(aparent in parent_names) {
+    nv <- neighbors(vgraph, V(vgraph)$name==aparent, mode = "out")
+    count[aparent] <- length(nv)
+  }
+  count
+}
+
 
 #' Helper function to create level names
 traits_levels <- function(prefix = "", size = NULL, from = NULL, to = NULL,
