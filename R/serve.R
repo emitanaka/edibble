@@ -26,6 +26,8 @@ serve_table <- function(.design, ...) {
     if("edbl_unit" %in% classes) lunit <- serve_units(.design$graph)
     if("edbl_trt" %in% classes) {
       if(is.null(.design$allocation)) {
+        # this modifies the environment
+        # [FIXME]
          .design$assign_allocation()
       }
       ltrt <- serve_trts(.design$graph, lunit)
