@@ -154,3 +154,21 @@ vec_cast.edbl_trt.edbl_trt <- function(x, to, ...) {
 }
 
 
+#' @export
+add_trts <- function(.edibble, ...) {
+  not_edibble_design(.edibble)
+
+  .name_repair <- match.arg(.name_repair)
+  .design <- get_edibble_design(.edibble)
+  attr <- vertex_attr_opt("trt")
+
+  dots <- enquos(..., .named = TRUE, .homonyms = "error")
+  vnames_trt <- names(dots)
+  for(i in seq_along(dots)) {
+      vname <- vnames_trt[i]
+      value <- eval_rhs_attr(dots[[i]], vname, .design)
+      .design$append_trts(value, vname, attr)
+  }
+
+  update_design(.edibble, .design)
+}
