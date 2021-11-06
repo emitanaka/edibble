@@ -19,30 +19,23 @@
 #'   set_trts(pesticide = c("A", "B", "C"),
 #'            dosage = c(0, 10, 20, 30, 40))
 #'
-#' # you can set treatments to existing edibble
-#' lady_tasting_tea %>%
-#'   edibble() %>%
-#'   set_trts(first)
 #' @export
 set_trts <- function(.design, ...,
-                      .name_repair = c("check_unique", "unique", "universal", "minimal")) {
+                     .name_repair = c("check_unique", "unique", "universal", "minimal")) {
   set_vars(.design, ..., .name_repair = .name_repair, .class = "edbl_trt")
 }
+
 
 #' Define the possible allocation of treatments to units
 #'
 #' @description
-#' This function adds the edges between level nodes in
-#' an edibble graph that outlines the possible ways that
-#' the treatment may be allocated to the recipient units.
+#' This function adds the edges between variable nodes to
+#' specify the mapping of units to treatment. This function
+#' does not actually assign specific treatment levels onto actual units.
 #'
 #' @param .data An `edbl_graph` object.
 #' @param ... One-sided or two-sided formula. If the input is a one-sided formula
 #' then the whole treatment is applied to the specified unit.
-#' @param class A sub-class. This is meant so that it can invoke the method
-#' `randomise_trts.class`.
-#' @importFrom rlang enexprs f_lhs f_rhs
-#' @importFrom igraph add_edges
 #' @family user-facing functions
 #' @examples
 #' start_design() %>%
@@ -50,85 +43,150 @@ set_trts <- function(.design, ...,
 #'             plot = nested_in(block, 3)) %>%
 #'   set_trts(treat = c("A", "B", "C"),
 #'            pest = c("a", "b")) %>%
-#'   allocate_trts(treat ~ plot,
+#'   allot_trts(treat ~ plot,
 #'                 pest ~ block)
 #'
-#' # allocation works on edibble table too
-#' lady_tasting_tea %>%
-#'   edibble() %>%
-#'   set_units(cup) %>%
-#'   set_trts(first) %>%
-#'   allocate_trts(first ~ cup)
 #'
 #' @export
-allocate_trts <- function(.edibble, ...) {
+allot_trts <- function(design, ...) {
 
-  not_edibble(.edibble)
+  not_edibble(design)
 
-  .design <- get_edibble_design(.edibble)
-
+  vlev <- vlevels(design)
   dots <- enexprs(...)
-  for(i in seq_along(dots)) {
-      trts <- all.vars(f_lhs(dots[[i]]))
-      # there should be only one unit
-      unit <- all.vars(f_rhs(dots[[i]]))
-      .design$add_allocation(trts, unit)
+  design$allotment <- dots
+  for(ialloc in seq_along(dots)) {
+    trts <- all.vars(f_lhs(dots[[ialloc]]))
+    # there should be only one unit
+    unit <- all.vars(f_rhs(dots[[ialloc]]))
+    uid <- vid(design$vgraph, unit)
+    if(length(trts)) {
+      # there should be an error if trts is not within vars
+      # maybe there should be a check that trts is edbl_trt
+      tids <- vid(design$vgraph, trts)
+    } else {
+      classes <- vgraph(design, node_var = "class")
+      tids <- vgraph(design, node_var = "id")[classes=="edbl_trt"]
+    }
+
+    design$vgraph$edges <- add_row(design$vgraph$edges,
+                                   from = tids, to = uid, alloc = ialloc)
+  }
+  design
+}
+
+#' @export
+allocate_trts <- function(design, ...) {
+  warn("`allocate_trts` is deprecated. Please use `allot_trts` instead.")
+  allot_trts(design, ...)
+}
+
+#' Assign treatments to units
+#'
+#' This function assigns specific treatment levels to actual units.
+#'
+#' @param design An edibble design which should have units, treatments and allotment defined.
+#' @param order A character vector signifying the apportion of treatments to units.
+#' The value should be either "random", "systematic" or "systematic-random".
+#' "random" allocates the treatment randomly to units based on specified allotment with restrictions
+#' implied by unit structure.
+#' "systematic" allocates the treatment in a systematic order to units.
+#' "systematic-random" allocates the treatment in a systematic order to units but
+#' where it is not possible to divide treatments equally (as the number of units are not divisible
+#' by the number of levels of the treatment factor), then the extras are chosen randomly.
+#' @param seed A scalar value used to set the seed so that the result is reproducible.
+#' @param constrain The nesting structure for units.
+#'
+#' @export
+assign_trts <- function(design, order = "random", seed = NULL, constrain = nesting(design)) {
+
+  not_edibble(design)
+
+  set.seed(seed)
+  design %@% "seed" <- seed
+  design %@% "seeds" <- .Random.seed
+
+  for(ialloc in seq_along(design$allotment)) {
+    trts <- all.vars(f_lhs(design$allotment[[ialloc]]))
+    # there should be only one unit
+    unit <- all.vars(f_rhs(design$allotment[[ialloc]]))
+    uid <- vid(design$vgraph, unit)
+    if(length(trts)) {
+      tids <- vid(design$vgraph, trts)
+    } else {
+      classes <- vgraph(design, node_var = "class")
+      tids <- vgraph(design, node_var = "id")[classes=="edbl_trt"]
+    }
+
+    luids <- subset(lgraph(design)$nodes, idvar == uid)$id
+    tdf <- subset(lgraph(design)$nodes, idvar %in% tids)
+    tidf <- expand.grid(split(tdf$id, tdf$var))
+    ntrts <- nrow(tidf)
+    permutation <- switch(order,
+                          "systematic" = rep(1:nrow(tidf), length.out = length(luids)),
+                          "systematic-random" = rep(sample(nrow(tidf)), length.out = length(luids)),
+                          "random" = {
+                            if(is_empty(constrain[[unit]])) {
+                              sample(rep(sample(nrow(tidf)), length.out = length(luids)))
+                            } else {
+
+                              # FIXME the ancestor should be found
+                              # based on `constrain`
+
+                              # find the grandest ancestor
+                              vanc <- vancestor(design$vgraph, id = uid)
+                              vanc <- vanc[vanc %in% unit_ids(design)]
+                              udf <- as.data.frame(serve_units(select_units(design, !!vlabel(design$vgraph, vanc))))
+                              gparent <- vlabel(design$vgraph, vanc[2])
+                              blocksizes <- as.data.frame(table(table(udf[[gparent]])))
+                              blocksizes$size <- as.numeric(as.character(blocksizes$Var1))
+                              for(isize in seq(nrow(blocksizes))) {
+                                if(blocksizes$size[isize] <= ntrts) {
+                                  comb <- combn(ntrts, blocksizes$size[isize])
+                                  blocksizes$rows[isize] <- list(comb)
+                                } else {
+                                  nrep <- floor(blocksizes$size[isize] / ntrts)
+                                  nremain <- blocksizes$size[isize] %% ntrts
+                                  comb <- combn(ntrts, nremain)
+                                  blocksizes$rows[isize] <- list(rbind(comb,
+                                                                       matrix(rep(1:ntrts, nrep * ncol(comb)), ncol = ncol(comb))))
+                                }
+                                blocksizes$select[isize] <- list(sample(rep(sample(ncol(comb)), length.out = blocksizes$Freq[isize])))
+                              }
+                              blocksizes$wselect <- blocksizes$select
+                              gpar_tab <- as.data.frame(table(udf[[gparent]]))
+                              out <- vector("integer", length = nrow(udf))
+                              for(ianc in seq(nrow(gpar_tab))) {
+                                imatch <- which(blocksizes$size == gpar_tab$Freq[ianc])
+                                iselect <- blocksizes$wselect[imatch][[1]][1]
+                                blocksizes$wselect[imatch] <- list(blocksizes$wselect[imatch][[1]][-1])
+                                out[as.character(udf[[gparent]])==as.character(gpar_tab$Var1[ianc])] <- sample(blocksizes$rows[imatch][[1]][,iselect])
+                              }
+                              out
+                            }
+                          },
+                          abort(paste("The", order, "`order` is not implemented.")))
+
+    tout <- tidf[permutation, , drop = FALSE]
+
+    for(itvar in seq_along(tout)) {
+      design$lgraph$edges <- add_row(design$lgraph$edges,
+                                     from = tout[[itvar]],
+                                     to = luids, alloc = ialloc)
+    }
   }
 
-  update_design(.edibble, .design)
+  design$assignment <- order
+
+  design
 }
 
-
-get_trt_vars <- function(x) {
-  if(is_edibble_graph(x)) {
-    return(V(x)$vname[V(x)$class=="edbl_trt"])
-  }
-  if(is_edibble_table(x)) {
-    ind <- unlist(lapply(x, function(var) "edbl_trt" %in% class(var)))
-    return(names(x)[ind])
-  }
+#' @export
+randomise_trts <- function(design, ...) {
+  warn("`randomise_trts` is deprecated. Please use `assign_trts(\"random\")` instead.")
+  assign_trts(design, order = "random", ...)
 }
 
-get_trt_levels <- function(.data) {
-  out <- list()
-  vars <- get_trt_vars(.data)
-  for(avar in vars) {
-    out[[avar]] <- var_levels(.data, avar)
-  }
-  out
-}
-
-
-
-
-n_trts <- function(.data, ...) {
-  UseMethod("n_trts")
-}
-
-n_trts.edbl_graph <- function(.data) {
-  return(prod(lengths(get_trt_levels(.data))))
-}
-
-n_trts.edbl_table <- function(.data) {
-  ind <- unlist(lapply(.data, function(var) "edbl_trt" %in% class(var)))
-  return(prod(lengths(lapply(.data, levels)[ind])))
-}
-
-n_vars <- function(.data, class = NULL) {
-  UseMethod("n_vars")
-}
-
-n_vars.edbl_table <- function(.data, class = NULL) {
-  if(is_null(class)) return(ncol(.data))
-  sum(map_lgl(.data, function(x) any(class(x) %in% class)))
-}
-
-
-n_vars.edbl_graph <- function(.data, class = NULL) {
-  vgraph <- subset(.data, class %in% class, .vtype = "var")
-  if(is_null(class)) return(sum(V(.data)$vtype=="var"))
-  sum(V(.data)$class %in% class)
-}
 
 #' @importFrom pillar pillar_shaft new_pillar_shaft_simple
 #' @export
@@ -154,21 +212,5 @@ vec_cast.edbl_trt.edbl_trt <- function(x, to, ...) {
 }
 
 
-#' @export
-add_trts <- function(.edibble, ...) {
-  not_edibble_design(.edibble)
-
-  .name_repair <- match.arg(.name_repair)
-  .design <- get_edibble_design(.edibble)
-  attr <- vertex_attr_opt("trt")
-
-  dots <- enquos(..., .named = TRUE, .homonyms = "error")
-  vnames_trt <- names(dots)
-  for(i in seq_along(dots)) {
-      vname <- vnames_trt[i]
-      value <- eval_rhs_attr(dots[[i]], vname, .design)
-      .design$append_trts(value, vname, attr)
-  }
-
-  update_design(.edibble, .design)
-}
+# TODO
+# add_trts()

@@ -53,8 +53,8 @@ new_rcbd <- function() {
   set_units(block = c("B1", "B2"),
             unit = nested_in(block, 6)) %>%
   set_trts(trt = LETTERS[1:4]) %>%
-  allocate_trts(~unit) %>%
-  randomise_trts()
+  allot_trts(~unit) %>%
+  assign_trts("random")
 }
 
 rcbd <- new_rcbd()
@@ -94,39 +94,7 @@ rcbd
 
 Instead of overwriting the options each time, you can set your `.Rprofile` so that when you load R, it will load the options in your profile. You can easily open `.Rprofile` with `usethis::edit_r_profile()`. I normally don't recommend to do this as it makes your output non-reproducible by others but the print output is made more for interactive use rather than reports so it doesn't matter much in this case. 
 
-## Plot for `edbl_graph`
 
-There are two views available for `edbl_graph`: high-level view and low-level view. The high-level view is designed for the user to see the overview of variable relations. [ADD link to other document with more explanation.]
-
-```{r rcbd-high-plot, fig.width = 4, fig.height = 4}
-plot(rcbd)
-```
-
-There is also a low-level view of this.
-
-```{r rcbd-low-plot, fig.width = 6, fig.height = 6}
-plot(rcbd, view = "low")
-```
-
-### Formatting plot output for `edbl_graph`
-
-If you don't like these aspects, you can in fact overwrite this. There are two ways you can do this. 
-
-1. `edbl_graph` is just an `igraph` under the hood and it's leveraging the `plot` method there which means you can customise it the way it is done for `igraph`,
-2. Modify the `options` output. You can see the full list of available options by printing `edibble:::op.edibble` with a few shown below.
-
-```{r opt-plot}
-options(edibble.vertex.shape.trt = "circle",
-        edibble.edge.width.t2v = 3,
-        edibble.vertex.fill.trt = "black")
-```
-
-This option is only applied to newly constructed designs so let's reconstruct the same design.
-
-```{r  rcbd-high-plot-v2, fig.width = 4, fig.height = 4}
-rcbd2 <- new_rcbd()
-plot(rcbd2)
-```
 
 ## Print for `edbl_table`
 

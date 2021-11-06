@@ -22,7 +22,6 @@
 
 # TODO Ask Nick whether participants knew if they knew the color was 2 each
 
-
 #' Lady tasting tea
 #'
 #' @description
@@ -71,19 +70,19 @@
 #' @family experimental data
 #' @source Bailey, Rosemary (2008) Design of Comparative Experiments.
 #'
-"rye_grass"
+#' #"rye_grass
 
-#' Scab disease in potatoes
-#'
-#' @description
-#' An experiment was conducted to compare seven treatments for
-#' their effectiveness in reducing scab disease in potatoes.
-#' The treatment is coded as 1-7. 100 potatoes are randomly
-#' sampled from each plot, for each one the percentage of the
-#' surface area infected with scabs was assessed by eye and recorded.
-#' The average of these 100 percentages was calculated to give the
-#' scabbiness index.
-#'
-#' @family experimental data
-#' @source Bailey, Rosemary (2008) Design of Comparative Experiments.
-NULL
+#' #' Scab disease in potatoes
+#' #'
+#' #' @description
+#' #' An experiment was conducted to compare seven treatments for
+#' #' their effectiveness in reducing scab disease in potatoes.
+#' #' The treatment is coded as 1-7. 100 potatoes are randomly
+#' #' sampled from each plot, for each one the percentage of the
+#' #' surface area infected with scabs was assessed by eye and recorded.
+#' #' The average of these 100 percentages was calculated to give the
+#' #' scabbiness index.
+#' #'
+#' #' @family experimental data
+#' #' @source Bailey, Rosemary (2008) Design of Comparative Experiments.
+#' NULL

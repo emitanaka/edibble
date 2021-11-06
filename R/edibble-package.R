@@ -1,6 +1,5 @@
 #' @aliases edibble-package
-#' @importFrom rlang %||% is_null is_empty is_named list2 abort warn
-#' @importFrom igraph V E
+#' @import rlang
 #' @details
 #' `r lifecycle::badge('experimental')`
 #'
@@ -11,11 +10,6 @@
 #' * Discussion is at <https://github.com/emitanaka/edibble/discussions>
 #'
 #' @section Package options:
-#' The following options are used for changing the default view for edibble
-#' graph or edibble design plot:
-#' - `edibble.vertex.label.color.default`
-#' - `edibble.vertex.label.color.unit`
-#'
 #' The following options are used for changing the default view for the print
 #' out of edibble design or edibble graph.
 #' - `edibble.tree.decorate.trts`

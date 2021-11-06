@@ -11,7 +11,7 @@ set_units(
 )
 }
 \arguments{
-\item{.edibble}{An edibble design (\code{EdibbleDesign}), an edibble data frame (\code{edbl_table}) or an
+\item{.edibble}{An edibble design (\code{edbl_design}), an edibble data frame (\code{edbl_table}) or an
 object that contains the edibble data frame in the attribute
 \code{design}.}
 
@@ -70,18 +70,14 @@ start_design() \%>\%
                                            . ~ 20)) \%>\%
   serve_table()
 
-# if using existing data then it specifies which variables are units
-lady_tasting_tea \%>\%
-  set_units(cup)
 
 }
 \seealso{
 Other user-facing functions: 
-\code{\link{allocate_trts}()},
+\code{\link{allot_trts}()},
 \code{\link{design-context}},
 \code{\link{expect_rcrds}()},
 \code{\link{export_design}()},
-\code{\link{randomise_trts}()},
 \code{\link{serve_table}()},
 \code{\link{set_rcrds}()},
 \code{\link{set_trts}()},

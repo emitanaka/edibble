@@ -4,20 +4,36 @@
 \alias{nested_in}
 \title{Specify the nesting structure for units}
 \usage{
-nested_in(.unit, ..., .vname)
+nested_in(
+  x,
+  ...,
+  prefix = "",
+  suffix = "",
+  distinct = TRUE,
+  leading0 = FALSE,
+  sep = edibble_labels_opt("sep"),
+  traits = NULL
+)
 }
 \arguments{
-\item{.unit}{The name of the parent unit to nest under.}
+\item{x}{The name of the parent unit to nest under.}
 
 \item{...}{a single number OR a sequence of two-sided formula where the
-left-hand side corresponds to the name of the level (or the level number) of \code{.unit}
+left-hand side corresponds to the name of the level (or the level number) of \code{x}
 and the right-hand side is an integer specifying the number of levels nested under the
 corresponding levels.}
 
-\item{.vname}{the child variable name}
-}
-\value{
-Returns an isolated graph
+\item{prefix}{The prefix of the label.}
+
+\item{suffix}{The suffix of the label.}
+
+\item{distinct}{whether the child variables are distinct in the levels that it is nesting}
+
+\item{leading0}{Whether there should be a leading 0 if labels are made.}
+
+\item{sep}{A separator added between prefix and the number if prefix is empty.}
+
+\item{traits}{A named vector where names and values correspond to attribute names and values of the variable.}
 }
 \description{
 Specify the nesting structure for units

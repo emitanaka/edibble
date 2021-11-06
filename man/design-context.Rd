@@ -3,25 +3,12 @@
 \name{design-context}
 \alias{design-context}
 \alias{set_context}
-\alias{sort_context}
-\alias{suppress_context}
-\alias{express_context}
 \title{Describe context related to experiment}
 \usage{
 set_context(.edibble, ...)
-
-sort_context(
-  .edibble,
-  descending = FALSE,
-  method = c("auto", "shell", "radix")
-)
-
-suppress_context(.edibble)
-
-express_context(.edibble)
 }
 \arguments{
-\item{.edibble}{An edibble design (\code{EdibbleDesign}), an edibble data frame (\code{edbl_table}) or an
+\item{.edibble}{An edibble design (\code{edbl_design}), an edibble data frame (\code{edbl_table}) or an
 object that contains the edibble data frame in the attribute
 \code{design}.}
 
@@ -30,16 +17,10 @@ maybe named. If you context it is wrong, consider writing the context
 in an external file then write the reference to the file in context
 instead. Input strings support inline markup that use \href{https://github.com/tidyverse/glue}{glue braces}
 as well \href{https://cli.r-lib.org/articles/semantic-cli.html#inline-text-formatting}{cli markup formatter}.
-The formatting is evaluated and stored in \code{EdibbleDesign}.}
-
-\item{descending}{Whether to sort it in ascending or descending alphabetical
-order.}
-
-\item{method}{the method to use for ordering. See \code{\link[base:order]{base::order()}} for
-explanation.}
+The formatting is evaluated and stored in \code{edbl_design}.}
 }
 \value{
-Same as original except \code{EdibbleDesign} updated with context.
+Same as original except \code{edbl_design} updated with context.
 }
 \description{
 \code{set_context} stores a simple context about the experiment.
@@ -66,10 +47,9 @@ start_design("COVID-19") \%>\%
 }
 \seealso{
 Other user-facing functions: 
-\code{\link{allocate_trts}()},
+\code{\link{allot_trts}()},
 \code{\link{expect_rcrds}()},
 \code{\link{export_design}()},
-\code{\link{randomise_trts}()},
 \code{\link{serve_table}()},
 \code{\link{set_rcrds}()},
 \code{\link{set_trts}()},

@@ -50,9 +50,6 @@
 #'                                            . ~ 20)) %>%
 #'   serve_table()
 #'
-#' # if using existing data then it specifies which variables are units
-#' lady_tasting_tea %>%
-#'   set_units(cup)
 #'
 #' @family user-facing functions
 #' @export
@@ -62,6 +59,21 @@ set_units <- function(.edibble, ...,
   set_vars(.edibble, ..., .name_repair = .name_repair, .class = "edbl_unit")
 }
 
+#' @importFrom tidyselect eval_select
+#' @export
+select_units <- function(.edibble, ...) {
+  vlevs <- vlevels(.edibble)
+  loc <- eval_select(expr(c(...)), vlevs)
+  keep_units <- names(vlevs)[loc]
+  keep_uids <- vid(.edibble$vgraph, keep_units)
+  keep_uids_ancestors <- vancestor(.edibble$vgraph, keep_uids)
+  .edibble$vgraph$nodes <- subset(.edibble$vgraph$nodes, id %in% keep_uids_ancestors)
+  .edibble$vgraph$edges <- subset(.edibble$vgraph$edges, to %in% keep_uids_ancestors & from %in% keep_uids_ancestors)
+  .edibble$lgraph$nodes <- subset(.edibble$lgraph$nodes, idvar %in% keep_uids_ancestors)
+  keep_lids_ancestors <- .edibble$lgraph$nodes$id
+  .edibble$lgraph$edges <- subset(.edibble$lgraph$edges, to %in% keep_lids_ancestors & from %in% keep_lids_ancestors)
+  .edibble
+}
 
 #' @importFrom vctrs vec_ptype_abbr
 #' @export
@@ -84,34 +96,22 @@ pillar_shaft.edbl_unit <- function(x, ...) {
   new_pillar_shaft_simple(out, align = "right", min_width = 11)
 }
 
-#' Number of units associated with the given variable
-#' @export
-n_units <- function(.design) {
-  nrow(.design$table)
+unit_ids <- function(design, type = "var") {
+  var_ids(design, type = type, vclass = "edbl_unit")
 }
 
-#' Get hte experimental unit names
-#'
-#' If there are more than one treatment factor applied to multiple units, then the
-#' return object will be a character vector.
-#'
-#' @export
-exp_unit_names <- function(.edibble) {
-  .graph <- get_edibble_graph(.edibble)
-  .vgraph <- subset_vars(.graph)
-  trt_names <- get_trt_vars(.vgraph)
-  attr(neighbors(.vgraph, V(.vgraph)$name==trt_names, "out"), "names")
+var_ids <- function(design, type = c("var", "level"), vclass = NULL) {
+  type <- match.arg(type)
+  if(is_null(vclass)) {
+    ids <- design$vgraph$nodes$id
+  } else {
+    ids <- subset(design$vgraph$nodes, class %in% vclass)$id
+  }
+  switch(type,
+         var = ids,
+         level = subset(design$lgraph$nodes, idvar %in% ids)$id)
 }
 
-#' @export
-unit_names <- function(.edibble) {
-  .graph <- get_edibble_graph(.edibble)
-  .vgraph <- subset_vars(.graph)
-  V(.vgraph)$vname[V(.vgraph)$class=="edbl_unit"]
+trt_ids <- function(design, type = "var") {
+  var_ids(design, type = type, vclass = "edbl_trt")
 }
-
-
-
-
-
-

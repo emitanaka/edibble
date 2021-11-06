@@ -20,8 +20,8 @@ Install the development version with:
 
 There are two intermixing goals for edibble:
 
-  - defining the **grammar of experimental design**, and
-  - provide an R-package that aids in the workflow of constructing an
+-   defining the **grammar of experimental design**, and
+-   provide an R-package that aids in the workflow of constructing an
     experimental design and serves as an implementation of the so-called
     grammar of experimental design.
 
@@ -38,11 +38,10 @@ inspired from.
 ### Experimental data
 
 tidyverse is well suited for the data science project workflow as
-illustrated below in (B) (from [Grolemund and
-Wickham 2017](https://r4ds.had.co.nz/introduction.html)). For
-experimental data, the statistical aspect begins before obtaining data
-as depicted below in (A). The focus of `edibble` is to facilitate work
-in (A).
+illustrated below in (B) (from [Grolemund and Wickham
+2017](https://r4ds.had.co.nz/introduction.html)). For experimental data,
+the statistical aspect begins before obtaining data as depicted below in
+(A). The focus of `edibble` is to facilitate work in (A).
 
 <img src="man/figures/design-analysis-flow.png">
 
@@ -51,19 +50,19 @@ constructing experimental design with a focus on the whole process and
 less on the randomisation process (which the other software generally
 focus and do well on). Some features include:
 
-  - declaratively create experimental designs based on experimental
+-   declaratively create experimental designs based on experimental
     components (e.g. units and treatments),
-  - explicitly specify variables that are to be recorded
+-   explicitly specify variables that are to be recorded
     (e.g. response), and
-  - set expected values for variables to be recorded which restrict the
+-   set expected values for variables to be recorded which restrict the
     data entry when the design is exported as an xlsx file,
-  - plot and print outputs for intermediate constructs of the
+-   plot and print outputs for intermediate constructs of the
     experimental design with configurations for most graphical elements
     (see
     [`vignette("output")`](https://edibble.emitanaka.org/articles/output.html)),
-  - make classical named designs (see
+-   make classical named designs (see
     [`vignette("named-designs")`](https://edibble.emitanaka.org/articles/named-designs.html)),
-  - add context that also serves as notes about experiment (see
+-   add context that also serves as notes about experiment (see
     [`vignette("edibble")`](https://edibble.emitanaka.org/articles/grammar.html)).
 
 ## Designing the *whole* experiment
@@ -72,12 +71,12 @@ An experiment is likely to involve a number of people. For simplicity,
 let’s suppose there are three actors (we’ll use the pronoun them/they
 for each actor):
 
-  - the **domain expert** 🕵️‍♀️ drives the experimental objective and
+-   the **domain expert** 🕵️‍♀️ drives the experimental objective and
     has the intricate knowledge about the subject area,
-  - the **statistician** 👩🏻‍💻 creates the design layout that contains
+-   the **statistician** 👩🏻‍💻 creates the design layout that contains
     the treatment-to-unit allocations after taking into account the
     statistical and practical constraints,
-  - the **technician** 👨‍🔬 carries out the experiment and collects the
+-   the **technician** 👨‍🔬 carries out the experiment and collects the
     data.
 
 The actors are purely illustrative. In practice, multiple people can
@@ -130,24 +129,24 @@ des <- start_design(name = "Effective teaching") %>%
               student = nested_in(class, 30)) %>%
     set_trts(style = c("flipped", "traditional"),
              exam = c("take-home", "open-book", "closed-book")) %>%
-    allocate_trts(style ~ class,
-                  exam ~ student) %>%
-    randomise_trts()
+    allot_trts(style ~ class,
+               exam ~ student) %>%
+    assign_trts("random")
 
 serve_table(des)
 #> # An edibble: 120 x 4
 #>        class     student       style        exam
 #>    <unit(4)> <unit(120)>    <trt(2)>    <trt(3)>
-#>  1    class1   student1  traditional take-home  
+#>  1    class1   student1  traditional open-book  
 #>  2    class1   student2  traditional take-home  
 #>  3    class1   student3  traditional open-book  
-#>  4    class1   student4  traditional take-home  
+#>  4    class1   student4  traditional open-book  
 #>  5    class1   student5  traditional closed-book
-#>  6    class1   student6  traditional closed-book
-#>  7    class1   student7  traditional closed-book
-#>  8    class1   student8  traditional open-book  
-#>  9    class1   student9  traditional take-home  
-#> 10    class1   student10 traditional take-home  
+#>  6    class1   student6  traditional open-book  
+#>  7    class1   student7  traditional take-home  
+#>  8    class1   student8  traditional closed-book
+#>  9    class1   student9  traditional closed-book
+#> 10    class1   student10 traditional open-book  
 #> # … with 110 more rows
 ```
 
@@ -157,12 +156,12 @@ variables can be recorded as.
 
 ``` r
 out <- des %>% 
-    set_rcrds(student = c(exam_mark,
-                          quiz1_mark,
-                          quiz2_mark,
-                          gender),
-              class = c(room,
-                        teacher)) %>%
+    set_rcrds_of(student = c("exam_mark",
+                             "quiz1_mark",
+                             "quiz2_mark",
+                             "gender"),
+              class = c("room",
+                        "teacher")) %>%
     expect_rcrds(exam_mark = to_be_numeric(with_value(between = c(0, 100))),
                 quiz1_mark = to_be_integer(with_value(between = c(0, 15))),
                 quiz2_mark = to_be_integer(with_value(between = c(0, 30))),
@@ -175,16 +174,16 @@ out
 #> # An edibble: 120 x 10
 #>        class     student       style        exam exam_mark quiz1_mark quiz2_mark
 #>    <unit(4)> <unit(120)>    <trt(2)>    <trt(3)>    <rcrd>     <rcrd>     <rcrd>
-#>  1    class1   student1  traditional take-home           ■          ■          ■
+#>  1    class1   student1  traditional open-book           ■          ■          ■
 #>  2    class1   student2  traditional take-home           ■          ■          ■
 #>  3    class1   student3  traditional open-book           ■          ■          ■
-#>  4    class1   student4  traditional take-home           ■          ■          ■
+#>  4    class1   student4  traditional open-book           ■          ■          ■
 #>  5    class1   student5  traditional closed-book         ■          ■          ■
-#>  6    class1   student6  traditional closed-book         ■          ■          ■
-#>  7    class1   student7  traditional closed-book         ■          ■          ■
-#>  8    class1   student8  traditional open-book           ■          ■          ■
-#>  9    class1   student9  traditional take-home           ■          ■          ■
-#> 10    class1   student10 traditional take-home           ■          ■          ■
+#>  6    class1   student6  traditional open-book           ■          ■          ■
+#>  7    class1   student7  traditional take-home           ■          ■          ■
+#>  8    class1   student8  traditional closed-book         ■          ■          ■
+#>  9    class1   student9  traditional closed-book         ■          ■          ■
+#> 10    class1   student10 traditional open-book           ■          ■          ■
 #> # … with 110 more rows, and 3 more variables: gender <rcrd>, room <rcrd>,
 #> #   teacher <rcrd>
 ```
@@ -231,9 +230,9 @@ start_design("nesting structure") %>%
                         c(2, 3) ~ 40,
                               . ~ 20)) %>% 
   serve_table()
-#> # An edibble: 190 x 3
+#> # An edibble: 170 x 3
 #>         site     block        plot
-#>    <unit(3)> <unit(7)> <unit(190)>
+#>    <unit(3)> <unit(7)> <unit(170)>
 #>  1         A    block1      plot1 
 #>  2         A    block1      plot2 
 #>  3         A    block1      plot3 
@@ -244,28 +243,25 @@ start_design("nesting structure") %>%
 #>  8         A    block1      plot8 
 #>  9         A    block1      plot9 
 #> 10         A    block1      plot10
-#> # … with 180 more rows
+#> # … with 160 more rows
 ```
 
 ## Limitations
 
 Currently, edibble:
 
-  - expects you to know the number of units available from the start.
+-   expects you to know the number of units available from the start.
     Unknown numbers will be supported in future versions.
-  - does not support designs where the size of the block is less than
-    the total number of treatments (e.g. incomplete block designs or
-    fractional factorial designs). This is to come.
-  - does not necessarily create the most efficient design. E.g. balanced
+-   does not necessarily create the most efficient design. E.g. balanced
     incomplete block designs have a special property and an adhoc
     solution may be required to make sure you can generate a design with
     this special property. This is just a nature of generalised tools
     and edibble doesn’t aim to be the best for everything, but hopes
     others developers can build on the edibble framework to create their
     own specialist design.
-  - in theory, edibble should support experiments that are not
+-   in theory, edibble should support experiments that are not
     comparative experiments but this is not tested.
-  - does not do enough testing so design should be diagnosed after
+-   does not do enough testing so design should be diagnosed after
     construction (which should be done regardless of how much testing
     edibble implements).
 
@@ -275,9 +271,9 @@ The way that edibble specifies experimental design is largely novel (if
 I say so myself) and there are no work that resembles it. I’m
 concurrently working on two extension packages:
 
-  - `deggust` - to visualise the designs constructed from edibble as
+-   `deggust` - to visualise the designs constructed from edibble as
     ggplot2 objects (WIP).
-  - `sizzled` - for experiments that require sample size calculation
+-   `sizzled` - for experiments that require sample size calculation
     (WIP).
 
 Below are some other related work. You can also have a look at the [CRAN
@@ -285,12 +281,12 @@ Task View for Design of Experiment and Analysis of Experimental
 Data](https://cran.r-project.org/web/views/ExperimentalDesign.html) for
 a whole collection.
 
-  - `DeclareDesign` for survey or sampling designs
-  - `designr` for balanced factorial designs with crossed and nested
+-   `DeclareDesign` for survey or sampling designs
+-   `designr` for balanced factorial designs with crossed and nested
     random and fixed effect to data frame
-  - `dae` for functions useful in the design and ANOVA of experiments
+-   `dae` for functions useful in the design and ANOVA of experiments
     (this is in fact powering the randomisation in edibble)
-  - `plotdesignr` for designing agronomic field experiments
+-   `plotdesignr` for designing agronomic field experiments
 
 ## Acknowledgement
 
@@ -309,19 +305,19 @@ shortcoming) so that tidyverse users can leverage their familiarity of
 the tidyverse language when using edibble. Specifically, edibble follows
 the philosophy:
 
-  - main functions do one thing and have a consistent form of
+-   main functions do one thing and have a consistent form of
     `<verb>_<noun>` (e.g. `set_units` and `record_vars`) where the nouns
     are generally plural. Exceptions are when the subject matter is
     clearly singular (e.g. `start_design` and `set_context`);
-  - pipable functions;
-  - all dots arguments are [dynamic
+-   pipable functions;
+-   all dots arguments are [dynamic
     dots](https://rlang.r-lib.org/reference/dyn-dots.html);
-  - duplicate names repaired with same option as `tibble` for additions
+-   duplicate names repaired with same option as `tibble` for additions
     to edibble graph;
-  - ability for developers to extend certain components. Currently only
+-   ability for developers to extend certain components. Currently only
     supported for others to contribute their own classical named
     experimental designs via `prep_classical_`;
-  - the specification of complex nested structure drawing similarity to
+-   the specification of complex nested structure drawing similarity to
     `dplyr::case_when` (LHS is character or integer for edibble
     however).
 

@@ -7,7 +7,7 @@
 serve_table(.design, ...)
 }
 \arguments{
-\item{.design}{An \code{edbl_graph} object.}
+\item{.design}{An edibble design.}
 
 \item{...}{Ignored.}
 }
@@ -24,11 +24,10 @@ zero rows.
 }
 \seealso{
 Other user-facing functions: 
-\code{\link{allocate_trts}()},
+\code{\link{allot_trts}()},
 \code{\link{design-context}},
 \code{\link{expect_rcrds}()},
 \code{\link{export_design}()},
-\code{\link{randomise_trts}()},
 \code{\link{set_rcrds}()},
 \code{\link{set_trts}()},
 \code{\link{set_units}()},

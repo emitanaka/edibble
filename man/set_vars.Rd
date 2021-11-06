@@ -12,14 +12,15 @@ set_vars(
 )
 }
 \arguments{
-\item{.edibble}{An edibble design (\code{EdibbleDesign}), an edibble data frame (\code{edbl_table}) or an
+\item{.edibble}{An edibble design (\code{edbl_design}), an edibble data frame (\code{edbl_table}) or an
 object that contains the edibble data frame in the attribute
 \code{design}.}
 
 \item{...}{Either a name-value pair or a series of the names.}
 
-\item{.name_repair}{Specify how to deal when there are duplicated name
-entries. The repair follows the same argument in \code{\link[tibble:tibble]{tibble::tibble()}}.}
+\item{.class}{A class for the variables.}
+
+\item{.name_repair}{Same as the argument in \code{tibble::tibble()}.}
 }
 \description{
 Adds variable and their level nodes in an edibble graph.

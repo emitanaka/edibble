@@ -4,7 +4,8 @@ make_sheet_names <- function(.design = NULL) {
     data_sheet_names <- "Data"
   } else {
     if(has_record(.design)) {
-      rcrds <- rcrd_to_unit_dict(.design$graph)
+      rids <- subset(.design$vgraph$nodes, class=="edbl_rcrd")$id
+      rcrds <- rcrd_to_unit_dict(.design, rids)
       units <- unique(unname(rcrds))
       if(length(units) == 1) {
         data_sheet_names <- "Data"
@@ -108,30 +109,39 @@ data_sheet_name <- function(name) {
   paste0("Data.", name)
 }
 
+subset.edbl_design <- function(.edibble, unit, rcrds) {
+  keep_rids <- vid(.edibble$vgraph, rcrds)
+  keep_uids <- vid(.edibble$vgraph, unit)
+  keep_uids_ancestors <- vancestor(.edibble$vgraph, keep_uids)
+  .edibble$vgraph$nodes <- subset(.edibble$vgraph$nodes, id %in% c(keep_uids_ancestors, keep_rids))
+  .edibble$vgraph$edges <- subset(.edibble$vgraph$edges, (to %in% keep_uids_ancestors &
+                                                            from %in% keep_uids_ancestors) |
+                                    to %in% keep_rids)
+  .edibble$lgraph$nodes <- subset(.edibble$lgraph$nodes, idvar %in% keep_uids_ancestors)
+  keep_lids_ancestors <- .edibble$lgraph$nodes$id
+  .edibble$lgraph$edges <- subset(.edibble$lgraph$edges, to %in% keep_lids_ancestors & from %in% keep_lids_ancestors)
+  if(!is_null(.edibble$allotment)) {
+    units <- map_chr(.edibble$allotment, function(x) all.vars(f_rhs(x)))
+    .edibble$allotment <- .edibble$allotment[units %in% .edibble$vgraph$nodes$label]
+  }
+  if(!is_null(.edibble$validation)) {
+    rcrds <- vlabel(.edibble$vgraph, keep_rids)
+    .edibble$validation <- .edibble$validation[rcrds]
+  }
+
+  .edibble
+}
+
 write_data_sheet <- function(wb, sheet_names, cell_styles, .design, .data) {
   if(nrow(.data) && ncol(.data)) {
     if(length(sheet_names) > 1) {
-      rcrds <- rcrd_to_unit_dict(.design$graph)
-      units <- unique(unname(rcrds))
-      vgraph <- subset_vars(.design$graph)
-
+      rids <- subset(.design$vgraph$nodes, class=="edbl_rcrd")$id
+      rcrds2unit <- rcrd_to_unit_dict(.design, rids)
+      units <- unique(unname(rcrds2unit))
       for(aunit in units) {
-        vertex_delete <- neighbors(vgraph, var_index(vgraph, aunit), mode = "out")
-        if(length(vertex_delete) == 0) {
-          records_to_delete <- names(rcrds)[rcrds != aunit]
-          w <- which(names(.data) %in% records_to_delete)
-          data <- cbind(.rowNumber = 1:nrow(.data), as_data_frame(.data)[-w])
-        } else {
-          units_to_delete <- var_names(vgraph, vertex_delete)
-          subdesign <- .design$clone()
-          subdesign$delete_variable(units_to_delete)
-          vars_degree <- degree(subset_vars(subdesign$graph))
-          others_to_delete <- names(vars_degree)[vars_degree==0]
-          subdesign$delete_variable(others_to_delete)
-          res <- subdesign$table
-          data <- cbind(.rowNumber = 1:nrow(res),
-                        as_data_frame(res))
-        }
+        rcrds <- names(rcrds2unit)[rcrds2unit==aunit]
+        des <- subset(.design, aunit, rcrds)
+        data <- as_data_frame(serve_table(des))
         writeData(wb, sheet = data_sheet_name(aunit),
                   x = data, startCol = 1,
                   headerStyle = cell_styles$header,
@@ -142,7 +152,7 @@ write_data_sheet <- function(wb, sheet_names, cell_styles, .design, .data) {
                  style = cell_styles$body)
       }
     } else {
-      data <- cbind(.rowNumber = 1:nrow(.data), as_data_frame(.data))
+      data <- as_data_frame(.data)
       writeData(wb, sheet = sheet_names, x = data, startCol = 1,
                 headerStyle = cell_styles$header,
                 name = "Data")
@@ -172,7 +182,8 @@ write_variables_sheet <- function(wb, sheet_name, cell_styles, .design, .data) {
     data$value <- ""
     valid <- .design$validation
     valid_names <- names(valid)
-    rcrds <- rcrd_to_unit_dict(.design$graph)
+    rids <- subset(.design$vgraph$nodes, class=="edbl_rcrd")$id
+    rcrds <- rcrd_to_unit_dict(.design, rids)
     n_ounits <- length(unique(rcrds))
     for(i in seq_along(valid)) {
       unit <- rcrds[valid_names[i]]
@@ -186,7 +197,7 @@ write_variables_sheet <- function(wb, sheet_name, cell_styles, .design, .data) {
         data$value[j] <- restriction_for_human(valid[[i]]$operator, valid[[i]]$value)
         dataValidation(wb, sheet = data_sheet,
                        rows = 1:nrow(dat) + 1,
-                       cols = j + 1,
+                       cols = j,
                        type = valid[[i]]$type,
                        operator = valid[[i]]$operator,
                        value = valid[[i]]$value)
@@ -200,7 +211,7 @@ write_variables_sheet <- function(wb, sheet_name, cell_styles, .design, .data) {
                   startRow = j + 1, colNames = FALSE)
         dataValidation(wb, sheet = data_sheet,
                        rows = 1:nrow(dat) + 1,
-                       cols = j + 1,
+                       cols = j,
                        type = "list", operator = NULL,
                        value = paste0("'", sheet_name, "'!$",
                                       L[1], "$", j + 1, ":$", L[2], "$", j + 1))
@@ -249,11 +260,11 @@ export_design <- function(.data, file, author, date = Sys.Date(), overwrite = FA
   if(!require("openxlsx")) {
     stop("Please install the `openxlsx` package to use this function.")
   }
-  if(is_edibble(.data)) {
+
+  if(is_edibble_table(.data)) {
     .design <- attr(.data, "design")
-  } else if(is_edibble_design(.data)) {
-    .design <- .data
-    .data <- .design$table
+  } else {
+    abort("The input is not an edibble table.")
   }
 
   title <- .design$name

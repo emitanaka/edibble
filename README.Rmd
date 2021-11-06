@@ -89,9 +89,9 @@ des <- start_design(name = "Effective teaching") %>%
               student = nested_in(class, 30)) %>%
     set_trts(style = c("flipped", "traditional"),
              exam = c("take-home", "open-book", "closed-book")) %>%
-    allocate_trts(style ~ class,
-                  exam ~ student) %>%
-    randomise_trts()
+    allot_trts(style ~ class,
+               exam ~ student) %>%
+    assign_trts("random")
 
 serve_table(des)
 ```
@@ -101,12 +101,12 @@ Before constructing the experiment, you might want to think about what you are r
 
 ```{r}
 out <- des %>% 
-    set_rcrds(student = c(exam_mark,
-                          quiz1_mark,
-                          quiz2_mark,
-                          gender),
-              class = c(room,
-                        teacher)) %>%
+    set_rcrds_of(student = c("exam_mark",
+                             "quiz1_mark",
+                             "quiz2_mark",
+                             "gender"),
+              class = c("room",
+                        "teacher")) %>%
     expect_rcrds(exam_mark = to_be_numeric(with_value(between = c(0, 100))),
                 quiz1_mark = to_be_integer(with_value(between = c(0, 15))),
                 quiz2_mark = to_be_integer(with_value(between = c(0, 30))),
@@ -163,8 +163,6 @@ start_design("nesting structure") %>%
 Currently, edibble:
 
 - expects you to know the number of units available from the start. Unknown numbers will be supported in future versions.
-- does not support designs where the size of the block is less than 
-the total number of treatments (e.g. incomplete block designs or fractional factorial designs). This is to come.
 - does not necessarily create the most efficient design. E.g. balanced incomplete block designs have a special property and an adhoc solution may be required to make sure you can generate a design with this special property. This is just a nature of generalised tools and edibble doesn't aim to be the best for everything, but hopes others developers can build on the edibble framework to create their own specialist design.
 - in theory, edibble should support experiments that are not comparative experiments but this is not tested. 
 - does not do enough testing so design should be diagnosed after construction (which should be done regardless of how much testing edibble implements).

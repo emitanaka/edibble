@@ -13,11 +13,11 @@ rye_grass <- start_design("Rye-grass") %>%
             plot = nested_in(strip, 4)) %>%
   set_trts(cultivar = c("Cropper", "Melle", "Melba"),
            fertilizer = c(0, 80, 160, 240)) %>%
-  allocate_trts(cultivar ~ strip,
+  allot_trts(cultivar ~ strip,
                 fertilizer ~ plot) %>%
-  randomise_trts() %>%
-  record_vars(plot = c(weight, perc)) %>%
-  expect_vars(weight = to_be_numeric(with_value(">=", 0)),
+  assign_trts("random") %>%
+  set_rcrds_of(plot = c("weight", "perc")) %>%
+  expect_rcrds(weight = to_be_numeric(with_value(">=", 0)),
               perc = to_be_numeric(with_value(between = c(0, 100)))) %>%
   serve_table()
 

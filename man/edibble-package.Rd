@@ -8,8 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-A system to facilitate statistical thinking of 
-    adapting experimental designs to different conditions.
+A system to facilitate statistical thinking of adapting experimental designs to different conditions.
 }
 \details{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
@@ -27,13 +26,6 @@ A system to facilitate statistical thinking of
 }
 
 \section{Package options}{
-
-The following options are used for changing the default view for edibble
-graph or edibble design plot:
-\itemize{
-\item \code{edibble.vertex.label.color.default}
-\item \code{edibble.vertex.label.color.unit}
-}
 
 The following options are used for changing the default view for the print
 out of edibble design or edibble graph.

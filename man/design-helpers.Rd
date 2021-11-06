@@ -7,9 +7,8 @@
 \alias{is_edibble_table}
 \alias{is_edibble_graph}
 \alias{is_edibble}
-\alias{get_edibble_design}
-\alias{get_edibble_table}
-\alias{get_edibble_graph}
+\alias{edbl_design}
+\alias{edbl_table}
 \title{Test and get edibble objects}
 \usage{
 is_edibble_design(x)
@@ -22,11 +21,9 @@ is_edibble_graph(x)
 
 is_edibble(x)
 
-get_edibble_design(x)
+edbl_design(x)
 
-get_edibble_table(x)
-
-get_edibble_graph(x)
+edbl_table(x)
 }
 \arguments{
 \item{x}{An object.}
@@ -35,25 +32,21 @@ get_edibble_graph(x)
 The \code{is} functions tests if an object (or an object in its attribute)
 inherits particular class and returns \code{TRUE} if it does, otherwise \code{FALSE}.
 \itemize{
-\item \code{is_edibble_design} checks if it inherits \code{EdibbleDesign}.
+\item \code{is_edibble_design} checks if it inherits \code{edbl_design}.
 \item \code{is_edibble_graph} checks if it inherits \code{edbl_graph}.
 \item \code{is_edibble_table} checks if it inherits \code{edbl_table}
-\item \code{is_edibble} checks if the object contains \code{EdibbleDesign}.
+\item \code{is_edibble} checks if the object inherits \code{edbl}.
 The search is quite simple, it checks if
-the object is \code{EdibbleDesign}, failing that it looks to see if the
-attribute "design" of the object is \code{EdibbleDesign}.
+the object is \code{edbl_design}, failing that it looks to see if the
+attribute "design" of the object is \code{edbl_design}.
 \item \code{is_named_design} check if it inherits \code{NamedDesign}.
 }
 
 The \code{get} functions extracts the requested edibble component (table, graph,
 or design) from the object if possible.
 \itemize{
-\item \code{get_edibble_design} tries to get \code{EdibbleDesign}.
-\item \code{get_edibble_table} tries to get \code{edbl_table} with no design attribute.
-\item \code{get_edibble_graph} tries to get \code{edbl_graph}.
+\item \code{edbl_design} tries to get \code{edbl_design}.
+\item \code{edbl_table} tries to get \code{edbl_table} with no design attribute.
+\item \code{edbl_graph} tries to get \code{edbl_graph}.
 }
-}
-\examples{
-is_edibble_df(mtcars) # FALSE
-is_named_design(code_classical_rcbd(.quiet = TRUE)) # TRUE
 }

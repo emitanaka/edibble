@@ -1,63 +1,57 @@
 test_that("set_units", {
 
-  expect_snapshot_output({
+  expect_snapshot({
     start_design(name = "unlinked units") %>%
       set_units(block = 3,
                 plot = 2)
   })
 
-  expect_snapshot_output({
-    start_design(name = "unlinked units with table") %>%
-      set_units(block = 3,
-                plot = 2) %>%
+  des <- start_design(name = "unlinked units") %>%
+    set_units(block = 3,
+              plot = 2)
+
+  expect_equal(nrow(des$vgraph$nodes), 2)
+  expect_equal(names(des$vgraph$nodes), c("id", "label", "class"))
+  expect_equal(nrow(des$lgraph$nodes), 5)
+  expect_equal(des$vgraph$nodes$id, c(1L, 2L))
+  expect_equal(des$vgraph$nodes$label, c("block", "plot"))
+  expect_equal(des$vgraph$nodes$class, c("edbl_unit", "edbl_unit"))
+  expect_equal(des$lgraph$nodes$idvar, c(1L, 1L, 1L, 2L, 2L))
+  expect_equal(des$lgraph$nodes$id, 1:5)
+  expect_equal(des$lgraph$nodes$label, c("block1", "block2", "block3", "plot1", "plot2"))
+  expect_equal(names(des$lgraph$nodes), c("idvar", "id", "label"))
+
+  des2 <- start_design() %>%
+    set_units(row = 3,
+              col = 4,
+              plot = ~row:col)
+
+  expect_snapshot({
+    start_design() %>%
+      set_units(row = 3,
+                col = 4,
+                plot = ~row:col) %>%
       serve_table()
   })
 
-  expect_snapshot_output({
-    start_design(name = "nested units") %>%
-      set_units(block = 3,
-                plot = nested_in(block, 2)) %>%
+  expect_snapshot({
+    start_design() %>%
+      set_units(row = 3,
+                col = 4,
+                site = 4,
+                plot = ~site:row:col) %>%
       serve_table()
   })
 
-  expect_snapshot_output({
-    start_design(name = "check SI prefix") %>%
-      set_units(block = 3,
-                plot = nested_in(block, 200),
-                plant = nested_in(plot, 5)) %>%
+  # FIXME
+  expect_snapshot({
+    start_design() %>%
+      set_units(site = 2,
+                row = nested_in(site, 1 ~ 2,
+                                      2 ~ 3),
+                col = nested_in(site, 3),
+                plot = ~site:row:col) %>%
       serve_table()
   })
-
-  df <- start_design(name = "complex nesting") %>%
-      set_units(block = 3,
-                plot = nested_in(block,
-                                  1 ~ 10,
-                                  . ~ 20),
-                plant = nested_in(plot, 5)) %>%
-      serve_table()
-
-  expect_equal(length(unique(df$plot)), 10 + 20 *2)
-  expect_equal(nrow(df), (10 + 20 * 2) * 5)
-  # need vec cast edbl_unit..
-  expect_equal(length(unique(df$plot[as.character(df$block)=="block1"])), 10)
-  expect_equal(length(unique(df$plot[as.character(df$block)=="block2"])), 20)
-  expect_equal(length(unique(df$plot[as.character(df$block)=="block3"])), 20)
-
-
-  df <- start_design(name = "complex nesting with labels") %>%
-    set_units(block = c("A", "B", "C", "D"),
-              plot = nested_in(block,
-                               c("A", "B") ~ 10,
-                                         . ~ 20),
-              plant = nested_in(plot, 5)) %>%
-    serve_table()
-
-  expect_equal(length(unique(df$plot)), 10 * 2 + 20 *2)
-  expect_equal(nrow(df), (10 * 2 + 20 * 2) * 5)
-  expect_equal(length(unique(df$plot[as.character(df$block)=="A"])), 10)
-  expect_equal(length(unique(df$plot[as.character(df$block)=="B"])), 10)
-  expect_equal(length(unique(df$plot[as.character(df$block)=="C"])), 20)
-  expect_equal(length(unique(df$plot[as.character(df$block)=="D"])), 20)
-
 
 })

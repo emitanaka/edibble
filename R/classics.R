@@ -139,7 +139,7 @@ prep_classical_crd <- function(t = 1 + sample(10, 1), n = t + sample(100, 1),
   des$add_code(paste0("set_trts(",
                  des$decorate_trts("treat"),
                  " = ", t, ")"))
-  des$add_code(paste0("allocate_trts(",
+  des$add_code(paste0("allot_trts(",
                  des$decorate_trts("treat"),
                  " ~ ", des$decorate_units("unit"), ")"))
   des$final_code()
@@ -181,7 +181,7 @@ prep_classical_factorial <- function(trt = c(1 + sample(10, 1),
                                      " = ", trt[i])),
                               collapse = ",\n           "),
                       ")"))
-  des$add_code(paste0("allocate_trts(",
+  des$add_code(paste0("allot_trts(",
                       " ~ ", des$decorate_units("unit"), ")"))
   des$final_code()
 
@@ -219,7 +219,7 @@ prep_classical_rcbd <- function(t = 1 + sample(10, 1),
   des$add_code(paste0("set_trts(",
                  des$decorate_trts("treat"),
                  " = ", t, ")"))
-  des$add_code(paste0("allocate_trts(",
+  des$add_code(paste0("allot_trts(",
                  des$decorate_trts("treat"),
                  " ~ ", des$decorate_units("unit"), ")"))
   des$final_code()
@@ -247,7 +247,7 @@ prep_classical_split <- function(t1 = 1 + sample(10, 1),
                  " = ", t1, ",\n           ",
                  des$decorate_trts("treat2"), " = ", t2,
                  ")"))
-  des$add_code(paste0("allocate_trts(",
+  des$add_code(paste0("allot_trts(",
                  des$decorate_trts("treat1"),
                  " ~ ", des$decorate_units("mainplot"), ",\n                ",
                  des$decorate_trts("treat2"),
@@ -347,7 +347,7 @@ NamedDesign <- R6::R6Class("NamedDesign",
        #' data frame.
        final_code = function() {
          self$code <- paste0(self$code,
-                " %>%\n  randomise_trts()",
+                " %>%\n  assign_trts(\"random\")",
                 " %>%\n  serve_table()")
        },
 

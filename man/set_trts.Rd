@@ -34,18 +34,13 @@ start_design() \%>\%
   set_trts(pesticide = c("A", "B", "C"),
            dosage = c(0, 10, 20, 30, 40))
 
-# you can set treatments to existing edibble
-lady_tasting_tea \%>\%
-  edibble() \%>\%
-  set_trts(first)
 }
 \seealso{
 Other user-facing functions: 
-\code{\link{allocate_trts}()},
+\code{\link{allot_trts}()},
 \code{\link{design-context}},
 \code{\link{expect_rcrds}()},
 \code{\link{export_design}()},
-\code{\link{randomise_trts}()},
 \code{\link{serve_table}()},
 \code{\link{set_rcrds}()},
 \code{\link{set_units}()},

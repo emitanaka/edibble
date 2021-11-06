@@ -3,23 +3,20 @@
 \name{add_edibble_vertex}
 \alias{add_edibble_vertex}
 \alias{add_edibble_vertex.default}
-\alias{add_edibble_vertex.lkbl_graph}
 \title{Add an edibble vertex}
 \usage{
-add_edibble_vertex(.data, ...)
+add_edibble_vertex(x, ...)
 
-\method{add_edibble_vertex}{default}(value, name, design = NULL, attr)
-
-\method{add_edibble_vertex}{lkbl_graph}(.lgraph, name, design = NULL, attr)
+\method{add_edibble_vertex}{default}(value, vname, class, design)
 }
 \arguments{
 \item{value}{A value that may be a single number, unnamed vector,
 a one sided formula or linkabble.}
 
-\item{name}{Name of the edibble variable as string.}
-
 \item{design}{An edibble graph with levels converted as list used
 for evaluation in any expressions.}
+
+\item{name}{Name of the edibble variable as string.}
 }
 \value{
 Returns an evaluated expression.

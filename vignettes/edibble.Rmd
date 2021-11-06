@@ -44,9 +44,9 @@ spdes <- start_design("Split-plot Design") %>%
             subplot = nested_in(wholeplot, 4)) %>% 
   set_trts(fertilizer = c("A", "B"),
            variety    = c("V1", "V2")) %>% 
-  allocate_trts(fertilizer ~ wholeplot, 
-                   variety ~ subplot) %>% 
-  randomise_trts()
+  allot_trts(fertilizer ~ wholeplot, 
+              variety ~ subplot) %>% 
+  assing_trts("random")
 ```
 There are a number of ways to visualise this intermediate construct. Just printing it gives a tree structure print out.
 
@@ -54,20 +54,6 @@ There are a number of ways to visualise this intermediate construct. Just printi
 spdes
 ```
 
-You can also plot it to understand the relationship between the variables. 
-
-```{r, fig.height = 5, fig.width = 5}
-plot(spdes)
-```
-```{r, fig.height = 5, fig.width = 5}
-plot(spdes, view = "low")
-```
-
-The low-level view of the edibble graph is often a bit cluttered so you may like to use the interactive version as below instead. 
-
-```{r, eval = FALSE}
-iplot(spdes)
-```
 
 If the design can be reconciled, you can also convert into a table. You typically use the step below when you are ready to serve your design.
 
@@ -86,8 +72,8 @@ rcbd <- start_design("RCBD") %>%
             plot  = nested_in(block, 4)) %>% 
   set_trts(fertilizer = c("A", "B"),
            variety    = c("V1", "V2")) %>% 
-  allocate_trts(fertilizer:variety ~ plot) %>% 
-  randomise_trts()
+  allot_trts(fertilizer:variety ~ plot) %>% 
+  assign_trts("random")
 ```
 
 The above design is an example of a Randomised Complete Block Design. If you change the unit names from `block` to `wholeplot` and `plot` to `subplot`, it looks like the Split-plot Design, so what differs here aside from the unit names? Yes, the allocation of treatment is more restrictive in the Split-plot Design. This is one of the key benefits of using edibble to construct your experimental design; it makes you think about your experiment in bare terms.
@@ -154,15 +140,15 @@ des <-
               student = nested_in(class, 30)) %>%
     set_trts(style = c("flipped", "traditional"),
              exam = c("take-home", "open-book", "closed-book")) %>%
-    allocate_trts(style ~ class,
-                  exam ~ student) %>%
-    randomise_trts() %>%
-    set_rcrds(student = c(exam_mark,
-                            quiz1_mark,
-                            quiz2_mark,
-                            gender),
-                 class = c(room,
-                           teacher)) %>%
+    allot_trts(style ~ class,
+                exam ~ student) %>%
+    assign_trts("random") %>%
+    set_rcrds_of(student = c("exam_mark",
+                          "quiz1_mark",
+                          "quiz2_mark",
+                           "gender"),
+                 class = c("room",
+                           "teacher")) %>%
     expect_vars( exam_mark = to_be_numeric(with_value(between = c(0, 100))),
                 quiz1_mark = to_be_integer(with_value(between = c(0, 15))),
                 quiz2_mark = to_be_integer(with_value(between = c(0, 30))),

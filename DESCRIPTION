@@ -21,18 +21,16 @@ Imports:
     magrittr,
     rlang,
     vctrs,
-    igraph,
     tibble,
     cli,
     pillar,
     tidyselect (>= 1.0.0),
-    dae,
+    nestr,
     R6
 Suggests: 
     testthat (>= 3.0.0),
     knitr,
     rmarkdown,
-    vdiffr,
     asciicast,
     openxlsx
 VignetteBuilder: knitr
