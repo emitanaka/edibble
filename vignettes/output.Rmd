@@ -33,6 +33,7 @@ asciicast::init_knitr_engine(
               set_units(block = c("B1", "B2"),
                         unit = nested_in(block, 6)) %>% 
         set_trts(trt = LETTERS[1:4])
+
     }),
   echo = TRUE,
   echo_input = FALSE)
@@ -62,7 +63,7 @@ rcbd <- new_rcbd()
 class(rcbd)
 ```
 
-An `EdibbleDesign` contains a graph and table. The default print out is the same as `edbl_graph`. 
+An `edbl_design` contains a graph and table. The default print out is the same as `edbl_graph`. 
 
 
 ## Print for `edbl_graph`
@@ -98,27 +99,47 @@ Instead of overwriting the options each time, you can set your `.Rprofile` so th
 
 ## Print for `edbl_table`
 
-When you `serve_table` to signal that you want the table, the default view for `EdibbleDesign` changes to the print out for `edbl_table`. 
+When you `serve_table` to signal that you want the table, the default view for `edbl_design` changes to the print out for `edbl_table`. 
 
-```{r, include = FALSE}
-options(crayon.enabled = FALSE)
-```
-
-
-```{r redefine}
+```{asciicast redefine, out.width = "100%", echo = 9}
+new_rcbd <- function() {
+  start_design(name = "RCBD") %>%
+  set_units(block = c("B1", "B2"),
+            unit = nested_in(block, 6)) %>%
+  set_trts(trt = LETTERS[1:4]) %>%
+  allot_trts(~unit) %>%
+  assign_trts("random")
+}
 serve_table(new_rcbd())
 ```
 
-```{r opt3}
+```{asciicast opt3, out.width = "100%", echo = 9:10}
+new_rcbd <- function() {
+  start_design(name = "RCBD") %>%
+  set_units(block = c("B1", "B2"),
+            unit = nested_in(block, 6)) %>%
+  set_trts(trt = LETTERS[1:4]) %>%
+  allot_trts(~unit) %>%
+  assign_trts("random")
+}
 options(edibble.levels.label.leading_zero = TRUE)
 serve_table(new_rcbd())
 ```
 
-```{r opt4}
+```{asciicast opt4, out.width = "100%", echo = 9:11}
+new_rcbd <- function() {
+  start_design(name = "RCBD") %>%
+  set_units(block = c("B1", "B2"),
+            unit = nested_in(block, 6)) %>%
+  set_trts(trt = LETTERS[1:4]) %>%
+  allot_trts(~unit) %>%
+  assign_trts("random")
+}
 options(edibble.levels.label.leading_zero = TRUE,
         edibble.levels.label.min_ndigits = 5)
 serve_table(new_rcbd())
 ```
+
 
 ```{r restore-options, include = FALSE}
 options(old_opts)
