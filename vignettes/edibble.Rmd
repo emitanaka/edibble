@@ -46,7 +46,7 @@ spdes <- start_design("Split-plot Design") %>%
            variety    = c("V1", "V2")) %>% 
   allot_trts(fertilizer ~ wholeplot, 
               variety ~ subplot) %>% 
-  assing_trts("random")
+  assign_trts("random")
 ```
 There are a number of ways to visualise this intermediate construct. Just printing it gives a tree structure print out.
 
