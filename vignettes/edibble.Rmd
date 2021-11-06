@@ -115,18 +115,6 @@ des <- start_design("COVID-19") %>%
 des
 ```
 
-You can muffle these messages by using `suppress_context`. [TODO: add option to muffle these and shorten some long contexts.]
-
-```{r, include = FALSE}
-options(crayon.enabled = FALSE)
-```
-
-```{r exp-context, include = FALSE}
-```
-
-```{r}
-suppress_context(des)
-```
 
 ## Recording responses and other variables
 
