@@ -145,7 +145,7 @@
 
 <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">rcbd</span><span class="op">)</span>
 <span class="co">#&gt; [1] "edbl_design" "edbl"</span></code></pre></div>
-<p>An <code>EdibbleDesign</code> contains a graph and table. The default print out is the same as <code>edbl_graph</code>.</p>
+<p>An <code>edbl_design</code> contains a graph and table. The default print out is the same as <code>edbl_graph</code>.</p>
 <div id="print-for-edbl_graph" class="section level2">
 <h2 class="hasAnchor">
 <a href="#print-for-edbl_graph" class="anchor"></a>Print for <code>edbl_graph</code>
@@ -176,61 +176,19 @@
 <h2 class="hasAnchor">
 <a href="#print-for-edbl_table" class="anchor"></a>Print for <code>edbl_table</code>
 </h2>
-<p>When you <code>serve_table</code> to signal that you want the table, the default view for <code>EdibbleDesign</code> changes to the print out for <code>edbl_table</code>.</p>
+<p>When you <code>serve_table</code> to signal that you want the table, the default view for <code>edbl_design</code> changes to the print out for <code>edbl_table</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="fu">new_rcbd</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [38;5;246m# An edibble: 12 x 3[39m</span>
-<span class="co">#&gt;        block       unit      trt</span>
-<span class="co">#&gt;    [3m[38;5;246m&lt;unit(2)&gt;[39m[23m [3m[38;5;246m&lt;unit(12)&gt;[39m[23m [3m[38;5;246m&lt;trt(4)&gt;[39m[23m</span>
-<span class="co">#&gt; [38;5;250m 1[39m        B1     unit1         D</span>
-<span class="co">#&gt; [38;5;250m 2[39m        B1     unit2         B</span>
-<span class="co">#&gt; [38;5;250m 3[39m        B1     unit3         D</span>
-<span class="co">#&gt; [38;5;250m 4[39m        B1     unit4         C</span>
-<span class="co">#&gt; [38;5;250m 5[39m        B1     unit5         A</span>
-<span class="co">#&gt; [38;5;250m 6[39m        B1     unit6         C</span>
-<span class="co">#&gt; [38;5;250m 7[39m        B2     unit7         A</span>
-<span class="co">#&gt; [38;5;250m 8[39m        B2     unit8         A</span>
-<span class="co">#&gt; [38;5;250m 9[39m        B2     unit9         D</span>
-<span class="co">#&gt; [38;5;250m10[39m        B2     unit10        B</span>
-<span class="co">#&gt; [38;5;250m11[39m        B2     unit11        C</span>
-<span class="co">#&gt; [38;5;250m12[39m        B2     unit12        D</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="fu">new_rcbd</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><img src="output_files/figure-html/redefine.svg" width="100%"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>edibble.levels.label.leading_zero <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="fu">new_rcbd</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [38;5;246m# An edibble: 12 x 3[39m</span>
-<span class="co">#&gt;        block       unit      trt</span>
-<span class="co">#&gt;    [3m[38;5;246m&lt;unit(2)&gt;[39m[23m [3m[38;5;246m&lt;unit(12)&gt;[39m[23m [3m[38;5;246m&lt;trt(4)&gt;[39m[23m</span>
-<span class="co">#&gt; [38;5;250m 1[39m        B1     unit1         C</span>
-<span class="co">#&gt; [38;5;250m 2[39m        B1     unit2         D</span>
-<span class="co">#&gt; [38;5;250m 3[39m        B1     unit3         B</span>
-<span class="co">#&gt; [38;5;250m 4[39m        B1     unit4         A</span>
-<span class="co">#&gt; [38;5;250m 5[39m        B1     unit5         D</span>
-<span class="co">#&gt; [38;5;250m 6[39m        B1     unit6         A</span>
-<span class="co">#&gt; [38;5;250m 7[39m        B2     unit7         B</span>
-<span class="co">#&gt; [38;5;250m 8[39m        B2     unit8         C</span>
-<span class="co">#&gt; [38;5;250m 9[39m        B2     unit9         C</span>
-<span class="co">#&gt; [38;5;250m10[39m        B2     unit10        B</span>
-<span class="co">#&gt; [38;5;250m11[39m        B2     unit11        D</span>
-<span class="co">#&gt; [38;5;250m12[39m        B2     unit12        A</span></code></pre></div>
+<span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="fu">new_rcbd</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><img src="output_files/figure-html/opt3.svg" width="100%"></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>edibble.levels.label.leading_zero <span class="op">=</span> <span class="cn">TRUE</span>,
         edibble.levels.label.min_ndigits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
-<span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="fu">new_rcbd</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [38;5;246m# An edibble: 12 x 3[39m</span>
-<span class="co">#&gt;        block       unit      trt</span>
-<span class="co">#&gt;    [3m[38;5;246m&lt;unit(2)&gt;[39m[23m [3m[38;5;246m&lt;unit(12)&gt;[39m[23m [3m[38;5;246m&lt;trt(4)&gt;[39m[23m</span>
-<span class="co">#&gt; [38;5;250m 1[39m        B1     unit1         D</span>
-<span class="co">#&gt; [38;5;250m 2[39m        B1     unit2         B</span>
-<span class="co">#&gt; [38;5;250m 3[39m        B1     unit3         A</span>
-<span class="co">#&gt; [38;5;250m 4[39m        B1     unit4         A</span>
-<span class="co">#&gt; [38;5;250m 5[39m        B1     unit5         B</span>
-<span class="co">#&gt; [38;5;250m 6[39m        B1     unit6         C</span>
-<span class="co">#&gt; [38;5;250m 7[39m        B2     unit7         D</span>
-<span class="co">#&gt; [38;5;250m 8[39m        B2     unit8         A</span>
-<span class="co">#&gt; [38;5;250m 9[39m        B2     unit9         B</span>
-<span class="co">#&gt; [38;5;250m10[39m        B2     unit10        C</span>
-<span class="co">#&gt; [38;5;250m11[39m        B2     unit11        A</span>
-<span class="co">#&gt; [38;5;250m12[39m        B2     unit12        C</span></code></pre></div>
+<span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="fu">new_rcbd</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><img src="output_files/figure-html/opt4.svg" width="100%"></p>
 </div>
   </div>
 
