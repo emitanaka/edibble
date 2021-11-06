@@ -190,7 +190,7 @@ edibble is hugely inspired by the work of [Tidyverse Team](https://joss.theoj.or
 
 The implementation in edibble adopt a similar nomenclature and design philosophy as tidyverse (and where it does not, it's likely my shortcoming) so that tidyverse users can leverage their familiarity of the tidyverse language when using edibble. Specifically, edibble follows the philosophy:
 
-- main functions do one thing and have a consistent form of `<verb>_<noun>` (e.g. `set_units` and `record_vars`) where the nouns are generally plural. Exceptions are when the subject matter is clearly singular (e.g. `start_design` and `set_context`);
+- main functions do one thing and have a consistent form of `<verb>_<noun>` (e.g. `set_units` and `set_rcrds`) where the nouns are generally plural. Exceptions are when the subject matter is clearly singular (e.g. `start_design` and `set_context`);
 - pipable functions;
 - all dots arguments are [dynamic dots](https://rlang.r-lib.org/reference/dyn-dots.html);
 - duplicate names repaired with same option as `tibble` for additions to edibble graph;
