@@ -33,7 +33,6 @@ the order presented in practice is unknown.
 }
 \seealso{
 Other experimental data: 
-\code{\link{rye_grass}},
 \code{\link{skittles}}
 }
 \concept{experimental data}

@@ -1,5 +1,6 @@
 #' @aliases edibble-package
 #' @import rlang
+#' @importFrom cli cli_text
 #' @details
 #' `r lifecycle::badge('experimental')`
 #'

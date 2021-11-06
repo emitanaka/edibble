@@ -31,8 +31,7 @@ tasting 10 skittles, 2 of each 5 color, in a random order.
 }
 \seealso{
 Other experimental data: 
-\code{\link{lady_tasting_tea}},
-\code{\link{rye_grass}}
+\code{\link{lady_tasting_tea}}
 }
 \concept{experimental data}
 \keyword{datasets}
