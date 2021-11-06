@@ -164,7 +164,7 @@
 </ul>
 <p>The actors are purely illustrative. In practice, multiple people can take on each role, one person can take on multiple roles, and/or a person in the role may not specialise in that role (i.e. a statistician role can be acted out by a non-statistician).</p>
 <p>An experiment may begin with no data at all. The <strong>domain expert</strong> comes up with the experimental hypothesis or question and recruit a <strong>statistician</strong> to help design the experiment. Before a <strong>statistician</strong> can produce the design layout, they must converse with the <strong>domain expert</strong> to understand the experimental objective, resources, practical constraints and other possible nuances that might influence the outcome of the experiment. This <em>consultation phase</em> an important information collection.</p>
-<p>With <strong>edibble</strong>, the functions resemble a natural language that you may have in a consultation phase. You may take notes of context using <code><a href="reference/design-context.html">set_context()</a></code>; you write down what and how many units and treatments you have available using <code><a href="reference/set_units.html">set_units()</a></code> and <code><a href="reference/set_trts.html">set_trts()</a></code>; you enquire about if there are any restrictions in allocation of treatments and set them using <code><a href="reference/allocate_trts.html">allocate_trts()</a></code>; you may ask what responses are measured or what records will be kept and set them using <code><a href="reference/set_rcrds.html">set_rcrds()</a></code>; you can solicit expected values for these records and encode them using <code><a href="reference/expect_rcrds.html">expect_rcrds()</a></code>. The last point is important to minimise the error in the data entry process. If the <strong>technician</strong> enters an invalid entry, then an error is produced. This concept is illustrated below using a UML sequence diagram.</p>
+<p>With <strong>edibble</strong>, the functions resemble a natural language that you may have in a consultation phase. You may take notes of context using <code><a href="reference/design-context.html">set_context()</a></code>; you write down what and how many units and treatments you have available using <code><a href="reference/set_units.html">set_units()</a></code> and <code><a href="reference/set_trts.html">set_trts()</a></code>; you enquire about if there are any restrictions in allocation of treatments and set them using <code>allocate_trts()</code>; you may ask what responses are measured or what records will be kept and set them using <code><a href="reference/set_rcrds.html">set_rcrds()</a></code>; you can solicit expected values for these records and encode them using <code><a href="reference/expect_rcrds.html">expect_rcrds()</a></code>. The last point is important to minimise the error in the data entry process. If the <strong>technician</strong> enters an invalid entry, then an error is produced. This concept is illustrated below using a UML sequence diagram.</p>
 <p><img src="reference/figures/seq-diagram-eg.png"></p>
 </div>
 <div id="examples" class="section level2">
@@ -177,61 +177,61 @@
 
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">2020</span><span class="op">)</span>
 
-<span class="va">des</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/start_design.html">start_design</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Effective teaching"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<span class="va">des</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/start_design.html">start_design</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Effective teaching"</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
     <span class="fu"><a href="reference/set_units.html">set_units</a></span><span class="op">(</span>class <span class="op">=</span> <span class="fl">4</span>,
-              student <span class="op">=</span> <span class="fu"><a href="reference/nested_in.html">nested_in</a></span><span class="op">(</span><span class="va">class</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+              student <span class="op">=</span> <span class="fu"><a href="reference/nested_in.html">nested_in</a></span><span class="op">(</span><span class="va">class</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
     <span class="fu"><a href="reference/set_trts.html">set_trts</a></span><span class="op">(</span>style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"flipped"</span>, <span class="st">"traditional"</span><span class="op">)</span>,
-             exam <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"take-home"</span>, <span class="st">"open-book"</span>, <span class="st">"closed-book"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu"><a href="reference/allocate_trts.html">allocate_trts</a></span><span class="op">(</span><span class="va">style</span> <span class="op">~</span> <span class="va">class</span>,
-                  <span class="va">exam</span> <span class="op">~</span> <span class="va">student</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu"><a href="reference/randomise_trts.html">randomise_trts</a></span><span class="op">(</span><span class="op">)</span>
+             exam <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"take-home"</span>, <span class="st">"open-book"</span>, <span class="st">"closed-book"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="reference/allot_trts.html">allot_trts</a></span><span class="op">(</span><span class="va">style</span> <span class="op">~</span> <span class="va">class</span>,
+               <span class="va">exam</span> <span class="op">~</span> <span class="va">student</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="reference/assign_trts.html">assign_trts</a></span><span class="op">(</span><span class="st">"random"</span><span class="op">)</span>
 
 <span class="fu"><a href="reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="va">des</span><span class="op">)</span>
 <span class="co">#&gt; # An edibble: 120 x 4</span>
-<span class="co">#&gt;        class     student       style        exam</span>
-<span class="co">#&gt;    &lt;unit(4)&gt; &lt;unit(120)&gt;    &lt;trt(2)&gt;    &lt;trt(3)&gt;</span>
-<span class="co">#&gt;  1    class1   student1  traditional take-home  </span>
-<span class="co">#&gt;  2    class1   student2  traditional take-home  </span>
-<span class="co">#&gt;  3    class1   student3  traditional open-book  </span>
-<span class="co">#&gt;  4    class1   student4  traditional take-home  </span>
-<span class="co">#&gt;  5    class1   student5  traditional closed-book</span>
-<span class="co">#&gt;  6    class1   student6  traditional closed-book</span>
-<span class="co">#&gt;  7    class1   student7  traditional closed-book</span>
-<span class="co">#&gt;  8    class1   student8  traditional open-book  </span>
-<span class="co">#&gt;  9    class1   student9  traditional take-home  </span>
-<span class="co">#&gt; 10    class1   student10 traditional take-home  </span>
+<span class="co">#&gt;        class     student    style        exam</span>
+<span class="co">#&gt;    &lt;unit(4)&gt; &lt;unit(120)&gt; &lt;trt(2)&gt;    &lt;trt(3)&gt;</span>
+<span class="co">#&gt;  1    class1   student1   flipped open-book  </span>
+<span class="co">#&gt;  2    class1   student2   flipped open-book  </span>
+<span class="co">#&gt;  3    class1   student3   flipped take-home  </span>
+<span class="co">#&gt;  4    class1   student4   flipped closed-book</span>
+<span class="co">#&gt;  5    class1   student5   flipped take-home  </span>
+<span class="co">#&gt;  6    class1   student6   flipped take-home  </span>
+<span class="co">#&gt;  7    class1   student7   flipped take-home  </span>
+<span class="co">#&gt;  8    class1   student8   flipped take-home  </span>
+<span class="co">#&gt;  9    class1   student9   flipped closed-book</span>
+<span class="co">#&gt; 10    class1   student10  flipped closed-book</span>
 <span class="co">#&gt; # … with 110 more rows</span></code></pre></div>
 <p>Before constructing the experiment, you might want to think about what you are recording for which level of unit and what values these variables can be recorded as.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">out</span> <span class="op">&lt;-</span> <span class="va">des</span> <span class="op">%&gt;%</span> 
-    <span class="fu"><a href="reference/set_rcrds.html">set_rcrds</a></span><span class="op">(</span>student <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">exam_mark</span>,
-                          <span class="va">quiz1_mark</span>,
-                          <span class="va">quiz2_mark</span>,
-                          <span class="va">gender</span><span class="op">)</span>,
-              class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">room</span>,
-                        <span class="va">teacher</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<code class="sourceCode R"><span class="va">out</span> <span class="op">&lt;-</span> <span class="va">des</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span> 
+    <span class="fu">set_rcrds_of</span><span class="op">(</span>student <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"exam_mark"</span>,
+                             <span class="st">"quiz1_mark"</span>,
+                             <span class="st">"quiz2_mark"</span>,
+                             <span class="st">"gender"</span><span class="op">)</span>,
+              class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"room"</span>,
+                        <span class="st">"teacher"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
     <span class="fu"><a href="reference/expect_rcrds.html">expect_rcrds</a></span><span class="op">(</span>exam_mark <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_numeric</a></span><span class="op">(</span><span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
                 quiz1_mark <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_integer</a></span><span class="op">(</span><span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">15</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
                 quiz2_mark <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_integer</a></span><span class="op">(</span><span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
                     gender <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_factor</a></span><span class="op">(</span>levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="st">"male"</span>, <span class="st">"non-binary"</span>, <span class="st">"unknown"</span><span class="op">)</span><span class="op">)</span>,
                    teacher <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_character</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span><span class="st">"&lt;="</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span>,
-                      room <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_character</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span><span class="st">"&gt;="</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+                      room <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_character</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span><span class="st">"&gt;="</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span> 
   <span class="fu"><a href="reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">out</span>
 <span class="co">#&gt; # An edibble: 120 x 10</span>
-<span class="co">#&gt;        class     student       style        exam exam_mark quiz1_mark quiz2_mark</span>
-<span class="co">#&gt;    &lt;unit(4)&gt; &lt;unit(120)&gt;    &lt;trt(2)&gt;    &lt;trt(3)&gt;    &lt;rcrd&gt;     &lt;rcrd&gt;     &lt;rcrd&gt;</span>
-<span class="co">#&gt;  1    class1   student1  traditional take-home           ■          ■          ■</span>
-<span class="co">#&gt;  2    class1   student2  traditional take-home           ■          ■          ■</span>
-<span class="co">#&gt;  3    class1   student3  traditional open-book           ■          ■          ■</span>
-<span class="co">#&gt;  4    class1   student4  traditional take-home           ■          ■          ■</span>
-<span class="co">#&gt;  5    class1   student5  traditional closed-book         ■          ■          ■</span>
-<span class="co">#&gt;  6    class1   student6  traditional closed-book         ■          ■          ■</span>
-<span class="co">#&gt;  7    class1   student7  traditional closed-book         ■          ■          ■</span>
-<span class="co">#&gt;  8    class1   student8  traditional open-book           ■          ■          ■</span>
-<span class="co">#&gt;  9    class1   student9  traditional take-home           ■          ■          ■</span>
-<span class="co">#&gt; 10    class1   student10 traditional take-home           ■          ■          ■</span>
+<span class="co">#&gt;        class     student    style        exam exam_mark quiz1_mark quiz2_mark</span>
+<span class="co">#&gt;    &lt;unit(4)&gt; &lt;unit(120)&gt; &lt;trt(2)&gt;    &lt;trt(3)&gt;    &lt;rcrd&gt;     &lt;rcrd&gt;     &lt;rcrd&gt;</span>
+<span class="co">#&gt;  1    class1   student1   flipped open-book           ■          ■          ■</span>
+<span class="co">#&gt;  2    class1   student2   flipped open-book           ■          ■          ■</span>
+<span class="co">#&gt;  3    class1   student3   flipped take-home           ■          ■          ■</span>
+<span class="co">#&gt;  4    class1   student4   flipped closed-book         ■          ■          ■</span>
+<span class="co">#&gt;  5    class1   student5   flipped take-home           ■          ■          ■</span>
+<span class="co">#&gt;  6    class1   student6   flipped take-home           ■          ■          ■</span>
+<span class="co">#&gt;  7    class1   student7   flipped take-home           ■          ■          ■</span>
+<span class="co">#&gt;  8    class1   student8   flipped take-home           ■          ■          ■</span>
+<span class="co">#&gt;  9    class1   student9   flipped closed-book         ■          ■          ■</span>
+<span class="co">#&gt; 10    class1   student10  flipped closed-book         ■          ■          ■</span>
 <span class="co">#&gt; # … with 110 more rows, and 3 more variables: gender &lt;rcrd&gt;, room &lt;rcrd&gt;,</span>
 <span class="co">#&gt; #   teacher &lt;rcrd&gt;</span></code></pre></div>
 <p>When you export the above edibble design using the <code>export_design</code> function, the variables you are recording are constraint to the values you expect, e.g. for factors, the cells have a drop-down menu to select from possible values.</p>
@@ -242,7 +242,7 @@
 <p><img src="reference/figures/README-excel_sheet_output.png" width="400px"></p>
 <p>There is also support for more complex nesting structures however randomisation is yet to be supported for this. You can always make the structure using edibble and take the resulting data frame to use in other experimental design software. It’s also possible to bring existing data frame into edibble if you want to take advantage of the exporting feature in edibble.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/start_design.html">start_design</a></span><span class="op">(</span><span class="st">"nesting structure"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="fu"><a href="reference/start_design.html">start_design</a></span><span class="op">(</span><span class="st">"nesting structure"</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span> 
   <span class="co"># there are 3 sites labelled A, B, C</span>
   <span class="fu"><a href="reference/set_units.html">set_units</a></span><span class="op">(</span>site <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span>,
             <span class="co"># each site has 2 blocks except B with 3 sites</span>
@@ -256,11 +256,11 @@
             plot <span class="op">=</span> <span class="fu"><a href="reference/nested_in.html">nested_in</a></span><span class="op">(</span><span class="va">block</span>, 
                               <span class="fl">1</span> <span class="op">~</span> <span class="fl">30</span>,
                         <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span> <span class="op">~</span> <span class="fl">40</span>,
-                              <span class="va">.</span> <span class="op">~</span> <span class="fl">20</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+                              <span class="va">.</span> <span class="op">~</span> <span class="fl">20</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span> 
   <span class="fu"><a href="reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # An edibble: 190 x 3</span>
+<span class="co">#&gt; # An edibble: 170 x 3</span>
 <span class="co">#&gt;         site     block        plot</span>
-<span class="co">#&gt;    &lt;unit(3)&gt; &lt;unit(7)&gt; &lt;unit(190)&gt;</span>
+<span class="co">#&gt;    &lt;unit(3)&gt; &lt;unit(7)&gt; &lt;unit(170)&gt;</span>
 <span class="co">#&gt;  1         A    block1      plot1 </span>
 <span class="co">#&gt;  2         A    block1      plot2 </span>
 <span class="co">#&gt;  3         A    block1      plot3 </span>
@@ -271,7 +271,7 @@
 <span class="co">#&gt;  8         A    block1      plot8 </span>
 <span class="co">#&gt;  9         A    block1      plot9 </span>
 <span class="co">#&gt; 10         A    block1      plot10</span>
-<span class="co">#&gt; # … with 180 more rows</span></code></pre></div>
+<span class="co">#&gt; # … with 160 more rows</span></code></pre></div>
 </div>
 <div id="limitations" class="section level2">
 <h2 class="hasAnchor">
@@ -279,7 +279,6 @@
 <p>Currently, edibble:</p>
 <ul>
 <li>expects you to know the number of units available from the start. Unknown numbers will be supported in future versions.</li>
-<li>does not support designs where the size of the block is less than the total number of treatments (e.g. incomplete block designs or fractional factorial designs). This is to come.</li>
 <li>does not necessarily create the most efficient design. E.g. balanced incomplete block designs have a special property and an adhoc solution may be required to make sure you can generate a design with this special property. This is just a nature of generalised tools and edibble doesn’t aim to be the best for everything, but hopes others developers can build on the edibble framework to create their own specialist design.</li>
 <li>in theory, edibble should support experiments that are not comparative experiments but this is not tested.</li>
 <li>does not do enough testing so design should be diagnosed after construction (which should be done regardless of how much testing edibble implements).</li>
@@ -317,7 +316,7 @@
 <a href="#tidyverse-familiarity" class="anchor"></a>Tidyverse familiarity</h2>
 <p>The implementation in edibble adopt a similar nomenclature and design philosophy as tidyverse (and where it does not, it’s likely my shortcoming) so that tidyverse users can leverage their familiarity of the tidyverse language when using edibble. Specifically, edibble follows the philosophy:</p>
 <ul>
-<li>main functions do one thing and have a consistent form of <code>&lt;verb&gt;_&lt;noun&gt;</code> (e.g. <code>set_units</code> and <code>record_vars</code>) where the nouns are generally plural. Exceptions are when the subject matter is clearly singular (e.g. <code>start_design</code> and <code>set_context</code>);</li>
+<li>main functions do one thing and have a consistent form of <code>&lt;verb&gt;_&lt;noun&gt;</code> (e.g. <code>set_units</code> and <code>set_rcrds</code>) where the nouns are generally plural. Exceptions are when the subject matter is clearly singular (e.g. <code>start_design</code> and <code>set_context</code>);</li>
 <li>pipable functions;</li>
 <li>all dots arguments are <a href="https://rlang.r-lib.org/reference/dyn-dots.html">dynamic dots</a>;</li>
 <li>duplicate names repaired with same option as <code>tibble</code> for additions to edibble graph;</li>

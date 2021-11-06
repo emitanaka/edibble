@@ -55,7 +55,7 @@
   
 
 <meta property="og:title" content="Start the edibble design — start_design" />
-<meta property="og:description" content="This function doesn't really do much besides create a new EdibbleDesign." />
+<meta property="og:description" content="This function doesn't really do much besides create a new edibble design object." />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@statsgen" />
@@ -168,12 +168,12 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Start the edibble design</h1>
-    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/edibble.R'><code>R/edibble.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/design.R'><code>R/design.R</code></a></small>
     <div class="hidden name"><code>start_design.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function doesn't really do much besides create a new <code>EdibbleDesign</code>.</p>
+    <p>This function doesn't really do much besides create a new edibble design object.</p>
     </div>
 
     <pre class="usage"><span class='fu'>start_design</span><span class='op'>(</span>name <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
@@ -189,25 +189,25 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An <code>EdibbleDesign</code> object which is a special type of <code>R6</code> class.</p>
+    <p>An empty <code>edbl_design</code> object.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Add variables to this design with <code><a href='set_units.html'>set_units()</a></code>, <code><a href='set_trts.html'>set_trts()</a></code>, and
-<code>record_vars()</code>.</p>
+<code><a href='set_rcrds.html'>set_rcrds()</a></code>.</p>
 <p>Other user-facing functions: 
-<code><a href='allocate_trts.html'>allocate_trts</a>()</code>,
+<code><a href='allot_trts.html'>allot_trts</a>()</code>,
 <code><a href='design-context.html'>design-context</a></code>,
 <code><a href='expect_rcrds.html'>expect_rcrds</a>()</code>,
 <code><a href='export_design.html'>export_design</a>()</code>,
-<code><a href='randomise_trts.html'>randomise_trts</a>()</code>,
 <code><a href='serve_table.html'>serve_table</a>()</code>,
 <code><a href='set_rcrds.html'>set_rcrds</a>()</code>,
 <code><a href='set_trts.html'>set_trts</a>()</code>,
 <code><a href='set_units.html'>set_units</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>start_design</span><span class='op'>(</span><span class='st'>"My design"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #00BBBB;font-style: italic;'>My design</span><span></div></span></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'>start_design</span><span class='op'>(</span><span class='st'>"My design"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB; font-style: italic;'>My design</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

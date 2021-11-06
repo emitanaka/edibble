@@ -207,39 +207,25 @@ all treatment variables.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other user-facing functions: 
-<code><a href='allocate_trts.html'>allocate_trts</a>()</code>,
+<code><a href='allot_trts.html'>allot_trts</a>()</code>,
 <code><a href='design-context.html'>design-context</a></code>,
 <code><a href='expect_rcrds.html'>expect_rcrds</a>()</code>,
 <code><a href='export_design.html'>export_design</a>()</code>,
-<code><a href='randomise_trts.html'>randomise_trts</a>()</code>,
 <code><a href='serve_table.html'>serve_table</a>()</code>,
 <code><a href='set_rcrds.html'>set_rcrds</a>()</code>,
 <code><a href='set_units.html'>set_units</a>()</code>,
 <code><a href='start_design.html'>start_design</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='fu'><a href='start_design.html'>start_design</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>set_trts</span><span class='op'>(</span>pesticide <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span><span class='op'>)</span>,
-           dosage <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>10</span>, <span class='fl'>20</span>, <span class='fl'>30</span>, <span class='fl'>40</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #00BBBB;font-style: italic;'>An edibble design</span><span>
-#&gt; ├─</span><span style='color: #0000BB;'>pesticide</span><span> </span><span style='color: #555555;'>(3 levels)</span><span>
-#&gt; └─</span><span style='color: #0000BB;'>dosage</span><span> </span><span style='color: #555555;'>(5 levels)</span><span></div><div class='input'>
-<span class='co'># you can set treatments to existing edibble</span>
-<span class='va'>lady_tasting_tea</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='edibble.html'>edibble</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>set_trts</span><span class='op'>(</span><span class='va'>first</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># An edibble: 8 x 4</span><span>
-#&gt;   cup      first guess correct
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;trt(2)&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>  
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 1         milk milk  TRUE   
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 2         milk milk  TRUE   
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> 3         milk milk  TRUE   
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> 4         tea  tea   TRUE   
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> 5         tea  tea   TRUE   
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> 6         milk milk  TRUE   
-#&gt; </span><span style='color: #BCBCBC;'>7</span><span> 7         tea  tea   TRUE   
-#&gt; </span><span style='color: #BCBCBC;'>8</span><span> 8         tea  tea   TRUE   </div></span></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='start_design.html'>start_design</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>set_trts</span><span class='op'>(</span>pesticide <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span><span class='op'>)</span>,</span>
+<span class='r-in'>           dosage <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>10</span>, <span class='fl'>20</span>, <span class='fl'>30</span>, <span class='fl'>40</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB; font-style: italic;'>An edibble design</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─<span style='color: #0000BB;'>pesticide</span> <span style='color: #555555;'>(3 levels)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> └─<span style='color: #0000BB;'>dosage</span> <span style='color: #555555;'>(5 levels)</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -189,7 +189,7 @@ specifically, this means that new nodes are added to the <code>edbl_graph</code>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>.edibble</th>
-      <td><p>An edibble design (<code>EdibbleDesign</code>), an edibble data frame (<code>edbl_table</code>) or an
+      <td><p>An edibble design (<code>edbl_design</code>), an edibble data frame (<code>edbl_table</code>) or an
 object that contains the edibble data frame in the attribute
 <code>design</code>.</p></td>
     </tr>
@@ -222,88 +222,89 @@ you need to know the number of levels prior to setting the units.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other user-facing functions: 
-<code><a href='allocate_trts.html'>allocate_trts</a>()</code>,
+<code><a href='allot_trts.html'>allot_trts</a>()</code>,
 <code><a href='design-context.html'>design-context</a></code>,
 <code><a href='expect_rcrds.html'>expect_rcrds</a>()</code>,
 <code><a href='export_design.html'>export_design</a>()</code>,
-<code><a href='randomise_trts.html'>randomise_trts</a>()</code>,
 <code><a href='serve_table.html'>serve_table</a>()</code>,
 <code><a href='set_rcrds.html'>set_rcrds</a>()</code>,
 <code><a href='set_trts.html'>set_trts</a>()</code>,
 <code><a href='start_design.html'>start_design</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># 30 rats</span>
-<span class='fu'><a href='start_design.html'>start_design</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>set_units</span><span class='op'>(</span>rat <span class='op'>=</span> <span class='fl'>30</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='serve_table.html'>serve_table</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># An edibble: 30 x 1</span><span>
-#&gt;           rat
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;unit(30)&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span>      rat1 
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span>      rat2 
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span>      rat3 
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span>      rat4 
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span>      rat5 
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span>      rat6 
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span>      rat7 
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span>      rat8 
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span>      rat9 
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span>      rat10
-#&gt; </span><span style='color: #949494;'># … with 20 more rows</span><span></div><div class='input'>
-<span class='co'># 4 girls named "Anna", "Betty", "Carol", "Diana"</span>
-<span class='fu'><a href='start_design.html'>start_design</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>set_units</span><span class='op'>(</span>girl <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Anna"</span>, <span class='st'>"Betty"</span>, <span class='st'>"Carol"</span>, <span class='st'>"Diana"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='serve_table.html'>serve_table</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># An edibble: 4 x 1</span><span>
-#&gt;        girl
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;unit(4)&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>     Anna 
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span>     Betty
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span>     Carol
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span>     Diana</div><div class='input'>
-<span class='co'># 3 companies, with 10 boxes each</span>
-<span class='fu'><a href='start_design.html'>start_design</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>set_units</span><span class='op'>(</span>company <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span><span class='op'>)</span>,
-                box <span class='op'>=</span> <span class='fu'><a href='nested_in.html'>nested_in</a></span><span class='op'>(</span><span class='va'>company</span>, <span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #00BBBB;font-style: italic;'>An edibble design</span><span>
-#&gt; └─</span><span style='color: #BBBB00;background-color: #000000;'>company</span><span> </span><span style='color: #555555;'>(3 levels)</span><span>
-#&gt;   └─</span><span style='color: #BBBB00;background-color: #000000;'>box</span><span> </span><span style='color: #555555;'>(30 levels)</span><span></div><div class='input'>
-<span class='co'># 2 classes, one with 10 students, the other with 20 students</span>
-<span class='fu'><a href='start_design.html'>start_design</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>set_units</span><span class='op'>(</span>class <span class='op'>=</span> <span class='fl'>2</span>,
-            student <span class='op'>=</span> <span class='fu'><a href='nested_in.html'>nested_in</a></span><span class='op'>(</span><span class='va'>class</span>,
-                                <span class='fl'>1</span> <span class='op'>~</span> <span class='fl'>10</span>,
-                                <span class='fl'>2</span> <span class='op'>~</span> <span class='fl'>20</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #00BBBB;font-style: italic;'>An edibble design</span><span>
-#&gt; └─</span><span style='color: #BBBB00;background-color: #000000;'>class</span><span> </span><span style='color: #555555;'>(2 levels)</span><span>
-#&gt;   └─</span><span style='color: #BBBB00;background-color: #000000;'>student</span><span> </span><span style='color: #555555;'>(30 levels)</span><span></div><div class='input'>
-<span class='co'># 4 countries with 10 people from Australia &amp; New Zealand and 20 from the rest</span>
-<span class='fu'><a href='start_design.html'>start_design</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>set_units</span><span class='op'>(</span>country <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"AU"</span>, <span class='st'>"NZ"</span>, <span class='st'>"USA"</span>, <span class='st'>"JPN"</span><span class='op'>)</span>,
-            person <span class='op'>=</span> <span class='fu'><a href='nested_in.html'>nested_in</a></span><span class='op'>(</span><span class='va'>country</span>,
-                               <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"AU"</span>, <span class='st'>"NZ"</span><span class='op'>)</span> <span class='op'>~</span> <span class='fl'>10</span>,
-                                           <span class='va'>.</span> <span class='op'>~</span> <span class='fl'>20</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='serve_table.html'>serve_table</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># An edibble: 60 x 2</span><span>
-#&gt;      country     person
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;unit(4)&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;unit(60)&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span>        AU   person1 
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span>        AU   person2 
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span>        AU   person3 
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span>        AU   person4 
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span>        AU   person5 
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span>        AU   person6 
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span>        AU   person7 
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span>        AU   person8 
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span>        AU   person9 
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span>        AU   person10
-#&gt; </span><span style='color: #949494;'># … with 50 more rows</span><span></div><div class='input'>
-<span class='co'># if using existing data then it specifies which variables are units</span>
-<span class='va'>lady_tasting_tea</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>set_units</span><span class='op'>(</span><span class='va'>cup</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error: .edibble is not an edibble.</span></div><div class='input'>
-</div></span></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># 30 rats</span></span>
+<span class='r-in'><span class='fu'><a href='start_design.html'>start_design</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>set_units</span><span class='op'>(</span>rat <span class='op'>=</span> <span class='fl'>30</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='serve_table.html'>serve_table</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># An edibble: 30 x 1</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           rat</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;unit(30)&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span>      rat1 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span>      rat2 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span>      rat3 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span>      rat4 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span>      rat5 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span>      rat6 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span>      rat7 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span>      rat8 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span>      rat9 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span>      rat10</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 20 more rows</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># 4 girls named "Anna", "Betty", "Carol", "Diana"</span></span>
+<span class='r-in'><span class='fu'><a href='start_design.html'>start_design</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>set_units</span><span class='op'>(</span>girl <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Anna"</span>, <span class='st'>"Betty"</span>, <span class='st'>"Carol"</span>, <span class='st'>"Diana"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='serve_table.html'>serve_table</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># An edibble: 4 x 1</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        girl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;unit(4)&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span>     Anna </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span>     Betty</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span>     Carol</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span>     Diana</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># 3 companies, with 10 boxes each</span></span>
+<span class='r-in'><span class='fu'><a href='start_design.html'>start_design</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>set_units</span><span class='op'>(</span>company <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span><span class='op'>)</span>,</span>
+<span class='r-in'>                box <span class='op'>=</span> <span class='fu'><a href='nested_in.html'>nested_in</a></span><span class='op'>(</span><span class='va'>company</span>, <span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB; font-style: italic;'>An edibble design</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> └─<span style='color: #BBBB00; background-color: #000000;'>company</span> <span style='color: #555555;'>(3 levels)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   └─<span style='color: #BBBB00; background-color: #000000;'>box</span> <span style='color: #555555;'>(30 levels)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># 2 classes, one with 10 students, the other with 20 students</span></span>
+<span class='r-in'><span class='fu'><a href='start_design.html'>start_design</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>set_units</span><span class='op'>(</span>class <span class='op'>=</span> <span class='fl'>2</span>,</span>
+<span class='r-in'>            student <span class='op'>=</span> <span class='fu'><a href='nested_in.html'>nested_in</a></span><span class='op'>(</span><span class='va'>class</span>,</span>
+<span class='r-in'>                                <span class='fl'>1</span> <span class='op'>~</span> <span class='fl'>10</span>,</span>
+<span class='r-in'>                                <span class='fl'>2</span> <span class='op'>~</span> <span class='fl'>20</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB; font-style: italic;'>An edibble design</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> └─<span style='color: #BBBB00; background-color: #000000;'>class</span> <span style='color: #555555;'>(2 levels)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   └─<span style='color: #BBBB00; background-color: #000000;'>student</span> <span style='color: #555555;'>(30 levels)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># 4 countries with 10 people from Australia &amp; New Zealand and 20 from the rest</span></span>
+<span class='r-in'><span class='fu'><a href='start_design.html'>start_design</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>set_units</span><span class='op'>(</span>country <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"AU"</span>, <span class='st'>"NZ"</span>, <span class='st'>"USA"</span>, <span class='st'>"JPN"</span><span class='op'>)</span>,</span>
+<span class='r-in'>            person <span class='op'>=</span> <span class='fu'><a href='nested_in.html'>nested_in</a></span><span class='op'>(</span><span class='va'>country</span>,</span>
+<span class='r-in'>                               <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"AU"</span>, <span class='st'>"NZ"</span><span class='op'>)</span> <span class='op'>~</span> <span class='fl'>10</span>,</span>
+<span class='r-in'>                                           <span class='va'>.</span> <span class='op'>~</span> <span class='fl'>20</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='serve_table.html'>serve_table</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># An edibble: 70 x 2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      country     person</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;unit(4)&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;unit(70)&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span>        AU   person1 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span>        AU   person2 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span>        AU   person3 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span>        AU   person4 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span>        AU   person5 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span>        AU   person6 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span>        AU   person7 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span>        AU   person8 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span>        AU   person9 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span>        AU   person10</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 60 more rows</span></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

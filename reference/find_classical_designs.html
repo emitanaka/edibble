@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Test and get edibble objects — design-helpers • edibble</title>
+<title>Find the short names of the classical named designs — find_classical_designs • edibble</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -54,26 +54,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Test and get edibble objects — design-helpers" />
-<meta property="og:description" content="The is functions tests if an object (or an object in its attribute)
-inherits particular class and returns TRUE if it does, otherwise FALSE.
-is_edibble_design checks if it inherits edbl_design.
-is_edibble_graph checks if it inherits edbl_graph.
-is_edibble_table checks if it inherits edbl_table
-is_edibble checks if the object inherits edbl.
-The search is quite simple, it checks if
-the object is edbl_design, failing that it looks to see if the
-attribute &quot;design&quot; of the object is edbl_design.
-is_named_design check if it inherits NamedDesign.
-
-
-The get functions extracts the requested edibble component (table, graph,
-or design) from the object if possible.
-edbl_design tries to get edbl_design.
-edbl_table tries to get edbl_table with no design attribute.
-edbl_graph tries to get edbl_graph.
-
-" />
+<meta property="og:title" content="Find the short names of the classical named designs — find_classical_designs" />
+<meta property="og:description" content="Find the short names of the classical named designs" />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@statsgen" />
@@ -185,53 +167,24 @@ edbl_graph tries to get edbl_graph.
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Test and get edibble objects</h1>
-    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/edibble.R'><code>R/edibble.R</code></a></small>
-    <div class="hidden name"><code>design-helpers.Rd</code></div>
+    <h1>Find the short names of the classical named designs</h1>
+    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/classics.R'><code>R/classics.R</code></a></small>
+    <div class="hidden name"><code>find_classical_designs.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The <code>is</code> functions tests if an object (or an object in its attribute)
-inherits particular class and returns <code>TRUE</code> if it does, otherwise <code>FALSE</code>.</p><ul>
-<li><p><code>is_edibble_design</code> checks if it inherits <code>edbl_design</code>.</p></li>
-<li><p><code>is_edibble_graph</code> checks if it inherits <code>edbl_graph</code>.</p></li>
-<li><p><code>is_edibble_table</code> checks if it inherits <code>edbl_table</code></p></li>
-<li><p><code>is_edibble</code> checks if the object inherits <code>edbl</code>.
-The search is quite simple, it checks if
-the object is <code>edbl_design</code>, failing that it looks to see if the
-attribute "design" of the object is <code>edbl_design</code>.</p></li>
-<li><p><code>is_named_design</code> check if it inherits <code>NamedDesign</code>.</p></li>
-</ul>
-
-<p>The <code>get</code> functions extracts the requested edibble component (table, graph,
-or design) from the object if possible.</p><ul>
-<li><p><code>edbl_design</code> tries to get <code>edbl_design</code>.</p></li>
-<li><p><code>edbl_table</code> tries to get <code>edbl_table</code> with no design attribute.</p></li>
-<li><p><code>edbl_graph</code> tries to get <code>edbl_graph</code>.</p></li>
-</ul>
-
+    <p>Find the short names of the classical named designs</p>
     </div>
 
-    <pre class="usage"><span class='fu'>is_edibble_design</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
-<span class='fu'>is_named_design</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
-<span class='fu'>is_edibble_table</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
-<span class='fu'>is_edibble_graph</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
-<span class='fu'>is_edibble</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
-<span class='fu'>edbl_design</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
-<span class='fu'>edbl_table</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>find_classical_designs</span><span class='op'>(</span>pkgs <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>An object.</p></td>
+      <th>pkgs</th>
+      <td><p>A character vector containing the package names to search classical
+named designs from. By default it will search edibble and other packages loaded.</p></td>
     </tr>
     </table>
 

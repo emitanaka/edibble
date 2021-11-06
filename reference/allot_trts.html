@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Test and get edibble objects — design-helpers • edibble</title>
+<title>Define the possible allocation of treatments to units — allot_trts • edibble</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -54,26 +54,10 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Test and get edibble objects — design-helpers" />
-<meta property="og:description" content="The is functions tests if an object (or an object in its attribute)
-inherits particular class and returns TRUE if it does, otherwise FALSE.
-is_edibble_design checks if it inherits edbl_design.
-is_edibble_graph checks if it inherits edbl_graph.
-is_edibble_table checks if it inherits edbl_table
-is_edibble checks if the object inherits edbl.
-The search is quite simple, it checks if
-the object is edbl_design, failing that it looks to see if the
-attribute &quot;design&quot; of the object is edbl_design.
-is_named_design check if it inherits NamedDesign.
-
-
-The get functions extracts the requested edibble component (table, graph,
-or design) from the object if possible.
-edbl_design tries to get edbl_design.
-edbl_table tries to get edbl_table with no design attribute.
-edbl_graph tries to get edbl_graph.
-
-" />
+<meta property="og:title" content="Define the possible allocation of treatments to units — allot_trts" />
+<meta property="og:description" content="This function adds the edges between variable nodes to
+specify the mapping of units to treatment. This function
+does not actually assign specific treatment levels onto actual units." />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@statsgen" />
@@ -185,57 +169,65 @@ edbl_graph tries to get edbl_graph.
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Test and get edibble objects</h1>
-    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/edibble.R'><code>R/edibble.R</code></a></small>
-    <div class="hidden name"><code>design-helpers.Rd</code></div>
+    <h1>Define the possible allocation of treatments to units</h1>
+    <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/trts.R'><code>R/trts.R</code></a></small>
+    <div class="hidden name"><code>allot_trts.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The <code>is</code> functions tests if an object (or an object in its attribute)
-inherits particular class and returns <code>TRUE</code> if it does, otherwise <code>FALSE</code>.</p><ul>
-<li><p><code>is_edibble_design</code> checks if it inherits <code>edbl_design</code>.</p></li>
-<li><p><code>is_edibble_graph</code> checks if it inherits <code>edbl_graph</code>.</p></li>
-<li><p><code>is_edibble_table</code> checks if it inherits <code>edbl_table</code></p></li>
-<li><p><code>is_edibble</code> checks if the object inherits <code>edbl</code>.
-The search is quite simple, it checks if
-the object is <code>edbl_design</code>, failing that it looks to see if the
-attribute "design" of the object is <code>edbl_design</code>.</p></li>
-<li><p><code>is_named_design</code> check if it inherits <code>NamedDesign</code>.</p></li>
-</ul>
-
-<p>The <code>get</code> functions extracts the requested edibble component (table, graph,
-or design) from the object if possible.</p><ul>
-<li><p><code>edbl_design</code> tries to get <code>edbl_design</code>.</p></li>
-<li><p><code>edbl_table</code> tries to get <code>edbl_table</code> with no design attribute.</p></li>
-<li><p><code>edbl_graph</code> tries to get <code>edbl_graph</code>.</p></li>
-</ul>
-
+    <p>This function adds the edges between variable nodes to
+specify the mapping of units to treatment. This function
+does not actually assign specific treatment levels onto actual units.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>is_edibble_design</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
-<span class='fu'>is_named_design</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
-<span class='fu'>is_edibble_table</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
-<span class='fu'>is_edibble_graph</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
-<span class='fu'>is_edibble</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
-<span class='fu'>edbl_design</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
-<span class='fu'>edbl_table</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>allot_trts</span><span class='op'>(</span><span class='va'>design</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>An object.</p></td>
+      <th>...</th>
+      <td><p>One-sided or two-sided formula. If the input is a one-sided formula
+then the whole treatment is applied to the specified unit.</p></td>
+    </tr>
+    <tr>
+      <th>.data</th>
+      <td><p>An <code>edbl_graph</code> object.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
+    <div class='dont-index'><p>Other user-facing functions: 
+<code><a href='design-context.html'>design-context</a></code>,
+<code><a href='expect_rcrds.html'>expect_rcrds</a>()</code>,
+<code><a href='export_design.html'>export_design</a>()</code>,
+<code><a href='serve_table.html'>serve_table</a>()</code>,
+<code><a href='set_rcrds.html'>set_rcrds</a>()</code>,
+<code><a href='set_trts.html'>set_trts</a>()</code>,
+<code><a href='set_units.html'>set_units</a>()</code>,
+<code><a href='start_design.html'>start_design</a>()</code></p></div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='start_design.html'>start_design</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='set_units.html'>set_units</a></span><span class='op'>(</span>block <span class='op'>=</span> <span class='fl'>10</span>,</span>
+<span class='r-in'>            plot <span class='op'>=</span> <span class='fu'><a href='nested_in.html'>nested_in</a></span><span class='op'>(</span><span class='va'>block</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='set_trts.html'>set_trts</a></span><span class='op'>(</span>treat <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span><span class='op'>)</span>,</span>
+<span class='r-in'>           pest <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"b"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>allot_trts</span><span class='op'>(</span><span class='va'>treat</span> <span class='op'>~</span> <span class='va'>plot</span>,</span>
+<span class='r-in'>                <span class='va'>pest</span> <span class='op'>~</span> <span class='va'>block</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB; font-style: italic;'>An edibble design</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─<span style='color: #BBBB00; background-color: #000000;'>block</span> <span style='color: #555555;'>(10 levels)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> │ └─<span style='color: #BBBB00; background-color: #000000;'>plot</span> <span style='color: #555555;'>(30 levels)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─<span style='color: #0000BB;'>treat</span> <span style='color: #555555;'>(3 levels)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> └─<span style='color: #0000BB;'>pest</span> <span style='color: #555555;'>(2 levels)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB; font-style: italic;'>Allotment:</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> • treat ~ plot</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> • pest ~ block</span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

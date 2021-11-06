@@ -113,8 +113,7 @@
 
       
 
-      </header><script src="edibble_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="edibble_files/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="edibble_files/asciinema_player-2.6.1/asciinema-player.css" rel="stylesheet">
-<script src="edibble_files/asciinema_player-2.6.1/asciinema-player.js"></script><script src="edibble_files/jquery-3.2.1/jquery-3.2.1.min.js"></script><script src="edibble_files/asciinema_player-binding-1.0.0.9000/asciinema_player.js"></script><div class="row">
+      </header><script src="edibble_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Getting started with <code>edibble</code>
@@ -143,14 +142,14 @@
 <p>In edibble, we can code the above split-plot design as below. Each function below creates an intermediate construct of the experimental design.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">2020</span><span class="op">)</span> 
-<span class="va">spdes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/start_design.html">start_design</a></span><span class="op">(</span><span class="st">"Split-plot Design"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<span class="va">spdes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/start_design.html">start_design</a></span><span class="op">(</span><span class="st">"Split-plot Design"</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/set_units.html">set_units</a></span><span class="op">(</span>wholeplot <span class="op">=</span> <span class="fl">4</span>,
-            subplot <span class="op">=</span> <span class="fu"><a href="../reference/nested_in.html">nested_in</a></span><span class="op">(</span><span class="va">wholeplot</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+            subplot <span class="op">=</span> <span class="fu"><a href="../reference/nested_in.html">nested_in</a></span><span class="op">(</span><span class="va">wholeplot</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/set_trts.html">set_trts</a></span><span class="op">(</span>fertilizer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span>,
-           variety    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"V1"</span>, <span class="st">"V2"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/allocate_trts.html">allocate_trts</a></span><span class="op">(</span><span class="va">fertilizer</span> <span class="op">~</span> <span class="va">wholeplot</span>, 
-                   <span class="va">variety</span> <span class="op">~</span> <span class="va">subplot</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/randomise_trts.html">randomise_trts</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+           variety    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"V1"</span>, <span class="st">"V2"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/allot_trts.html">allot_trts</a></span><span class="op">(</span><span class="va">fertilizer</span> <span class="op">~</span> <span class="va">wholeplot</span>, 
+              <span class="va">variety</span> <span class="op">~</span> <span class="va">subplot</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/assign_trts.html">assign_trts</a></span><span class="op">(</span><span class="st">"random"</span><span class="op">)</span></code></pre></div>
 <p>There are a number of ways to visualise this intermediate construct. Just printing it gives a tree structure print out.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">spdes</span>
@@ -158,49 +157,43 @@
 <span class="co">#&gt; ├─wholeplot (4 levels)</span>
 <span class="co">#&gt; │ └─subplot (16 levels)</span>
 <span class="co">#&gt; ├─fertilizer (2 levels)</span>
-<span class="co">#&gt; └─variety (2 levels)</span></code></pre></div>
-<p>You can also plot it to understand the relationship between the variables.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">spdes</span><span class="op">)</span></code></pre></div>
-<p><img src="edibble_files/figure-html/unnamed-chunk-4-1.png" width="480"></p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">spdes</span>, view <span class="op">=</span> <span class="st">"low"</span><span class="op">)</span></code></pre></div>
-<p><img src="edibble_files/figure-html/unnamed-chunk-5-1.png" width="480"></p>
-<p>The low-level view of the edibble graph is often a bit cluttered so you may like to use the interactive version as below instead.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/iplot.html">iplot</a></span><span class="op">(</span><span class="va">spdes</span><span class="op">)</span></code></pre></div>
+<span class="co">#&gt; └─variety (2 levels)</span>
+<span class="co">#&gt; Allotment:</span>
+<span class="co">#&gt; • fertilizer ~ wholeplot</span>
+<span class="co">#&gt; • variety ~ subplot</span>
+<span class="co">#&gt; Assignment: random</span></code></pre></div>
 <p>If the design can be reconciled, you can also convert into a table. You typically use the step below when you are ready to serve your design.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="va">spdes</span><span class="op">)</span>
 <span class="co">#&gt; # An edibble: 16 x 4</span>
 <span class="co">#&gt;     wholeplot    subplot fertilizer  variety</span>
 <span class="co">#&gt;     &lt;unit(4)&gt; &lt;unit(16)&gt;   &lt;trt(2)&gt; &lt;trt(2)&gt;</span>
-<span class="co">#&gt;  1 wholeplot1  subplot1           A       V2</span>
+<span class="co">#&gt;  1 wholeplot1  subplot1           A       V1</span>
 <span class="co">#&gt;  2 wholeplot1  subplot2           A       V2</span>
-<span class="co">#&gt;  3 wholeplot1  subplot3           A       V1</span>
+<span class="co">#&gt;  3 wholeplot1  subplot3           A       V2</span>
 <span class="co">#&gt;  4 wholeplot1  subplot4           A       V1</span>
-<span class="co">#&gt;  5 wholeplot2  subplot5           B       V2</span>
-<span class="co">#&gt;  6 wholeplot2  subplot6           B       V1</span>
-<span class="co">#&gt;  7 wholeplot2  subplot7           B       V1</span>
-<span class="co">#&gt;  8 wholeplot2  subplot8           B       V2</span>
-<span class="co">#&gt;  9 wholeplot3  subplot9           A       V1</span>
-<span class="co">#&gt; 10 wholeplot3  subplot10          A       V2</span>
-<span class="co">#&gt; 11 wholeplot3  subplot11          A       V2</span>
-<span class="co">#&gt; 12 wholeplot3  subplot12          A       V1</span>
-<span class="co">#&gt; 13 wholeplot4  subplot13          B       V1</span>
-<span class="co">#&gt; 14 wholeplot4  subplot14          B       V2</span>
-<span class="co">#&gt; 15 wholeplot4  subplot15          B       V1</span>
-<span class="co">#&gt; 16 wholeplot4  subplot16          B       V2</span></code></pre></div>
+<span class="co">#&gt;  5 wholeplot2  subplot5           A       V1</span>
+<span class="co">#&gt;  6 wholeplot2  subplot6           A       V2</span>
+<span class="co">#&gt;  7 wholeplot2  subplot7           A       V1</span>
+<span class="co">#&gt;  8 wholeplot2  subplot8           A       V2</span>
+<span class="co">#&gt;  9 wholeplot3  subplot9           B       V1</span>
+<span class="co">#&gt; 10 wholeplot3  subplot10          B       V2</span>
+<span class="co">#&gt; 11 wholeplot3  subplot11          B       V1</span>
+<span class="co">#&gt; 12 wholeplot3  subplot12          B       V2</span>
+<span class="co">#&gt; 13 wholeplot4  subplot13          B       V2</span>
+<span class="co">#&gt; 14 wholeplot4  subplot14          B       V1</span>
+<span class="co">#&gt; 15 wholeplot4  subplot15          B       V2</span>
+<span class="co">#&gt; 16 wholeplot4  subplot16          B       V1</span></code></pre></div>
 <p>You can see it outputs a data frame (or tibble) called edibble. The name origin of <code>edibble</code> is a play on <a href="https://tibble.tidyverse.org/"><code>tibble</code></a> and can be thought of as tibble output for experimental design.</p>
 <p>Once you get the rough idea of how edibble specifies design, you should be roughly be able to visualise what the experimental design layout is just from looking at the code alone. Take another example below. Can you see what the design is?</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rcbd</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/start_design.html">start_design</a></span><span class="op">(</span><span class="st">"RCBD"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rcbd</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/start_design.html">start_design</a></span><span class="op">(</span><span class="st">"RCBD"</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/set_units.html">set_units</a></span><span class="op">(</span>block <span class="op">=</span> <span class="fl">4</span>,
-            plot  <span class="op">=</span> <span class="fu"><a href="../reference/nested_in.html">nested_in</a></span><span class="op">(</span><span class="va">block</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+            plot  <span class="op">=</span> <span class="fu"><a href="../reference/nested_in.html">nested_in</a></span><span class="op">(</span><span class="va">block</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/set_trts.html">set_trts</a></span><span class="op">(</span>fertilizer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span>,
-           variety    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"V1"</span>, <span class="st">"V2"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/allocate_trts.html">allocate_trts</a></span><span class="op">(</span><span class="va">fertilizer</span><span class="op">:</span><span class="va">variety</span> <span class="op">~</span> <span class="va">plot</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/randomise_trts.html">randomise_trts</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+           variety    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"V1"</span>, <span class="st">"V2"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/allot_trts.html">allot_trts</a></span><span class="op">(</span><span class="va">fertilizer</span><span class="op">:</span><span class="va">variety</span> <span class="op">~</span> <span class="va">plot</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/assign_trts.html">assign_trts</a></span><span class="op">(</span><span class="st">"random"</span><span class="op">)</span></code></pre></div>
 <p>The above design is an example of a Randomised Complete Block Design. If you change the unit names from <code>block</code> to <code>wholeplot</code> and <code>plot</code> to <code>subplot</code>, it looks like the Split-plot Design, so what differs here aside from the unit names? Yes, the allocation of treatment is more restrictive in the Split-plot Design. This is one of the key benefits of using edibble to construct your experimental design; it makes you think about your experiment in bare terms.</p>
 <p>⚠️ Please note that edibble is currently fragile. That means that the code is likely to break when you deviate from example code. Even it it works, you should diagnose the output to make sure it did what you expected.</p>
 <div id="context-of-the-experiment" class="section level2">
@@ -209,66 +202,63 @@
 <p>In designing an experiment, there may be certain context of the experiment that are important but aren’t utilised in the design of the experiment. You can add notes about the experiment in the <code><a href="../reference/design-context.html">set_context()</a></code>.</p>
 <p>These are shown when you print your intermediate construct of the design to remind you about some context of the experiment. I think these steps are important since you may come to realise later some of the context may need to be properly accounted for in the design later, or if there are unexpected results in the experiment, these notes may aid you in uncovering some unexpected sources of variation. For longer form contexts, it’s better to write them to an external file and you can write the name of the file in context.</p>
 <p>The idea here is that the user is reminded about the experimental context but also these contexts can also be exported out together with the design table. Many experimental design software assume that the user knows what experimental design to implement from the get-go, but in practice there may be a lot of back-and-forth with the domain experts or others involved in the experiment. edibble tries to aid in the whole workflow and not just the design generation process.</p>
-<pre class="asciicast"><code>des &lt;- start_design("COVID-19") %&gt;%
-  set_context(question = "Is the vaccine effective?",
-              where = "Tested in the lab",
-              "experiment is blinded",
-              "experiment is carried out by one technician",
-              "More details are in {.file experimental-details.txt}.") %&gt;% 
-  set_units(rat = 20) %&gt;% 
-  set_trts(treat = c("A", "B")) 
-des</code></pre>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">des</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/start_design.html">start_design</a></span><span class="op">(</span><span class="st">"COVID-19"</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/design-context.html">set_context</a></span><span class="op">(</span>question <span class="op">=</span> <span class="st">"Is the vaccine effective?"</span>,
+              where <span class="op">=</span> <span class="st">"Tested in the lab"</span>,
+              <span class="st">"experiment is blinded"</span>,
+              <span class="st">"experiment is carried out by one technician"</span>,
+              <span class="st">"More details are in {.file experimental-details.txt}."</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/set_units.html">set_units</a></span><span class="op">(</span>rat <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/set_trts.html">set_trts</a></span><span class="op">(</span>treat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span><span class="op">)</span> 
+<span class="va">des</span></code></pre></div>
 <p><img src="edibble_files/figure-html/exp-context.svg" width="700"></p>
-<p>You can muffle these messages by using <code>suppress_context</code>. [TODO: add option to muffle these and shorten some long contexts.]</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/design-context.html">suppress_context</a></span><span class="op">(</span><span class="va">des</span><span class="op">)</span>
-<span class="co">#&gt; [36m[3mCOVID-19[23m[39m</span>
-<span class="co">#&gt; ├─[40m[33mrat[39m[49m [90m(20 levels)[39m</span>
-<span class="co">#&gt; └─[34mtreat[39m [90m(2 levels)[39m</span></code></pre></div>
 </div>
 <div id="recording-responses-and-other-variables" class="section level2">
 <h2 class="hasAnchor">
 <a href="#recording-responses-and-other-variables" class="anchor"></a>Recording responses and other variables</h2>
 <p>You can write out what you plan to record for the experiment with <code>record_vars</code>. The record should be made on a unit defined in <code>set_units</code>. You can add data validation rules with <code>expect_vars</code> which is used when the data are exported. This means that data entry is restricted according to the rules you specify.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">des</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="../reference/start_design.html">start_design</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Effective teaching"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/start_design.html">start_design</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Effective teaching"</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
     <span class="fu"><a href="../reference/set_units.html">set_units</a></span><span class="op">(</span>class <span class="op">=</span> <span class="fl">4</span>,
-              student <span class="op">=</span> <span class="fu"><a href="../reference/nested_in.html">nested_in</a></span><span class="op">(</span><span class="va">class</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+              student <span class="op">=</span> <span class="fu"><a href="../reference/nested_in.html">nested_in</a></span><span class="op">(</span><span class="va">class</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
     <span class="fu"><a href="../reference/set_trts.html">set_trts</a></span><span class="op">(</span>style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"flipped"</span>, <span class="st">"traditional"</span><span class="op">)</span>,
-             exam <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"take-home"</span>, <span class="st">"open-book"</span>, <span class="st">"closed-book"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu"><a href="../reference/allocate_trts.html">allocate_trts</a></span><span class="op">(</span><span class="va">style</span> <span class="op">~</span> <span class="va">class</span>,
-                  <span class="va">exam</span> <span class="op">~</span> <span class="va">student</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu"><a href="../reference/randomise_trts.html">randomise_trts</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu"><a href="../reference/set_rcrds.html">set_rcrds</a></span><span class="op">(</span>student <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">exam_mark</span>,
-                            <span class="va">quiz1_mark</span>,
-                            <span class="va">quiz2_mark</span>,
-                            <span class="va">gender</span><span class="op">)</span>,
-                 class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">room</span>,
-                           <span class="va">teacher</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+             exam <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"take-home"</span>, <span class="st">"open-book"</span>, <span class="st">"closed-book"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="../reference/allot_trts.html">allot_trts</a></span><span class="op">(</span><span class="va">style</span> <span class="op">~</span> <span class="va">class</span>,
+                <span class="va">exam</span> <span class="op">~</span> <span class="va">student</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="../reference/assign_trts.html">assign_trts</a></span><span class="op">(</span><span class="st">"random"</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu">set_rcrds_of</span><span class="op">(</span>student <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"exam_mark"</span>,
+                          <span class="st">"quiz1_mark"</span>,
+                          <span class="st">"quiz2_mark"</span>,
+                           <span class="st">"gender"</span><span class="op">)</span>,
+                 class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"room"</span>,
+                           <span class="st">"teacher"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
     <span class="fu">expect_vars</span><span class="op">(</span> exam_mark <span class="op">=</span> <span class="fu"><a href="../reference/expect-vars.html">to_be_numeric</a></span><span class="op">(</span><span class="fu"><a href="../reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
                 quiz1_mark <span class="op">=</span> <span class="fu"><a href="../reference/expect-vars.html">to_be_integer</a></span><span class="op">(</span><span class="fu"><a href="../reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">15</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
                 quiz2_mark <span class="op">=</span> <span class="fu"><a href="../reference/expect-vars.html">to_be_integer</a></span><span class="op">(</span><span class="fu"><a href="../reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
                     gender <span class="op">=</span> <span class="fu"><a href="../reference/expect-vars.html">to_be_factor</a></span><span class="op">(</span>levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="st">"male"</span>, <span class="st">"non-binary"</span><span class="op">)</span><span class="op">)</span>,
                    teacher <span class="op">=</span> <span class="fu"><a href="../reference/expect-vars.html">to_be_character</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="../reference/with_value.html">with_value</a></span><span class="op">(</span><span class="st">"&lt;="</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span>,
                       room <span class="op">=</span> <span class="fu"><a href="../reference/expect-vars.html">to_be_character</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="../reference/with_value.html">with_value</a></span><span class="op">(</span><span class="st">"&gt;="</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; Warning: This function defunct in favour of `expect_rcrds`. Please replace `expect_vars` with</span>
+<span class="co">#&gt; `expect_rcrds`</span>
 
 <span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="va">des</span><span class="op">)</span>
 <span class="co">#&gt; [38;5;246m# An edibble: 120 x 10[39m</span>
 <span class="co">#&gt;        class     student       style        exam exam_mark quiz1_mark quiz2_mark gender   room</span>
 <span class="co">#&gt;    [3m[38;5;246m&lt;unit(4)&gt;[39m[23m [3m[38;5;246m&lt;unit(120)&gt;[39m[23m    [3m[38;5;246m&lt;trt(2)&gt;[39m[23m    [3m[38;5;246m&lt;trt(3)&gt;[39m[23m    [3m[38;5;246m&lt;rcrd&gt;[39m[23m     [3m[38;5;246m&lt;rcrd&gt;[39m[23m     [3m[38;5;246m&lt;rcrd&gt;[39m[23m [3m[38;5;246m&lt;rcrd&gt;[39m[23m [3m[38;5;246m&lt;rcrd&gt;[39m[23m</span>
 <span class="co">#&gt; [38;5;250m 1[39m    class1   student1  traditional open-book           ■          ■          ■      ■      ■</span>
-<span class="co">#&gt; [38;5;250m 2[39m    class1   student2  traditional closed-book         ■          ■          ■      ■      [38;5;246mx[39m</span>
-<span class="co">#&gt; [38;5;250m 3[39m    class1   student3  traditional open-book           ■          ■          ■      ■      [38;5;246mx[39m</span>
-<span class="co">#&gt; [38;5;250m 4[39m    class1   student4  traditional take-home           ■          ■          ■      ■      [38;5;246mx[39m</span>
+<span class="co">#&gt; [38;5;250m 2[39m    class1   student2  traditional open-book           ■          ■          ■      ■      [38;5;246mx[39m</span>
+<span class="co">#&gt; [38;5;250m 3[39m    class1   student3  traditional take-home           ■          ■          ■      ■      [38;5;246mx[39m</span>
+<span class="co">#&gt; [38;5;250m 4[39m    class1   student4  traditional open-book           ■          ■          ■      ■      [38;5;246mx[39m</span>
 <span class="co">#&gt; [38;5;250m 5[39m    class1   student5  traditional take-home           ■          ■          ■      ■      [38;5;246mx[39m</span>
 <span class="co">#&gt; [38;5;250m 6[39m    class1   student6  traditional closed-book         ■          ■          ■      ■      [38;5;246mx[39m</span>
-<span class="co">#&gt; [38;5;250m 7[39m    class1   student7  traditional closed-book         ■          ■          ■      ■      [38;5;246mx[39m</span>
+<span class="co">#&gt; [38;5;250m 7[39m    class1   student7  traditional take-home           ■          ■          ■      ■      [38;5;246mx[39m</span>
 <span class="co">#&gt; [38;5;250m 8[39m    class1   student8  traditional open-book           ■          ■          ■      ■      [38;5;246mx[39m</span>
-<span class="co">#&gt; [38;5;250m 9[39m    class1   student9  traditional closed-book         ■          ■          ■      ■      [38;5;246mx[39m</span>
+<span class="co">#&gt; [38;5;250m 9[39m    class1   student9  traditional open-book           ■          ■          ■      ■      [38;5;246mx[39m</span>
 <span class="co">#&gt; [38;5;250m10[39m    class1   student10 traditional take-home           ■          ■          ■      ■      [38;5;246mx[39m</span>
 <span class="co">#&gt; [38;5;246m# … with 110 more rows, and 1 more variable: teacher &lt;rcrd&gt;[39m</span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/export_design.html">export_design</a></span><span class="op">(</span><span class="va">des</span>, <span class="st">"/PATH/TO/FILE.xlsx"</span><span class="op">)</span></code></pre></div>
 <p>Now you have an excel file that separates out observational units to their own sheet and data entering is now restricted to what you set out in <code>expect_vars</code>.</p>
 </div>

@@ -4,25 +4,16 @@
     <loc>https://edibble.emitanaka.org/index.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/EdibbleDesign.html</loc>
-  </url>
-  <url>
     <loc>https://edibble.emitanaka.org/reference/NamedDesign.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/add_edibble_vertex.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/allocate_trts.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/allot_trts.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/calculate.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/cross_edge_seq.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/derive_vars.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/assign_trts.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/design-context.html</loc>
@@ -34,12 +25,6 @@
     <loc>https://edibble.emitanaka.org/reference/edibble-package.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/edibble.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/exp_unit_names.html</loc>
-  </url>
-  <url>
     <loc>https://edibble.emitanaka.org/reference/expect-vars.html</loc>
   </url>
   <url>
@@ -49,10 +34,7 @@
     <loc>https://edibble.emitanaka.org/reference/export_design.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/find_classical_names.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/iplot.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/find_classical_designs.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/lady_tasting_tea.html</loc>
@@ -61,25 +43,13 @@
     <loc>https://edibble.emitanaka.org/reference/make_classical.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/match_edge_seq.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/n_units.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/names-ed-vars.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/names_by_class.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/names_to_vnames.html</loc>
-  </url>
-  <url>
     <loc>https://edibble.emitanaka.org/reference/ndigits.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/nested_in.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/nesting.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/new_edibble.html</loc>
@@ -91,28 +61,13 @@
     <loc>https://edibble.emitanaka.org/reference/number_si_prefix.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/path_seq.html</loc>
-  </url>
-  <url>
     <loc>https://edibble.emitanaka.org/reference/pipe.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/plot.edibble.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/prep_classical_crd.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/print.edbl_graph.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/randomise_trts.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/replicabble.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/restart_design.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/rye_grass.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/print.edbl_design.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/serve_table.html</loc>
@@ -136,7 +91,7 @@
     <loc>https://edibble.emitanaka.org/reference/start_design.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/subset-edbl-graph.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/table_units.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/traits.html</loc>
@@ -145,10 +100,10 @@
     <loc>https://edibble.emitanaka.org/reference/traits_levels.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/unit_to_trts.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/utility-edibble-var.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/utility-edibble-var.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/vgraph.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/with_value.html</loc>

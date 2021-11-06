@@ -192,24 +192,14 @@ Use <code>switch_context</code> to turn on print out of context if it was switch
 or turn off print out if it was switched on.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>set_context</span><span class='op'>(</span><span class='va'>.edibble</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='fu'>sort_context</span><span class='op'>(</span>
-  <span class='va'>.edibble</span>,
-  descending <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"auto"</span>, <span class='st'>"shell"</span>, <span class='st'>"radix"</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='fu'>suppress_context</span><span class='op'>(</span><span class='va'>.edibble</span><span class='op'>)</span>
-
-<span class='fu'>express_context</span><span class='op'>(</span><span class='va'>.edibble</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>set_context</span><span class='op'>(</span><span class='va'>.edibble</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>.edibble</th>
-      <td><p>An edibble design (<code>EdibbleDesign</code>), an edibble data frame (<code>edbl_table</code>) or an
+      <td><p>An edibble design (<code>edbl_design</code>), an edibble data frame (<code>edbl_table</code>) or an
 object that contains the edibble data frame in the attribute
 <code>design</code>.</p></td>
     </tr>
@@ -220,30 +210,19 @@ maybe named. If you context it is wrong, consider writing the context
 in an external file then write the reference to the file in context
 instead. Input strings support inline markup that use <a href='https://github.com/tidyverse/glue'>glue braces</a>
 as well <a href='https://cli.r-lib.org/articles/semantic-cli.html#inline-text-formatting'>cli markup formatter</a>.
-The formatting is evaluated and stored in <code>EdibbleDesign</code>.</p></td>
-    </tr>
-    <tr>
-      <th>descending</th>
-      <td><p>Whether to sort it in ascending or descending alphabetical
-order.</p></td>
-    </tr>
-    <tr>
-      <th>method</th>
-      <td><p>the method to use for ordering. See <code><a href='https://rdrr.io/r/base/order.html'>base::order()</a></code> for
-explanation.</p></td>
+The formatting is evaluated and stored in <code>edbl_design</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Same as original except <code>EdibbleDesign</code> updated with context.</p>
+    <p>Same as original except <code>edbl_design</code> updated with context.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other user-facing functions: 
-<code><a href='allocate_trts.html'>allocate_trts</a>()</code>,
+<code><a href='allot_trts.html'>allot_trts</a>()</code>,
 <code><a href='expect_rcrds.html'>expect_rcrds</a>()</code>,
 <code><a href='export_design.html'>export_design</a>()</code>,
-<code><a href='randomise_trts.html'>randomise_trts</a>()</code>,
 <code><a href='serve_table.html'>serve_table</a>()</code>,
 <code><a href='set_rcrds.html'>set_rcrds</a>()</code>,
 <code><a href='set_trts.html'>set_trts</a>()</code>,
@@ -251,16 +230,22 @@ explanation.</p></td>
 <code><a href='start_design.html'>start_design</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>files</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"details.txt"</span>, <span class='st'>"about.docx"</span><span class='op'>)</span>
-<span class='fu'><a href='start_design.html'>start_design</a></span><span class='op'>(</span><span class='st'>"COVID-19"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>set_context</span><span class='op'>(</span>question <span class='op'>=</span> <span class='st'>"Does {.field Pfizer vaccine} work?"</span>,
-              where <span class='op'>=</span> <span class='st'>"Tested in {.emph lab}"</span>,
-              contact <span class='op'>=</span> <span class='st'>"{.strong Jane Doe} ({.email jane.doe@fakeaddress.com}) for domain knowledge"</span>,
-              <span class='st'>"Context do not have to be named"</span>,
-              <span class='st'>"The function {.fn designRandomise} from {.pkg dae} randomises allocation of treatments"</span>,
-              <span class='st'>"Other detailed information in {.file {files}}"</span>,
-              <span class='st'>"Check more details at {.url https://covid-19-au.com/}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Does <span style='color: #00BB00;'>Pfizer vaccine</span><span> work?</span></div><div class='output co'>#&gt; <span class='message'>Tested in </span><span style='font-style: italic;'>lab</span><span></span></div><div class='output co'>#&gt; <span class='message'></span><span style='font-weight: bold;'>Jane Doe</span><span> (</span><span style='color: #0000BB;'>jane.doe@fakeaddress.com</span><span>) for domain knowledge</span></div><div class='output co'>#&gt; <span class='message'>Context do not have to be named</span></div><div class='output co'>#&gt; <span class='message'>The function </span><span style='color: #262626;background-color: #DADADA;'>`designRandomise()`</span><span> from </span><span style='color: #0000BB;'>dae</span><span> randomises allocation of treatments</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir = list(`?` = function(...) stop()), enclos = envir): object 'files' not found</span></div></span></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>files</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"details.txt"</span>, <span class='st'>"about.docx"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='start_design.html'>start_design</a></span><span class='op'>(</span><span class='st'>"COVID-19"</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>set_context</span><span class='op'>(</span>question <span class='op'>=</span> <span class='st'>"Does {.field Pfizer vaccine} work?"</span>,</span>
+<span class='r-in'>              where <span class='op'>=</span> <span class='st'>"Tested in {.emph lab}"</span>,</span>
+<span class='r-in'>              contact <span class='op'>=</span> <span class='st'>"{.strong Jane Doe} ({.email jane.doe@fakeaddress.com}) for domain knowledge"</span>,</span>
+<span class='r-in'>              <span class='st'>"Context do not have to be named"</span>,</span>
+<span class='r-in'>              <span class='st'>"The function {.fn designRandomise} from {.pkg dae} randomises allocation of treatments"</span>,</span>
+<span class='r-in'>              <span class='st'>"Other detailed information in {.file {files}}"</span>,</span>
+<span class='r-in'>              <span class='st'>"Check more details at {.url https://covid-19-au.com/}"</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Does <span style='color: #00BB00;'>Pfizer vaccine</span> work?</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Tested in <span style='font-style: italic;'>lab</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Jane Doe</span> (<span style='color: #0000BB;'>jane.doe@fakeaddress.com</span>) for domain knowledge</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Context do not have to be named</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The function <span style='color: #262626; background-color: #DADADA;'>`designRandomise()`</span> from <span style='color: #0000BB;'>dae</span> randomises allocation of treatments</span>
+<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in eval(expr, envir = list(`?` = function(...) stop()), enclos = envir):</span> object 'files' not found</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

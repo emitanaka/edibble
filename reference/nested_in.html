@@ -176,31 +176,57 @@
     <p>Specify the nesting structure for units</p>
     </div>
 
-    <pre class="usage"><span class='fu'>nested_in</span><span class='op'>(</span><span class='va'>.unit</span>, <span class='va'>...</span>, <span class='va'>.vname</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>nested_in</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>...</span>,
+  prefix <span class='op'>=</span> <span class='st'>""</span>,
+  suffix <span class='op'>=</span> <span class='st'>""</span>,
+  distinct <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  leading0 <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  sep <span class='op'>=</span> <span class='fu'>edibble_labels_opt</span><span class='op'>(</span><span class='st'>"sep"</span><span class='op'>)</span>,
+  traits <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.unit</th>
+      <th>x</th>
       <td><p>The name of the parent unit to nest under.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>a single number OR a sequence of two-sided formula where the
-left-hand side corresponds to the name of the level (or the level number) of <code>.unit</code>
+left-hand side corresponds to the name of the level (or the level number) of <code>x</code>
 and the right-hand side is an integer specifying the number of levels nested under the
 corresponding levels.</p></td>
     </tr>
     <tr>
-      <th>.vname</th>
-      <td><p>the child variable name</p></td>
+      <th>prefix</th>
+      <td><p>The prefix of the label.</p></td>
+    </tr>
+    <tr>
+      <th>suffix</th>
+      <td><p>The suffix of the label.</p></td>
+    </tr>
+    <tr>
+      <th>distinct</th>
+      <td><p>whether the child variables are distinct in the levels that it is nesting</p></td>
+    </tr>
+    <tr>
+      <th>leading0</th>
+      <td><p>Whether there should be a leading 0 if labels are made.</p></td>
+    </tr>
+    <tr>
+      <th>sep</th>
+      <td><p>A separator added between prefix and the number if prefix is empty.</p></td>
+    </tr>
+    <tr>
+      <th>traits</th>
+      <td><p>A named vector where names and values correspond to attribute names and values of the variable.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Returns an isolated graph</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>See <code><a href='set_units.html'>set_units()</a></code> for examples of how to use this.</p></div>
