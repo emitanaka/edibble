@@ -256,16 +256,16 @@ named experimental designs.</p></div>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># An edibble: 50 x 2</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>          unit    treat</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;unit(50)&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;trt(5)&gt;</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span>     unit1    treat3</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span>     unit2    treat1</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span>     unit3    treat2</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span>     unit4    treat4</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span>     unit5    treat1</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span>     unit6    treat4</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span>     unit7    treat5</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span>     unit8    treat3</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span>     unit9    treat2</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span>     unit10   treat1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span>     unit1    treat1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span>     unit2    treat4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span>     unit3    treat1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span>     unit4    treat3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span>     unit5    treat4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span>     unit6    treat3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span>     unit7    treat2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span>     unit8    treat1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span>     unit9    treat5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span>     unit10   treat2</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 40 more rows</span></span>
 <span class='r-in'><span class='co'># if you omit the design parameters then it will use the default</span></span>
 <span class='r-in'><span class='co'># (which may be random)</span></span>
@@ -275,34 +275,34 @@ named experimental designs.</p></div>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span>   • This experimental design is often called <span style='font-style: italic;'>Randomised Complete Block Design</span>.</span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span>   • You can change the number in <span style='color: #262626; background-color: #DADADA;'>`set.seed`</span> to get another random instance of</span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span>   the same design.</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span>   • This design has a total of <span style='color: #BBBB00; background-color: #000000;'>99 units</span> testing a total of <span style='color: #0000BB;'>9 treatments</span>.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   • This design has a total of <span style='color: #BBBB00; background-color: #000000;'>42 units</span> testing a total of <span style='color: #0000BB;'>7 treatments</span>.</span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span>   • This design is <span style='font-style: italic;'>balanced</span> and <span style='font-style: italic;'>complete</span>.</span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>──</span> <span style='font-weight: bold;'>edibble code</span> <span style='color: #00BBBB;'>────────────────────────────────────────────────────────────────</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> set.seed(762)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> set.seed(29)</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> start_design("rcbd") %&gt;%</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   set_units(<span style='color: #BBBB00; background-color: #000000;'>block</span> = 11,</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>             <span style='color: #BBBB00; background-color: #000000;'>unit</span> = nested_in(<span style='color: #BBBB00; background-color: #000000;'>block</span>, 9)) %&gt;%</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   set_trts(<span style='color: #0000BB;'>treat</span> = 9) %&gt;%</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   set_units(<span style='color: #BBBB00; background-color: #000000;'>block</span> = 6,</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             <span style='color: #BBBB00; background-color: #000000;'>unit</span> = nested_in(<span style='color: #BBBB00; background-color: #000000;'>block</span>, 7)) %&gt;%</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   set_trts(<span style='color: #0000BB;'>treat</span> = 7) %&gt;%</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   allot_trts(<span style='color: #0000BB;'>treat</span> ~ <span style='color: #BBBB00; background-color: #000000;'>unit</span>) %&gt;%</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   assign_trts("random") %&gt;%</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   serve_table() </span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>──</span> <span style='font-weight: bold;'>edibble data frame</span> <span style='color: #00BBBB;'>──────────────────────────────────────────────────────────</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># An edibble: 99 x 3</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>         block       unit    treat</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;unit(11)&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;unit(99)&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;trt(9)&gt;</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span>     block1     unit1    treat7</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span>     block1     unit2    treat8</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span>     block1     unit3    treat5</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span>     block1     unit4    treat2</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span>     block1     unit5    treat4</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span>     block1     unit6    treat9</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span>     block1     unit7    treat1</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span>     block1     unit8    treat3</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span>     block1     unit9    treat6</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span>     block2     unit10   treat7</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 89 more rows</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># An edibble: 42 x 3</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        block       unit    treat</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;unit(6)&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;unit(42)&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;trt(7)&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span>    block1     unit1    treat4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span>    block1     unit2    treat5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span>    block1     unit3    treat7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span>    block1     unit4    treat2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span>    block1     unit5    treat1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span>    block1     unit6    treat6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span>    block1     unit7    treat3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span>    block2     unit8    treat6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span>    block2     unit9    treat5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span>    block2     unit10   treat2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 32 more rows</span></span>
 <span class='r-in'><span class='co'># if you don't give any short names then it will generate a random one</span></span>
 <span class='r-in'><span class='fu'>make_classical</span><span class='op'>(</span><span class='op'>)</span></span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span> → No name was supplied so selecting a random named experimental design...</span>
