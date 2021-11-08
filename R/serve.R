@@ -57,7 +57,7 @@ serve_rcrds <- function(design, lunits) {
 }
 
 is_connected <- function(design) {
-  nvar <- nrow(design$vgraph$nodes)
+  nvar <- nrow(subset(design$vgraph$nodes, class!="edbl_rcrd"))
   if(nvar==0) return(FALSE)
   if(nvar==1) return(TRUE)
   all(design$lgraph$nodes$id %in% c(design$lgraph$edges$to, design$lgraph$edges$from))

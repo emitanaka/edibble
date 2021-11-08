@@ -122,11 +122,20 @@ subset.edbl_design <- function(.edibble, unit, rcrds) {
   .edibble$lgraph$edges <- subset(.edibble$lgraph$edges, to %in% keep_lids_ancestors & from %in% keep_lids_ancestors)
   if(!is_null(.edibble$allotment)) {
     units <- map_chr(.edibble$allotment, function(x) all.vars(f_rhs(x)))
-    .edibble$allotment <- .edibble$allotment[units %in% .edibble$vgraph$nodes$label]
+    allotments <- .edibble$allotment[units %in% .edibble$vgraph$nodes$label]
+    if(is_empty(allotments)) {
+      .edibble$allotment <- NULL
+    } else {
+      .edibble$allotment <- allotments
+    }
   }
   if(!is_null(.edibble$validation)) {
     rcrds <- vlabel(.edibble$vgraph, keep_rids)
-    .edibble$validation <- .edibble$validation[rcrds]
+    if(!any(rcrds %in% names(.edibble$validation))) {
+      .edibble$validation <- NULL
+    } else {
+      .edibble$validation <- .edibble$validation[rcrds]
+    }
   }
 
   .edibble
