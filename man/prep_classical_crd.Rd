@@ -4,7 +4,12 @@
 \alias{prep_classical_crd}
 \title{Completely randomised design}
 \usage{
-prep_classical_crd(t = 1 + sample(10, 1), n = t + sample(100, 1), r = n/t)
+prep_classical_crd(
+  t = sample(1:10, 1),
+  n = sample(t + 1:20, 1),
+  r = n/t,
+  seed = sample(1000, 1)
+)
 }
 \arguments{
 \item{t}{The number of treatment levels}
@@ -12,7 +17,16 @@ prep_classical_crd(t = 1 + sample(10, 1), n = t + sample(100, 1), r = n/t)
 \item{n}{The number of experimental units}
 
 \item{r}{(Optional) The number of replicates.}
+
+\item{seed}{A scalar value for computational reproducibility.}
 }
 \description{
 Completely randomised design
 }
+\seealso{
+Other named-designs: 
+\code{\link{prep_classical_factorial}()},
+\code{\link{prep_classical_rcbd}()},
+\code{\link{prep_classical_split}()}
+}
+\concept{named-designs}

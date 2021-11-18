@@ -5,9 +5,9 @@
 \alias{code_classical}
 \title{Create a classical named experimental design}
 \usage{
-make_classical(.name = "", ..., .seed = sample(1000, 1), .output = TRUE)
+make_classical(.name = "", ..., .output = TRUE)
 
-code_classical(.name = "", .seed = sample(1000, 1), ..., .quiet = FALSE)
+code_classical(.name = "", ..., .quiet = FALSE)
 }
 \arguments{
 \item{.name}{The short name of the classical named experimental design. See
