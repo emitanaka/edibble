@@ -32,7 +32,7 @@ The output contains information about the design, the code to generate the desig
 
 make_classical("crd", n = 30, t = 5)
 
-code_classical("rcbd", t = 4, n = 40)
+code_classical("rcbd", t = 4, r = 3)
 ```
 
 The terminal output has color. You can see the terminal output below for the Split-plot design.
