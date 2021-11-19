@@ -135,11 +135,11 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ── edibble ──</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; • crd with the arguments t, n, and r for a Completely Randomised Design.</span>
-<span class="co">#&gt; • factorial with the arguments trt, n, and r for a Factorial Design.</span>
-<span class="co">#&gt; • rcbd with the arguments t, b, r, and n for a Randomised Complete Block</span>
+<span class="co">#&gt; • crd with the arguments t, n, r, and seed for a Completely Randomised Design.</span>
+<span class="co">#&gt; • factorial with the arguments trt, r, design, and seed for a Factorial Design.</span>
+<span class="co">#&gt; • rcbd with the arguments t, r, and seed for a Randomised Complete Block</span>
 <span class="co">#&gt; Design.</span>
-<span class="co">#&gt; • split with the arguments t1, t2, and r for a Split-Plot Design or a</span>
+<span class="co">#&gt; • split with the arguments t1, t2, r, and seed for a Split-Plot Design or a</span>
 <span class="co">#&gt; Split-Unit Design.</span></code></pre></div>
 <p>The output contains information about the design, the code to generate the design using edibble that can be easily copy-and-pasted and the output data frame. If you want the edibble code alone then you can just use <code>code_classical</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -150,45 +150,39 @@
 <span class="co">#&gt;   • This experimental design is often called Completely Randomised Design.</span>
 <span class="co">#&gt;   • You can change the number in `set.seed` to get another random instance of</span>
 <span class="co">#&gt;   the same design.</span>
-<span class="co">#&gt;   • This design has a total of 30 units testing a total of 5 treatments.</span>
-<span class="co">#&gt; The following information is only true for the chosen parameters and not</span>
-<span class="co">#&gt; necessary true for all Completely Randomised Designs.</span>
-<span class="co">#&gt;   • This design is balanced for the given numbers.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ── edibble code ────────────────────────────────────────────────────────────────</span>
-<span class="co">#&gt; set.seed(70)</span>
 <span class="co">#&gt; start_design("crd") %&gt;%</span>
-<span class="co">#&gt;   set_units(unit = 30) %&gt;%</span>
-<span class="co">#&gt;   set_trts(treat = 5) %&gt;%</span>
-<span class="co">#&gt;   allot_trts(treat ~ unit) %&gt;%</span>
-<span class="co">#&gt;   assign_trts("random") %&gt;%</span>
-<span class="co">#&gt;   serve_table()</span>
+<span class="co">#&gt;     set_units(unit = 30) %&gt;%</span>
+<span class="co">#&gt;     set_trts(trt = 5) %&gt;%</span>
+<span class="co">#&gt;     allot_trts(trt ~ unit) %&gt;%</span>
+<span class="co">#&gt;     assign_trts("random", seed = 812) %&gt;%</span>
+<span class="co">#&gt;     serve_table()</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ── edibble data frame ──────────────────────────────────────────────────────────</span>
 <span class="co">#&gt; # An edibble: 30 x 2</span>
-<span class="co">#&gt;          unit    treat</span>
+<span class="co">#&gt;          unit      trt</span>
 <span class="co">#&gt;    &lt;unit(30)&gt; &lt;trt(5)&gt;</span>
-<span class="co">#&gt;  1     unit1    treat3</span>
-<span class="co">#&gt;  2     unit2    treat5</span>
-<span class="co">#&gt;  3     unit3    treat2</span>
-<span class="co">#&gt;  4     unit4    treat4</span>
-<span class="co">#&gt;  5     unit5    treat3</span>
-<span class="co">#&gt;  6     unit6    treat1</span>
-<span class="co">#&gt;  7     unit7    treat4</span>
-<span class="co">#&gt;  8     unit8    treat2</span>
-<span class="co">#&gt;  9     unit9    treat3</span>
-<span class="co">#&gt; 10     unit10   treat5</span>
+<span class="co">#&gt;  1     unit1      trt5</span>
+<span class="co">#&gt;  2     unit2      trt5</span>
+<span class="co">#&gt;  3     unit3      trt4</span>
+<span class="co">#&gt;  4     unit4      trt3</span>
+<span class="co">#&gt;  5     unit5      trt3</span>
+<span class="co">#&gt;  6     unit6      trt3</span>
+<span class="co">#&gt;  7     unit7      trt2</span>
+<span class="co">#&gt;  8     unit8      trt4</span>
+<span class="co">#&gt;  9     unit9      trt1</span>
+<span class="co">#&gt; 10     unit10     trt1</span>
 <span class="co">#&gt; # … with 20 more rows</span>
 
-<span class="fu"><a href="../reference/make_classical.html">code_classical</a></span><span class="op">(</span><span class="st">"rcbd"</span>, t <span class="op">=</span> <span class="fl">4</span>, n <span class="op">=</span> <span class="fl">40</span><span class="op">)</span>
-<span class="co">#&gt; set.seed(857)</span>
+<span class="fu"><a href="../reference/make_classical.html">code_classical</a></span><span class="op">(</span><span class="st">"rcbd"</span>, t <span class="op">=</span> <span class="fl">4</span>, r <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="co">#&gt; start_design("rcbd") %&gt;%</span>
-<span class="co">#&gt;   set_units(block = 10,</span>
-<span class="co">#&gt;             unit = nested_in(block, 4)) %&gt;%</span>
-<span class="co">#&gt;   set_trts(treat = 4) %&gt;%</span>
-<span class="co">#&gt;   allot_trts(treat ~ unit) %&gt;%</span>
-<span class="co">#&gt;   assign_trts("random") %&gt;%</span>
-<span class="co">#&gt;   serve_table()</span></code></pre></div>
+<span class="co">#&gt;     set_units(block = 3,</span>
+<span class="co">#&gt;               unit = nested_in(block, 4)) %&gt;%</span>
+<span class="co">#&gt;     set_trts(trt = 4) %&gt;%</span>
+<span class="co">#&gt;     allot_trts(trt ~ unit) %&gt;%</span>
+<span class="co">#&gt;     assign_trts("random", seed = 942) %&gt;%</span>
+<span class="co">#&gt;     serve_table()</span></code></pre></div>
 <p>The terminal output has color. You can see the terminal output below for the Split-plot design.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/make_classical.html">make_classical</a></span><span class="op">(</span><span class="st">"split"</span>, t1 <span class="op">=</span> <span class="fl">4</span>, t2  <span class="op">=</span> <span class="fl">2</span>, r <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></code></pre></div>

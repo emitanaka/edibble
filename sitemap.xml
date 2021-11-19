@@ -4,9 +4,6 @@
     <loc>https://edibble.emitanaka.org/index.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/NamedDesign.html</loc>
-  </url>
-  <url>
     <loc>https://edibble.emitanaka.org/reference/add_edibble_vertex.html</loc>
   </url>
   <url>
@@ -64,7 +61,19 @@
     <loc>https://edibble.emitanaka.org/reference/pipe.html</loc>
   </url>
   <url>
+    <loc>https://edibble.emitanaka.org/reference/prep_classical_.html</loc>
+  </url>
+  <url>
     <loc>https://edibble.emitanaka.org/reference/prep_classical_crd.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/prep_classical_factorial.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/prep_classical_rcbd.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/prep_classical_split.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/print.edbl_design.html</loc>

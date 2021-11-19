@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Completely randomised design — prep_classical_crd • edibble</title>
+<title>Prepare a randomised complete block design — prep_classical_rcbd • edibble</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -54,8 +54,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Completely randomised design — prep_classical_crd" />
-<meta property="og:description" content="Completely randomised design" />
+<meta property="og:title" content="Prepare a randomised complete block design — prep_classical_rcbd" />
+<meta property="og:description" content="Prepare a randomised complete block design" />
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@statsgen" />
@@ -167,19 +167,18 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Completely randomised design</h1>
+    <h1>Prepare a randomised complete block design</h1>
     <small class="dont-index">Source: <a href='https://github.com/emitanaka/edibble/blob/master/R/classics.R'><code>R/classics.R</code></a></small>
-    <div class="hidden name"><code>prep_classical_crd.Rd</code></div>
+    <div class="hidden name"><code>prep_classical_rcbd.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Completely randomised design</p>
+    <p>Prepare a randomised complete block design</p>
     </div>
 
-    <pre class="usage"><span class='fu'>prep_classical_crd</span><span class='op'>(</span>
-  t <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='fl'>1</span><span class='op'>)</span>,
-  n <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>t</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>20</span>, <span class='fl'>1</span><span class='op'>)</span>,
-  r <span class='op'>=</span> <span class='va'>n</span><span class='op'>/</span><span class='va'>t</span>,
+    <pre class="usage"><span class='fu'>prep_classical_rcbd</span><span class='op'>(</span>
+  t <span class='op'>=</span> <span class='fl'>1</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>1</span><span class='op'>)</span>,
+  r <span class='op'>=</span> <span class='fl'>1</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>1</span><span class='op'>)</span>,
   seed <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1000</span>, <span class='fl'>1</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
 
@@ -188,15 +187,11 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>t</th>
-      <td><p>The number of treatment levels</p></td>
-    </tr>
-    <tr>
-      <th>n</th>
-      <td><p>The number of experimental units</p></td>
+      <td><p>The number of treatments.</p></td>
     </tr>
     <tr>
       <th>r</th>
-      <td><p>(Optional) The number of replicates.</p></td>
+      <td><p>The number of replicate blocks.</p></td>
     </tr>
     <tr>
       <th>seed</th>
@@ -207,8 +202,8 @@
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other named-designs: 
+<code><a href='prep_classical_crd.html'>prep_classical_crd</a>()</code>,
 <code><a href='prep_classical_factorial.html'>prep_classical_factorial</a>()</code>,
-<code><a href='prep_classical_rcbd.html'>prep_classical_rcbd</a>()</code>,
 <code><a href='prep_classical_split.html'>prep_classical_split</a>()</code></p></div>
 
   </div>
