@@ -16,7 +16,7 @@ serve_table <- function(.design, ...) {
   if(!is_connected(.design)) {
     lout <- serve_vars_not_reconciled(.design)
   } else {
-    classes <- .design$vgraph$nodes$class
+    classes <- fct_class(.design)
     lunit <- ltrt <- lvar <- list()
     if("edbl_unit" %in% classes) lunit <- serve_units(.design)
     if("edbl_trt" %in% classes) ltrt <- serve_trts(.design, lunit)
@@ -24,13 +24,13 @@ serve_table <- function(.design, ...) {
     lout <- c(lunit, ltrt, lvar)
   }
 
-  namesv <- .design$vgraph$nodes$label
+  namesv <- fct_label(.design)
   new_edibble(lout[namesv], design = .design)
 }
 
 serve_trts <- function(design, lunits) {
-  tids <- subset(design$vgraph$nodes, class=="edbl_trt")$id
-  vnames <- vlabel(design$vgraph, id = tids)
+  tids <- trt_ids(design)
+  vnames <- fct_label(design, id = tids)
   lvs <- lapply(tids, function(i) {
     serve_trt(design, i, lunits)
   })
@@ -39,15 +39,15 @@ serve_trts <- function(design, lunits) {
 }
 
 rcrd_to_unit_dict <- function(design, rids) {
-  tdf <- subset(design$vgraph$edges, to %in% rids)
-  set_names(vlabel(design$vgraph, tdf$from),
-            vlabel(design$vgraph, tdf$to))
+  tdf <- fct_edges_filter(design, to %in% rids)
+  set_names(fct_label(design, tdf$from),
+            fct_label(design, tdf$to))
 }
 
 serve_rcrds <- function(design, lunits) {
-  rids <- subset(design$vgraph$nodes, class=="edbl_rcrd")$id
+  rids <- rcrd_ids(design)
   rcrd2unit <- rcrd_to_unit_dict(design, rids)
-  rnames <- vlabel(design$vgraph, id = rids)
+  rnames <- fct_label(design, id = rids)
   N <- max(lengths(lunits))
   lvs <- lapply(rnames, function(avar) {
     new_edibble_rcrd(N, lunits[[rcrd2unit[avar]]])
@@ -57,21 +57,21 @@ serve_rcrds <- function(design, lunits) {
 }
 
 is_connected <- function(design) {
-  nvar <- nrow(subset(design$vgraph$nodes, class!="edbl_rcrd"))
+  nvar <- fct_n(design) - length(rcrd_ids(design))
   if(nvar==0) return(FALSE)
   if(nvar==1) return(TRUE)
-  all(design$lgraph$nodes$id %in% c(design$lgraph$edges$to, design$lgraph$edges$from))
+  all(lvl_nodes_pull(design, id) %in% c(lvl_edges_pull(design, to), lvl_edges_pull(design, from)))
 }
 
 # Returns list of edibble variables
 serve_vars_not_reconciled <- function(.design) {
-  namesv <- .design$vgraph$nodes$label
+  namesv <- fct_label(.design)
   res <- lapply(namesv,
                 function(avar) {
-                  new_edibble_var(levels = vlevels(.design, label = avar)[[avar]],
+                  new_edibble_var(levels = fct_levels(.design, label = avar)[[avar]],
                                   name = avar,
-                                  class = vclass(.design$vgraph,
-                                                 id = vid(.design$vgraph, avar)))
+                                  class = fct_class(.design,
+                                                    id = fct_id(.design, avar)))
                 })
   names(res) <- namesv
   res
@@ -80,10 +80,10 @@ serve_vars_not_reconciled <- function(.design) {
 # Return edibble unit
 serve_unit_with_child <- function(parent_levels, parent_vname, parent_class,
                                   child_labels, child_vname, design) {
-  pids <- vid(design$lgraph, label = parent_levels)
-  cids <- vid(design$lgraph, label = unique(child_labels))
-  ledges <- subset(design$lgraph$edges, to %in% cids & from %in% pids)
-  dict <- set_names(vlabel(design$lgraph, ledges$from), vlabel(design$lgraph, ledges$to))
+  pids <- lvl_id(design, label = parent_levels)
+  cids <- lvl_id(design, label = unique(child_labels))
+  ledges <- lvl_edges_filter(design, to %in% cids & from %in% pids)
+  dict <- set_names(lvl_label(design, ledges$from), lvl_label(design, ledges$to))
   new_edibble_var(levels = parent_levels,
                   labels = unname(dict[child_labels]),
                   name = parent_vname,
@@ -100,38 +100,38 @@ serve_unit_with_no_child <- function(vlevs, vname, classv) {
 
 
 serve_units <- function(design) {
-  uid <- subset(design$vgraph$nodes, class=="edbl_unit")$id
-  rid <- subset(design$vgraph$nodes, class=="edbl_rcrd")$id
-  lid <- uid[!uid %in% subset(design$vgraph$edges, !to %in% rid)$from]
+  uid <- unit_ids(design)
+  rid <- rcrd_ids(design)
+  lid <- uid[!uid %in% fct_edges_filter(design, !to %in% rid)$from]
   wid <- uid
-  vlev <- vlevels(design)
+  vlev <- fct_levels(design)
   res <- list()
   while(!is_empty(lid)) {
     lvs <- lapply(lid, function(i) {
-      vname <- vlabel(design$vgraph, id = i)
-      classv <- vclass(design$vgraph, id = i)
+      vname <- fct_label(design, id = i)
+      classv <- fct_class(design, id = i)
       vlevs <- vlev[[vname]]
-      cid <- setdiff(vchild(design$vgraph, id = i), rid)
+      cid <- setdiff(fct_child(design, id = i), rid)
       if(!is_empty(cid) & length(cid)==1) {
         # currently assumes one child only for now
-        cname <- vlabel(design$vgraph, id = cid)
+        cname <- fct_label(design, id = cid)
         serve_unit_with_child(vlevs, vname, classv,
                               as.character(res[[cname]]), cname, design)
       } else {
         serve_unit_with_no_child(vlevs, vname, classv)
       }
     })
-    names(lvs) <- vlabel(design$vgraph, id = lid)
+    names(lvs) <- fct_label(design, id = lid)
     res <- c(res, lvs)
     wid <- setdiff(wid, lid)
-    lid <- wid[!wid %in% subset(design$vgraph$edges, !to %in% c(lid, rid))$from]
+    lid <- wid[!wid %in% fct_edges_filter(design, !to %in% c(lid, rid))$from]
   }
   res
 }
 
 serve_trts <- function(design, lunits) {
-  tids <- subset(design$vgraph$nodes, class=="edbl_trt")$id
-  vnames <- vlabel(design$vgraph, id = tids)
+  tids <- trt_ids(design)
+  vnames <- fct_label(design, id = tids)
   lvs <- lapply(tids, function(i) {
     serve_trt(design, i, lunits)
   })
@@ -140,19 +140,19 @@ serve_trts <- function(design, lunits) {
 }
 
 serve_trt <- function(design, tid, lunits) {
-  tdf <- subset(design$lgraph$nodes, idvar == tid)
+  tdf <- lvl_nodes_filter(design, idvar == tid)
   ltids <- tdf$id
-  luids <- vchild(design$lgraph, id = ltids)
-  ledges <- subset(design$lgraph$edges, to %in% luids & from %in% ltids)
-  aunit <- vlabel(design$vgraph, id = vchild(design$vgraph, id = tid))
+  luids <- lvl_child(design, id = ltids)
+  ledges <- lvl_edges_filter(design, to %in% luids & from %in% ltids)
+  aunit <- fct_label(design, id = fct_child(design, id = tid))
   if(!is_empty(aunit)) {
-    dict <- set_names(vlabel(design$lgraph, ledges$from), vlabel(design$lgraph, ledges$to))
+    dict <- set_names(lvl_label(design, ledges$from), lvl_label(design, ledges$to))
     labels <- unname(dict[lunits[[aunit]]])
   } else {
     labels <- tdf$label
   }
   new_edibble_var(levels = tdf$label,
                   labels = labels,
-                  name = vlabel(design$vgraph, id = tid),
-                  class = vclass(design$vgraph, id = tid))
+                  name = fct_label(design, id = tid),
+                  class = fct_class(design, id = tid))
 }

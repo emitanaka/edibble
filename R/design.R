@@ -13,10 +13,22 @@
 #' @export
 start_design <- function(name = NULL) {
   structure(list(name = name %||% "An edibble design",
-                 vgraph = empty_edibble_graph("edbl_vgraph"),
-                 lgraph = empty_edibble_graph("edbl_lgraph")),
-            class = c("edbl_design", "edbl"),
-            active = "graph")
+                 graph = initialise_edibble_graph()),
+            class = c("edbl_design", "edbl"))
 }
 
+# initialise graph structure -----------------------------------------------
+
+initialise_edibble_graph <- function() {
+  fnodes <- data.frame(id = integer(), label = character(), class = character(), stringsAsFactors = FALSE)
+  lnodes <- data.frame(idvar = integer(), id = integer(), label = character(), stringsAsFactors = FALSE)
+  edges <-  data.frame(from = integer(), to = integer(),
+                       alloc = integer(),
+                       stringsAsFactors = FALSE)
+  structure(list(nodes = fnodes,
+                 edges = edges,
+                 levels = list(nodes = lnodes,
+                               edges = edges)),
+            class = "edbl_graph")
+}
 

@@ -17,7 +17,7 @@ nested_in <- function(x, ..., prefix = "", suffix = "",
                       distinct = TRUE, leading0 = FALSE,
                       sep = edibble_labels_opt("sep"),
                       traits = NULL) {
-  if(prefix=="") prefix <- paste0(caller_env()$.top_env$.vname, sep)
+  if(prefix=="") prefix <- paste0(caller_env()$.top_env$.fname, sep)
   parent_name <- as_string(enexpr(x))
   parent_vlevels <- x
 
@@ -42,8 +42,10 @@ nested_in <- function(x, ..., prefix = "", suffix = "",
 #' @export
 nesting <- function(design) {
   uids <- unit_ids(design)
-  ndf <- subset(vgraph(design)$edges, from %in% uids & to %in% uids)
-  split(ndf$var_from, ndf$var_to)
+  ndf <- fct_edges_filter(design, from %in% uids & to %in% uids)
+  from <- fct_label(design, ndf$from)
+  to <- fct_label(design, ndf$to)
+  split(from, to)
 }
 
 

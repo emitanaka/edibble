@@ -1,4 +1,79 @@
 
+#' Check if the design contains a particular variable label.
+#'
+#'
+#' @param design An edibble design.
+#' @param label A character vector of the variable labels.
+#' @return A logical vector of the same size as `label` or a single logical value if class is provied.
+#' @export
+var_exists <- function(design, label = NULL) {
+  if(is_null(label)) {
+    abort("`label` must be supplied in `var_exists`.")
+  }
+  label %in% fct_label(design)
+}
+
+template_var_exists <- function(design, label = NULL, class = NULL, all_labels = fct_label(design)) {
+  if(is_null(label)) {
+    class %in% fct_class(design)
+  } else {
+    vexists <- label %in% all_labels
+    if(!all(vexists)) {
+      abort_missing_vars(label[!vexists])
+    }
+    vexists
+  }
+}
+
+trts_exists <- function(design, label = NULL) {
+  template_var_exists(design, label = label, class = "edbl_trt", all_labels = trt_labels(design))
+}
+
+units_exists <- function(design, label = NULL) {
+  template_var_exists(design, label = label, class = "edbl_unit", all_labels = unit_labels(design))
+}
+
+rcrds_exists <- function(design, label = NULL) {
+  template_var_exists(design, label = label, class = "edbl_rcrd", all_labels = rcrd_labels(design))
+}
+
+check_trt_exists <- function(design, label = NULL) {
+  if(!trts_exists(design)) {
+    abort("No treatment variables exists in the design.")
+  }
+}
+
+check_rcrd_exists <- function(design, label = NULL) {
+  if(!rcrds_exists(desgin)) {
+    abort("No record variables exists in the design.")
+  }
+}
+
+check_unit_exists <- function(design, label = NULL) {
+  if(!units_exists(design)) {
+    abort("No unit variables exists in the design.")
+  }
+}
+
+check_var_exists <- function(design, label = NULL, vclass = NULL) {
+  f_exists <- switch(vclass,
+                     "edbl_trt" = trts_exists,
+                     "edbl_unit" = units_exists,
+                     "edbl_rcrd" = rcrds_exists)
+  vexists <- f_exists(design, label)
+  if(is_null(label) && any(!vexists)) {
+    abort(sprintf("No variables with class `%s` exists.", vclass))
+  }
+
+  if(any(!vexists)) {
+    abort_missing_vars(label[!vexists])
+  }
+}
+
+abort_missing_vars <- function(missing_vars) {
+  abort(sprintf("%s does not exist in the design.",
+                .combine_words(paste0("`", missing_vars, "`"))))
+}
 
 
 decorate_vars <- function(x, decorate_units, decorate_trts, decorate_resp, classes) {
@@ -12,6 +87,7 @@ decorate_vars <- function(x, decorate_units, decorate_trts, decorate_resp, class
   }
   x
 }
+
 
 
 #' Print intermediate experimental design to terminal
@@ -52,38 +128,37 @@ print.edbl_design <- function(x,
                               decorate_title  = edibble_decorate("title"),
                               title = NULL, ...) {
   title <- title %||% x$name
-  vnames <- x$vgraph$nodes$label
+  fnames <- names(x)
 
-  if(is_empty(vnames)) {
+  if(is_empty(fnames)) {
     data <- data.frame(var = "root",
                        child = NA,
                        label = as.character(decorate_title(title)))
   } else {
 
-    classes <- x$vgraph$nodes$class
-    label_names <- decorate_vars(vnames,
+    classes <- fct_class(x)
+    label_names <- decorate_vars(fnames,
                                  decorate_units,
                                  decorate_trts,
                                  decorate_resp,
                                  classes)
-
-    var_nlevels <- lengths(vlevels(x)[vnames])
-    nvar <- length(vnames)
-    ll <- lapply(vnames,
+    var_nlevels <- lengths(fct_levels(x)[fnames])
+    nvar <- length(fnames)
+    ll <- lapply(fnames,
                  function(v) {
-                   id <- vid(x$vgraph, v)
-                   class <- vclass(x$vgraph, id = id)
-                   children <- vchild(x$vgraph, id = id)
+                   id <- fct_id(x, v)
+                   class <- fct_class(x, id = id)
+                   children <- fct_child(x, id = id)
                    if(class!="edbl_trt" & !is_empty(children)) {
-                     vlabel(x$vgraph, id = children)
+                     fct_label(x, id = children)
                    } else {
                      character()
                    }
                  })
     nodes_with_parents <- unname(unlist(ll))
 
-    data <- data.frame(var = c("root", vnames),
-                       child = I(c(list(setdiff(vnames, nodes_with_parents)), ll)),
+    data <- data.frame(var = c("root", fnames),
+                       child = I(c(list(setdiff(fnames, nodes_with_parents)), ll)),
                        label = c(decorate_title(title),
                                  paste(label_names, map_chr(var_nlevels, decorate_levels))))
   }
@@ -110,19 +185,25 @@ print.edbl_design <- function(x,
 }
 
 #' @export
-print.edbl_graph <- function(x, ...) {
-  cat(cli::col_green("nodes\n"))
+print.edbl_graph <- function(x, show_levels = FALSE, ...) {
+  cat(cli::col_green("factor nodes\n"))
   print(x$nodes)
-  cat(cli::col_green("edges\n"))
+  cat(cli::col_green("factor edges\n"))
   print(x$edges)
+  if(show_levels) {
+    cat(cli::col_blue("level nodes\n"))
+    print(x$levels$nodes)
+    cat(cli::col_blue("level edges\n"))
+    print(x$levels$edges)
+  }
 }
 
-names.edbl_graph <- function(.graph) {
-  .graph$nodes$label
+names.edbl_graph <- function(graph) {
+  graph$nodes$label
 }
 
-names.edbl_design <- function(.design) {
-  names(.design$vgraph)
+names.edbl_design <- function(design) {
+  names(design$graph)
 }
 
 
@@ -141,29 +222,10 @@ ndigits <- function(x) {
   max(c(floor(log10(abs(x))) + 1, edibble_labels_opt("min_ndigits")))
 }
 
-#' Count of child units per parent unit
-#' @param .edibble An edibble design or graph
-#' @param parent A string with the name of the parent.
-#' @param child A string with the child name.
-#' @export
-table_units <- function(.edibble, parent, child) {
-  graph <- get_edibble_graph(.edibble)
-  vgraph <- delete_edges(graph, which(E(graph)$etype!="l2l"))
-  # [FIXME] shouldn't match based on prefix to find parent and child level nodes
-  parent_names <- V(graph)$name[grepl(paste0(parent, ":"), V(graph)$name)]
-  child_names <- V(graph)$name[grepl(paste0(child, ":"), V(graph)$name)]
-  count <- setNames(rep(0, length(parent_names)), parent_names)
-  for(aparent in parent_names) {
-    nv <- neighbors(vgraph, V(vgraph)$name==aparent, mode = "out")
-    count[aparent] <- length(nv)
-  }
-  count
-}
-
 
 is_nested_unit <- function(design, uid) {
-  unit_ids <- subset(vgraph(design)$nodes, class == "edbl_unit")$id
-  out <- subset(vgraph(design)$edges, to %in% uid & from %in% unit_ids)
+  unit_ids <- fct_nodes_filter(design, class == "edbl_unit")$id
+  out <- fct_edges_filter(design, to %in% uid & from %in% unit_ids)
   nrow(out) > 0
 }
 

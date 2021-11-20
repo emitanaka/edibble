@@ -62,16 +62,16 @@ set_units <- function(.edibble, ...,
 #' @importFrom tidyselect eval_select
 #' @export
 select_units <- function(.edibble, ...) {
-  vlevs <- vlevels(.edibble)
+  vlevs <- fct_levels(.edibble)
   loc <- eval_select(expr(c(...)), vlevs)
   keep_units <- names(vlevs)[loc]
-  keep_uids <- vid(.edibble$vgraph, keep_units)
-  keep_uids_ancestors <- vancestor(.edibble$vgraph, keep_uids)
-  .edibble$vgraph$nodes <- subset(.edibble$vgraph$nodes, id %in% keep_uids_ancestors)
-  .edibble$vgraph$edges <- subset(.edibble$vgraph$edges, to %in% keep_uids_ancestors & from %in% keep_uids_ancestors)
-  .edibble$lgraph$nodes <- subset(.edibble$lgraph$nodes, idvar %in% keep_uids_ancestors)
-  keep_lids_ancestors <- .edibble$lgraph$nodes$id
-  .edibble$lgraph$edges <- subset(.edibble$lgraph$edges, to %in% keep_lids_ancestors & from %in% keep_lids_ancestors)
+  keep_uids <- fct_id(.edibble, keep_units)
+  keep_uids_ancestors <- fct_ancestor(.edibble, keep_uids)
+  .edibble$graph$nodes <- fct_nodes_filter(.edibble, id %in% keep_uids_ancestors)
+  .edibble$graph$edges <- fct_edges_filter(.edibble, to %in% keep_uids_ancestors & from %in% keep_uids_ancestors)
+  .edibble$graph$levels$nodes <- lvl_nodes_filter(.edibble, idvar %in% keep_uids_ancestors)
+  keep_lids_ancestors <- lvl_id(.edibble)
+  .edibble$graph$levels$edges <- lvl_edges_filter(.edibble, to %in% keep_lids_ancestors & from %in% keep_lids_ancestors)
   .edibble
 }
 
@@ -96,22 +96,3 @@ pillar_shaft.edbl_unit <- function(x, ...) {
   new_pillar_shaft_simple(out, align = "right", min_width = 11)
 }
 
-unit_ids <- function(design, type = "var") {
-  var_ids(design, type = type, vclass = "edbl_unit")
-}
-
-var_ids <- function(design, type = c("var", "level"), vclass = NULL) {
-  type <- match.arg(type)
-  if(is_null(vclass)) {
-    ids <- design$vgraph$nodes$id
-  } else {
-    ids <- subset(design$vgraph$nodes, class %in% vclass)$id
-  }
-  switch(type,
-         var = ids,
-         level = subset(design$lgraph$nodes, idvar %in% ids)$id)
-}
-
-trt_ids <- function(design, type = "var") {
-  var_ids(design, type = type, vclass = "edbl_trt")
-}

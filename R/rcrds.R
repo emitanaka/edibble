@@ -21,17 +21,17 @@ set_rcrds <- function(.edibble, ...,
       return(quo_text(x))
     })
   rcrds <- names(units)
-  if(!all(units %in% .edibble$vgraph$nodes$label)) {
-    abort("Some variables do not exist in the design.")
-  }
+
+  check_var_exists(.edibble, label = units, vclass = "edbl_unit")
+
   for(i in seq_along(units)) {
-    rid <- last_id(.edibble$vgraph) + 1L
-    uid <- vid(.edibble$vgraph, unname(units)[i])
-    .edibble$vgraph$nodes <- add_row(.edibble$vgraph$nodes,
+    rid <- fct_last_id(.edibble) + 1L
+    uid <- fct_id(.edibble, unname(units)[i])
+    .edibble$graph$nodes <- add_row(.edibble$graph$nodes,
                                      id = rid,
                                      label = rcrds[i],
                                      class = "edbl_rcrd")
-    .edibble$vgraph$edges <- add_row(.edibble$vgraph$edges,
+    .edibble$graph$edges <- add_row(.edibble$graph$edges,
                                      from = uid,
                                      to = rid)
   }
@@ -73,7 +73,7 @@ expect_vars <- function(.edibble, ...) {
 }
 
 has_record <- function(.design) {
-  "edbl_rcrd" %in% .design$vgraph$nodes$class
+  "edbl_rcrd" %in% .design$graph$nodes$class
 }
 
 

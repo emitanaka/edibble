@@ -15,32 +15,31 @@ set_vars <- function(.edibble, ..., .class = NULL,
   not_edibble(.edibble)
 
   .name_repair <- match.arg(.name_repair)
+  res <- .edibble
 
   if(is_edibble_design(.edibble)) {
-    res <- edbl_design(.edibble)
     dots <- enquos(..., .named = TRUE, .homonyms = "error")
-    vnames_new <- names(dots)
-    vnames_old <- names(res)
-    vnames <- vec_as_names(c(vnames_old, vnames_new), repair = .name_repair)
-    vlev <- NULL
+    fnames_new <- names(dots)
+    fnames_old <- names(res)
+    fnames <- vec_as_names(c(fnames_old, fnames_new), repair = .name_repair)
+    levels_fct <- NULL
     for(i in seq_along(dots)) {
-      vname <- vnames[i + length(vnames_old)]
-      if(nrow(res$lgraph$nodes)) vlev <- vlevels(res)
-      value <- eval_tidy(dots[[i]], data = c(vlev, list(.vname = vname)))
-      res <- add_edibble_vertex(value, vname, .class, res)
+      fname <- fnames[i + length(fnames_old)]
+      if(fct_n(res)) levels_fct <- fct_levels(res)
+      value <- eval_tidy(dots[[i]], data = c(levels_fct, list(.fname = fname)))
+      res <- add_edibble_vertex(value, fname, .class, res)
     }
 
   } else if(is_edibble_table(.edibble)) {
-    res <- .edibble
     dots <- enquos(..., .named = TRUE)
 
     loc <- eval_select(expr(!!names(dots)), res)
     for(i in seq_along(loc)) {
       var <- res[[loc[i]]]
       lvls <- unique(as.character(var))
-      vname <- names(loc)[i]
+      fname <- names(loc)[i]
       res[[loc[i]]] <- ...
-      res <- add_edibble_vertex(lvls, vname, .class, res)
+      res <- add_edibble_vertex(lvls, fname, .class, res)
     }
   }
 
@@ -57,6 +56,7 @@ set_vars <- function(.edibble, ..., .class = NULL,
 #'
 #' @name add_edibble_vertex
 #' @return Returns an evaluated expression.
+#' @export
 add_edibble_vertex <- function(x, ...) {
   UseMethod("add_edibble_vertex")
 }
@@ -69,94 +69,99 @@ add_edibble_vertex <- function(x, ...) {
 #' @rdname add_edibble_vertex
 #' @importFrom tibble add_row
 #' @export
-add_edibble_vertex.default <- function(value, vname, class, design) {
+add_edibble_vertex.default <- function(value, fname, class, design) {
 
-  type <- var_value_type(value)
+  type <- fct_value_type(value)
   levels <- switch(type,
-                   "numeric" = traits(n = value, prefix = vname, class = class),
+                   "numeric" = traits(n = value, prefix = fname, class = class),
                    "unnamed_vector" = traits(labels = value, class = class),
                    "named_vector" = traits(labels = names(value),
                                            rep = unname(value),
                                            class = class),
                    "unimplemented" = traits(labels = character(), class = class))
 
-  add_edibble_vertex.edbl_trait(levels, vname, class, design)
+  add_edibble_vertex.edbl_trait(levels, fname, class, design)
 }
 
-last_id <- function(graph) {
-  ifelse(nrow(graph$nodes), max(graph$nodes$id), 0L)
+fct_last_id <- function(design) {
+  ifelse(fct_n(design), max(fct_id(design)), 0L)
 }
 
-add_edibble_vertex.edbl_trait <- function(value, vname, class, design) {
+lvl_last_id <- function(design) {
+  ifelse(lvl_n(design), max(lvl_id(design)), 0L)
+}
+
+
+add_edibble_vertex.edbl_trait <- function(value, fname, class, design) {
   out <- design
-  vid <- last_id(out$vgraph) + 1L
-  lid <- last_id(out$lgraph) + 1L
+  fid <- fct_last_id(out) + 1L
+  lid <- lvl_last_id(out) + 1L
   attrs <- attributes(value)
-  missing_cols <- setdiff(names(attrs), names(out$vgraph$nodes))
-  out$vgraph$nodes[missing_cols] <- NA
-  out$vgraph$nodes <- add_row(out$vgraph$nodes,
-                              id = vid,
-                              label = vname,
-                              class = class,
-                              !!!attrs[missing_cols])
-  out$lgraph$nodes <- add_row(out$lgraph$nodes,
-                              idvar = vid,
-                              id = lid:(lid + length(value) - 1),
-                              label = as.character(value))
+  missing_cols <- setdiff(names(attrs), names(fct_nodes(design)))
+  out$graph$nodes[missing_cols] <- NA
+  out$graph$nodes <- add_row(out$graph$nodes,
+                            id = fid,
+                            label = fname,
+                            class = class,
+                            !!!attrs[missing_cols])
+  out$graph$levels$nodes <- add_row(out$graph$levels$nodes,
+                                    idvar = fid,
+                                    id = lid:(lid + length(value) - 1),
+                                    label = as.character(value))
   out
 }
 
-add_edibble_vertex.formula <- function(value, vname, class, design) {
-  vlevels <- vlevels(design)
+add_edibble_vertex.formula <- function(value, fname, class, design) {
+  flevels <- fct_levels(design)
   tt <- terms(value)
   vars <- rownames(attr(tt, "factor"))
-  pdf <- expand.grid(vlevels[vars])
-  pdf[[vname]] <- traits(prefix = vname, n = nrow(pdf), class = class)
-  out <- add_edibble_vertex.edbl_trait(pdf[[vname]], vname, class, design)
-  idv <- subset(out$vgraph$nodes, label == vname)$id
+  pdf <- expand.grid(flevels[vars])
+  pdf[[fname]] <- traits(prefix = fname, n = nrow(pdf), class = class)
+  out <- add_edibble_vertex.edbl_trait(pdf[[fname]], fname, class, design)
+  idv <- fct_nodes_filter(out, label == fname)$id
   for(avar in vars) {
-    idp <- subset(out$vgraph$nodes, label == avar)$id
-    out$vgraph$edges <- add_row(out$vgraph$edges,
-                                from = idp, to = idv)
-    out$lgraph$edges <- add_row(out$lgraph$edges,
-                                from = vid(out$lgraph, pdf[[avar]]),
-                                to = vid(out$lgraph, pdf[[vname]]))
+    idp <- fct_nodes_filter(out, label == avar)$id
+    out$graph$edges <- add_row(out$graph$edges,
+                              from = idp, to = idv)
+    out$graph$levels$edges <- add_row(out$graph$levels$edges,
+                                      from = lvl_id(out, pdf[[avar]]),
+                                      to = lvl_id(out, pdf[[fname]]))
   }
   out
 }
 
-add_edibble_vertex.nst_levels <- function(value, vname, class, design) {
+add_edibble_vertex.nst_levels <- function(value, fname, class, design) {
   out <- design
-  idv <- last_id(out$vgraph) + 1L
-  idl <- last_id(out$lgraph) + 1L
+  idv <- fct_last_id(out) + 1L
+  idl <- lvl_last_id(out) + 1L
   parent <- value %@% "keyname"
-  idp <- vid(design$vgraph, label = parent)
+  idp <- fct_id(design, label = parent)
   attrs <- attributes(value)
-  missing_cols <- setdiff(names(attrs), c(names(out$vgraph$nodes), "names", "keyname"))
-  out$vgraph[missing_cols] <- NA
-  out$vgraph$nodes <- add_row(out$vgraph$nodes,
-                              id = idv,
-                              label = vname,
-                              class = class,
-                              !!!attrs[missing_cols])
-  out$vgraph$edges <- add_row(out$vgraph$edges,
-                              from = idp, to = idv)
+  missing_cols <- setdiff(names(attrs), c(names(fct_nodes(design)), "names", "keyname"))
+  out$graph[missing_cols] <- NA
+  out$graph$nodes <- add_row(out$graph$nodes,
+                             id = idv,
+                             label = fname,
+                             class = class,
+                             !!!attrs[missing_cols])
+  out$graph$edges <- add_row(out$graph$edges,
+                             from = idp, to = idv)
   plevels <- rep(names(value), lengths(value))
   clevels <- unname(unlist(value))
-  out$lgraph$nodes <- add_row(out$lgraph$nodes,
-                              idvar = idv,
-                              id = idl:(idl + sum(lengths(value)) - 1),
-                              label = clevels)
-  pids <- vid(out$lgraph, plevels)
-  vids <- vid(out$lgraph, clevels)
+  out$graph$levels$nodes <- add_row(out$graph$levels$nodes,
+                                   idvar = idv,
+                                   id = idl:(idl + sum(lengths(value)) - 1),
+                                   label = clevels)
+  pids <- lvl_id(out, plevels)
+  vids <- lvl_id(out, clevels)
   # TODO: fix for situation were same labels are used for levels for different factors
-  out$lgraph$edges <- add_row(out$lgraph$edges,
-                              from = pids, to = vids)
+  out$graph$levels$edges <- add_row(out$graph$levels$edges,
+                                    from = pids, to = vids)
   out
 }
 
 
-var_value_type <- function(x) {
+fct_value_type <- function(x) {
   if(is.numeric(x) && length(x)==1) return("numeric")
   if(is.vector(x) && !is_named(x)) return("unnamed_vector")
   if(is.vector(x) && is_named(x)) return("named_vector")
@@ -204,12 +209,7 @@ as.integer.edbl_var <- function(x, ...) {
 }
 
 #' @export
-levels.edbl_unit <- function(x) {
-  attr(x, "levels")
-}
-
-#' @export
-levels.edbl_trt <- function(x) {
+levels.edbl_var <- function(x) {
   attr(x, "levels")
 }
 

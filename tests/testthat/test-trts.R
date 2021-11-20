@@ -34,6 +34,22 @@ test_that("treatments", {
       serve_table()
   })
 
+
+
+  expect_error({
+    start_design() %>%
+      set_trts(irrigation = 2) %>%
+      set_units(person = 3) %>%
+      allot_trts( ~ peason)
+  })
+
+  expect_error({
+    start_design() %>%
+      set_trts(irrigation = 2) %>%
+      set_units(person = 3) %>%
+      allot_trts(irr ~ person)
+  })
+
   expect_snapshot({
     start_design() %>%
       set_trts(vaccine = 3,

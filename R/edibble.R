@@ -33,7 +33,7 @@ is_edibble_design <- function(x) {
 #' @rdname design-helpers
 #' @export
 is_named_design <- function(x) {
-  inherits(x, "NamedDesign")
+  inherits(x, "named_design")
 }
 
 #' @rdname design-helpers
@@ -62,8 +62,11 @@ is_edibble <- function(x) {
 edbl_design <- function(x) {
   if(is_edibble_design(x)) {
     x
-  } else {
+  } else if(is_edibble_table(x)) {
     attr(x, "design")
+  } else {
+    abort(sprintf("An edibble design is not available in %s.",
+                  deparse(substitute(x))))
   }
 }
 
@@ -71,10 +74,9 @@ edbl_design <- function(x) {
 #' @export
 edbl_table <- function(x) {
   if(is_edibble_design(x)) {
-    x$table
+    return(x$table)
   } else if(is_edibble_table(x)) {
-    attr(x, "design") <- NULL
-    x
+    return(x)
   } else {
     abort(sprintf("Do not know how to get table from %s.",
                   deparse(substitute(x))))

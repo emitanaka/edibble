@@ -52,25 +52,25 @@ allot_trts <- function(design, ...) {
 
   not_edibble(design)
 
-  vlev <- vlevels(design)
   dots <- enexprs(...)
   design$allotment <- dots
   for(ialloc in seq_along(dots)) {
     trts <- all.vars(f_lhs(dots[[ialloc]]))
     # there should be only one unit
     unit <- all.vars(f_rhs(dots[[ialloc]]))
-    uid <- vid(design$vgraph, unit)
+    check_var_exists(design, unit, "edbl_unit")
+    uid <- fct_id(design, unit)
     if(length(trts)) {
-      # there should be an error if trts is not within vars
-      # maybe there should be a check that trts is edbl_trt
-      tids <- vid(design$vgraph, trts)
+      check_var_exists(design, trts, "edbl_trt")
+      tids <- fct_id(design, trts)
     } else {
-      classes <- vgraph(design, node_var = "class")
-      tids <- vgraph(design, node_var = "id")[classes=="edbl_trt"]
+      check_trt_exists(design)
+      classes <- fct_class(design)
+      tids <- trt_ids(design)
     }
 
-    design$vgraph$edges <- add_row(design$vgraph$edges,
-                                   from = tids, to = uid, alloc = ialloc)
+    design$graph$edges <- add_row(design$graph$edges,
+                                  from = tids, to = uid, alloc = ialloc)
   }
   design
 }
@@ -110,17 +110,17 @@ assign_trts <- function(design, order = "random", seed = NULL, constrain = nesti
     trts <- all.vars(f_lhs(design$allotment[[ialloc]]))
     # there should be only one unit
     unit <- all.vars(f_rhs(design$allotment[[ialloc]]))
-    uid <- vid(design$vgraph, unit)
+    uid <- fct_id(design, unit)
     if(length(trts)) {
-      tids <- vid(design$vgraph, trts)
+      tids <- fct_id(design, trts)
     } else {
-      classes <- vgraph(design, node_var = "class")
-      tids <- vgraph(design, node_var = "id")[classes=="edbl_trt"]
+      classes <-fct_class(design)
+      tids <- trt_ids(design)
     }
 
-    luids <- subset(lgraph(design)$nodes, idvar == uid)$id
-    tdf <- subset(lgraph(design)$nodes, idvar %in% tids)
-    tidf <- expand.grid(split(tdf$id, tdf$var))
+    luids <- lvl_nodes_filter(design, idvar == uid)$id
+    tdf <- lvl_nodes_filter(design, idvar %in% tids)
+    tidf <- expand.grid(split(tdf$id, fct_label(design, tdf$idvar)))
     ntrts <- nrow(tidf)
     permutation <- switch(order,
                           "systematic" = rep(1:nrow(tidf), length.out = length(luids)),
@@ -134,10 +134,10 @@ assign_trts <- function(design, order = "random", seed = NULL, constrain = nesti
                               # based on `constrain`
 
                               # find the grandest ancestor
-                              vanc <- vancestor(design$vgraph, id = uid)
+                              vanc <- fct_ancestor(design, id = uid)
                               vanc <- vanc[vanc %in% unit_ids(design)]
-                              udf <- as.data.frame(serve_units(select_units(design, !!vlabel(design$vgraph, vanc))))
-                              gparent <- vlabel(design$vgraph, vanc[2])
+                              udf <- as.data.frame(serve_units(select_units(design, !!fct_label(design, vanc))))
+                              gparent <- fct_label(design, vanc[2])
                               blocksizes <- as.data.frame(table(table(udf[[gparent]])))
                               blocksizes$size <- as.numeric(as.character(blocksizes$Var1))
                               for(isize in seq(nrow(blocksizes))) {
@@ -169,8 +169,9 @@ assign_trts <- function(design, order = "random", seed = NULL, constrain = nesti
 
     tout <- tidf[permutation, , drop = FALSE]
 
+
     for(itvar in seq_along(tout)) {
-      design$lgraph$edges <- add_row(design$lgraph$edges,
+      design$graph$levels$edges <- add_row(design$graph$levels$edges,
                                      from = tout[[itvar]],
                                      to = luids, alloc = ialloc)
     }

@@ -10,16 +10,16 @@ test_that("set_units", {
     set_units(block = 3,
               plot = 2)
 
-  expect_equal(nrow(des$vgraph$nodes), 2)
-  expect_equal(names(des$vgraph$nodes), c("id", "label", "class"))
-  expect_equal(nrow(des$lgraph$nodes), 5)
-  expect_equal(des$vgraph$nodes$id, c(1L, 2L))
-  expect_equal(des$vgraph$nodes$label, c("block", "plot"))
-  expect_equal(des$vgraph$nodes$class, c("edbl_unit", "edbl_unit"))
-  expect_equal(des$lgraph$nodes$idvar, c(1L, 1L, 1L, 2L, 2L))
-  expect_equal(des$lgraph$nodes$id, 1:5)
-  expect_equal(des$lgraph$nodes$label, c("block1", "block2", "block3", "plot1", "plot2"))
-  expect_equal(names(des$lgraph$nodes), c("idvar", "id", "label"))
+  expect_equal(nrow(des$graph$nodes), 2)
+  expect_equal(names(des$graph$nodes), c("id", "label", "class"))
+  expect_equal(nrow(des$graph$levels$nodes), 5)
+  expect_equal(des$graph$nodes$id, c(1L, 2L))
+  expect_equal(des$graph$nodes$label, c("block", "plot"))
+  expect_equal(des$graph$nodes$class, c("edbl_unit", "edbl_unit"))
+  expect_equal(des$graph$levels$nodes$idvar, c(1L, 1L, 1L, 2L, 2L))
+  expect_equal(des$graph$levels$nodes$id, 1:5)
+  expect_equal(des$graph$levels$nodes$label, c("block1", "block2", "block3", "plot1", "plot2"))
+  expect_equal(names(des$graph$levels$nodes), c("idvar", "id", "label"))
 
   des2 <- start_design() %>%
     set_units(row = 3,

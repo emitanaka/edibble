@@ -7,7 +7,7 @@
 \usage{
 add_edibble_vertex(x, ...)
 
-\method{add_edibble_vertex}{default}(value, vname, class, design)
+\method{add_edibble_vertex}{default}(value, fname, class, design)
 }
 \arguments{
 \item{value}{A value that may be a single number, unnamed vector,

@@ -4,7 +4,7 @@ make_sheet_names <- function(.design = NULL) {
     data_sheet_names <- "Data"
   } else {
     if(has_record(.design)) {
-      rids <- subset(.design$vgraph$nodes, class=="edbl_rcrd")$id
+      rids <- rcrd_ids(.design)
       rcrds <- rcrd_to_unit_dict(.design, rids)
       units <- unique(unname(rcrds))
       if(length(units) == 1) {
@@ -13,7 +13,7 @@ make_sheet_names <- function(.design = NULL) {
         data_sheet_names <- data_sheet_name(units)
       }
     } else {
-      data_sheet_nmes <- "Data"
+      data_sheet_names <- "Data"
     }
   }
 
@@ -110,19 +110,19 @@ data_sheet_name <- function(name) {
 }
 
 subset.edbl_design <- function(.edibble, unit, rcrds) {
-  keep_rids <- vid(.edibble$vgraph, rcrds)
-  keep_uids <- vid(.edibble$vgraph, unit)
-  keep_uids_ancestors <- vancestor(.edibble$vgraph, keep_uids)
-  .edibble$vgraph$nodes <- subset(.edibble$vgraph$nodes, id %in% c(keep_uids_ancestors, keep_rids))
-  .edibble$vgraph$edges <- subset(.edibble$vgraph$edges, (to %in% keep_uids_ancestors &
-                                                            from %in% keep_uids_ancestors) |
-                                    to %in% keep_rids)
-  .edibble$lgraph$nodes <- subset(.edibble$lgraph$nodes, idvar %in% keep_uids_ancestors)
-  keep_lids_ancestors <- .edibble$lgraph$nodes$id
-  .edibble$lgraph$edges <- subset(.edibble$lgraph$edges, to %in% keep_lids_ancestors & from %in% keep_lids_ancestors)
+  keep_rids <- fct_id(.edibble, rcrds)
+  keep_uids <- fct_id(.edibble, unit)
+  keep_uids_ancestors <- fct_ancestor(.edibble, keep_uids)
+  .edibble$graph$nodes <- fct_nodes_filter(.edibble, id %in% c(keep_uids_ancestors, keep_rids))
+  .edibble$graph$edges <- fct_edges_filter(.edibble, (to %in% keep_uids_ancestors &
+                                                      from %in% keep_uids_ancestors) |
+                                             to %in% keep_rids)
+  .edibble$graph$levels$nodes <- lvl_nodes_filter(.edibble, idvar %in% keep_uids_ancestors)
+  keep_lids_ancestors <- lvl_id(.edibble)
+  .edibble$graph$levels$edges <- lvl_edges_filter(.edibble, to %in% keep_lids_ancestors & from %in% keep_lids_ancestors)
   if(!is_null(.edibble$allotment)) {
     units <- map_chr(.edibble$allotment, function(x) all.vars(f_rhs(x)))
-    allotments <- .edibble$allotment[units %in% .edibble$vgraph$nodes$label]
+    allotments <- .edibble$allotment[units %in% fct_label(.edibble)]
     if(is_empty(allotments)) {
       .edibble$allotment <- NULL
     } else {
@@ -130,7 +130,7 @@ subset.edbl_design <- function(.edibble, unit, rcrds) {
     }
   }
   if(!is_null(.edibble$validation)) {
-    rcrds <- vlabel(.edibble$vgraph, keep_rids)
+    rcrds <- fct_label(.edibble, keep_rids)
     if(!any(rcrds %in% names(.edibble$validation))) {
       .edibble$validation <- NULL
     } else {
@@ -144,7 +144,7 @@ subset.edbl_design <- function(.edibble, unit, rcrds) {
 write_data_sheet <- function(wb, sheet_names, cell_styles, .design, .data) {
   if(nrow(.data) && ncol(.data)) {
     if(length(sheet_names) > 1) {
-      rids <- subset(.design$vgraph$nodes, class=="edbl_rcrd")$id
+      rids <- rcrd_ids(.design)
       rcrds2unit <- rcrd_to_unit_dict(.design, rids)
       units <- unique(unname(rcrds2unit))
       for(aunit in units) {
@@ -191,7 +191,7 @@ write_variables_sheet <- function(wb, sheet_name, cell_styles, .design, .data) {
     data$value <- ""
     valid <- .design$validation
     valid_names <- names(valid)
-    rids <- subset(.design$vgraph$nodes, class=="edbl_rcrd")$id
+    rids <- rcrd_ids(.design)
     rcrds <- rcrd_to_unit_dict(.design, rids)
     n_ounits <- length(unique(rcrds))
     for(i in seq_along(valid)) {
