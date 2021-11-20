@@ -170,18 +170,18 @@
 <span class="co">#&gt;     &lt;unit(4)&gt; &lt;unit(16)&gt;   &lt;trt(2)&gt; &lt;trt(2)&gt;</span>
 <span class="co">#&gt;  1 wholeplot1  subplot1           B       V1</span>
 <span class="co">#&gt;  2 wholeplot1  subplot2           B       V2</span>
-<span class="co">#&gt;  3 wholeplot1  subplot3           B       V1</span>
-<span class="co">#&gt;  4 wholeplot1  subplot4           B       V2</span>
-<span class="co">#&gt;  5 wholeplot2  subplot5           B       V1</span>
-<span class="co">#&gt;  6 wholeplot2  subplot6           B       V2</span>
-<span class="co">#&gt;  7 wholeplot2  subplot7           B       V1</span>
-<span class="co">#&gt;  8 wholeplot2  subplot8           B       V2</span>
-<span class="co">#&gt;  9 wholeplot3  subplot9           A       V2</span>
+<span class="co">#&gt;  3 wholeplot1  subplot3           B       V2</span>
+<span class="co">#&gt;  4 wholeplot1  subplot4           B       V1</span>
+<span class="co">#&gt;  5 wholeplot2  subplot5           B       V2</span>
+<span class="co">#&gt;  6 wholeplot2  subplot6           B       V1</span>
+<span class="co">#&gt;  7 wholeplot2  subplot7           B       V2</span>
+<span class="co">#&gt;  8 wholeplot2  subplot8           B       V1</span>
+<span class="co">#&gt;  9 wholeplot3  subplot9           A       V1</span>
 <span class="co">#&gt; 10 wholeplot3  subplot10          A       V2</span>
-<span class="co">#&gt; 11 wholeplot3  subplot11          A       V1</span>
+<span class="co">#&gt; 11 wholeplot3  subplot11          A       V2</span>
 <span class="co">#&gt; 12 wholeplot3  subplot12          A       V1</span>
-<span class="co">#&gt; 13 wholeplot4  subplot13          A       V1</span>
-<span class="co">#&gt; 14 wholeplot4  subplot14          A       V2</span>
+<span class="co">#&gt; 13 wholeplot4  subplot13          A       V2</span>
+<span class="co">#&gt; 14 wholeplot4  subplot14          A       V1</span>
 <span class="co">#&gt; 15 wholeplot4  subplot15          A       V2</span>
 <span class="co">#&gt; 16 wholeplot4  subplot16          A       V1</span></code></pre></div>
 <p>You can see it outputs a data frame (or tibble) called edibble. The name origin of <code>edibble</code> is a play on <a href="https://tibble.tidyverse.org/"><code>tibble</code></a> and can be thought of as tibble output for experimental design.</p>
@@ -245,18 +245,18 @@
 
 <span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="va">des</span><span class="op">)</span>
 <span class="co">#&gt; [38;5;246m# An edibble: 120 x 10[39m</span>
-<span class="co">#&gt;        class     student       style        exam exam_mark quiz1_mark quiz2_mark gender   room</span>
-<span class="co">#&gt;    [3m[38;5;246m&lt;unit(4)&gt;[39m[23m [3m[38;5;246m&lt;unit(120)&gt;[39m[23m    [3m[38;5;246m&lt;trt(2)&gt;[39m[23m    [3m[38;5;246m&lt;trt(3)&gt;[39m[23m    [3m[38;5;246m&lt;rcrd&gt;[39m[23m     [3m[38;5;246m&lt;rcrd&gt;[39m[23m     [3m[38;5;246m&lt;rcrd&gt;[39m[23m [3m[38;5;246m&lt;rcrd&gt;[39m[23m [3m[38;5;246m&lt;rcrd&gt;[39m[23m</span>
-<span class="co">#&gt; [38;5;250m 1[39m    class1   student1  traditional take-home           ■          ■          ■      ■      ■</span>
-<span class="co">#&gt; [38;5;250m 2[39m    class1   student2  traditional closed-book         ■          ■          ■      ■      [38;5;246mx[39m</span>
-<span class="co">#&gt; [38;5;250m 3[39m    class1   student3  traditional open-book           ■          ■          ■      ■      [38;5;246mx[39m</span>
-<span class="co">#&gt; [38;5;250m 4[39m    class1   student4  traditional open-book           ■          ■          ■      ■      [38;5;246mx[39m</span>
-<span class="co">#&gt; [38;5;250m 5[39m    class1   student5  traditional open-book           ■          ■          ■      ■      [38;5;246mx[39m</span>
-<span class="co">#&gt; [38;5;250m 6[39m    class1   student6  traditional closed-book         ■          ■          ■      ■      [38;5;246mx[39m</span>
-<span class="co">#&gt; [38;5;250m 7[39m    class1   student7  traditional take-home           ■          ■          ■      ■      [38;5;246mx[39m</span>
-<span class="co">#&gt; [38;5;250m 8[39m    class1   student8  traditional open-book           ■          ■          ■      ■      [38;5;246mx[39m</span>
-<span class="co">#&gt; [38;5;250m 9[39m    class1   student9  traditional take-home           ■          ■          ■      ■      [38;5;246mx[39m</span>
-<span class="co">#&gt; [38;5;250m10[39m    class1   student10 traditional take-home           ■          ■          ■      ■      [38;5;246mx[39m</span>
+<span class="co">#&gt;        class     student    style        exam exam_mark quiz1_mark quiz2_mark gender   room</span>
+<span class="co">#&gt;    [3m[38;5;246m&lt;unit(4)&gt;[39m[23m [3m[38;5;246m&lt;unit(120)&gt;[39m[23m [3m[38;5;246m&lt;trt(2)&gt;[39m[23m    [3m[38;5;246m&lt;trt(3)&gt;[39m[23m    [3m[38;5;246m&lt;rcrd&gt;[39m[23m     [3m[38;5;246m&lt;rcrd&gt;[39m[23m     [3m[38;5;246m&lt;rcrd&gt;[39m[23m [3m[38;5;246m&lt;rcrd&gt;[39m[23m [3m[38;5;246m&lt;rcrd&gt;[39m[23m</span>
+<span class="co">#&gt; [38;5;250m 1[39m    class1   student1   flipped closed-book         ■          ■          ■      ■      ■</span>
+<span class="co">#&gt; [38;5;250m 2[39m    class1   student2   flipped open-book           ■          ■          ■      ■      [38;5;246mx[39m</span>
+<span class="co">#&gt; [38;5;250m 3[39m    class1   student3   flipped open-book           ■          ■          ■      ■      [38;5;246mx[39m</span>
+<span class="co">#&gt; [38;5;250m 4[39m    class1   student4   flipped open-book           ■          ■          ■      ■      [38;5;246mx[39m</span>
+<span class="co">#&gt; [38;5;250m 5[39m    class1   student5   flipped take-home           ■          ■          ■      ■      [38;5;246mx[39m</span>
+<span class="co">#&gt; [38;5;250m 6[39m    class1   student6   flipped open-book           ■          ■          ■      ■      [38;5;246mx[39m</span>
+<span class="co">#&gt; [38;5;250m 7[39m    class1   student7   flipped closed-book         ■          ■          ■      ■      [38;5;246mx[39m</span>
+<span class="co">#&gt; [38;5;250m 8[39m    class1   student8   flipped open-book           ■          ■          ■      ■      [38;5;246mx[39m</span>
+<span class="co">#&gt; [38;5;250m 9[39m    class1   student9   flipped take-home           ■          ■          ■      ■      [38;5;246mx[39m</span>
+<span class="co">#&gt; [38;5;250m10[39m    class1   student10  flipped closed-book         ■          ■          ■      ■      [38;5;246mx[39m</span>
 <span class="co">#&gt; [38;5;246m# … with 110 more rows, and 1 more variable: teacher &lt;rcrd&gt;[39m</span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/export_design.html">export_design</a></span><span class="op">(</span><span class="va">des</span>, <span class="st">"/PATH/TO/FILE.xlsx"</span><span class="op">)</span></code></pre></div>
