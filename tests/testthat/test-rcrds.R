@@ -43,6 +43,17 @@ test_that("measure response", {
                  teacher = to_be_character(length = with_value("<=", 100)),
                  room = to_be_character(length = with_value(">=", 1)))
 
+  des2 %>%
+    expect_rcrds( exam_mark = to_be_numeric(with_value(between = c(0, 100))),
+                  quiz1_mark > 0,
+                  quiz1_mark <= 15,
+                  quiz1_mark < 12,
+                  factor(gender, levels = c("female", "male", "non-binary")))
+  des2 %>%
+    expect_rcrds(exam_mark >= 0,
+                 exam_mark <= 100,
+                 factor(gender, levels = c("female", "male", "non-binary")))
+
   #export_design(serve_table(des3), "~/Downloads/temp.xlsx", overwrite = TRUE)
 
 

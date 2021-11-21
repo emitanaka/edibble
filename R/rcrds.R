@@ -62,9 +62,106 @@ set_rcrds_of <- function(.edibble, ...) {
 #' @export
 expect_rcrds <- function(.edibble, ...) {
   not_edibble(.edibble)
-  .edibble$validation <- list2(...)
+  dots <- enquos(...)
+  dots_nms <- names(dots)
+  rules_named <- map(dots[dots_nms!=""], eval_tidy)
+  rules_unnamed <- map(dots[dots_nms==""], validate_rcrd,
+                       rnames = fct_label(.edibble, rcrd_ids(.edibble)))
+  rules_unnamed <- setNames(rules_unnamed, map_chr(rules_unnamed, function(x) x$rcrd))
+  .edibble$validation <- simplify_validation(c(rules_named, rules_unnamed))
   .edibble
 }
+
+simplify_validation <- function(x) {
+  rcrd_nms <- names(x)
+  rules <- list()
+  for(arcrd in unique(rcrd_nms)) {
+    xs <- x[which(rcrd_nms==arcrd)]
+    rules[arcrd] <- xs[1]
+    if(length(xs)!=1) {
+      # the rules must match record type
+      record_type <- unique(map_chr(xs, function(a) a$record))
+      if(length(record_type)==1 && record_type=="numeric") {
+        rng <- c(-Inf, Inf)
+        inc <- c(TRUE, TRUE)
+        for(ax in xs) {
+          rng[1] <- switch(ax$operator,
+                           "equal" = ,
+                           "greaterThanOrEqual" = ,
+                           "greaterThan" = max(ax$value, rng[1]),
+                           "between" = max(ax$value[1], rng[1]),
+                           rng[1])
+          rng[2] <- switch(ax$operator,
+                           "equal" = ,
+                           "lessThanOrEqual" = ,
+                           "lessThan" = min(ax$value, rng[2]),
+                           "between" = min(ax$value[2], rng[2]),
+                           rng[2])
+          inc[1] <- switch(ax$operator,
+                           "greaterThan" = FALSE,
+                           TRUE)
+          inc[2] <- switch(ax$operator,
+                           "lessThan" = FALSE,
+                           TRUE)
+        }
+        if(all(is.infinite(rng))) {
+          # TODO: support just including type as numeric
+          abort("No upper or lower range supplied. This is not supported yet.")
+        } else if(is.infinite(rng[1])) {
+          rules[[arcrd]]$operator <- ifelse(inc[1], "greaterThanOrEqual", "greaterThan")
+          rules[[arcrd]]$value <- rng[2]
+        } else if(is.infinite(rng[2])) {
+          rules[[arcrd]]$operator <- ifelse(inc[1], "lessThanOrEqual", "lessThan")
+          rules[[arcrd]]$value <- rng[1]
+        } else {
+          rules[[arcrd]]$operator <- "between"
+          rules[[arcrd]]$value <- rng
+        }
+
+      } else {
+        abort(sprintf("The record `%s` have record types: %s. Only one record type is allowed.",
+                      arcrd, .combine_words(record_type)))
+      }
+    }
+  }
+  rules
+}
+
+
+
+
+validate_rcrd <- function(x, rnames = NULL) {
+  l <- as.list(x[[2]])
+  operator <- as.character(l[[1]])
+  #browser()
+  if(is.numeric(l[[2]])) {
+    value <- l[[2]]
+  } else {
+    rcrd1 <- as.character(l[[2]])
+  }
+  if(is.numeric(l[[3]])) {
+    value <- l[[3]]
+  } else {
+    rcrd2 <- as.character(l[[3]])
+  }
+  if(exists("rcrd1") && rcrd1 %in% rnames) {
+    rcrd <- rcrd1
+  } else if(exists("rcrd2") && rcrd2 %in% rnames){
+    rcrd <- rcrd2
+  }
+  if(exists("value") & operator!="factor") {
+    if(is.integer(value)) {
+      return(c(to_be_integer(with_value(operator, value)), rcrd = rcrd))
+    } else {
+      return(c(to_be_numeric(with_value(operator, value)), rcrd = rcrd))
+    }
+  } else if(operator=="factor") {
+    lvls <- eval(l[[3]], envir = attr(x, ".Environment"))
+    return(c(to_be_factor(levels = lvls), rcrd = rcrd))
+  }
+}
+
+
 
 #' @export
 expect_vars <- function(.edibble, ...) {

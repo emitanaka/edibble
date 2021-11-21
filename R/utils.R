@@ -177,10 +177,45 @@ print.edbl_design <- function(x,
   if(!is_null(x$validation)) {
     cat(decorate_title("Validation:\n"))
     rnames <- names(x$validation)
+    #browser()
     items <- map_chr(seq_along(x$validation), function(i) {
-      paste0(rnames[i], ": ", style_italic(x$validation[[i]]$record))
+      paste0(rnames[i], ": ", style_italic(x$validation[[i]]$record), " ",
+             validation_interval(x$validation[[i]]))
     })
     cli_li(items = items)
+  }
+}
+
+validation_interval <- function(x) {
+  rng <- c(-Inf, Inf)
+  inc <- c("[", "]")
+  if(x$record %in% c("numeric", "integer")) {
+    rng[1] <- switch(x$operator,
+                     "equal" = ,
+                     "greaterThanOrEqual" = ,
+                     "greaterThan" = x$value,
+                     "between" = x$value[1],
+                     rng[1])
+    rng[2] <- switch(x$operator,
+                     "equal" = ,
+                     "lessThanOrEqual" = ,
+                     "lessThan" = x$value,
+                     "between" = x$value[2],
+                     rng[2])
+    inc[1] <- switch(x$operator,
+                     "greaterThan" = "(",
+                     "[")
+    inc[2] <- switch(x$operator,
+                     "lessThan" = ")",
+                     "]")
+
+    return(paste0(inc[1], rng[1], ", ", rng[2] ,inc[2]))
+  } else if(x$record == "factor") {
+    lvls <- x$values
+    if(length(lvls) > 5) {
+      lvls <- c(lvls[1:3], "...", lvls[length(lvls)])
+    }
+    return(paste0("[", paste0(lvls, collapse = ", "), "]"))
   }
 }
 
