@@ -35,7 +35,7 @@ test_that("measure response", {
     serve_table(des2)
   })
 
-  des3 <- des2 %>%
+  des3A <- des2 %>%
     expect_rcrds( exam_mark = to_be_numeric(with_value(between = c(0, 100))),
                  quiz1_mark = to_be_integer(with_value(between = c(0, 15))),
                  quiz2_mark = to_be_integer(with_value(between = c(0, 30))),
@@ -43,16 +43,23 @@ test_that("measure response", {
                  teacher = to_be_character(length = with_value("<=", 100)),
                  room = to_be_character(length = with_value(">=", 1)))
 
-  des2 %>%
+  des3B <- des2 %>%
     expect_rcrds( exam_mark = to_be_numeric(with_value(between = c(0, 100))),
                   quiz1_mark > 0,
                   quiz1_mark <= 15,
                   quiz1_mark < 12,
                   factor(gender, levels = c("female", "male", "non-binary")))
-  des2 %>%
+
+  des3C <- des2 %>%
     expect_rcrds(exam_mark >= 0,
                  exam_mark <= 100,
                  factor(gender, levels = c("female", "male", "non-binary")))
+
+  des3D <- des2 %>%
+    expect_rcrds(exam_mark < -1)
+
+  des3D <- des2 %>%
+    expect_rcrds(0 < exam_mark)
 
   #export_design(serve_table(des3), "~/Downloads/temp.xlsx", overwrite = TRUE)
 

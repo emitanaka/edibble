@@ -127,37 +127,49 @@ simplify_validation <- function(x) {
   rules
 }
 
+validate_values <- function(x, env = parent.env()) {
+  if(is.numeric(x)) {
+    value <- x
+  } else if(is.language(x)) {
+    value <- tryCatch(eval(x, envir = env),
+                      error = function(y) as.character(x))
+  } else {
+    abort("Don't know how to interpret the validation value.")
+  }
+  value
+}
 
+reverse_operator <- function(x) {
+  switch(x,
+         "<" = ">",
+         "<=" = ">=",
+         ">=" = "<=",
+         ">" = "<")
+}
 
 
 validate_rcrd <- function(x, rnames = NULL) {
   l <- as.list(x[[2]])
   operator <- as.character(l[[1]])
   #browser()
-  if(is.numeric(l[[2]])) {
-    value <- l[[2]]
-  } else {
-    rcrd1 <- as.character(l[[2]])
-  }
-  if(is.numeric(l[[3]])) {
-    value <- l[[3]]
-  } else {
-    rcrd2 <- as.character(l[[3]])
-  }
-  if(exists("rcrd1") && rcrd1 %in% rnames) {
-    rcrd <- rcrd1
-  } else if(exists("rcrd2") && rcrd2 %in% rnames){
-    rcrd <- rcrd2
-  }
-  if(exists("value") & operator!="factor") {
+  val1 <- validate_values(l[[2]], env = attr(x, ".Environment"))
+  val2 <- validate_values(l[[3]], env = attr(x, ".Environment"))
+  w <- ifelse(val1 %in% rnames,
+              1,
+              ifelse(val2 %in% rnames,
+                     2,
+                     abort("No record factor found.")))
+  rcrd <- ifelse(w==1, val1, val2)
+  value <- if(w==2) val1 else val2
+  if(operator!="factor") {
+    operator <- ifelse(w==1, operator, reverse_operator(operator))
     if(is.integer(value)) {
       return(c(to_be_integer(with_value(operator, value)), rcrd = rcrd))
     } else {
       return(c(to_be_numeric(with_value(operator, value)), rcrd = rcrd))
     }
   } else if(operator=="factor") {
-    lvls <- eval(l[[3]], envir = attr(x, ".Environment"))
-    return(c(to_be_factor(levels = lvls), rcrd = rcrd))
+    return(c(to_be_factor(levels = value), rcrd = rcrd))
   }
 }
 
