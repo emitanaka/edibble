@@ -1,7 +1,7 @@
 op.edibble <- list(
   edibble.tree.decorate.trts = cli::col_blue,
   edibble.tree.decorate.units = cli::combine_ansi_styles(cli::bg_black, cli::col_yellow),
-  edibble.tree.decorate.rcrd = cli::col_green,
+  edibble.tree.decorate.rcrds = cli::col_green,
   edibble.tree.decorate.levels = function(x) cli::col_grey(cli::pluralize("({x} level{?s})")),
   edibble.tree.decorate.title = cli::combine_ansi_styles("cyan", "italic"),
   # vector labels

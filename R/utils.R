@@ -76,9 +76,9 @@ abort_missing_vars <- function(missing_vars) {
 }
 
 
-decorate_vars <- function(x, decorate_units, decorate_trts, decorate_resp, classes) {
-  edbl_classes <- c("edbl_unit", "edbl_trt", "edbl_resp")
-  decorate_fns <- list(decorate_units, decorate_trts, decorate_resp)
+decorate_vars <- function(x, decorate_units, decorate_trts, decorate_rcrds, classes) {
+  edbl_classes <- c("edbl_unit", "edbl_trt", "edbl_rcrd")
+  decorate_fns <- list(decorate_units, decorate_trts, decorate_rcrds)
   for(i in seq_along(edbl_classes)) {
     index <- which(classes==edbl_classes[i])
     if(length(index) > 0) {
@@ -123,7 +123,7 @@ decorate_vars <- function(x, decorate_units, decorate_trts, decorate_resp, class
 print.edbl_design <- function(x,
                               decorate_units  = edibble_decorate("units"),
                               decorate_trts   = edibble_decorate("trts"),
-                              decorate_resp   = edibble_decorate("resp"),
+                              decorate_rcrds  = edibble_decorate("rcrds"),
                               decorate_levels = edibble_decorate("levels"),
                               decorate_title  = edibble_decorate("title"),
                               title = NULL, ...) {
@@ -140,7 +140,7 @@ print.edbl_design <- function(x,
     label_names <- decorate_vars(fnames,
                                  decorate_units,
                                  decorate_trts,
-                                 decorate_resp,
+                                 decorate_rcrds,
                                  classes)
     var_nlevels <- lengths(fct_levels(x)[fnames])
     nvar <- length(fnames)
@@ -156,11 +156,13 @@ print.edbl_design <- function(x,
                    }
                  })
     nodes_with_parents <- unname(unlist(ll))
+    label_names_with_levels <- paste(label_names, map_chr(var_nlevels, decorate_levels))
+    label_names_with_levels[classes=="edbl_rcrd"] <- label_names[classes=="edbl_rcrd"]
 
     data <- data.frame(var = c("root", fnames),
                        child = I(c(list(setdiff(fnames, nodes_with_parents)), ll)),
                        label = c(decorate_title(title),
-                                 paste(label_names, map_chr(var_nlevels, decorate_levels))))
+                                 label_names_with_levels))
   }
   cat(tree(data, root = "root"), sep = "\n")
   if(!is_null(x$allotment)) {

@@ -8,7 +8,7 @@
   x,
   decorate_units = edibble_decorate("units"),
   decorate_trts = edibble_decorate("trts"),
-  decorate_resp = edibble_decorate("resp"),
+  decorate_rcrds = edibble_decorate("rcrds"),
   decorate_levels = edibble_decorate("levels"),
   decorate_title = edibble_decorate("title"),
   title = NULL,
