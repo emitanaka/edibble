@@ -273,21 +273,26 @@ with_value <- function(operator = c("=", "==", ">=", "<=", "<", ">", "!="),
        value = value)
 }
 
+fill_symbol <- function() "■"
+dup_symbol <- function() "x"
 
-new_edibble_rcrd <- function(n, unit, class = NULL) {
-  v <- rep("x", n)
-  loc <- match(unique(unit), unit)
-  v[loc] <- "■"
-  x <- new_vctr(v, class = "edbl_rcrd")
+
+new_edibble_rcrd <- function(x, unit_name = NULL, unit_values = NULL, class = NULL) {
+  x <- new_vctr(x, class = "edbl_rcrd")
   class(x) <- c(class, class(x))
+  attr(x, "unit") <- unit_name %||% attr(x, "unit")
+  attr(x, "unit_values") <- unit_values %||% attr(x, "unit_values")
   x
 }
 
 #' @importFrom pillar pillar_shaft new_pillar_shaft_simple style_subtle
 #' @export
 pillar_shaft.edbl_rcrd <- function(x, ...) {
-  out <- as.character(x)
-  out <- ifelse(out=="x", style_subtle("x"), out)
+  uvals <- attr(x, "unit_values")[1:length(x)]
+  n <- length(uvals)
+  out <- rep(dup_symbol(), n)
+  loc <- match(unique(uvals), uvals)
+  out[loc] <- fill_symbol()
   new_pillar_shaft_simple(out, align = "right")
 }
 

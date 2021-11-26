@@ -7,8 +7,8 @@
       Effective teaching
       +-class (4 levels)
       | +-student (120 levels)
-      | | \-exam_mark (0 levels)
-      | \-room (0 levels)
+      | | \-exam_mark
+      | \-room
       +-style (2 levels)
       \-exam (3 levels)
       Allotment:

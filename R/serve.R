@@ -50,7 +50,9 @@ serve_rcrds <- function(design, lunits) {
   rnames <- fct_label(design, id = rids)
   N <- max(lengths(lunits))
   lvs <- lapply(rnames, function(avar) {
-    new_edibble_rcrd(N, lunits[[rcrd2unit[avar]]])
+    unit <- rcrd2unit[avar]
+    unit_values <- lunits[[unit]]
+    new_edibble_rcrd(rep(NA_real_, N), unit, unit_values)
   })
   names(lvs) <- rnames
   lvs
