@@ -156,22 +156,22 @@
 <span class="co">#&gt;     set_units(unit = 30) %&gt;%</span>
 <span class="co">#&gt;     set_trts(trt = 5) %&gt;%</span>
 <span class="co">#&gt;     allot_trts(trt ~ unit) %&gt;%</span>
-<span class="co">#&gt;     assign_trts("random", seed = 476) %&gt;%</span>
+<span class="co">#&gt;     assign_trts("random", seed = 325) %&gt;%</span>
 <span class="co">#&gt;     serve_table()</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ── edibble data frame ──────────────────────────────────────────────────────────</span>
 <span class="co">#&gt; # An edibble: 30 x 2</span>
 <span class="co">#&gt;          unit      trt</span>
 <span class="co">#&gt;    &lt;unit(30)&gt; &lt;trt(5)&gt;</span>
-<span class="co">#&gt;  1     unit1      trt3</span>
-<span class="co">#&gt;  2     unit2      trt1</span>
+<span class="co">#&gt;  1     unit1      trt2</span>
+<span class="co">#&gt;  2     unit2      trt5</span>
 <span class="co">#&gt;  3     unit3      trt3</span>
-<span class="co">#&gt;  4     unit4      trt4</span>
-<span class="co">#&gt;  5     unit5      trt5</span>
-<span class="co">#&gt;  6     unit6      trt2</span>
-<span class="co">#&gt;  7     unit7      trt3</span>
+<span class="co">#&gt;  4     unit4      trt1</span>
+<span class="co">#&gt;  5     unit5      trt3</span>
+<span class="co">#&gt;  6     unit6      trt3</span>
+<span class="co">#&gt;  7     unit7      trt4</span>
 <span class="co">#&gt;  8     unit8      trt3</span>
-<span class="co">#&gt;  9     unit9      trt4</span>
+<span class="co">#&gt;  9     unit9      trt2</span>
 <span class="co">#&gt; 10     unit10     trt5</span>
 <span class="co">#&gt; # … with 20 more rows</span>
 
@@ -181,7 +181,7 @@
 <span class="co">#&gt;               unit = nested_in(block, 4)) %&gt;%</span>
 <span class="co">#&gt;     set_trts(trt = 4) %&gt;%</span>
 <span class="co">#&gt;     allot_trts(trt ~ unit) %&gt;%</span>
-<span class="co">#&gt;     assign_trts("random", seed = 155) %&gt;%</span>
+<span class="co">#&gt;     assign_trts("random", seed = 289) %&gt;%</span>
 <span class="co">#&gt;     serve_table()</span></code></pre></div>
 <p>The terminal output has color. You can see the terminal output below for the Split-plot design.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
