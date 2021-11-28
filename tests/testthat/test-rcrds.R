@@ -29,6 +29,7 @@ test_that("measure response", {
                                "gender"),
                    class = c("room",
                              "teacher"))
+    des2
   })
 
   expect_snapshot({

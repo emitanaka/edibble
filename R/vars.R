@@ -210,11 +210,28 @@ as.integer.edbl_var <- function(x, ...) {
 
 #' @export
 levels.edbl_var <- function(x) {
-  attr(x, "levels")
+  if(inherits(x, "edbl_rcrd")) {
+    unique(attr(x, "unit_values"))
+  } else {
+    attr(x, "levels")
+  }
 }
 
 #' @rdname utility-edibble-var
 #' @export
 is_edibble_var <- function(x) {
   inherits(x, "edbl_var")
+}
+
+#' @export
+vec_math <- vctrs::vec_math
+
+#' @export
+vec_math.edbl_var <- function(.f, .x) {
+  .f(as.character(.x))
+}
+
+#' @export
+vec_math.edbl_trt <- function(.f, .x) {
+  .f(as.character(.x))
 }

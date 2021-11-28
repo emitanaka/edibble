@@ -25,7 +25,8 @@ Imports:
     cli,
     pillar,
     tidyselect (>= 1.0.0),
-    nestr
+    nestr,
+    stats
 Suggests: 
     testthat (>= 3.0.0),
     knitr,

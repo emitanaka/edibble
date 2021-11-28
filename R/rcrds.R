@@ -277,23 +277,28 @@ fill_symbol <- function() "■"
 dup_symbol <- function() "x"
 
 
-new_edibble_rcrd <- function(x, unit_name = NULL, unit_values = NULL, class = NULL) {
-  x <- new_vctr(x, class = "edbl_rcrd")
-  class(x) <- c(class, class(x))
-  attr(x, "unit") <- unit_name %||% attr(x, "unit")
-  attr(x, "unit_values") <- unit_values %||% attr(x, "unit_values")
-  x
+new_edibble_rcrd <- function(x, unit_name = NULL, unit_values = NULL, class = NULL, ...) {
+  res <- new_vctr(x, class = c("edbl_rcrd", "edbl_var"),
+                  unit = unit_name %||% attr(x, "unit_name"),
+                  unit_values = unit_values %||% attr(x, "unit_values"),
+                  ...)
+  class(res) <- c(class, class(res))
+  res
 }
 
 #' @importFrom pillar pillar_shaft new_pillar_shaft_simple style_subtle
 #' @export
 pillar_shaft.edbl_rcrd <- function(x, ...) {
-  uvals <- attr(x, "unit_values")[1:length(x)]
-  n <- length(uvals)
-  out <- rep(dup_symbol(), n)
-  loc <- match(unique(uvals), uvals)
-  out[loc] <- fill_symbol()
-  new_pillar_shaft_simple(out, align = "right")
+  if(all(is.na(x))) {
+    uvals <- attr(x, "unit_values")[1:length(x)]
+    n <- length(uvals)
+    out <- rep(dup_symbol(), n)
+    loc <- match(unique(uvals), uvals)
+    out[loc] <- fill_symbol()
+    new_pillar_shaft_simple(out, align = "right")
+  } else {
+    pillar::pillar_shaft(unclass(x))
+  }
 }
 
 #' @export
@@ -313,6 +318,13 @@ vec_ptype_abbr.edbl_rcrd <- function(x, ...)  {
 #' @importFrom vctrs vec_ptype_full
 #' @export
 vec_ptype_full.edbl_rcrd <- function(x, ...) "rcrd"
+
+#' @export
+as.numeric.edbl_rcrd <- function(x, ...) {
+  browser()
+  out <- unclass(x)
+  out
+}
 
 #' # TODO
 #' # see scabbiness.R
@@ -388,3 +400,4 @@ vec_ptype_full.edbl_rcrd <- function(x, ...) "rcrd"
 #' xlf <- function(.f = NULL) {
 #'   structure(.f, class = "xlformula")
 #' }
+

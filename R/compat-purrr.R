@@ -24,6 +24,9 @@ map_int <- function(.x, .f, ...) {
   map_mold(.x, .f, integer(1), ...)
 }
 
+map_dbl <- function(.x, .f, ...) {
+  map_mold(.x, .f, double(1), ...)
+}
 
 map2 <- function(.x, .y, .f, ...) {
   out <- mapply(.f, .x, .y, MoreArgs = list(...), SIMPLIFY = FALSE)

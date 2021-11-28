@@ -55,11 +55,12 @@ check_unit_exists <- function(design, label = NULL) {
   }
 }
 
-check_var_exists <- function(design, label = NULL, vclass = NULL) {
+check_var_exists <- function(design, label = NULL, vclass = "edbl_var") {
   f_exists <- switch(vclass,
                      "edbl_trt" = trts_exists,
                      "edbl_unit" = units_exists,
-                     "edbl_rcrd" = rcrds_exists)
+                     "edbl_rcrd" = rcrds_exists,
+                     var_exists)
   vexists <- f_exists(design, label)
   if(is_null(label) && any(!vexists)) {
     abort(sprintf("No variables with class `%s` exists.", vclass))

@@ -43,6 +43,25 @@
     Code
       des2 <- des0 %>% set_rcrds_of(student = c("exam_mark", "quiz1_mark",
         "quiz2_mark", "gender"), class = c("room", "teacher"))
+      des2
+    Output
+      Effective teaching
+      +-class (4 levels)
+      | +-student (120 levels)
+      | | +-exam_mark
+      | | +-quiz1_mark
+      | | +-quiz2_mark
+      | | \-gender
+      | +-room
+      | \-teacher
+      +-style (2 levels)
+      \-exam (3 levels)
+      Allotment:
+    Message <cliMessage>
+      * style ~ class
+      * exam ~ student
+    Output
+      Assignment: random 
 
 ---
 
