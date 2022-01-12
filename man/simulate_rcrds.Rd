@@ -4,7 +4,7 @@
 \alias{simulate_rcrds}
 \title{Simulate records}
 \usage{
-simulate_rcrds(.data, ...)
+simulate_rcrds(.data, ..., .censor = NA)
 }
 \arguments{
 \item{.data}{An edibble table or data frame}
