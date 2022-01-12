@@ -22,20 +22,22 @@ set_rcrds <- function(.edibble, ...,
     })
   rcrds <- names(units)
 
-  check_var_exists(.edibble, label = units, vclass = "edbl_unit")
+  des <- edbl_design(.edibble)
+  check_var_exists(des, label = units, vclass = "edbl_unit")
 
   for(i in seq_along(units)) {
-    rid <- fct_last_id(.edibble) + 1L
-    uid <- fct_id(.edibble, unname(units)[i])
-    .edibble$graph$nodes <- add_row(.edibble$graph$nodes,
+    rid <- fct_last_id(des) + 1L
+    uid <- fct_id(des, unname(units)[i])
+    des$graph$nodes <- add_row(des$graph$nodes,
                                      id = rid,
                                      label = rcrds[i],
                                      class = "edbl_rcrd")
-    .edibble$graph$edges <- add_row(.edibble$graph$edges,
+    des$graph$edges <- add_row(des$graph$edges,
                                      from = uid,
                                      to = rid)
   }
-  .edibble
+  if(is_edibble_table(.edibble)) return(serve_table(des))
+  des
 }
 
 #' @export
