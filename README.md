@@ -13,100 +13,26 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 Install the development version with:
 
-    # install.packages("remotes")
-    remotes::install_github("emitanaka/edibble")
+``` r
+# install.packages("remotes")
+remotes::install_github("emitanaka/edibble")
+```
+
+You may also need to install the `simulate` package which is currently
+only available on GitHub:
+
+``` r
+remotes::install_github("emitanaka/simulate")
+```
 
 ## Overview
 
-There are two intermixing goals for edibble:
-
--   defining the **grammar of experimental design**, and
--   provide an R-package that aids in the workflow of constructing an
-    experimental design and serves as an implementation of the so-called
-    grammar of experimental design.
-
-The *grammar of experimental design* is a framework that functionally
-maps the fundamental components of an experiment to an object oriented
-system to build and modify the experimental design. Some
-(work-in-progress) details can be found in `vignette("grammar")` where
-it is serving as the dumping ground of my thoughts for now. The use of
-the word “grammar” pay homage to the [*grammar of
-graphics*](https://ggplot2.tidyverse.org/) and [*grammar of data
-manipulation*](https://dplyr.tidyverse.org/) which this work is heavily
-inspired from.
-
-### Experimental data
-
-tidyverse is well suited for the data science project workflow as
-illustrated below in (B) (from [Grolemund and Wickham
-2017](https://r4ds.had.co.nz/introduction.html)). For experimental data,
-the statistical aspect begins before obtaining data as depicted below in
-(A). The focus of `edibble` is to facilitate work in (A).
-
-<img src="man/figures/design-analysis-flow.png">
-
-The edibble R-package differ considerably to other packages for
-constructing experimental design with a focus on the whole process and
-less on the randomisation process (which the other software generally
-focus and do well on). Some features include:
-
--   declaratively create experimental designs based on experimental
-    components (e.g. units and treatments),
--   explicitly specify variables that are to be recorded
-    (e.g. response), and
--   set expected values for variables to be recorded which restrict the
-    data entry when the design is exported as an xlsx file,
--   plot and print outputs for intermediate constructs of the
-    experimental design with configurations for most graphical elements
-    (see
-    [`vignette("output")`](https://edibble.emitanaka.org/articles/output.html)),
--   make classical named designs (see
-    [`vignette("named-designs")`](https://edibble.emitanaka.org/articles/named-designs.html)),
--   add context that also serves as notes about experiment (see
-    [`vignette("edibble")`](https://edibble.emitanaka.org/articles/grammar.html)).
-
-## Designing the *whole* experiment
-
-An experiment is likely to involve a number of people. For simplicity,
-let’s suppose there are three actors (we’ll use the pronoun them/they
-for each actor):
-
--   the **domain expert** 🕵️‍♀️ drives the experimental objective and
-    has the intricate knowledge about the subject area,
--   the **statistician** 👩🏻‍💻 creates the design layout that contains
-    the treatment-to-unit allocations after taking into account the
-    statistical and practical constraints,
--   the **technician** 👨‍🔬 carries out the experiment and collects the
-    data.
-
-The actors are purely illustrative. In practice, multiple people can
-take on each role, one person can take on multiple roles, and/or a
-person in the role may not specialise in that role (i.e. a statistician
-role can be acted out by a non-statistician).
-
-An experiment may begin with no data at all. The **domain expert** comes
-up with the experimental hypothesis or question and recruit a
-**statistician** to help design the experiment. Before a
-**statistician** can produce the design layout, they must converse with
-the **domain expert** to understand the experimental objective,
-resources, practical constraints and other possible nuances that might
-influence the outcome of the experiment. This *consultation phase* an
-important information collection.
-
-With **edibble**, the functions resemble a natural language that you may
-have in a consultation phase. You may take notes of context using
-`set_context()`; you write down what and how many units and treatments
-you have available using `set_units()` and `set_trts()`; you enquire
-about if there are any restrictions in allocation of treatments and set
-them using `allocate_trts()`; you may ask what responses are measured or
-what records will be kept and set them using `set_rcrds()`; you can
-solicit expected values for these records and encode them using
-`expect_rcrds()`. The last point is important to minimise the error in
-the data entry process. If the **technician** enters an invalid entry,
-then an error is produced. This concept is illustrated below using a UML
-sequence diagram.
-
-<img src="man/figures/seq-diagram-eg.png">
+The goal of `edibble` R-package is to aid in the plan, design and
+simulation of experiments by mapping fundamental components of
+experiments to an object oriented system. The `edibble` system is built
+on the principle that the system must make it easy to recover
+experimental context by encouraging the user to be explicit about
+experimental details in fundamental terms.
 
 ## Examples
 
@@ -121,6 +47,7 @@ exam can be different for individual students.
 
 ``` r
 library(edibble)
+#> Loading required package: simulate
 
 set.seed(2020)
 
@@ -137,16 +64,16 @@ serve_table(des)
 #> # An edibble: 120 x 4
 #>        class     student    style        exam
 #>    <unit(4)> <unit(120)> <trt(2)>    <trt(3)>
-#>  1    class1   student1   flipped take-home  
-#>  2    class1   student2   flipped take-home  
-#>  3    class1   student3   flipped closed-book
+#>  1    class1   student1   flipped closed-book
+#>  2    class1   student2   flipped open-book  
+#>  3    class1   student3   flipped take-home  
 #>  4    class1   student4   flipped closed-book
-#>  5    class1   student5   flipped take-home  
-#>  6    class1   student6   flipped open-book  
-#>  7    class1   student7   flipped take-home  
-#>  8    class1   student8   flipped open-book  
-#>  9    class1   student9   flipped open-book  
-#> 10    class1   student10  flipped closed-book
+#>  5    class1   student5   flipped open-book  
+#>  6    class1   student6   flipped closed-book
+#>  7    class1   student7   flipped closed-book
+#>  8    class1   student8   flipped take-home  
+#>  9    class1   student9   flipped take-home  
+#> 10    class1   student10  flipped open-book  
 #> # … with 110 more rows
 ```
 
@@ -174,16 +101,16 @@ out
 #> # An edibble: 120 x 10
 #>        class     student    style        exam exam_mark quiz1_mark quiz2_mark
 #>    <unit(4)> <unit(120)> <trt(2)>    <trt(3)>    <rcrd>     <rcrd>     <rcrd>
-#>  1    class1   student1   flipped take-home           ■          ■          ■
-#>  2    class1   student2   flipped take-home           ■          ■          ■
-#>  3    class1   student3   flipped closed-book         ■          ■          ■
+#>  1    class1   student1   flipped closed-book         ■          ■          ■
+#>  2    class1   student2   flipped open-book           ■          ■          ■
+#>  3    class1   student3   flipped take-home           ■          ■          ■
 #>  4    class1   student4   flipped closed-book         ■          ■          ■
-#>  5    class1   student5   flipped take-home           ■          ■          ■
-#>  6    class1   student6   flipped open-book           ■          ■          ■
-#>  7    class1   student7   flipped take-home           ■          ■          ■
-#>  8    class1   student8   flipped open-book           ■          ■          ■
-#>  9    class1   student9   flipped open-book           ■          ■          ■
-#> 10    class1   student10  flipped closed-book         ■          ■          ■
+#>  5    class1   student5   flipped open-book           ■          ■          ■
+#>  6    class1   student6   flipped closed-book         ■          ■          ■
+#>  7    class1   student7   flipped closed-book         ■          ■          ■
+#>  8    class1   student8   flipped take-home           ■          ■          ■
+#>  9    class1   student9   flipped take-home           ■          ■          ■
+#> 10    class1   student10  flipped open-book           ■          ■          ■
 #> # … with 110 more rows, and 3 more variables: gender <rcrd>, room <rcrd>,
 #> #   teacher <rcrd>
 ```
@@ -245,6 +172,35 @@ start_design("nesting structure") %>%
 #> 10         A    block1      plot10
 #> # … with 160 more rows
 ```
+
+## Experimental data
+
+tidyverse is well suited for the data science project workflow as
+illustrated below in (B) (from [Grolemund and Wickham
+2017](https://r4ds.had.co.nz/introduction.html)). For experimental data,
+the statistical aspect begins before obtaining data as depicted below in
+(A). The focus of `edibble` is to facilitate work in (A).
+
+<img src="man/figures/design-analysis-flow.png">
+
+The edibble R-package differ considerably to other packages for
+constructing experimental design with a focus on the whole process and
+less on the randomisation process (which the other software generally
+focus and do well on). Some features include:
+
+-   declaratively create experimental designs based on experimental
+    components (e.g. units and treatments),
+-   explicitly specify variables that are to be recorded
+    (e.g. response), and
+-   set expected values for variables to be recorded which restrict the
+    data entry when the design is exported as an xlsx file,
+-   print outputs for intermediate constructs of the experimental design
+    with configurations for most graphical elements (see
+    [`vignette("output")`](https://edibble.emitanaka.org/articles/output.html)),
+-   make classical named designs (see
+    [`vignette("named-designs")`](https://edibble.emitanaka.org/articles/named-designs.html)),
+-   add context that also serves as notes about experiment (see
+    [`vignette("edibble")`](https://edibble.emitanaka.org/articles/grammar.html)).
 
 ## Limitations
 
