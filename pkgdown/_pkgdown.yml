@@ -26,14 +26,15 @@ reference:
   - start_design
   - set_units
   - set_trts
-  - allocate_trts
-  - randomise_trts
+  - allot_trts
+  - assign_trts
   - serve_table
 - title: "Exporting the experimental design"
   desc: >
     These help to create data validation rules and export the experimental layout as xlsx file.
 - contents:
   - set_rcrds
+  - set_rcrds_of
   - expect_rcrds
   - contains("to_be")
   - with_value
@@ -49,11 +50,10 @@ reference:
   desc: "These are functions to add notes and context about the experiment"
 - contents:
   - contains("context")
-- title: "Plot and print"
+- title: "Print"
   desc: >
     These functions plot or print intermediate constructs of the design.
 - contents:
-  - contains("plot")
   - contains("print")
 - title: "Experiments"
   desc: >
@@ -61,4 +61,3 @@ reference:
 - contents:
   - lady_tasting_tea
   - skittles
-  - rye_grass
