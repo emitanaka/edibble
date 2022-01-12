@@ -66,12 +66,14 @@ expect_rcrds <- function(.edibble, ...) {
   not_edibble(.edibble)
   dots <- enquos(...)
   dots_nms <- names(dots)
+  des <- edbl_design(.edibble)
   rules_named <- map(dots[dots_nms!=""], eval_tidy)
   rules_unnamed <- map(dots[dots_nms==""], validate_rcrd,
-                       rnames = fct_label(.edibble, rcrd_ids(.edibble)))
+                       rnames = fct_label(des, rcrd_ids(des)))
   rules_unnamed <- setNames(rules_unnamed, map_chr(rules_unnamed, function(x) x$rcrd))
-  .edibble$validation <- simplify_validation(c(rules_named, rules_unnamed))
-  .edibble
+  des$validation <- simplify_validation(c(rules_named, rules_unnamed))
+  if(is_edibble_table(.edibble)) return(serve_table(des))
+  des
 }
 
 simplify_validation <- function(x) {
