@@ -4,12 +4,17 @@
 \alias{simulate_rcrds}
 \title{Simulate records}
 \usage{
-simulate_rcrds(.data, ..., .censor = NA)
+simulate_rcrds(.data, ..., .censor = NA, .seed = NULL)
 }
 \arguments{
 \item{.data}{An edibble table or data frame}
 
 \item{...}{A name-value pair.}
+
+\item{.censor}{The value to replace if the value does not lie within
+valid values.}
+
+\item{.seed}{An optional seed value.}
 }
 \description{
 Simulate records

@@ -3,10 +3,13 @@
 #'
 #' @param .data An edibble table or data frame
 #' @param ... A name-value pair.
+#' @param .censor The value to replace if the value does not lie within
+#'  valid values.
+#' @param .seed An optional seed value.
 #'
 #' @export
-simulate_rcrds <- function(.data, ..., .censor = NA) {
-  out <- simulate(.data, ...)
+simulate_rcrds <- function(.data, ..., .censor = NA, .seed = NULL) {
+  out <- simulate(.data, ..., .seed = .seed)
   srcrds <- names(list2(...))
   des <- edbl_design(.data)
   vrcrds <- names(des$validation)
