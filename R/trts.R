@@ -52,7 +52,7 @@ allot_trts <- function(design, ...) {
 
   not_edibble(design)
 
-  dots <- enexprs(...)
+  dots <- list2(...)
   design$allotment <- dots
   for(ialloc in seq_along(dots)) {
     trts <- all.vars(f_lhs(dots[[ialloc]]))
