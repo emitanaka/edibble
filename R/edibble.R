@@ -110,7 +110,7 @@ not_edibble <- function(x) {
 #' @export
 new_edibble <- function(.data, ..., graph = NULL, class = NULL) {
   new_tibble(.data, ..., nrow = vec_size_common(!!!.data),
-             class = c("edbl_table", class), graph = graph)
+             class = c("edbl_table", "edbl", class), graph = graph)
 }
 
 #' @importFrom tibble tbl_sum
