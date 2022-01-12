@@ -26,13 +26,15 @@ Imports:
     pillar,
     tidyselect (>= 1.0.0),
     nestr,
-    stats
+    stats,
+    simulate
 Suggests: 
     testthat (>= 3.0.0),
     knitr,
     rmarkdown,
     asciicast,
     openxlsx
+Remotes: emitanaka/simulate
 VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)
