@@ -4,12 +4,17 @@
 \alias{assign_trts}
 \title{Assign treatments to units}
 \usage{
-assign_trts(design, order = "random", seed = NULL, constrain = nesting(design))
+assign_trts(
+  .design,
+  .order = "random",
+  .seed = NULL,
+  .constrain = nesting(.design)
+)
 }
 \arguments{
-\item{design}{An edibble design which should have units, treatments and allotment defined.}
+\item{.design}{An edibble design which should have units, treatments and allotment defined.}
 
-\item{order}{A character vector signifying the apportion of treatments to units.
+\item{.order}{A character vector signifying the apportion of treatments to units.
 The value should be either "random", "systematic" or "systematic-random".
 "random" allocates the treatment randomly to units based on specified allotment with restrictions
 implied by unit structure.
@@ -18,9 +23,9 @@ implied by unit structure.
 where it is not possible to divide treatments equally (as the number of units are not divisible
 by the number of levels of the treatment factor), then the extras are chosen randomly.}
 
-\item{seed}{A scalar value used to set the seed so that the result is reproducible.}
+\item{.seed}{A scalar value used to set the seed so that the result is reproducible.}
 
-\item{constrain}{The nesting structure for units.}
+\item{.constrain}{The nesting structure for units.}
 }
 \description{
 This function assigns specific treatment levels to actual units.
