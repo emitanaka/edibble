@@ -174,7 +174,7 @@ fct_value_type <- function(x) {
 new_edibble_var <- function(labels = character(), levels = unique(labels),
                             name = character(), rep = NULL, ..., class = NULL) {
   x <- new_vctr(labels, levels = levels, name = name,
-                ..., class = "edbl_var")
+                ..., class = c("edbl_var", "character"))
   class(x) <- c(class, class(x))
   x
 }
@@ -223,15 +223,17 @@ is_edibble_var <- function(x) {
   inherits(x, "edbl_var")
 }
 
+#' @importFrom vctrs vec_math
 #' @export
-vec_math <- vctrs::vec_math
+vctrs::vec_math
 
+#' @method vec_math edbl_var
 #' @export
-vec_math.edbl_var <- function(.f, .x) {
-  .f(as.character(.x))
+vec_math.edbl_var <- function(.fn, .x, ...) {
+  if(.fn %in% c("is.nan", "is.infinite")) return(rep_len(FALSE, length(.x)))
+  if(.fn == "is.finite") return(rep_len(TRUE, length(.x)))
+  out <- lapply(as.character(.x), get(.fn), ...)
+  vctrs::vec_restore(out, .x)
 }
 
-#' @export
-vec_math.edbl_trt <- function(.f, .x) {
-  .f(as.character(.x))
-}
+
