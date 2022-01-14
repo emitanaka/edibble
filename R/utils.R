@@ -128,7 +128,7 @@ print.edbl_design <- function(x,
                               decorate_levels = edibble_decorate("levels"),
                               decorate_title  = edibble_decorate("title"),
                               title = NULL, ...) {
-  title <- title %||% x$name
+  title <- title %||% x$name %||% "An edibble design"
   fnames <- names(x)
 
   if(is_empty(fnames)) {
