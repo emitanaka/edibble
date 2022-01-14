@@ -13,8 +13,37 @@ test_that("simulate", {
     set_units(unit = 12) %>%
     allot_trts(~ unit) %>%
     assign_trts(seed = 1) %>%
-    set_rcrds(response = unit) %>%
+    set_rcrds(response = unit,
+              level = unit) %>%
     serve_table()
+
+  des3 <- start_design() %>%
+    set_trts(treat = c("A", "B", "C"),
+             irr = 2) %>%
+    set_units(unit = 12) %>%
+    allot_trts(~ unit) %>%
+    assign_trts(seed = 1) %>%
+    set_rcrds(response = unit,
+              level = unit) %>%
+    expect_rcrds(factor(level, c("yes", "no")),
+                 response > 0) %>%
+    serve_table()
+
+  des3 <- start_design() %>%
+    set_trts(treat = c("A", "B", "C"),
+             irr = 2) %>%
+    set_units(unit = 12) %>%
+    allot_trts(~ unit) %>%
+    assign_trts(seed = 1) %>%
+    set_rcrds(response = unit) %>%
+    expect_rcrds(response > 0) %>%
+    serve_table()
+
+
+  des3 %>%
+    simulate_rcrds(response = sim_normal(~treat) %>%
+                     params("mean",
+                            treat = c("A" = 10, "B" = -10, "C" = 0)))
 
   eff1 <- params(mean = list(treat = c("A" = 3, "B" = 2, "C" = 0)))
   eff2 <- params(mean = list(treat = c("A" = 40, "C" = -100)))

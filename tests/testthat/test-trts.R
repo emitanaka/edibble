@@ -4,11 +4,50 @@ test_that("treatments", {
       set_trts(vaccine = 2)
   })
 
+  expect_equal({
+    start_design() %>%
+      set_trts(vaccine = 2)
+  }, structure(list(name = NULL,
+                    graph = structure(list(nodes = data.frame(id = 1L,
+                                                              label = "vaccine",
+                                                              class = "edbl_trt"),
+                                           edges = data.frame(from = integer(),
+                                                              to = integer(),
+                                                              alloc = integer()),
+                                           levels = list(nodes = data.frame(idvar = c(1L, 1L),
+                                                                            id = c(1L, 2L),
+                                                                            label = c("vaccine1", "vaccine2")),
+                                                         edges = data.frame(from = integer(),
+                                                                            to = integer(),
+                                                                            alloc = integer()))),
+                                      class = "edbl_graph")),
+               class = c("edbl_design", "edbl")))
+
   expect_snapshot({
     start_design() %>%
       set_trts(vaccine = 2,
                sex = 2)
   })
+
+  expect_equal({
+    start_design() %>%
+      set_trts(vaccine = 2,
+               sex = 2)
+  }, structure(list(name = NULL,
+                    graph = structure(list(nodes = data.frame(id = c(1L, 2L),
+                                                              label = c("vaccine", "sex"),
+                                                              class = "edbl_trt"),
+                                           edges = data.frame(from = integer(),
+                                                              to = integer(),
+                                                              alloc = integer()),
+                                           levels = list(nodes = data.frame(idvar = c(1L, 1L, 2L, 2L),
+                                                                            id = c(1L, 2L, 3L, 4L),
+                                                                            label = c("vaccine1", "vaccine2", "sex1", "sex2")),
+                                                         edges = data.frame(from = integer(),
+                                                                            to = integer(),
+                                                                            alloc = integer()))),
+                                      class = "edbl_graph")),
+               class = c("edbl_design", "edbl")))
 
   expect_snapshot({
     start_design() %>%
@@ -85,7 +124,7 @@ test_that("treatments", {
       set_trts(vaccine = 3) %>%
       set_units(person = 5) %>%
       allot_trts(vaccine ~ person) %>%
-      assign_trts("systematic-random", seed = 2) %>%
+      assign_trts("systematic-random", .seed = 2) %>%
       serve_table()
   })
 
@@ -94,7 +133,7 @@ test_that("treatments", {
       set_trts(vaccine = 3) %>%
       set_units(person = 5) %>%
       allot_trts(vaccine ~ person) %>%
-      assign_trts("random", seed = 3) %>%
+      assign_trts("random", .seed = 3) %>%
       serve_table()
   })
 
@@ -104,7 +143,7 @@ test_that("treatments", {
       set_units(person = 20,
                 blood = nested_in(person, 3)) %>%
       allot_trts(vaccine ~ person) %>%
-      assign_trts("random", seed = 2) %>%
+      assign_trts("random", .seed = 2) %>%
       serve_table()
     table(tab$vaccine, tab$person)
   })
@@ -115,7 +154,7 @@ test_that("treatments", {
       set_units(person = 20,
                 blood = nested_in(person, 3)) %>%
       allot_trts(vaccine ~ blood) %>%
-      assign_trts("random", seed = 2, constrain = NULL) %>%
+      assign_trts("random", .seed = 2, .constrain = NULL) %>%
       serve_table()
     table(tab$vaccine, tab$person)
   })
@@ -126,7 +165,7 @@ test_that("treatments", {
       set_units(person = 20,
                 blood = nested_in(person, 3)) %>%
       allot_trts(vaccine ~ blood) %>%
-      assign_trts("random", seed = 2) %>%
+      assign_trts("random", .seed = 2) %>%
       serve_table()
     table(tab$vaccine, tab$person)
   })
@@ -137,7 +176,7 @@ test_that("treatments", {
       set_units(person = 20,
                 blood = nested_in(person, 2)) %>%
       allot_trts(vaccine ~ blood) %>%
-      assign_trts("random", seed = 2) %>%
+      assign_trts("random", .seed = 2) %>%
       serve_table()
     table(tab$vaccine, tab$person)
   })
@@ -148,7 +187,7 @@ test_that("treatments", {
       set_units(person = 20,
                 blood = nested_in(person, 8)) %>%
       allot_trts(vaccine ~ blood) %>%
-      assign_trts("random", seed = 2) %>%
+      assign_trts("random", .seed = 2) %>%
       serve_table()
     table(tab$vaccine, tab$person)
   })
@@ -162,7 +201,7 @@ test_that("treatments", {
                                   2 ~ 3,
                                   . ~ 4)) %>%
       allot_trts(vaccine ~ blood) %>%
-      assign_trts("random", seed = 2) %>%
+      assign_trts("random", .seed = 2) %>%
       serve_table()
     table(tab$vaccine, tab$person)
   })
@@ -177,7 +216,7 @@ test_that("treatments", {
                                   2 ~ 3,
                                   . ~ 4)) %>%
       allot_trts(fert ~ sample) %>%
-      assign_trts("random", seed = 2) %>%
+      assign_trts("random", .seed = 2) %>%
       serve_table()
     table(tab$fert, tab$plot)
   })
@@ -191,7 +230,7 @@ test_that("treatments", {
                 splot = nested_in(wplot, 4)) %>%
       allot_trts(fert ~ splot,
                  irr ~ wplot) %>%
-      assign_trts("random", seed = 2) %>%
+      assign_trts("random", .seed = 2) %>%
       serve_table()
     table(tab$fert, tab$irr, tab$wplot)
   })

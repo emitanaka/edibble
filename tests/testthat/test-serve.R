@@ -1,16 +1,32 @@
 test_that("serve", {
   expect_snapshot({
-    start_design(name = "unlinked units with table") %>%
+    start_design(name = "unlinked units with table - the title cut-off seems to be only for testthat????????????????????? ?????? ??????") %>%
       set_units(block = 3,
                 plot = 2) %>%
       serve_table()
   })
+  # TODO: when the title is long, it cuts off
+  # The cut-off seems to have only happened for when the title was "unlinked units with table"
+  # and the ANSI styling was cut
+  expect_equal({
+    start_design(name = "unlinked units with table - the title cut-off seems to be only for testthat????????????????????? ?????? ??????") %>%
+      set_units(block = 3,
+                plot = 2) %>%
+      serve_table()
+  }, data.frame(block = character(), plot = character()), ignore_attr = TRUE)
 
   expect_snapshot({
     start_design(name = "one unit") %>%
       set_units(block = 3) %>%
       serve_table()
   })
+
+
+  expect_equal({
+    start_design(name = "one unit") %>%
+      set_units(block = 3) %>%
+      serve_table()
+  }, data.frame(block = c("block1", "block2", "block3")), ignore_attr = TRUE)
 
   expect_snapshot({
     start_design(name = "serve nested units") %>%
