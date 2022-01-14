@@ -32,7 +32,8 @@ Suggests:
     knitr,
     rmarkdown,
     asciicast,
-    openxlsx
+    openxlsx,
+    visNetwork
 Remotes: emitanaka/simulate
 VignetteBuilder: knitr
 Depends: 
