@@ -12,7 +12,7 @@
 #' @family user-facing functions
 #' @export
 start_design <- function(name = NULL) {
-  structure(list(name = name %||% "An edibble design",
+  structure(list(name = name,
                  graph = initialise_edibble_graph()),
             class = c("edbl_design", "edbl"))
 }
