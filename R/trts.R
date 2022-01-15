@@ -43,8 +43,10 @@ set_trts <- function(.design, ...,
 #' @param .seed A scalar value used to set the seed so that the result is reproducible.
 #' @param .constrain The nesting structure for units.
 #'
+#'
 #' @export
 assign_trts <- function(.design, .order = "random", .seed = NULL, .constrain = nesting(.design)) {
+  # TODO nesting function also exists in tidyr
 
   not_edibble(.design)
 
@@ -83,32 +85,16 @@ assign_trts <- function(.design, .order = "random", .seed = NULL, .constrain = n
                               vanc <- fct_ancestor(.design, id = uid)
                               vanc <- vanc[vanc %in% unit_ids(.design)]
                               udf <- as.data.frame(serve_units(select_units(.design, !!fct_label(.design, vanc))))
-                              gparent <- fct_label(.design, vanc[2])
-                              blocksizes <- as.data.frame(table(table(udf[[gparent]])))
-                              blocksizes$size <- as.numeric(as.character(blocksizes$Var1))
-                              for(isize in seq(nrow(blocksizes))) {
-                                if(blocksizes$size[isize] <= ntrts) {
-                                  comb <- combn(ntrts, blocksizes$size[isize])
-                                  blocksizes$rows[isize] <- list(comb)
-                                } else {
-                                  nrep <- floor(blocksizes$size[isize] / ntrts)
-                                  nremain <- blocksizes$size[isize] %% ntrts
-                                  comb <- combn(ntrts, nremain)
-                                  blocksizes$rows[isize] <- list(rbind(comb,
-                                                                       matrix(rep(1:ntrts, nrep * ncol(comb)), ncol = ncol(comb))))
-                                }
-                                blocksizes$select[isize] <- list(sample(rep(sample(ncol(comb)), length.out = blocksizes$Freq[isize])))
+
+                              vparents <- fct_parent(.design, id = uid)
+                              vparents <- vparents[vparents %in% unit_ids(.design)]
+                              vparents <- setdiff(vparents, uid)
+
+                              if(length(vparents)==1L) {
+                                permute_parent_one(.design, vparents, udf, ntrts)
+                              } else {
+                                permute_parent_more_than_one(.design, vparents, udf, ntrts)
                               }
-                              blocksizes$wselect <- blocksizes$select
-                              gpar_tab <- as.data.frame(table(udf[[gparent]]))
-                              out <- vector("integer", length = nrow(udf))
-                              for(ianc in seq(nrow(gpar_tab))) {
-                                imatch <- which(blocksizes$size == gpar_tab$Freq[ianc])
-                                iselect <- blocksizes$wselect[imatch][[1]][1]
-                                blocksizes$wselect[imatch] <- list(blocksizes$wselect[imatch][[1]][-1])
-                                out[as.character(udf[[gparent]])==as.character(gpar_tab$Var1[ianc])] <- sample(blocksizes$rows[imatch][[1]][,iselect])
-                              }
-                              out
                             }
                           },
                           abort(paste("The", .order, "`.order` is not implemented.")))
@@ -126,6 +112,55 @@ assign_trts <- function(.design, .order = "random", .seed = NULL, .constrain = n
   .design$assignment <- .order
 
   .design
+}
+
+permute_parent_more_than_one <- function(.design, vids, udf, ntrts) {
+  gparents <- fct_label(.design, vids)
+  vlevs <- fct_levels(.design)
+
+  lvls <- lengths(vlevs[gparents])
+  oa <- latin_array(dim = lvls, ntrts)
+
+  index <- lapply(gparents, function(gparent) match(udf[[gparent]], vlevs[[gparent]]))
+
+  out <- vector("integer", length = nrow(udf))
+  for(i in seq(nrow(udf))) {
+    out[i] <- do.call("[", c(list(oa), lapply(index, function(x) x[i])))
+  }
+  out
+
+}
+
+
+
+
+permute_parent_one <- function(.design, vid, udf, ntrts) {
+  gparent <- fct_label(.design, vid)
+  blocksizes <- as.data.frame(table(table(udf[[gparent]])))
+  blocksizes$size <- as.numeric(as.character(blocksizes$Var1))
+  for(isize in seq(nrow(blocksizes))) {
+    if(blocksizes$size[isize] <= ntrts) {
+      comb <- combn(ntrts, blocksizes$size[isize])
+      blocksizes$rows[isize] <- list(comb)
+    } else {
+      nrep <- floor(blocksizes$size[isize] / ntrts)
+      nremain <- blocksizes$size[isize] %% ntrts
+      comb <- combn(ntrts, nremain)
+      blocksizes$rows[isize] <- list(rbind(comb,
+                                           matrix(rep(1:ntrts, nrep * ncol(comb)), ncol = ncol(comb))))
+    }
+    blocksizes$select[isize] <- list(sample(rep(sample(ncol(comb)), length.out = blocksizes$Freq[isize])))
+  }
+  blocksizes$wselect <- blocksizes$select
+  gpar_tab <- as.data.frame(table(udf[[gparent]]))
+  out <- vector("integer", length = nrow(udf))
+  for(ianc in seq(nrow(gpar_tab))) {
+    imatch <- which(blocksizes$size == gpar_tab$Freq[ianc])
+    iselect <- blocksizes$wselect[imatch][[1]][1]
+    blocksizes$wselect[imatch] <- list(blocksizes$wselect[imatch][[1]][-1])
+    out[as.character(udf[[gparent]])==as.character(gpar_tab$Var1[ianc])] <- sample(blocksizes$rows[imatch][[1]][,iselect])
+  }
+  out
 }
 
 #' @export

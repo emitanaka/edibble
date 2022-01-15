@@ -222,6 +222,16 @@ validation_interval <- function(x) {
   }
 }
 
+perm <- function(x) {
+  n <- length(x)
+  if (n == 1) x
+  else {
+    X <- NULL
+    for (i in 1:n) X <- rbind(X, cbind(x[i], perm(x[-i])))
+    X
+  }
+}
+
 #' @export
 print.edbl_graph <- function(x, show_levels = FALSE, ...) {
   cat(cli::col_green("factor nodes\n"))

@@ -235,4 +235,21 @@ test_that("treatments", {
     table(tab$fert, tab$irr, tab$wplot)
   })
 
+  start_design("McIntyre (1955)") %>%
+    set_units(plant = 8,
+              position = 1:4,
+              leaf = ~plant:position) %>%
+    set_trts(light = c("a", "b", "c", "d")) %>%
+    allot_trts(light ~ leaf) %>%
+    assign_trts() %>% serve_table()
+
+  start_design("McIntyre (1955)") %>%
+    set_units(site = 4,
+              plant = 8,
+              position = 1:4,
+              leaf = ~site:plant:position) %>%
+    set_trts(light = c("a", "b", "c", "d")) %>%
+    allot_trts(light ~ leaf) %>%
+    assign_trts() %>% serve_table()
+
 })
