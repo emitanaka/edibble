@@ -120,12 +120,11 @@ tbl_sum.edbl_table <- function(.data) {
 }
 
 #' @export
-format.edbl_table <- function(x, ..., n = NULL, width = NULL, n_extra = NULL) {
+print.edbl_table <- function(x, ..., n = NULL, width = NULL, n_extra = NULL) {
   name <- edbl_design(x)$name
   format_name <- style_subtle(paste("#", cli::style_bold(name)))
-  mat <- NextMethod()
-  if(is.null(name)) return(format(mat))
-  c(format_name, format(mat))
+  if(!is.null(name)) cat(format_name, "\n")
+  NextMethod()
 }
 
 
