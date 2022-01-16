@@ -5,10 +5,10 @@
 \title{Completely randomised design}
 \usage{
 prep_classical_crd(
-  t = sample(1:10, 1),
-  n = sample(t + 1:20, 1),
+  t = random_integer_small(),
+  n = random_integer_medium(min = t),
   r = n/t,
-  seed = sample(1000, 1)
+  seed = random_seed_number()
 )
 }
 \arguments{
@@ -26,6 +26,7 @@ Completely randomised design
 \seealso{
 Other named-designs: 
 \code{\link{prep_classical_factorial}()},
+\code{\link{prep_classical_lsd}()},
 \code{\link{prep_classical_rcbd}()},
 \code{\link{prep_classical_split}()}
 }

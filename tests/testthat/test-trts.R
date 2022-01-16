@@ -241,7 +241,8 @@ test_that("treatments", {
               leaf = ~plant:position) %>%
     set_trts(light = c("a", "b", "c", "d")) %>%
     allot_trts(light ~ leaf) %>%
-    assign_trts() %>% serve_table()
+    assign_trts() %>%
+    serve_table()
 
   start_design("McIntyre (1955)") %>%
     set_units(site = 4,

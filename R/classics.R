@@ -3,7 +3,7 @@
 new_named_design <- function(name, name_full = name,
                              info_always = NULL,
                              info_this = NULL) {
-  dname <- edibble_decorate("title")(paste0('"', name, '"'))
+  dname <- edibble_decorate("title")(paste0('"', paste(name_full, collapse = " | "), '"'))
   structure(list(name = name,
                  name_full = name_full,
                  code = paste0("start_design(", dname, ")"),
@@ -12,12 +12,25 @@ new_named_design <- function(name, name_full = name,
             class = "named_design")
 }
 
+named_design_add_code <- function(.named, ...) {
+  dots <- list2(...)
+  for(x in dots) {
+    .named$code <- sprintf('%s %%>%%
+  %s', .named$code, x)
+  }
+  .named
+}
+
 #' @export
 print.named_design <- function(x, ...) {
-  name_full <- edibble_decorate("title")(x$name_full)
-  cat(cli::style_italic(paste(name_full, collapse = " | ")), "\n")
+  #name_full <- edibble_decorate("title")(x$name_full)
+  #cat(cli::style_italic(paste(name_full, collapse = " | ")), "\n")
   cat(x$code)
 }
+
+random_integer_small <- function(min = 1) min + sample(10, 1)
+random_integer_medium <- function(min = 1) min + sample(10:25, 1)
+random_seed_number <- function() sample(1000, 1)
 
 #' Prepare a randomised complete block design
 #'
@@ -26,27 +39,22 @@ print.named_design <- function(x, ...) {
 #' @param seed A scalar value for computational reproducibility.
 #' @family named-designs
 #' @export
-prep_classical_rcbd <- function(t = 1 + sample(10, 1),
-                                r = 1 + sample(10, 1),
-                                seed = sample(1000, 1)) {
+prep_classical_rcbd <- function(t = random_integer_small(),
+                                r = random_integer_small(),
+                                seed = random_seed_number()) {
+
   des <- new_named_design(name = "rcbd",
                           name_full = "Randomised Complete Block Design")
   block <- edibble_decorate("units")("block")
   unit <- edibble_decorate("units")("unit")
   trt <- edibble_decorate("trts")("trt")
-  des$code <- sprintf('%s %%>%%
-    set_units(%s = %d,
-              %s = nested_in(%s, %d)) %%>%%
-    set_trts(%s = %d) %%>%%
-    allot_trts(%s ~ %s) %%>%%
-    assign_trts("random", seed = %d) %%>%%
-    serve_table()',
-    des$code,
-    block, r,
-    unit, block, t,
-    trt, t,
-    trt, unit,
-    seed)
+  des <- named_design_add_code(des,
+        sprintf('set_units(%s = %d,
+            %s = nested_in(%s, %d))', block, r, unit, block, t),
+        sprintf('set_trts(%s = %d)', trt, t),
+        sprintf('allot_trts(%s ~ %s)', trt, unit),
+        sprintf('assign_trts("random", .seed = %d)', seed),
+        'serve_table()')
   des
 }
 
@@ -59,10 +67,11 @@ prep_classical_rcbd <- function(t = 1 + sample(10, 1),
 #' @family named-designs
 #' @inheritParams prep_classical_rcbd
 #' @export
-prep_classical_crd <- function(t = sample(1:10, 1),
-                               n = sample(t + 1:20, 1),
+prep_classical_crd <- function(t = random_integer_small(),
+                               n = random_integer_medium(min = t),
                                r = n / t,
-                               seed = sample(1000, 1)) {
+                               seed = random_seed_number()) {
+
   # checks
   if(!missing(n) & !missing(r)) {
     abort("You cannot define both `n` and `r`.")
@@ -77,17 +86,12 @@ prep_classical_crd <- function(t = sample(1:10, 1),
   unit <- edibble_decorate("units")("unit")
   trt <- edibble_decorate("trts")("trt")
 
-  des$code <- sprintf('%s %%>%%
-    set_units(%s = %d) %%>%%
-    set_trts(%s = %d) %%>%%
-    allot_trts(%s ~ %s) %%>%%
-    assign_trts("random", seed = %d) %%>%%
-    serve_table()',
-    des$code,
-    unit, n,
-    trt, t,
-    trt, unit,
-    seed)
+  des <- named_design_add_code(des,
+                               sprintf('set_units(%s = %d)', unit, n),
+                               sprintf('set_trts(%s = %d)', trt, t),
+                               sprintf('allot_trts(%s ~ %s)', trt, unit),
+                               sprintf('assign_trts("random", .seed = %d)', seed),
+                               'serve_table()')
 
   des
 }
@@ -101,11 +105,11 @@ prep_classical_crd <- function(t = sample(1:10, 1),
 #' @inheritParams prep_classical_rcbd
 #' @family named-designs
 #' @export
-prep_classical_factorial <- function(trt = c(sample(1:10, 1),
-                                             sample(1:10, 1)),
-                                     r = sample(1:10, 1),
+prep_classical_factorial <- function(trt = c(random_integer_small(),
+                                             random_integer_small()),
+                                     r = random_integer_small(),
                                      design = c("crd", "rcbd"),
-                                     seed = sample(1000, 1)) {
+                                     seed = random_seed_number()) {
   design <- match.arg(design)
   des <- new_named_design(name = "factorial",
                           name_full = paste0("Factorial Design",
@@ -118,25 +122,20 @@ prep_classical_factorial <- function(trt = c(sample(1:10, 1),
   unit_str <- switch(design,
                      "crd" = sprintf('%s = %d', unit, ntrt * r),
                      "rcbd" = sprintf('%s = %d,
-               %s = nested_in(%s, %d)',
+             %s = nested_in(%s, %d)',
                                       block, r,
                                       unit, block, ntrt))
   trt_str <- paste0(map_chr(seq_along(trt), function(i)
     paste0(edibble_decorate("trts")(paste0("trt", i)),
            " = ", trt[i])),
-    collapse = ",\n             ")
+    collapse = ",\n           ")
 
-  des$code <- sprintf('%s %%>%%
-    set_units(%s) %%>%%
-    set_trts(%s) %%>%%
-    allot_trts(~%s) %%>%%
-    assign_trts("random", seed = %d) %%>%%
-    serve_table()',
-    des$code,
-    unit_str,
-    trt_str,
-    unit,
-    seed)
+  des <- named_design_add_code(des,
+                                sprintf('set_units(%s)', unit_str),
+                                sprintf('set_trts(%s)', trt_str),
+                                sprintf('allot_trts(~%s)', unit),
+                                sprintf('assign_trts("random", .seed = %d)', seed),
+                                'serve_table()')
 
   des
 }
@@ -150,10 +149,10 @@ prep_classical_factorial <- function(trt = c(sample(1:10, 1),
 #' @family named-designs
 #' @importFrom cli style_italic
 #' @export
-prep_classical_split <- function(t1 = sample(1:10, 1),
-                                 t2 = sample(1:10, 1),
-                                 r = sample(1:10, 1),
-                                 seed = sample(1000, 1)) {
+prep_classical_split <- function(t1 = random_integer_small(),
+                                 t2 = random_integer_small(),
+                                 r = random_integer_small(),
+                                 seed = random_seed_number()) {
 
   n <- t1 * t2 * r
   des <- new_named_design(name = "split",
@@ -167,28 +166,50 @@ prep_classical_split <- function(t1 = sample(1:10, 1),
   trt1 <- edibble_decorate("trts")("trt1")
   trt2 <- edibble_decorate("trts")("trt2")
 
-  des$code <- sprintf('%s %%>%%
-  set_units(%s = %d,
-            %s = nested_in(%s, %d)) %%>%%
-  set_trts(%s = %d,
-           %s = %d) %%>%%
-  allot_trts(%s ~ %s,
-             %s ~ %s) %%>%%
-  assign_trts("random", seed = %d) %%>%%
-  serve_table()',
-  des$code,
-  mainplot, t1 * r,
-  subplot, mainplot, t2,
-  trt1, t1,
-  trt2, t2,
-  trt1, mainplot,
-  trt2, subplot,
-  seed)
+  des <- named_design_add_code(des,
+                               sprintf('set_units(%s = %d,
+             %s = nested_in(%s, %d))', mainplot, t1 * r, subplot, mainplot, t2),
+              sprintf('set_trts(%s = %d,
+           %s = %d)', trt1, t1, trt2, t2),
+              sprintf('allot_trts(%s ~ %s,
+             %s ~ %s)', trt1, mainplot, trt2, subplot),
+              sprintf('assign_trts("random", .seed = %d)', seed),
+              'serve_table()')
 
   des
 }
 
 
+#' Prepare classical Latin square design
+#'
+#' @param trt The number of treatments
+#' @inheritParams prep_classical_rcbd
+#' @family named-designs
+#' @importFrom cli style_italic
+#' @export
+prep_classical_lsd <- function(t = random_integer_small(),
+                               seed = random_seed_number()) {
+  des <- new_named_design(name = "lsd",
+                          name_full = "Latin Square Design")
+  des$info_always <- c(des$info_always,
+                       paste0("This design is ", style_italic("balanced.")))
+
+  row <- edibble_decorate("units")("row")
+  column <- edibble_decorate("units")("column")
+  unit <- edibble_decorate("units")("unit")
+  trt <- edibble_decorate("trts")("trt")
+
+  des <- named_design_add_code(des,
+                               sprintf('set_units(%s = %d,
+            %s = %d,
+            %s = ~%s:%s)', row, t, column, t, unit, row, column),
+             sprintf('set_trts(%s = %d)', trt, t),
+           sprintf('allot_trts(%s ~ %s)', trt, unit),
+           sprintf('assign_trts("random", .seed = %d)', seed),
+           'serve_table()')
+
+  des
+}
 
 
 #' Find the short names of the classical named designs
@@ -257,7 +278,6 @@ prep_classical_ <- function(...) {
 #'  printed or not or a vector of character (e.g. `c("info", "code", "table")`) specifying which of the three
 #'  outputs should be printed. Default is TRUE.
 #' @param ... Parameters passed into the `prep_classical_*` functions.
-#' @param .quiet Opposite of `.code`. Whether to suppress code output.
 #' @details
 #'
 #' For The available named designs are:
@@ -291,7 +311,7 @@ make_classical <- function(.name = "", ...,
     cli_ul()
     cli_li("This experimental design is often called
            {.combine_words(des$name_full, and = ' or ', fun = style_italic)}.")
-    cli_li("You can change the number in {.code set.seed} to get another random
+    cli_li("You can change the number in {.code .seed} to get another random
            instance of the same design.")
     if(!is_empty(des$info_always)) {
       cli_li(des$info_always)

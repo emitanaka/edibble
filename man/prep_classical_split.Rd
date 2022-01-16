@@ -5,10 +5,10 @@
 \title{Prepare classical split plot design}
 \usage{
 prep_classical_split(
-  t1 = sample(1:10, 1),
-  t2 = sample(1:10, 1),
-  r = sample(1:10, 1),
-  seed = sample(1000, 1)
+  t1 = random_integer_small(),
+  t2 = random_integer_small(),
+  r = random_integer_small(),
+  seed = random_seed_number()
 )
 }
 \arguments{
@@ -27,6 +27,7 @@ Prepare classical split plot design
 Other named-designs: 
 \code{\link{prep_classical_crd}()},
 \code{\link{prep_classical_factorial}()},
+\code{\link{prep_classical_lsd}()},
 \code{\link{prep_classical_rcbd}()}
 }
 \concept{named-designs}

@@ -3,72 +3,96 @@
     Code
       prep_classical_crd(n = 20, t = 3, seed = 3)
     Output
-      Completely Randomised Design 
-      start_design("crd") %>%
-          set_units(unit = 20) %>%
-          set_trts(trt = 3) %>%
-          allot_trts(trt ~ unit) %>%
-          assign_trts("random", seed = 3) %>%
-          serve_table()
+      start_design("Completely Randomised Design") %>%
+        set_units(unit = 20) %>%
+        set_trts(trt = 3) %>%
+        allot_trts(trt ~ unit) %>%
+        assign_trts("random", .seed = 3) %>%
+        serve_table()
 
 ---
 
     Code
       prep_classical_rcbd(r = 4, t = 3, seed = 3)
     Output
-      Randomised Complete Block Design 
-      start_design("rcbd") %>%
-          set_units(block = 4,
-                    unit = nested_in(block, 3)) %>%
-          set_trts(trt = 3) %>%
-          allot_trts(trt ~ unit) %>%
-          assign_trts("random", seed = 3) %>%
-          serve_table()
+      start_design("Randomised Complete Block Design") %>%
+        set_units(block = 4,
+                  unit = nested_in(block, 3)) %>%
+        set_trts(trt = 3) %>%
+        allot_trts(trt ~ unit) %>%
+        assign_trts("random", .seed = 3) %>%
+        serve_table()
 
 ---
 
     Code
       prep_classical_factorial(trt = c(3, 5, 6), r = 2, seed = 3)
     Output
-      Factorial Design 
-      start_design("factorial") %>%
-          set_units(unit = 180) %>%
-          set_trts(trt1 = 3,
-                   trt2 = 5,
-                   trt3 = 6) %>%
-          allot_trts(~unit) %>%
-          assign_trts("random", seed = 3) %>%
-          serve_table()
+      start_design("Factorial Design") %>%
+        set_units(unit = 180) %>%
+        set_trts(trt1 = 3,
+                 trt2 = 5,
+                 trt3 = 6) %>%
+        allot_trts(~unit) %>%
+        assign_trts("random", .seed = 3) %>%
+        serve_table()
 
 ---
 
     Code
       prep_classical_factorial(trt = c(3, 5, 6), r = 2, design = "rcbd", seed = 3)
     Output
-      Factorial Design with RCBD structure 
-      start_design("factorial") %>%
-          set_units(block = 2,
-                     unit = nested_in(block, 90)) %>%
-          set_trts(trt1 = 3,
-                   trt2 = 5,
-                   trt3 = 6) %>%
-          allot_trts(~unit) %>%
-          assign_trts("random", seed = 3) %>%
-          serve_table()
+      start_design("Factorial Design with RCBD structure") %>%
+        set_units(block = 2,
+                   unit = nested_in(block, 90)) %>%
+        set_trts(trt1 = 3,
+                 trt2 = 5,
+                 trt3 = 6) %>%
+        allot_trts(~unit) %>%
+        assign_trts("random", .seed = 3) %>%
+        serve_table()
 
 ---
 
     Code
       prep_classical_factorial(trt = 4, r = 2, design = "rcbd", seed = 3)
     Output
-      Factorial Design with RCBD structure 
-      start_design("factorial") %>%
-          set_units(block = 2,
-                     unit = nested_in(block, 4)) %>%
-          set_trts(trt1 = 4) %>%
-          allot_trts(~unit) %>%
-          assign_trts("random", seed = 3) %>%
-          serve_table()
+      start_design("Factorial Design with RCBD structure") %>%
+        set_units(block = 2,
+                   unit = nested_in(block, 4)) %>%
+        set_trts(trt1 = 4) %>%
+        allot_trts(~unit) %>%
+        assign_trts("random", .seed = 3) %>%
+        serve_table()
+
+---
+
+    Code
+      prep_classical_split(t1 = 3, t2 = 2, r = 2, seed = 3)
+    Output
+      start_design("Split-Plot Design | Split-Unit Design") %>%
+        set_units(mainplot = 6,
+                   subplot = nested_in(mainplot, 2)) %>%
+        set_trts(trt1 = 3,
+                 trt2 = 2) %>%
+        allot_trts(trt1 ~ mainplot,
+                   trt2 ~ subplot) %>%
+        assign_trts("random", .seed = 3) %>%
+        serve_table()
+
+---
+
+    Code
+      prep_classical_lsd(t = 5, seed = 3)
+    Output
+      start_design("Latin Square Design") %>%
+        set_units(row = 5,
+                  column = 5,
+                  unit = ~row:column) %>%
+        set_trts(trt = 5) %>%
+        allot_trts(trt ~ unit) %>%
+        assign_trts("random", .seed = 3) %>%
+        serve_table()
 
 ---
 
@@ -80,6 +104,7 @@
       
       * crd with the arguments t, n, r, and seed for a Completely Randomised Design.
       * factorial with the arguments trt, r, design, and seed for a Factorial Design.
+      * lsd with the arguments t and seed for a Latin Square Design.
       * rcbd with the arguments t, r, and seed for a Randomised Complete Block
       Design.
       * split with the arguments t1, t2, r, and seed for a Split-Plot Design or a
@@ -90,12 +115,12 @@
     Code
       code_classical("crd", t = 4, n = 20, seed = 1)
     Output
-      start_design("crd") %>%
-          set_units(unit = 20) %>%
-          set_trts(trt = 4) %>%
-          allot_trts(trt ~ unit) %>%
-          assign_trts("random", seed = 1) %>%
-          serve_table()
+      start_design("Completely Randomised Design") %>%
+        set_units(unit = 20) %>%
+        set_trts(trt = 4) %>%
+        allot_trts(trt ~ unit) %>%
+        assign_trts("random", .seed = 1) %>%
+        serve_table()
 
 ---
 
@@ -105,22 +130,23 @@
       
       -- experimental design details -------------------------------------------------
         * This experimental design is often called Randomised Complete Block Design.
-        * You can change the number in `set.seed` to get another random instance of
-        the same design.
+        * You can change the number in `.seed` to get another random instance of the
+        same design.
       
       -- edibble code ----------------------------------------------------------------
     Output
-      start_design("rcbd") %>%
-          set_units(block = 20,
-                    unit = nested_in(block, 4)) %>%
-          set_trts(trt = 4) %>%
-          allot_trts(trt ~ unit) %>%
-          assign_trts("random", seed = 1) %>%
-          serve_table() 
+      start_design("Randomised Complete Block Design") %>%
+        set_units(block = 20,
+                  unit = nested_in(block, 4)) %>%
+        set_trts(trt = 4) %>%
+        allot_trts(trt ~ unit) %>%
+        assign_trts("random", .seed = 1) %>%
+        serve_table() 
     Message <cliMessage>
       
       -- edibble data frame ----------------------------------------------------------
     Output
+      # Randomised Complete Block Design 
       # An edibble: 80 x 3
               block       unit      trt
          <unit(20)> <unit(80)> <trt(4)>

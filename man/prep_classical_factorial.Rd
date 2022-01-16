@@ -5,10 +5,10 @@
 \title{Prepare a factorial design}
 \usage{
 prep_classical_factorial(
-  trt = c(sample(1:10, 1), sample(1:10, 1)),
-  r = sample(1:10, 1),
+  trt = c(random_integer_small(), random_integer_small()),
+  r = random_integer_small(),
   design = c("crd", "rcbd"),
-  seed = sample(1000, 1)
+  seed = random_seed_number()
 )
 }
 \arguments{
@@ -26,6 +26,7 @@ Prepare a factorial design
 \seealso{
 Other named-designs: 
 \code{\link{prep_classical_crd}()},
+\code{\link{prep_classical_lsd}()},
 \code{\link{prep_classical_rcbd}()},
 \code{\link{prep_classical_split}()}
 }
