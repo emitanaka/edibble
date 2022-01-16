@@ -18,8 +18,6 @@ under Details for the available named designs.}
 \item{.output}{A logical value to indicate whether all output should be
 printed or not or a vector of character (e.g. \code{c("info", "code", "table")}) specifying which of the three
 outputs should be printed. Default is TRUE.}
-
-\item{.quiet}{Opposite of \code{.code}. Whether to suppress code output.}
 }
 \description{
 The function \code{make_classical} generates a classical named experimental
