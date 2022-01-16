@@ -9,6 +9,9 @@
 #'
 #' @export
 simulate_rcrds <- function(.data, ..., .censor = NA, .seed = NULL) {
+  if(!require("simulate")) {
+    stop("Please install the `simulate` package to use this function. Only the development version is available for now so please run `remotes::install_github('emitanaka/simulate')`.")
+  }
   out <- simulate(.data, ..., .seed = .seed)
   srcrds <- names(list2(...))
   des <- edbl_design(.data)
