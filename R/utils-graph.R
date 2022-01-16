@@ -302,6 +302,18 @@ fct_ancestor <- function(design, id = NULL) {
 
 #' @rdname var_ids
 #' @export
+fct_obs_unit <- function(design, initial = NULL) {
+  if(is.null(initial)) {
+    uids <- unit_ids(design)
+    initial <- uids[1]
+  }
+  id <- fct_child(design, initial)
+  if(length(id)) return(fct_obs_unit(design, initial = id[1]))
+  return(initial)
+}
+
+#' @rdname var_ids
+#' @export
 lvl_ancestor <- function(design, id = NULL) {
   out <- id
   parent_ids <- lvl_parent(design, id)

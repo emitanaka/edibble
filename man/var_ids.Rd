@@ -12,6 +12,7 @@
 \alias{fct_parent}
 \alias{lvl_parent}
 \alias{fct_ancestor}
+\alias{fct_obs_unit}
 \alias{lvl_ancestor}
 \title{Get the vertex IDs of the edibble design}
 \usage{
@@ -36,6 +37,8 @@ fct_parent(design, id = NULL)
 lvl_parent(design, id = NULL)
 
 fct_ancestor(design, id = NULL)
+
+fct_obs_unit(design, initial = NULL)
 
 lvl_ancestor(design, id = NULL)
 }
