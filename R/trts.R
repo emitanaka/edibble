@@ -45,13 +45,13 @@ set_trts <- function(.design, ...,
 #'
 #'
 #' @export
-assign_trts <- function(.design, .order = "random", .seed = NULL, .constrain = nesting(.design)) {
+assign_trts <- function(.design, order = "random", seed = NULL, constrain = nesting(.design)) {
   # TODO nesting function also exists in tidyr
 
   not_edibble(.design)
 
-  set.seed(.seed)
-  .design %@% "seed" <- .seed
+  set.seed(seed)
+  .design %@% "seed" <- seed
   .design %@% "seeds" <- .Random.seed
 
   for(ialloc in seq_along(.design$allotment)) {
@@ -70,11 +70,11 @@ assign_trts <- function(.design, .order = "random", .seed = NULL, .constrain = n
     tdf <- lvl_nodes_filter(.design, idvar %in% tids)
     tidf <- expand.grid(split(tdf$id, fct_label(.design, tdf$idvar)))
     ntrts <- nrow(tidf)
-    permutation <- switch(.order,
+    permutation <- switch(order,
                           "systematic" = rep(1:nrow(tidf), length.out = length(luids)),
                           "systematic-random" = rep(sample(nrow(tidf)), length.out = length(luids)),
                           "random" = {
-                            if(is_empty(.constrain[[unit]])) {
+                            if(is_empty(constrain[[unit]])) {
                               sample(rep(sample(nrow(tidf)), length.out = length(luids)))
                             } else {
 
@@ -109,7 +109,7 @@ assign_trts <- function(.design, .order = "random", .seed = NULL, .constrain = n
     }
   }
 
-  .design$assignment <- .order
+  .design$assignment <- order
 
   .design
 }

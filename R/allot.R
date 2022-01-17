@@ -55,10 +55,13 @@ allocate_trts <- function(design, ...) {
 
 #' A shorthand for allot, assign and serve
 #'
+#' @inheritParams assign_trts
+#' @inheritDotParams allot_trts
+#'
 #' @export
-allot_table <- function(.design, ..., .order = "random", .seed = NULL, .constrain = nesting(.design)) {
+allot_table <- function(.design, ..., order = "random", seed = NULL, constrain = nesting(.design)) {
   .design %>%
     allot_trts(...) %>%
-    assign_trts(.order = .order, .seed = .seed, .constrain = .constrain) %>%
+    assign_trts(order = order, seed = seed, constrain = constrain) %>%
     serve_table()
 }

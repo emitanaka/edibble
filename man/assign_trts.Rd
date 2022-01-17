@@ -6,9 +6,9 @@
 \usage{
 assign_trts(
   .design,
-  .order = "random",
-  .seed = NULL,
-  .constrain = nesting(.design)
+  order = "random",
+  seed = NULL,
+  constrain = nesting(.design)
 )
 }
 \arguments{

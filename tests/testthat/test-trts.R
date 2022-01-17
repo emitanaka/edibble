@@ -124,7 +124,7 @@ test_that("treatments", {
       set_trts(vaccine = 3) %>%
       set_units(person = 5) %>%
       allot_trts(vaccine ~ person) %>%
-      assign_trts("systematic-random", .seed = 2) %>%
+      assign_trts("systematic-random", seed = 2) %>%
       serve_table()
   })
 
@@ -133,7 +133,7 @@ test_that("treatments", {
       set_trts(vaccine = 3) %>%
       set_units(person = 5) %>%
       allot_trts(vaccine ~ person) %>%
-      assign_trts("random", .seed = 3) %>%
+      assign_trts("random", seed = 3) %>%
       serve_table()
   })
 
@@ -143,7 +143,7 @@ test_that("treatments", {
       set_units(person = 20,
                 blood = nested_in(person, 3)) %>%
       allot_trts(vaccine ~ person) %>%
-      assign_trts("random", .seed = 2) %>%
+      assign_trts("random", seed = 2) %>%
       serve_table()
     table(tab$vaccine, tab$person)
   })
@@ -154,7 +154,7 @@ test_that("treatments", {
       set_units(person = 20,
                 blood = nested_in(person, 3)) %>%
       allot_trts(vaccine ~ blood) %>%
-      assign_trts("random", .seed = 2, .constrain = NULL) %>%
+      assign_trts("random", seed = 2, constrain = NULL) %>%
       serve_table()
     table(tab$vaccine, tab$person)
   })
@@ -165,7 +165,7 @@ test_that("treatments", {
       set_units(person = 20,
                 blood = nested_in(person, 3)) %>%
       allot_trts(vaccine ~ blood) %>%
-      assign_trts("random", .seed = 2) %>%
+      assign_trts("random", seed = 2) %>%
       serve_table()
     table(tab$vaccine, tab$person)
   })
@@ -176,7 +176,7 @@ test_that("treatments", {
       set_units(person = 20,
                 blood = nested_in(person, 2)) %>%
       allot_trts(vaccine ~ blood) %>%
-      assign_trts("random", .seed = 2) %>%
+      assign_trts("random", seed = 2) %>%
       serve_table()
     table(tab$vaccine, tab$person)
   })
@@ -187,7 +187,7 @@ test_that("treatments", {
       set_units(person = 20,
                 blood = nested_in(person, 8)) %>%
       allot_trts(vaccine ~ blood) %>%
-      assign_trts("random", .seed = 2) %>%
+      assign_trts("random", seed = 2) %>%
       serve_table()
     table(tab$vaccine, tab$person)
   })
@@ -201,7 +201,7 @@ test_that("treatments", {
                                   2 ~ 3,
                                   . ~ 4)) %>%
       allot_trts(vaccine ~ blood) %>%
-      assign_trts("random", .seed = 2) %>%
+      assign_trts("random", seed = 2) %>%
       serve_table()
     table(tab$vaccine, tab$person)
   })
@@ -216,7 +216,7 @@ test_that("treatments", {
                                   2 ~ 3,
                                   . ~ 4)) %>%
       allot_trts(fert ~ sample) %>%
-      assign_trts("random", .seed = 2) %>%
+      assign_trts("random", seed = 2) %>%
       serve_table()
     table(tab$fert, tab$plot)
   })
@@ -230,7 +230,7 @@ test_that("treatments", {
                 splot = nested_in(wplot, 4)) %>%
       allot_trts(fert ~ splot,
                  irr ~ wplot) %>%
-      assign_trts("random", .seed = 2) %>%
+      assign_trts("random", seed = 2) %>%
       serve_table()
     table(tab$fert, tab$irr, tab$wplot)
   })

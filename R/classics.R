@@ -53,7 +53,7 @@ prep_classical_rcbd <- function(t = random_integer_small(),
             %s = nested_in(%s, %d))', block, r, unit, block, t),
         sprintf('set_trts(%s = %d)', trt, t),
         sprintf('allot_trts(%s ~ %s)', trt, unit),
-        sprintf('assign_trts("random", .seed = %d)', seed),
+        sprintf('assign_trts("random", seed = %d)', seed),
         'serve_table()')
   des
 }
@@ -90,7 +90,7 @@ prep_classical_crd <- function(t = random_integer_small(),
                                sprintf('set_units(%s = %d)', unit, n),
                                sprintf('set_trts(%s = %d)', trt, t),
                                sprintf('allot_trts(%s ~ %s)', trt, unit),
-                               sprintf('assign_trts("random", .seed = %d)', seed),
+                               sprintf('assign_trts("random", seed = %d)', seed),
                                'serve_table()')
 
   des
@@ -134,7 +134,7 @@ prep_classical_factorial <- function(trt = c(random_integer_small(),
                                 sprintf('set_units(%s)', unit_str),
                                 sprintf('set_trts(%s)', trt_str),
                                 sprintf('allot_trts(~%s)', unit),
-                                sprintf('assign_trts("random", .seed = %d)', seed),
+                                sprintf('assign_trts("random", seed = %d)', seed),
                                 'serve_table()')
 
   des
@@ -173,7 +173,7 @@ prep_classical_split <- function(t1 = random_integer_small(),
            %s = %d)', trt1, t1, trt2, t2),
               sprintf('allot_trts(%s ~ %s,
              %s ~ %s)', trt1, mainplot, trt2, subplot),
-              sprintf('assign_trts("random", .seed = %d)', seed),
+              sprintf('assign_trts("random", seed = %d)', seed),
               'serve_table()')
 
   des
@@ -205,7 +205,7 @@ prep_classical_lsd <- function(t = random_integer_small(),
             %s = ~%s:%s)', row, t, column, t, unit, row, column),
              sprintf('set_trts(%s = %d)', trt, t),
            sprintf('allot_trts(%s ~ %s)', trt, unit),
-           sprintf('assign_trts("random", .seed = %d)', seed),
+           sprintf('assign_trts("random", seed = %d)', seed),
            'serve_table()')
 
   des
@@ -311,7 +311,7 @@ make_classical <- function(.name = "", ...,
     cli_ul()
     cli_li("This experimental design is often called
            {.combine_words(des$name_full, and = ' or ', fun = style_italic)}.")
-    cli_li("You can change the number in {.code .seed} to get another random
+    cli_li("You can change the number in {.code seed} to get another random
            instance of the same design.")
     if(!is_empty(des$info_always)) {
       cli_li(des$info_always)

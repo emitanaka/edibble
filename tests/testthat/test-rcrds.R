@@ -8,7 +8,7 @@ test_that("measure response", {
              exam = c("take-home", "open-book", "closed-book")) %>%
     allot_trts(style ~ class,
                exam ~ student) %>%
-    assign_trts("random", .seed = 1)
+    assign_trts("random", seed = 1)
 
   expect_snapshot({
     des0 %>%

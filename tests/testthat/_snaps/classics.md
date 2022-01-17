@@ -7,7 +7,7 @@
         set_units(unit = 20) %>%
         set_trts(trt = 3) %>%
         allot_trts(trt ~ unit) %>%
-        assign_trts("random", .seed = 3) %>%
+        assign_trts("random", seed = 3) %>%
         serve_table()
 
 ---
@@ -20,7 +20,7 @@
                   unit = nested_in(block, 3)) %>%
         set_trts(trt = 3) %>%
         allot_trts(trt ~ unit) %>%
-        assign_trts("random", .seed = 3) %>%
+        assign_trts("random", seed = 3) %>%
         serve_table()
 
 ---
@@ -34,7 +34,7 @@
                  trt2 = 5,
                  trt3 = 6) %>%
         allot_trts(~unit) %>%
-        assign_trts("random", .seed = 3) %>%
+        assign_trts("random", seed = 3) %>%
         serve_table()
 
 ---
@@ -49,7 +49,7 @@
                  trt2 = 5,
                  trt3 = 6) %>%
         allot_trts(~unit) %>%
-        assign_trts("random", .seed = 3) %>%
+        assign_trts("random", seed = 3) %>%
         serve_table()
 
 ---
@@ -62,7 +62,7 @@
                    unit = nested_in(block, 4)) %>%
         set_trts(trt1 = 4) %>%
         allot_trts(~unit) %>%
-        assign_trts("random", .seed = 3) %>%
+        assign_trts("random", seed = 3) %>%
         serve_table()
 
 ---
@@ -77,7 +77,7 @@
                  trt2 = 2) %>%
         allot_trts(trt1 ~ mainplot,
                    trt2 ~ subplot) %>%
-        assign_trts("random", .seed = 3) %>%
+        assign_trts("random", seed = 3) %>%
         serve_table()
 
 ---
@@ -91,7 +91,7 @@
                   unit = ~row:column) %>%
         set_trts(trt = 5) %>%
         allot_trts(trt ~ unit) %>%
-        assign_trts("random", .seed = 3) %>%
+        assign_trts("random", seed = 3) %>%
         serve_table()
 
 ---
@@ -119,7 +119,7 @@
         set_units(unit = 20) %>%
         set_trts(trt = 4) %>%
         allot_trts(trt ~ unit) %>%
-        assign_trts("random", .seed = 1) %>%
+        assign_trts("random", seed = 1) %>%
         serve_table()
 
 ---
@@ -130,7 +130,7 @@
       
       -- experimental design details -------------------------------------------------
         * This experimental design is often called Randomised Complete Block Design.
-        * You can change the number in `.seed` to get another random instance of the
+        * You can change the number in `seed` to get another random instance of the
         same design.
       
       -- edibble code ----------------------------------------------------------------
@@ -140,7 +140,7 @@
                   unit = nested_in(block, 4)) %>%
         set_trts(trt = 4) %>%
         allot_trts(trt ~ unit) %>%
-        assign_trts("random", .seed = 1) %>%
+        assign_trts("random", seed = 1) %>%
         serve_table() 
     Message <cliMessage>
       
