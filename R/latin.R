@@ -54,6 +54,7 @@ latin_array <- function(dim, nt, randomise = TRUE) {
   if(ndim == 2) return(latin_rectangle(dim[1], dim[2], nt, randomise))
   r <- ceiling(dim[ndim]/nt)
   dim_ext <- c(dim[-ndim], r * nt)
+  out <- array(dim = dim_ext)
   out <- assign_array(out, 1, 1, latin_array(dim_ext[-1], nt, randomise))
   for(i in 2:dim[1]) {
     out <- assign_array(out, 1, i, lag_array(index_array(out, 1, i - 1), 1))
