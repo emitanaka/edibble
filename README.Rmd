@@ -27,7 +27,7 @@ Install the development version with:
 remotes::install_github("emitanaka/edibble")
 ```
 
-You may also need to install the `simulate` package which is currently only 
+For `simulate_rcrds()`, you also need to install the `simulate` package which is currently only 
 available on GitHub:
 
 ```r
