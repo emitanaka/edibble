@@ -68,7 +68,7 @@ assign_trts <- function(.design, order = "random", seed = NULL, constrain = nest
 
     luids <- lvl_nodes_filter(.design, idvar == uid)$id
     tdf <- lvl_nodes_filter(.design, idvar %in% tids)
-    tidf <- expand.grid(split(tdf$id, fct_label(.design, tdf$idvar)))
+    tidf <- expand.grid(split(tdf$id, fct_names(.design, tdf$idvar)))
     ntrts <- nrow(tidf)
     permutation <- switch(order,
                           "systematic" = rep(1:nrow(tidf), length.out = length(luids)),
@@ -84,7 +84,7 @@ assign_trts <- function(.design, order = "random", seed = NULL, constrain = nest
                               # find the grandest ancestor
                               vanc <- fct_ancestor(.design, id = uid)
                               vanc <- vanc[vanc %in% unit_ids(.design)]
-                              udf <- as.data.frame(serve_units(select_units(.design, !!fct_label(.design, vanc))))
+                              udf <- as.data.frame(serve_units(select_units(.design, !!fct_names(.design, vanc))))
 
                               vparents <- fct_parent(.design, id = uid)
                               vparents <- vparents[vparents %in% unit_ids(.design)]
@@ -115,7 +115,7 @@ assign_trts <- function(.design, order = "random", seed = NULL, constrain = nest
 }
 
 permute_parent_more_than_one <- function(.design, vids, udf, ntrts) {
-  gparents <- fct_label(.design, vids)
+  gparents <- fct_names(.design, vids)
   vlevs <- fct_levels(.design)
 
   lvls <- lengths(vlevs[gparents])
@@ -135,7 +135,7 @@ permute_parent_more_than_one <- function(.design, vids, udf, ntrts) {
 
 
 permute_parent_one <- function(.design, vid, udf, ntrts) {
-  gparent <- fct_label(.design, vid)
+  gparent <- fct_names(.design, vid)
   blocksizes <- as.data.frame(table(table(udf[[gparent]])))
   blocksizes$size <- as.numeric(as.character(blocksizes$Var1))
   for(isize in seq(nrow(blocksizes))) {

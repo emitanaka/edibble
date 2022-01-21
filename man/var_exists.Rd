@@ -2,18 +2,18 @@
 % Please edit documentation in R/utils.R
 \name{var_exists}
 \alias{var_exists}
-\title{Check if the design contains a particular variable label.}
+\title{Check if the design contains a particular variable.}
 \usage{
-var_exists(design, label = NULL)
+var_exists(design, name = NULL)
 }
 \arguments{
 \item{design}{An edibble design.}
 
-\item{label}{A character vector of the variable labels.}
+\item{name}{A character vector of the variable names.}
 }
 \value{
-A logical vector of the same size as \code{label} or a single logical value if class is provied.
+A logical vector of the same size as \code{name} or a single logical value if class is provied.
 }
 \description{
-Check if the design contains a particular variable label.
+Check if the design contains a particular variable.
 }

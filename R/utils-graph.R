@@ -53,32 +53,32 @@ rcrd_ids <-  function(design, type = "fct") {
 #' @inheritParams var_ids
 #' @family design manipulators
 #' @export
-var_labels <- function(design, vclass = NULL) {
+var_names <- function(design, vclass = NULL) {
   nodes <- fct_nodes(design)
   if(is_null(vclass)) {
-    labels <- nodes$label
+    labels <- nodes$name
   } else {
-    labels <- subset(nodes, class %in% vclass)$label
+    labels <- subset(nodes, class %in% vclass)$name
   }
   labels
 }
 
-#' @rdname var_labels
+#' @rdname var_names
 #' @export
-trt_labels <- function(design) {
-  var_labels(design, vclass = "edbl_trt")
+trt_names <- function(design) {
+  var_names(design, vclass = "edbl_trt")
 }
 
-#' @rdname var_labels
+#' @rdname var_names
 #' @export
-unit_labels <- function(design) {
-  var_labels(design, vclass = "edbl_unit")
+unit_names <- function(design) {
+  var_names(design, vclass = "edbl_unit")
 }
 
-#' @rdname var_labels
+#' @rdname var_names
 #' @export
-rcrd_labels <- function(design) {
-  var_labels(design, vclass = "edbl_rcrd")
+rcrd_names <- function(design) {
+  var_names(design, vclass = "edbl_rcrd")
 }
 
 
@@ -95,7 +95,7 @@ NULL
 #' @export
 fct_nodes <- function(design) {
   nodes <- design$graph$nodes
-  nodes$n <- lengths(fct_levels(design)[nodes$label])
+  nodes$n <- lengths(fct_levels(design)[nodes$name])
   nodes
 }
 
@@ -103,8 +103,8 @@ fct_nodes <- function(design) {
 #' @export
 fct_edges <- function(design) {
   edges <- design$graph$edges
-  edges$var_from <- fct_label(design, id = edges$from)
-  edges$var_to <- fct_label(design, id = edges$to)
+  edges$var_from <- fct_names(design, id = edges$from)
+  edges$var_to <- fct_names(design, id = edges$to)
   edges
 }
 
@@ -112,7 +112,7 @@ fct_edges <- function(design) {
 #' @export
 lvl_nodes <- function(design) {
   nodes <- design$graph$levels$nodes
-  nodes$var <- fct_label(design, id = nodes$idvar)
+  nodes$var <- fct_names(design, id = nodes$idvar)
   nodes
 }
 
@@ -120,8 +120,8 @@ lvl_nodes <- function(design) {
 #' @export
 lvl_edges <- function(design) {
   edges <- design$graph$levels$edges
-  edges$lvl_from <- lvl_label(design, id = edges$from)
-  edges$lvl_to <- lvl_label(design, id = edges$to)
+  edges$lvl_from <- lvl_names(design, id = edges$from)
+  edges$lvl_to <- lvl_names(design, id = edges$to)
   edges
 }
 
@@ -210,34 +210,34 @@ lvl_n <- function(design) {
 # vectorised
 #' @rdname var_ids
 #' @export
-fct_id <- function(design, label = NULL) {
-  label_to_id_fct <- fct_nodes_pull(design, id, label)
-  label <- label %||% names(label_to_id_fct)
-  unname(label_to_id_fct[as.character(label)])
+fct_id <- function(design, name = NULL) {
+  name_to_id_fct <- fct_nodes_pull(design, id, name)
+  name <- name %||% names(name_to_id_fct)
+  unname(name_to_id_fct[as.character(name)])
 }
 
 #' @rdname var_ids
 #' @export
-lvl_id <- function(design, label = NULL) {
-  label_to_id_lvl <- lvl_nodes_pull(design, id, label)
-  label <- label %||% names(label_to_id_lvl)
-  unname(label_to_id_lvl[as.character(label)])
+lvl_id <- function(design, name = NULL) {
+  name_to_id_lvl <- lvl_nodes_pull(design, id, name)
+  name <- name %||% names(name_to_id_lvl)
+  unname(name_to_id_lvl[as.character(name)])
 }
 
-#' @rdname var_labels
+#' @rdname var_names
 #' @export
-fct_label <- function(design, id = NULL) {
-  id_to_label_fct <- fct_nodes_pull(design, label, id)
+fct_names <- function(design, id = NULL) {
+  id_to_name_fct <- fct_nodes_pull(design, name, id)
   ids_fct <-  id %||% fct_nodes_pull(design, id)
-  unname(id_to_label_fct[as.character(ids_fct)])
+  unname(id_to_name_fct[as.character(ids_fct)])
 }
 
-#' @rdname var_labels
+#' @rdname var_names
 #' @export
-lvl_label <- function(design, id = NULL) {
-  id_to_label_lvl <- lvl_nodes_pull(design, label, id)
+lvl_names <- function(design, id = NULL) {
+  id_to_level_lvl <- lvl_nodes_pull(design, name, id)
   ids_lvl <-  id %||% lvl_nodes_pull(design, id)
-  unname(id_to_label_lvl[as.character(ids_lvl)])
+  unname(id_to_level_lvl[as.character(ids_lvl)])
 }
 
 #' @rdname design_data
@@ -324,15 +324,13 @@ lvl_ancestor <- function(design, id = NULL) {
 }
 
 
-#' @rdname var_labels
+#' @rdname var_names
 #' @export
-fct_levels <- function(design, id = NULL, label = NULL) {
-  fcts_id <- fct_nodes_pull(design, id)
-  fcts_name <-  fct_nodes_pull(design, label)
-  qid <- id %||% fct_id(design, label)
+fct_levels <- function(design, id = NULL, name = NULL) {
+  qid <- id %||% fct_id(design, name)
   out <- lvl_nodes_filter(design, idvar %in% qid)
-  out$var <- fct_label(design, out$idvar)
-  split(out$label, out$var)
+  out$var <- fct_names(design, out$idvar)
+  split(out$name, out$var)
 }
 
 

@@ -24,13 +24,13 @@ serve_table <- function(.design, ...) {
     lout <- c(lunit, ltrt, lvar)
   }
 
-  namesv <- fct_label(.design)
+  namesv <- fct_names(.design)
   new_edibble(lout[namesv], design = .design)
 }
 
 serve_trts <- function(design, lunits) {
   tids <- trt_ids(design)
-  vnames <- fct_label(design, id = tids)
+  vnames <- fct_names(design, id = tids)
   lvs <- lapply(tids, function(i) {
     serve_trt(design, i, lunits)
   })
@@ -40,14 +40,14 @@ serve_trts <- function(design, lunits) {
 
 rcrd_to_unit_dict <- function(design, rids) {
   tdf <- fct_edges_filter(design, to %in% rids)
-  set_names(fct_label(design, tdf$from),
-            fct_label(design, tdf$to))
+  set_names(fct_names(design, tdf$from),
+            fct_names(design, tdf$to))
 }
 
 serve_rcrds <- function(design, lunits) {
   rids <- rcrd_ids(design)
   rcrd2unit <- rcrd_to_unit_dict(design, rids)
-  rnames <- fct_label(design, id = rids)
+  rnames <- fct_names(design, id = rids)
   N <- max(lengths(lunits))
   lvs <- lapply(rnames, function(avar) {
     unit <- rcrd2unit[avar]
@@ -67,10 +67,10 @@ is_connected <- function(design) {
 
 # Returns list of edibble variables
 serve_vars_not_reconciled <- function(.design) {
-  namesv <- fct_label(.design)
+  namesv <- fct_names(.design)
   res <- lapply(namesv,
                 function(avar) {
-                  new_edibble_var(levels = fct_levels(.design, label = avar)[[avar]],
+                  new_edibble_var(levels = fct_levels(.design, name = avar)[[avar]],
                                   name = avar,
                                   class = fct_class(.design,
                                                     id = fct_id(.design, avar)))
@@ -82,10 +82,10 @@ serve_vars_not_reconciled <- function(.design) {
 # Return edibble unit
 serve_unit_with_child <- function(parent_levels, parent_vname, parent_class,
                                   child_labels, child_vname, design) {
-  pids <- lvl_id(design, label = parent_levels)
-  cids <- lvl_id(design, label = unique(child_labels))
+  pids <- lvl_id(design, name = parent_levels)
+  cids <- lvl_id(design, name = unique(child_labels))
   ledges <- lvl_edges_filter(design, to %in% cids & from %in% pids)
-  dict <- set_names(lvl_label(design, ledges$from), lvl_label(design, ledges$to))
+  dict <- set_names(lvl_names(design, ledges$from), lvl_names(design, ledges$to))
   new_edibble_var(levels = parent_levels,
                   labels = unname(dict[child_labels]),
                   name = parent_vname,
@@ -110,20 +110,20 @@ serve_units <- function(design) {
   res <- list()
   while(!is_empty(lid)) {
     lvs <- lapply(lid, function(i) {
-      vname <- fct_label(design, id = i)
+      vname <- fct_names(design, id = i)
       classv <- fct_class(design, id = i)
       vlevs <- vlev[[vname]]
       cid <- setdiff(fct_child(design, id = i), rid)
       if(!is_empty(cid) & length(cid)==1) {
         # currently assumes one child only for now
-        cname <- fct_label(design, id = cid)
+        cname <- fct_names(design, id = cid)
         serve_unit_with_child(vlevs, vname, classv,
                               as.character(res[[cname]]), cname, design)
       } else {
         serve_unit_with_no_child(vlevs, vname, classv)
       }
     })
-    names(lvs) <- fct_label(design, id = lid)
+    names(lvs) <- fct_names(design, id = lid)
     res <- c(res, lvs)
     wid <- setdiff(wid, lid)
     lid <- wid[!wid %in% fct_edges_filter(design, !to %in% c(lid, rid))$from]
@@ -133,7 +133,7 @@ serve_units <- function(design) {
 
 serve_trts <- function(design, lunits) {
   tids <- trt_ids(design)
-  vnames <- fct_label(design, id = tids)
+  vnames <- fct_names(design, id = tids)
   lvs <- lapply(tids, function(i) {
     serve_trt(design, i, lunits)
   })
@@ -146,15 +146,15 @@ serve_trt <- function(design, tid, lunits) {
   ltids <- tdf$id
   luids <- lvl_child(design, id = ltids)
   ledges <- lvl_edges_filter(design, to %in% luids & from %in% ltids)
-  aunit <- fct_label(design, id = fct_child(design, id = tid))
+  aunit <- fct_names(design, id = fct_child(design, id = tid))
   if(!is_empty(aunit)) {
-    dict <- set_names(lvl_label(design, ledges$from), lvl_label(design, ledges$to))
+    dict <- set_names(lvl_names(design, ledges$from), lvl_names(design, ledges$to))
     labels <- unname(dict[lunits[[aunit]]])
   } else {
     labels <- tdf$label
   }
   new_edibble_var(levels = tdf$label,
                   labels = labels,
-                  name = fct_label(design, id = tid),
+                  name = fct_names(design, id = tid),
                   class = fct_class(design, id = tid))
 }

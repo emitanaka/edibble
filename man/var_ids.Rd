@@ -24,9 +24,9 @@ unit_ids(design, type = "fct")
 
 rcrd_ids(design, type = "fct")
 
-fct_id(design, label = NULL)
+fct_id(design, name = NULL)
 
-lvl_id(design, label = NULL)
+lvl_id(design, name = NULL)
 
 fct_child(design, id = NULL)
 
@@ -56,6 +56,6 @@ Set of operators to get the vertex/node IDs of an \code{edbl_design} object.
 \seealso{
 Other design manipulators: 
 \code{\link{design_data}},
-\code{\link{var_labels}()}
+\code{\link{var_names}()}
 }
 \concept{design manipulators}

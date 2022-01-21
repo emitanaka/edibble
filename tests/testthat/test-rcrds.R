@@ -28,15 +28,15 @@ test_that("measure response", {
   expect_snapshot({
     serve_table(des1)
   })
-
+  des2 <- des0 %>%
+    set_rcrds_of(student = c("exam_mark",
+                             "quiz1_mark",
+                             "quiz2_mark",
+                             "gender"),
+                 class = c("room",
+                           "teacher"))
   expect_snapshot({
-    des2 <- des0 %>%
-      set_rcrds_of(student = c("exam_mark",
-                               "quiz1_mark",
-                               "quiz2_mark",
-                               "gender"),
-                   class = c("room",
-                             "teacher"))
+
     des2
   })
 

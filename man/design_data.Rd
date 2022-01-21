@@ -61,6 +61,6 @@ Get the node or edge data from an edibble design
 \seealso{
 Other design manipulators: 
 \code{\link{var_ids}()},
-\code{\link{var_labels}()}
+\code{\link{var_names}()}
 }
 \concept{design manipulators}

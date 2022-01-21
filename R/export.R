@@ -122,7 +122,7 @@ subset.edbl_design <- function(.edibble, unit, rcrds) {
   .edibble$graph$levels$edges <- lvl_edges_filter(.edibble, to %in% keep_lids_ancestors & from %in% keep_lids_ancestors)
   if(!is_null(.edibble$allotment)) {
     units <- map_chr(.edibble$allotment, function(x) all.vars(f_rhs(x)))
-    allotments <- .edibble$allotment[units %in% fct_label(.edibble)]
+    allotments <- .edibble$allotment[units %in% fct_names(.edibble)]
     if(is_empty(allotments)) {
       .edibble$allotment <- NULL
     } else {
@@ -130,7 +130,7 @@ subset.edbl_design <- function(.edibble, unit, rcrds) {
     }
   }
   if(!is_null(.edibble$validation)) {
-    rcrds <- fct_label(.edibble, keep_rids)
+    rcrds <- fct_names(.edibble, keep_rids)
     if(!any(rcrds %in% names(.edibble$validation))) {
       .edibble$validation <- NULL
     } else {

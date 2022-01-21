@@ -43,8 +43,8 @@ nested_in <- function(x, ..., prefix = "", suffix = "",
 nesting <- function(design) {
   uids <- unit_ids(design)
   ndf <- fct_edges_filter(design, from %in% uids & to %in% uids)
-  from <- fct_label(design, ndf$from)
-  to <- fct_label(design, ndf$to)
+  from <- fct_names(design, ndf$from)
+  to <- fct_names(design, ndf$to)
   split(from, to)
 }
 

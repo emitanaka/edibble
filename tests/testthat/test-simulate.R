@@ -43,7 +43,8 @@ test_that("simulate", {
   des3 %>%
     simulate_rcrds(response = sim_normal(~treat) %>%
                      params("mean",
-                            treat = c("A" = 10, "B" = -10, "C" = 0)))
+                            treat = c("A" = 10, "B" = -10, "C" = 0)),
+                   .censor = 0)
 
   eff1 <- params(mean = list(treat = c("A" = 3, "B" = 2, "C" = 0)))
   eff2 <- params(mean = list(treat = c("A" = 40, "C" = -100)))
@@ -107,12 +108,4 @@ test_that("simulate", {
   })
 
 
-  eff4 <- params(treat = c("A" = 3, "B" = 2, "C" = 0),
-                 unit = ~sim_normal(0, 1))
-
-  eff4 <- params(treat = ~sim_normal(10, 3),
-                 unit = ~sim_normal(0, 1))
-  des %>%
-   simulate_rcrds(response = sim_fixed(mean = ~30 + treat + unit,
-                                       params = list(mean = eff4)))
 })

@@ -8,6 +8,7 @@ plot.edbl_design <- function(.design, view = c("factors", "levels"), width = "10
   nodes$group <- switch(view,
                         "factors" = gsub("edbl_", "", nodes$class),
                         "levels" = nodes$var)
+  nodes$label <- nodes$name
   class2shape <- c("edbl_unit" = "circle",
                    "edbl_trt" = "diamond",
                    "edbl_rcrd" = "database")

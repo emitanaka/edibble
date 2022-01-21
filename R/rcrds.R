@@ -23,14 +23,14 @@ set_rcrds <- function(.edibble, ...,
   rcrds <- names(units)
 
   des <- edbl_design(.edibble)
-  check_var_exists(des, label = units, vclass = "edbl_unit")
+  check_var_exists(des, name = units, vclass = "edbl_unit")
 
   for(i in seq_along(units)) {
     rid <- fct_last_id(des) + 1L
     uid <- fct_id(des, unname(units)[i])
     des$graph$nodes <- add_row(des$graph$nodes,
                                      id = rid,
-                                     label = rcrds[i],
+                                     name = rcrds[i],
                                      class = "edbl_rcrd")
     des$graph$edges <- add_row(des$graph$edges,
                                      from = uid,
@@ -69,7 +69,7 @@ expect_rcrds <- function(.edibble, ...) {
   des <- edbl_design(.edibble)
   rules_named <- map(dots[dots_nms!=""], eval_tidy)
   rules_unnamed <- map(dots[dots_nms==""], validate_rcrd,
-                       rnames = fct_label(des, rcrd_ids(des)))
+                       rnames = fct_names(des, rcrd_ids(des)))
   rules_unnamed <- setNames(rules_unnamed, map_chr(rules_unnamed, function(x) x$rcrd))
   des$validation <- simplify_validation(c(rules_named, rules_unnamed))
   if(is_edibble_table(.edibble)) return(serve_table(des))

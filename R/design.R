@@ -20,8 +20,8 @@ start_design <- function(name = NULL) {
 # initialise graph structure -----------------------------------------------
 
 initialise_edibble_graph <- function() {
-  fnodes <- data.frame(id = integer(), label = character(), class = character(), stringsAsFactors = FALSE)
-  lnodes <- data.frame(idvar = integer(), id = integer(), label = character(), stringsAsFactors = FALSE)
+  fnodes <- data.frame(id = integer(), name = character(), class = character(), stringsAsFactors = FALSE)
+  lnodes <- data.frame(idvar = integer(), id = integer(), name = character(), stringsAsFactors = FALSE)
   edges <-  data.frame(from = integer(), to = integer(),
                        alloc = integer(),
                        stringsAsFactors = FALSE)

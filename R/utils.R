@@ -1,73 +1,73 @@
 
-#' Check if the design contains a particular variable label.
+#' Check if the design contains a particular variable.
 #'
 #'
 #' @param design An edibble design.
-#' @param label A character vector of the variable labels.
-#' @return A logical vector of the same size as `label` or a single logical value if class is provied.
+#' @param name A character vector of the variable names.
+#' @return A logical vector of the same size as `name` or a single logical value if class is provied.
 #' @export
-var_exists <- function(design, label = NULL) {
-  if(is_null(label)) {
-    abort("`label` must be supplied in `var_exists`.")
+var_exists <- function(design, name = NULL) {
+  if(is_null(name)) {
+    abort("`name` must be supplied in `var_exists`.")
   }
-  label %in% fct_label(design)
+  name %in% fct_names(design)
 }
 
-template_var_exists <- function(design, label = NULL, class = NULL, all_labels = fct_label(design)) {
-  if(is_null(label)) {
+template_var_exists <- function(design, name = NULL, class = NULL, all_names = fct_names(design)) {
+  if(is_null(name)) {
     class %in% fct_class(design)
   } else {
-    vexists <- label %in% all_labels
+    vexists <- name %in% all_names
     if(!all(vexists)) {
-      abort_missing_vars(label[!vexists])
+      abort_missing_vars(name[!vexists])
     }
     vexists
   }
 }
 
-trts_exists <- function(design, label = NULL) {
-  template_var_exists(design, label = label, class = "edbl_trt", all_labels = trt_labels(design))
+trts_exists <- function(design, name = NULL) {
+  template_var_exists(design, name = name, class = "edbl_trt", all_names = trt_names(design))
 }
 
-units_exists <- function(design, label = NULL) {
-  template_var_exists(design, label = label, class = "edbl_unit", all_labels = unit_labels(design))
+units_exists <- function(design, name = NULL) {
+  template_var_exists(design, name = name, class = "edbl_unit", all_names = unit_names(design))
 }
 
-rcrds_exists <- function(design, label = NULL) {
-  template_var_exists(design, label = label, class = "edbl_rcrd", all_labels = rcrd_labels(design))
+rcrds_exists <- function(design, name = NULL) {
+  template_var_exists(design, name = name, class = "edbl_rcrd", all_names = rcrd_names(design))
 }
 
-check_trt_exists <- function(design, label = NULL) {
+check_trt_exists <- function(design) {
   if(!trts_exists(design)) {
     abort("No treatment variables exists in the design.")
   }
 }
 
-check_rcrd_exists <- function(design, label = NULL) {
+check_rcrd_exists <- function(design) {
   if(!rcrds_exists(desgin)) {
     abort("No record variables exists in the design.")
   }
 }
 
-check_unit_exists <- function(design, label = NULL) {
+check_unit_exists <- function(design) {
   if(!units_exists(design)) {
     abort("No unit variables exists in the design.")
   }
 }
 
-check_var_exists <- function(design, label = NULL, vclass = "edbl_var") {
+check_var_exists <- function(design, name = NULL, vclass = "edbl_var") {
   f_exists <- switch(vclass,
                      "edbl_trt" = trts_exists,
                      "edbl_unit" = units_exists,
                      "edbl_rcrd" = rcrds_exists,
                      var_exists)
-  vexists <- f_exists(design, label)
-  if(is_null(label) && any(!vexists)) {
+  vexists <- f_exists(design, name)
+  if(is_null(name) && any(!vexists)) {
     abort(sprintf("No variables with class `%s` exists.", vclass))
   }
 
   if(any(!vexists)) {
-    abort_missing_vars(label[!vexists])
+    abort_missing_vars(name[!vexists])
   }
 }
 
@@ -151,7 +151,7 @@ print.edbl_design <- function(x,
                    class <- fct_class(x, id = id)
                    children <- fct_child(x, id = id)
                    if(class!="edbl_trt" & !is_empty(children)) {
-                     fct_label(x, id = children)
+                     fct_names(x, id = children)
                    } else {
                      character()
                    }
@@ -180,7 +180,6 @@ print.edbl_design <- function(x,
   if(!is_null(x$validation)) {
     cat(decorate_title("Validation:\n"))
     rnames <- names(x$validation)
-    #browser()
     items <- map_chr(seq_along(x$validation), function(i) {
       paste0(rnames[i], ": ", style_italic(x$validation[[i]]$record), " ",
              validation_interval(x$validation[[i]]))
@@ -247,7 +246,7 @@ print.edbl_graph <- function(x, show_levels = FALSE, ...) {
 }
 
 names.edbl_graph <- function(graph) {
-  graph$nodes$label
+  graph$nodes$name
 }
 
 names.edbl_design <- function(design) {

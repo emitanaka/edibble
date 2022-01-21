@@ -63,8 +63,6 @@
 ---
 
     Code
-      des2 <- des0 %>% set_rcrds_of(student = c("exam_mark", "quiz1_mark",
-        "quiz2_mark", "gender"), class = c("room", "teacher"))
       des2
     Output
       Effective teaching
