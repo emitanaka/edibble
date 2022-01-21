@@ -58,6 +58,36 @@ prep_classical_rcbd <- function(t = random_integer_small(),
   des
 }
 
+#' Graeco-Latin Square Design
+#'
+#' @inheritParams prep_classical_rcbd
+#' @family named-designs
+#' @export
+prep_classical_graeco <- function(t = random_integer_small(),
+                                  seed = random_seed_number()) {
+  des <- new_named_design(name = "graeco",
+                          name_full = "Graeco-Latin Square Design")
+
+  row <- edibble_decorate("units")("row")
+  column <- edibble_decorate("units")("collumn")
+  unit <- edibble_decorate("units")("unit")
+  trt1 <- edibble_decorate("trts")("trt1")
+  trt2 <- edibble_decorate("trts")("trt2")
+
+  des <- named_design_add_code(des,
+                              sprintf('set_units(%s = %d,
+            %s = %d,
+            %s = ~%s:%s)', row, t, column, t, unit, row, column),
+            sprintf('set_trts(%s = %d,
+           %s = %d)', trt1, t, trt2, t),
+            sprintf('allot_trts(%s ~ %s,
+             %s ~ %s)', trt1, unit, trt2, unit),
+            sprintf('assign_trts("random", seed = %d)', seed),
+            'serve_table()')
+
+  des
+}
+
 
 #' Completely randomised design
 #'

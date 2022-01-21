@@ -27,6 +27,7 @@ Prepare classical split plot design
 Other named-designs: 
 \code{\link{prep_classical_crd}()},
 \code{\link{prep_classical_factorial}()},
+\code{\link{prep_classical_graeco}()},
 \code{\link{prep_classical_lsd}()},
 \code{\link{prep_classical_rcbd}()}
 }
