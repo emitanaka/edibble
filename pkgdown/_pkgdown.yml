@@ -39,22 +39,13 @@ reference:
   - contains("to_be")
   - with_value
   - export_desgin
-- title: "Experiment from existing data"
-  desc: >
-    These are functions relevant when making an experiment from existing data
-- contents:
-  - edibble
-  - as_edibble
-  - restart_design
-- title: "Adding context"
-  desc: "These are functions to add notes and context about the experiment"
-- contents:
-  - contains("context")
-- title: "Print"
-  desc: >
-    These functions plot or print intermediate constructs of the design.
-- contents:
-  - contains("print")
+# - title: "Experiment from existing data"
+#   desc: >
+#     These are functions relevant when making an experiment from existing data
+# - contents:
+#   - edibble
+#   - as_edibble
+#   - restart_design
 - title: "Experiments"
   desc: >
     These are some example experiments.
