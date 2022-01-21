@@ -7,11 +7,9 @@
 prep_classical_lsd(t = random_integer_small(), seed = random_seed_number())
 }
 \arguments{
-\item{t}{The number of treatments.}
+\item{t}{The number of treatments}
 
 \item{seed}{A scalar value for computational reproducibility.}
-
-\item{trt}{The number of treatments}
 }
 \description{
 Prepare classical Latin square design
@@ -22,6 +20,7 @@ Other named-designs:
 \code{\link{prep_classical_factorial}()},
 \code{\link{prep_classical_graeco}()},
 \code{\link{prep_classical_rcbd}()},
-\code{\link{prep_classical_split}()}
+\code{\link{prep_classical_split}()},
+\code{\link{prep_classical_youden}()}
 }
 \concept{named-designs}

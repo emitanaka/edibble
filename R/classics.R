@@ -209,10 +209,40 @@ prep_classical_split <- function(t1 = random_integer_small(),
   des
 }
 
+#' Youden square design
+#'
+#' @inheritParams prep_classical_rcbd
+#' @family named-designs
+#' @importFrom cli style_italic
+#' @export
+prep_classical_youden <- function(nc = random_integer_small(),
+                                  t = random_integer_small(min = nc + 1),
+                               seed = random_seed_number()) {
+  des <- new_named_design(name = "youden",
+                          name_full = "Youden Square Design")
+
+  row <- edibble_decorate("units")("row")
+  column <- edibble_decorate("units")("column")
+  unit <- edibble_decorate("units")("unit")
+  trt <- edibble_decorate("trts")("trt")
+
+  des <- named_design_add_code(des,
+                               sprintf('set_units(%s = %d,
+            %s = %d,
+            %s = ~%s:%s)', row, t, column, nc, unit, row, column),
+            sprintf('set_trts(%s = %d)', trt, t),
+            sprintf('allot_trts(%s ~ %s)', trt, unit),
+            sprintf('assign_trts("random", seed = %d)', seed),
+            'serve_table()')
+
+  des
+}
+
+
 
 #' Prepare classical Latin square design
 #'
-#' @param trt The number of treatments
+#' @param t The number of treatments
 #' @inheritParams prep_classical_rcbd
 #' @family named-designs
 #' @importFrom cli style_italic

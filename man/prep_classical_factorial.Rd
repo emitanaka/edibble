@@ -29,6 +29,7 @@ Other named-designs:
 \code{\link{prep_classical_graeco}()},
 \code{\link{prep_classical_lsd}()},
 \code{\link{prep_classical_rcbd}()},
-\code{\link{prep_classical_split}()}
+\code{\link{prep_classical_split}()},
+\code{\link{prep_classical_youden}()}
 }
 \concept{named-designs}
