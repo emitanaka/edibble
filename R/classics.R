@@ -69,7 +69,7 @@ prep_classical_graeco <- function(t = random_integer_small(),
                           name_full = "Graeco-Latin Square Design")
 
   row <- edibble_decorate("units")("row")
-  column <- edibble_decorate("units")("collumn")
+  column <- edibble_decorate("units")("column")
   unit <- edibble_decorate("units")("unit")
   trt1 <- edibble_decorate("trts")("trt1")
   trt2 <- edibble_decorate("trts")("trt2")
@@ -367,7 +367,7 @@ make_classical <- function(.name = "", ...,
   df <- eval(parse(text = ansi_strip(des$code)))
 
   if(isTRUE(.output) | "info" %in% .output) {
-    cli_h1("experimental design details")
+    cli_h2("experimental design details")
     cli_ul()
     cli_li("This experimental design is often called
            {.combine_words(des$name_full, and = ' or ', fun = style_italic)}.")
@@ -387,13 +387,13 @@ make_classical <- function(.name = "", ...,
   }
 
   if(isTRUE(.output) | "code" %in% .output) {
-    cli_h1("edibble code")
+    if(isTRUE(.output) | length(.output) > 1) cli_h2("edibble code")
     cat(des$code, "\n")
   }
 
 
   if(isTRUE(.output) | "table" %in% .output) {
-    cli_h1("edibble data frame")
+    if(isTRUE(.output) | length(.output) > 1) cli_h2("edibble data frame")
     print(df)
   }
 
