@@ -4,7 +4,7 @@
 \alias{takeout}
 \title{Create a named experimental design}
 \usage{
-takeout(recipe = NULL, output = TRUE)
+takeout(recipe = NULL, output = FALSE)
 }
 \arguments{
 \item{recipe}{A named design object. This should be typically generated from a
@@ -18,9 +18,8 @@ outputs should be printed. Default is TRUE.}
 This function generates a named experimental
 design by supplying the selected menu named design and prints out, by default:
 \itemize{
-\item \code{info}: information about the named experimental design,
-\item \code{code}: code to create the design using the fundamental system, and
-\item \code{table}: an edibble data frame for the generated design.
+\item \code{info}: information about the named experimental design, and
+\item \code{code}: code to create the design using the fundamental system.
 }
 
 You can find the available recipes with \code{scan_menu()}.

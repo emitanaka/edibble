@@ -1,6 +1,6 @@
 
 
-new_named_design <- function(name, name_full = name,
+new_recipe_design <- function(name, name_full = name,
                              info_always = NULL,
                              info_this = NULL) {
   dname <- edibble_decorate("title")(paste0('"', paste(name_full, collapse = " | "), '"'))
@@ -9,10 +9,10 @@ new_named_design <- function(name, name_full = name,
                  code = paste0("start_design(", dname, ")"),
                  info_always = info_always,
                  info_this = info_this),
-            class = "named_design")
+            class = "recipe_design")
 }
 
-named_design_add_code <- function(.named, ...) {
+recipe_design_add_code <- function(.named, ...) {
   dots <- list2(...)
   for(x in dots) {
     .named$code <- sprintf('%s %%>%%
@@ -22,7 +22,7 @@ named_design_add_code <- function(.named, ...) {
 }
 
 #' @export
-print.named_design <- function(x, ...) {
+print.recipe_design <- function(x, ...) {
   #name_full <- edibble_decorate("title")(x$name_full)
   #cat(cli::style_italic(paste(name_full, collapse = " | ")), "\n")
   cat(x$code)
@@ -38,18 +38,18 @@ random_seed_number <- function() sample(1000, 1)
 #' @param t The number of treatments.
 #' @param r The number of replicate blocks.
 #' @param seed A scalar value for computational reproducibility.
-#' @family named-designs
+#' @family recipe-designs
 #' @export
 menu_rcbd <- function(t = random_integer_small(),
                       r = random_integer_small(),
                       seed = random_seed_number()) {
 
-  des <- new_named_design(name = "rcbd",
+  des <- new_recipe_design(name = "rcbd",
                           name_full = "Randomised Complete Block Design")
   block <- edibble_decorate("units")("block")
   unit <- edibble_decorate("units")("unit")
   trt <- edibble_decorate("trts")("trt")
-  des <- named_design_add_code(des,
+  des <- recipe_design_add_code(des,
         sprintf('set_units(%s = %d,
             %s = nested_in(%s, %d))', block, r, unit, block, t),
         sprintf('set_trts(%s = %d)', trt, t),
@@ -70,11 +70,11 @@ prep_classical_rcbd <- function(t = random_integer_small(),
 #' Graeco-Latin Square Design
 #'
 #' @inheritParams menu_rcbd
-#' @family named-designs
+#' @family recipe-designs
 #' @export
 menu_graeco <- function(t = random_integer_small(),
                         seed = random_seed_number()) {
-  des <- new_named_design(name = "graeco",
+  des <- new_recipe_design(name = "graeco",
                           name_full = "Graeco-Latin Square Design")
 
   row <- edibble_decorate("units")("row")
@@ -83,7 +83,7 @@ menu_graeco <- function(t = random_integer_small(),
   trt1 <- edibble_decorate("trts")("trt1")
   trt2 <- edibble_decorate("trts")("trt2")
 
-  des <- named_design_add_code(des,
+  des <- recipe_design_add_code(des,
                               sprintf('set_units(%s = %d,
             %s = %d,
             %s = ~%s:%s)', row, t, column, t, unit, row, column),
@@ -110,7 +110,7 @@ prep_classical_graeco <- function(t = random_integer_small(),
 #' @param t The number of treatment levels
 #' @param n The number of experimental units
 #' @param r (Optional) The number of replicates.
-#' @family named-designs
+#' @family recipe-designs
 #' @inheritParams menu_rcbd
 #' @export
 menu_crd <- function(t = random_integer_small(),
@@ -126,13 +126,13 @@ menu_crd <- function(t = random_integer_small(),
     n <- r * t
   }
 
-  des <- new_named_design(name = "crd",
+  des <- new_recipe_design(name = "crd",
                           name_full = "Completely Randomised Design")
 
   unit <- edibble_decorate("units")("unit")
   trt <- edibble_decorate("trts")("trt")
 
-  des <- named_design_add_code(des,
+  des <- recipe_design_add_code(des,
                                sprintf('set_units(%s = %d)', unit, n),
                                sprintf('set_trts(%s = %d)', trt, t),
                                sprintf('allot_trts(%s ~ %s)', trt, unit),
@@ -158,7 +158,7 @@ prep_classical_crd <- function(t = random_integer_small(),
 #' @param trt A vector of the number of levels for each treatment factor.
 #' @param design The unit structure: "crd" or "rcbd". The default is "crd".
 #' @inheritParams menu_rcbd
-#' @family named-designs
+#' @family recipe-designs
 #' @export
 menu_factorial <- function(trt = c(random_integer_small(),
                                              random_integer_small()),
@@ -166,7 +166,7 @@ menu_factorial <- function(trt = c(random_integer_small(),
                                      design = c("crd", "rcbd"),
                                      seed = random_seed_number()) {
   design <- match.arg(design)
-  des <- new_named_design(name = "factorial",
+  des <- new_recipe_design(name = "factorial",
                           name_full = paste0("Factorial Design",
                                              switch(design,
                                                     "crd" = "",
@@ -185,7 +185,7 @@ menu_factorial <- function(trt = c(random_integer_small(),
            " = ", trt[i])),
     collapse = ",\n           ")
 
-  des <- named_design_add_code(des,
+  des <- recipe_design_add_code(des,
                                 sprintf('set_units(%s)', unit_str),
                                 sprintf('set_trts(%s)', trt_str),
                                 sprintf('allot_trts(~%s)', unit),
@@ -211,7 +211,7 @@ prep_classical_factorial <- function(trt = c(random_integer_small(),
 #' @param t1 The number of treatment levels for the main plots.
 #' @param t2 The number of treatment levels for the subplots.
 #' @inheritParams menu_rcbd
-#' @family named-designs
+#' @family recipe-designs
 #' @importFrom cli style_italic
 #' @export
 menu_split <- function(t1 = random_integer_small(),
@@ -220,7 +220,7 @@ menu_split <- function(t1 = random_integer_small(),
                                  seed = random_seed_number()) {
 
   n <- t1 * t2 * r
-  des <- new_named_design(name = "split",
+  des <- new_recipe_design(name = "split",
                           name_full = c("Split-Plot Design",
                                         "Split-Unit Design"))
   des$info_always <- c(des$info_always,
@@ -231,7 +231,7 @@ menu_split <- function(t1 = random_integer_small(),
   trt1 <- edibble_decorate("trts")("trt1")
   trt2 <- edibble_decorate("trts")("trt2")
 
-  des <- named_design_add_code(des,
+  des <- recipe_design_add_code(des,
                                sprintf('set_units(%s = %d,
              %s = nested_in(%s, %d))', mainplot, t1 * r, subplot, mainplot, t2),
               sprintf('set_trts(%s = %d,
@@ -256,13 +256,13 @@ prep_classical_split <- function(t1 = random_integer_small(),
 #' Youden square design
 #'
 #' @inheritParams menu_rcbd
-#' @family named-designs
+#' @family recipe-designs
 #' @importFrom cli style_italic
 #' @export
 menu_youden <- function(nc = random_integer_small(),
                                   t = random_integer_small(min = nc + 1),
                                seed = random_seed_number()) {
-  des <- new_named_design(name = "youden",
+  des <- new_recipe_design(name = "youden",
                           name_full = "Youden Square Design")
 
   row <- edibble_decorate("units")("row")
@@ -270,7 +270,7 @@ menu_youden <- function(nc = random_integer_small(),
   unit <- edibble_decorate("units")("unit")
   trt <- edibble_decorate("trts")("trt")
 
-  des <- named_design_add_code(des,
+  des <- recipe_design_add_code(des,
                                sprintf('set_units(%s = %d,
             %s = %d,
             %s = ~%s:%s)', row, t, column, nc, unit, row, column),
@@ -296,12 +296,12 @@ prep_classical_youden <- function(nc = random_integer_small(),
 #'
 #' @param t The number of treatments
 #' @inheritParams menu_rcbd
-#' @family named-designs
+#' @family recipe-designs
 #' @importFrom cli style_italic
 #' @export
 menu_lsd <- function(t = random_integer_small(),
                                seed = random_seed_number()) {
-  des <- new_named_design(name = "lsd",
+  des <- new_recipe_design(name = "lsd",
                           name_full = "Latin Square Design")
   des$info_always <- c(des$info_always,
                        paste0("This design is ", style_italic("balanced.")))
@@ -311,7 +311,7 @@ menu_lsd <- function(t = random_integer_small(),
   unit <- edibble_decorate("units")("unit")
   trt <- edibble_decorate("trts")("trt")
 
-  des <- named_design_add_code(des,
+  des <- recipe_design_add_code(des,
                                sprintf('set_units(%s = %d,
             %s = %d,
             %s = ~%s:%s)', row, t, column, t, unit, row, column),
@@ -416,9 +416,8 @@ prep_classical_ <- function(...) {
 #' This function generates a named experimental
 #' design by supplying the selected menu named design and prints out, by default:
 #'
-#' * `info`: information about the named experimental design,
-#' * `code`: code to create the design using the fundamental system, and
-#' * `table`: an edibble data frame for the generated design.
+#' * `info`: information about the named experimental design, and
+#' * `code`: code to create the design using the fundamental system.
 #'
 #' You can find the available recipes with `scan_menu()`.
 #'
@@ -440,13 +439,27 @@ prep_classical_ <- function(...) {
 #'
 #' @importFrom cli cli_h1 cli_ul cli_end cli_h2 col_grey style_italic ansi_strip
 #' @export
-takeout <- function(recipe = NULL, output = TRUE) {
+takeout <- function(recipe = NULL, output = FALSE) {
   if(is.null(recipe)) {
     cli_alert("No name was supplied so selecting a random named experimental design...")
     name <- sample(suppressMessages(scan_menu()), 1L)
     recipe <- do.call(paste0("menu_", name), list())
   }
   df <- eval(parse(text = ansi_strip(recipe$code)))
+
+
+  res <- structure(df,
+                   class = c("takeout", class(df)),
+                   recipe = recipe,
+                   output = output)
+
+  return(res)
+}
+
+#' @export
+print.takeout <- function(x, ...) {
+  recipe <- attr(x, "recipe")
+  output <- attr(x, "output")
 
   if(isTRUE(output) | "info" %in% output) {
     cli_h2("experimental design details")
@@ -469,21 +482,25 @@ takeout <- function(recipe = NULL, output = TRUE) {
   }
 
   if(isTRUE(output) | "code" %in% output) {
-    if(isTRUE(output) | length(output) > 1) cli_h2("edibble code")
+    if(isTRUE(output) | is.character(output)) cli_h2("edibble code")
     cat(recipe$code, "\n")
     cat("\n")
   }
 
+  if(isTRUE(output) | is.character(output)) cli_h2("edibble data frame")
 
-  if(isTRUE(output) | "table" %in% output) {
-    if(isTRUE(output) | length(output) > 1) cli_h2("edibble data frame")
-    print(df)
-  }
-
-  return(invisible(df))
+  NextMethod()
+  invisible(x)
 }
 
-
+#' Check the recipe code of a takeout
+#'
+#' @param takeout A `takeout` object.
+#' @return A named design object.
+#' @export
+examine_recipe <- function(takeout) {
+  attr(takeout, "recipe")
+}
 
 #' Create a classical named experimental design
 #'

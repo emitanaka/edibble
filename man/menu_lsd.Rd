@@ -15,7 +15,7 @@ menu_lsd(t = random_integer_small(), seed = random_seed_number())
 Prepare classical Latin square design
 }
 \seealso{
-Other named-designs: 
+Other recipe-designs: 
 \code{\link{menu_crd}()},
 \code{\link{menu_factorial}()},
 \code{\link{menu_graeco}()},
@@ -23,4 +23,4 @@ Other named-designs:
 \code{\link{menu_split}()},
 \code{\link{menu_youden}()}
 }
-\concept{named-designs}
+\concept{recipe-designs}

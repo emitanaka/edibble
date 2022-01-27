@@ -19,7 +19,7 @@ menu_youden(
 Youden square design
 }
 \seealso{
-Other named-designs: 
+Other recipe-designs: 
 \code{\link{menu_crd}()},
 \code{\link{menu_factorial}()},
 \code{\link{menu_graeco}()},
@@ -27,4 +27,4 @@ Other named-designs:
 \code{\link{menu_rcbd}()},
 \code{\link{menu_split}()}
 }
-\concept{named-designs}
+\concept{recipe-designs}

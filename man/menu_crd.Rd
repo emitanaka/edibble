@@ -24,7 +24,7 @@ menu_crd(
 Completely randomised design
 }
 \seealso{
-Other named-designs: 
+Other recipe-designs: 
 \code{\link{menu_factorial}()},
 \code{\link{menu_graeco}()},
 \code{\link{menu_lsd}()},
@@ -32,4 +32,4 @@ Other named-designs:
 \code{\link{menu_split}()},
 \code{\link{menu_youden}()}
 }
-\concept{named-designs}
+\concept{recipe-designs}
