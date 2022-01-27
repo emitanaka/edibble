@@ -409,24 +409,21 @@ prep_classical_ <- function(...) {
 }
 
 
-#' Create a classical named experimental design
+#' Create a named experimental design
 #'
 #' @description
 #'
-#' This function is defunct. Please use `takeout` instead.
-#'
-#' The function `make_classical` generates a classical named experimental
-#' design by supplying its short name and prints out, by default:
+#' This function generates a named experimental
+#' design by supplying the selected menu named design and prints out, by default:
 #'
 #' * `info`: information about the named experimental design,
-#' * `code`: code to create the design using edibble, and
+#' * `code`: code to create the design using the fundamental system, and
 #' * `table`: an edibble data frame for the generated design.
 #'
-#' You can find the available short names with `find_classical_names()`.
+#' You can find the available recipes with `scan_menu()`.
 #'
-#'
-#' @param recipe The short name of the classical named experimental design. See
-#'   under Details for the available named designs.
+#' @param recipe A named design object. This should be typically generated from a
+#'   function with prefix `menu_`. If nothing is supplied, it will randomly select one.
 #' @param output A logical value to indicate whether all output should be
 #'  printed or not or a vector of character (e.g. `c("info", "code", "table")`) specifying which of the three
 #'  outputs should be printed. Default is TRUE.
@@ -474,6 +471,7 @@ takeout <- function(recipe = NULL, output = TRUE) {
   if(isTRUE(output) | "code" %in% output) {
     if(isTRUE(output) | length(output) > 1) cli_h2("edibble code")
     cat(recipe$code, "\n")
+    cat("\n")
   }
 
 
