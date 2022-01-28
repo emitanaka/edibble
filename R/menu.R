@@ -78,7 +78,7 @@ menu_graeco <- function(t = random_integer_small(),
                           name_full = "Graeco-Latin Square Design")
 
   row <- edibble_decorate("units")("row")
-  column <- edibble_decorate("units")("column")
+  col <- edibble_decorate("units")("col")
   unit <- edibble_decorate("units")("unit")
   trt1 <- edibble_decorate("trts")("trt1")
   trt2 <- edibble_decorate("trts")("trt2")
@@ -86,7 +86,7 @@ menu_graeco <- function(t = random_integer_small(),
   des <- recipe_design_add_code(des,
                               sprintf('set_units(%s = %d,
             %s = %d,
-            %s = ~%s:%s)', row, t, column, t, unit, row, column),
+            %s = ~%s:%s)', row, t, col, t, unit, row, col),
             sprintf('set_trts(%s = %d,
            %s = %d)', trt1, t, trt2, t),
             sprintf('allot_trts(%s ~ %s,
@@ -266,14 +266,14 @@ menu_youden <- function(nc = random_integer_small(),
                           name_full = "Youden Square Design")
 
   row <- edibble_decorate("units")("row")
-  column <- edibble_decorate("units")("column")
+  col <- edibble_decorate("units")("col")
   unit <- edibble_decorate("units")("unit")
   trt <- edibble_decorate("trts")("trt")
 
   des <- recipe_design_add_code(des,
                                sprintf('set_units(%s = %d,
             %s = %d,
-            %s = ~%s:%s)', row, t, column, nc, unit, row, column),
+            %s = ~%s:%s)', row, t, col, nc, unit, row, col),
             sprintf('set_trts(%s = %d)', trt, t),
             sprintf('allot_trts(%s ~ %s)', trt, unit),
             sprintf('assign_trts("random", seed = %d)', seed),
@@ -307,18 +307,51 @@ menu_lsd <- function(t = random_integer_small(),
                        paste0("This design is ", style_italic("balanced.")))
 
   row <- edibble_decorate("units")("row")
-  column <- edibble_decorate("units")("column")
+  col <- edibble_decorate("units")("col")
   unit <- edibble_decorate("units")("unit")
   trt <- edibble_decorate("trts")("trt")
 
   des <- recipe_design_add_code(des,
                                sprintf('set_units(%s = %d,
             %s = %d,
-            %s = ~%s:%s)', row, t, column, t, unit, row, column),
+            %s = ~%s:%s)', row, t, col, t, unit, row, col),
              sprintf('set_trts(%s = %d)', trt, t),
            sprintf('allot_trts(%s ~ %s)', trt, unit),
            sprintf('assign_trts("random", seed = %d)', seed),
            'serve_table()')
+
+  des
+}
+
+#' Hyper-Graeco-Latin Square Design
+#'
+#' @param t The number of treatments
+#' @inheritParams menu_rcbd
+#' @family recipe-designs
+#' @export
+menu_hyper_graeco <- function(t = random_integer_small(),
+                     seed = random_seed_number()) {
+  des <- new_recipe_design(name = "hyper_graeco",
+                           name_full = "Hyper-Graeco-Latin Square Design")
+
+  block1 <- edibble_decorate("units")("block1")
+  block2 <- edibble_decorate("units")("block2")
+  block3 <- edibble_decorate("units")("block3")
+  block4 <- edibble_decorate("units")("block4")
+  unit <- edibble_decorate("units")("unit")
+  trt <- edibble_decorate("trts")("trt")
+
+  des <- recipe_design_add_code(des,
+                                sprintf('set_units(%s = %d,
+            %s = %d,
+            %s = %d,
+            %s = %d,
+            %s = ~%s:%s:%s:%s)', block1, t, block2, t, block3, t, block4, t, unit,
+            block1, block2, block3, block4),
+            sprintf('set_trts(%s = %d)', trt, t),
+            sprintf('allot_trts(%s ~ %s)', trt, unit),
+            sprintf('assign_trts("random", seed = %d)', seed),
+            'serve_table()')
 
   des
 }

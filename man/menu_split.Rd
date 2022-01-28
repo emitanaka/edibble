@@ -28,6 +28,7 @@ Other recipe-designs:
 \code{\link{menu_crd}()},
 \code{\link{menu_factorial}()},
 \code{\link{menu_graeco}()},
+\code{\link{menu_hyper_graeco}()},
 \code{\link{menu_lsd}()},
 \code{\link{menu_rcbd}()},
 \code{\link{menu_youden}()}
