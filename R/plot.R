@@ -1,5 +1,12 @@
+
+#' Interactive plot of the edibble design
+#' @param .design An edibble design.
+#' @param view A string of either "factors" or "levels".
+#' @param width,height The width and height of the plot.
+#' @param seed A seed number so same plot is always generated.
+#' @param show_buttons A logical value indicating whether to hide or show the buttons.
 #' @export
-plot.edbl_design <- function(.design, view = c("factors", "levels"), width = "100%", height = NULL, seed = 1, ...) {
+plot.edbl_design <- function(.design, view = c("factors", "levels"), width = "100%", height = NULL, seed = 1, show_buttons = TRUE, ...) {
   if(!require("visNetwork")) abort("You need to install `visNetwork` package.")
   view <- match.arg(view)
   nodes <- switch(view,
@@ -16,23 +23,29 @@ plot.edbl_design <- function(.design, view = c("factors", "levels"), width = "10
   edges <- switch(view,
                   "factors" = fct_edges(.design),
                   "levels" = lvl_edges(.design))
-  visNetwork::visNetwork(nodes = nodes,
-                         edges = edges,
-                         width = width,
-                         height = height,
-                         main = .design$name) %>%
+  out <- visNetwork::visNetwork(nodes = nodes,
+                               edges = edges,
+                               width = width,
+                               height = height,
+                               main = .design$name) %>%
     visNetwork::visLayout(randomSeed = seed) %>%
     visNetwork::visNodes(id = "id") %>%
-    visNetwork::visEdges(arrows = "to", id = "id") %>%
+    visNetwork::visEdges(arrows = "to", id = "id")
     #visNetwork::visLegend() %>%
-    visNetwork::visOptions(highlightNearest = TRUE,
-                           nodesIdSelection = TRUE,
-                           collapse = TRUE,
-                           manipulation = TRUE,
-                           selectedBy = "group") %>%
-    visNetwork::visInteraction(navigationButtons = TRUE)
+  if(show_buttons) {
+    out %>%
+      visNetwork::visOptions(highlightNearest = TRUE,
+                             nodesIdSelection = TRUE,
+                             collapse = TRUE,
+                             manipulation = TRUE,
+                             selectedBy = "group") %>%
+      visNetwork::visInteraction(navigationButtons = TRUE)
+  } else {
+    out
+  }
 }
 
+#' @rdname plot.edbl_design
 #' @export
 plot.edbl_table <- function(.table, ...) {
   des <- edbl_design(.table)
