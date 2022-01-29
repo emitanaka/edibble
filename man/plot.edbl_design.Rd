@@ -7,11 +7,11 @@
 \usage{
 \method{plot}{edbl_design}(
   .design,
-  view = c("factors", "levels"),
+  which = c("factors", "levels"),
   width = "100\%",
   height = NULL,
   seed = 1,
-  show_buttons = TRUE,
+  view = c("show-buttons", "hide-buttons", "static"),
   ...
 )
 
@@ -20,13 +20,13 @@
 \arguments{
 \item{.design}{An edibble design.}
 
-\item{view}{A string of either "factors" or "levels".}
+\item{which}{A string of either "factors" or "levels".}
 
 \item{width, height}{The width and height of the plot.}
 
 \item{seed}{A seed number so same plot is always generated.}
 
-\item{show_buttons}{A logical value indicating whether to hide or show the buttons.}
+\item{view}{A string of either "show-buttons" (default), "hide-buttons", "static"}
 }
 \description{
 Interactive plot of the edibble design
