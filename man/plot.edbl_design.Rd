@@ -11,6 +11,7 @@
   width = "100\%",
   height = NULL,
   seed = 1,
+  title = NULL,
   view = c("show-buttons", "hide-buttons", "static"),
   ...
 )
@@ -25,6 +26,8 @@
 \item{width, height}{The width and height of the plot.}
 
 \item{seed}{A seed number so same plot is always generated.}
+
+\item{title}{The title of the plot. By default it uses the name from the \code{.design} object.}
 
 \item{view}{A string of either "show-buttons" (default), "hide-buttons", "static"}
 }

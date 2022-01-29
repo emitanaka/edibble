@@ -4,9 +4,11 @@
 #' @param which A string of either "factors" or "levels".
 #' @param width,height The width and height of the plot.
 #' @param seed A seed number so same plot is always generated.
+#' @param title The title of the plot. By default it uses the name from the `.design` object.
 #' @param view A string of either "show-buttons" (default), "hide-buttons", "static"
 #' @export
-plot.edbl_design <- function(.design, which = c("factors", "levels"), width = "100%", height = NULL, seed = 1,
+plot.edbl_design <- function(.design, which = c("factors", "levels"),
+                             width = "100%", height = NULL, seed = 1, title = NULL,
                              view = c("show-buttons", "hide-buttons", "static"), ...) {
   if(!require("visNetwork")) abort("You need to install `visNetwork` package.")
   which <- match.arg(which)
@@ -30,7 +32,7 @@ plot.edbl_design <- function(.design, which = c("factors", "levels"), width = "1
                                edges = edges,
                                width = width,
                                height = height,
-                               main = .design$name) %>%
+                               main = title %||% .design$name) %>%
     visNetwork::visLayout(randomSeed = seed) %>%
     visNetwork::visNodes(id = "id") %>%
     visNetwork::visEdges(arrows = "to", id = "id")
