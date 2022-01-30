@@ -17,11 +17,15 @@ serve_table <- function(.design, ...) {
     lout <- serve_vars_not_reconciled(.design)
   } else {
     classes <- fct_class(.design)
-    lunit <- ltrt <- lvar <- list()
+    lunit <- ltrt <- lrcrd <- list()
     if("edbl_unit" %in% classes) lunit <- serve_units(.design)
-    if("edbl_trt" %in% classes) ltrt <- serve_trts(.design, lunit)
-    if("edbl_rcrd" %in% classes) lvar <- serve_rcrds(.design, lunit)
-    lout <- c(lunit, ltrt, lvar)
+    if(length(lunit)) {
+      if("edbl_trt" %in% classes) ltrt <- serve_trts(.design, lunit)
+      if("edbl_rcrd" %in% classes) lrcrd <- serve_rcrds(.design, lunit)
+      lout <- c(lunit, ltrt, lrcrd)
+    } else {
+      lout <- serve_vars_not_reconciled(.design)
+    }
   }
 
   namesv <- fct_names(.design)
@@ -103,8 +107,10 @@ serve_unit_with_no_child <- function(vlevs, vname, classv) {
 
 serve_units <- function(design) {
   uid <- unit_ids(design)
-  rid <- rcrd_ids(design)
-  lid <- uid[!uid %in% fct_edges_filter(design, !to %in% rid)$from]
+  lid <- fct_leaves(design)
+  if(length(lid) != 1) {
+    return(list())
+  }
   wid <- uid
   vlev <- fct_levels(design)
   res <- list()
@@ -113,12 +119,12 @@ serve_units <- function(design) {
       vname <- fct_names(design, id = i)
       classv <- fct_class(design, id = i)
       vlevs <- vlev[[vname]]
-      cid <- setdiff(fct_child(design, id = i), rid)
-      if(!is_empty(cid) & length(cid)==1) {
-        # currently assumes one child only for now
+      cid <- intersect(fct_child(design, id = i), uid)
+      if(!is_empty(cid)) {
+        # currently uses the first child only
         cname <- fct_names(design, id = cid)
         serve_unit_with_child(vlevs, vname, classv,
-                              as.character(res[[cname]]), cname, design)
+                              as.character(res[[cname[1]]]), cname[1], design)
       } else {
         serve_unit_with_no_child(vlevs, vname, classv)
       }
@@ -126,7 +132,7 @@ serve_units <- function(design) {
     names(lvs) <- fct_names(design, id = lid)
     res <- c(res, lvs)
     wid <- setdiff(wid, lid)
-    lid <- wid[!wid %in% fct_edges_filter(design, !to %in% c(lid, rid))$from]
+    lid <- wid[!wid %in% fct_edges_filter(design, to %in% uid, !to %in% lid)$from]
   }
   res
 }
