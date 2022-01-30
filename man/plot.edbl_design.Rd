@@ -12,6 +12,9 @@
   height = NULL,
   seed = 1,
   title = NULL,
+  subtitle = NULL,
+  footer = NULL,
+  background = "transparent",
   view = c("show-buttons", "hide-buttons", "static"),
   ...
 )
@@ -27,7 +30,14 @@
 
 \item{seed}{A seed number so same plot is always generated.}
 
-\item{title}{The title of the plot. By default it uses the name from the \code{.design} object.}
+\item{title, subtitle, footer}{The title, subtitle or footer of the plot.
+By default it uses the name from the \code{.design} object as the title while rest is empty.
+To modify the look of the text, you can pass a character string consisting of valid
+for input style value in an HTML object, e.g. "font-size: 18px;font-family:serif;" as a
+named vector where the name corresponds to the text to display, e.g. \code{c("Title" = "font-size:20px;")}.}
+
+\item{background}{The background color of the plot. Default is transparent. The input
+can be a color name (e.g. "white"), a HEX value ("#FFFFFF"), or rgb/rgba in the format like rgba(0, 0, 0, 0).}
 
 \item{view}{A string of either "show-buttons" (default), "hide-buttons", "static"}
 }
