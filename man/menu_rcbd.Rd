@@ -28,6 +28,7 @@ Other recipe-designs:
 \code{\link{menu_hyper_graeco}()},
 \code{\link{menu_lsd}()},
 \code{\link{menu_split}()},
+\code{\link{menu_strip}()},
 \code{\link{menu_youden}()}
 }
 \concept{recipe-designs}
