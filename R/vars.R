@@ -93,30 +93,42 @@ lvl_last_id <- function(design) {
   ifelse(lvl_n(design), max(lvl_id(design)), 0L)
 }
 
+rbind_ <- function(df1, df2) {
+  if(nrow(df1) & nrow(df2)) {
+    df1[setdiff(names(df2), names(df1))] <- NA
+    df2[setdiff(names(df1), names(df2))] <- NA
+    out <- rbind(df1, df2)
+  } else if(nrow(df1)) {
+    df1[setdiff(names(df2), names(df1))] <- NA
+    out <- df1
+  } else if(nrow(df2)) {
+    df2[setdiff(names(df1), names(df2))] <- NA
+    out <- df2
+  } else {
+    out <- cbind(df1, df2[setdiff(names(df2), names(df1))])
+  }
+  out[c(names(df1), setdiff(names(out), names(df1)))]
+}
 
 add_edibble_vertex.edbl_levels <- function(value, fname, class, design) {
   out <- design
   fid <- fct_last_id(out) + 1L
   lid <- lvl_last_id(out) + 1L
   attrs <- attributes(value)
-  missing_cols <- setdiff(names(attrs), c(names(fct_nodes(design)), "names"))
-  for(amiss in missing_cols) {
-    # FIXME should be dependent on the class of corresponding attribute
-    out$graph$nodes[[amiss]] <- rep(NA_character_, fct_n(design))
-  }
-  out$graph$nodes <- add_row(out$graph$nodes,
-                            id = fid,
-                            name = fname,
-                            class = class,
-                            !!!attrs[missing_cols])
-  missing_cols <- setdiff(names(lvl_data(value)), names(out$graph$levels$nodes))
-  for(amiss in missing_cols) {
-    out$graph$levels$nodes[[amiss]] <- rep(NA_character_, lvl_n(design))
-  }
-  out$graph$levels$nodes <- add_row(out$graph$levels$nodes,
-                                    idvar = fid,
-                                    id = lid:(lid + length(value) - 1),
-                                    !!!lvl_data(value))
+  fnodes <- fct_nodes(design)
+  fattrs <- do.call(data.frame, c(attrs[setdiff(names(attrs), c("names", "class"))],
+                                  list(stringsAsFactors = FALSE,
+                                       id = fid,
+                                       name = fname,
+                                       class = class)))
+  out$graph$nodes <- rbind_(fnodes, fattrs)
+
+  lnodes <- lvl_nodes(design)
+  lattrs <- lvl_data(value)
+  lattrs$idvar <- fid
+  lattrs$var <- fname
+  lattrs$id <- lid:(lid + length(value) - 1)
+  out$graph$levels$nodes <- rbind_(lnodes, lattrs)
   out
 }
 
