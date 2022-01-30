@@ -25,6 +25,9 @@
 #'  instead. Input strings support inline markup that use [glue braces](https://github.com/tidyverse/glue)
 #'  as well [cli markup formatter](https://cli.r-lib.org/articles/semantic-cli.html#inline-text-formatting).
 #'  The formatting is evaluated and stored in `edbl_design`.
+#' @param .record A logical value. This indicates whether to record this
+#'    code step. The default is TRUE. It should remain TRUE unless this
+#'    function is used as a wrapper in other code.
 #' @return Same as original except `edbl_design` updated with context.
 #' @examples
 #' files <- c("details.txt", "about.docx")
@@ -40,8 +43,9 @@
 #' @importFrom cli style_bold style_italic
 #' @family user-facing functions
 #' @export
-set_context <- function(.edibble, ...) {
+set_context <- function(.edibble, ..., .record = TRUE) {
 
+  if(.record) record_step()
 
   new_context <- lapply(list2(...), function(x) {
       capture.output(cli_text(x), type = "message")

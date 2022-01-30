@@ -4,6 +4,7 @@
 #' This function doesn't really do much besides create a new edibble design object.
 #'
 #' @param name Optional name used as title for printing the design.
+#' @inheritParams design-context
 #' @return An empty `edbl_design` object.
 #' @examples
 #' start_design("My design")
@@ -11,7 +12,9 @@
 #' [set_rcrds()].
 #' @family user-facing functions
 #' @export
-start_design <- function(name = NULL) {
+start_design <- function(name = NULL, .record = TRUE, seed = NULL) {
+  if(.record) record_step()
+  save_seed(seed)
   structure(list(name = name,
                  graph = initialise_edibble_graph()),
             class = c("edbl_design", "edbl"))

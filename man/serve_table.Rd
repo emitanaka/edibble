@@ -4,12 +4,19 @@
 \alias{serve_table}
 \title{Serve edibble table}
 \usage{
-serve_table(.design, ...)
+serve_table(.design, ..., .record = TRUE)
 }
 \arguments{
-\item{.design}{An edibble design.}
+\item{...}{Strings of contexts or notes for the experiment. The context
+maybe named. If you context it is wrong, consider writing the context
+in an external file then write the reference to the file in context
+instead. Input strings support inline markup that use \href{https://github.com/tidyverse/glue}{glue braces}
+as well \href{https://cli.r-lib.org/articles/semantic-cli.html#inline-text-formatting}{cli markup formatter}.
+The formatting is evaluated and stored in \code{edbl_design}.}
 
-\item{...}{Ignored.}
+\item{.record}{A logical value. This indicates whether to record this
+code step. The default is TRUE. It should remain TRUE unless this
+function is used as a wrapper in other code.}
 }
 \value{
 An \code{edbl} data frame with columns defined by vertices and

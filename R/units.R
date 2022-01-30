@@ -53,26 +53,27 @@
 #'
 #' @family user-facing functions
 #' @export
-set_units <- function(.edibble, ...,
-                      .name_repair = c("check_unique", "unique", "universal", "minimal")) {
-
-  set_vars(.edibble, ..., .name_repair = .name_repair, .class = "edbl_unit")
+set_units <- function(.design, ...,
+                      .name_repair = c("check_unique", "unique", "universal", "minimal"),
+                      .record = TRUE) {
+  if(.record) record_step()
+  set_vars(.design, ..., .name_repair = .name_repair, .class = "edbl_unit")
 }
 
 #' @importFrom tidyselect eval_select
 #' @export
-select_units <- function(.edibble, ...) {
-  vlevs <- fct_levels(.edibble)
+select_units <- function(.design, ...) {
+  vlevs <- fct_levels(.design)
   loc <- eval_select(expr(c(...)), vlevs)
   keep_units <- names(vlevs)[loc]
-  keep_uids <- fct_id(.edibble, keep_units)
-  keep_uids_ancestors <- fct_ancestor(.edibble, keep_uids)
-  .edibble$graph$nodes <- fct_nodes_filter(.edibble, id %in% keep_uids_ancestors)
-  .edibble$graph$edges <- fct_edges_filter(.edibble, to %in% keep_uids_ancestors & from %in% keep_uids_ancestors)
-  .edibble$graph$levels$nodes <- lvl_nodes_filter(.edibble, idvar %in% keep_uids_ancestors)
-  keep_lids_ancestors <- lvl_id(.edibble)
-  .edibble$graph$levels$edges <- lvl_edges_filter(.edibble, to %in% keep_lids_ancestors & from %in% keep_lids_ancestors)
-  .edibble
+  keep_uids <- fct_id(.design, keep_units)
+  keep_uids_ancestors <- fct_ancestor(.design, keep_uids)
+  .design$graph$nodes <- fct_nodes_filter(.design, id %in% keep_uids_ancestors)
+  .design$graph$edges <- fct_edges_filter(.design, to %in% keep_uids_ancestors & from %in% keep_uids_ancestors)
+  .design$graph$levels$nodes <- lvl_nodes_filter(.design, idvar %in% keep_uids_ancestors)
+  keep_lids_ancestors <- lvl_id(.design)
+  .design$graph$levels$edges <- lvl_edges_filter(.design, to %in% keep_lids_ancestors & from %in% keep_lids_ancestors)
+  .design
 }
 
 #' @importFrom vctrs vec_ptype_abbr

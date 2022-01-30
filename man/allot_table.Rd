@@ -18,7 +18,9 @@ allot_table(
 \item{...}{
   Arguments passed on to \code{\link[=allot_trts]{allot_trts}}
   \describe{
-    \item{\code{}}{}
+    \item{\code{.record}}{A logical value. This indicates whether to record this
+code step. The default is TRUE. It should remain TRUE unless this
+function is used as a wrapper in other code.}
   }}
 
 \item{order}{A character vector signifying the apportion of treatments to units.

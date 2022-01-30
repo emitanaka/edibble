@@ -1,10 +1,10 @@
 
 
-new_recipe_design <- function(name, name_full = name) {
+new_recipe_design <- function(name, name_full = name, code = NULL) {
   dname <- edibble_decorate("title")(paste0('"', paste(name_full, collapse = " | "), '"'))
   structure(list(name = name,
                  name_full = name_full,
-                 code = paste0("start_design(", dname, ")")),
+                 code = code %||% paste0("start_design(", dname, ")")),
             class = "recipe_design")
 }
 
@@ -533,13 +533,50 @@ print.takeout <- function(x, show = NULL, ...) {
   invisible(x)
 }
 
-#' Check the recipe code of a takeout
+#' Check the recipe code
 #'
-#' @param takeout A `takeout` object.
-#' @return A named design object.
+#' @param x An edibble design, edibble, or takeout object.
+#' @param ... Not used.
 #' @export
-examine_recipe <- function(takeout) {
-  attr(takeout, "recipe")
+examine_recipe <- function(x, ...) {
+  UseMethod("examine_recipe")
+}
+
+#' @export
+examine_recipe.default <- function(x) {
+  abort(sprintf("`examine_recipe` is not implemented for class %s.", .combine_words(class(x))))
+}
+
+#' @export
+examine_recipe.edbl_design <- function(x) {
+  recipe <- new_recipe_design(name = x$name, code = x$recipe[1])
+  code <- map_chr(x$recipe[-1], function(.x) {
+    line <- str2lang(.x)
+    lline <- as.list(line)
+    iarg <- which(map_lgl(lline, function(a) is_symbol(a, ".")))
+    if(length(iarg)) {
+      lline[iarg] <- NULL
+    } else {
+      lline[2] <- NULL # deletes first argument
+    }
+    # change this so "," starts a new line
+    deparse(as.call(lline))
+  })
+  recipe_design_add_code(recipe, !!!as.list(code))
+}
+
+#' @export
+examine_recipe.edbl_table <- function(x) {
+  examine_recipe(edbl_design(x))
+}
+
+#' @export
+examine_recipe.takeout <- function(x) {
+  attr(x, "recipe")
+}
+
+is_takeout <- function(x) {
+  inherits(x, "takeout")
 }
 
 #' Create a classical named experimental design

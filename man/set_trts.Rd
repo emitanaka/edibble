@@ -7,13 +7,18 @@
 set_trts(
   .design,
   ...,
-  .name_repair = c("check_unique", "unique", "universal", "minimal")
+  .name_repair = c("check_unique", "unique", "universal", "minimal"),
+  .record = TRUE
 )
 }
 \arguments{
 \item{...}{Either a name-value pair or a series of the names.}
 
 \item{.name_repair}{Same as the argument in \code{tibble::tibble()}.}
+
+\item{.record}{A logical value. This indicates whether to record this
+code step. The default is TRUE. It should remain TRUE unless this
+function is used as a wrapper in other code.}
 }
 \description{
 This function add a special class, called \code{edbl_trt}, of edibble variables.

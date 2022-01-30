@@ -5,7 +5,7 @@
 \alias{set_context}
 \title{Describe context related to experiment}
 \usage{
-set_context(.edibble, ...)
+set_context(.edibble, ..., .record = TRUE)
 }
 \arguments{
 \item{.edibble}{An edibble design (\code{edbl_design}), an edibble data frame (\code{edbl_table}) or an
@@ -18,6 +18,10 @@ in an external file then write the reference to the file in context
 instead. Input strings support inline markup that use \href{https://github.com/tidyverse/glue}{glue braces}
 as well \href{https://cli.r-lib.org/articles/semantic-cli.html#inline-text-formatting}{cli markup formatter}.
 The formatting is evaluated and stored in \code{edbl_design}.}
+
+\item{.record}{A logical value. This indicates whether to record this
+code step. The default is TRUE. It should remain TRUE unless this
+function is used as a wrapper in other code.}
 }
 \value{
 Same as original except \code{edbl_design} updated with context.

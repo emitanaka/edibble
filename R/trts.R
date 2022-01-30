@@ -21,7 +21,9 @@
 #'
 #' @export
 set_trts <- function(.design, ...,
-                     .name_repair = c("check_unique", "unique", "universal", "minimal")) {
+                     .name_repair = c("check_unique", "unique", "universal", "minimal"),
+                     .record = TRUE) {
+  if(.record) record_step()
   set_vars(.design, ..., .name_repair = .name_repair, .class = "edbl_trt")
 }
 
@@ -45,14 +47,14 @@ set_trts <- function(.design, ...,
 #'
 #'
 #' @export
-assign_trts <- function(.design, order = "random", seed = NULL, constrain = nesting(.design)) {
+assign_trts <- function(.design, order = "random", seed = NULL, constrain = nesting(.design), .record = TRUE) {
   # TODO nesting function also exists in tidyr
 
   not_edibble(.design)
 
-  set.seed(seed)
-  .design %@% "seed" <- seed
-  .design %@% "seeds" <- .Random.seed
+  if(.record) record_step()
+
+  save_seed(seed)
 
   for(ialloc in seq_along(.design$allotment)) {
     trts <- all.vars(f_lhs(.design$allotment[[ialloc]]))

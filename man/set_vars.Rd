@@ -8,14 +8,11 @@ set_vars(
   .edibble,
   ...,
   .class = NULL,
-  .name_repair = c("check_unique", "unique", "universal", "minimal")
+  .name_repair = c("check_unique", "unique", "universal", "minimal"),
+  .code = NULL
 )
 }
 \arguments{
-\item{.edibble}{An edibble design (\code{edbl_design}), an edibble data frame (\code{edbl_table}) or an
-object that contains the edibble data frame in the attribute
-\code{design}.}
-
 \item{...}{Either a name-value pair or a series of the names.}
 
 \item{.class}{A class for the variables.}

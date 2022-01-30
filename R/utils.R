@@ -13,6 +13,22 @@ var_exists <- function(design, name = NULL) {
   name %in% fct_names(design)
 }
 
+#' Record the coding step
+#'
+#' Call this function in functions that modify the edibble design or table so
+#' the step is tracked. The output of functions using `record_step()` should
+#' be returning an edibble design or table.
+#'
+#' @export
+record_step <- function() {
+  do.call("on.exit",
+          list(quote(return(add_edibble_code(returnValue(default = FALSE),
+                                             paste(gsub("(^ +| +$)", "", deparse(match.call())), collapse = "")))),
+               add = TRUE),
+          envir = parent.frame())
+}
+
+
 template_var_exists <- function(design, name = NULL, class = NULL, all_names = fct_names(design)) {
   if(is_null(name)) {
     class %in% fct_class(design)
@@ -53,6 +69,51 @@ check_unit_exists <- function(design) {
   if(!units_exists(design)) {
     abort("No unit variables exists in the design.")
   }
+}
+
+add_edibble_seed <- function(.edibble, seed) {
+  if(!isFALSE(.edibble)) {
+    if(is_edibble_design(.edibble)) {
+      .edibble$seed <- seed
+      .edibble
+    } else {
+      des <- edbl_design(.edibble)
+      des$seed <- seed
+      attr(.edibble, "design") <- des
+      .edibble
+    }
+  }
+}
+
+add_edibble_code <- function(.edibble, code) {
+  if(!isFALSE(.edibble)) {
+    if(is_edibble_design(.edibble)) {
+      .edibble$recipe <- c(.edibble$recipe, code)
+      .edibble
+    } else {
+      des <- edbl_design(.edibble)
+      des$recipe <- c(des$recipe, code)
+      attr(.edibble, "design") <- des
+      .edibble
+    }
+  }
+}
+
+save_seed <- function(seed) {
+  if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE))
+    stats::runif(1)
+  if (is.null(seed))
+    RNGstate <- get(".Random.seed", envir = .GlobalEnv)
+  else {
+    set.seed(seed)
+    RNGstate <- structure(seed, kind = as.list(RNGkind()))
+  }
+  assign(".RNGstate", RNGstate, envir = parent.frame())
+  do.call("on.exit",
+          list(quote(return(add_edibble_seed(returnValue(default = FALSE),
+                                             .RNGstate))),
+               add = TRUE),
+          envir = parent.frame())
 }
 
 check_var_exists <- function(design, name = NULL, vclass = "edbl_var") {

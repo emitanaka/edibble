@@ -10,7 +10,8 @@
 #' @importFrom cli col_grey
 #' @importFrom tidyselect eval_select
 set_vars <- function(.edibble, ..., .class = NULL,
-                     .name_repair = c("check_unique", "unique", "universal", "minimal")) {
+                     .name_repair = c("check_unique", "unique", "universal", "minimal"),
+                     .code = NULL) {
 
   not_edibble(.edibble)
 
@@ -42,7 +43,6 @@ set_vars <- function(.edibble, ..., .class = NULL,
       res <- add_edibble_vertex(lvls, fname, .class, res)
     }
   }
-
   res
 }
 

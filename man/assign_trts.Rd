@@ -8,7 +8,8 @@ assign_trts(
   .design,
   order = "random",
   seed = NULL,
-  constrain = nesting(.design)
+  constrain = nesting(.design),
+  .record = TRUE
 )
 }
 \arguments{

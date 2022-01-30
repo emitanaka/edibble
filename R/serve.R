@@ -6,13 +6,14 @@
 #' variables can be reconciled, otherwise it will be a data frame with
 #' zero rows.
 #'
-#' @param .design An edibble design.
-#' @param ... Ignored.
+#' @inheritParams design-context
 #' @return An `edbl` data frame with columns defined by vertices and
 #' rows displayed only if the vertices are connected and reconcile for output.
 #' @family user-facing functions
 #' @export
-serve_table <- function(.design, ...) {
+serve_table <- function(.design, ..., .record = TRUE) {
+  if(.record) record_step()
+
   if(!is_connected(.design)) {
     lout <- serve_vars_not_reconciled(.design)
   } else {

@@ -4,13 +4,15 @@
 \alias{allot_trts}
 \title{Define the possible allocation of treatments to units}
 \usage{
-allot_trts(design, ...)
+allot_trts(.design, ..., .record = TRUE)
 }
 \arguments{
 \item{...}{One-sided or two-sided formula. If the input is a one-sided formula
 then the whole treatment is applied to the specified unit.}
 
-\item{.data}{An \code{edbl_graph} object.}
+\item{.record}{A logical value. This indicates whether to record this
+code step. The default is TRUE. It should remain TRUE unless this
+function is used as a wrapper in other code.}
 }
 \description{
 This function adds the edges between variable nodes to

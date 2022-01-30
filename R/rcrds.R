@@ -15,7 +15,9 @@ set_rcrds <- function(.edibble, ...,
                       .name_repair = c("check_unique", "unique", "universal", "minimal")) {
 
   not_edibble(.edibble)
+  record_step()
   .name_repair <- match.arg(.name_repair)
+  code <- deparse(match.call())
   units <- map_chr(enexprs(...), function(x) {
       if(is.character(x)) return(x)
       return(quo_text(x))
@@ -64,6 +66,7 @@ set_rcrds_of <- function(.edibble, ...) {
 #' @export
 expect_rcrds <- function(.edibble, ...) {
   not_edibble(.edibble)
+  record_step()
   dots <- enquos(...)
   dots_nms <- names(dots)
   des <- edbl_design(.edibble)

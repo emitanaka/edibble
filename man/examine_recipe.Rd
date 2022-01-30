@@ -2,16 +2,15 @@
 % Please edit documentation in R/menu.R
 \name{examine_recipe}
 \alias{examine_recipe}
-\title{Check the recipe code of a takeout}
+\title{Check the recipe code}
 \usage{
-examine_recipe(takeout)
+examine_recipe(x, ...)
 }
 \arguments{
-\item{takeout}{A \code{takeout} object.}
-}
-\value{
-A named design object.
+\item{x}{An edibble design, edibble, or takeout object.}
+
+\item{...}{Not used.}
 }
 \description{
-Check the recipe code of a takeout
+Check the recipe code
 }

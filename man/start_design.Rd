@@ -4,10 +4,14 @@
 \alias{start_design}
 \title{Start the edibble design}
 \usage{
-start_design(name = NULL)
+start_design(name = NULL, .record = TRUE, seed = NULL)
 }
 \arguments{
 \item{name}{Optional name used as title for printing the design.}
+
+\item{.record}{A logical value. This indicates whether to record this
+code step. The default is TRUE. It should remain TRUE unless this
+function is used as a wrapper in other code.}
 }
 \value{
 An empty \code{edbl_design} object.
