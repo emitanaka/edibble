@@ -249,13 +249,12 @@ menu_split <- function(t1 = random_integer_small(),
 #' @export
 menu_strip <- function(t1 = random_integer_small(),
                        t2 = random_integer_small(),
-                       #r = random_integer_small(),
+                       r = random_integer_small(),
                        seed = random_seed_number()) {
-  r <- 1 # only allow one replication for now
-  n <- t1 * t2 * r
   des <- new_recipe_design(name = "strip",
                            name_full = c("Strip-Plot Design",
                                          "Strip-Unit Design"))
+  block <- edibble_decorate("units")("block")
   unit <- edibble_decorate("units")("unit")
   row <- edibble_decorate("units")("row")
   col <- edibble_decorate("units")("col")
@@ -264,8 +263,9 @@ menu_strip <- function(t1 = random_integer_small(),
 
   des <- recipe_design_add_code(des,
                                 sprintf('set_units(%s = %d,
-            %s = %d,
-            %s = ~%s:%s)', row, t1, col, t2, unit, row, col),
+            %s = nested_in(%s, %d),
+            %s = nested_in(%s, %d),
+            %s = ~%s:%s)', block, r, row, block, t1, col, block, t2, unit, row, col),
             sprintf('set_trts(%s = %d,
            %s = %d)', trt1, t1, trt2, t2),
            sprintf('allot_trts(%s ~ %s,
