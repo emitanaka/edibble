@@ -4,23 +4,18 @@
 \alias{takeout}
 \title{Create a named experimental design}
 \usage{
-takeout(recipe = NULL, output = FALSE)
+takeout(recipe = NULL, show = TRUE)
 }
 \arguments{
 \item{recipe}{A named design object. This should be typically generated from a
 function with prefix \code{menu_}. If nothing is supplied, it will randomly select one.}
 
-\item{output}{A logical value to indicate whether all output should be
-printed or not or a vector of character (e.g. \code{c("info", "code", "table")}) specifying which of the three
-outputs should be printed. Default is TRUE.}
+\item{show}{A logical value to indicate whether the code should be shown or not.
+Default is TRUE.}
 }
 \description{
 This function generates a named experimental
-design by supplying the selected menu named design and prints out, by default:
-\itemize{
-\item \code{info}: information about the named experimental design, and
-\item \code{code}: code to create the design using the fundamental system.
-}
+design by supplying the selected menu named design and prints out by default
 
 You can find the available recipes with \code{scan_menu()}.
 }

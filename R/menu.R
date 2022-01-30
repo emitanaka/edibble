@@ -1,14 +1,10 @@
 
 
-new_recipe_design <- function(name, name_full = name,
-                             info_always = NULL,
-                             info_this = NULL) {
+new_recipe_design <- function(name, name_full = name) {
   dname <- edibble_decorate("title")(paste0('"', paste(name_full, collapse = " | "), '"'))
   structure(list(name = name,
                  name_full = name_full,
-                 code = paste0("start_design(", dname, ")"),
-                 info_always = info_always,
-                 info_this = info_this),
+                 code = paste0("start_design(", dname, ")")),
             class = "recipe_design")
 }
 
@@ -206,7 +202,9 @@ prep_classical_factorial <- function(trt = c(random_integer_small(),
 }
 
 
-#' Prepare classical split plot design
+#' Split-unit design
+#'
+#' Originally referred to as split-plot design when it was first used.
 #'
 #' @param t1 The number of treatment levels for the main plots.
 #' @param t2 The number of treatment levels for the subplots.
@@ -223,8 +221,6 @@ menu_split <- function(t1 = random_integer_small(),
   des <- new_recipe_design(name = "split",
                           name_full = c("Split-Plot Design",
                                         "Split-Unit Design"))
-  des$info_always <- c(des$info_always,
-                       paste0("This design is ", style_italic("balanced.")))
 
   mainplot <- edibble_decorate("units")("mainplot")
   subplot <- edibble_decorate("units")("subplot")
@@ -243,6 +239,44 @@ menu_split <- function(t1 = random_integer_small(),
 
   des
 }
+
+
+#' Strip-unit design
+#'
+#'
+#' @inheritParams menu_split
+#' @family recipe-designs
+#' @export
+menu_strip <- function(t1 = random_integer_small(),
+                       t2 = random_integer_small(),
+                       #r = random_integer_small(),
+                       seed = random_seed_number()) {
+  r <- 1 # only allow one replication for now
+  n <- t1 * t2 * r
+  des <- new_recipe_design(name = "strip",
+                           name_full = c("Strip-Plot Design",
+                                         "Strip-Unit Design"))
+  unit <- edibble_decorate("units")("unit")
+  row <- edibble_decorate("units")("row")
+  col <- edibble_decorate("units")("col")
+  trt1 <- edibble_decorate("trts")("trt1")
+  trt2 <- edibble_decorate("trts")("trt2")
+
+  des <- recipe_design_add_code(des,
+                                sprintf('set_units(%s = %d,
+            %s = %d,
+            %s = ~%s:%s)', row, t1, col, t2, unit, row, col),
+            sprintf('set_trts(%s = %d,
+           %s = %d)', trt1, t1, trt2, t2),
+           sprintf('allot_trts(%s ~ %s,
+             %s ~ %s)', trt1, row, trt2, col),
+            sprintf('assign_trts("random", seed = %d)', seed),
+            'serve_table()')
+
+  des
+}
+
+
 
 #' @export
 prep_classical_split <- function(t1 = random_integer_small(),
@@ -303,8 +337,6 @@ menu_lsd <- function(t = random_integer_small(),
                                seed = random_seed_number()) {
   des <- new_recipe_design(name = "lsd",
                           name_full = "Latin Square Design")
-  des$info_always <- c(des$info_always,
-                       paste0("This design is ", style_italic("balanced.")))
 
   row <- edibble_decorate("units")("row")
   col <- edibble_decorate("units")("col")
@@ -447,18 +479,15 @@ prep_classical_ <- function(...) {
 #' @description
 #'
 #' This function generates a named experimental
-#' design by supplying the selected menu named design and prints out, by default:
-#'
-#' * `info`: information about the named experimental design, and
-#' * `code`: code to create the design using the fundamental system.
+#' design by supplying the selected menu named design and prints out by default
+#; the code to create the design using the fundamental system.
 #'
 #' You can find the available recipes with `scan_menu()`.
 #'
 #' @param recipe A named design object. This should be typically generated from a
 #'   function with prefix `menu_`. If nothing is supplied, it will randomly select one.
-#' @param output A logical value to indicate whether all output should be
-#'  printed or not or a vector of character (e.g. `c("info", "code", "table")`) specifying which of the three
-#'  outputs should be printed. Default is TRUE.
+#' @param show A logical value to indicate whether the code should be shown or not.
+#'   Default is TRUE.
 #'
 #' @examples
 #' takeout(menu_crd(n = 50, t = 5))
@@ -472,55 +501,33 @@ prep_classical_ <- function(...) {
 #'
 #' @importFrom cli cli_h1 cli_ul cli_end cli_h2 col_grey style_italic ansi_strip
 #' @export
-takeout <- function(recipe = NULL, output = FALSE) {
+takeout <- function(recipe = NULL, show = TRUE) {
   if(is.null(recipe)) {
     cli_alert("No name was supplied so selecting a random named experimental design...")
     name <- sample(suppressMessages(scan_menu()), 1L)
     recipe <- do.call(paste0("menu_", name), list())
+    cli_alert(sprintf("Selected %s", recipe$name_full))
   }
   df <- eval(parse(text = ansi_strip(recipe$code)))
-
 
   res <- structure(df,
                    class = c("takeout", class(df)),
                    recipe = recipe,
-                   output = output)
+                   show = show)
 
   return(res)
 }
 
 #' @export
-print.takeout <- function(x, ...) {
+print.takeout <- function(x, show = NULL, ...) {
   recipe <- attr(x, "recipe")
-  output <- attr(x, "output")
+  show <- show %||% attr(x, "show")
 
-  if(isTRUE(output) | "info" %in% output) {
-    cli_h2("experimental design details")
-    cli_ul()
-    cli_li("This experimental design is often called
-           {.combine_words(recipe$name_full, and = ' or ', fun = style_italic)}.")
-    cli_li("You can change the number in {.code seed} to get another random
-           instance of the same design.")
-    if(!is_empty(recipe$info_always)) {
-      cli_li(recipe$info_always)
-    } else if(!is_empty(recipe$info_this)) {
-      cli_end()
-      cli_text(col_grey("The following information is only true for the
-                        chosen parameters and not necessary true for all
-                        {recipe$name_full}s."))
-      cli_ul()
-      cli_li(recipe$info_this)
-    }
-    cli_end()
-  }
 
-  if(isTRUE(output) | "code" %in% output) {
-    if(isTRUE(output) | is.character(output)) cli_h2("edibble code")
+  if(show) {
     cat(recipe$code, "\n")
     cat("\n")
   }
-
-  if(isTRUE(output) | is.character(output)) cli_h2("edibble data frame")
 
   NextMethod()
   invisible(x)

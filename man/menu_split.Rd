@@ -2,7 +2,7 @@
 % Please edit documentation in R/menu.R
 \name{menu_split}
 \alias{menu_split}
-\title{Prepare classical split plot design}
+\title{Split-unit design}
 \usage{
 menu_split(
   t1 = random_integer_small(),
@@ -21,7 +21,7 @@ menu_split(
 \item{seed}{A scalar value for computational reproducibility.}
 }
 \description{
-Prepare classical split plot design
+Originally referred to as split-plot design when it was first used.
 }
 \seealso{
 Other recipe-designs: 
