@@ -302,6 +302,15 @@ fct_ancestor <- function(design, id = NULL) {
 
 #' @rdname var_ids
 #' @export
+fct_leaves <- function(design) {
+  uids <- unit_ids(design)
+  has_child <- map_lgl(uids, function(id) length(fct_child(design, id)) > 0)
+  uids[!has_child]
+}
+
+
+#' @rdname var_ids
+#' @export
 fct_obs_unit <- function(design, initial = NULL) {
   if(is.null(initial)) {
     uids <- unit_ids(design)
