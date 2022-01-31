@@ -42,6 +42,7 @@ set_rcrds <- function(.edibble, ...,
   des
 }
 
+#' @rdname set_rcrds
 #' @export
 set_rcrds_of <- function(.edibble, ...) {
   unit2rcrd <- list2(...)

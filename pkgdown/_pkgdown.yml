@@ -1,11 +1,13 @@
 
 url: https://edibble.emitanaka.org
 
+
 home:
-  title: "edibble - an R package that implements grammar of experimental design"
+  title: "edibble - an R package to facilitate construction of experimental designs"
   description: Facilitate contruction of experimental designs.
 
 template:
+  bootstrap: 5
   opengraph:
     twitter:
       creator: "@statsgen"
@@ -22,23 +24,30 @@ reference:
 - title: "Constructing an experiment"
   desc: >
     These are the main functions used to set experiments from scratch.
-- contents:
+  contents:
   - start_design
   - set_units
   - set_trts
   - allot_trts
   - assign_trts
   - serve_table
+- title: "Named experimental designs"
+  desc: >
+    The recipe of a named experimental design is displayed using the `menu_*` functions.
+    The `takeout()` allows you to get the design table from selected menu.
+  contents:
+  - starts_with("menu_")
+  - takeout
 - title: "Exporting the experimental design"
   desc: >
     These help to create data validation rules and export the experimental layout as xlsx file.
-- contents:
+  contents:
   - set_rcrds
   - set_rcrds_of
   - expect_rcrds
   - contains("to_be")
   - with_value
-  - export_desgin
+  - export_design
 # - title: "Experiment from existing data"
 #   desc: >
 #     These are functions relevant when making an experiment from existing data
@@ -49,6 +58,6 @@ reference:
 - title: "Experiments"
   desc: >
     These are some example experiments.
-- contents:
+  contents:
   - lady_tasting_tea
   - skittles

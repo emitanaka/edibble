@@ -2,6 +2,7 @@
 % Please edit documentation in R/rcrds.R
 \name{set_rcrds}
 \alias{set_rcrds}
+\alias{set_rcrds_of}
 \title{Set records for given unit}
 \usage{
 set_rcrds(
@@ -9,6 +10,8 @@ set_rcrds(
   ...,
   .name_repair = c("check_unique", "unique", "universal", "minimal")
 )
+
+set_rcrds_of(.edibble, ...)
 }
 \arguments{
 \item{.edibble}{An edibble design (\code{edbl_design}), an edibble data frame (\code{edbl_table}) or an

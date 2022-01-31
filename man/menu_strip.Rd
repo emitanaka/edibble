@@ -16,7 +16,7 @@ menu_strip(
 
 \item{t2}{The number of treatment levels for the subplots.}
 
-\item{r}{The number of replicate blocks.}
+\item{r}{The number of replications for each treatment level.}
 
 \item{seed}{A scalar value for computational reproducibility.}
 }

@@ -17,7 +17,7 @@ menu_bibd(
 \item{k}{The size of the block. This should be less than the number of
 treatments.}
 
-\item{r}{The number of replicate blocks.}
+\item{r}{The number of replications for each treatment level.}
 
 \item{seed}{A scalar value for computational reproducibility.}
 }

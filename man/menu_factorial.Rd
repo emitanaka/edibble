@@ -14,7 +14,7 @@ menu_factorial(
 \arguments{
 \item{trt}{A vector of the number of levels for each treatment factor.}
 
-\item{r}{The number of replicate blocks.}
+\item{r}{The number of replications for each treatment level.}
 
 \item{design}{The unit structure: "crd" or "rcbd". The default is "crd".}
 
