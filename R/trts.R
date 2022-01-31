@@ -165,11 +165,6 @@ permute_parent_one <- function(.design, vid, udf, ntrts) {
   out
 }
 
-#' @export
-randomise_trts <- function(design, ...) {
-  warn("`randomise_trts` is deprecated. Please use `assign_trts(\"random\")` instead.")
-  assign_trts(design, order = "random", ...)
-}
 
 
 #' @importFrom pillar pillar_shaft new_pillar_shaft_simple
