@@ -48,11 +48,7 @@ allot_trts <- function(.design, ..., .record = TRUE) {
   .design
 }
 
-#' @export
-allocate_trts <- function(design, ...) {
-  warn("`allocate_trts` is deprecated. Please use `allot_trts` instead.")
-  allot_trts(design, ...)
-}
+
 
 #' A shorthand for allot, assign and serve
 #'
