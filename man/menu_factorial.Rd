@@ -25,6 +25,7 @@ Prepare a factorial design
 }
 \seealso{
 Other recipe-designs: 
+\code{\link{menu_bibd}()},
 \code{\link{menu_crd}()},
 \code{\link{menu_graeco}()},
 \code{\link{menu_hyper_graeco}()},

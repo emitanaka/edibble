@@ -25,14 +25,14 @@ print.recipe_design <- function(x, ...) {
   cat("\n")
 }
 
-random_integer_small <- function(min = 1) min + sample(10, 1)
+random_integer_small <- function(min = 1, max = 10) min + sample(max - min, 1)
 random_integer_medium <- function(min = 1) min + sample(10:25, 1)
 random_seed_number <- function() sample(1000, 1)
 
 #' Prepare a randomised complete block design
 #'
 #' @param t The number of treatments.
-#' @param r The number of replicate blocks.
+#' @param r The number of replications for each treatment level.
 #' @param seed A scalar value for computational reproducibility.
 #' @family recipe-designs
 #' @export
@@ -214,6 +214,47 @@ menu_split <- function(t1 = random_integer_small(),
   des
 }
 
+#' Balance incomplete block design
+#'
+#' Some combinations of parameter values cannot create a balanced incomplete
+#' block design.
+#'
+#' @inheritParams menu_rcbd
+#' @param k The size of the block. This should be less than the number of
+#'   treatments.
+#' @family recipe-designs
+#' @export
+menu_bibd <- function(t = random_integer_small(),
+                      k = random_integer_small(max = t - 1),
+                      r = random_integer_small(),
+                      seed = random_seed_number()) {
+  if(k >= t) abort("The size of the block `k` must be smaller than `t`.")
+
+  b <- r * t / k
+  lambda <- r * (k - 1) / (t - 1)
+  if(lambda %% 1 != 0 &
+     b %% 1 != 0 &
+     r <= lambda &
+     lambda * (t - 1) != r * (k - 1)) {
+    abort("The chosen parameters cannot create a balanced incomplete block design.")
+  }
+
+
+  des <- new_recipe_design(name = "bibd",
+                           name_full = "Balanced Incomplete Block Design")
+  block <- edibble_decorate("units")("block")
+  unit <- edibble_decorate("units")("unit")
+  trt <- edibble_decorate("trts")("trt")
+  des <- recipe_design_add_code(des,
+                                sprintf('set_units(%s = %d,
+            %s = nested_in(%s, %d))', block, b, unit, block, k),
+            sprintf('set_trts(%s = %d)', trt, t),
+            sprintf('allot_trts(%s ~ %s)', trt, unit),
+            sprintf('assign_trts("random", seed = %d)', seed),
+            'serve_table()')
+  des
+
+}
 
 #' Strip-unit design
 #'

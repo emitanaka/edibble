@@ -25,6 +25,7 @@ Strip-unit design
 }
 \seealso{
 Other recipe-designs: 
+\code{\link{menu_bibd}()},
 \code{\link{menu_crd}()},
 \code{\link{menu_factorial}()},
 \code{\link{menu_graeco}()},

@@ -25,6 +25,7 @@ Completely randomised design
 }
 \seealso{
 Other recipe-designs: 
+\code{\link{menu_bibd}()},
 \code{\link{menu_factorial}()},
 \code{\link{menu_graeco}()},
 \code{\link{menu_hyper_graeco}()},
