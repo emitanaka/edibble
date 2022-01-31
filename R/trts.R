@@ -93,7 +93,6 @@ assign_trts <- function(.design, order = "random", seed = NULL, constrain = nest
                               vparents <- setdiff(vparents, uid)
 
                               if(length(vparents)==1L) {
-                                #permute_parent_one(.design, vparents, udf, ntrts)
                                 permute_parent_one_alg(.design, vparents, udf, ntrts)
                               } else {
                                 permute_parent_more_than_one(.design, vparents, udf, ntrts)
@@ -137,10 +136,14 @@ permute_parent_more_than_one <- function(.design, vids, udf, ntrts) {
 permute_parent_one_alg <- function(.design, vid, udf, ntrts) {
   gparent <- fct_names(.design, vid)
   blocksizes <- table(udf[[gparent]])
-  res <- AlgDesign::optBlock(~.,
-                      withinData = data.frame(tindex = factor(1:ntrts)),
-                      blocksizes = blocksizes)
-  unname(unlist(lapply(res$Blocks, function(x) sample(as.integer(x$tindex)))))
+  if(min(blocksizes) > ntrts) {
+    permute_parent_one(.design, vid, udf, ntrts)
+  } else {
+    res <- AlgDesign::optBlock(~.,
+                               withinData = data.frame(tindex = factor(1:ntrts)),
+                               blocksizes = blocksizes)
+    unname(unlist(lapply(res$Blocks, function(x) sample(as.integer(x$tindex)))))
+  }
 }
 
 
