@@ -232,13 +232,14 @@ menu_bibd <- function(t = random_integer_small(),
 
   b <- r * t / k
   lambda <- r * (k - 1) / (t - 1)
-  if(lambda %% 1 != 0 &
-     b %% 1 != 0 &
-     r <= lambda &
-     lambda * (t - 1) != r * (k - 1)) {
-    abort("The chosen parameters cannot create a balanced incomplete block design.")
-  }
-
+  # since I derive b myself, below isn't necessay
+  # if(lambda %% 1 != 0 &
+  #    b %% 1 != 0 &
+  #    r <= lambda &
+  #    lambda * (t - 1) != r * (k - 1)) {
+  #   abort("The chosen parameters cannot create a balanced incomplete block design.")
+  # }
+  b <- as.integer(b)
 
   des <- new_recipe_design(name = "bibd",
                            name_full = "Balanced Incomplete Block Design")
