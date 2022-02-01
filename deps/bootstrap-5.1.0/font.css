@@ -1,14 +1,21 @@
 @font-face {
-  font-family: 'Ubuntu';
+  font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(fonts/4iCs6KVjbNBYlgo6ew.woff) format('woff');
+  src: url(fonts/KFOmCnqEu92Fr1Me5g.woff) format('woff');
 }
 @font-face {
-  font-family: 'Ubuntu';
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(fonts/KFOlCnqEu92Fr1MmEU9vAA.woff) format('woff');
+}
+@font-face {
+  font-family: 'Roboto';
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(fonts/4iCv6KVjbNBYlgoCxCvTtA.woff) format('woff');
+  src: url(fonts/KFOlCnqEu92Fr1MmWUlvAA.woff) format('woff');
 }
