@@ -32,12 +32,15 @@ reference:
   - assign_trts
   - serve_table
   - allot_table
+  - nested_in
+  - nesting
 - title: "Understanding your design"
   desc: >
     Function helpers to understand your design better.
   contents:
   - plot.edbl_design
   - examine_recipe
+  - simulate_rcrds
 - title: "Named experimental designs"
   desc: >
     The recipe of a named experimental design is displayed using the `menu_*` functions.
@@ -84,8 +87,17 @@ reference:
   - starts_with("lvl")
   - starts_with("var")
   - starts_with("utility-edibble-var")
+  - edibble-package
+  - ndigits
+  - new_edibble
+  - new_edibble_var
+  - number_si_prefix
+  - print.edbl_design
+  - record_step
+  - set_vars
 - title: "Defunct functions"
   desc: >
     Please don't use these functions anymore and use suggested alternatives instead.
   contents:
   - prep_classical_
+  - make_classical
