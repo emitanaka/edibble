@@ -31,13 +31,25 @@ reference:
   - allot_trts
   - assign_trts
   - serve_table
+  - allot_table
+- title: "Understanding your design"
+  desc: >
+    Function helpers to understand your design better.
+  contents:
+  - plot
+  - examine_recipe
 - title: "Named experimental designs"
   desc: >
     The recipe of a named experimental design is displayed using the `menu_*` functions.
     The `takeout()` allows you to get the design table from selected menu.
   contents:
   - starts_with("menu_")
+  - scan_menu
   - takeout
+- title: "Latin-related designs"
+  desc: "Helper functions for creating orthogonal array structures."
+  contents:
+  - starts_with("latin")
 - title: "Exporting the experimental design"
   desc: >
     These help to create data validation rules and export the experimental layout as xlsx file.
@@ -61,3 +73,19 @@ reference:
   contents:
   - lady_tasting_tea
   - skittles
+- title: "Utility functions"
+  desc: >
+    These are mostly for internal usage and for those who wish to extend edibble functions.
+  contents:
+  - add_edibble_vertex
+  - design-context
+  - design-helpers
+  - starts_with("fct")
+  - starts_with("lvl")
+  - starts_with("var")
+  - starts_with("utility-edibble-var")
+- title: "Defunct functions"
+  desc: >
+    Please don't use these functions anymore and use suggested alternatives instead.
+  contents:
+  - prep_classical_

@@ -61,12 +61,14 @@ add_edibble_vertex <- function(x, ...) {
   UseMethod("add_edibble_vertex")
 }
 
+#' Add an edibble vertex
+#'
 #' @param value A value that may be a single number, unnamed vector,
 #' a one sided formula or linkabble.
 #' @param name Name of the edibble variable as string.
 #' @param design An edibble graph with levels converted as list used
 #' for evaluation in any expressions.
-#' @rdname add_edibble_vertex
+#' @describeIn add_edibble_vertex default method
 #' @importFrom tibble add_row
 #' @export
 add_edibble_vertex.default <- function(value, fname, class, design) {

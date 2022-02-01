@@ -26,3 +26,8 @@ In edibble, a short hand is used to assign new edibble variables/nodes.
 This function converts the short hand to make the minimal edibble node
 and returns an edibble graph with that additional node.
 }
+\section{Methods (by class)}{
+\itemize{
+\item \code{default}: default method
+}}
+
