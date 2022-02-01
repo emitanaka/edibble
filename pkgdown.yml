@@ -1,12 +1,8 @@
 pandoc: 2.7.3
-pkgdown: 1.6.1
+pkgdown: 2.0.2
 pkgdown_sha: ~
-articles:
-  edibble: edibble.html
-  grammar: grammar.html
-  named-designs: named-designs.html
-  output: output.html
-last_built: 2021-11-28T06:54Z
+articles: {}
+last_built: 2022-02-01T00:43Z
 urls:
   reference: https://edibble.emitanaka.org/reference
   article: https://edibble.emitanaka.org/articles

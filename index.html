@@ -4,23 +4,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>edibble - an R package that implements grammar of experimental design • edibble</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="Facilitate contruction of experimental designs.">
+<title>edibble - an R package to facilitate construction of experimental designs • edibble</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/united/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
-<script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><!-- docsearch --><script src="docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous">
-<link href="docsearch.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><link href="extra.css" rel="stylesheet">
-<meta property="og:title" content="edibble - an R package that implements grammar of experimental design">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
+<meta property="og:title" content="edibble - an R package to facilitate construction of experimental designs">
 <meta property="og:description" content="Facilitate contruction of experimental designs.">
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -37,214 +35,151 @@
   gtag('config', 'G-7HJYKJBM5E');
 </script>
 </head>
-<body data-spy="scroll" data-target="#toc">
-    <div class="container template-home">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">edibble</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
-      </span>
-    </div>
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
+    
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
+    
+    <a class="navbar-brand me-2" href="index.html">edibble</a>
+
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item">
+  <a class="nav-link" href="reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="articles/edibble.html">Get started</a>
-</li>
-<li>
-  <a href="reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="articles/grammar.html">Grammar of experimental design</a>
-    </li>
-    <li>
-      <a href="articles/named-designs.html">Named experimental designs</a>
-    </li>
-    <li>
-      <a href="articles/output.html">Output configurations in edibble</a>
-    </li>
-  </ul>
-</li>
-<li>
-  <a href="news/index.html">Changelog</a>
+<li class="nav-item">
+  <a class="nav-link" href="news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/emitanaka/edibble/">
-    <span class="fab fa-github fa-lg"></span>
+<form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="search.json" id="search-input" placeholder="Search for" autocomplete="off">
+</form>
+
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/emitanaka/edibble/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
       </ul>
-<form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
-        <div class="form-group">
-          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
 </div>
-      </form>
-      
-    </div>
-<!--/.nav-collapse -->
+
+    
   </div>
-<!--/.container -->
+</nav><div class="container template-home">
+<div class="row">
+  <main id="main" class="col-md-9"><div class="section level1">
+<div class="page-header">
+<img src="logo.png" class="logo" alt=""><h1 id="edibble-">edibble <a class="anchor" aria-label="anchor" href="#edibble-"></a>
+</h1>
 </div>
-<!--/.navbar -->
-
-      
-
-      </header><div class="row">
-  <div class="contents col-md-9">
-<div id="edibble-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#edibble-" class="anchor"></a>edibble <img src="reference/figures/logo.png" align="right" alt="" width="120">
-</h1></div>
 <!-- badges: start -->
 
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>Install the development version with:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># install.packages("remotes")</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a>remotes<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"emitanaka/edibble"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"emitanaka/edibble"</span><span class="op">)</span></code></pre></div>
+<p>For <code><a href="reference/simulate_rcrds.html">simulate_rcrds()</a></code>, you also need to install the <code>simulate</code> package which is currently only available on GitHub:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"emitanaka/simulate"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
-<p>There are two intermixing goals for edibble:</p>
-<ul>
-<li>defining the <strong>grammar of experimental design</strong>, and</li>
-<li>provide an R-package that aids in the workflow of constructing an experimental design and serves as an implementation of the so-called grammar of experimental design.</li>
-</ul>
-<p>The <em>grammar of experimental design</em> is a framework that functionally maps the fundamental components of an experiment to an object oriented system to build and modify the experimental design. Some (work-in-progress) details can be found in <code><a href="articles/grammar.html">vignette("grammar")</a></code> where it is serving as the dumping ground of my thoughts for now. The use of the word “grammar” pay homage to the <a href="https://ggplot2.tidyverse.org/"><em>grammar of graphics</em></a> and <a href="https://dplyr.tidyverse.org/"><em>grammar of data manipulation</em></a> which this work is heavily inspired from.</p>
-<div id="experimental-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#experimental-data" class="anchor"></a>Experimental data</h3>
-<p>tidyverse is well suited for the data science project workflow as illustrated below in (B) (from <a href="https://r4ds.had.co.nz/introduction.html">Grolemund and Wickham 2017</a>). For experimental data, the statistical aspect begins before obtaining data as depicted below in (A). The focus of <code>edibble</code> is to facilitate work in (A).</p>
-<p><img src="reference/figures/design-analysis-flow.png"></p>
-<p>The edibble R-package differ considerably to other packages for constructing experimental design with a focus on the whole process and less on the randomisation process (which the other software generally focus and do well on). Some features include:</p>
-<ul>
-<li>declaratively create experimental designs based on experimental components (e.g. units and treatments),</li>
-<li>explicitly specify variables that are to be recorded (e.g. response), and</li>
-<li>set expected values for variables to be recorded which restrict the data entry when the design is exported as an xlsx file,</li>
-<li>plot and print outputs for intermediate constructs of the experimental design with configurations for most graphical elements (see <a href="https://edibble.emitanaka.org/articles/output.html"><code>vignette("output")</code></a>),</li>
-<li>make classical named designs (see <a href="https://edibble.emitanaka.org/articles/named-designs.html"><code>vignette("named-designs")</code></a>),</li>
-<li>add context that also serves as notes about experiment (see <a href="https://edibble.emitanaka.org/articles/grammar.html"><code>vignette("edibble")</code></a>).</li>
-</ul>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
+<p>The goal of <code>edibble</code> R-package is to aid in the plan, design and simulation of experiments by mapping fundamental components of experiments to an object oriented system. The <code>edibble</code> system is built on the principle that the system must make it easy to recover experimental context by encouraging the user to be explicit about experimental details in fundamental terms.</p>
 </div>
-</div>
-<div id="designing-the-whole-experiment" class="section level2">
-<h2 class="hasAnchor">
-<a href="#designing-the-whole-experiment" class="anchor"></a>Designing the <em>whole</em> experiment</h2>
-<p>An experiment is likely to involve a number of people. For simplicity, let’s suppose there are three actors (we’ll use the pronoun them/they for each actor):</p>
-<ul>
-<li>the <strong>domain expert</strong> 🕵️‍♀️ drives the experimental objective and has the intricate knowledge about the subject area,</li>
-<li>the <strong>statistician</strong> 👩🏻‍💻 creates the design layout that contains the treatment-to-unit allocations after taking into account the statistical and practical constraints,</li>
-<li>the <strong>technician</strong> 👨‍🔬 carries out the experiment and collects the data.</li>
-</ul>
-<p>The actors are purely illustrative. In practice, multiple people can take on each role, one person can take on multiple roles, and/or a person in the role may not specialise in that role (i.e. a statistician role can be acted out by a non-statistician).</p>
-<p>An experiment may begin with no data at all. The <strong>domain expert</strong> comes up with the experimental hypothesis or question and recruit a <strong>statistician</strong> to help design the experiment. Before a <strong>statistician</strong> can produce the design layout, they must converse with the <strong>domain expert</strong> to understand the experimental objective, resources, practical constraints and other possible nuances that might influence the outcome of the experiment. This <em>consultation phase</em> an important information collection.</p>
-<p>With <strong>edibble</strong>, the functions resemble a natural language that you may have in a consultation phase. You may take notes of context using <code><a href="reference/design-context.html">set_context()</a></code>; you write down what and how many units and treatments you have available using <code><a href="reference/set_units.html">set_units()</a></code> and <code><a href="reference/set_trts.html">set_trts()</a></code>; you enquire about if there are any restrictions in allocation of treatments and set them using <code>allocate_trts()</code>; you may ask what responses are measured or what records will be kept and set them using <code><a href="reference/set_rcrds.html">set_rcrds()</a></code>; you can solicit expected values for these records and encode them using <code><a href="reference/expect_rcrds.html">expect_rcrds()</a></code>. The last point is important to minimise the error in the data entry process. If the <strong>technician</strong> enters an invalid entry, then an error is produced. This concept is illustrated below using a UML sequence diagram.</p>
-<p><img src="reference/figures/seq-diagram-eg.png"></p>
-</div>
-<div id="examples" class="section level2">
-<h2 class="hasAnchor">
-<a href="#examples" class="anchor"></a>Examples</h2>
+<div class="section level2">
+<h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
+</h2>
 <p>Consider an experiment where you want to know what is an effective way of teaching (flipped or traditional style) for teaching a particular subject and how different forms of exams (take-home, open-book or closed-book) affect student’s marks.</p>
 <p>There are four classes for this subject with each class holding 30 students. The teaching style can only be applied to the whole class but exam can be different for individual students.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://edibble.emitanaka.org/">edibble</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://edibble.emitanaka.org/">edibble</a></span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">2020</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2020</span><span class="op">)</span>
 
-<span class="va">des</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/start_design.html">start_design</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Effective teaching"</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
+<span class="va">des</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/start_design.html">start_design</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Effective teaching"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
     <span class="fu"><a href="reference/set_units.html">set_units</a></span><span class="op">(</span>class <span class="op">=</span> <span class="fl">4</span>,
-              student <span class="op">=</span> <span class="fu"><a href="reference/nested_in.html">nested_in</a></span><span class="op">(</span><span class="va">class</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
-    <span class="fu"><a href="reference/set_trts.html">set_trts</a></span><span class="op">(</span>style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"flipped"</span>, <span class="st">"traditional"</span><span class="op">)</span>,
-             exam <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"take-home"</span>, <span class="st">"open-book"</span>, <span class="st">"closed-book"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
+              student <span class="op">=</span> <span class="fu"><a href="reference/nested_in.html">nested_in</a></span><span class="op">(</span><span class="va">class</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+    <span class="fu"><a href="reference/set_trts.html">set_trts</a></span><span class="op">(</span>style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"flipped"</span>, <span class="st">"traditional"</span><span class="op">)</span>,
+             exam <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"take-home"</span>, <span class="st">"open-book"</span>, <span class="st">"closed-book"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
     <span class="fu"><a href="reference/allot_trts.html">allot_trts</a></span><span class="op">(</span><span class="va">style</span> <span class="op">~</span> <span class="va">class</span>,
-               <span class="va">exam</span> <span class="op">~</span> <span class="va">student</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
+               <span class="va">exam</span> <span class="op">~</span> <span class="va">student</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
     <span class="fu"><a href="reference/assign_trts.html">assign_trts</a></span><span class="op">(</span><span class="st">"random"</span><span class="op">)</span>
 
 <span class="fu"><a href="reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="va">des</span><span class="op">)</span>
+<span class="co">#&gt; # Effective teaching </span>
 <span class="co">#&gt; # An edibble: 120 x 4</span>
 <span class="co">#&gt;        class     student    style        exam</span>
 <span class="co">#&gt;    &lt;unit(4)&gt; &lt;unit(120)&gt; &lt;trt(2)&gt;    &lt;trt(3)&gt;</span>
-<span class="co">#&gt;  1    class1   student1   flipped open-book  </span>
-<span class="co">#&gt;  2    class1   student2   flipped open-book  </span>
-<span class="co">#&gt;  3    class1   student3   flipped take-home  </span>
+<span class="co">#&gt;  1    class1   student1   flipped take-home  </span>
+<span class="co">#&gt;  2    class1   student2   flipped closed-book</span>
+<span class="co">#&gt;  3    class1   student3   flipped open-book  </span>
 <span class="co">#&gt;  4    class1   student4   flipped closed-book</span>
-<span class="co">#&gt;  5    class1   student5   flipped take-home  </span>
-<span class="co">#&gt;  6    class1   student6   flipped take-home  </span>
-<span class="co">#&gt;  7    class1   student7   flipped take-home  </span>
+<span class="co">#&gt;  5    class1   student5   flipped closed-book</span>
+<span class="co">#&gt;  6    class1   student6   flipped open-book  </span>
+<span class="co">#&gt;  7    class1   student7   flipped open-book  </span>
 <span class="co">#&gt;  8    class1   student8   flipped take-home  </span>
 <span class="co">#&gt;  9    class1   student9   flipped closed-book</span>
 <span class="co">#&gt; 10    class1   student10  flipped closed-book</span>
 <span class="co">#&gt; # … with 110 more rows</span></code></pre></div>
 <p>Before constructing the experiment, you might want to think about what you are recording for which level of unit and what values these variables can be recorded as.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">out</span> <span class="op">&lt;-</span> <span class="va">des</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span> 
-    <span class="fu">set_rcrds_of</span><span class="op">(</span>student <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"exam_mark"</span>,
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">out</span> <span class="op">&lt;-</span> <span class="va">des</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
+    <span class="fu"><a href="reference/set_rcrds.html">set_rcrds_of</a></span><span class="op">(</span>student <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"exam_mark"</span>,
                              <span class="st">"quiz1_mark"</span>,
                              <span class="st">"quiz2_mark"</span>,
                              <span class="st">"gender"</span><span class="op">)</span>,
-              class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"room"</span>,
-                        <span class="st">"teacher"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
-    <span class="fu"><a href="reference/expect_rcrds.html">expect_rcrds</a></span><span class="op">(</span>exam_mark <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_numeric</a></span><span class="op">(</span><span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
-                quiz1_mark <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_integer</a></span><span class="op">(</span><span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">15</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
-                quiz2_mark <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_integer</a></span><span class="op">(</span><span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
-                    gender <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_factor</a></span><span class="op">(</span>levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="st">"male"</span>, <span class="st">"non-binary"</span>, <span class="st">"unknown"</span><span class="op">)</span><span class="op">)</span>,
+              class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"room"</span>,
+                        <span class="st">"teacher"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+    <span class="fu"><a href="reference/expect_rcrds.html">expect_rcrds</a></span><span class="op">(</span>exam_mark <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_numeric</a></span><span class="op">(</span><span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
+                quiz1_mark <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_integer</a></span><span class="op">(</span><span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">15</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
+                quiz2_mark <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_integer</a></span><span class="op">(</span><span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span>between <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
+                    gender <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_factor</a></span><span class="op">(</span>levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="st">"male"</span>, <span class="st">"non-binary"</span>, <span class="st">"unknown"</span><span class="op">)</span><span class="op">)</span>,
                    teacher <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_character</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span><span class="st">"&lt;="</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span>,
-                      room <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_character</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span><span class="st">"&gt;="</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span> 
+                      room <span class="op">=</span> <span class="fu"><a href="reference/expect-vars.html">to_be_character</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="reference/with_value.html">with_value</a></span><span class="op">(</span><span class="st">"&gt;="</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">out</span>
+<span class="co">#&gt; # Effective teaching </span>
 <span class="co">#&gt; # An edibble: 120 x 10</span>
 <span class="co">#&gt;        class     student    style        exam exam_mark quiz1_mark quiz2_mark</span>
 <span class="co">#&gt;    &lt;unit(4)&gt; &lt;unit(120)&gt; &lt;trt(2)&gt;    &lt;trt(3)&gt;    &lt;rcrd&gt;     &lt;rcrd&gt;     &lt;rcrd&gt;</span>
-<span class="co">#&gt;  1    class1   student1   flipped open-book           ■          ■          ■</span>
-<span class="co">#&gt;  2    class1   student2   flipped open-book           ■          ■          ■</span>
-<span class="co">#&gt;  3    class1   student3   flipped take-home           ■          ■          ■</span>
+<span class="co">#&gt;  1    class1   student1   flipped take-home           ■          ■          ■</span>
+<span class="co">#&gt;  2    class1   student2   flipped closed-book         ■          ■          ■</span>
+<span class="co">#&gt;  3    class1   student3   flipped open-book           ■          ■          ■</span>
 <span class="co">#&gt;  4    class1   student4   flipped closed-book         ■          ■          ■</span>
-<span class="co">#&gt;  5    class1   student5   flipped take-home           ■          ■          ■</span>
-<span class="co">#&gt;  6    class1   student6   flipped take-home           ■          ■          ■</span>
-<span class="co">#&gt;  7    class1   student7   flipped take-home           ■          ■          ■</span>
+<span class="co">#&gt;  5    class1   student5   flipped closed-book         ■          ■          ■</span>
+<span class="co">#&gt;  6    class1   student6   flipped open-book           ■          ■          ■</span>
+<span class="co">#&gt;  7    class1   student7   flipped open-book           ■          ■          ■</span>
 <span class="co">#&gt;  8    class1   student8   flipped take-home           ■          ■          ■</span>
 <span class="co">#&gt;  9    class1   student9   flipped closed-book         ■          ■          ■</span>
 <span class="co">#&gt; 10    class1   student10  flipped closed-book         ■          ■          ■</span>
 <span class="co">#&gt; # … with 110 more rows, and 3 more variables: gender &lt;rcrd&gt;, room &lt;rcrd&gt;,</span>
 <span class="co">#&gt; #   teacher &lt;rcrd&gt;</span></code></pre></div>
 <p>When you export the above edibble design using the <code>export_design</code> function, the variables you are recording are constraint to the values you expect, e.g. for factors, the cells have a drop-down menu to select from possible values.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/export_design.html">export_design</a></span><span class="op">(</span><span class="va">out</span>, file <span class="op">=</span> <span class="st">"/PATH/TO/FILE.xlsx"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-excel_factor_output.png" width="1266"></p>
 <p>In addition, there is a spreadsheet for every observational level. E.g. here <code>room</code> and <code>teacher</code> is the same for all students in one class so rather than entering duplicate information, these are exported to another sheet for data entry.</p>
 <p><img src="reference/figures/README-excel_sheet_output.png" width="400px"></p>
 <p>There is also support for more complex nesting structures however randomisation is yet to be supported for this. You can always make the structure using edibble and take the resulting data frame to use in other experimental design software. It’s also possible to bring existing data frame into edibble if you want to take advantage of the exporting feature in edibble.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/start_design.html">start_design</a></span><span class="op">(</span><span class="st">"nesting structure"</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span> 
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/start_design.html">start_design</a></span><span class="op">(</span><span class="st">"nesting structure"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
   <span class="co"># there are 3 sites labelled A, B, C</span>
-  <span class="fu"><a href="reference/set_units.html">set_units</a></span><span class="op">(</span>site <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span>,
+  <span class="fu"><a href="reference/set_units.html">set_units</a></span><span class="op">(</span>site <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span>,
             <span class="co"># each site has 2 blocks except B with 3 sites</span>
             block <span class="op">=</span> <span class="fu"><a href="reference/nested_in.html">nested_in</a></span><span class="op">(</span><span class="va">site</span>, 
                               <span class="st">"B"</span> <span class="op">~</span> <span class="fl">3</span>,
@@ -255,9 +190,10 @@
             <span class="co"># the rest of blocks have 20 plots.</span>
             plot <span class="op">=</span> <span class="fu"><a href="reference/nested_in.html">nested_in</a></span><span class="op">(</span><span class="va">block</span>, 
                               <span class="fl">1</span> <span class="op">~</span> <span class="fl">30</span>,
-                        <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span> <span class="op">~</span> <span class="fl">40</span>,
-                              <span class="va">.</span> <span class="op">~</span> <span class="fl">20</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span> 
+                        <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span> <span class="op">~</span> <span class="fl">40</span>,
+                              <span class="va">.</span> <span class="op">~</span> <span class="fl">20</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; # nesting structure </span>
 <span class="co">#&gt; # An edibble: 170 x 3</span>
 <span class="co">#&gt;         site     block        plot</span>
 <span class="co">#&gt;    &lt;unit(3)&gt; &lt;unit(7)&gt; &lt;unit(170)&gt;</span>
@@ -273,9 +209,24 @@
 <span class="co">#&gt; 10         A    block1      plot10</span>
 <span class="co">#&gt; # … with 160 more rows</span></code></pre></div>
 </div>
-<div id="limitations" class="section level2">
-<h2 class="hasAnchor">
-<a href="#limitations" class="anchor"></a>Limitations</h2>
+<div class="section level2">
+<h2 id="experimental-data">Experimental data<a class="anchor" aria-label="anchor" href="#experimental-data"></a>
+</h2>
+<p>tidyverse is well suited for the data science project workflow as illustrated below in (B) (from <a href="https://r4ds.had.co.nz/introduction.html" class="external-link">Grolemund and Wickham 2017</a>). For experimental data, the statistical aspect begins before obtaining data as depicted below in (A). The focus of <code>edibble</code> is to facilitate work in (A).</p>
+<p><img src="reference/figures/design-analysis-flow.png"></p>
+<p>The edibble R-package differ considerably to other packages for constructing experimental design with a focus on the whole process and less on the randomisation process (which the other software generally focus and do well on). Some features include:</p>
+<ul>
+<li>declaratively create experimental designs based on experimental components (e.g. units and treatments),</li>
+<li>explicitly specify variables that are to be recorded (e.g. response), and</li>
+<li>set expected values for variables to be recorded which restrict the data entry when the design is exported as an xlsx file,</li>
+<li>print outputs for intermediate constructs of the experimental design with configurations for most graphical elements (see <a href="https://edibble.emitanaka.org/articles/output.html"><code>vignette("output")</code></a>),</li>
+<li>make classical named designs (see <a href="https://edibble.emitanaka.org/articles/named-designs.html"><code>vignette("named-designs")</code></a>),</li>
+<li>add context that also serves as notes about experiment (see <a href="https://edibble.emitanaka.org/articles/grammar.html"><code>vignette("edibble")</code></a>).</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="limitations">Limitations<a class="anchor" aria-label="anchor" href="#limitations"></a>
+</h2>
 <p>Currently, edibble:</p>
 <ul>
 <li>expects you to know the number of units available from the start. Unknown numbers will be supported in future versions.</li>
@@ -284,9 +235,9 @@
 <li>does not do enough testing so design should be diagnosed after construction (which should be done regardless of how much testing edibble implements).</li>
 </ul>
 </div>
-<div id="related-work" class="section level2">
-<h2 class="hasAnchor">
-<a href="#related-work" class="anchor"></a>Related Work</h2>
+<div class="section level2">
+<h2 id="related-work">Related Work<a class="anchor" aria-label="anchor" href="#related-work"></a>
+</h2>
 <p>The way that edibble specifies experimental design is largely novel (if I say so myself) and there are no work that resembles it. I’m concurrently working on two extension packages:</p>
 <ul>
 <li>
@@ -294,7 +245,7 @@
 <li>
 <code>sizzled</code> - for experiments that require sample size calculation (WIP).</li>
 </ul>
-<p>Below are some other related work. You can also have a look at the <a href="https://cran.r-project.org/web/views/ExperimentalDesign.html">CRAN Task View for Design of Experiment and Analysis of Experimental Data</a> for a whole collection.</p>
+<p>Below are some other related work. You can also have a look at the <a href="https://cran.r-project.org/web/views/ExperimentalDesign.html" class="external-link">CRAN Task View for Design of Experiment and Analysis of Experimental Data</a> for a whole collection.</p>
 <ul>
 <li>
 <code>DeclareDesign</code> for survey or sampling designs</li>
@@ -306,92 +257,88 @@
 <code>plotdesignr</code> for designing agronomic field experiments</li>
 </ul>
 </div>
-<div id="acknowledgement" class="section level2">
-<h2 class="hasAnchor">
-<a href="#acknowledgement" class="anchor"></a>Acknowledgement</h2>
-<p>edibble is hugely inspired by the work of <a href="https://joss.theoj.org/papers/10.21105/joss.01686">Tidyverse Team</a>. I’m grateful for the dedication and work by the Tidyverse Team, as well as <a href="https://www.r-project.org/contributors.html">R Development Core Team</a> that supports the core R ecosystem, that made developing this package possible.</p>
+<div class="section level2">
+<h2 id="acknowledgement">Acknowledgement<a class="anchor" aria-label="anchor" href="#acknowledgement"></a>
+</h2>
+<p>edibble is hugely inspired by the work of <a href="https://joss.theoj.org/papers/10.21105/joss.01686" class="external-link">Tidyverse Team</a>. I’m grateful for the dedication and work by the Tidyverse Team, as well as <a href="https://www.r-project.org/contributors.html" class="external-link">R Development Core Team</a> that supports the core R ecosystem, that made developing this package possible.</p>
 </div>
-<div id="tidyverse-familiarity" class="section level2">
-<h2 class="hasAnchor">
-<a href="#tidyverse-familiarity" class="anchor"></a>Tidyverse familiarity</h2>
+<div class="section level2">
+<h2 id="tidyverse-familiarity">Tidyverse familiarity<a class="anchor" aria-label="anchor" href="#tidyverse-familiarity"></a>
+</h2>
 <p>The implementation in edibble adopt a similar nomenclature and design philosophy as tidyverse (and where it does not, it’s likely my shortcoming) so that tidyverse users can leverage their familiarity of the tidyverse language when using edibble. Specifically, edibble follows the philosophy:</p>
 <ul>
 <li>main functions do one thing and have a consistent form of <code>&lt;verb&gt;_&lt;noun&gt;</code> (e.g. <code>set_units</code> and <code>set_rcrds</code>) where the nouns are generally plural. Exceptions are when the subject matter is clearly singular (e.g. <code>start_design</code> and <code>set_context</code>);</li>
 <li>pipable functions;</li>
-<li>all dots arguments are <a href="https://rlang.r-lib.org/reference/dyn-dots.html">dynamic dots</a>;</li>
+<li>all dots arguments are <a href="https://rlang.r-lib.org/reference/dyn-dots.html" class="external-link">dynamic dots</a>;</li>
 <li>duplicate names repaired with same option as <code>tibble</code> for additions to edibble graph;</li>
 <li>ability for developers to extend certain components. Currently only supported for others to contribute their own classical named experimental designs via <code>prep_classical_</code>;</li>
 <li>the specification of complex nested structure drawing similarity to <code>dplyr::case_when</code> (LHS is character or integer for edibble however).</li>
 </ul>
 </div>
-<div id="code-of-conduct" class="section level2">
-<h2 class="hasAnchor">
-<a href="#code-of-conduct" class="anchor"></a>Code of Conduct</h2>
-<p>Please note that the edibble project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+<div class="section level2">
+<h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
+</h2>
+<p>Please note that the edibble project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="links">
-<h2>Links</h2>
+  </main><aside class="col-md-3"><div class="links">
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/emitanaka/edibble/">https://​github.com/​emitanaka/​edibble/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/emitanaka/edibble/issues">https://​github.com/​emitanaka/​edibble/​issues</a>
-</li>
+<li><a href="https://github.com/emitanaka/edibble/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/emitanaka/edibble/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></small></li>
+<li><small><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></small></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing edibble</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Emi Tanaka <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-1455-259X" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Emi Tanaka <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-1455-259X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="https://www.tidyverse.org/lifecycle/#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
 </ul>
 </div>
-</div>
-</div>
 
-
-      <footer><div class="copyright">
-  <p>Developed by Emi Tanaka.</p>
+  </aside>
 </div>
 
-<div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+
+    <footer><div class="pkgdown-footer-left">
+  <p></p>
+<p>Developed by Emi Tanaka.</p>
 </div>
 
-      </footer>
+<div class="pkgdown-footer-right">
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+</div>
+
+    </footer>
 </div>
 
   
-<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
-  docsearch({
-    
-    
-    apiKey: '12ac28b2a1c1bed41e27966b7b482faf',
-    indexName: 'edibble',
-    inputSelector: 'input#search-input.form-control',
-    transformData: function(hits) {
-      return hits.map(function (hit) {
-        hit.url = updateHitURL(hit);
-        return hit;
-      });
-    }
-  });
-</script>
-</body>
+
+  
+
+  </body>
 </html>
