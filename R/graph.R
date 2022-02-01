@@ -304,7 +304,7 @@ fct_ancestor <- function(design, id = NULL) {
 #' @export
 fct_leaves <- function(design) {
   uids <- unit_ids(design)
-  has_child <- map_lgl(uids, function(id) length(fct_child(design, id)) > 0)
+  has_child <- map_lgl(uids, function(id) length(intersect(fct_child(design, id), uids)) > 0)
   uids[!has_child]
 }
 

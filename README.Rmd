@@ -75,13 +75,14 @@ out <- des %>%
                              "gender"),
               class = c("room",
                         "teacher")) %>%
-    expect_rcrds(exam_mark = to_be_numeric(with_value(between = c(0, 100))),
-                quiz1_mark = to_be_integer(with_value(between = c(0, 15))),
-                quiz2_mark = to_be_integer(with_value(between = c(0, 30))),
-                    gender = to_be_factor(levels = c("female", "male", "non-binary", "unknown")),
-                   teacher = to_be_character(length = with_value("<=", 100)),
-                      room = to_be_character(length = with_value(">=", 1))) %>% 
-  serve_table()
+    expect_rcrds(exam_mark <= 100,
+                 exam_mark >= 0,
+                 quiz1_mark <= 15L,
+                 quiz1_mark >= 0L,
+                 quiz2_mark <= 30L,
+                 quiz2_mark >= 0L,
+                 factor(gender, levels = c("female", "male", "non-binary", "unknown"))) %>%
+    serve_table()
 
 out
 ```
@@ -103,7 +104,7 @@ In addition, there is a spreadsheet for every observational level. E.g. here `ro
 knitr::include_graphics("man/figures/README-excel_sheet_output.png")
 ```
 
-There is also support for more complex nesting structures however randomisation is yet to be supported for this. You can always make the structure using edibble and take the resulting data frame to use in other experimental design software. It's also possible to bring existing data frame into edibble if you want to take advantage of the exporting feature in edibble.
+There is also support for more complex nesting structures. You can always make the structure using edibble and take the resulting data frame to use in other experimental design software. It's also possible to bring existing data frame into edibble if you want to take advantage of the exporting feature in edibble.
 
 ```{r}
 start_design("nesting structure") %>% 

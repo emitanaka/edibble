@@ -62,18 +62,18 @@ des <- start_design(name = "Effective teaching") %>%
 serve_table(des)
 #> # Effective teaching 
 #> # An edibble: 120 x 4
-#>        class     student    style        exam
-#>    <unit(4)> <unit(120)> <trt(2)>    <trt(3)>
-#>  1    class1   student1   flipped take-home  
-#>  2    class1   student2   flipped closed-book
-#>  3    class1   student3   flipped open-book  
-#>  4    class1   student4   flipped closed-book
-#>  5    class1   student5   flipped closed-book
-#>  6    class1   student6   flipped open-book  
-#>  7    class1   student7   flipped open-book  
-#>  8    class1   student8   flipped take-home  
-#>  9    class1   student9   flipped closed-book
-#> 10    class1   student10  flipped closed-book
+#>        class     student       style        exam
+#>    <unit(4)> <unit(120)>    <trt(2)>    <trt(3)>
+#>  1    class1   student1  traditional take-home  
+#>  2    class1   student2  traditional closed-book
+#>  3    class1   student3  traditional open-book  
+#>  4    class1   student4  traditional take-home  
+#>  5    class1   student5  traditional closed-book
+#>  6    class1   student6  traditional take-home  
+#>  7    class1   student7  traditional take-home  
+#>  8    class1   student8  traditional open-book  
+#>  9    class1   student9  traditional take-home  
+#> 10    class1   student10 traditional closed-book
 #> # … with 110 more rows
 ```
 
@@ -89,29 +89,30 @@ out <- des %>%
                              "gender"),
               class = c("room",
                         "teacher")) %>%
-    expect_rcrds(exam_mark = to_be_numeric(with_value(between = c(0, 100))),
-                quiz1_mark = to_be_integer(with_value(between = c(0, 15))),
-                quiz2_mark = to_be_integer(with_value(between = c(0, 30))),
-                    gender = to_be_factor(levels = c("female", "male", "non-binary", "unknown")),
-                   teacher = to_be_character(length = with_value("<=", 100)),
-                      room = to_be_character(length = with_value(">=", 1))) %>% 
-  serve_table()
+    expect_rcrds(exam_mark <= 100,
+                 exam_mark >= 0,
+                 quiz1_mark <= 15L,
+                 quiz1_mark >= 0L,
+                 quiz2_mark <= 30L,
+                 quiz2_mark >= 0L,
+                 factor(gender, levels = c("female", "male", "non-binary", "unknown"))) %>%
+    serve_table()
 
 out
 #> # Effective teaching 
 #> # An edibble: 120 x 10
-#>        class     student    style        exam exam_mark quiz1_mark quiz2_mark
-#>    <unit(4)> <unit(120)> <trt(2)>    <trt(3)>    <rcrd>     <rcrd>     <rcrd>
-#>  1    class1   student1   flipped take-home           ■          ■          ■
-#>  2    class1   student2   flipped closed-book         ■          ■          ■
-#>  3    class1   student3   flipped open-book           ■          ■          ■
-#>  4    class1   student4   flipped closed-book         ■          ■          ■
-#>  5    class1   student5   flipped closed-book         ■          ■          ■
-#>  6    class1   student6   flipped open-book           ■          ■          ■
-#>  7    class1   student7   flipped open-book           ■          ■          ■
-#>  8    class1   student8   flipped take-home           ■          ■          ■
-#>  9    class1   student9   flipped closed-book         ■          ■          ■
-#> 10    class1   student10  flipped closed-book         ■          ■          ■
+#>        class     student       style        exam exam_mark quiz1_mark quiz2_mark
+#>    <unit(4)> <unit(120)>    <trt(2)>    <trt(3)>    <rcrd>     <rcrd>     <rcrd>
+#>  1    class1   student1  traditional take-home           ■          ■          ■
+#>  2    class1   student2  traditional closed-book         ■          ■          ■
+#>  3    class1   student3  traditional open-book           ■          ■          ■
+#>  4    class1   student4  traditional take-home           ■          ■          ■
+#>  5    class1   student5  traditional closed-book         ■          ■          ■
+#>  6    class1   student6  traditional take-home           ■          ■          ■
+#>  7    class1   student7  traditional take-home           ■          ■          ■
+#>  8    class1   student8  traditional open-book           ■          ■          ■
+#>  9    class1   student9  traditional take-home           ■          ■          ■
+#> 10    class1   student10 traditional closed-book         ■          ■          ■
 #> # … with 110 more rows, and 3 more variables: gender <rcrd>, room <rcrd>,
 #> #   teacher <rcrd>
 ```
@@ -125,7 +126,7 @@ from possible values.
 export_design(out, file = "/PATH/TO/FILE.xlsx")
 ```
 
-<img src="man/figures/README-excel_factor_output.png" width="1266" />
+![](man/figures/README-excel_factor_output.png)<!-- -->
 
 In addition, there is a spreadsheet for every observational level. E.g.
 here `room` and `teacher` is the same for all students in one class so
@@ -134,12 +135,11 @@ another sheet for data entry.
 
 <img src="man/figures/README-excel_sheet_output.png" width="400px" />
 
-There is also support for more complex nesting structures however
-randomisation is yet to be supported for this. You can always make the
-structure using edibble and take the resulting data frame to use in
-other experimental design software. It’s also possible to bring existing
-data frame into edibble if you want to take advantage of the exporting
-feature in edibble.
+There is also support for more complex nesting structures. You can
+always make the structure using edibble and take the resulting data
+frame to use in other experimental design software. It’s also possible
+to bring existing data frame into edibble if you want to take advantage
+of the exporting feature in edibble.
 
 ``` r
 start_design("nesting structure") %>% 

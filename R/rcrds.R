@@ -89,7 +89,7 @@ simplify_validation <- function(x) {
     if(length(xs)!=1) {
       # the rules must match record type
       record_type <- unique(map_chr(xs, function(a) a$record))
-      if(length(record_type)==1 && record_type=="numeric") {
+      if(length(record_type)==1 && record_type %in% c("numeric", "integer")) {
         rng <- c(-Inf, Inf)
         inc <- c(TRUE, TRUE)
         for(ax in xs) {
@@ -159,7 +159,6 @@ reverse_operator <- function(x) {
 validate_rcrd <- function(x, rnames = NULL) {
   l <- as.list(x[[2]])
   operator <- as.character(l[[1]])
-  #browser()
   val1 <- validate_values(l[[2]], env = attr(x, ".Environment"))
   val2 <- validate_values(l[[3]], env = attr(x, ".Environment"))
   w <- ifelse(val1 %in% rnames,
@@ -329,7 +328,6 @@ vec_ptype_full.edbl_rcrd <- function(x, ...) "rcrd"
 
 #' @export
 as.numeric.edbl_rcrd <- function(x, ...) {
-  browser()
   out <- unclass(x)
   out
 }
