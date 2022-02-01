@@ -36,7 +36,7 @@ reference:
   desc: >
     Function helpers to understand your design better.
   contents:
-  - plot
+  - plot.edbl_design
   - examine_recipe
 - title: "Named experimental designs"
   desc: >
