@@ -280,8 +280,8 @@ menu_strip <- function(t1 = random_integer_small(),
   des <- recipe_design_add_code(des,
                                 sprintf('set_units(%s = %d,
             %s = %d,
-            %s = nested_in(%s, %d),
-            %s = ~%s:%s)', block, r, row, t1, col, block, t2, unit, row, col),
+            %s = %d,
+            %s = ~%s:%s:%s)', block, r, row, t1, col, t2, unit, block, row, col),
             sprintf('set_trts(%s = %d,
            %s = %d)', trt1, t1, trt2, t2),
            sprintf('allot_trts(%s ~ %s,
@@ -418,18 +418,20 @@ scan_menu <- function(pkgs = NULL) {
   short_names <- NULL
   for(i in seq_along(ls_fns)) {
     cli_h2(pkg_names[i])
-    for(prep_fn in ls_fns[[i]]) {
-      args <- as.list(formals(prep_fn))
-      des <- do.call(prep_fn, list())
-      short_names <- c(short_names, set_names(des$name, pkg_names[i]))
-      cli_li("{.pkg {des$name}} with the arguments {.field {names(args)}}
+    for(menu_fn in ls_fns[[i]]) {
+      args <- as.list(formals(menu_fn))
+      des <- do.call(menu_fn, list())
+      tryCatch({
+        short_names <- c(short_names, set_names(des$name, pkg_names[i]))
+        cli_li("{.pkg {des$name}} with the arguments {.field {names(args)}}
              for a {.combine_words(des$name_full, fun = style_bold, and = ' / ')}.")
+      }, error = function(x)  {
+        cli_li("{.pkg {gsub('menu_', '', menu_fn)}} seems to be {cli::col_red('unavailable')}.")
+      })
     }
   }
   invisible(short_names)
 }
-
-
 
 
 #' Create a named experimental design
