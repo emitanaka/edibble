@@ -34,7 +34,7 @@ reference:
   - serve_table
   - allot_table
   - nested_in
-  - nesting
+  - crossed_by
 - title: "Understanding your design"
   desc: >
     Function helpers to understand your design better.
@@ -42,6 +42,7 @@ reference:
   - plot.edbl_design
   - examine_recipe
   - simulate_rcrds
+  - anatomy
 - title: "Named experimental designs"
   desc: >
     The recipe of a named experimental design is displayed using the `menu_*` functions.
@@ -81,6 +82,7 @@ reference:
   desc: >
     These are mostly for internal usage and for those who wish to extend edibble functions.
   contents:
+  - nesting_structure
   - add_edibble_vertex
   - design-context
   - design-helpers
