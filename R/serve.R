@@ -133,7 +133,8 @@ serve_units <- function(design) {
     names(lvs) <- fct_names(design, id = lid)
     res <- c(res, lvs)
     wid <- setdiff(wid, lid)
-    lid <- wid[!wid %in% fct_edges_filter(design, to %in% uid, !to %in% lid)$from]
+    wdes <- select_units(design, fct_names(design, wid))
+    lid <- fct_leaves(wdes)
   }
   res
 }
