@@ -23,11 +23,9 @@ set_vars <- function(.edibble, ..., .class = NULL,
     fnames_new <- names(dots)
     fnames_old <- names(res)
     fnames <- vec_as_names(c(fnames_old, fnames_new), repair = .name_repair)
-    levels_fct <- NULL
     for(i in seq_along(dots)) {
       fname <- fnames[i + length(fnames_old)]
-      if(fct_n(res)) levels_fct <- fct_levels(res)
-      value <- eval_tidy(dots[[i]], data = c(levels_fct, list(.fname = fname)))
+      value <- eval_tidy(dots[[i]], data = c(fct_levels(res), list(des = res, .fname = fname)))
       res <- add_edibble_vertex(value, fname, .class, res)
     }
 
@@ -138,6 +136,7 @@ add_edibble_vertex.formula <- function(value, fname, class, design) {
   flevels <- fct_levels(design)
   tt <- terms(value)
   vars <- rownames(attr(tt, "factor"))
+
   pdf <- expand.grid(flevels[vars])
   pdf[[fname]] <- fct_attrs(levels = lvl_attrs(1:nrow(pdf), prefix = fname),
                              class = class)
@@ -159,17 +158,16 @@ add_edibble_vertex.nst_levels <- function(value, fname, class, design) {
   idv <- fct_last_id(out) + 1L
   idl <- lvl_last_id(out) + 1L
   parent <- value %@% "keyname"
-  idp <- fct_id(design, name = parent)
+  cross_parents <- value %@% "parents"
+  idp <- fct_id(design, name = c(parent, colnames(cross_parents[[1]])))
   attrs <- attributes(value)
-  missing_cols <- setdiff(names(attrs), c(names(fct_nodes(design)), "names", "keyname"))
-  for(amiss in missing_cols) {
-    out$graph$levels$nodes[[amiss]] <- rep(NA_character_, lvl_n(design))
-  }
-  out$graph$nodes <- add_row(out$graph$nodes,
-                             id = idv,
-                             name = fname,
-                             class = class,
-                             !!!attrs[missing_cols])
+  fnodes <- fct_nodes(design)
+  fattrs <- do.call(data.frame, c(attrs[setdiff(names(attrs), c("names", "keyname", "class", "parents"))],
+                                  list(stringsAsFactors = FALSE,
+                                       id = idv,
+                                       name = fname,
+                                       class = class)))
+  out$graph$nodes <- rbind_(fnodes, fattrs)
   out$graph$edges <- add_row(out$graph$edges,
                              from = idp, to = idv)
   plevels <- rep(names(value), lengths(value))
@@ -185,6 +183,15 @@ add_edibble_vertex.nst_levels <- function(value, fname, class, design) {
   # TODO: fix for situation were same labels are used for levels for different factors
   out$graph$levels$edges <- add_row(out$graph$levels$edges,
                                     from = pids, to = vids)
+  if(!is_null(cross_parents)) {
+    cross_df <- do.call("rbind", cross_parents[names(value)])
+    cross_parent_names <- colnames(cross_df)
+    for(across in cross_parent_names) {
+      cpids <- lvl_id(out, cross_df[[across]])
+      out$graph$levels$edges <- add_row(out$graph$levels$edges,
+                                        from = cpids, to = vids)
+    }
+  }
   out
 }
 
