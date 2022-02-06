@@ -145,10 +145,15 @@ permute_parent_one_alg <- function(.design, vid, udf, ntrts) {
   capture.output({
       # prevent "No improvement over initial random design" print out from AlgDesign
       # where the design is balanced
-      res <- AlgDesign::optBlock(~.,
-                                 withinData = data.frame(tindex = factor(1:ntrts)),
-                                 blocksizes = blocksizes_adj)
+    res <- tryCatch({
+        AlgDesign::optBlock(~.,
+                                   withinData = data.frame(tindex = factor(1:ntrts)),
+                                   blocksizes = blocksizes_adj)
+      }, error = function(x) {
+        return(permute_parent_one(.design, vid, udf, ntrts))
+      })
   })
+  if(is.integer(res)) return(res)
   reps <- ceiling(blocksizes / ntrts) - 1L
   unname(unlist(lapply(seq_along(blocksizes), function(i) {
     blocksizes
