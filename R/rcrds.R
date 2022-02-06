@@ -12,28 +12,34 @@
 #' @family user-facing functions
 #' @export
 set_rcrds <- function(.edibble, ...,
-                      .name_repair = c("check_unique", "unique", "universal", "minimal")) {
+                      .name_repair = c("check_unique", "unique", "universal", "minimal"),
+                      .record = TRUE) {
 
   not_edibble(.edibble)
-  record_step()
+  if(.record) record_step()
+
   .name_repair <- match.arg(.name_repair)
-  code <- deparse(match.call())
-  units <- map_chr(enexprs(...), function(x) {
+  units <- map(enexprs(...), function(x) {
       if(is.character(x)) return(x)
-      return(quo_text(x))
+      if(is_symbol(x)) return(quo_text(x))
+      return(eval(x))
     })
   rcrds <- names(units)
 
   des <- edbl_design(.edibble)
-  check_var_exists(des, name = units, vclass = "edbl_unit")
+  check_var_exists(des, name = unlist(units), vclass = "edbl_unit")
 
   for(i in seq_along(units)) {
     rid <- fct_last_id(des) + 1L
-    uid <- fct_id(des, unname(units)[i])
-    des$graph$nodes <- add_row(des$graph$nodes,
-                                     id = rid,
-                                     name = rcrds[i],
-                                     class = "edbl_rcrd")
+    uid <- fct_id(des, units[[i]])
+    attrs <- attributes(units[[i]])
+    fnodes <- fct_nodes(des)
+    fattrs <- do.call(data.frame, c(attrs[setdiff(names(attrs), c("names", "class"))],
+                                    list(stringsAsFactors = FALSE,
+                                         id = rid,
+                                         name = rcrds[i],
+                                         class = "edbl_rcrd")))
+    des$graph$nodes <- rbind_(fnodes, fattrs)
     des$graph$edges <- add_row(des$graph$edges,
                                      from = uid,
                                      to = rid)
