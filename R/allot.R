@@ -56,7 +56,7 @@ allot_trts <- function(.design, ..., .record = TRUE) {
 #' @inheritDotParams allot_trts
 #'
 #' @export
-allot_table <- function(.design, ..., order = "random", seed = NULL, constrain = nesting(.design)) {
+allot_table <- function(.design, ..., order = "random", seed = NULL, constrain = nesting_structure(.design)) {
 
   .design %>%
     allot_trts(...) %>%
