@@ -6,7 +6,7 @@ test_that("nested-units", {
                 plot = nested_in(block, 2))
   })
 
-  des1 <- start_design(name = "nested units") %>%
+  des1 <- start_design(name = "nested units", seed = 1) %>%
     set_units(block = 3,
               plot = nested_in(block, 2))
 
@@ -14,18 +14,22 @@ test_that("nested-units", {
                structure(list(name = "nested units",
                               graph = structure(list(nodes = data.frame(id = c(1L, 2L),
                                                                         name = c("block", "plot"),
-                                                                        class = "edbl_unit"),
+                                                                        class = "edbl_unit",
+                                                                        n = c(3L, 6L)),
                                                      edges = data.frame(from = 1L,
                                                                         to = 2L,
                                                                         alloc = NA_integer_),
                                                      levels = list(nodes = data.frame(idvar = rep(c(1L, 2L), c(3, 6)),
                                                                                       id = 1:9,
                                                                                       name = c(paste0("block", 1:3), paste0("plot", 1:6)),
+                                                                                      var = rep(c("block", "plot"), c(3, 6)),
                                                                                       label = c(paste0("block", 1:3), paste0("plot", 1:6))),
                                                                    edges = data.frame(from = rep(c(1L, 2L, 3L), each = 2),
                                                                                       to = 4:9,
                                                                                       alloc = NA_integer_))),
-                                                class = "edbl_graph")),
+                                                class = "edbl_graph"),
+                              recipe = "",
+                              seed = 1),
                          class = c("edbl_design", "edbl")))
 
   des2 <- des1 %>%
