@@ -44,11 +44,12 @@ set_trts <- function(.design, ...,
 #' by the number of levels of the treatment factor), then the extras are chosen randomly.
 #' @param seed A scalar value used to set the seed so that the result is reproducible.
 #' @param constrain The nesting structure for units.
+#' @param ... Arguments parsed into `order_trts` functions.
 #' @param .record Whether to record the step.
 #'
 #'
 #' @export
-assign_trts <- function(.design, order = "random", seed = NULL, constrain = nesting_structure(.design), .record = TRUE) {
+assign_trts <- function(.design, order = "random", seed = NULL, constrain = nesting_structure(.design), ..., .record = TRUE) {
   not_edibble(.design)
 
   if(.record) record_step()
@@ -69,7 +70,7 @@ assign_trts <- function(.design, order = "random", seed = NULL, constrain = nest
 
     luids <- lvl_nodes_filter(.design, idvar == uid)$id
     tdf <- lvl_nodes_filter(.design, idvar %in% tids)
-    tidf <- expand.grid(split(tdf$id, fct_names(.design, tdf$idvar)))
+    tidf <- expand.grid(split(tdf$name, fct_names(.design, tdf$idvar)), stringsAsFactors = FALSE)
     ntrts <- nrow(tidf)
     permutation <- switch(order,
                           "systematic" = rep(1:nrow(tidf), length.out = length(luids)),
@@ -98,14 +99,14 @@ assign_trts <- function(.design, order = "random", seed = NULL, constrain = nest
                               }
                             }
                           },
-                          abort(paste("The", .order, "`.order` is not implemented.")))
+                          order_trts(structure(order, class = order), .design, constrain, tidf, ...))
 
     tout <- tidf[permutation, , drop = FALSE]
 
 
     for(itvar in seq_along(tout)) {
       .design$graph$levels$edges <- add_row(.design$graph$levels$edges,
-                                     from = tout[[itvar]],
+                                     from = lvl_id(.design, tout[[itvar]]),
                                      to = luids, alloc = ialloc)
     }
   }
@@ -113,6 +114,27 @@ assign_trts <- function(.design, order = "random", seed = NULL, constrain = nest
   .design$assignment <- order
 
   .design
+}
+
+order_trts <- function(x, ...) {
+  UseMethod("order_trts")
+}
+
+order_trts.default <- function(order, design, constrain, ...) {
+  abort(paste("The", order, "`order` is not implemented."))
+}
+
+order_trts.dae <- function(order, design, constrain, trts, ...) {
+  dat <- assign_trts(design, order = "systematic", constrain = constrain, .record = FALSE) %>%
+    serve_table(use_labels = TRUE) %>%
+    lapply(as.factor) %>%
+    as.data.frame()
+  out <- dae::designRandomize(allocated = dat[trt_names(design)],
+                       recipient = dat[unit_names(design)],
+                       nested.recipients = constrain)
+  trtsv <- setNames(1:nrow(trts), do.call(paste0, trts[trt_names(design)]))
+  otrtsv <- do.call(paste0, dat[trt_names(design)])
+  unname(trtsv[otrtsv])
 }
 
 permute_parent_more_than_one <- function(.design, vids, udf, ntrts) {
@@ -128,9 +150,12 @@ permute_parent_more_than_one <- function(.design, vids, udf, ntrts) {
   for(i in seq(nrow(udf))) {
     out[i] <- do.call("[", c(list(oa), lapply(index, function(x) x[i])))
   }
+
   out
 
 }
+
+
 
 permute_parent_one_alg <- function(.design, vid, udf, ntrts) {
   gparent <- fct_names(.design, vid)

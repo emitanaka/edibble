@@ -26,6 +26,14 @@ set_vars <- function(.edibble, ..., .class = NULL,
     for(i in seq_along(dots)) {
       fname <- fnames[i + length(fnames_old)]
       value <- eval_tidy(dots[[i]], data = c(fct_levels(res), list(des = res, .fname = fname)))
+      if(.class=="edbl_unit") {
+        if(is.null(res$anatomy)) {
+          res$anatomy <- as.formula(paste0("~", fname))
+        } else {
+          term <- ifelse(inherits(value, "nst_levels"), paste0(attr(value, "keyname"), "/", fname), fname)
+          res$anatomy <- update(res$anatomy, as.formula(paste0("~ . + ", term)), evaluate = FALSE)
+        }
+      }
       res <- add_edibble_vertex(value, fname, .class, res)
     }
 
@@ -159,10 +167,11 @@ add_edibble_vertex.nst_levels <- function(value, fname, class, design) {
   idl <- lvl_last_id(out) + 1L
   parent <- value %@% "keyname"
   cross_parents <- value %@% "parents"
+  clabels <- value %@% "labels"
   idp <- fct_id(design, name = c(parent, colnames(cross_parents[[1]])))
   attrs <- attributes(value)
   fnodes <- fct_nodes(design)
-  fattrs <- do.call(data.frame, c(attrs[setdiff(names(attrs), c("names", "keyname", "class", "parents"))],
+  fattrs <- do.call(data.frame, c(attrs[setdiff(names(attrs), c("names", "keyname", "class", "parents", "labels"))],
                                   list(stringsAsFactors = FALSE,
                                        id = idv,
                                        name = fname,
@@ -176,8 +185,8 @@ add_edibble_vertex.nst_levels <- function(value, fname, class, design) {
                                    idvar = idv,
                                    id = idl:(idl + sum(lengths(value)) - 1),
                                    name = clevels,
-                                   # FIXME: should allow labels to be user supplied one
-                                   label = clevels)
+                                   var = fname,
+                                   label = unname(unlist(clabels)))
   pids <- lvl_id(out, plevels)
   vids <- lvl_id(out, clevels)
   # TODO: fix for situation were same labels are used for levels for different factors
@@ -269,6 +278,25 @@ levels.edbl_var <- function(x) {
 is_edibble_var <- function(x) {
   inherits(x, "edbl_var")
 }
+
+#' @rdname utility-edibble-var
+#' @export
+is_edibble_unit <- function(x) {
+  inherits(x, "edbl_unit")
+}
+
+#' @rdname utility-edibble-var
+#' @export
+is_edibble_trt <- function(x) {
+  inherits(x, "edbl_trt")
+}
+
+#' @rdname utility-edibble-var
+#' @export
+is_edibble_rcrd <- function(x) {
+  inherits(x, "edbl_rcrd")
+}
+
 
 #' @importFrom vctrs vec_math
 #' @export

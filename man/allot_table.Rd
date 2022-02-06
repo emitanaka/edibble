@@ -9,7 +9,7 @@ allot_table(
   ...,
   order = "random",
   seed = NULL,
-  constrain = nesting(.design)
+  constrain = nesting_structure(.design)
 )
 }
 \arguments{

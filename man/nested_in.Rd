@@ -9,10 +9,9 @@ nested_in(
   ...,
   prefix = "",
   suffix = "",
-  distinct = TRUE,
   leading0 = FALSE,
   sep = edibble_labels_opt("sep"),
-  traits = NULL
+  attrs = NULL
 )
 }
 \arguments{
@@ -27,13 +26,12 @@ corresponding levels.}
 
 \item{suffix}{The suffix of the label.}
 
-\item{distinct}{whether the child variables are distinct in the levels that it is nesting}
-
 \item{leading0}{Whether there should be a leading 0 if labels are made.}
 
 \item{sep}{A separator added between prefix and the number if prefix is empty.}
 
-\item{traits}{A named vector where names and values correspond to attribute names and values of the variable.}
+\item{attrs}{A named vector where names and values correspond to attribute names and values of the variable, or
+a data frame.}
 }
 \description{
 Specify the nesting structure for units

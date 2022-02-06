@@ -7,11 +7,12 @@
 #' zero rows.
 #'
 #' @inheritParams design-context
+#' @param use_labels To show the labels instead of names.
 #' @return An `edbl` data frame with columns defined by vertices and
 #' rows displayed only if the vertices are connected and reconcile for output.
 #' @family user-facing functions
 #' @export
-serve_table <- function(.design, ..., .record = TRUE) {
+serve_table <- function(.design, use_labels = FALSE, ..., .record = TRUE) {
   if(.record) record_step()
 
   if(!is_connected(.design)) {
@@ -30,6 +31,12 @@ serve_table <- function(.design, ..., .record = TRUE) {
   }
 
   namesv <- fct_names(.design)
+  if(use_labels) {
+    translate <- setNames(lvl_nodes(.design)$label, lvl_nodes(.design)$name)
+    # FIXME: it lsoes the classes when this is done
+    lout <- lapply(lout, function(.x) translate[.x])
+  }
+
   new_edibble(lout[namesv], design = .design)
 }
 

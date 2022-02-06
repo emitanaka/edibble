@@ -9,6 +9,7 @@ assign_trts(
   order = "random",
   seed = NULL,
   constrain = nesting_structure(.design),
+  ...,
   .record = TRUE
 )
 }
@@ -27,6 +28,8 @@ by the number of levels of the treatment factor), then the extras are chosen ran
 \item{seed}{A scalar value used to set the seed so that the result is reproducible.}
 
 \item{constrain}{The nesting structure for units.}
+
+\item{...}{Arguments parsed into \code{order_trts} functions.}
 
 \item{.record}{Whether to record the step.}
 }

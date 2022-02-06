@@ -27,7 +27,8 @@ Imports:
     tidyselect (>= 1.0.0),
     nestr,
     stats,
-    AlgDesign
+    AlgDesign,
+    dae
 Suggests: 
     testthat (>= 3.0.0),
     knitr,

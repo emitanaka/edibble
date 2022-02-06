@@ -7,7 +7,6 @@
 #' corresponding levels.
 #' @param prefix The prefix of the label.
 #' @param suffix The suffix of the label.
-#' @param distinct whether the child variables are distinct in the levels that it is nesting
 #' @param leading0 Whether there should be a leading 0 if labels are made.
 #' @param sep A separator added between prefix and the number if prefix is empty.
 #' @param attrs A named vector where names and values correspond to attribute names and values of the variable, or
@@ -15,7 +14,7 @@
 #' @seealso See [set_units()] for examples of how to use this.
 #' @export
 nested_in <- function(x, ..., prefix = "", suffix = "",
-                      distinct = TRUE, leading0 = FALSE,
+                      leading0 = FALSE,
                       sep = edibble_labels_opt("sep"),
                       attrs = NULL) {
   top <- caller_env()$.top_env
@@ -54,13 +53,22 @@ nested_in <- function(x, ..., prefix = "", suffix = "",
                                  !!!args,
                                  prefix = prefix,
                                  suffix = suffix,
-                                 distinct = distinct,
+                                 distinct = TRUE,
+                                 leading0 = leading0,
+                                 compact = FALSE,
+                                 keyname = parent_name)
+  child_labels <- nestr::nest_in(parent_vlevels,
+                                 !!!args,
+                                 prefix = prefix,
+                                 suffix = suffix,
+                                 distinct = FALSE,
                                  leading0 = leading0,
                                  compact = FALSE,
                                  keyname = parent_name)
   lattrs <- as.list(attrs)
   attributes(child_levels) <- c(lattrs, attributes(child_levels),
-                                list(parents = attr(args, "parents")))
+                                list(parents = attr(args, "parents"),
+                                     labels = child_labels))
   class(child_levels) <- c("nst_levels", class(child_levels))
   return(child_levels)
 }

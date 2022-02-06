@@ -5,7 +5,7 @@
 \title{Balance incomplete block design}
 \usage{
 menu_bibd(
-  t = random_integer_small(),
+  t = random_integer_small(min = 3),
   k = random_integer_small(max = t - 1),
   r = random_integer_small(),
   seed = random_seed_number()

@@ -373,3 +373,15 @@ number_si_prefix <- function(x) {
   words[n - 1] = paste0(words[n - 1], and, words[n])
   paste0(words[-n], collapse = sep)
 }
+
+
+as.data.frame.edbl_table <- function(x) {
+  out <- lapply(x, function(.x) {
+    if(is_edibble_unit(.x) | is_edibble_trt(.x)) {
+      factor(as.character(.x), levels(.x))
+    } else {
+      .x
+    }
+  })
+  as.data.frame(out)
+}

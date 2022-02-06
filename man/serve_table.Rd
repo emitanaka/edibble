@@ -4,9 +4,11 @@
 \alias{serve_table}
 \title{Serve edibble table}
 \usage{
-serve_table(.design, ..., .record = TRUE)
+serve_table(.design, use_labels = FALSE, ..., .record = TRUE)
 }
 \arguments{
+\item{use_labels}{To show the labels instead of names.}
+
 \item{...}{Strings of contexts or notes for the experiment. The context
 maybe named. If you context it is wrong, consider writing the context
 in an external file then write the reference to the file in context
