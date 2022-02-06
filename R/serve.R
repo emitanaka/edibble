@@ -20,8 +20,8 @@ serve_table <- function(.design, ..., .record = TRUE) {
     classes <- fct_class(.design)
     lunit <- ltrt <- lrcrd <- list()
     if("edbl_unit" %in% classes) lunit <- serve_units(.design)
-    if(length(lunit)) {
-      if("edbl_trt" %in% classes) ltrt <- serve_trts(.design, lunit)
+    if("edbl_trt" %in% classes) ltrt <- serve_trts(.design, lunit)
+    if(length(lunit) | length(ltrt)) {
       if("edbl_rcrd" %in% classes) lrcrd <- serve_rcrds(.design, lunit)
       lout <- c(lunit, ltrt, lrcrd)
     } else {
