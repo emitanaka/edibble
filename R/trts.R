@@ -135,18 +135,26 @@ permute_parent_more_than_one <- function(.design, vids, udf, ntrts) {
 permute_parent_one_alg <- function(.design, vid, udf, ntrts) {
   gparent <- fct_names(.design, vid)
   blocksizes <- table(udf[[gparent]])
-  if(min(blocksizes) > ntrts) {
-    permute_parent_one(.design, vid, udf, ntrts)
-  } else {
-    capture.output({
+  # if(min(blocksizes) > ntrts) {
+  #   permute_parent_one(.design, vid, udf, ntrts)
+  # } else {
+  # AlgDesign::optBlock takes really long when at least one block size > ntrts
+  # in this case subtract total trts
+  blocksizes_adj <- blocksizes
+  blocksizes_adj[blocksizes > ntrts] <- blocksizes_adj[blocksizes > ntrts] %% ntrts
+  capture.output({
       # prevent "No improvement over initial random design" print out from AlgDesign
-      # where the design is balaned
+      # where the design is balanced
       res <- AlgDesign::optBlock(~.,
                                  withinData = data.frame(tindex = factor(1:ntrts)),
-                                 blocksizes = blocksizes)
-    })
-    unname(unlist(lapply(res$Blocks, function(x) sample(as.integer(x$tindex)))))
-  }
+                                 blocksizes = blocksizes_adj)
+  })
+  reps <- ceiling(blocksizes / ntrts) - 1L
+  unname(unlist(lapply(seq_along(blocksizes), function(i) {
+    blocksizes
+    sample(c(as.integer(res$Blocks[[i]]$tindex), rep(1:ntrts, reps[i])))
+  })))
+  # }
 }
 
 
