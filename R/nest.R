@@ -69,7 +69,7 @@ nested_in <- function(x, ..., prefix = "", suffix = "",
 #' @param design An edibble design
 #' @return Return a named list. Only shows the direct parent.
 #' @export
-nesting <- function(design) {
+nesting_structure <- function(design) {
   uids <- unit_ids(design)
   ndf <- fct_edges_filter(design, from %in% uids & to %in% uids)
   from <- fct_names(design, ndf$from)

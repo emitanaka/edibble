@@ -34,7 +34,7 @@ set_trts <- function(.design, ...,
 #' This function assigns specific treatment levels to actual units.
 #'
 #' @param .design An edibble design which should have units, treatments and allotment defined.
-#' @param .order A character vector signifying the apportion of treatments to units.
+#' @param order A character vector signifying the apportion of treatments to units.
 #' The value should be either "random", "systematic" or "systematic-random".
 #' "random" allocates the treatment randomly to units based on specified allotment with restrictions
 #' implied by unit structure.
@@ -42,14 +42,13 @@ set_trts <- function(.design, ...,
 #' "systematic-random" allocates the treatment in a systematic order to units but
 #' where it is not possible to divide treatments equally (as the number of units are not divisible
 #' by the number of levels of the treatment factor), then the extras are chosen randomly.
-#' @param .seed A scalar value used to set the seed so that the result is reproducible.
-#' @param .constrain The nesting structure for units.
+#' @param seed A scalar value used to set the seed so that the result is reproducible.
+#' @param constrain The nesting structure for units.
+#' @param .record Whether to record the step.
 #'
 #'
 #' @export
-assign_trts <- function(.design, order = "random", seed = NULL, constrain = nesting(.design), .record = TRUE) {
-  # TODO nesting function also exists in tidyr
-
+assign_trts <- function(.design, order = "random", seed = NULL, constrain = nesting_structure(.design), .record = TRUE) {
   not_edibble(.design)
 
   if(.record) record_step()
@@ -139,9 +138,13 @@ permute_parent_one_alg <- function(.design, vid, udf, ntrts) {
   if(min(blocksizes) > ntrts) {
     permute_parent_one(.design, vid, udf, ntrts)
   } else {
-    res <- AlgDesign::optBlock(~.,
-                               withinData = data.frame(tindex = factor(1:ntrts)),
-                               blocksizes = blocksizes)
+    capture.output({
+      # prevent "No improvement over initial random design" print out from AlgDesign
+      # where the design is balaned
+      res <- AlgDesign::optBlock(~.,
+                                 withinData = data.frame(tindex = factor(1:ntrts)),
+                                 blocksizes = blocksizes)
+    })
     unname(unlist(lapply(res$Blocks, function(x) sample(as.integer(x$tindex)))))
   }
 }
