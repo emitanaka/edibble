@@ -88,84 +88,77 @@ named experimental designs.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   set_units(<span style="color: #BBBB00; background-color: #000000;">unit</span> = 50) %&gt;%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   set_trts(<span style="color: #0000BB;">trt</span> = 5) %&gt;%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   allot_trts(<span style="color: #0000BB;">trt</span> ~ <span style="color: #BBBB00; background-color: #000000;">unit</span>) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   assign_trts("random", seed = 687) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   assign_trts("random", seed = 720) %&gt;%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   serve_table() </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># </span><span style="color: #949494; font-weight: bold;">Completely Randomised Design</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An edibble: 50 x 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          unit      trt</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;unit(50)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;trt(5)&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>     unit1      trt4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>     unit2      trt2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>     unit3      trt1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>     unit4      trt2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>     unit5      trt1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>     unit6      trt2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>     unit7      trt4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>     unit8      trt4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>     unit9      trt5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>     unit10     trt5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>     unit1      trt1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>     unit2      trt4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>     unit3      trt3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>     unit4      trt3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>     unit5      trt3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>     unit6      trt4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>     unit7      trt5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>     unit8      trt3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>     unit9      trt4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>     unit10     trt2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 40 more rows</span></span>
 <span class="r-in"><span class="co"># if you omit the design parameters then it will use the default</span></span>
 <span class="r-in"><span class="co"># (which may be random)</span></span>
 <span class="r-in"><span class="fu">takeout</span><span class="op">(</span><span class="fu"><a href="menu_crd.html">menu_crd</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> start_design(<span style="color: #00BBBB; font-style: italic;">"Completely Randomised Design"</span>) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   set_units(<span style="color: #BBBB00; background-color: #000000;">unit</span> = 16) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   set_trts(<span style="color: #0000BB;">trt</span> = 6) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_units(<span style="color: #BBBB00; background-color: #000000;">unit</span> = 27) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_trts(<span style="color: #0000BB;">trt</span> = 7) %&gt;%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   allot_trts(<span style="color: #0000BB;">trt</span> ~ <span style="color: #BBBB00; background-color: #000000;">unit</span>) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   assign_trts("random", seed = 547) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   assign_trts("random", seed = 333) %&gt;%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   serve_table() </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># </span><span style="color: #949494; font-weight: bold;">Completely Randomised Design</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An edibble: 16 x 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An edibble: 27 x 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          unit      trt</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;unit(16)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;trt(6)&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>     unit1      trt1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>     unit2      trt5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>     unit3      trt2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;unit(27)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;trt(7)&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>     unit1      trt5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>     unit2      trt1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>     unit3      trt7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>     unit4      trt6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>     unit5      trt6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>     unit6      trt4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>     unit7      trt2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>     unit8      trt4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>     unit9      trt5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>     unit10     trt6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span>     unit11     trt3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span>     unit12     trt2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span>     unit13     trt4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span>     unit14     trt1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span>     unit15     trt5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span>     unit16     trt3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>     unit6      trt3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>     unit7      trt4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>     unit8      trt7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>     unit9      trt3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>     unit10     trt7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 17 more rows</span></span>
 <span class="r-in"><span class="co"># if you don't give any short names then it will generate a random one</span></span>
 <span class="r-in"><span class="fu">takeout</span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → No name was supplied so selecting a random named experimental design...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Selected Hyper-Graeco-Latin Square Design</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> start_design(<span style="color: #00BBBB; font-style: italic;">"Hyper-Graeco-Latin Square Design"</span>) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   set_units(<span style="color: #BBBB00; background-color: #000000;">block1</span> = 8,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             <span style="color: #BBBB00; background-color: #000000;">block2</span> = 8,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             <span style="color: #BBBB00; background-color: #000000;">block3</span> = 8,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             <span style="color: #BBBB00; background-color: #000000;">block4</span> = 8,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             <span style="color: #BBBB00; background-color: #000000;">unit</span> = ~<span style="color: #BBBB00; background-color: #000000;">block1</span>:<span style="color: #BBBB00; background-color: #000000;">block2</span>:<span style="color: #BBBB00; background-color: #000000;">block3</span>:<span style="color: #BBBB00; background-color: #000000;">block4</span>) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   set_trts(<span style="color: #0000BB;">trt</span> = 8) %&gt;%</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Selected Latin Square Design</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> start_design(<span style="color: #00BBBB; font-style: italic;">"Latin Square Design"</span>) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_units(<span style="color: #BBBB00; background-color: #000000;">row</span> = 6,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             <span style="color: #BBBB00; background-color: #000000;">col</span> = 6,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             <span style="color: #BBBB00; background-color: #000000;">unit</span> = ~<span style="color: #BBBB00; background-color: #000000;">row</span>:<span style="color: #BBBB00; background-color: #000000;">col</span>) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_trts(<span style="color: #0000BB;">trt</span> = 6) %&gt;%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   allot_trts(<span style="color: #0000BB;">trt</span> ~ <span style="color: #BBBB00; background-color: #000000;">unit</span>) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   assign_trts("random", seed = 520) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   assign_trts("random", seed = 301) %&gt;%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   serve_table() </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># </span><span style="color: #949494; font-weight: bold;">Hyper-Graeco-Latin Square Design</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An edibble: 4,096 x 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       block1    block2    block3    block4       unit      trt</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;unit(8)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;unit(8)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;unit(8)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;unit(8)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;unit(4k)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;trt(8)&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>   block11   block21   block31   block41     unit1      trt4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>   block12   block21   block31   block41     unit2      trt7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>   block13   block21   block31   block41     unit3      trt1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>   block14   block21   block31   block41     unit4      trt3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>   block15   block21   block31   block41     unit5      trt5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>   block16   block21   block31   block41     unit6      trt8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>   block17   block21   block31   block41     unit7      trt2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>   block18   block21   block31   block41     unit8      trt6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>   block11   block22   block31   block41     unit9      trt6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>   block12   block22   block31   block41     unit10     trt2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 4,086 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># </span><span style="color: #949494; font-weight: bold;">Latin Square Design</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An edibble: 36 x 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          row       col       unit      trt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;unit(6)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;unit(6)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;unit(36)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;trt(6)&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>      row1      col1     unit1      trt2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>      row2      col1     unit2      trt6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>      row3      col1     unit3      trt1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>      row4      col1     unit4      trt5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>      row5      col1     unit5      trt3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>      row6      col1     unit6      trt4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>      row1      col2     unit7      trt6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>      row2      col2     unit8      trt5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>      row3      col2     unit9      trt3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>      row4      col2     unit10     trt2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 26 more rows</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
