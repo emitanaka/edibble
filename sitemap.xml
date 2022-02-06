@@ -25,7 +25,13 @@
     <loc>https://edibble.emitanaka.org/reference/allot_trts.html</loc>
   </url>
   <url>
+    <loc>https://edibble.emitanaka.org/reference/anatomy.html</loc>
+  </url>
+  <url>
     <loc>https://edibble.emitanaka.org/reference/assign_trts.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/crossed_by.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/design-context.html</loc>
@@ -106,7 +112,7 @@
     <loc>https://edibble.emitanaka.org/reference/nested_in.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/nesting.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/nesting_structure.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/new_edibble.html</loc>

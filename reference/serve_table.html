@@ -69,12 +69,14 @@ zero rows.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">serve_table</span><span class="op">(</span><span class="va">.design</span>, <span class="va">...</span>, .record <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">serve_table</span><span class="op">(</span><span class="va">.design</span>, use_labels <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span>, .record <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>...</dt>
+    <dl><dt>use_labels</dt>
+<dd><p>To show the labels instead of names.</p></dd>
+<dt>...</dt>
 <dd><p>Strings of contexts or notes for the experiment. The context
 maybe named. If you context it is wrong, consider writing the context
 in an external file then write the reference to the file in context
