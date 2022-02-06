@@ -62,4 +62,18 @@ test_that("serve", {
       set_trts(vaccine = c("AZ", "M", "P")) %>%
       serve_table()
   })
+
+  expect_snapshot({
+    start_design() %>%
+      set_units(site = 2,
+                row = nested_in(site,
+                                1 ~ 3,
+                                2 ~ 2),
+                col = nested_in(site,
+                                1 ~ 3,
+                                2 ~ 2),
+                plot = nested_in(site, ~row:col)) %>%
+      set_trts(trt = c("A", "B")) %>%
+      allot_table(trt ~ plot)
+  })
 })

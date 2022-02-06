@@ -26,9 +26,14 @@ test_that("split", {
 
 test_that("strip", {
   expect_snapshot({
-    strip <- takeout(menu_split(t1 = 3, t2 = 2, r = 2, seed = 1))
+    strip <- takeout(menu_strip(t1 = 3, t2 = 2, r = 4, seed = 1))
     strip
   })
+  expect_true(all(table(strip$trt1, strip$row) %in% c(0, 2)))
+  expect_true(all(table(strip$trt2, strip$col) %in% c(0, 3)))
+  expect_equal(apply(apply(table(strip$trt2, strip$col), 2, function(x) x==3), 2, sum),
+               setNames(rep(1, 8), paste0("col", 1:8)), ignore_attr = FALSE)
+
 })
 
 test_that("factorial", {

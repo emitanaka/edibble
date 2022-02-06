@@ -97,35 +97,36 @@
 # strip
 
     Code
-      strip <- takeout(menu_split(t1 = 3, t2 = 2, r = 2, seed = 1))
+      strip <- takeout(menu_strip(t1 = 3, t2 = 2, r = 4, seed = 1))
       strip
     Output
-      start_design("Split-Plot Design | Split-Unit Design") %>%
-        set_units(mainplot = 6,
-                   subplot = nested_in(mainplot, 2)) %>%
+      start_design("Strip-Plot Design | Strip-Unit Design") %>%
+        set_units(block = 4,
+                  row = nested_in(block, 3),
+                  col = nested_in(block, 2),
+                  unit = nested_in(block, crossed_by(row, col))) %>%
         set_trts(trt1 = 3,
                  trt2 = 2) %>%
-        allot_trts(trt1 ~ mainplot,
-                   trt2 ~ subplot) %>%
+        allot_trts(trt1 ~ row,
+                   trt2 ~ col) %>%
         assign_trts("random", seed = 1) %>%
         serve_table() 
       
-      # Split-Plot Design | Split-Unit Design 
-      # An edibble: 12 x 4
-          mainplot    subplot     trt1     trt2
-       * <unit(6)> <unit(12)> <trt(3)> <trt(2)>
-       1 mainplot1  subplot1     trt11    trt22
-       2 mainplot1  subplot2     trt11    trt21
-       3 mainplot2  subplot3     trt12    trt22
-       4 mainplot2  subplot4     trt12    trt21
-       5 mainplot3  subplot5     trt13    trt22
-       6 mainplot3  subplot6     trt13    trt21
-       7 mainplot4  subplot7     trt13    trt22
-       8 mainplot4  subplot8     trt13    trt21
-       9 mainplot5  subplot9     trt11    trt22
-      10 mainplot5  subplot10    trt11    trt21
-      11 mainplot6  subplot11    trt12    trt21
-      12 mainplot6  subplot12    trt12    trt22
+      # Strip-Plot Design | Strip-Unit Design 
+      # An edibble: 24 x 6
+             block        row       col       unit     trt1     trt2
+       * <unit(4)> <unit(12)> <unit(8)> <unit(24)> <trt(3)> <trt(2)>
+       1    block1       row1      col1     unit1     trt12    trt21
+       2    block1       row2      col1     unit2     trt13    trt21
+       3    block1       row3      col1     unit3     trt11    trt21
+       4    block1       row1      col2     unit4     trt12    trt22
+       5    block1       row2      col2     unit5     trt13    trt22
+       6    block1       row3      col2     unit6     trt11    trt22
+       7    block2       row4      col3     unit7     trt12    trt22
+       8    block2       row5      col3     unit8     trt13    trt22
+       9    block2       row6      col3     unit9     trt11    trt22
+      10    block2       row4      col4     unit10    trt12    trt21
+      # ... with 14 more rows
 
 # factorial
 
@@ -198,7 +199,7 @@
       start_design("Latin Square Design") %>%
         set_units(row = 10,
                   col = 10,
-                  unit = ~row:col) %>%
+                  unit = crossed_by(row, col)) %>%
         set_trts(trt = 10) %>%
         allot_trts(trt ~ unit) %>%
         assign_trts("random", seed = 1) %>%
@@ -229,7 +230,7 @@
       start_design("Youden Square Design") %>%
         set_units(row = 10,
                   col = 7,
-                  unit = ~row:col) %>%
+                  unit = crossed_by(row, col)) %>%
         set_trts(trt = 10) %>%
         allot_trts(trt ~ unit) %>%
         assign_trts("random", seed = 1) %>%
