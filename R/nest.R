@@ -17,12 +17,40 @@ nested_in <- function(x, ..., prefix = "", suffix = "",
                       distinct = TRUE, leading0 = FALSE,
                       sep = edibble_labels_opt("sep"),
                       traits = NULL) {
-  if(prefix=="") prefix <- paste0(caller_env()$.top_env$.fname, sep)
+  top <- caller_env()$.top_env
+  if(is.null(top$.fname)) abort("The `nested_in` function must be used within `set_units` function.")
+  des <- top$des
+  vlevs <- fct_levels(des)
+  if(prefix=="") prefix <- paste0(top$.fname, sep)
   parent_name <- as_string(enexpr(x))
-  parent_vlevels <- x
+  parent_vlevels <- vlevs[[parent_name]]
+  dots <- list2(...)
+  args <- list()
+  for(.x in dots) {
+    ind <- is_formula(.x, lhs = FALSE)
+    if(ind) {
+      vars <- rownames(attr(terms(.x), "factors"))
+      child_lvls_by_parent <- map(vars, function(.var) {
+        out <- serve_units(select_units(des, c(.var, parent_name)))
+        split(out[[.var]], out[[parent_name]])
+      })
+      names(child_lvls_by_parent) <- vars
+      cross_lvls_by_parent <- map(parent_vlevels, function(.lvl) {
+        out <- setNames(map(vars, function(.var) child_lvls_by_parent[[.var]][[.lvl]]),
+                        vars)
+        do.call("expand.grid", out)
+      })
+      names(cross_lvls_by_parent) <- parent_vlevels
+      args <- c(args, map(names(cross_lvls_by_parent), function(.parent)
+        as.formula(paste0('"', .parent, '"', " ~ ", nrow(cross_lvls_by_parent[[.parent]])))))
+      attr(args, "parents") <- cross_lvls_by_parent
+    } else {
+      args <- c(args, list(.x))
+    }
+  }
 
-  child_levels <- nestr::nest_in(factor(parent_vlevels, levels = parent_vlevels),
-                                 ...,
+  child_levels <- nestr::nest_in(parent_vlevels,
+                                 !!!args,
                                  prefix = prefix,
                                  suffix = suffix,
                                  distinct = distinct,
@@ -30,7 +58,8 @@ nested_in <- function(x, ..., prefix = "", suffix = "",
                                  compact = FALSE,
                                  keyname = parent_name)
   ltraits <- as.list(traits)
-  attributes(child_levels) <- c(ltraits, attributes(child_levels))
+  attributes(child_levels) <- c(ltraits, attributes(child_levels),
+                                list(parents = attr(args, "parents")))
   class(child_levels) <- c("nst_levels", class(child_levels))
   return(child_levels)
 }
