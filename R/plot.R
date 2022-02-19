@@ -20,10 +20,11 @@ plot.edbl_design <- function(.design, which = c("factors", "levels"),
   if(!require("visNetwork")) abort("You need to install `visNetwork` package.")
   which <- match.arg(which)
   view <- match.arg(view)
+  prep <- cook_design(.design)
 
   nodes <- switch(which,
-                  "factors" = fct_nodes(.design),
-                  "levels" = lvl_nodes(.design))
+                  "factors" = prep$fct_nodes,
+                  "levels" = prep$lvl_nodes)
   nodes$group <- switch(which,
                         "factors" = gsub("edbl_", "", nodes$class),
                         "levels" = nodes$var)
@@ -31,7 +32,7 @@ plot.edbl_design <- function(.design, which = c("factors", "levels"),
   class2shape <- c("edbl_unit" = "circle",
                    "edbl_trt" = "diamond",
                    "edbl_rcrd" = "database")
-  nodes$shape <- class2shape[fct_class(.design, nodes$idvar)]
+  nodes$shape <- class2shape[prep$fct_class(nodes$idvar)]
 
   main <- names(title) %||% title %||% .design$name
   main_style <- ifelse(is_named(title), title, "")
@@ -41,8 +42,8 @@ plot.edbl_design <- function(.design, which = c("factors", "levels"),
   footer_style <- ifelse(is_named(footer), footer, "")
   background <- ifelse(background=="transparent", "rgba(0, 0, 0, 0)", background)
   edges <- switch(which,
-                  "factors" = fct_edges(.design),
-                  "levels" = lvl_edges(.design))
+                  "factors" = prep$fct_edges,
+                  "levels" = prep$lvl_edges)
   out <- visNetwork::visNetwork(nodes = nodes,
                                edges = edges,
                                width = width,
