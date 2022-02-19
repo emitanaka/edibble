@@ -1,4 +1,5 @@
 # nocov start - compat-purrr (last updated: rlang 0.3.2.9000)
+# ET: added some tibble inner functions, dplyr-like functions
 
 # This file serves as a reference for compatibility functions for
 # purrr. They are not drop-in replacements but allow a similar style
@@ -51,4 +52,43 @@ imap_chr <- function(.x, .f, ...) {
 
 map_chr <- function (.x, .f, ...) {
   map_mold(.x, .f, character(1), ...)
+}
+
+#### tibble
+# inner functions of tibble
+
+dim_desc <- function (x) {
+  dim <- dim(x) %||% length(x)
+  format_dim <- map_chr(dim, big_mark)
+  paste0(format_dim, collapse = spaces_around(mult_sign()))
+}
+
+spaces_around <- function (x) {
+  paste0(" ", x, " ")
+}
+
+mult_sign <- function() {
+  "x"
+}
+
+big_mark <- function (x, ...) {
+  mark <- if (identical(getOption("OutDec"), ","))
+    "."
+  else ","
+  ret <- formatC(x, big.mark = mark, format = "d", ...)
+  ret[is.na(x)] <- "??"
+  ret
+}
+
+
+### dplyr
+
+pull <- function(data, var = -1, name = NULL, ...) {
+  var <- tidyselect::vars_pull(names(data), !!enquo(var))
+  name <- enquo(name)
+  if (quo_is_null(name)) {
+    return(data[[var]])
+  }
+  name <- tidyselect::vars_pull(names(data), !!name)
+  set_names(data[[var]], nm = data[[name]])
 }

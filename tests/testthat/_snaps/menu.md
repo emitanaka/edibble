@@ -4,7 +4,7 @@
       crd <- takeout(menu_crd(n = 24, t = 4, seed = 1))
       crd
     Output
-      start_design("Completely Randomised Design") %>%
+      design("Completely Randomised Design") %>%
         set_units(unit = 24) %>%
         set_trts(trt = 4) %>%
         allot_trts(trt ~ unit) %>%
@@ -33,7 +33,7 @@
       rcbd <- takeout(menu_rcbd(r = 3, t = 5, seed = 1))
       rcbd
     Output
-      start_design("Randomised Complete Block Design") %>%
+      design("Randomised Complete Block Design") %>%
         set_units(block = 3,
                   unit = nested_in(block, 5)) %>%
         set_trts(trt = 5) %>%
@@ -67,7 +67,7 @@
       split <- takeout(menu_split(t1 = 3, t2 = 2, r = 2, seed = 1))
       split
     Output
-      start_design("Split-Plot Design | Split-Unit Design") %>%
+      design("Split-Plot Design | Split-Unit Design") %>%
         set_units(mainplot = 6,
                    subplot = nested_in(mainplot, 2)) %>%
         set_trts(trt1 = 3,
@@ -100,7 +100,7 @@
       strip <- takeout(menu_strip(t1 = 3, t2 = 2, r = 4, seed = 1))
       strip
     Output
-      start_design("Strip-Plot Design | Strip-Unit Design") %>%
+      design("Strip-Plot Design | Strip-Unit Design") %>%
         set_units(block = 4,
                   row = nested_in(block, 3),
                   col = nested_in(block, 2),
@@ -135,7 +135,7 @@
       seed = 1))
       fac_crd
     Output
-      start_design("Factorial Design") %>%
+      design("Factorial Design") %>%
         set_units(unit = 48) %>%
         set_trts(trt1 = 2,
                  trt2 = 3,
@@ -164,7 +164,7 @@
       seed = 1))
       fac_rcbd
     Output
-      start_design("Factorial Design with RCBD structure") %>%
+      design("Factorial Design with RCBD structure") %>%
         set_units(block = 2,
                    unit = nested_in(block, 24)) %>%
         set_trts(trt1 = 2,
@@ -196,7 +196,7 @@
       lsd <- takeout(menu_lsd(t = 10, seed = 1))
       lsd
     Output
-      start_design("Latin Square Design") %>%
+      design("Latin Square Design") %>%
         set_units(row = 10,
                   col = 10,
                   unit = crossed_by(row, col)) %>%
@@ -227,7 +227,7 @@
       youden <- takeout(menu_youden(nc = 7, t = 10, seed = 1))
       youden
     Output
-      start_design("Youden Square Design") %>%
+      design("Youden Square Design") %>%
         set_units(row = 10,
                   col = 7,
                   unit = crossed_by(row, col)) %>%

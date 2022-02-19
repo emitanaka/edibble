@@ -27,25 +27,27 @@ allot_trts <- function(.design, ..., .record = TRUE) {
 
   dots <- list2(...)
   .design$allotment <- dots
+  prep <- cook_design(.design)
+
   for(ialloc in seq_along(dots)) {
     trts <- all.vars(f_lhs(dots[[ialloc]]))
     # there should be only one unit
     unit <- all.vars(f_rhs(dots[[ialloc]]))
-    check_var_exists(.design, unit, "edbl_unit")
-    uid <- fct_id(.design, unit)
+    prep$fct_exists(name = unit, class = "edbl_unit")
+    uid <- prep$fct_id(unit)
     if(length(trts)) {
-      check_var_exists(.design, trts, "edbl_trt")
-      tids <- fct_id(.design, trts)
+      prep$fct_exists(name = trts, class = "edbl_trt")
+      tids <- prep$fct_id(trts)
     } else {
-      check_trt_exists(.design)
-      classes <- fct_class(.design)
-      tids <- trt_ids(.design)
+      prep$trts_exists()
+      classes <- prep$fct_class()
+      tids <- prep$trt_ids
     }
 
-    .design$graph$edges <- add_row(.design$graph$edges,
-                                  from = tids, to = uid, alloc = ialloc)
+    prep$fct_edges <- add_row(prep$fct_edges,
+                              from = tids, to = uid, alloc = ialloc)
   }
-  .design
+  prep$design
 }
 
 

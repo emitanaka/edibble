@@ -54,6 +54,17 @@ is_edibble <- function(x) {
   inherits(x, "edbl")
 }
 
+#' @rdname design-helpers
+#' @export
+is_edibble_levels <- function(x) {
+  inherits(x, "edbl_lvls")
+}
+
+#' @rdname design-helpers
+#' @export
+is_nest_levels <- function(x) {
+  inherits(x, "nest_lvls")
+}
 
 # `get` functions ---------------------------------------------------------
 

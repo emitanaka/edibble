@@ -7,6 +7,8 @@
 \alias{is_edibble_table}
 \alias{is_edibble_graph}
 \alias{is_edibble}
+\alias{is_edibble_levels}
+\alias{is_nest_levels}
 \alias{edbl_design}
 \alias{edbl_table}
 \title{Test and get edibble objects}
@@ -20,6 +22,10 @@ is_edibble_table(x)
 is_edibble_graph(x)
 
 is_edibble(x)
+
+is_edibble_levels(x)
+
+is_nest_levels(x)
 
 edbl_design(x)
 

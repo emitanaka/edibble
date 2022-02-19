@@ -6,61 +6,17 @@
 \alias{fct_edges}
 \alias{lvl_nodes}
 \alias{lvl_edges}
-\alias{fct_nodes_pull}
-\alias{fct_edges_pull}
-\alias{lvl_nodes_pull}
-\alias{lvl_edges_pull}
-\alias{fct_nodes_filter}
-\alias{lvl_nodes_filter}
-\alias{fct_edges_filter}
-\alias{lvl_edges_filter}
-\alias{fct_n}
-\alias{lvl_n}
-\alias{fct_class}
-\alias{lvl_class}
 \title{Get the node or edge data from an edibble design}
 \usage{
-fct_nodes(design)
+fct_nodes(edibble)
 
-fct_edges(design)
+fct_edges(edibble)
 
 lvl_nodes(design)
 
 lvl_edges(design)
-
-fct_nodes_pull(design, var = -1, name = NULL, ...)
-
-fct_edges_pull(design, var = -1, name = NULL, ...)
-
-lvl_nodes_pull(design, var = -1, name = NULL, ...)
-
-lvl_edges_pull(design, var = -1, name = NULL, ...)
-
-fct_nodes_filter(design, ...)
-
-lvl_nodes_filter(design, ...)
-
-fct_edges_filter(design, ...)
-
-lvl_edges_filter(design, ...)
-
-fct_n(design)
-
-lvl_n(design)
-
-fct_class(design, id = NULL)
-
-lvl_class(design, id = NULL)
-}
-\arguments{
-\item{design}{An edibble design.}
 }
 \description{
 Get the node or edge data from an edibble design
-}
-\seealso{
-Other design manipulators: 
-\code{\link{var_ids}()},
-\code{\link{var_names}()}
 }
 \concept{design manipulators}

@@ -55,22 +55,24 @@ assign_trts <- function(.design, order = "random", seed = NULL, constrain = nest
   if(.record) record_step()
 
   save_seed(seed)
+  prep <- cook_design(.design)
 
   for(ialloc in seq_along(.design$allotment)) {
     trts <- all.vars(f_lhs(.design$allotment[[ialloc]]))
     # there should be only one unit
     unit <- all.vars(f_rhs(.design$allotment[[ialloc]]))
-    uid <- fct_id(.design, unit)
+    uid <- prep$fct_id(unit)
     if(length(trts)) {
-      tids <- fct_id(.design, trts)
+      tids <- prep$fct_id(trts)
     } else {
-      classes <-fct_class(.design)
-      tids <- trt_ids(.design)
+      classes <- prep$fct_class()
+      tids <- prep$trt_ids
     }
 
-    luids <- lvl_nodes_filter(.design, idvar == uid)$id
-    tdf <- lvl_nodes_filter(.design, idvar %in% tids)
-    tidf <- expand.grid(split(tdf$name, fct_names(.design, tdf$idvar)), stringsAsFactors = FALSE)
+    lnodes <- prep$lvl_nodes
+    luids <- lnodes[lnodes$idvar == uid, "id"]
+    tdf <- lnodes[lnodes$idvar %in% tids, ]
+    tidf <- expand.grid(split(tdf$name, prep$fct_names(tdf$idvar)), stringsAsFactors = FALSE)
     ntrts <- nrow(tidf)
     permutation <- switch(order,
                           "systematic" = rep(1:nrow(tidf), length.out = length(luids)),
@@ -84,62 +86,62 @@ assign_trts <- function(.design, order = "random", seed = NULL, constrain = nest
                               # based on `constrain`
 
                               # find the grandest ancestor
-                              vanc <- fct_ancestor(.design, id = uid)
-                              vanc <- vanc[vanc %in% unit_ids(.design)]
-                              udf <- as.data.frame(serve_units(select_units(.design, !!fct_names(.design, vanc))))
+                              vanc <- prep$fct_ancestor(id = uid)
+                              vanc <- vanc[vanc %in% prep$unit_ids]
+                              udf <- as.data.frame(serve_units(select_units(prep, !!prep$fct_names(vanc))))
 
-                              vparents <- fct_parent(.design, id = uid)
-                              vparents <- vparents[vparents %in% unit_ids(.design)]
+                              vparents <- prep$fct_parent(id = uid)
+                              vparents <- vparents[vparents %in% prep$unit_ids]
                               vparents <- setdiff(vparents, uid)
 
                               if(length(vparents)==1L) {
-                                permute_parent_one_alg(.design, vparents, udf, ntrts)
+                                permute_parent_one_alg(prep, vparents, udf, ntrts)
                               } else {
-                                permute_parent_more_than_one(.design, vparents, udf, ntrts)
+                                permute_parent_more_than_one(prep, vparents, udf, ntrts)
                               }
                             }
                           },
-                          order_trts(structure(order, class = order), .design, constrain, tidf, ...))
+                          order_trts(structure(order, class = order), prep, constrain, tidf, ...))
 
     tout <- tidf[permutation, , drop = FALSE]
 
 
     for(itvar in seq_along(tout)) {
-      .design$graph$levels$edges <- add_row(.design$graph$levels$edges,
-                                     from = lvl_id(.design, tout[[itvar]]),
+      prep$lvl_edges <- add_row(prep$lvl_edges,
+                                     from = prep$lvl_id(tout[[itvar]]),
                                      to = luids, alloc = ialloc)
     }
   }
 
-  .design$assignment <- order
+  prep$design$assignment <- order
 
-  .design
+  prep$design
 }
 
 order_trts <- function(x, ...) {
   UseMethod("order_trts")
 }
 
-order_trts.default <- function(order, design, constrain, ...) {
+order_trts.default <- function(order, prep, constrain, ...) {
   abort(paste("The", order, "`order` is not implemented."))
 }
 
-order_trts.dae <- function(order, design, constrain, trts, ...) {
-  dat <- assign_trts(design, order = "systematic", constrain = constrain, .record = FALSE) %>%
+order_trts.dae <- function(order, prep, constrain, trts, ...) {
+  dat <- assign_trts(prep$design, order = "systematic", constrain = constrain, .record = FALSE) %>%
     serve_table(use_labels = TRUE) %>%
     lapply(as.factor) %>%
     as.data.frame()
-  out <- dae::designRandomize(allocated = dat[trt_names(design)],
-                       recipient = dat[unit_names(design)],
+  out <- dae::designRandomize(allocated = dat[prep$trt_names],
+                       recipient = dat[prep$unit_names],
                        nested.recipients = constrain)
-  trtsv <- setNames(1:nrow(trts), do.call(paste0, trts[trt_names(design)]))
-  otrtsv <- do.call(paste0, dat[trt_names(design)])
+  trtsv <- setNames(1:nrow(trts), do.call(paste0, trts[prep$trt_names]))
+  otrtsv <- do.call(paste0, dat[prep$trt_names])
   unname(trtsv[otrtsv])
 }
 
-permute_parent_more_than_one <- function(.design, vids, udf, ntrts) {
-  gparents <- fct_names(.design, vids)
-  vlevs <- fct_levels(.design)
+permute_parent_more_than_one <- function(prep, vids, udf, ntrts) {
+  gparents <- prep$fct_names(vids)
+  vlevs <- prep$fct_levels()
 
   lvls <- lengths(vlevs[gparents])
   oa <- latin_array(dim = lvls, ntrts)
@@ -157,8 +159,8 @@ permute_parent_more_than_one <- function(.design, vids, udf, ntrts) {
 
 
 
-permute_parent_one_alg <- function(.design, vid, udf, ntrts) {
-  gparent <- fct_names(.design, vid)
+permute_parent_one_alg <- function(prep, vid, udf, ntrts) {
+  gparent <- prep$fct_names(vid)
   blocksizes <- table(udf[[gparent]])
   # if(min(blocksizes) > ntrts) {
   #   permute_parent_one(.design, vid, udf, ntrts)
@@ -175,7 +177,7 @@ permute_parent_one_alg <- function(.design, vid, udf, ntrts) {
                                    withinData = data.frame(tindex = factor(1:ntrts)),
                                    blocksizes = blocksizes_adj)
       }, error = function(x) {
-        return(permute_parent_one(.design, vid, udf, ntrts))
+        return(permute_parent_one(prep, vid, udf, ntrts))
       })
   })
   if(is.integer(res)) return(res)
@@ -188,8 +190,8 @@ permute_parent_one_alg <- function(.design, vid, udf, ntrts) {
 }
 
 
-permute_parent_one <- function(.design, vid, udf, ntrts) {
-  gparent <- fct_names(.design, vid)
+permute_parent_one <- function(prep, vid, udf, ntrts) {
+  gparent <- prep$fct_names(vid)
   blocksizes <- as.data.frame(table(table(udf[[gparent]])))
   blocksizes$size <- as.numeric(as.character(blocksizes$Var1))
   for(isize in seq(nrow(blocksizes))) {

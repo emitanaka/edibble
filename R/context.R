@@ -10,11 +10,6 @@
 #' as exported in the title sheet (see [export_design()]). If the context
 #' already exists then it will be overwritten.
 #'
-#' You can use `sort_context` to reorder named context alphabetically. If
-#' you don't want to see the context printed out each time, use `suppress_context`
-#' to muffle the context and `express_context` to turn on the context print out.
-#' Use `switch_context` to turn on print out of context if it was switched off,
-#' or turn off print out if it was switched on.
 #'
 #' @param .edibble An edibble design (`edbl_design`), an edibble data frame (`edbl_table`) or an
 #'   object that contains the edibble data frame in the attribute

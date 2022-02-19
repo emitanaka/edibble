@@ -1,72 +1,33 @@
 test_that("treatments", {
   expect_snapshot({
-    start_design() %>%
+    design() %>%
       set_trts(vaccine = 2)
   })
 
-  expect_equal({
-    start_design() %>%
-      set_trts(vaccine = 2)
-  }, structure(list(name = NULL,
-                    graph = structure(list(nodes = data.frame(id = 1L,
-                                                              name = "vaccine",
-                                                              class = "edbl_trt"),
-                                           edges = data.frame(from = integer(),
-                                                              to = integer(),
-                                                              alloc = integer()),
-                                           levels = list(nodes = data.frame(idvar = c(1L, 1L),
-                                                                            id = c(1L, 2L),
-                                                                            name = c("vaccine1", "vaccine2"),
-                                                                            label = c("vaccine1", "vaccine2")),
-                                                         edges = data.frame(from = integer(),
-                                                                            to = integer(),
-                                                                            alloc = integer()))),
-                                      class = "edbl_graph")),
-               class = c("edbl_design", "edbl")))
 
   expect_snapshot({
-    start_design() %>%
+    design() %>%
       set_trts(vaccine = 2,
                sex = 2)
   })
 
-  expect_equal({
-    start_design() %>%
-      set_trts(vaccine = 2,
-               sex = 2)
-  }, structure(list(name = NULL,
-                    graph = structure(list(nodes = data.frame(id = c(1L, 2L),
-                                                              name = c("vaccine", "sex"),
-                                                              class = "edbl_trt"),
-                                           edges = data.frame(from = integer(),
-                                                              to = integer(),
-                                                              alloc = integer()),
-                                           levels = list(nodes = data.frame(idvar = c(1L, 1L, 2L, 2L),
-                                                                            id = c(1L, 2L, 3L, 4L),
-                                                                            name = c("vaccine1", "vaccine2", "sex1", "sex2"),
-                                                                            label = c("vaccine1", "vaccine2", "sex1", "sex2")),
-                                                         edges = data.frame(from = integer(),
-                                                                            to = integer(),
-                                                                            alloc = integer()))),
-                                      class = "edbl_graph")),
-               class = c("edbl_design", "edbl")))
 
   expect_snapshot({
-    start_design() %>%
+    design() %>%
       set_units(person = 5) %>%
       set_trts(vaccine = 2,
                sex = 2)
   })
 
   expect_snapshot({
-    start_design() %>%
+    design() %>%
       set_trts(vaccine = 2,
                sex = 2) %>%
       set_units(person = 5)
   })
 
   expect_snapshot({
-    start_design() %>%
+    design() %>%
       set_trts(vaccine = 3,
                sex = 2) %>%
       set_units(person = 30) %>%
@@ -78,21 +39,21 @@ test_that("treatments", {
 
 
   expect_error({
-    start_design() %>%
+    design() %>%
       set_trts(irrigation = 2) %>%
       set_units(person = 3) %>%
       allot_trts( ~ peason)
   })
 
   expect_error({
-    start_design() %>%
+    design() %>%
       set_trts(irrigation = 2) %>%
       set_units(person = 3) %>%
       allot_trts(irr ~ person)
   })
 
   expect_snapshot({
-    start_design() %>%
+    design() %>%
       set_trts(vaccine = 3,
                sex = c("F", "M")) %>%
       set_units(person = 30) %>%
@@ -102,7 +63,7 @@ test_that("treatments", {
   })
 
   expect_snapshot({
-    start_design() %>%
+    design() %>%
       set_trts(vaccine = 3,
                sex = c("F", "M")) %>%
       set_units(person = 30) %>%
@@ -113,7 +74,7 @@ test_that("treatments", {
   })
 
   expect_snapshot({
-    start_design() %>%
+    design() %>%
       set_trts(vaccine = 3) %>%
       set_units(person = 30) %>%
       allot_trts(vaccine ~ person) %>%
@@ -122,7 +83,7 @@ test_that("treatments", {
   })
 
   expect_snapshot({
-    start_design() %>%
+    design() %>%
       set_trts(vaccine = 3) %>%
       set_units(person = 5) %>%
       allot_trts(vaccine ~ person) %>%
@@ -131,7 +92,7 @@ test_that("treatments", {
   })
 
   expect_snapshot({
-    start_design() %>%
+    design() %>%
       set_trts(vaccine = 3) %>%
       set_units(person = 5) %>%
       allot_trts(vaccine ~ person) %>%
@@ -140,7 +101,7 @@ test_that("treatments", {
   })
 
   expect_snapshot({
-    tab <- start_design() %>%
+    tab <- design() %>%
       set_trts(vaccine = 3) %>%
       set_units(person = 20,
                 blood = nested_in(person, 3)) %>%
@@ -151,7 +112,7 @@ test_that("treatments", {
   })
 
   expect_snapshot({
-    tab <- start_design() %>%
+    tab <- design() %>%
       set_trts(vaccine = 3) %>%
       set_units(person = 20,
                 blood = nested_in(person, 3)) %>%
@@ -162,7 +123,7 @@ test_that("treatments", {
   })
 
   expect_snapshot({
-    tab <- start_design() %>%
+    tab <- design() %>%
       set_trts(vaccine = 3) %>%
       set_units(person = 20,
                 blood = nested_in(person, 3)) %>%
@@ -173,7 +134,7 @@ test_that("treatments", {
   })
 
   expect_snapshot({
-    tab <- start_design() %>%
+    tab <- design() %>%
       set_trts(vaccine = 3) %>%
       set_units(person = 20,
                 blood = nested_in(person, 2)) %>%
@@ -184,7 +145,7 @@ test_that("treatments", {
   })
 
   expect_snapshot({
-    tab <- start_design() %>%
+    tab <- design() %>%
       set_trts(vaccine = 3) %>%
       set_units(person = 20,
                 blood = nested_in(person, 8)) %>%
@@ -195,7 +156,7 @@ test_that("treatments", {
   })
 
   expect_snapshot({
-    tab <- start_design() %>%
+    tab <- design() %>%
       set_trts(vaccine = 3) %>%
       set_units(person = 20,
                 blood = nested_in(person,
@@ -209,7 +170,7 @@ test_that("treatments", {
   })
 
   expect_snapshot({
-    tab <- start_design() %>%
+    tab <- design() %>%
       set_trts(fert = 8) %>%
       set_units(site = 10,
                 plot = nested_in(site, 10),
@@ -224,7 +185,7 @@ test_that("treatments", {
   })
 
   expect_snapshot({
-    tab <- start_design() %>%
+    tab <- design() %>%
       set_trts(fert = 2,
                irr = 2) %>%
       set_units(block = 10,
@@ -237,7 +198,7 @@ test_that("treatments", {
     table(tab$fert, tab$irr, tab$wplot)
   })
 
-  start_design("McIntyre (1955)") %>%
+  design("McIntyre (1955)") %>%
     set_units(plant = 8,
               position = 1:4,
               leaf = ~plant:position) %>%
@@ -246,7 +207,7 @@ test_that("treatments", {
     assign_trts() %>%
     serve_table()
 
-  start_design("McIntyre (1955)") %>%
+  design("McIntyre (1955)") %>%
     set_units(site = 4,
               plant = 8,
               position = 1:4,

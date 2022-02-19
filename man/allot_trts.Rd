@@ -33,12 +33,12 @@ start_design() \%>\%
 \seealso{
 Other user-facing functions: 
 \code{\link{design-context}},
+\code{\link{design}()},
 \code{\link{expect_rcrds}()},
 \code{\link{export_design}()},
 \code{\link{serve_table}()},
 \code{\link{set_rcrds}()},
 \code{\link{set_trts}()},
-\code{\link{set_units}()},
-\code{\link{start_design}()}
+\code{\link{set_units}()}
 }
 \concept{user-facing functions}

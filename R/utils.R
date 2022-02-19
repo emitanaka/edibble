@@ -1,17 +1,5 @@
 
-#' Check if the design contains a particular variable.
-#'
-#'
-#' @param design An edibble design.
-#' @param name A character vector of the variable names.
-#' @return A logical vector of the same size as `name` or a single logical value if class is provied.
-#' @export
-var_exists <- function(design, name = NULL) {
-  if(is_null(name)) {
-    abort("`name` must be supplied in `var_exists`.")
-  }
-  name %in% fct_names(design)
-}
+
 
 #' Record the coding step
 #'
@@ -29,47 +17,6 @@ record_step <- function() {
 }
 
 
-template_var_exists <- function(design, name = NULL, class = NULL, all_names = fct_names(design)) {
-  if(is_null(name)) {
-    class %in% fct_class(design)
-  } else {
-    vexists <- name %in% all_names
-    if(!all(vexists)) {
-      abort_missing_vars(name[!vexists])
-    }
-    vexists
-  }
-}
-
-trts_exists <- function(design, name = NULL) {
-  template_var_exists(design, name = name, class = "edbl_trt", all_names = trt_names(design))
-}
-
-units_exists <- function(design, name = NULL) {
-  template_var_exists(design, name = name, class = "edbl_unit", all_names = unit_names(design))
-}
-
-rcrds_exists <- function(design, name = NULL) {
-  template_var_exists(design, name = name, class = "edbl_rcrd", all_names = rcrd_names(design))
-}
-
-check_trt_exists <- function(design) {
-  if(!trts_exists(design)) {
-    abort("No treatment variables exists in the design.")
-  }
-}
-
-check_rcrd_exists <- function(design) {
-  if(!rcrds_exists(desgin)) {
-    abort("No record variables exists in the design.")
-  }
-}
-
-check_unit_exists <- function(design) {
-  if(!units_exists(design)) {
-    abort("No unit variables exists in the design.")
-  }
-}
 
 add_edibble_seed <- function(.edibble, seed) {
   if(!isFALSE(.edibble)) {
@@ -116,26 +63,9 @@ save_seed <- function(seed) {
           envir = parent.frame())
 }
 
-check_var_exists <- function(design, name = NULL, vclass = "edbl_var") {
-  f_exists <- switch(vclass,
-                     "edbl_trt" = trts_exists,
-                     "edbl_unit" = units_exists,
-                     "edbl_rcrd" = rcrds_exists,
-                     var_exists)
-  vexists <- f_exists(design, name)
-  if(is_null(name) && any(!vexists)) {
-    abort(sprintf("No variables with class `%s` exists.", vclass))
-  }
 
-  if(any(!vexists)) {
-    abort_missing_vars(name[!vexists])
-  }
-}
 
-abort_missing_vars <- function(missing_vars) {
-  abort(sprintf("%s does not exist in the design.",
-                .combine_words(paste0("`", missing_vars, "`"))))
-}
+
 
 
 decorate_vars <- function(x, decorate_units, decorate_trts, decorate_rcrds, classes) {
@@ -191,6 +121,7 @@ print.edbl_design <- function(x,
                               title = NULL, ...) {
   title <- title %||% x$name %||% "An edibble design"
   fnames <- names(x)
+  prep <- cook_design(x)
 
   if(is_empty(fnames)) {
     data <- data.frame(var = "root",
@@ -198,21 +129,21 @@ print.edbl_design <- function(x,
                        label = as.character(decorate_title(title)))
   } else {
 
-    classes <- fct_class(x)
+    classes <- prep$fct_class()
     label_names <- decorate_vars(fnames,
                                  decorate_units,
                                  decorate_trts,
                                  decorate_rcrds,
                                  classes)
-    var_nlevels <- lengths(fct_levels(x)[fnames])
+    var_nlevels <- lengths(prep$fct_levels()[fnames])
     nvar <- length(fnames)
     ll <- lapply(fnames,
                  function(v) {
-                   id <- fct_id(x, v)
-                   class <- fct_class(x, id = id)
-                   children <- fct_child(x, id = id)
+                   id <- prep$fct_id(v)
+                   class <- prep$fct_class(id = id)
+                   children <- prep$fct_child(id = id)
                    if(class!="edbl_trt" & !is_empty(children)) {
-                     fct_names(x, id = children)
+                     prep$fct_names(id = children)
                    } else {
                      character()
                    }
@@ -335,6 +266,25 @@ is_nested_unit <- function(design, uid) {
   unit_ids <- fct_nodes_filter(design, class == "edbl_unit")$id
   out <- fct_edges_filter(design, to %in% uid & from %in% unit_ids)
   nrow(out) > 0
+}
+
+
+
+rbind_ <- function(df1, df2) {
+  if(nrow(df1) & nrow(df2)) {
+    df1[setdiff(names(df2), names(df1))] <- NA
+    df2[setdiff(names(df1), names(df2))] <- NA
+    out <- rbind(df1, df2)
+  } else if(nrow(df1)) {
+    df1[setdiff(names(df2), names(df1))] <- NA
+    out <- df1
+  } else if(nrow(df2)) {
+    df2[setdiff(names(df1), names(df2))] <- NA
+    out <- df2
+  } else {
+    out <- cbind(df1, df2[setdiff(names(df2), names(df1))])
+  }
+  out[c(names(df1), setdiff(names(out), names(df1)))]
 }
 
 

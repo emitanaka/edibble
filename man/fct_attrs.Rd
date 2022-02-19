@@ -14,7 +14,7 @@ fct_attrs(
 )
 }
 \arguments{
-\item{levels}{An \code{edbl_levels} object that should contain information about the levels
+\item{levels}{An \code{edbl_lvls} object that should contain information about the levels
 in the factor.}
 
 \item{label}{A string that denotes the long name of the factor.}
@@ -30,7 +30,7 @@ attributed to the whole factor (not individual levels).
 The values are added as attributes to the output object.}
 }
 \value{
-An \code{edbl_levels} object.
+An \code{edbl_lvls} object.
 }
 \description{
 This function is used to set characteristics of the factors.

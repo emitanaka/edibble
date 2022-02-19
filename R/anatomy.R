@@ -11,7 +11,8 @@
 anatomy <- function(.design, ...) {
   des <- edbl_design(.design)
   tab <- edbl_table(.design)
-  trt_str <- as.formula(paste0("~", paste0(trt_names(des), collapse = "*")))
+  prep <- cook_design(des)
+  trt_str <- as.formula(paste0("~", paste0(prep$trt_names, collapse = "*")))
   out <- dae::designAnatomy(list(unit = des$anatomy, trt = trt_str), data = tab, ...)
   structure(out,
             class = c("des_anatomy", class(out)))

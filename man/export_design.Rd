@@ -26,11 +26,11 @@ external xlsx file.
 Other user-facing functions: 
 \code{\link{allot_trts}()},
 \code{\link{design-context}},
+\code{\link{design}()},
 \code{\link{expect_rcrds}()},
 \code{\link{serve_table}()},
 \code{\link{set_rcrds}()},
 \code{\link{set_trts}()},
-\code{\link{set_units}()},
-\code{\link{start_design}()}
+\code{\link{set_units}()}
 }
 \concept{user-facing functions}

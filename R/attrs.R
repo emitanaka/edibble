@@ -3,7 +3,7 @@
 #'
 #' This function is used to set characteristics of the factors.
 #'
-#' @param levels An `edbl_levels` object that should contain information about the levels
+#' @param levels An `edbl_lvls` object that should contain information about the levels
 #'   in the factor.
 #' @param label A string that denotes the long name of the factor.
 #' @param description The text description of the factor.
@@ -14,7 +14,7 @@
 #' The values are added as attributes to the output object.
 #'
 #' @seealso lvl_traits
-#' @return An `edbl_levels` object.
+#' @return An `edbl_lvls` object.
 #' @export
 fct_attrs <- function(levels = NULL,
                        label = NULL,
@@ -68,16 +68,16 @@ lvl_attrs <- function(levels = NULL,
                  "%s%s%s%s")
   name <- sprintf(form, prefix, sep, levels, suffix)
   labels <- labels %||% name
-  new_rcrd(c(list2(name = name, label = labels, ...), data), class = "edbl_levels")
+  new_rcrd(c(list2(name = name, label = labels, ...), data), class = "edbl_lvls")
 }
 
 #' @export
-format.edbl_levels <- function(x, ...) {
+format.edbl_lvls <- function(x, ...) {
   levels(x)
 }
 
 #' @export
-levels.edbl_levels <- function(x, ...) {
+levels.edbl_lvls <- function(x, ...) {
   lvl_data(x)$name
 }
 

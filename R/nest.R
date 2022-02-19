@@ -19,8 +19,8 @@ nested_in <- function(x, ..., prefix = "", suffix = "",
                       attrs = NULL) {
   top <- caller_env()$.top_env
   if(is.null(top$.fname)) abort("The `nested_in` function must be used within `set_units` function.")
-  des <- top$des
-  vlevs <- fct_levels(des)
+  prep <- top$prep
+  vlevs <- prep$fct_levels()
   if(prefix=="") prefix <- paste0(top$.fname, sep)
   parent_name <- as_string(enexpr(x))
   parent_vlevels <- vlevs[[parent_name]]
@@ -31,7 +31,7 @@ nested_in <- function(x, ..., prefix = "", suffix = "",
     if(ind) {
       vars <- rownames(attr(terms(.x), "factors"))
       child_lvls_by_parent <- map(vars, function(.var) {
-        out <- serve_units(select_units(des, c(.var, parent_name)))
+        out <- serve_units(select_units(prep, c(.var, parent_name)))
         split(out[[.var]], out[[parent_name]])
       })
       names(child_lvls_by_parent) <- vars
@@ -69,7 +69,7 @@ nested_in <- function(x, ..., prefix = "", suffix = "",
   attributes(child_levels) <- c(lattrs, attributes(child_levels),
                                 list(parents = attr(args, "parents"),
                                      labels = child_labels))
-  class(child_levels) <- c("nst_levels", class(child_levels))
+  class(child_levels) <- c("nest_lvls", class(child_levels))
   return(child_levels)
 }
 
@@ -79,10 +79,12 @@ nested_in <- function(x, ..., prefix = "", suffix = "",
 #' @return Return a named list. Only shows the direct parent.
 #' @export
 nesting_structure <- function(design) {
-  uids <- unit_ids(design)
-  ndf <- fct_edges_filter(design, from %in% uids & to %in% uids)
-  from <- fct_names(design, ndf$from)
-  to <- fct_names(design, ndf$to)
+  prep <- cook_design(design)
+  uids <- prep$unit_ids
+  fedges <- prep$fct_edges
+  ndf <- fedges[fedges$from %in% uids & fedges$to %in% uids,]
+  from <- prep$fct_names(ndf$from)
+  to <- prep$fct_names(ndf$to)
   split(from, to)
 }
 

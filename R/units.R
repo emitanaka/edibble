@@ -62,18 +62,23 @@ set_units <- function(.design, ...,
 
 #' @importFrom tidyselect eval_select
 #' @export
-select_units <- function(.design, ...) {
-  vlevs <- fct_levels(.design)
-  loc <- eval_select(expr(c(...)), vlevs)
+select_units <- function(prep, ...) {
+  vlevs <- prep$fct_levels()
+  loc <- eval_select(tidyselect::all_of(expr(c(...))), vlevs)
   keep_units <- names(vlevs)[loc]
-  keep_uids <- fct_id(.design, keep_units)
-  keep_uids_ancestors <- fct_ancestor(.design, keep_uids)
-  .design$graph$nodes <- fct_nodes_filter(.design, id %in% keep_uids_ancestors)
-  .design$graph$edges <- fct_edges_filter(.design, to %in% keep_uids_ancestors & from %in% keep_uids_ancestors)
-  .design$graph$levels$nodes <- lvl_nodes_filter(.design, idvar %in% keep_uids_ancestors)
-  keep_lids_ancestors <- lvl_id(.design)
-  .design$graph$levels$edges <- lvl_edges_filter(.design, to %in% keep_lids_ancestors & from %in% keep_lids_ancestors)
-  .design
+  keep_uids <- prep$fct_id(keep_units)
+  keep_uids_ancestors <- prep$fct_ancestor(keep_uids)
+  sprep <- prep$clone()
+  fnodes <- prep$fct_nodes
+  fedges <- prep$fct_edges
+  lnodes <- prep$lvl_nodes
+  ledges <- prep$lvl_edges
+  sprep$fct_nodes <- fnodes[fnodes$id %in% keep_uids_ancestors, ]
+  sprep$fct_edges <- fedges[fedges$to %in% keep_uids_ancestors & fedges$from %in% keep_uids_ancestors,]
+  sprep$lvl_nodes <- lnodes[lnodes$idvar %in% keep_uids_ancestors, ]
+  keep_lids_ancestors <- sprep$lvl_id()
+  sprep$lvl_edges <- ledges[ledges$to %in% keep_lids_ancestors & ledges$from %in% keep_lids_ancestors,]
+  sprep
 }
 
 #' @importFrom vctrs vec_ptype_abbr

@@ -1,6 +1,6 @@
 test_that("start designs", {
-  des1 <- start_design()
-  des2 <- start_design("Some design")
+  des1 <- design()
+  des2 <- design("Some design")
 
   expect_equal(class(des1), c("edbl_design", "edbl"))
   expect_equal(des1$name, NULL)

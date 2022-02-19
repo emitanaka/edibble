@@ -4,7 +4,7 @@ new_recipe_design <- function(name, name_full = name, code = NULL) {
   dname <- edibble_decorate("title")(paste0('"', paste(name_full, collapse = " | "), '"'))
   structure(list(name = name,
                  name_full = name_full,
-                 code = code %||% paste0("start_design(", dname, ")")),
+                 code = code %||% paste0("design(", dname, ")")),
             class = "recipe_design")
 }
 

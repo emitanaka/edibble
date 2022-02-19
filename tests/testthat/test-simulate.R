@@ -1,5 +1,5 @@
 test_that("simulate", {
-  des <- start_design() %>%
+  des <- design() %>%
     set_trts(treat = c("A", "B", "C")) %>%
     set_units(unit = 12) %>%
     allot_trts(treat ~ unit) %>%
@@ -7,7 +7,7 @@ test_that("simulate", {
     set_rcrds(response = unit) %>%
     serve_table()
 
-  des2 <- start_design() %>%
+  des2 <- design() %>%
     set_trts(treat = c("A", "B", "C"),
              irr = 2) %>%
     set_units(unit = 12) %>%
@@ -17,7 +17,7 @@ test_that("simulate", {
               level = unit) %>%
     serve_table()
 
-  des3 <- start_design() %>%
+  des3 <- design() %>%
     set_trts(treat = c("A", "B", "C"),
              irr = 2) %>%
     set_units(unit = 12) %>%
@@ -29,7 +29,7 @@ test_that("simulate", {
                  response > 0) %>%
     serve_table()
 
-  des3 <- start_design() %>%
+  des3 <- design() %>%
     set_trts(treat = c("A", "B", "C"),
              irr = 2) %>%
     set_units(unit = 12) %>%
@@ -91,21 +91,8 @@ test_that("simulate", {
                                          sd = 3,
                                          params = eff3))
 
-  library(ggplot2)
-  as_data_frame(df2) %>%
-    ggplot(aes(treat, response, fill = irr)) +
-    geom_violin() +
-    geom_boxplot(width = 0.1)
 
-  expect_snapshot({
-    des %>%
-      simulate_rcrds(response = sim_fixed(mean = ~30 + treat,
-                                          params = eff1))
 
-    des %>%
-      simulate_rcrds(response = sim_fixed(mean = ~30 + treat,
-                                          params = eff2))
-  })
 
 
 })

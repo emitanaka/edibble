@@ -1,6 +1,6 @@
 test_that("serve", {
   expect_snapshot({
-    start_design(name = "unlinked units with table - the title cut-off seems to be only for testthat????????????????????? ?????? ??????") %>%
+    design(name = "unlinked units with table - the title cut-off seems to be only for testthat????????????????????? ?????? ??????") %>%
       set_units(block = 3,
                 plot = 2) %>%
       serve_table()
@@ -9,33 +9,33 @@ test_that("serve", {
   # The cut-off seems to have only happened for when the title was "unlinked units with table"
   # and the ANSI styling was cut
   expect_equal({
-    start_design(name = "unlinked units with table - the title cut-off seems to be only for testthat????????????????????? ?????? ??????") %>%
+    design(name = "unlinked units with table - the title cut-off seems to be only for testthat????????????????????? ?????? ??????") %>%
       set_units(block = 3,
                 plot = 2) %>%
       serve_table()
   }, data.frame(block = character(), plot = character()), ignore_attr = TRUE)
 
   expect_snapshot({
-    start_design(name = "one unit") %>%
+    design(name = "one unit") %>%
       set_units(block = 3) %>%
       serve_table()
   })
 
 
   expect_equal({
-    start_design(name = "one unit") %>%
+    design(name = "one unit") %>%
       set_units(block = 3) %>%
       serve_table()
   }, data.frame(block = c("block1", "block2", "block3")), ignore_attr = TRUE)
 
   expect_snapshot({
-    start_design(name = "serve nested units") %>%
+    design(name = "serve nested units") %>%
       set_units(block = 3,
                 plot = nested_in(block, 2)) %>%
       serve_table()
   })
 
-  des1 <- start_design() %>%
+  des1 <- design() %>%
     set_units(site = 2)
   des2 <- des1 %>%
     set_units(block = nested_in(site, 3))
@@ -58,13 +58,13 @@ test_that("serve", {
 
 
   expect_snapshot({
-    start_design() %>%
+    design() %>%
       set_trts(vaccine = c("AZ", "M", "P")) %>%
       serve_table()
   })
 
   expect_snapshot({
-    start_design() %>%
+    design() %>%
       set_units(site = 2,
                 row = nested_in(site,
                                 1 ~ 3,
@@ -74,6 +74,6 @@ test_that("serve", {
                                 2 ~ 2),
                 plot = nested_in(site, ~row:col)) %>%
       set_trts(trt = c("A", "B")) %>%
-      allot_table(trt ~ plot)
+      allot_table(trt ~ plot, seed = 1)
   })
 })

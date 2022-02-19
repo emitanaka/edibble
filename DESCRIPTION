@@ -28,7 +28,8 @@ Imports:
     nestr,
     stats,
     AlgDesign,
-    dae
+    dae,
+    R6
 Suggests: 
     testthat (>= 3.0.0),
     knitr,

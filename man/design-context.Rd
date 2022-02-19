@@ -31,12 +31,6 @@ Same as original except \code{edbl_design} updated with context.
 The context is printed when the return object is printed as well
 as exported in the title sheet (see \code{\link[=export_design]{export_design()}}). If the context
 already exists then it will be overwritten.
-
-You can use \code{sort_context} to reorder named context alphabetically. If
-you don't want to see the context printed out each time, use \code{suppress_context}
-to muffle the context and \code{express_context} to turn on the context print out.
-Use \code{switch_context} to turn on print out of context if it was switched off,
-or turn off print out if it was switched on.
 }
 \examples{
 files <- c("details.txt", "about.docx")
@@ -52,12 +46,12 @@ start_design("COVID-19") \%>\%
 \seealso{
 Other user-facing functions: 
 \code{\link{allot_trts}()},
+\code{\link{design}()},
 \code{\link{expect_rcrds}()},
 \code{\link{export_design}()},
 \code{\link{serve_table}()},
 \code{\link{set_rcrds}()},
 \code{\link{set_trts}()},
-\code{\link{set_units}()},
-\code{\link{start_design}()}
+\code{\link{set_units}()}
 }
 \concept{user-facing functions}

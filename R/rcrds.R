@@ -17,6 +17,7 @@ set_rcrds <- function(.edibble, ...,
 
   not_edibble(.edibble)
   if(.record) record_step()
+  prep <- cook_design(.edibble)
 
   .name_repair <- match.arg(.name_repair)
   units <- map(enexprs(...), function(x) {
@@ -26,26 +27,22 @@ set_rcrds <- function(.edibble, ...,
     })
   rcrds <- names(units)
 
-  des <- edbl_design(.edibble)
-  check_var_exists(des, name = unlist(units), vclass = "edbl_unit")
+  prep$fct_exists(name = unlist(units), class = "edbl_unit")
 
   for(i in seq_along(units)) {
-    rid <- fct_last_id(des) + 1L
-    uid <- fct_id(des, units[[i]])
+    rid <- prep$fct_last_id + 1L
+    uid <- prep$fct_id(units[[i]])
     attrs <- attributes(units[[i]])
-    fnodes <- fct_nodes(des)
     fattrs <- do.call(data.frame, c(attrs[setdiff(names(attrs), c("names", "class"))],
                                     list(stringsAsFactors = FALSE,
                                          id = rid,
                                          name = rcrds[i],
                                          class = "edbl_rcrd")))
-    des$graph$nodes <- rbind_(fnodes, fattrs)
-    des$graph$edges <- add_row(des$graph$edges,
-                                     from = uid,
-                                     to = rid)
+    prep$append_fct_nodes(fattrs)
+    prep$append_fct_edges(data.frame(from = uid, to = rid))
   }
-  if(is_edibble_table(.edibble)) return(serve_table(des))
-  des
+  if(is_edibble_table(.edibble)) return(serve_table(prep$design))
+  prep$design
 }
 
 #' @rdname set_rcrds
@@ -76,14 +73,14 @@ expect_rcrds <- function(.edibble, ...) {
   record_step()
   dots <- enquos(...)
   dots_nms <- names(dots)
-  des <- edbl_design(.edibble)
+  prep <- cook_design(.edibble)
   rules_named <- map(dots[dots_nms!=""], eval_tidy)
   rules_unnamed <- map(dots[dots_nms==""], validate_rcrd,
-                       rnames = fct_names(des, rcrd_ids(des)))
+                       rnames = prep$rcrd_names)
   rules_unnamed <- setNames(rules_unnamed, map_chr(rules_unnamed, function(x) x$rcrd))
-  des$validation <- simplify_validation(c(rules_named, rules_unnamed))
-  if(is_edibble_table(.edibble)) return(serve_table(des))
-  des
+  prep$design$validation <- simplify_validation(c(rules_named, rules_unnamed))
+  if(is_edibble_table(.edibble)) return(serve_table(prep$design))
+  prep$design
 }
 
 simplify_validation <- function(x) {

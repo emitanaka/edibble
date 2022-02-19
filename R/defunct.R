@@ -195,6 +195,13 @@ prep_classical_rcbd <- function(t = random_integer_small(),
   menu_rcbd(t, r, seed)
 }
 
+#' @export
+start_design <- function(name = NULL, .record = TRUE, seed = NULL, kitchen = Kitchen) {
+  warn("`start_design` is deprecated. Please use `design` instead.")
+  design(name, .record, seed, kitchen)
+}
+
+
 
 #' @export
 allocate_trts <- function(design, ...) {
