@@ -26,7 +26,11 @@ allot_trts <- function(.design, ..., .record = TRUE) {
   if(.record) record_step()
 
   dots <- list2(...)
-  .design$allotment <- dots
+  if("allotment" %in% names(.design)) {
+    .design$allotment$trts <- c(.design$allotment$trts, dots)
+  } else {
+    .design$allotment <- list(trts = dots, units = NULL)
+  }
   prep <- cook_design(.design)
 
   for(ialloc in seq_along(dots)) {
@@ -44,12 +48,39 @@ allot_trts <- function(.design, ..., .record = TRUE) {
       tids <- prep$trt_ids
     }
 
-    prep$fct_edges <- add_row(prep$fct_edges,
-                              from = tids, to = uid, alloc = ialloc)
+    prep$fct_edges <- prep$append_fct_edges(data.frame(from = tids, to = uid, alloc = ialloc))
   }
   prep$design
 }
 
+
+allot_units <- function(.design, ..., .record = TRUE) {
+  not_edibble(.design)
+  if(.record) record_step()
+
+  dots <- list2(...)
+  prep <- cook_design(.design)
+
+  for(ialloc in seq_along(dots)) {
+    trts <- all.vars(f_lhs(dots[[ialloc]]))
+    # there should be only one unit
+    unit <- all.vars(f_rhs(dots[[ialloc]]))
+    prep$fct_exists(name = unit, class = "edbl_unit")
+    uid <- prep$fct_id(unit)
+    if(length(trts)) {
+      prep$fct_exists(name = trts, class = "edbl_trt")
+      tids <- prep$fct_id(trts)
+    } else {
+      prep$trts_exists()
+      classes <- prep$fct_class()
+      tids <- prep$trt_ids
+    }
+
+    prep$fct_edges <- prep$append_fct_edges(data.frame(from = tids, to = uid, alloc = ialloc))
+  }
+  prep$design
+
+}
 
 
 #' A shorthand for allot, assign and serve

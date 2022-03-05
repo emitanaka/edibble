@@ -26,9 +26,6 @@ Kitchen <- R6::R6Class("Kitchen",
 
 
 
-
-
-
                          #' @description
                          #' Get the id based on either the name of the factor node or
                          #' the class.
@@ -117,46 +114,48 @@ Kitchen <- R6::R6Class("Kitchen",
                          #' supplied then the child has to fit `class`
                          fct_child = function(id = NULL, class = NULL) {
                            edges <- self$fct_edges
-                           child_ids <- intersect(edges$to, self$fct_id(class = class))
+                           child_ids <- edges$to
                            parent_ids <- edges$from
-                           child_ids[parent_ids %in% id]
+                           child_ids[parent_ids %in% id & child_ids %in% self$fct_id(class = class)]
                          },
 
                          #' @description
                          #' Get the level child ids
                          lvl_child = function(id = NULL, class = NULL) {
                            edges <- self$lvl_edges
-                           child_ids <- intersect(edges$to, self$lvl_id(class = class))
+                           child_ids <- edges$to
                            parent_ids <- edges$from
-                           child_ids[parent_ids %in% id]
+                           child_ids[parent_ids %in% id & child_ids %in% self$lvl_id(class = class)]
                          },
 
                          #' @description
                          #' Get the factor parent ids
                          fct_parent = function(id = NULL, class = NULL) {
                            edges <- self$fct_edges
-                           parent_ids <- intersect(edges$from, self$fct_id(class = class))
+                           class_ids <- self$fct_id(class = class)
+                           parent_ids <- edges$from
                            child_ids <- edges$to
-                           parent_ids[child_ids %in% id]
+                           parent_ids[child_ids %in% id & parent_ids %in% class_ids & child_ids %in% class_ids]
                          },
 
                          #' @description
                          #' Get the level parent ids
                          lvl_parent = function(id = NULL, class = NULL) {
                            edges <- self$lvl_edges
-                           parent_ids <- intersect(edges$from, self$lvl_id(class = class))
+                           class_ids <- self$lvl_id(class = class)
+                           parent_ids <- edges$from
                            child_ids <- edges$to
-                           parent_ids[child_ids %in% id]
+                           parent_ids[child_ids %in% id & parent_ids %in% class_ids & child_ids %in% class_ids]
                          },
 
 
                          #' @description
                          #' Get the factor ancestor ids
                          fct_ancestor = function(id = NULL, class = NULL) {
-                           out <- id
+                           out <- unique(id)
                            parent_ids <- self$fct_parent(id = id, class = class)
                            if(!is_empty(parent_ids)) {
-                             out <- c(out, self$fct_ancestor(id = parent_ids, class = class))
+                             out <- unique(c(out, self$fct_ancestor(id = parent_ids, class = class)))
                            }
                            out
                          },

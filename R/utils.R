@@ -160,7 +160,7 @@ print.edbl_design <- function(x,
   cat(tree(data, root = "root"), sep = "\n")
   if(!is_null(x$allotment)) {
     cat(decorate_title("Allotment:\n"))
-    s <- as.character(x$allotment)
+    s <- as.character(c(x$allotment$trts, x$allotment$units))
     tilde_pos <- unlist(gregexpr("~", s))
     tilde_pos_max <- max(tilde_pos)
     pad <- map_chr(tilde_pos_max - tilde_pos, function(n) ifelse(n==0, "", paste0(rep(" ", n), collapse = "")))

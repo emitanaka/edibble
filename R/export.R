@@ -1,4 +1,6 @@
 
+# FIXME
+
 make_sheet_names <- function(.design = NULL) {
   if(is_null(.design)) {
     data_sheet_names <- "Data"
@@ -120,13 +122,13 @@ subset.edbl_design <- function(.edibble, unit, rcrds) {
   .edibble$graph$levels$nodes <- lvl_nodes_filter(.edibble, idvar %in% keep_uids_ancestors)
   keep_lids_ancestors <- lvl_id(.edibble)
   .edibble$graph$levels$edges <- lvl_edges_filter(.edibble, to %in% keep_lids_ancestors & from %in% keep_lids_ancestors)
-  if(!is_null(.edibble$allotment)) {
-    units <- map_chr(.edibble$allotment, function(x) all.vars(f_rhs(x)))
-    allotments <- .edibble$allotment[units %in% fct_names(.edibble)]
+  if(!is_null(.edibble$allotment$trts)) {
+    units <- map_chr(.edibble$allotment$trts, function(x) all.vars(f_rhs(x)))
+    allotments <- .edibble$allotment$trts[units %in% fct_names(.edibble)]
     if(is_empty(allotments)) {
-      .edibble$allotment <- NULL
+      .edibble$allotment$trts <- NULL
     } else {
-      .edibble$allotment <- allotments
+      .edibble$allotment$trts <- allotments
     }
   }
   if(!is_null(.edibble$validation)) {

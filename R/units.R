@@ -67,7 +67,7 @@ select_units <- function(prep, ...) {
   loc <- eval_select(tidyselect::all_of(expr(c(...))), vlevs)
   keep_units <- names(vlevs)[loc]
   keep_uids <- prep$fct_id(keep_units)
-  keep_uids_ancestors <- prep$fct_ancestor(keep_uids)
+  keep_uids_ancestors <- prep$fct_ancestor(keep_uids, class = "edbl_unit")
   sprep <- prep$clone()
   fnodes <- prep$fct_nodes
   fedges <- prep$fct_edges

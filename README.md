@@ -118,6 +118,8 @@ out
 #> #   teacher <rcrd>
 ```
 
+FIXME: latest core rewrite broke this
+
 When you export the above edibble design using the `export_design`
 function, the variables you are recording are constraint to the values
 you expect, e.g. for factors, the cells have a drop-down menu to select

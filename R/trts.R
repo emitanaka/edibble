@@ -57,10 +57,10 @@ assign_trts <- function(.design, order = "random", seed = NULL, constrain = nest
   save_seed(seed)
   prep <- cook_design(.design)
 
-  for(ialloc in seq_along(.design$allotment)) {
-    trts <- all.vars(f_lhs(.design$allotment[[ialloc]]))
+  for(ialloc in seq_along(.design$allotment$trts)) {
+    trts <- all.vars(f_lhs(.design$allotment$trts[[ialloc]]))
     # there should be only one unit
-    unit <- all.vars(f_rhs(.design$allotment[[ialloc]]))
+    unit <- all.vars(f_rhs(.design$allotment$trts[[ialloc]]))
     uid <- prep$fct_id(unit)
     if(length(trts)) {
       tids <- prep$fct_id(trts)
