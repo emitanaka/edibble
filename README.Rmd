@@ -136,16 +136,16 @@ The edibble R-package differ considerably to other packages for constructing exp
 * declaratively create experimental designs based on experimental components (e.g. units and treatments),
 * explicitly specify variables that are to be recorded (e.g. response), and
 * set expected values for variables to be recorded which restrict the data entry when the design is exported as an xlsx file,
-* print outputs for intermediate constructs of the experimental design with configurations for most graphical elements (see [`vignette("output")`](https://edibble.emitanaka.org/articles/output.html)),
-* make classical named designs (see [`vignette("named-designs")`](https://edibble.emitanaka.org/articles/named-designs.html)),
-* add context that also serves as notes about experiment (see [`vignette("edibble")`](https://edibble.emitanaka.org/articles/grammar.html)).
+* simulate values for record variables,
+* make classical named designs see [Cookbook chapter](https://emitanaka.org/edibble-book/cookbook.html).
+
+Work-in-progress book on this package can be found [here](https://emitanaka.org/edibble-book).
 
 ## Limitations 
 
 Currently, edibble:
 
 - expects you to know the number of units available from the start. Unknown numbers will be supported in future versions.
-- does not necessarily create the most efficient design. E.g. balanced incomplete block designs have a special property and an adhoc solution may be required to make sure you can generate a design with this special property. This is just a nature of generalised tools and edibble doesn't aim to be the best for everything, but hopes others developers can build on the edibble framework to create their own specialist design.
 - in theory, edibble should support experiments that are not comparative experiments but this is not tested. 
 - does not do enough testing so design should be diagnosed after construction (which should be done regardless of how much testing edibble implements).
 

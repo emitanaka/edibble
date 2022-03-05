@@ -58,6 +58,7 @@ des <- start_design(name = "Effective teaching") %>%
     allot_trts(style ~ class,
                exam ~ student) %>%
     assign_trts("random")
+#> Warning: `start_design` is deprecated. Please use `design` instead.
 
 serve_table(des)
 #> # Effective teaching 
@@ -158,10 +159,11 @@ start_design("nesting structure") %>%
                         c(2, 3) ~ 40,
                               . ~ 20)) %>% 
   serve_table()
+#> Warning: `start_design` is deprecated. Please use `design` instead.
 #> # nesting structure 
-#> # An edibble: 170 x 3
+#> # An edibble: 190 x 3
 #>         site     block        plot
-#>    <unit(3)> <unit(7)> <unit(170)>
+#>    <unit(3)> <unit(7)> <unit(190)>
 #>  1         A    block1      plot1 
 #>  2         A    block1      plot2 
 #>  3         A    block1      plot3 
@@ -172,7 +174,7 @@ start_design("nesting structure") %>%
 #>  8         A    block1      plot8 
 #>  9         A    block1      plot9 
 #> 10         A    block1      plot10
-#> # … with 160 more rows
+#> # … with 180 more rows
 ```
 
 ## Experimental data
@@ -196,13 +198,12 @@ focus and do well on). Some features include:
     (e.g. response), and
 -   set expected values for variables to be recorded which restrict the
     data entry when the design is exported as an xlsx file,
--   print outputs for intermediate constructs of the experimental design
-    with configurations for most graphical elements (see
-    [`vignette("output")`](https://edibble.emitanaka.org/articles/output.html)),
--   make classical named designs (see
-    [`vignette("named-designs")`](https://edibble.emitanaka.org/articles/named-designs.html)),
--   add context that also serves as notes about experiment (see
-    [`vignette("edibble")`](https://edibble.emitanaka.org/articles/grammar.html)).
+-   simulate values for record variables,
+-   make classical named designs see [Cookbook
+    chapter](https://emitanaka.org/edibble-book/cookbook.html).
+
+Work-in-progress book on this package can be found
+[here](https://emitanaka.org/edibble-book).
 
 ## Limitations
 
@@ -210,13 +211,6 @@ Currently, edibble:
 
 -   expects you to know the number of units available from the start.
     Unknown numbers will be supported in future versions.
--   does not necessarily create the most efficient design. E.g. balanced
-    incomplete block designs have a special property and an adhoc
-    solution may be required to make sure you can generate a design with
-    this special property. This is just a nature of generalised tools
-    and edibble doesn’t aim to be the best for everything, but hopes
-    others developers can build on the edibble framework to create their
-    own specialist design.
 -   in theory, edibble should support experiments that are not
     comparative experiments but this is not tested.
 -   does not do enough testing so design should be diagnosed after
