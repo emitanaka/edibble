@@ -87,3 +87,22 @@ plot.edbl_table <- function(.table, ...) {
   des <- edbl_design(.table)
   plot(des, ...)
 }
+
+
+#' @export
+plot_fct_network <- function(.design, width = "100%", height = NULL, seed = 1, title = NULL,
+                             subtitle = NULL, footer = NULL, background = "transparent",
+                             view = c("show-buttons", "hide-buttons", "static"), ...) {
+  plot(.design, which = "factors",
+       width = width, height = height, seed = seed, title = title, subtitle = subtitle,
+       footer = footer, view = view, ...)
+}
+
+#' @export
+plot_lvl_network <- function(.design, width = "100%", height = NULL, seed = 1, title = NULL,
+                             subtitle = NULL, footer = NULL, background = "transparent",
+                             view = c("show-buttons", "hide-buttons", "static"), ...) {
+  plot(.design, which = "levels",
+       width = width, height = height, seed = seed, title = title, subtitle = subtitle,
+       footer = footer, view = view, ...)
+}
