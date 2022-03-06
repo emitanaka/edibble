@@ -62,21 +62,14 @@ allot_units <- function(.design, ..., .record = TRUE) {
   prep <- cook_design(.design)
 
   for(ialloc in seq_along(dots)) {
-    trts <- all.vars(f_lhs(dots[[ialloc]]))
+    lhs <- all.vars(f_lhs(dots[[ialloc]]))
     # there should be only one unit
-    unit <- all.vars(f_rhs(dots[[ialloc]]))
-    prep$fct_exists(name = unit, class = "edbl_unit")
-    uid <- prep$fct_id(unit)
-    if(length(trts)) {
-      prep$fct_exists(name = trts, class = "edbl_trt")
-      tids <- prep$fct_id(trts)
-    } else {
-      prep$trts_exists()
-      classes <- prep$fct_class()
-      tids <- prep$trt_ids
-    }
-
-    prep$fct_edges <- prep$append_fct_edges(data.frame(from = tids, to = uid, alloc = ialloc))
+    rhs <- all.vars(f_rhs(dots[[ialloc]]))
+    prep$fct_exists(name = rhs, class = "edbl_unit")
+    lhs_id <- prep$fct_id(lhs)
+    prep$fct_exists(name = lhs, class = "edbl_unit")
+    rhs_id <- prep$fct_id(rhs)
+    prep$fct_edges <- prep$append_fct_edges(data.frame(from = rhs_id, to = lhs_id))
   }
   prep$design
 
