@@ -54,11 +54,17 @@ allot_trts <- function(.design, ..., .record = TRUE) {
 }
 
 
+#' @export
 allot_units <- function(.design, ..., .record = TRUE) {
   not_edibble(.design)
   if(.record) record_step()
 
   dots <- list2(...)
+  if("allotment" %in% names(.design)) {
+    .design$allotment$units <- c(.design$allotment$units, dots)
+  } else {
+    .design$allotment <- list(trts = NULL, units = dots)
+  }
   prep <- cook_design(.design)
 
   for(ialloc in seq_along(dots)) {

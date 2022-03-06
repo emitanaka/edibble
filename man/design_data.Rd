@@ -12,9 +12,9 @@ fct_nodes(edibble)
 
 fct_edges(edibble)
 
-lvl_nodes(design)
+lvl_nodes(edibble)
 
-lvl_edges(design)
+lvl_edges(edibble)
 }
 \description{
 Get the node or edge data from an edibble design

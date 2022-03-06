@@ -67,16 +67,17 @@ Initialise function}
 \item \href{#method-lvl_names}{\code{Kitchen$lvl_names()}}
 \item \href{#method-append_fct_nodes}{\code{Kitchen$append_fct_nodes()}}
 \item \href{#method-append_lvl_nodes}{\code{Kitchen$append_lvl_nodes()}}
+\item \href{#method-append_fct_edges}{\code{Kitchen$append_fct_edges()}}
+\item \href{#method-append_lvl_edges}{\code{Kitchen$append_lvl_edges()}}
 \item \href{#method-fct_class}{\code{Kitchen$fct_class()}}
 \item \href{#method-lvl_class}{\code{Kitchen$lvl_class()}}
 \item \href{#method-fct_child}{\code{Kitchen$fct_child()}}
 \item \href{#method-lvl_child}{\code{Kitchen$lvl_child()}}
 \item \href{#method-fct_parent}{\code{Kitchen$fct_parent()}}
 \item \href{#method-lvl_parent}{\code{Kitchen$lvl_parent()}}
-\item \href{#method-fct_obs_unit}{\code{Kitchen$fct_obs_unit()}}
-\item \href{#method-fct_levels}{\code{Kitchen$fct_levels()}}
 \item \href{#method-fct_ancestor}{\code{Kitchen$fct_ancestor()}}
 \item \href{#method-lvl_ancestor}{\code{Kitchen$lvl_ancestor()}}
+\item \href{#method-fct_levels}{\code{Kitchen$fct_levels()}}
 \item \href{#method-setup_data}{\code{Kitchen$setup_data()}}
 \item \href{#method-add_anatomy}{\code{Kitchen$add_anatomy()}}
 \item \href{#method-fct_exists}{\code{Kitchen$fct_exists()}}
@@ -214,6 +215,40 @@ Given node data, append the level nodes
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-append_fct_edges"></a>}}
+\if{latex}{\out{\hypertarget{method-append_fct_edges}{}}}
+\subsection{Method \code{append_fct_edges()}}{
+Given edge data, append the factor edges
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Kitchen$append_fct_edges(data)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{data}}{The nodes data}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-append_lvl_edges"></a>}}
+\if{latex}{\out{\hypertarget{method-append_lvl_edges}{}}}
+\subsection{Method \code{append_lvl_edges()}}{
+Given edge data, append the level edges
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Kitchen$append_lvl_edges(data)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{data}}{The nodes data}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-fct_class"></a>}}
 \if{latex}{\out{\hypertarget{method-fct_class}{}}}
 \subsection{Method \code{fct_class()}}{
@@ -251,15 +286,18 @@ Get the class of the vertex given the level id
 \if{html}{\out{<a id="method-fct_child"></a>}}
 \if{latex}{\out{\hypertarget{method-fct_child}{}}}
 \subsection{Method \code{fct_child()}}{
-Get the factor child ids
+Get the factor child ids. If \code{class} is
+supplied then the child has to fit \code{class}
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Kitchen$fct_child(id = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Kitchen$fct_child(id = NULL, class = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
+
+\item{\code{class}}{The class for the vertex/node.}
 }
 \if{html}{\out{</div>}}
 }
@@ -270,13 +308,15 @@ Get the factor child ids
 \subsection{Method \code{lvl_child()}}{
 Get the level child ids
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Kitchen$lvl_child(id = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Kitchen$lvl_child(id = NULL, class = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
+
+\item{\code{class}}{The class for the vertex/node.}
 }
 \if{html}{\out{</div>}}
 }
@@ -287,13 +327,15 @@ Get the level child ids
 \subsection{Method \code{fct_parent()}}{
 Get the factor parent ids
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Kitchen$fct_parent(id = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Kitchen$fct_parent(id = NULL, class = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
+
+\item{\code{class}}{The class for the vertex/node.}
 }
 \if{html}{\out{</div>}}
 }
@@ -304,30 +346,53 @@ Get the factor parent ids
 \subsection{Method \code{lvl_parent()}}{
 Get the level parent ids
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Kitchen$lvl_parent(id = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Kitchen$lvl_parent(id = NULL, class = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
+
+\item{\code{class}}{The class for the vertex/node.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fct_obs_unit"></a>}}
-\if{latex}{\out{\hypertarget{method-fct_obs_unit}{}}}
-\subsection{Method \code{fct_obs_unit()}}{
-Get the observational unit id
+\if{html}{\out{<a id="method-fct_ancestor"></a>}}
+\if{latex}{\out{\hypertarget{method-fct_ancestor}{}}}
+\subsection{Method \code{fct_ancestor()}}{
+Get the factor ancestor ids
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Kitchen$fct_obs_unit(initial = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Kitchen$fct_ancestor(id = NULL, class = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{initial}}{The intial id.}
+\item{\code{id}}{The id of the corresponding node.}
+
+\item{\code{class}}{The class for the vertex/node.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-lvl_ancestor"></a>}}
+\if{latex}{\out{\hypertarget{method-lvl_ancestor}{}}}
+\subsection{Method \code{lvl_ancestor()}}{
+Get the level ancestor ids
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Kitchen$lvl_ancestor(id = NULL, class = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{The id of the corresponding node.}
+
+\item{\code{class}}{The class for the vertex/node.}
 }
 \if{html}{\out{</div>}}
 }
@@ -347,40 +412,6 @@ Get the levels for each factor
 \item{\code{id}}{The id of the corresponding node.}
 
 \item{\code{name}}{The name of the vertex.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fct_ancestor"></a>}}
-\if{latex}{\out{\hypertarget{method-fct_ancestor}{}}}
-\subsection{Method \code{fct_ancestor()}}{
-Get the factor ancestor ids
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Kitchen$fct_ancestor(id = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{id}}{The id of the corresponding node.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-lvl_ancestor"></a>}}
-\if{latex}{\out{\hypertarget{method-lvl_ancestor}{}}}
-\subsection{Method \code{lvl_ancestor()}}{
-Get the level ancestor ids
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Kitchen$lvl_ancestor(id = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{id}}{The id of the corresponding node.}
 }
 \if{html}{\out{</div>}}
 }

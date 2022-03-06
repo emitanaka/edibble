@@ -48,6 +48,7 @@ assign_trts <- function(.design, order = "random", seed = NULL, constrain = nest
                           "systematic-random" = rep(sample(nrow(tidf)), length.out = length(luids)),
                           "random" = {
                             if(is_empty(constrain[[unit]])) {
+                              # FIXME I think I need to do replicate here not rep??
                               sample(rep(sample(nrow(tidf)), length.out = length(luids)))
                             } else {
 
@@ -88,7 +89,7 @@ assign_trts <- function(.design, order = "random", seed = NULL, constrain = nest
 }
 
 
-# FIXME
+#' @export
 assign_units <- function(.design, order = "random", seed = NULL, constrain = nesting_structure(.design), ..., .record = TRUE) {
   not_edibble(.design)
 
@@ -102,23 +103,41 @@ assign_units <- function(.design, order = "random", seed = NULL, constrain = nes
     rhs <- all.vars(f_rhs(.design$allotment$units[[ialloc]]))
 
     lnodes <- prep$lvl_nodes
-    lhs_id <- lnodes[lnodes$idvar == lhs, "id"]
-    rhs_id <- lnodes[lnodes$idvar == rhs, "id"]
+    lhs_id <- lnodes[lnodes$idvar == prep$fct_id(lhs), "id"]
+    rhs_id <- lnodes[lnodes$idvar == prep$fct_id(rhs), "id"]
     rhs_df <- data.frame(rhs = rhs_id)
     permutation <- switch(order,
                           "systematic" = rep(1:nrow(rhs_df), length.out = length(lhs_id)),
                           "systematic-random" = rep(sample(nrow(rhs_df)), length.out = length(lhs_id)),
                           "random" = {
-                            if(is_empty(constrain[[unit]])) {
-                              sample(rep(sample(nrow(rhs_df)), length.out = length(lhs_id)))
-                            }
-                          }, stop("not implemented yet"))
+
+                              # FIXME the ancestor should be found
+                              # based on `constrain`
+
+                              # find the grandest ancestor
+                              vanc <- prep$fct_ancestor(id = prep$fct_id(rhs))
+                              vanc <- vanc[vanc %in% prep$unit_ids]
+                              udf <- as.data.frame(serve_units(select_units(prep, !!prep$fct_names(vanc))))
+                              # FIXME the unit allocation not working for dryer example
+
+                              vparents <- prep$fct_parent(id = prep$fct_id(rhs))
+                              vparents <- vparents[vparents %in% prep$unit_ids]
+                              vparents <- setdiff(vparents, prep$fct_id(rhs))
+
+                              if(length(vparents)==0L) {
+                                # FIXME I think I need to do replicate here not rep
+                                sample(rep(sample(nrow(rhs_df)), length.out = length(lhs_id)))
+                              } else if(length(vparents)==1L) {
+                                permute_parent_one_alg(prep, vparents, udf, nrow(rhs_df))
+                              } else {
+                                permute_parent_more_than_one(prep, vparents, udf, nrow(rhs_df))
+                              }
+                          }, abort("not implemented yet"))
 
     tout <- rhs_df[permutation, , drop = FALSE]
 
-
     for(itvar in seq_along(tout)) {
-      prep$lvl_edges <- prep$append_lvl_edges(data.frame(from = prep$lvl_id(tout[[itvar]]),
+      prep$lvl_edges <- prep$append_lvl_edges(data.frame(from = tout[[itvar]],
                                                          to = lhs_id,
                                                          alloc = ialloc))
     }
