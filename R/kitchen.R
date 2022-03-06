@@ -215,6 +215,7 @@ Kitchen <- R6::R6Class("Kitchen",
                          #' @param abort A logical value to indicate whether to abort if it doesn't exist.
                          fct_exists = function(name = NULL, id = NULL, class = NULL, abort = TRUE) {
 
+                           exist <- TRUE
                            abort_missing <- function(vars = NULL, msg = NULL) {
                              if(abort & !exist) {
                                if(!is_null(vars)) {
@@ -236,12 +237,12 @@ Kitchen <- R6::R6Class("Kitchen",
                            } else if(!is_null(name) & is_null(id) & is_null(class)) {
                              vexist <- name %in% fnodes$name
                              exist <- all(vexist)
-                             abort_missing(vars = name[!vexists])
+                             abort_missing(vars = name[!vexist])
 
                            } else if(is_null(name) & !is_null(id) & is_null(class)) {
                              vexist <- id %in% fnodes$id
                              exist <- all(vexist)
-                             abort_missing(vars = id[!vexists])
+                             abort_missing(vars = id[!vexist])
 
                            } else if(is_null(name) & is_null(id) & !is_null(class)) {
                              exist <- any(class %in% fnodes$class)
@@ -252,25 +253,25 @@ Kitchen <- R6::R6Class("Kitchen",
                              sclass <- fnodes[match(id, fnodes$id), "class"]
                              vexist <- sclass == class
                              exist <- all(vexist)
-                             abort_missing(vars = id[!vexists])
+                             abort_missing(vars = id[!vexist])
 
                            } else if(!is_null(name) & is_null(id) & !is_null(class)) {
                              sclass <- fnodes[match(name, fnodes$name), "class"]
                              vexist <- sclass == class
                              exist <- all(vexist)
-                             abort_missing(vars = name[!vexists])
+                             abort_missing(vars = name[!vexist])
 
                            } else if(!is_null(name) & !is_null(id) & is_null(class)) {
                              sid <- fnodes[match(name, fnodes$name), "id"]
                              vexist <- sid == id
                              exist <- all(vexist)
-                             abort_missing(vars = name[!vexists])
+                             abort_missing(vars = name[!vexist])
 
                            } else {
                              snodes <- fnodes[match(name, fnodes$name), ]
                              vexist <- snodes$id == id & snodes$class == class
                              exist <- all(vexist)
-                             abort_missing(vars = name[!vexists])
+                             abort_missing(vars = name[!vexist])
                            }
 
                            return(exist)
