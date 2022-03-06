@@ -1,8 +1,9 @@
 
 #' A manipulator for the edbl_design.
 #'
-#' Internal functions should create a new EdibbleGraph object.
-#' Set of operators to get the vertex/node IDs of an `edbl_design` object.
+#' Internal functions should create a new Kitchen object.
+#' The Kitchen contains a set of operations to manipulate the nodes and edges of
+#' the edibble design object.
 #'
 #' @param class The class for the vertex/node.
 #' @param data The nodes data

@@ -9,8 +9,9 @@ A manipulator for the edbl_design.
 A manipulator for the edbl_design.
 }
 \details{
-Internal functions should create a new EdibbleGraph object.
-Set of operators to get the vertex/node IDs of an \code{edbl_design} object.
+Internal functions should create a new Kitchen object.
+The Kitchen contains a set of operations to manipulate the nodes and edges of
+the edibble design object.
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}

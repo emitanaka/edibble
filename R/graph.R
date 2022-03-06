@@ -6,7 +6,7 @@
 
 # data or vector --------------------------------------------------
 
-#' Cook the design into Edibble object
+#' Cook the design in the kitchen
 #' @export
 cook_design <- function(x) {
   des <- edbl_design(x)
@@ -20,7 +20,6 @@ cook_design <- function(x) {
 
 #' Get the node or edge data from an edibble design
 #'
-#' @inheritParams var_ids
 #' @family design manipulators
 #' @name design_data
 NULL

@@ -2,10 +2,10 @@
 % Please edit documentation in R/graph.R
 \name{cook_design}
 \alias{cook_design}
-\title{Cook the design into Edibble object}
+\title{Cook the design in the kitchen}
 \usage{
 cook_design(x)
 }
 \description{
-Cook the design into Edibble object
+Cook the design in the kitchen
 }
