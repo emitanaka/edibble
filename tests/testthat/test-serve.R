@@ -1,6 +1,6 @@
 test_that("serve", {
   expect_snapshot({
-    design(name = "unlinked units with table - the title cut-off seems to be only for testthat????????????????????? ?????? ??????") %>%
+    design(name = "unlinked units with table") %>%
       set_units(block = 3,
                 plot = 2) %>%
       serve_table()
@@ -9,7 +9,7 @@ test_that("serve", {
   # The cut-off seems to have only happened for when the title was "unlinked units with table"
   # and the ANSI styling was cut
   expect_equal({
-    design(name = "unlinked units with table - the title cut-off seems to be only for testthat????????????????????? ?????? ??????") %>%
+    design(name = "unlinked units with table") %>%
       set_units(block = 3,
                 plot = 2) %>%
       serve_table()

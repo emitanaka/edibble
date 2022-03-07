@@ -114,7 +114,7 @@ Kitchen <- R6::R6Class("Kitchen",
                          #' Get the factor child ids. If `class` is
                          #' supplied then the child has to fit `class`
                          fct_child = function(id = NULL, class = NULL) {
-                           edges <- self$fct_edges
+                           edges <- subset(self$fct_edges, !type %in% c("depends", "cross"))
                            child_ids <- edges$to
                            parent_ids <- edges$from
                            child_ids[parent_ids %in% id & child_ids %in% self$fct_id(class = class)]
@@ -132,7 +132,7 @@ Kitchen <- R6::R6Class("Kitchen",
                          #' @description
                          #' Get the factor parent ids
                          fct_parent = function(id = NULL, class = NULL) {
-                           edges <- self$fct_edges
+                           edges <- subset(self$fct_edges, !type %in% c("depends", "cross"))
                            class_ids <- self$fct_id(class = class)
                            parent_ids <- edges$from
                            child_ids <- edges$to
@@ -514,23 +514,35 @@ Kitchen <- R6::R6Class("Kitchen",
                            tt <- terms(fresh)
                            vars <- rownames(attr(tt, "factor"))
 
+                           private$setup_data.cross_lvls(vars, name, class)
+                         },
+
+                         setup_data.cross_lvls = function(fresh, name, class) {
+                           flevels <- self$fct_levels()
+                           vars <- fresh
+
                            pdf <- expand.grid(flevels[vars])
                            pdf[[name]] <- fct_attrs(levels = lvl_attrs(1:nrow(pdf), prefix = name),
-                                                     class = class)
+                                                    class = class)
                            private$setup_data.edbl_lvls(pdf[[name]], name, class)
                            fnodes <- self$fct_nodes
                            idv <- fnodes[fnodes$name == name, "id"]
                            for(avar in vars) {
                              idp <- fnodes[fnodes$name == avar, "id"]
-                             self$append_fct_edges(data.frame(from = idp, to = idv))
+                             self$append_fct_edges(data.frame(from = idp, to = idv, type = "nest"))
                              self$append_lvl_edges(data.frame(from = self$lvl_id(pdf[[avar]]),
                                                               to = self$lvl_id(pdf[[name]])))
                            }
+                           idvs <- fnodes[fnodes$name %in% vars, "id"]
+                           cross_df <- expand.grid(from = idvs, to = idvs)
+                           cross_df <- subset(cross_df, from!=to)
+                           cross_df$type <- "cross"
+                           self$append_fct_edges(cross_df)
                          },
 
                          setup_data.nest_lvls = function(fresh, name, class) {
                            idv <- self$fct_last_id + 1L
-                           idl <- self$lvl_last_id+ 1L
+                           idl <- self$lvl_last_id + 1L
                            parent <- fresh %@% "keyname"
                            cross_parents <- fresh %@% "parents"
                            clabels <- fresh %@% "labels"
@@ -542,7 +554,7 @@ Kitchen <- R6::R6Class("Kitchen",
                                                                 name = name,
                                                                 class = class)))
                            self$append_fct_nodes(fattrs)
-                           self$append_fct_edges(data.frame(from = idp, to = idv))
+                           self$append_fct_edges(data.frame(from = idp, to = idv, type = "nest"))
                            plevels <- rep(names(fresh), lengths(fresh))
                            clevels <- unname(unlist(fresh))
                            self$append_lvl_nodes(data.frame(idvar = idv,

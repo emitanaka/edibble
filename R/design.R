@@ -31,7 +31,7 @@ initialise_edibble_graph <- function() {
   fnodes <- data.frame(id = integer(), name = character(), class = character(), stringsAsFactors = FALSE)
   lnodes <- data.frame(idvar = integer(), id = integer(), name = character(), stringsAsFactors = FALSE)
   edges <-  data.frame(from = integer(), to = integer(),
-                       alloc = integer(),
+                       alloc = integer(), type = character(),
                        stringsAsFactors = FALSE)
   structure(list(nodes = fnodes,
                  edges = edges,

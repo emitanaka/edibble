@@ -66,6 +66,12 @@ is_nest_levels <- function(x) {
   inherits(x, "nest_lvls")
 }
 
+#' @rdname design-helpers
+#' @export
+is_cross_levels <- function(x) {
+  inherits(x, "cross_lvls")
+}
+
 # `get` functions ---------------------------------------------------------
 
 #' @rdname design-helpers

@@ -48,8 +48,9 @@ assign_trts <- function(.design, order = "random", seed = NULL, constrain = nest
                           "systematic-random" = rep(sample(nrow(tidf)), length.out = length(luids)),
                           "random" = {
                             if(is_empty(constrain[[unit]])) {
-                              # FIXME I think I need to do replicate here not rep??
-                              sample(rep(sample(nrow(tidf)), length.out = length(luids)))
+                              out <- as.vector(replicate(ceiling(length(luids) / nrow(tidf)),
+                                                          sample(nrow(tidf))))
+                              out[1:length(luids)]
                             } else {
 
                               # FIXME the ancestor should be found
@@ -104,42 +105,35 @@ assign_units <- function(.design, order = "random", seed = NULL, constrain = nes
 
     lnodes <- prep$lvl_nodes
     lhs_id <- lnodes[lnodes$idvar == prep$fct_id(lhs), "id"]
-    rhs_id <- lnodes[lnodes$idvar == prep$fct_id(rhs), "id"]
-    rhs_df <- data.frame(rhs = rhs_id)
+    udf <- as.data.frame(serve_units(select_units(prep, !!rhs)))
+    udf <- udf[rhs]
+    small_df <- data.frame(lhs = lhs_id)
     permutation <- switch(order,
-                          "systematic" = rep(1:nrow(rhs_df), length.out = length(lhs_id)),
-                          "systematic-random" = rep(sample(nrow(rhs_df)), length.out = length(lhs_id)),
+                          "systematic" = rep(1:nrow(small_df), length.out = nrow(udf)),
+                          "systematic-random" = rep(sample(nrow(small_df)), length.out = nrow(udf)),
                           "random" = {
 
                               # FIXME the ancestor should be found
-                              # based on `constrain`
+                              # based on `constrain`??
+                              vparents <- prep$fct_id(rhs[-length(rhs)])
 
-                              # find the grandest ancestor
-                              vanc <- prep$fct_ancestor(id = prep$fct_id(rhs))
-                              vanc <- vanc[vanc %in% prep$unit_ids]
-                              udf <- as.data.frame(serve_units(select_units(prep, !!prep$fct_names(vanc))))
-                              # FIXME the unit allocation not working for dryer example
-
-                              vparents <- prep$fct_parent(id = prep$fct_id(rhs))
-                              vparents <- vparents[vparents %in% prep$unit_ids]
-                              vparents <- setdiff(vparents, prep$fct_id(rhs))
-
-                              if(length(vparents)==0L) {
-                                # FIXME I think I need to do replicate here not rep
-                                sample(rep(sample(nrow(rhs_df)), length.out = length(lhs_id)))
-                              } else if(length(vparents)==1L) {
-                                permute_parent_one_alg(prep, vparents, udf, nrow(rhs_df))
+                              if(length(rhs)==1L) {
+                                out <- as.vector(replicate(ceiling(nrow(udf)/nrow(small_df)),
+                                                        sample(nrow(small_df))))
+                                out[1:nrow(udf)]
+                              } else if(length(rhs)==2L) {
+                                permute_parent_one_alg(prep, vparents, udf, nrow(small_df))
                               } else {
-                                permute_parent_more_than_one(prep, vparents, udf, nrow(rhs_df))
+                                permute_parent_more_than_one(prep, vparents, udf, nrow(small_df))
                               }
                           }, abort("not implemented yet"))
 
-    tout <- rhs_df[permutation, , drop = FALSE]
+    tout <- small_df[permutation, , drop = FALSE]
 
     for(itvar in seq_along(tout)) {
-      prep$lvl_edges <- prep$append_lvl_edges(data.frame(from = tout[[itvar]],
-                                                         to = lhs_id,
-                                                         alloc = ialloc))
+      prep$append_lvl_edges(data.frame(from = tout[[itvar]],
+                                       to = prep$lvl_id(udf[[rhs[length(rhs)]]]),
+                                       alloc = ialloc))
     }
 
   }

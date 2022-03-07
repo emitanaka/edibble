@@ -26,7 +26,7 @@ allot_trts <- function(.design, ..., .record = TRUE) {
   if(.record) record_step()
 
   dots <- list2(...)
-  if("allotment" %in% names(.design)) {
+  if(!is_null(.design$allotment)) {
     .design$allotment$trts <- c(.design$allotment$trts, dots)
   } else {
     .design$allotment <- list(trts = dots, units = NULL)
@@ -48,7 +48,7 @@ allot_trts <- function(.design, ..., .record = TRUE) {
       tids <- prep$trt_ids
     }
 
-    prep$fct_edges <- prep$append_fct_edges(data.frame(from = tids, to = uid, alloc = ialloc))
+    prep$append_fct_edges(data.frame(from = tids, to = uid, alloc = ialloc, type = "allot"))
   }
   prep$design
 }
@@ -60,7 +60,7 @@ allot_units <- function(.design, ..., .record = TRUE) {
   if(.record) record_step()
 
   dots <- list2(...)
-  if("allotment" %in% names(.design)) {
+  if(!is_null(.design$allotment)) {
     .design$allotment$units <- c(.design$allotment$units, dots)
   } else {
     .design$allotment <- list(trts = NULL, units = dots)
@@ -68,14 +68,21 @@ allot_units <- function(.design, ..., .record = TRUE) {
   prep <- cook_design(.design)
 
   for(ialloc in seq_along(dots)) {
-    lhs <- all.vars(f_lhs(dots[[ialloc]]))
-    # there should be only one unit
-    rhs <- all.vars(f_rhs(dots[[ialloc]]))
-    prep$fct_exists(name = rhs, class = "edbl_unit")
-    lhs_id <- prep$fct_id(lhs)
-    prep$fct_exists(name = lhs, class = "edbl_unit")
-    rhs_id <- prep$fct_id(rhs)
-    prep$fct_edges <- prep$append_fct_edges(data.frame(from = rhs_id, to = lhs_id))
+    # there should be only one unit for `big`
+    big <- all.vars(f_lhs(dots[[ialloc]]))
+    small <- all.vars(f_rhs(dots[[ialloc]]))
+    prep$fct_exists(name = small, class = "edbl_unit")
+    big_id <- prep$fct_id(big)
+    prep$fct_exists(name = big, class = "edbl_unit")
+    small_id <- prep$fct_id(small)
+    prep$append_fct_edges(data.frame(from = big_id,
+                                     to = small_id[length(small_id)],
+                                     type = "nest"))
+    if(length(small) > 1) {
+      prep$append_fct_edges(data.frame(from =  big_id,
+                                       to = small_id[length(small_id) - 1],
+                                       type = "depends"))
+    }
   }
   prep$design
 

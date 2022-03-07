@@ -27,9 +27,13 @@ nested_in <- function(x, ..., prefix = "", suffix = "",
   dots <- list2(...)
   args <- list()
   for(.x in dots) {
-    ind <- is_formula(.x, lhs = FALSE)
+    ind <- is_cross_levels(.x) | is_formula(.x, lhs = FALSE)
     if(ind) {
-      vars <- rownames(attr(terms(.x), "factors"))
+      if(is_formula(.x, lhs = FALSE)) {
+        vars <- rownames(attr(terms(.x), "factors"))
+      } else {
+        vars <- .x
+      }
       child_lvls_by_parent <- map(vars, function(.var) {
         out <- serve_units(select_units(prep, c(.var, parent_name)))
         split(out[[.var]], out[[parent_name]])
@@ -79,13 +83,13 @@ nested_in <- function(x, ..., prefix = "", suffix = "",
 #' @return Return a named list. Only shows the direct parent.
 #' @export
 nesting_structure <- function(design) {
-  prep <- cook_design(design)
-  uids <- prep$unit_ids
-  fedges <- prep$fct_edges
-  ndf <- fedges[fedges$from %in% uids & fedges$to %in% uids,]
-  from <- prep$fct_names(ndf$from)
-  to <- prep$fct_names(ndf$to)
-  split(from, to)
+    prep <- cook_design(design)
+    uids <- prep$unit_ids
+    fedges <- prep$fct_edges
+    ndf <- fedges[fedges$from %in% uids & fedges$to %in% uids & !fedges$type %in% c("depends", "cross"),]
+    from <- prep$fct_names(ndf$from)
+    to <- prep$fct_names(ndf$to)
+    split(from, to)
 }
 
 

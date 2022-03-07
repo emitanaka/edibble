@@ -74,6 +74,8 @@ permute_parent_more_than_one <- function(prep, vids, udf, ntrts) {
 
 permute_parent_one_alg <- function(prep, vid, udf, ntrts) {
   gparent <- prep$fct_names(vid)
+  udf$.id <- 1:nrow(udf)
+  udf <- udf[order(udf[[gparent]]),]
   blocksizes <- table(udf[[gparent]])
   # if(min(blocksizes) > ntrts) {
   #   permute_parent_one(.design, vid, udf, ntrts)
@@ -95,11 +97,12 @@ permute_parent_one_alg <- function(prep, vid, udf, ntrts) {
   })
   if(is.integer(res)) return(res)
   reps <- ceiling(blocksizes / ntrts) - 1L
-  unname(unlist(lapply(seq_along(blocksizes), function(i) {
+  res <- unname(unlist(lapply(seq_along(blocksizes), function(i) {
     blocksizes
     sample(c(as.integer(res$Blocks[[i]]$tindex), rep(1:ntrts, reps[i])))
   })))
-  # }
+  udf$.res <- res
+  udf[order(udf$.id), ".res"]
 }
 
 

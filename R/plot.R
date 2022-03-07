@@ -44,6 +44,16 @@ plot.edbl_design <- function(.design, which = c("factors", "levels"),
   edges <- switch(which,
                   "factors" = prep$fct_edges,
                   "levels" = prep$lvl_edges)
+  if(which=="factors") {
+    # this doesn't seem to work
+    type2arrowtype <- c("cross" = NA, "depends" = "circle", "nest" = "arrow", "allot" = "arrow")
+    edges$arrows.middle.type = type2arrowtype[edges$type]
+
+    type2dash <- c("cross" = TRUE, "depends" = TRUE, "nest" = FALSE, "allot" = FALSE)
+    type2arrow <- c("cross" = NA, "depends" = "middle", "nest" = "to", "allot" = "to")
+    edges$dashes <- type2dash[edges$type]
+    edges$arrows <- type2arrow[edges$type] # list(to = list(type = type2arrowtype[edges$type]))
+  }
   out <- visNetwork::visNetwork(nodes = nodes,
                                edges = edges,
                                width = width,
@@ -58,7 +68,8 @@ plot.edbl_design <- function(.design, which = c("factors", "levels"),
                                ) %>%
     visNetwork::visLayout(randomSeed = seed) %>%
     visNetwork::visNodes(id = "id") %>%
-    visNetwork::visEdges(arrows = "to", id = "id")
+    visNetwork::visEdges(id = "id")
+    #visNetwork::visHierarchicalLayout()
     #visNetwork::visLegend() %>%
   switch(view,
          "show-buttons" = out %>%

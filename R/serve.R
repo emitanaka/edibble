@@ -48,6 +48,7 @@ serve_trts <- function(prep, lunits) {
   lvs <- lapply(tids, function(i) {
     serve_trt(prep, i, lunits)
   })
+
   names(lvs) <- vnames
   lvs
 }

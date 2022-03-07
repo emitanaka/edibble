@@ -13,8 +13,8 @@
 #' @export
 crossed_by <- function(..., prefix = NULL, suffix = NULL, leading0 = NULL, sep = NULL, attrs = NULL) {
   e <- exprs(...)
-  structure(as.formula(paste0("~", paste0(map_chr(e, as.character), collapse = ":"))),
-            attrs = attrs)
+  structure(as.character(e),
+            attrs = attrs, class = "cross_lvls")
 }
 
 
