@@ -26,7 +26,7 @@ reference:
   desc: >
     These are the main functions used to set experiments from scratch.
   contents:
-  - start_design
+  - design
   - set_units
   - set_trts
   - allot_trts
@@ -82,8 +82,9 @@ reference:
   desc: >
     These are mostly for internal usage and for those who wish to extend edibble functions.
   contents:
+  - cook_design
+  - Kitchen
   - nesting_structure
-  - add_edibble_vertex
   - design-context
   - design-helpers
   - starts_with("fct")
