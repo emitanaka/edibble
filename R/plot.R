@@ -53,6 +53,8 @@ plot.edbl_design <- function(.design, which = c("factors", "levels"),
     type2arrow <- c("cross" = NA, "depends" = "middle", "nest" = "to", "allot" = "to")
     edges$dashes <- type2dash[edges$type]
     edges$arrows <- type2arrow[edges$type] # list(to = list(type = type2arrowtype[edges$type]))
+  } else {
+    edges$arrows <- "to"
   }
   out <- visNetwork::visNetwork(nodes = nodes,
                                edges = edges,
