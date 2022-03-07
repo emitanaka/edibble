@@ -16,7 +16,7 @@
     <loc>https://edibble.emitanaka.org/news/index.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/add_edibble_vertex.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/Kitchen.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/allot_table.html</loc>
@@ -31,6 +31,9 @@
     <loc>https://edibble.emitanaka.org/reference/assign_trts.html</loc>
   </url>
   <url>
+    <loc>https://edibble.emitanaka.org/reference/cook_design.html</loc>
+  </url>
+  <url>
     <loc>https://edibble.emitanaka.org/reference/crossed_by.html</loc>
   </url>
   <url>
@@ -38,6 +41,9 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/design-helpers.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/design.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/design_data.html</loc>
@@ -166,22 +172,10 @@
     <loc>https://edibble.emitanaka.org/reference/skittles.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/start_design.html</loc>
-  </url>
-  <url>
     <loc>https://edibble.emitanaka.org/reference/takeout.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/utility-edibble-var.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/var_exists.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/var_ids.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/var_names.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/with_value.html</loc>
