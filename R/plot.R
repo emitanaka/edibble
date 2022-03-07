@@ -90,7 +90,7 @@ plot.edbl_table <- function(.table, ...) {
 
 
 #' @export
-plot_fct_network <- function(.design, width = "100%", height = NULL, seed = 1, title = NULL,
+plot_fct_graph <- function(.design, width = "100%", height = NULL, seed = 1, title = NULL,
                              subtitle = NULL, footer = NULL, background = "transparent",
                              view = c("show-buttons", "hide-buttons", "static"), ...) {
   plot(.design, which = "factors",
@@ -99,7 +99,7 @@ plot_fct_network <- function(.design, width = "100%", height = NULL, seed = 1, t
 }
 
 #' @export
-plot_lvl_network <- function(.design, width = "100%", height = NULL, seed = 1, title = NULL,
+plot_lvl_graph <- function(.design, width = "100%", height = NULL, seed = 1, title = NULL,
                              subtitle = NULL, footer = NULL, background = "transparent",
                              view = c("show-buttons", "hide-buttons", "static"), ...) {
   plot(.design, which = "levels",
