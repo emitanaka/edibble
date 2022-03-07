@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 Install the development version with: 
 
-```r
+```{r, eval = FALSE}
 # install.packages("remotes")
 remotes::install_github("emitanaka/edibble")
 ```

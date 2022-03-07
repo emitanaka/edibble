@@ -65,16 +65,16 @@ serve_table(des)
 #> # An edibble: 120 x 4
 #>        class     student       style        exam
 #>    <unit(4)> <unit(120)>    <trt(2)>    <trt(3)>
-#>  1    class1   student1  traditional take-home  
-#>  2    class1   student2  traditional closed-book
-#>  3    class1   student3  traditional open-book  
-#>  4    class1   student4  traditional take-home  
-#>  5    class1   student5  traditional closed-book
+#>  1    class1   student1  traditional closed-book
+#>  2    class1   student2  traditional open-book  
+#>  3    class1   student3  traditional take-home  
+#>  4    class1   student4  traditional closed-book
+#>  5    class1   student5  traditional open-book  
 #>  6    class1   student6  traditional take-home  
-#>  7    class1   student7  traditional take-home  
-#>  8    class1   student8  traditional open-book  
+#>  7    class1   student7  traditional closed-book
+#>  8    class1   student8  traditional take-home  
 #>  9    class1   student9  traditional take-home  
-#> 10    class1   student10 traditional closed-book
+#> 10    class1   student10 traditional open-book  
 #> # … with 110 more rows
 ```
 
@@ -104,16 +104,16 @@ out
 #> # An edibble: 120 x 10
 #>        class     student       style        exam exam_mark quiz1_mark quiz2_mark
 #>    <unit(4)> <unit(120)>    <trt(2)>    <trt(3)>    <rcrd>     <rcrd>     <rcrd>
-#>  1    class1   student1  traditional take-home           ■          ■          ■
-#>  2    class1   student2  traditional closed-book         ■          ■          ■
-#>  3    class1   student3  traditional open-book           ■          ■          ■
-#>  4    class1   student4  traditional take-home           ■          ■          ■
-#>  5    class1   student5  traditional closed-book         ■          ■          ■
+#>  1    class1   student1  traditional closed-book         ■          ■          ■
+#>  2    class1   student2  traditional open-book           ■          ■          ■
+#>  3    class1   student3  traditional take-home           ■          ■          ■
+#>  4    class1   student4  traditional closed-book         ■          ■          ■
+#>  5    class1   student5  traditional open-book           ■          ■          ■
 #>  6    class1   student6  traditional take-home           ■          ■          ■
-#>  7    class1   student7  traditional take-home           ■          ■          ■
-#>  8    class1   student8  traditional open-book           ■          ■          ■
+#>  7    class1   student7  traditional closed-book         ■          ■          ■
+#>  8    class1   student8  traditional take-home           ■          ■          ■
 #>  9    class1   student9  traditional take-home           ■          ■          ■
-#> 10    class1   student10 traditional closed-book         ■          ■          ■
+#> 10    class1   student10 traditional open-book           ■          ■          ■
 #> # … with 110 more rows, and 3 more variables: gender <rcrd>, room <rcrd>,
 #> #   teacher <rcrd>
 ```
