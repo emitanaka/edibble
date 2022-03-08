@@ -38,9 +38,9 @@ set_fcts <- function(.edibble, ..., .class = NULL,
     loc <- eval_select(tidyselect::all_of(expr(c(...))), .edibble)
     for(i in seq_along(loc)) {
       var <- .edibble[[loc[i]]]
-      lvls <- unique(as.character(var))
+      lvls <- as.character(sort(unique(var)))
       fname <- names(loc)[i]
-      .edibble[[loc[i]]] <- new_edibble_fct(labels = .edibble[[loc[[i]]]],
+      .edibble[[loc[i]]] <- new_edibble_fct(labels = as.character(.edibble[[loc[[i]]]]),
                                             levels = lvls,
                                             class = .class,
                                             name = fname)

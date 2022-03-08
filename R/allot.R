@@ -87,24 +87,50 @@ allot_units <- function(.design, ..., .record = TRUE) {
     # there should be only one unit for `big`
     big <- all.vars(f_lhs(dots[[ialloc]]))
     small <- all.vars(f_rhs(dots[[ialloc]]))
+    op <- as.character(as.list(f_rhs(dots[[ialloc]]))[[1]])
     prep$fct_exists(name = small, class = "edbl_unit")
     big_id <- prep$fct_id(big)
     prep$fct_exists(name = big, class = "edbl_unit")
     small_id <- prep$fct_id(small)
-    prep$append_fct_edges(data.frame(from = big_id,
-                                     to = small_id[length(small_id)],
-                                     type = "nest"))
-    if(length(small) > 1) {
-      prep$append_fct_edges(data.frame(from =  big_id,
-                                       to = small_id[length(small_id) - 1],
-                                       type = "depends"))
+
+    if(!op %in% c("crossed_by", "nested_in")) {
+      prep$append_fct_edges(data.frame(from = big_id,
+                                       to = small_id[length(small_id)],
+                                       type = "nest"))
+      if(length(small) > 1) {
+        prep$append_fct_edges(data.frame(from =  big_id,
+                                         to = small_id[length(small_id) - 1],
+                                         type = "depends"))
+      }
+
     }
   }
   if(is_edibble_design(.design)) {
     prep$design
   } else if(is_edibble_table(.design)) {
-    prep$append_lvl_edges(data.frame(from = prep$lvl_id(as.character(.design[[big]])),
-                                     to = prep$lvl_id(as.character(.design[[small]]))))
+    # Note: for crossed and nested, it's the opposite -> small = big, not big = small.
+    if(op %in% c("crossed_by", "nested_in")) {
+      for(ismall in seq_along(small_id)) {
+        prep$append_fct_edges(data.frame(from = small_id[ismall],
+                                         to = big_id,
+                                         type = "nest"))
+        if(op == "crossed_by") {
+          cross_df <- expand.grid(from = small_id, to = small_id)
+          cross_df <- subset(cross_df, from!=to)
+          cross_df$type <- "cross"
+          prep$append_fct_edges(cross_df)
+        }
+        prep$append_lvl_edges(data.frame(from = prep$lvl_id(as.character(.design[[small[ismall]]])),
+                                         to = prep$lvl_id(as.character(.design[[big]]))))
+
+      }
+
+    } else {
+      for(asmall in small) {
+        prep$append_lvl_edges(data.frame(from = prep$lvl_id(as.character(.design[[big]])),
+                                         to = prep$lvl_id(as.character(.design[[asmall]]))))
+      }
+    }
     attr(.design, "design") <- prep$design
     .design
   }
