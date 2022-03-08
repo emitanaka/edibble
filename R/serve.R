@@ -81,7 +81,7 @@ serve_vars_not_reconciled <- function(prep) {
   namesv <- prep$fct_names()
   res <- lapply(namesv,
                 function(avar) {
-                  new_edibble_var(levels = prep$fct_levels(name = avar)[[avar]],
+                  new_edibble_fct(levels = prep$fct_levels(name = avar)[[avar]],
                                   name = avar,
                                   class = prep$fct_class(id = prep$fct_id(avar)))
                 })
@@ -97,7 +97,7 @@ serve_unit_with_child <- function(parent_levels, parent_vname, parent_class,
   ledges <- prep$lvl_edges
   ledges <- ledges[ledges$to %in% cids & ledges$from %in% pids, ]
   dict <- set_names(prep$lvl_names(ledges$from), prep$lvl_names(ledges$to))
-  new_edibble_var(levels = parent_levels,
+  new_edibble_fct(levels = parent_levels,
                   labels = unname(dict[child_labels]),
                   name = parent_vname,
                   class = parent_class)
@@ -105,7 +105,7 @@ serve_unit_with_child <- function(parent_levels, parent_vname, parent_class,
 }
 
 serve_unit_with_no_child <- function(vlevs, vname, classv) {
-  new_edibble_var(levels = vlevs,
+  new_edibble_fct(levels = vlevs,
                   labels = vlevs,
                   name = vname,
                   class = classv)
@@ -169,7 +169,7 @@ serve_trt <- function(prep, tid, lunits) {
   } else {
     labels <- tdf$label
   }
-  new_edibble_var(levels = tdf$label,
+  new_edibble_fct(levels = tdf$label,
                   labels = labels,
                   name = prep$fct_names(id = tid),
                   class = prep$fct_class(id = tid))

@@ -25,13 +25,15 @@ allot_trts <- function(.design, ..., .record = TRUE) {
   not_edibble(.design)
   if(.record) record_step()
 
+  des <- edbl_design(.design)
+
   dots <- list2(...)
-  if(!is_null(.design$allotment)) {
-    .design$allotment$trts <- c(.design$allotment$trts, dots)
+  if(!is_null(des$allotment)) {
+    des$allotment$trts <- c(des$allotment$trts, dots)
   } else {
-    .design$allotment <- list(trts = dots, units = NULL)
+    des$allotment <- list(trts = dots, units = NULL)
   }
-  prep <- cook_design(.design)
+  prep <- cook_design(des)
 
   for(ialloc in seq_along(dots)) {
     trts <- all.vars(f_lhs(dots[[ialloc]]))
@@ -50,7 +52,20 @@ allot_trts <- function(.design, ..., .record = TRUE) {
 
     prep$append_fct_edges(data.frame(from = tids, to = uid, alloc = ialloc, type = "allot"))
   }
-  prep$design
+
+  if(is_edibble_design(.design)) {
+    prep$design
+  } else if(is_edibble_table(.design)) {
+    if(length(trts)==0) {
+      trts <- prep$trt_names
+    }
+    for(atrt in trts) {
+      prep$append_lvl_edges(data.frame(from = prep$lvl_id(as.character(.design[[atrt]])),
+                                       to = prep$lvl_id(as.character(.design[[unit]]))))
+    }
+    attr(.design, "design") <- prep$design
+    .design
+  }
 }
 
 
@@ -58,14 +73,15 @@ allot_trts <- function(.design, ..., .record = TRUE) {
 allot_units <- function(.design, ..., .record = TRUE) {
   not_edibble(.design)
   if(.record) record_step()
+  des <- edbl_design(.design)
 
   dots <- list2(...)
-  if(!is_null(.design$allotment)) {
-    .design$allotment$units <- c(.design$allotment$units, dots)
+  if(!is_null(des$allotment)) {
+    des$allotment$units <- c(des$allotment$units, dots)
   } else {
-    .design$allotment <- list(trts = NULL, units = dots)
+    des$allotment <- list(trts = NULL, units = dots)
   }
-  prep <- cook_design(.design)
+  prep <- cook_design(des)
 
   for(ialloc in seq_along(dots)) {
     # there should be only one unit for `big`
@@ -84,7 +100,14 @@ allot_units <- function(.design, ..., .record = TRUE) {
                                        type = "depends"))
     }
   }
-  prep$design
+  if(is_edibble_design(.design)) {
+    prep$design
+  } else if(is_edibble_table(.design)) {
+    prep$append_lvl_edges(data.frame(from = prep$lvl_id(as.character(.design[[big]])),
+                                     to = prep$lvl_id(as.character(.design[[small]]))))
+    attr(.design, "design") <- prep$design
+    .design
+  }
 
 }
 

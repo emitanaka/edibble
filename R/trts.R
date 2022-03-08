@@ -24,7 +24,7 @@ set_trts <- function(.design, ...,
                      .name_repair = c("check_unique", "unique", "universal", "minimal"),
                      .record = TRUE) {
   if(.record) record_step()
-  set_vars(.design, ..., .name_repair = .name_repair, .class = "edbl_trt")
+  set_fcts(.design, ..., .name_repair = .name_repair, .class = "edbl_trt")
 }
 
 

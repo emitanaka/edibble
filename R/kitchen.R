@@ -188,8 +188,8 @@ Kitchen <- R6::R6Class("Kitchen",
                          #' @description
                          #' Setup the node and edge data
                          setup_data = function(fresh, name, class) {
-                           f <- private$next_method("setup_data", class(fresh))
-                           f(fresh, name, class)
+                           setup_data_internal <- private$next_method("setup_data", class(fresh))
+                           setup_data_internal(fresh, name, class)
                          },
 
                          #' @description
@@ -515,6 +515,23 @@ Kitchen <- R6::R6Class("Kitchen",
                            vars <- rownames(attr(tt, "factor"))
 
                            private$setup_data.cross_lvls(vars, name, class)
+                         },
+
+                         setup_data.edbl_fct = function(fresh, name, class) {
+                           fid <- self$fct_last_id + 1L
+                           lid <- self$lvl_last_id + 1L
+
+                           self$append_fct_nodes(data.frame(id = fid, name = name, class = class,
+                                                            stringsAsFactors = FALSE))
+
+                           lvls <- levels(fresh)
+                           lattrs <- data.frame(name = lvls,
+                                                label = lvls,
+                                                idvar = fid,
+                                                var = name,
+                                                id = lid:(lid + length(lvls) - 1))
+
+                           self$append_lvl_nodes(lattrs)
                          },
 
                          setup_data.cross_lvls = function(fresh, name, class) {

@@ -9,7 +9,7 @@
 #' @importFrom vctrs vec_as_names
 #' @importFrom cli col_grey
 #' @importFrom tidyselect eval_select
-set_vars <- function(.edibble, ..., .class = NULL,
+set_fcts <- function(.edibble, ..., .class = NULL,
                      .name_repair = c("check_unique", "unique", "universal", "minimal"),
                      .code = NULL) {
 
@@ -31,30 +31,26 @@ set_vars <- function(.edibble, ..., .class = NULL,
       prep$add_anatomy(fresh, fname, .class)
       prep$setup_data(fresh, fname, .class)
     }
+    prep$design
 
-  # } else if(is_edibble_table(.edibble)) {
-  #   dots <- enquos(..., .named = TRUE)
-  #   # FIXME
-  #   loc <- eval_select(expr(!!names(dots)), .edibble)
-  #   for(i in seq_along(loc)) {
-  #     var <- .edibble[[loc[i]]]
-  #     lvls <- unique(as.character(var))
-  #     fname <- names(loc)[i]
-  #     .edibble[[loc[i]]] <- ...
-  #     .edibble <- add_graph(lvls, fname, .class, res)
-  #   }
+  } else if(is_edibble_table(.edibble)) {
+
+    loc <- eval_select(tidyselect::all_of(expr(c(...))), .edibble)
+    for(i in seq_along(loc)) {
+      var <- .edibble[[loc[i]]]
+      lvls <- unique(as.character(var))
+      fname <- names(loc)[i]
+      .edibble[[loc[i]]] <- new_edibble_fct(labels = .edibble[[loc[[i]]]],
+                                            levels = lvls,
+                                            class = .class,
+                                            name = fname)
+      prep$setup_data(.edibble[[loc[i]]], fname, .class)
+      attr(.edibble, "design") <- prep$design
+
+    }
+    .edibble
   }
-  prep$design
 }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -62,10 +58,10 @@ set_vars <- function(.edibble, ..., .class = NULL,
 
 #' Constructor for an edibble variable
 #' @importFrom vctrs new_vctr
-new_edibble_var <- function(labels = character(), levels = unique(labels),
+new_edibble_fct <- function(labels = character(), levels = unique(labels),
                             name = character(), rep = NULL, ..., class = NULL) {
   x <- new_vctr(labels, levels = levels, name = name,
-                ..., class = c("edbl_var", "character"))
+                ..., class = c("edbl_fct", "character"))
   class(x) <- c(class, class(x))
   x
 }
@@ -74,17 +70,17 @@ new_edibble_var <- function(labels = character(), levels = unique(labels),
 #' Utility functions for edibble variable
 #'
 #' @description
-#' The S3 methods for `edbl_var` objects have
+#' The S3 methods for `edbl_fct` objects have
 #' the same expected output that of a factor.
 #'
-#' Other functions are utility functions related to `edbl_var` object.
+#' Other functions are utility functions related to `edbl_fct` object.
 #'
-#' @param x An `edbl_var` object.
+#' @param x An `edbl_fct` object.
 #' @param ... Ignored.
 #'
 #' @name utility-edibble-var
 #' @export
-as.character.edbl_var <- function(x, ...) {
+as.character.edbl_fct <- function(x, ...) {
   #unname(levels(x)[x])
   out <- unclass(x)
   attributes(out) <- NULL
@@ -105,14 +101,14 @@ as.integer.edbl_lvls <- function(x, ...) {
 
 #' @rdname utility-edibble-var
 #' @export
-as.integer.edbl_var <- function(x, ...) {
+as.integer.edbl_fct <- function(x, ...) {
   out <- as.integer(as.factor(as.character(x)))
   attributes(out) <- NULL
   out
 }
 
 #' @export
-levels.edbl_var <- function(x) {
+levels.edbl_fct <- function(x) {
   if(inherits(x, "edbl_rcrd")) {
     unique(attr(x, "unit_values"))
   } else {
@@ -123,7 +119,7 @@ levels.edbl_var <- function(x) {
 #' @rdname utility-edibble-var
 #' @export
 is_edibble_var <- function(x) {
-  inherits(x, "edbl_var")
+  inherits(x, "edbl_fct")
 }
 
 #' @rdname utility-edibble-var
@@ -149,9 +145,9 @@ is_edibble_rcrd <- function(x) {
 #' @export
 vctrs::vec_math
 
-#' @method vec_math edbl_var
+#' @method vec_math edbl_fct
 #' @export
-vec_math.edbl_var <- function(.fn, .x, ...) {
+vec_math.edbl_fct <- function(.fn, .x, ...) {
   if(.fn %in% c("is.nan", "is.infinite")) return(rep_len(FALSE, length(.x)))
   if(.fn == "is.finite") return(rep_len(TRUE, length(.x)))
   out <- lapply(as.character(.x), get(.fn), ...)

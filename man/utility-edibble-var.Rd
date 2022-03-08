@@ -2,17 +2,17 @@
 % Please edit documentation in R/vars.R
 \name{utility-edibble-var}
 \alias{utility-edibble-var}
-\alias{as.character.edbl_var}
-\alias{as.integer.edbl_var}
+\alias{as.character.edbl_fct}
+\alias{as.integer.edbl_fct}
 \alias{is_edibble_var}
 \alias{is_edibble_unit}
 \alias{is_edibble_trt}
 \alias{is_edibble_rcrd}
 \title{Utility functions for edibble variable}
 \usage{
-\method{as.character}{edbl_var}(x, ...)
+\method{as.character}{edbl_fct}(x, ...)
 
-\method{as.integer}{edbl_var}(x, ...)
+\method{as.integer}{edbl_fct}(x, ...)
 
 is_edibble_var(x)
 
@@ -23,13 +23,13 @@ is_edibble_trt(x)
 is_edibble_rcrd(x)
 }
 \arguments{
-\item{x}{An \code{edbl_var} object.}
+\item{x}{An \code{edbl_fct} object.}
 
 \item{...}{Ignored.}
 }
 \description{
-The S3 methods for \code{edbl_var} objects have
+The S3 methods for \code{edbl_fct} objects have
 the same expected output that of a factor.
 
-Other functions are utility functions related to \code{edbl_var} object.
+Other functions are utility functions related to \code{edbl_fct} object.
 }

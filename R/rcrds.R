@@ -288,7 +288,7 @@ dup_symbol <- function() "x"
 
 
 new_edibble_rcrd <- function(x, unit_name = NULL, unit_values = NULL, class = NULL, ...) {
-  res <- new_vctr(x, class = c("edbl_rcrd", "edbl_var"),
+  res <- new_vctr(x, class = c("edbl_rcrd", "edbl_fct"),
                   unit = unit_name %||% attr(x, "unit_name"),
                   unit_values = unit_values %||% attr(x, "unit_values"),
                   ...)

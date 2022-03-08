@@ -125,9 +125,9 @@ not_edibble <- function(x) {
 #' @importFrom vctrs vec_size_common
 #'
 #' @export
-new_edibble <- function(.data, ..., graph = NULL, class = NULL) {
+new_edibble <- function(.data, ..., design = NULL, class = NULL) {
   new_tibble(.data, ..., nrow = vec_size_common(!!!.data),
-             class = c("edbl_table", "edbl", class), graph = graph)
+             class = c(class, "edbl_table", "edbl"), design = design)
 }
 
 #' @importFrom tibble tbl_sum
@@ -145,14 +145,21 @@ print.edbl_table <- function(x, ..., n = NULL, width = NULL, n_extra = NULL) {
 }
 
 
-# as_edibble <- function(.data, ...) {
-#   UseMethod("as_edibble")
-# }
-#
-# as_edibble.default <- function(.data, ...) {
-#   edibble(.data, ...)
-# }
+#' @export
+as_edibble <- function(.data, ...) {
+  UseMethod("as_edibble")
+}
 
+#' @export
+as_edibble.default <- function(.data, ...) {
+  edibble(.data, ...)
+}
+
+#' @export
+edibble <- function(.data, name = NULL, .record = TRUE, seed = NULL, kitchen = Kitchen, ...) {
+  des <- design(name = name, .record = .record, seed = seed, kitchen = kitchen)
+  new_edibble(.data, ..., design = des)
+}
 
 
 

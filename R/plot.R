@@ -44,18 +44,21 @@ plot.edbl_design <- function(.design, which = c("factors", "levels"),
   edges <- switch(which,
                   "factors" = prep$fct_edges,
                   "levels" = prep$lvl_edges)
-  if(which=="factors") {
-    # this doesn't seem to work
-    type2arrowtype <- c("cross" = NA, "depends" = "circle", "nest" = "arrow", "allot" = "arrow")
-    edges$arrows.middle.type = type2arrowtype[edges$type]
+  if(nrow(edges)) {
+    if(which=="factors") {
+      # this doesn't seem to work
+      type2arrowtype <- c("cross" = NA, "depends" = "circle", "nest" = "arrow", "allot" = "arrow")
+      edges$arrows.middle.type = type2arrowtype[edges$type]
 
-    type2dash <- c("cross" = TRUE, "depends" = TRUE, "nest" = FALSE, "allot" = FALSE)
-    type2arrow <- c("cross" = NA, "depends" = "middle", "nest" = "to", "allot" = "to")
-    edges$dashes <- type2dash[edges$type]
-    edges$arrows <- type2arrow[edges$type] # list(to = list(type = type2arrowtype[edges$type]))
-  } else {
-    edges$arrows <- "to"
+      type2dash <- c("cross" = TRUE, "depends" = TRUE, "nest" = FALSE, "allot" = FALSE)
+      type2arrow <- c("cross" = NA, "depends" = "middle", "nest" = "to", "allot" = "to")
+      edges$dashes <- type2dash[edges$type]
+      edges$arrows <- type2arrow[edges$type] # list(to = list(type = type2arrowtype[edges$type]))
+    } else {
+      edges$arrows <- "to"
+    }
   }
+
   out <- visNetwork::visNetwork(nodes = nodes,
                                edges = edges,
                                width = width,

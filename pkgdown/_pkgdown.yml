@@ -40,6 +40,8 @@ reference:
     Function helpers to understand your design better.
   contents:
   - plot.edbl_design
+  - plot_fct_graph
+  - plot_lvl_graph
   - examine_recipe
   - simulate_rcrds
   - anatomy
@@ -65,13 +67,12 @@ reference:
   - contains("to_be")
   - with_value
   - export_design
-# - title: "Experiment from existing data"
-#   desc: >
-#     These are functions relevant when making an experiment from existing data
-# - contents:
-#   - edibble
-#   - as_edibble
-#   - restart_design
+- title: "Experiment from existing data"
+  desc: >
+    These are functions relevant when making an experiment from existing data
+- contents:
+  - edibble
+  - as_edibble
 - title: "Experiments"
   desc: >
     These are some example experiments.
@@ -89,16 +90,14 @@ reference:
   - design-helpers
   - starts_with("fct")
   - starts_with("lvl")
-  - starts_with("var")
-  - starts_with("utility-edibble-var")
   - edibble-package
   - ndigits
   - new_edibble
-  - new_edibble_var
+  - new_edibble_fct
   - number_si_prefix
   - print.edbl_design
   - record_step
-  - set_vars
+  - set_fcts
 - title: "Defunct functions"
   desc: >
     Please don't use these functions anymore and use suggested alternatives instead.
