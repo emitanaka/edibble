@@ -1,13 +1,13 @@
 
 # FIXME
 
-make_sheet_names <- function(.design = NULL) {
-  if(is_null(.design)) {
+make_sheet_names <- function(prep = NULL) {
+  if(is_null(prep)) {
     data_sheet_names <- "Data"
   } else {
-    if(has_record(.design)) {
-      rids <- rcrd_ids(.design)
-      rcrds <- rcrd_to_unit_dict(.design, rids)
+    if(has_record(prep)) {
+      rids <- prep$rcrd_ids
+      rcrds <- rcrd_to_unit_dict(prep, rids)
       units <- unique(unname(rcrds))
       if(length(units) == 1) {
         data_sheet_names <- "Data"
@@ -68,9 +68,9 @@ add_worksheets <- function(wb, sheet_names, title) {
 
 
 
-write_title_sheet <- function(wb, sheet_name, cell_styles, .design, author, date = Sys.Date()) {
+write_title_sheet <- function(wb, sheet_name, cell_styles, prep, author, date = Sys.Date()) {
   # title
-  writeData(wb, sheet = sheet_name, x = .design$name,
+  writeData(wb, sheet = sheet_name, x = prep$design$name,
             startRow = 1, startCol = 1, name = "title")
   addStyle(wb, sheet = sheet_name,
            style = cell_styles$title, 1, 1, stack = TRUE)
@@ -88,15 +88,15 @@ write_title_sheet <- function(wb, sheet_name, cell_styles, .design, author, date
   }
 
   # context
-  ncontext <- length(.design$context)
+  ncontext <- length(prep$design$context)
   writeData(wb, sheet = sheet_name,
-            x = unlist(.design$context),
+            x = unlist(prep$design$context),
             startRow = 5, startCol = 2)
   addStyle(wb, sheet_name, cell_styles$context, 5:(5 + ncontext), 2,
            stack = TRUE)
 
   writeData(wb, sheet = sheet_name,
-            x = names(.design$context),
+            x = names(prep$design$context),
             startCol = 1, startRow = 5)
   addStyle(wb, sheet_name, cell_styles$context_name, 5:(5 + ncontext), 1,
            stack = TRUE)
@@ -111,47 +111,48 @@ data_sheet_name <- function(name) {
   paste0("Data.", name)
 }
 
-subset.edbl_design <- function(.edibble, unit, rcrds) {
-  keep_rids <- fct_id(.edibble, rcrds)
-  keep_uids <- fct_id(.edibble, unit)
-  keep_uids_ancestors <- fct_ancestor(.edibble, keep_uids)
-  .edibble$graph$nodes <- fct_nodes_filter(.edibble, id %in% c(keep_uids_ancestors, keep_rids))
-  .edibble$graph$edges <- fct_edges_filter(.edibble, (to %in% keep_uids_ancestors &
-                                                      from %in% keep_uids_ancestors) |
-                                             to %in% keep_rids)
-  .edibble$graph$levels$nodes <- lvl_nodes_filter(.edibble, idvar %in% keep_uids_ancestors)
-  keep_lids_ancestors <- lvl_id(.edibble)
-  .edibble$graph$levels$edges <- lvl_edges_filter(.edibble, to %in% keep_lids_ancestors & from %in% keep_lids_ancestors)
-  if(!is_null(.edibble$allotment$trts)) {
-    units <- map_chr(.edibble$allotment$trts, function(x) all.vars(f_rhs(x)))
-    allotments <- .edibble$allotment$trts[units %in% fct_names(.edibble)]
+subset_design <- function(prep, unit, rcrds) {
+  keep_rids <- prep$fct_id(rcrds)
+  keep_uids <- prep$fct_id(unit)
+  keep_uids_ancestors <- prep$fct_ancestor(keep_uids)
+  sprep <- prep$clone()
+  sprep$fct_nodes <- subset(sprep$fct_nodes, id %in% c(keep_uids_ancestors, keep_rids))
+  sprep$fct_edges <- subset(sprep$fct_edges, (to %in% keep_uids_ancestors &
+                                                   from %in% keep_uids_ancestors) |
+                                        to %in% keep_rids)
+  sprep$lvl_nodes <- subset(sprep$lvl_nodes, idvar %in% keep_uids_ancestors)
+  eep_lids_ancestors <- sprep$lvl_ids()
+  sprep$lvl_edges <- subset(sprep$lvl_edges, to %in% keep_lids_ancestors & from %in% keep_lids_ancestors)
+  if(!is_null(sprep$design$allotment$trts)) {
+    units <- map_chr(sprep$design$allotment$trts, function(x) all.vars(f_rhs(x)))
+    allotments <- sprep$design$allotment$trts[units %in% sprep$fct_names]
     if(is_empty(allotments)) {
-      .edibble$allotment$trts <- NULL
+      sprep$design$allotment$trts <- NULL
     } else {
-      .edibble$allotment$trts <- allotments
+      sprep$design$allotment$trts <- allotments
     }
   }
-  if(!is_null(.edibble$validation)) {
-    rcrds <- fct_names(.edibble, keep_rids)
-    if(!any(rcrds %in% names(.edibble$validation))) {
-      .edibble$validation <- NULL
+  if(!is_null(sprep$design$validation)) {
+    rcrds <- sprep$fct_names(keep_rids)
+    if(!any(rcrds %in% names(sprep$design$validation))) {
+      sprep$design$validation <- NULL
     } else {
-      .edibble$validation <- .edibble$validation[rcrds]
+      sprep$design$validation <- sprep$design$validation[rcrds]
     }
   }
 
-  .edibble
+  sprep$design
 }
 
-write_data_sheet <- function(wb, sheet_names, cell_styles, .design, .data) {
+write_data_sheet <- function(wb, sheet_names, cell_styles, prep, .data) {
   if(nrow(.data) && ncol(.data)) {
     if(length(sheet_names) > 1) {
-      rids <- rcrd_ids(.design)
-      rcrds2unit <- rcrd_to_unit_dict(.design, rids)
+      rids <- prep$rcrd_ids
+      rcrds2unit <- rcrd_to_unit_dict(prep, rids)
       units <- unique(unname(rcrds2unit))
       for(aunit in units) {
         rcrds <- names(rcrds2unit)[rcrds2unit==aunit]
-        des <- subset(.design, aunit, rcrds)
+        des <- subset_design(prep, aunit, rcrds)
         data <- as_data_frame(serve_table(des))
         writeData(wb, sheet = data_sheet_name(aunit),
                   x = data, startCol = 1,
@@ -176,7 +177,7 @@ write_data_sheet <- function(wb, sheet_names, cell_styles, .design, .data) {
 }
 
 
-write_variables_sheet <- function(wb, sheet_name, cell_styles, .design, .data) {
+write_variables_sheet <- function(wb, sheet_name, cell_styles, prep, .data) {
 
   type <- map_chr(.data, function(var) {
       cls <- class(var)
@@ -188,13 +189,13 @@ write_variables_sheet <- function(wb, sheet_name, cell_styles, .design, .data) {
   data <- data.frame(variable = names(.data),
                     type = unname(type),
                     stringsAsFactors = FALSE)
-  if(!is_null(.design$validation)) {
+  if(!is_null(prep$design$validation)) {
     data$record <- ""
     data$value <- ""
-    valid <- .design$validation
+    valid <- prep$design$validation
     valid_names <- names(valid)
-    rids <- rcrd_ids(.design)
-    rcrds <- rcrd_to_unit_dict(.design, rids)
+    rids <- prep$rcrd_ids
+    rcrds <- rcrd_to_unit_dict(prep, rids)
     n_ounits <- length(unique(rcrds))
     for(i in seq_along(valid)) {
       unit <- rcrds[valid_names[i]]
@@ -277,9 +278,10 @@ export_design <- function(.data, file, author, date = Sys.Date(), overwrite = FA
   } else {
     abort("The input is not an edibble table.")
   }
+  prep <- cook_design(.design)
 
   title <- .design$name
-  sheet_names <- make_sheet_names(.design)
+  sheet_names <- make_sheet_names(prep)
   cell_styles_list <- make_cell_styles()
 
   wb <- createWorkbook()
@@ -287,22 +289,22 @@ export_design <- function(.data, file, author, date = Sys.Date(), overwrite = FA
   add_creator(wb, author)
 
   write_title_sheet(wb, sheet_names[1],
-                    cell_styles_list$context, .design, author, date)
+                    cell_styles_list$context, prep, author, date)
   write_data_sheet(wb, sheet_names[-c(1, length(sheet_names))],
-                     cell_styles_list$data, .design, .data)
+                     cell_styles_list$data, prep, .data)
   write_variables_sheet(wb, sheet_names[length(sheet_names)],
-                        cell_styles_list$variables, .design, .data)
+                        cell_styles_list$variables, prep, .data)
 
-  save_workbook(wb, file, overwrite, .design)
+  save_workbook(wb, file, overwrite, prep)
   invisible(.data)
 }
 
-save_workbook <- function(wb, file, overwrite, .design) {
+save_workbook <- function(wb, file, overwrite, prep) {
   success <- saveWorkbook(wb, file, overwrite = overwrite, returnValue = TRUE)
   if(success) {
-    cli_alert_success("{.emph {.design$name}} has been written to {.file {file}}")
+    cli_alert_success("{.emph {prep$design$name}} has been written to {.file {file}}")
   } else {
-    cli_alert_warning("Something went wrong. {.emph {.design$name}} failed to be exported.")
+    cli_alert_warning("Something went wrong. {.emph {prep$design$name}} failed to be exported.")
   }
 }
 
