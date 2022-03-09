@@ -60,7 +60,18 @@ of tibble.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">new_edibble</span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span>, graph <span class="op">=</span> <span class="cn">NULL</span>, class <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">new_edibble</span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span>, design <span class="op">=</span> <span class="cn">NULL</span>, class <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
+
+<span class="fu">as_edibble</span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span><span class="op">)</span>
+
+<span class="fu">edibble</span><span class="op">(</span>
+  <span class="va">.data</span>,
+  name <span class="op">=</span> <span class="cn">NULL</span>,
+  .record <span class="op">=</span> <span class="cn">TRUE</span>,
+  seed <span class="op">=</span> <span class="cn">NULL</span>,
+  kitchen <span class="op">=</span> <span class="va">Kitchen</span>,
+  <span class="va">...</span>
+<span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -69,10 +80,10 @@ of tibble.</p>
 <dd><p>data frame or list of the same size.</p></dd>
 <dt>...</dt>
 <dd><p>Passed to <code>new_tibble</code>.</p></dd>
-<dt>graph</dt>
-<dd><p>An edibble graph object.</p></dd>
 <dt>class</dt>
 <dd><p>Subclasses for edibble table. The default is NULL.</p></dd>
+<dt>graph</dt>
+<dd><p>An edibble graph object.</p></dd>
 </dl></div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

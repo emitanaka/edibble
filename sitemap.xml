@@ -124,7 +124,7 @@
     <loc>https://edibble.emitanaka.org/reference/new_edibble.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/new_edibble_var.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/new_edibble_fct.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/number_si_prefix.html</loc>
@@ -154,6 +154,9 @@
     <loc>https://edibble.emitanaka.org/reference/serve_table.html</loc>
   </url>
   <url>
+    <loc>https://edibble.emitanaka.org/reference/set_fcts.html</loc>
+  </url>
+  <url>
     <loc>https://edibble.emitanaka.org/reference/set_rcrds.html</loc>
   </url>
   <url>
@@ -161,9 +164,6 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/set_units.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/set_vars.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/simulate_rcrds.html</loc>
