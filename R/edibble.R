@@ -145,6 +145,7 @@ print.edbl_table <- function(x, ..., n = NULL, width = NULL, n_extra = NULL) {
 }
 
 
+#' @rdname new_edibble
 #' @export
 as_edibble <- function(.data, ...) {
   UseMethod("as_edibble")
@@ -155,6 +156,7 @@ as_edibble.default <- function(.data, ...) {
   edibble(.data, ...)
 }
 
+#' @rdname new_edibble
 #' @export
 edibble <- function(.data, name = NULL, .record = TRUE, seed = NULL, kitchen = Kitchen, ...) {
   des <- design(name = name, .record = .record, seed = seed, kitchen = kitchen)

@@ -2,9 +2,22 @@
 % Please edit documentation in R/edibble.R
 \name{new_edibble}
 \alias{new_edibble}
+\alias{as_edibble}
+\alias{edibble}
 \title{An edibble table constructor}
 \usage{
 new_edibble(.data, ..., design = NULL, class = NULL)
+
+as_edibble(.data, ...)
+
+edibble(
+  .data,
+  name = NULL,
+  .record = TRUE,
+  seed = NULL,
+  kitchen = Kitchen,
+  ...
+)
 }
 \arguments{
 \item{.data}{data frame or list of the same size.}
