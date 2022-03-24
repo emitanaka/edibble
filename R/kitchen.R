@@ -455,6 +455,7 @@ Kitchen <- R6::R6Class("Kitchen",
                            if(is_edibble_levels(fresh)) return("edbl_lvls")
                            if(is_nest_levels(fresh)) return("nest_lvls")
                            if(vec_is(fresh, numeric(), 1)) return("numeric")
+                           if(vec_is(fresh, integer(), 1)) return("numeric")
                            if(is.vector(fresh) && !is_named(fresh)) return("unnamed_vector")
                            if(is.vector(fresh) && is_named(fresh)) return("named_vector")
                            return("unimplemented")
