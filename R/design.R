@@ -23,7 +23,11 @@ design <- function(name = NULL, .record = TRUE, seed = NULL, kitchen = Kitchen) 
             class = c("edbl_design", "edbl"))
 }
 
-
+#' @export
+restart_design <- function(.data, name = NULL, .record = TRUE, seed = NULL, kitchen = Kitchen, ...) {
+  des <- design(name = name, .record = .record, seed = seed, kitchen = kitchen)
+  new_edibble(.data, ..., design = des)
+}
 
 # initialise graph structure -----------------------------------------------
 

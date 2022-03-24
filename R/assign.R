@@ -52,7 +52,7 @@ assign_trts <- function(.design, order = "random", seed = NULL, constrain = nest
                             if(is_empty(constrain[[unit]])) {
                               out <- as.vector(replicate(ceiling(length(luids) / nrow(tidf)),
                                                           sample(nrow(tidf))))
-                              out[1:length(luids)]
+                              sample(out[1:length(luids)])
                             } else {
 
                               # FIXME the ancestor should be found
