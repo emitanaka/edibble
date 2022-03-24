@@ -26,6 +26,8 @@ assign_trts <- function(.design, order = "random", seed = NULL, constrain = nest
   save_seed(seed)
   prep <- cook_design(.design)
 
+  order <- rep(order, length.out = length(.design$allotment$trts))
+
   for(ialloc in seq_along(.design$allotment$trts)) {
     trts <- all.vars(f_lhs(.design$allotment$trts[[ialloc]]))
     # there should be only one unit
@@ -41,9 +43,9 @@ assign_trts <- function(.design, order = "random", seed = NULL, constrain = nest
     lnodes <- prep$lvl_nodes
     luids <- lnodes[lnodes$idvar == uid, "id"]
     tdf <- lnodes[lnodes$idvar %in% tids, ]
-    tidf <- expand.grid(split(tdf$name, prep$fct_names(tdf$idvar)), stringsAsFactors = FALSE)
+    tidf <- expand.grid(split(tdf$name, prep$fct_names(tdf$idvar))[prep$fct_names(tids)], stringsAsFactors = FALSE)
     ntrts <- nrow(tidf)
-    permutation <- switch(order,
+    permutation <- switch(order[ialloc],
                           "systematic" = rep(1:nrow(tidf), length.out = length(luids)),
                           "systematic-random" = rep(sample(nrow(tidf)), length.out = length(luids)),
                           "random" = {
