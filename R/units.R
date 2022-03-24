@@ -95,6 +95,27 @@ vec_cast.edbl_unit.edbl_unit <- function(x, to, ...) {
   x
 }
 
+### below may not be working as intended
+
+#' @export
+vec_cast.character.edbl_fct <- function(x, to, ...) as.character(x)
+
+#' @export
+vec_cast.edbl_fct.character <- function(x, to, ...) new_edibble_fct(x)
+
+###
+
+#' @export
+`==.edbl_fct` <- function(e1, e2) {
+  as.character(e1)==e2
+}
+
+#' @export
+`!=.edbl_fct` <- function(e1, e2) {
+  as.character(e1)!=e2
+}
+
+
 #' @importFrom pillar pillar_shaft new_pillar_shaft_simple
 #' @export
 pillar_shaft.edbl_unit <- function(x, ...) {
