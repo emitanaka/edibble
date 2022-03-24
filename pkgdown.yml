@@ -2,7 +2,7 @@ pandoc: 2.7.3
 pkgdown: 2.0.2
 pkgdown_sha: ~
 articles: {}
-last_built: 2022-03-24T06:00Z
+last_built: 2022-03-24T06:34Z
 urls:
   reference: https://edibble.emitanaka.org/reference
   article: https://edibble.emitanaka.org/articles
