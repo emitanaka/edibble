@@ -61,7 +61,7 @@ lvl_attrs <- function(levels = NULL,
                        sep = edibble_labels_opt("sep"),
                        include_leading_zero = edibble_labels_opt("leading_zero"),
                        data = NULL, ...) {
-  form <- ifelse(is.numeric(levels),
+  form <- ifelse(vec_is(levels, numeric(), 1),
                  ifelse(include_leading_zero,
                         paste0("%s%s%.", ndigits(max(levels)), "d%s"),
                         "%s%s%d%s"),
