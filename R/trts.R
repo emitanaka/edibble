@@ -97,11 +97,12 @@ permute_parent_one_alg <- function(prep, vid, udf, ntrts) {
   })
   if(is.integer(res)) return(res)
   reps <- ceiling(blocksizes / ntrts) - 1L
-  res <- unname(unlist(lapply(seq_along(blocksizes), function(i) {
+  out <- unname(unlist(lapply(seq_along(blocksizes), function(i) {
     blocksizes
-    sample(c(as.integer(res$Blocks[[i]]$tindex), rep(1:ntrts, reps[i])))
+    xv <- c(as.integer(res$Blocks[[i]]$tindex), rep(1:ntrts, reps[i]))
+    if(length(xv)==1) xv else sample(xv)
   })))
-  udf$.res <- res
+  udf$.res <- out
   udf[order(udf$.id), ".res"]
 }
 
