@@ -155,11 +155,7 @@ vec_ptype_abbr.edbl_trt <- function(x, ...)  {
 #' @export
 vec_ptype_full.edbl_trt <- function(x, ...) paste0("trt(", nlevels(x), ")")
 
-#' @importFrom vctrs vec_cast
-#' @export
-vec_cast.edbl_trt.edbl_trt <- function(x, to, ...) {
-  x
-}
+
 
 
 # TODO

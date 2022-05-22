@@ -155,3 +155,33 @@ vec_math.edbl_fct <- function(.fn, .x, ...) {
 }
 
 
+#' @importFrom vctrs vec_ptype2
+#' @export
+vec_ptype2.edbl_fct.character <- function(x, y, ...) character()
+#' @export
+vec_ptype2.character.edbl_fct <- function(x, y, ...) character()
+#' @export
+vec_ptype2.edbl_unit.character <- function(x, y, ...) character()
+#' @export
+vec_ptype2.character.edbl_unit <- function(x, y, ...) character()
+#' @export
+vec_ptype2.edbl_trt.character <- function(x, y, ...) character()
+#' @export
+vec_ptype2.character.edbl_trt <- function(x, y, ...) character()
+#' @export
+
+#' @importFrom vctrs vec_cast
+#' @export
+vec_cast.edbl_fct.character <- function(x, to, ...) as.character(x)
+#' @export
+vec_cast.character.edbl_fct <- function(x, to, ...) x
+#' @export
+vec_cast.edbl_unit.character <- function(x, to, ...) as.character(x)
+#' @export
+vec_cast.character.edbl_unit <- function(x, to, ...) x
+#' @export
+vec_cast.edbl_trt.character <- function(x, to, ...) as.character(x)
+#' @export
+vec_cast.character.edbl_trt <- function(x, to, ...) x
+
+
