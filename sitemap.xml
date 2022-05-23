@@ -28,6 +28,9 @@
     <loc>https://edibble.emitanaka.org/reference/anatomy.html</loc>
   </url>
   <url>
+    <loc>https://edibble.emitanaka.org/reference/as.data.frame.edbl_table.html</loc>
+  </url>
+  <url>
     <loc>https://edibble.emitanaka.org/reference/assign_trts.html</loc>
   </url>
   <url>
@@ -131,6 +134,9 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/pivot_trts_widelist.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/plot.edbl_design.html</loc>
