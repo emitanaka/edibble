@@ -2,15 +2,23 @@
 % Please edit documentation in R/pivot.R
 \name{pivot_trts_widelist}
 \alias{pivot_trts_widelist}
+\alias{pivot_trts_widetable}
 \title{Pivot treatments to a wider list or table format}
 \usage{
-pivot_trts_widelist(.data, trts = NULL)
+pivot_trts_widelist(.data, trts = NULL, fcts = NULL, drop = FALSE)
+
+pivot_trts_widetable(.data, trts = NULL, fcts = NULL)
 }
 \arguments{
 \item{.data}{An edibble table.}
 
-\item{trts}{A vector of character with the treatment names. By default it is
+\item{trts}{A vector of treatment (tidyselect compatible). By default it is
 NULL and includes all the treatments.}
+
+\item{fcts}{A vector of factors in the edibble table.}
+
+\item{drop}{Whether the resulting list should drop to a vector within each list
+element if there is only one column. Default is FALSE.}
 }
 \description{
 Pivot treatments to a wider list or table format

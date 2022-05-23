@@ -324,11 +324,23 @@ number_si_prefix <- function(x) {
   paste0(words[-n], collapse = sep)
 }
 
-
-as.data.frame.edbl_table <- function(x) {
+#' Convert edibble table to normal data frame
+#'
+#' @param x An edibble table
+#' @param levels_as Coerce the edibble factors to either "factor" or "character".
+#' @param ignore_numeric Whether to coerce numeric factors or not. Default is TRUE,
+#'  i.e. don't coerce numeric factors.
+as.data.frame.edbl_table <- function(x,
+                                     levels_as = "factor",
+                                     ignore_numeric = TRUE) {
   out <- lapply(x, function(.x) {
     if(is_edibble_unit(.x) | is_edibble_trt(.x)) {
-      factor(as.character(.x), levels(.x))
+      if(ignore_numeric) {
+        if(is.numeric(.x)) return(as.numeric(.x))
+      }
+      switch(levels_as,
+             "factor" = factor(as.character(.x), levels(.x)),
+             "character" = as.character(.x))
     } else {
       .x
     }

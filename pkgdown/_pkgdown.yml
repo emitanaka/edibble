@@ -79,6 +79,13 @@ reference:
   contents:
   - lady_tasting_tea
   - skittles
+- title: "Table manipulators"
+  desc: >
+    These functions manipulate or wrangle the edibble table into another form.
+  contents:
+  - pivot_trts_widelist
+  - pivot_trts_widetable
+  - as.data.frame.edbl_table
 - title: "Utility functions"
   desc: >
     These are mostly for internal usage and for those who wish to extend edibble functions.
