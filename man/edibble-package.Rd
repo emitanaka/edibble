@@ -4,11 +4,11 @@
 \name{edibble-package}
 \alias{edibble-package}
 \alias{_PACKAGE}
-\title{edibble: Generate experimental designs using the grammar of experimental design}
+\title{edibble: Design of comparative experiments}
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-A system to facilitate statistical thinking of adapting experimental designs to different conditions.
+A system to facilitate designing comparative experiments using a cognitive framework.
 }
 \details{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}

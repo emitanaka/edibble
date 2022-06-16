@@ -1,5 +1,5 @@
 Package: edibble
-Title: Generate experimental designs using the grammar of experimental design
+Title: Design of comparative experiments 
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Emi",
@@ -7,9 +7,9 @@ Authors@R:
            role = c("aut", "cre"),
            email = "dr.emi.tanaka@gmail.com",
            comment = c(ORCID = "0000-0002-1455-259X"))
-Description: A system to facilitate statistical thinking of 
-    adapting experimental designs to different conditions. 
-License: GPL-3
+Description: A system to facilitate designing comparative experiments using a
+ cognitive framework. 
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE, r6 = TRUE)
@@ -36,9 +36,7 @@ Suggests:
     rmarkdown,
     asciicast,
     openxlsx,
-    visNetwork,
-    simulate
-Remotes: emitanaka/simulate
+    visNetwork
 VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)
