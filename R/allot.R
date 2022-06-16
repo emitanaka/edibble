@@ -18,7 +18,7 @@
 #'   allot_trts(treat ~ plot,
 #'                 pest ~ block)
 #'
-#'
+#' @return Return an edibble design.
 #' @export
 allot_trts <- function(.design, ..., .record = TRUE) {
 
@@ -140,7 +140,7 @@ allot_units <- function(.design, ..., .record = TRUE) {
 
 #' A shorthand for allot, assign and serve
 #'
-#' @inheritParams assign_trts
+#' @inheritParams assign
 #' @inheritDotParams allot_trts
 #'
 #' @export

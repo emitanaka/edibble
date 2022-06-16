@@ -12,6 +12,7 @@
 #' @param attrs A named vector where names and values correspond to attribute names and values of the variable, or
 #'   a data frame.
 #' @seealso See [set_units()] for examples of how to use this.
+#' @return A nested level.
 #' @export
 nested_in <- function(x, ..., prefix = "", suffix = "",
                       leading0 = FALSE,

@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 # edibble  <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
 <!-- badges: start -->
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 <!-- badges: end -->
 
 ## Installation
@@ -25,13 +25,6 @@ Install the development version with:
 ```{r, eval = FALSE}
 # install.packages("remotes")
 remotes::install_github("emitanaka/edibble")
-```
-
-For `simulate_rcrds()`, you also need to install the `simulate` package which is currently only 
-available on GitHub:
-
-```r
-remotes::install_github("emitanaka/simulate")
 ```
 
 
@@ -87,8 +80,6 @@ out <- des %>%
 out
 ```
 
-FIXME: latest core rewrite broke this
-
 When you export the above edibble design using the `export_design` function, the variables you are recording are constraint to the values you expect, e.g. for factors, the cells have a drop-down menu to select from possible values. 
 
 ```{r, eval = FALSE}
@@ -141,7 +132,7 @@ The edibble R-package differ considerably to other packages for constructing exp
 * simulate values for record variables,
 * make classical named designs see [Cookbook chapter](https://emitanaka.org/edibble-book/cookbook.html).
 
-Work-in-progress book on this package can be found [here](https://emitanaka.org/edibble-book).
+Work-in-progress book on this package can be found [here](https://emitanaka.org/edibble-book/).
 
 ## Limitations 
 
@@ -159,7 +150,7 @@ The way that edibble specifies experimental design is largely novel (if I say so
 * `sizzled` - for experiments that require sample size calculation (WIP).
 
 
-Below are some other related work. You can also have a look at the [CRAN Task View for Design of Experiment and Analysis of Experimental Data](https://cran.r-project.org/web/views/ExperimentalDesign.html) for a whole collection. 
+Below are some other related work. You can also have a look at the [CRAN Task View for Design of Experiment and Analysis of Experimental Data](https://CRAN.R-project.org/view=ExperimentalDesign) for a whole collection. 
 
 * `DeclareDesign` for survey or sampling designs
 * `designr` for balanced factorial designs with crossed and nested random and fixed effect to data frame

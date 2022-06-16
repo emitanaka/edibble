@@ -23,43 +23,43 @@ make_sheet_names <- function(prep = NULL) {
 }
 
 make_cell_styles <- function() {
-  list(context = list(title = createStyle(fontSize = 30,
+  list(context = list(title = openxlsx::createStyle(fontSize = 30,
                                             textDecoration = "bold"),
-                        date = createStyle(fontSize = 25),
-                        author = createStyle(fontSize = 25),
-                        contact = createStyle(fontSize = 25),
-                        context_name = createStyle(fontSize = 18, fontColour = "blue"),
-                        context = createStyle(fontSize = 18),
-                        instructions = createStyle(fontSize = 12)),
-       data = list(header = createStyle(fgFill = "#DCE6F1",
+                        date = openxlsx::createStyle(fontSize = 25),
+                        author = openxlsx::createStyle(fontSize = 25),
+                        contact = openxlsx::createStyle(fontSize = 25),
+                        context_name = openxlsx::createStyle(fontSize = 18, fontColour = "blue"),
+                        context = openxlsx::createStyle(fontSize = 18),
+                        instructions = openxlsx::createStyle(fontSize = 12)),
+       data = list(header = openxlsx::createStyle(fgFill = "#DCE6F1",
                                           halign = "left",
                                           textDecoration = "bold",
                                           border = "Bottom"),
-                     body = createStyle(fontSize = 12)),
-       variables = list(header = createStyle(fgFill = "#DCE6F1",
+                     body = openxlsx::createStyle(fontSize = 12)),
+       variables = list(header = openxlsx::createStyle(fgFill = "#DCE6F1",
                                              halign = "left",
                                              textDecoration = "bold",
                                              border = "Bottom"),
-                        names = createStyle(fontSize = 14,
+                        names = openxlsx::createStyle(fontSize = 14,
                                               textDecoration = "bold"),
-                        type = createStyle(fontSize = 14,
+                        type = openxlsx::createStyle(fontSize = 14,
                                            fontColour = "blue"),
-                        what = createStyle(fontSize = 14),
-                        validation = createStyle(fontSize = 14)))
+                        what = openxlsx::createStyle(fontSize = 14),
+                        validation = openxlsx::createStyle(fontSize = 14)))
 }
 
 add_creator <- function(wb, authors) {
-  addCreator(wb, "Created with edibble using R")
+  openxlsx::addCreator(wb, "Created with edibble using R")
   if(!missing(authors)) {
     for(author in authors) {
-      addCreator(wb, author)
+      openxlsx::addCreator(wb, author)
     }
   }
 }
 
 add_worksheets <- function(wb, sheet_names, title) {
   for(asheet in sheet_names) {
-    addWorksheet(wb, asheet,
+    openxlsx::addWorksheet(wb, asheet,
                  header = c(paste0("Created on ", Sys.Date()), title, "&[Page] / &[Pages]"),
                  footer = c("&[File]", "&[Tab]", "Printed on &[Date]"),
                  gridLines = ifelse(asheet==sheet_names[1], FALSE, TRUE))
@@ -70,38 +70,38 @@ add_worksheets <- function(wb, sheet_names, title) {
 
 write_title_sheet <- function(wb, sheet_name, cell_styles, prep, author, date = Sys.Date()) {
   # title
-  writeData(wb, sheet = sheet_name, x = prep$design$name,
+  openxlsx::writeData(wb, sheet = sheet_name, x = prep$design$name,
             startRow = 1, startCol = 1, name = "title")
-  addStyle(wb, sheet = sheet_name,
+  openxlsx::addStyle(wb, sheet = sheet_name,
            style = cell_styles$title, 1, 1, stack = TRUE)
 
   # date
-  writeData(wb, sheet = sheet_name, x = date,
+  openxlsx::writeData(wb, sheet = sheet_name, x = date,
             startRow = 2, startCol = 1, name = "date")
-  addStyle(wb, sheet_name, cell_styles$date, 2, 1, stack = TRUE)
+  openxlsx::addStyle(wb, sheet_name, cell_styles$date, 2, 1, stack = TRUE)
 
   # author
   if(!missing(author)) {
-    writeData(wb, sheet = sheet_name, x = author,
+    openxlsx::writeData(wb, sheet = sheet_name, x = author,
               startRow = 3, startCol = 1, name = "author")
-    addStyle(wb, sheet_name, cell_styles$author, 3, 1, stack = TRUE)
+    openxlsx::addStyle(wb, sheet_name, cell_styles$author, 3, 1, stack = TRUE)
   }
 
   # context
   ncontext <- length(prep$design$context)
-  writeData(wb, sheet = sheet_name,
+  openxlsx::writeData(wb, sheet = sheet_name,
             x = unlist(prep$design$context),
             startRow = 5, startCol = 2)
-  addStyle(wb, sheet_name, cell_styles$context, 5:(5 + ncontext), 2,
+  openxlsx::addStyle(wb, sheet_name, cell_styles$context, 5:(5 + ncontext), 2,
            stack = TRUE)
 
-  writeData(wb, sheet = sheet_name,
+  openxlsx::writeData(wb, sheet = sheet_name,
             x = names(prep$design$context),
             startCol = 1, startRow = 5)
-  addStyle(wb, sheet_name, cell_styles$context_name, 5:(5 + ncontext), 1,
+  openxlsx::addStyle(wb, sheet_name, cell_styles$context_name, 5:(5 + ncontext), 1,
            stack = TRUE)
 
-  createNamedRegion(wb, sheet_name, cols = 1:2, rows = 5:(5 + ncontext),
+  openxlsx::createNamedRegion(wb, sheet_name, cols = 1:2, rows = 5:(5 + ncontext),
                     name = "context")
 
 
@@ -154,21 +154,21 @@ write_data_sheet <- function(wb, sheet_names, cell_styles, prep, .data) {
         rcrds <- names(rcrds2unit)[rcrds2unit==aunit]
         des <- subset_design(prep, aunit, rcrds)
         data <- as_data_frame(serve_table(des))
-        writeData(wb, sheet = data_sheet_name(aunit),
+        openxlsx::writeData(wb, sheet = data_sheet_name(aunit),
                   x = data, startCol = 1,
                   headerStyle = cell_styles$header,
                   name = data_sheet_name(aunit))
-        addStyle(wb, sheet = data_sheet_name(aunit),
+        openxlsx::addStyle(wb, sheet = data_sheet_name(aunit),
                  rows = 2:(nrow(data) + 1),
                  cols = 1:ncol(data), gridExpand = TRUE, stack = TRUE,
                  style = cell_styles$body)
       }
     } else {
       data <- as_data_frame(.data)
-      writeData(wb, sheet = sheet_names, x = data, startCol = 1,
+      openxlsx::writeData(wb, sheet = sheet_names, x = data, startCol = 1,
                 headerStyle = cell_styles$header,
                 name = "Data")
-      addStyle(wb, sheet = sheet_names, rows = 2:(nrow(data) + 1),
+      openxlsx::addStyle(wb, sheet = sheet_names, rows = 2:(nrow(data) + 1),
                cols = 1:ncol(data), gridExpand = TRUE, stack = TRUE,
                style = cell_styles$body)
     }
@@ -207,7 +207,7 @@ write_variables_sheet <- function(wb, sheet_name, cell_styles, prep, .data) {
       data$record[j] <- valid[[i]]$record
       if(valid[[i]]$type != "list") {
         data$value[j] <- restriction_for_human(valid[[i]]$operator, valid[[i]]$value)
-        dataValidation(wb, sheet = data_sheet,
+        openxlsx::dataValidation(wb, sheet = data_sheet,
                        rows = 1:nrow(dat) + 1,
                        cols = j,
                        type = valid[[i]]$type,
@@ -218,10 +218,10 @@ write_variables_sheet <- function(wb, sheet_name, cell_styles, prep, .data) {
         values <- valid[[i]]$values
         data$value[j] <- values[1]
         L <- LETTERS[c(k, k + length(values) - 1)]
-        writeData(wb, sheet = sheet_name, x = data.frame(t(values), stringsAsFactors = FALSE),
+        openxlsx::writeData(wb, sheet = sheet_name, x = data.frame(t(values), stringsAsFactors = FALSE),
                   startCol = k,
                   startRow = j + 1, colNames = FALSE)
-        dataValidation(wb, sheet = data_sheet,
+        openxlsx::dataValidation(wb, sheet = data_sheet,
                        rows = 1:nrow(dat) + 1,
                        cols = j,
                        type = "list", operator = NULL,
@@ -231,7 +231,7 @@ write_variables_sheet <- function(wb, sheet_name, cell_styles, prep, .data) {
 
     }
   }
-  writeData(wb, sheet = sheet_name, x = data, startCol = 1,
+  openxlsx::writeData(wb, sheet = sheet_name, x = data, startCol = 1,
             headerStyle = cell_styles$header,
             name = "Variables")
 
@@ -265,7 +265,6 @@ restriction_for_human <- function(operator, value) {
 #' @param overwrite A logical indicating whether to overwrite exisitng file or not.
 #'
 #' @importFrom cli cli_alert_success
-#' @importFrom openxlsx addCreator addStyle createNamedRegion createStyle createWorkbook addWorksheet writeData dataValidation saveWorkbook
 #' @family user-facing functions
 #' @export
 export_design <- function(.data, file, author, date = Sys.Date(), overwrite = FALSE) {
@@ -284,7 +283,7 @@ export_design <- function(.data, file, author, date = Sys.Date(), overwrite = FA
   sheet_names <- make_sheet_names(prep)
   cell_styles_list <- make_cell_styles()
 
-  wb <- createWorkbook()
+  wb <- openxlsx::createWorkbook()
   add_worksheets(wb, sheet_names, title)
   add_creator(wb, author)
 
@@ -300,7 +299,7 @@ export_design <- function(.data, file, author, date = Sys.Date(), overwrite = FA
 }
 
 save_workbook <- function(wb, file, overwrite, prep) {
-  success <- saveWorkbook(wb, file, overwrite = overwrite, returnValue = TRUE)
+  success <- openxlsx::saveWorkbook(wb, file, overwrite = overwrite, returnValue = TRUE)
   if(success) {
     cli_alert_success("{.emph {prep$design$name}} has been written to {.file {file}}")
   } else {

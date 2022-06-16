@@ -20,6 +20,9 @@ menu_strip(
 
 \item{seed}{A scalar value for computational reproducibility.}
 }
+\value{
+A recipe design.
+}
 \description{
 Strip-unit design
 }

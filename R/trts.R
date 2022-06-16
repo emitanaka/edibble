@@ -19,6 +19,7 @@
 #'   set_trts(pesticide = c("A", "B", "C"),
 #'            dosage = c(0, 10, 20, 30, 40))
 #'
+#' @return An edibble design.
 #' @export
 set_trts <- function(.design, ...,
                      .name_repair = c("check_unique", "unique", "universal", "minimal"),
@@ -26,8 +27,6 @@ set_trts <- function(.design, ...,
   if(.record) record_step()
   set_fcts(.design, ..., .name_repair = .name_repair, .class = "edbl_trt")
 }
-
-
 
 
 

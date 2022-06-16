@@ -33,6 +33,9 @@ corresponding levels.}
 \item{attrs}{A named vector where names and values correspond to attribute names and values of the variable, or
 a data frame.}
 }
+\value{
+A nested level.
+}
 \description{
 Specify the nesting structure for units
 }

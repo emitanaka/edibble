@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 <!-- badges: end -->
 
 ## Installation
@@ -16,13 +16,6 @@ Install the development version with:
 ``` r
 # install.packages("remotes")
 remotes::install_github("emitanaka/edibble")
-```
-
-For `simulate_rcrds()`, you also need to install the `simulate` package
-which is currently only available on GitHub:
-
-``` r
-remotes::install_github("emitanaka/simulate")
 ```
 
 ## Overview
@@ -69,12 +62,12 @@ serve_table(des)
 #>  2    class1   student2  traditional open-book  
 #>  3    class1   student3  traditional take-home  
 #>  4    class1   student4  traditional closed-book
-#>  5    class1   student5  traditional open-book  
+#>  5    class1   student5  traditional take-home  
 #>  6    class1   student6  traditional take-home  
-#>  7    class1   student7  traditional closed-book
-#>  8    class1   student8  traditional take-home  
-#>  9    class1   student9  traditional take-home  
-#> 10    class1   student10 traditional open-book  
+#>  7    class1   student7  traditional open-book  
+#>  8    class1   student8  traditional open-book  
+#>  9    class1   student9  traditional closed-book
+#> 10    class1   student10 traditional closed-book
 #> # … with 110 more rows
 ```
 
@@ -108,17 +101,15 @@ out
 #>  2    class1   student2  traditional open-book           ■          ■          ■
 #>  3    class1   student3  traditional take-home           ■          ■          ■
 #>  4    class1   student4  traditional closed-book         ■          ■          ■
-#>  5    class1   student5  traditional open-book           ■          ■          ■
+#>  5    class1   student5  traditional take-home           ■          ■          ■
 #>  6    class1   student6  traditional take-home           ■          ■          ■
-#>  7    class1   student7  traditional closed-book         ■          ■          ■
-#>  8    class1   student8  traditional take-home           ■          ■          ■
-#>  9    class1   student9  traditional take-home           ■          ■          ■
-#> 10    class1   student10 traditional open-book           ■          ■          ■
+#>  7    class1   student7  traditional open-book           ■          ■          ■
+#>  8    class1   student8  traditional open-book           ■          ■          ■
+#>  9    class1   student9  traditional closed-book         ■          ■          ■
+#> 10    class1   student10 traditional closed-book         ■          ■          ■
 #> # … with 110 more rows, and 3 more variables: gender <rcrd>, room <rcrd>,
 #> #   teacher <rcrd>
 ```
-
-FIXME: latest core rewrite broke this
 
 When you export the above edibble design using the `export_design`
 function, the variables you are recording are constraint to the values
@@ -205,7 +196,7 @@ focus and do well on). Some features include:
     chapter](https://emitanaka.org/edibble-book/cookbook.html).
 
 Work-in-progress book on this package can be found
-[here](https://emitanaka.org/edibble-book).
+[here](https://emitanaka.org/edibble-book/).
 
 ## Limitations
 
@@ -232,8 +223,8 @@ concurrently working on two extension packages:
 
 Below are some other related work. You can also have a look at the [CRAN
 Task View for Design of Experiment and Analysis of Experimental
-Data](https://cran.r-project.org/web/views/ExperimentalDesign.html) for
-a whole collection.
+Data](https://CRAN.R-project.org/view=ExperimentalDesign) for a whole
+collection.
 
 -   `DeclareDesign` for survey or sampling designs
 -   `designr` for balanced factorial designs with crossed and nested

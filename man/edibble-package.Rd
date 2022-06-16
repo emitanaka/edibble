@@ -4,7 +4,7 @@
 \name{edibble-package}
 \alias{edibble-package}
 \alias{_PACKAGE}
-\title{edibble: Design of comparative experiments}
+\title{edibble: Design of Comparative Experiments}
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
@@ -50,6 +50,6 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Emi Tanaka \email{dr.emi.tanaka@gmail.com} (\href{https://orcid.org/0000-0002-1455-259X}{ORCID})
+\strong{Maintainer}: Emi Tanaka \email{dr.emi.tanaka@gmail.com} (\href{https://orcid.org/0000-0002-1455-259X}{ORCID}) [copyright holder]
 
 }

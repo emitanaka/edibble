@@ -20,6 +20,9 @@ set_units(
 code step. The default is TRUE. It should remain TRUE unless this
 function is used as a wrapper in other code.}
 }
+\value{
+An edibble design.
+}
 \description{
 This function sets new edibble variables of class \code{edbl_unit}. More
 specifically, this means that new nodes are added to the \code{edbl_graph}.

@@ -1,6 +1,6 @@
-#' Assign treatments to units
+#' Assign treatments or units to units
 #'
-#' This function assigns specific treatment levels to actual units.
+#' This function assigns specific treatment or unit levels to actual units.
 #'
 #' @param .design An edibble design which should have units, treatments and allotment defined.
 #' @param order A character vector signifying the apportion of treatments to units.
@@ -16,7 +16,7 @@
 #' @param ... Arguments parsed into `order_trts` functions.
 #' @param .record Whether to record the step.
 #'
-#'
+#' @name assign
 #' @export
 assign_trts <- function(.design, order = "random", seed = NULL, constrain = nesting_structure(.design), ..., .record = TRUE) {
   not_edibble(.design)
@@ -92,6 +92,7 @@ assign_trts <- function(.design, order = "random", seed = NULL, constrain = nest
 }
 
 
+#' @rdname assign
 #' @export
 assign_units <- function(.design, order = "random", seed = NULL, constrain = nesting_structure(.design), ..., .record = TRUE) {
   not_edibble(.design)

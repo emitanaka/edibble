@@ -14,6 +14,9 @@ then the whole treatment is applied to the specified unit.}
 code step. The default is TRUE. It should remain TRUE unless this
 function is used as a wrapper in other code.}
 }
+\value{
+Return an edibble design.
+}
 \description{
 This function adds the edges between variable nodes to
 specify the mapping of units to treatment. This function
@@ -27,7 +30,6 @@ start_design() \%>\%
            pest = c("a", "b")) \%>\%
   allot_trts(treat ~ plot,
                 pest ~ block)
-
 
 }
 \seealso{

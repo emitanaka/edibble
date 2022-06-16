@@ -1,10 +1,10 @@
 Package: edibble
-Title: Design of comparative experiments 
-Version: 0.0.0.9000
+Title: Design of Comparative Experiments 
+Version: 0.1.0
 Authors@R: 
     person(given = "Emi",
            family = "Tanaka",
-           role = c("aut", "cre"),
+           role = c("aut", "cre", "cph"),
            email = "dr.emi.tanaka@gmail.com",
            comment = c(ORCID = "0000-0002-1455-259X"))
 Description: A system to facilitate designing comparative experiments using a

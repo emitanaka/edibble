@@ -21,6 +21,9 @@ treatments.}
 
 \item{seed}{A scalar value for computational reproducibility.}
 }
+\value{
+A recipe design.
+}
 \description{
 Some combinations of parameter values cannot create a balanced incomplete
 block design.

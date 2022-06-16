@@ -11,6 +11,9 @@ menu_lsd(t = random_integer_small(), seed = random_seed_number())
 
 \item{seed}{A scalar value for computational reproducibility.}
 }
+\value{
+A recipe design.
+}
 \description{
 Prepare classical Latin square design
 }

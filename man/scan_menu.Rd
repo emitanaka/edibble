@@ -10,6 +10,9 @@ scan_menu(pkgs = NULL)
 \item{pkgs}{A character vector containing the package names to search
 named designs from. By default it will search edibble and other packages loaded.}
 }
+\value{
+A character vector of the short names of the named menu designs.
+}
 \description{
 Find the short names of the named designs
 }

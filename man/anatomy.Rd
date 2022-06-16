@@ -4,12 +4,15 @@
 \alias{anatomy}
 \title{Anatomy of the design}
 \usage{
-anatomy(.design, ...)
+anatomy(.edibble, ...)
 }
 \arguments{
-\item{.design}{A complete edibble design object or edibble table.}
+\item{.edibble}{A complete edibble design object or edibble table.}
 
 \item{...}{Any other arguments parsed to \code{dae::designAnatomy}.}
+}
+\value{
+An object of class "des_anatomy".
 }
 \description{
 This is a convenient wrapper for \code{dae::designAnatomy} where the \code{formulae} structure is

@@ -5,12 +5,13 @@
 #' automatically determined by the unit and treatment structure specified in `edibble` system.
 #' Note: the computation may be long if the design is quite complicated or there are many units.
 #'
-#' @param .design A complete edibble design object or edibble table.
+#' @param .edibble A complete edibble design object or edibble table.
 #' @param ... Any other arguments parsed to `dae::designAnatomy`.
+#' @return An object of class "des_anatomy".
 #' @export
-anatomy <- function(.design, ...) {
-  des <- edbl_design(.design)
-  tab <- edbl_table(.design)
+anatomy <- function(.edibble, ...) {
+  des <- edbl_design(.edibble)
+  tab <- edbl_table(.edibble)
   prep <- cook_design(des)
   trt_str <- as.formula(paste0("~", paste0(prep$trt_names, collapse = "*")))
   out <- dae::designAnatomy(list(unit = des$anatomy, trt = trt_str), data = tab, ...)

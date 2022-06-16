@@ -15,6 +15,9 @@ menu_youden(
 
 \item{seed}{A scalar value for computational reproducibility.}
 }
+\value{
+A recipe design.
+}
 \description{
 Youden square design
 }

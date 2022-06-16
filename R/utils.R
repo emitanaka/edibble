@@ -7,6 +7,7 @@
 #' the step is tracked. The output of functions using `record_step()` should
 #' be returning an edibble design or table.
 #'
+#' @return Returns nothing.
 #' @export
 record_step <- function() {
   do.call("on.exit",
@@ -15,8 +16,6 @@ record_step <- function() {
                add = TRUE),
           envir = parent.frame())
 }
-
-
 
 add_edibble_seed <- function(.edibble, seed) {
   if(!isFALSE(.edibble)) {
@@ -65,9 +64,6 @@ save_seed <- function(seed) {
 
 
 
-
-
-
 decorate_vars <- function(x, decorate_units, decorate_trts, decorate_rcrds, classes) {
   edbl_classes <- c("edbl_unit", "edbl_trt", "edbl_rcrd")
   decorate_fns <- list(decorate_units, decorate_trts, decorate_rcrds)
@@ -111,6 +107,7 @@ decorate_vars <- function(x, decorate_units, decorate_trts, decorate_rcrds, clas
 #' ## ├─variety (2 levels)
 #' ## └─irrigation (2 levels)
 #' @importFrom cli tree cli_li
+#' @name formatting
 #' @export
 print.edbl_design <- function(x,
                               decorate_units  = edibble_decorate("units"),

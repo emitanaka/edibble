@@ -11,6 +11,9 @@ menu_hyper_graeco(t = random_integer_small(), seed = random_seed_number())
 
 \item{seed}{A scalar value for computational reproducibility.}
 }
+\value{
+A recipe design.
+}
 \description{
 Hyper-Graeco-Latin Square Design
 }

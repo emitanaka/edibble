@@ -20,6 +20,9 @@ set_trts(
 code step. The default is TRUE. It should remain TRUE unless this
 function is used as a wrapper in other code.}
 }
+\value{
+An edibble design.
+}
 \description{
 This function add a special class, called \code{edbl_trt}, of edibble variables.
 }

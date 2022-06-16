@@ -52,6 +52,7 @@
 #'
 #'
 #' @family user-facing functions
+#' @return An edibble design.
 #' @export
 set_units <- function(.design, ...,
                       .name_repair = c("check_unique", "unique", "universal", "minimal"),
@@ -60,7 +61,13 @@ set_units <- function(.design, ...,
   set_fcts(.design, ..., .name_repair = .name_repair, .class = "edbl_unit")
 }
 
+#' Select a subset of units from a cooked design
+#'
+#' @param prep A cooked design.
+#' @param ... The units to select.
+#'
 #' @importFrom tidyselect eval_select
+#' @return An edibble design.
 #' @export
 select_units <- function(prep, ...) {
   vlevs <- prep$fct_levels()

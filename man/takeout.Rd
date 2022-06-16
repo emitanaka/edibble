@@ -13,6 +13,9 @@ function with prefix \code{menu_}. If nothing is supplied, it will randomly sele
 \item{show}{A logical value to indicate whether the code should be shown or not.
 Default is TRUE.}
 }
+\value{
+A recipe design.
+}
 \description{
 This function generates a named experimental
 design by supplying the selected menu named design and prints out by default
