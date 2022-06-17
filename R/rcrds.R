@@ -10,6 +10,12 @@
 #' @param ... Name-value pair. The value should correspond to a single name of the
 #'  unit defined in `set_units`. The name should be the name of the record variable.
 #' @family user-facing functions
+#' @examples
+#' takeout(menu_crd(t = 4, n = 10)) %>%
+#'   set_rcrds(y = unit)
+#'
+#' takeout(menu_crd(t = 4, n = 10)) %>%
+#'   set_rcrds_of(unit = "y")
 #' @return An edibble design.
 #' @export
 set_rcrds <- function(.edibble, ...,
@@ -68,6 +74,10 @@ set_rcrds_of <- function(.edibble, ...) {
 #'  that are plan to be recorded from `set_rcrds()` and the values are
 #'  the expected types and values set by helper functions, see `?expect-rcrds`.
 #' @family user-facing functions
+#' @examples
+#' takeout(menu_crd(t = 4, n = 10)) %>%
+#'   set_rcrds(y = unit) %>%
+#'   expect_rcrds(y > 0)
 #' @return An edibble design.
 #' @export
 expect_rcrds <- function(.edibble, ...) {
@@ -331,79 +341,3 @@ as.numeric.edbl_rcrd <- function(x, ...) {
   out <- unclass(x)
   out
 }
-
-#' # TODO
-#' # see scabbiness.R
-#' #' Derive variables from other variables.
-#' #'
-#' #' @description
-#' #' This is used to specify the excel formula for variables that
-#' #' are derived based on other variables.
-#' #'
-#' #' @seealso See [calculate()], [calculate2()] and [pcalculate()] to
-#' #' specify the excel formula.
-#' derive_vars <- function(.edibble, ...) {
-#'   dots <- enquos(...)
-#'   dots_names <- names(dots)
-#' }
-#'
-#' #' Specify the calculation to derive variables
-#' #'
-#' #' @description
-#' #' This function specifies the excel formula that should
-#' #' be stored when the design is exported with [export_design()].
-#' #' The functions must be translatable to excel formula. Mappings
-#' #' for some complex functions may not work.
-#' #'
-#' #' @param .x,.y Name of other variables in data.
-#' #' @param .f A function, formula, or excel formula.
-#' #' @param ... Arguments to be passed into `.f`.
-#' #' @param .l A vector of variable names.
-#' #' @return A special derivation class.
-#' calculate <- function(.x, .f, ..., .group_by = NULL) {
-#'   if(inherits(.f, "xlformula")) {
-#'     xlf <- .f
-#'   } else if(is.function(.f)) {
-#'     xlf <- map_to_xlf(.f, ...) # TODO
-#'   } else {
-#'     xlf <- map_to_xlf(rlang::as_function(.f))
-#'   }
-#'   return(structure(list(vars = as_label(enexpr(.x)),
-#'                         xlf = xlf,
-#'                         group_by = .group_by),
-#'                    class = "derivative"))
-#' }
-#'
-#' calculate2 <- function(.x, .y, .f, ..., .group_by = NULL) {
-#'   if(inherits(.f, "xlformula")) {
-#'     xlf <- .f
-#'   } else if(is.function(.f)) {
-#'     xlf <- map_to_xlf(.f, ...) # TODO
-#'   } else {
-#'     xlf <- map_to_xlf(rlang::as_function(.f))
-#'   }
-#'   return(structure(list(vars = c(as_label(enexpr(.x)),
-#'                                  as_label(enexpr(.y))),
-#'                         xlf = xlf,
-#'                         group_by = .group_by),
-#'                    class = "derivative"))
-#' }
-#'
-#' pcalculate <- function(.l, .f, ..., .group_by = NULL) {
-#'   if(inherits(.f, "xlformula")) {
-#'     xlf <- .f
-#'   } else if(is.function(.f)) {
-#'     xlf <- map_to_xlf(.f, ...) # TODO
-#'   } else {
-#'     xlf <- map_to_xlf(rlang::as_function(.f))
-#'   }
-#'   return(structure(list(vars = all.vars(enexprs(l)),
-#'                         xlf = xlf,
-#'                         group_by = .group_by),
-#'                    class = "derivative"))
-#' }
-#'
-#' xlf <- function(.f = NULL) {
-#'   structure(.f, class = "xlformula")
-#' }
-

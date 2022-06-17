@@ -12,10 +12,13 @@ menu_graeco(t = random_integer_small(), seed = random_seed_number())
 \item{seed}{A scalar value for computational reproducibility.}
 }
 \value{
-A recipe design.
+A recipe for Graeco-Latin square design.
 }
 \description{
 Graeco-Latin Square Design
+}
+\examples{
+menu_graeco(t = 3)
 }
 \seealso{
 Other recipe-designs: 

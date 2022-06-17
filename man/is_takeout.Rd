@@ -15,3 +15,6 @@ A logical value.
 \description{
 The function returns \code{TRUE} if the input is a takeout design.
 }
+\examples{
+is_takeout(takeout())
+}

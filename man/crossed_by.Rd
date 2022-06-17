@@ -33,3 +33,10 @@ An object of class "cross_lvls".
 \code{crossed_by(A, B)} is the same as \code{~A:B} but \code{crossed_by} offers more control over the names of the new units
 as well as adding new attributes.
 }
+\examples{
+design("Strip-Plot Design | Strip-Unit Design") \%>\%
+  set_units(block = 3,
+            row = nested_in(block, 7),
+            col = nested_in(block, 6),
+            unit = nested_in(block, crossed_by(row, col)))
+}

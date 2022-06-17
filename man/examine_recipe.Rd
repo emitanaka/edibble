@@ -11,6 +11,12 @@ examine_recipe(x, ...)
 
 \item{...}{Not used.}
 }
+\value{
+The recipe code.
+}
 \description{
 Check the recipe code
+}
+\examples{
+examine_recipe(takeout())
 }

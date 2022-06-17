@@ -14,6 +14,8 @@
 #' The values are added as attributes to the output object.
 #'
 #' @seealso lvl_traits
+#' @examples
+#' fct_attrs(levels = c("A", "B"))
 #' @return An `edbl_lvls` object.
 #' @export
 fct_attrs <- function(levels = NULL,
@@ -53,6 +55,9 @@ fct_attrs <- function(levels = NULL,
 #' @param ... Name-value pair denoting other level attributes. The value should be the same
 #'  length as `levels` or a single value.
 #' @importFrom vctrs new_rcrd vec_data
+#' @examples
+#' lvl_attrs(c("A", "B"))
+#' @return An edbl_lvls object.
 #' @export
 lvl_attrs <- function(levels = NULL,
                        labels = NULL,

@@ -17,8 +17,14 @@ menu_rcbd(
 
 \item{seed}{A scalar value for computational reproducibility.}
 }
+\value{
+A recipe for randomised complete block design.
+}
 \description{
 Prepare a randomised complete block design
+}
+\examples{
+menu_rcbd(t = 3, r = 2)
 }
 \seealso{
 Other recipe-designs: 

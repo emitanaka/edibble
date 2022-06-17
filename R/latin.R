@@ -5,6 +5,10 @@
 #' @param dim A vector of integers to indicate the number of elements in each dimension.
 #' @param randomise A logical value to indicate whether the treatment allocation should be randomised. The default value is `TRUE`.
 #' @name latin
+#' @examples
+#' latin_square(n = 3)
+#' latin_rectangle(3, 3, 3)
+#' latin_array(3, c(3, 3, 3))
 NULL
 
 #' @describeIn latin Latin square design

@@ -30,6 +30,14 @@ This function should be used when the design is in the final form
 variables can be reconciled, otherwise it will be a data frame with
 zero rows.
 }
+\examples{
+design("Completely Randomised Design") \%>\%
+  set_units(unit = 28) \%>\%
+  set_trts(trt = 6) \%>\%
+  allot_trts(trt ~ unit) \%>\%
+  assign_trts("random", seed = 521) \%>\%
+  serve_table()
+}
 \seealso{
 Other user-facing functions: 
 \code{\link{allot}},

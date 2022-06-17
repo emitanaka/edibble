@@ -62,3 +62,6 @@ or design) from the object if possible.
 \item \code{edbl_graph} tries to get \code{edbl_graph}.
 }
 }
+\examples{
+is_edibble_design(takeout())
+}

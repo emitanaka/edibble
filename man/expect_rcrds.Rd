@@ -21,6 +21,11 @@ An edibble design.
 \description{
 Set the expected values for recording variables
 }
+\examples{
+takeout(menu_crd(t = 4, n = 10)) \%>\%
+  set_rcrds(y = unit) \%>\%
+  expect_rcrds(y > 0)
+}
 \seealso{
 Other user-facing functions: 
 \code{\link{allot}},

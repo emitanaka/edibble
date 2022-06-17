@@ -21,10 +21,13 @@ menu_crd(
 \item{seed}{A scalar value for computational reproducibility.}
 }
 \value{
-A recipe design.
+A recipe for completely randomised design.
 }
 \description{
 Completely randomised design
+}
+\examples{
+menu_crd(t = 3, n = 10)
 }
 \seealso{
 Other recipe-designs: 

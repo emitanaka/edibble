@@ -9,6 +9,7 @@
 #' @importFrom vctrs vec_as_names
 #' @importFrom cli col_grey
 #' @importFrom tidyselect eval_select
+#' @noRd
 set_fcts <- function(.edibble, ..., .class = NULL,
                      .name_repair = c("check_unique", "unique", "universal", "minimal")) {
 
@@ -79,6 +80,7 @@ new_edibble_fct <- function(labels = character(), levels = unique(labels),
 #' @param ... Ignored.
 #'
 #' @name utility-edibble-var
+#' @return A character vector.
 #' @export
 as.character.edbl_fct <- function(x, ...) {
   #unname(levels(x)[x])

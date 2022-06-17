@@ -1,6 +1,4 @@
 
-# FIXME
-
 make_sheet_names <- function(prep = NULL) {
   if(is_null(prep)) {
     data_sheet_names <- "Data"
@@ -266,6 +264,7 @@ restriction_for_human <- function(operator, value) {
 #'
 #' @importFrom cli cli_alert_success
 #' @family user-facing functions
+#' @return The input data object.
 #' @export
 export_design <- function(.data, file, author, date = Sys.Date(), overwrite = FALSE) {
   if(!requireNamespace("openxlsx")) {

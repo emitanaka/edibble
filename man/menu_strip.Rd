@@ -21,10 +21,13 @@ menu_strip(
 \item{seed}{A scalar value for computational reproducibility.}
 }
 \value{
-A recipe design.
+A recipe strip-unit design.
 }
 \description{
 Strip-unit design
+}
+\examples{
+menu_strip(t1 = 3, t2 = 3, r = 2)
 }
 \seealso{
 Other recipe-designs: 

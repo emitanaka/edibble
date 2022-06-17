@@ -17,10 +17,11 @@
 #'   set_trts(treat = c("A", "B", "C"),
 #'            pest = c("a", "b")) %>%
 #'   allot_trts(treat ~ plot,
-#'                 pest ~ block)
+#'               pest ~ block)
 #'
 #' @return Return an edibble design.
 #' @name allot
+#' @seealso assign
 NULL
 
 #' @rdname allot

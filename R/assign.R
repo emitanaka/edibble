@@ -17,6 +17,22 @@
 #' @param .record Whether to record the step.
 #'
 #' @name assign
+#' @examples
+#' # 10 subject, 2 vaccine treatments
+#' design() %>%
+#'   set_units(subject = 10) %>%
+#'   set_trts(vaccine = 2) %>%
+#'   allot_trts(vaccine ~ subject) %>%
+#'   assign_trts() %>%
+#'   serve_table()
+#'
+#' # 20 subjects, 2 blocks, assign subjects to blocks
+#' design() %>%
+#'   set_units(subject = 20,
+#'             block = 2) %>%
+#'   allot_units(block ~ subject) %>%
+#'   assign_units() %>%
+#'   serve_table()
 #' @return An edibble design.
 #' @export
 assign_trts <- function(.design, order = "random", seed = NULL, constrain = nesting_structure(.design), ..., .record = TRUE) {

@@ -35,6 +35,9 @@ An \code{edbl_lvls} object.
 \description{
 This function is used to set characteristics of the factors.
 }
+\examples{
+fct_attrs(levels = c("A", "B"))
+}
 \seealso{
 lvl_traits
 }

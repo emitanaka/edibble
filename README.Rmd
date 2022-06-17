@@ -45,7 +45,7 @@ library(edibble)
 
 set.seed(2020)
 
-des <- start_design(name = "Effective teaching") %>%
+des <- design(name = "Effective teaching") %>%
     set_units(class = 4,
               student = nested_in(class, 30)) %>%
     set_trts(style = c("flipped", "traditional"),
@@ -100,7 +100,7 @@ knitr::include_graphics("man/figures/README-excel_sheet_output.png")
 There is also support for more complex nesting structures. You can always make the structure using edibble and take the resulting data frame to use in other experimental design software. It's also possible to bring existing data frame into edibble if you want to take advantage of the exporting feature in edibble.
 
 ```{r}
-start_design("nesting structure") %>% 
+design("nesting structure") %>% 
   # there are 3 sites labelled A, B, C
   set_units(site = c("A", "B", "C"),
             # each site has 2 blocks except B with 3 sites
@@ -165,7 +165,7 @@ edibble is hugely inspired by the work of [Tidyverse Team](https://joss.theoj.or
 
 The implementation in edibble adopt a similar nomenclature and design philosophy as tidyverse (and where it does not, it's likely my shortcoming) so that tidyverse users can leverage their familiarity of the tidyverse language when using edibble. Specifically, edibble follows the philosophy:
 
-- main functions do one thing and have a consistent form of `<verb>_<noun>` (e.g. `set_units` and `set_rcrds`) where the nouns are generally plural. Exceptions are when the subject matter is clearly singular (e.g. `start_design` and `set_context`);
+- main functions do one thing and have a consistent form of `<verb>_<noun>` (e.g. `set_units` and `set_rcrds`) where the nouns are generally plural. Exceptions are when the subject matter is clearly singular (e.g. `design` and `set_context`);
 - pipable functions;
 - all dots arguments are [dynamic dots](https://rlang.r-lib.org/reference/dyn-dots.html);
 - duplicate names repaired with same option as `tibble` for additions to edibble graph;

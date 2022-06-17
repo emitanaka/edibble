@@ -11,6 +11,13 @@
 #' @return An `edbl` data frame with columns defined by vertices and
 #' rows displayed only if the vertices are connected and reconcile for output.
 #' @family user-facing functions
+#' @examples
+#' design("Completely Randomised Design") %>%
+#'   set_units(unit = 28) %>%
+#'   set_trts(trt = 6) %>%
+#'   allot_trts(trt ~ unit) %>%
+#'   assign_trts("random", seed = 521) %>%
+#'   serve_table()
 #' @export
 serve_table <- function(.edibble, use_labels = FALSE, ..., .record = TRUE) {
   if(.record) record_step()

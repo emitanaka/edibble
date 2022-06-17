@@ -36,3 +36,8 @@ Latin square designs and its generalisations as an array
 \item \code{latin_array}: Returns an array where it stitches up multiple Latin square/rectangle design
 }}
 
+\examples{
+latin_square(n = 3)
+latin_rectangle(3, 3, 3)
+latin_array(3, c(3, 3, 3))
+}

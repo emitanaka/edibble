@@ -25,6 +25,8 @@
 #'
 #' @param x An object.
 #' @name design-helpers
+#' @examples
+#' is_edibble_design(takeout())
 #' @return A logical value.
 #' @export
 is_edibble_design <- function(x) {

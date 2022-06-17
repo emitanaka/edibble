@@ -13,6 +13,8 @@
 #'
 #' @param x An edibble object.
 #' @return A Kitchen object.
+#' @examples
+#' cook_design(takeout())
 #' @export
 cook_design <- function(x) {
   des <- edbl_design(x)

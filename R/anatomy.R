@@ -7,6 +7,9 @@
 #'
 #' @param .edibble A complete edibble design object or edibble table.
 #' @param ... Any other arguments parsed to `dae::designAnatomy`.
+#' @examples
+#' split <- takeout(menu_split(t1 = 3, t2 = 2, r = 2))
+#' anatomy(split)
 #' @return An object of class "des_anatomy".
 #' @export
 anatomy <- function(.edibble, ...) {

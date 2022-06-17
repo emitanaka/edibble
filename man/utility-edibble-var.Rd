@@ -27,6 +27,9 @@ is_edibble_rcrd(x)
 
 \item{...}{Ignored.}
 }
+\value{
+A character vector.
+}
 \description{
 The S3 methods for \code{edbl_fct} objects have
 the same expected output that of a factor.

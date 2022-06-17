@@ -13,6 +13,10 @@
 #'   a data frame.
 #' @seealso See [set_units()] for examples of how to use this.
 #' @return A nested level.
+#' @examples
+#' design("Split-Plot Design | Split-Unit Design") %>%
+#'   set_units(mainplot = 60,
+#'             subplot = nested_in(mainplot, 10))
 #' @export
 nested_in <- function(x, ..., prefix = "", suffix = "",
                       leading0 = FALSE,
@@ -81,6 +85,8 @@ nested_in <- function(x, ..., prefix = "", suffix = "",
 #' Get the nesting structure for the units
 #'
 #' @param design An edibble design
+#' @examples
+#' nesting_structure(takeout(menu_split()))
 #' @return Return a named list. Only shows the direct parent.
 #' @export
 nesting_structure <- function(design) {

@@ -18,10 +18,13 @@ menu_youden(
 \item{seed}{A scalar value for computational reproducibility.}
 }
 \value{
-A recipe design.
+A recipe Youden square design.
 }
 \description{
 Youden square design
+}
+\examples{
+menu_youden(nc = 4, t = 5)
 }
 \seealso{
 Other recipe-designs: 

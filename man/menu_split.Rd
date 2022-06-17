@@ -21,10 +21,13 @@ menu_split(
 \item{seed}{A scalar value for computational reproducibility.}
 }
 \value{
-A recipe design.
+A recipe split-plot design.
 }
 \description{
 Originally referred to as split-plot design when it was first used.
+}
+\examples{
+menu_split(t1 = 3, t2 = 2, r = 4)
 }
 \seealso{
 Other recipe-designs: 

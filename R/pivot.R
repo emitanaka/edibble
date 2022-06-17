@@ -7,6 +7,9 @@
 #' @param fcts A vector of factors in the edibble table.
 #' @param drop Whether the resulting list should drop to a vector within each list
 #'   element if there is only one column. Default is FALSE.
+#' @examples
+#' pivot_trts_widelist(takeout(menu_crd(t = 5, n = 20)))
+#' @return A named list where elements are the data and the names are treatments.
 #' @export
 pivot_trts_widelist <- function(.data, trts = NULL, fcts = NULL, drop = FALSE) {
   not_edibble(.data)

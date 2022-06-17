@@ -15,3 +15,6 @@ Return a named list. Only shows the direct parent.
 \description{
 Get the nesting structure for the units
 }
+\examples{
+nesting_structure(takeout(menu_split()))
+}

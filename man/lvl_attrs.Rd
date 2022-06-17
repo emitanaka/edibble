@@ -34,8 +34,14 @@ be a leading zero added to level indexes. This is ignored if \code{levels} is no
 \item{...}{Name-value pair denoting other level attributes. The value should be the same
 length as \code{levels} or a single value.}
 }
+\value{
+An edbl_lvls object.
+}
 \description{
 Use this function to create a "vector" of levels. The vector is actually comprised of a
 data frame with a column \code{labels} and other columns with corresponding level attribute (if any).
 This data frame can be accessed with \code{lvl_data()}.
+}
+\examples{
+lvl_attrs(c("A", "B"))
 }

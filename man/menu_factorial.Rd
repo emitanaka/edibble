@@ -21,10 +21,13 @@ menu_factorial(
 \item{seed}{A scalar value for computational reproducibility.}
 }
 \value{
-A recipe design.
+A recipe for factorial design.
 }
 \description{
 Prepare a factorial design
+}
+\examples{
+menu_factorial(trt = c(3, 2), r = 2, design = "crd")
 }
 \seealso{
 Other recipe-designs: 

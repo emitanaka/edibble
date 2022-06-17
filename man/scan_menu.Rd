@@ -16,3 +16,6 @@ A character vector of the short names of the named menu designs.
 \description{
 Find the short names of the named designs
 }
+\examples{
+scan_menu()
+}

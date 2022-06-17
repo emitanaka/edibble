@@ -71,6 +71,14 @@ can be a color name (e.g. "white"), a HEX value ("#FFFFFF"), or rgb/rgba in the 
 
 \item{...}{Currently unused.}
 }
+\value{
+A plot.
+}
 \description{
 Interactive plot of the edibble design
+}
+\examples{
+\dontrun{
+ plot(takeout(menu_crd(t = 4, n = 20)))
+}
 }

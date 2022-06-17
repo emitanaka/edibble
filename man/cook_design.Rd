@@ -16,3 +16,6 @@ A Kitchen object.
 This is a developer function to create a new Kitchen class with
 the existing design.
 }
+\examples{
+cook_design(takeout())
+}

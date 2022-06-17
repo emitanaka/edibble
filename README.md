@@ -43,7 +43,7 @@ library(edibble)
 
 set.seed(2020)
 
-des <- start_design(name = "Effective teaching") %>%
+des <- design(name = "Effective teaching") %>%
     set_units(class = 4,
               student = nested_in(class, 30)) %>%
     set_trts(style = c("flipped", "traditional"),
@@ -51,7 +51,6 @@ des <- start_design(name = "Effective teaching") %>%
     allot_trts(style ~ class,
                exam ~ student) %>%
     assign_trts("random")
-#> Warning: `start_design` is deprecated. Please use `design` instead.
 
 serve_table(des)
 #> # Effective teaching 
@@ -97,16 +96,16 @@ out
 #> # An edibble: 120 x 10
 #>        class     student       style        exam exam_mark quiz1_mark quiz2_mark
 #>    <unit(4)> <unit(120)>    <trt(2)>    <trt(3)>    <rcrd>     <rcrd>     <rcrd>
-#>  1    class1   student1  traditional closed-book         ■          ■          ■
-#>  2    class1   student2  traditional open-book           ■          ■          ■
-#>  3    class1   student3  traditional take-home           ■          ■          ■
-#>  4    class1   student4  traditional closed-book         ■          ■          ■
-#>  5    class1   student5  traditional take-home           ■          ■          ■
-#>  6    class1   student6  traditional take-home           ■          ■          ■
-#>  7    class1   student7  traditional open-book           ■          ■          ■
-#>  8    class1   student8  traditional open-book           ■          ■          ■
-#>  9    class1   student9  traditional closed-book         ■          ■          ■
-#> 10    class1   student10 traditional closed-book         ■          ■          ■
+#>  1    class1   student1  traditional closed-book         o          o          o
+#>  2    class1   student2  traditional open-book           o          o          o
+#>  3    class1   student3  traditional take-home           o          o          o
+#>  4    class1   student4  traditional closed-book         o          o          o
+#>  5    class1   student5  traditional take-home           o          o          o
+#>  6    class1   student6  traditional take-home           o          o          o
+#>  7    class1   student7  traditional open-book           o          o          o
+#>  8    class1   student8  traditional open-book           o          o          o
+#>  9    class1   student9  traditional closed-book         o          o          o
+#> 10    class1   student10 traditional closed-book         o          o          o
 #> # … with 110 more rows, and 3 more variables: gender <rcrd>, room <rcrd>,
 #> #   teacher <rcrd>
 ```
@@ -136,7 +135,7 @@ to bring existing data frame into edibble if you want to take advantage
 of the exporting feature in edibble.
 
 ``` r
-start_design("nesting structure") %>% 
+design("nesting structure") %>% 
   # there are 3 sites labelled A, B, C
   set_units(site = c("A", "B", "C"),
             # each site has 2 blocks except B with 3 sites
@@ -152,7 +151,6 @@ start_design("nesting structure") %>%
                         c(2, 3) ~ 40,
                               . ~ 20)) %>% 
   serve_table()
-#> Warning: `start_design` is deprecated. Please use `design` instead.
 #> # nesting structure 
 #> # An edibble: 190 x 3
 #>         site     block        plot
@@ -253,7 +251,7 @@ the philosophy:
 -   main functions do one thing and have a consistent form of
     `<verb>_<noun>` (e.g. `set_units` and `set_rcrds`) where the nouns
     are generally plural. Exceptions are when the subject matter is
-    clearly singular (e.g. `start_design` and `set_context`);
+    clearly singular (e.g. `design` and `set_context`);
 -   pipable functions;
 -   all dots arguments are [dynamic
     dots](https://rlang.r-lib.org/reference/dyn-dots.html);

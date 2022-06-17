@@ -13,6 +13,11 @@
 #'   can be a color name (e.g. "white"), a HEX value ("#FFFFFF"), or rgb/rgba in the format like rgba(0, 0, 0, 0).
 #' @param view A string of either "show-buttons" (default), "hide-buttons", "static"
 #' @param ... Currently unused.
+#' @examples
+#' \dontrun{
+#'  plot(takeout(menu_crd(t = 4, n = 20)))
+#' }
+#' @return A plot.
 #' @export
 plot.edbl_design <- function(x, which = c("factors", "levels"),
                              width = "100%", height = NULL, seed = 1, title = NULL,

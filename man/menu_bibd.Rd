@@ -22,11 +22,14 @@ treatments.}
 \item{seed}{A scalar value for computational reproducibility.}
 }
 \value{
-A recipe design.
+A recipe for balance incomplete block design.
 }
 \description{
 Some combinations of parameter values cannot create a balanced incomplete
 block design.
+}
+\examples{
+menu_bibd(t = 3, k = 2, r = 4)
 }
 \seealso{
 Other recipe-designs: 

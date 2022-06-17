@@ -39,6 +39,11 @@ A nested level.
 \description{
 Specify the nesting structure for units
 }
+\examples{
+design("Split-Plot Design | Split-Unit Design") \%>\%
+  set_units(mainplot = 60,
+            subplot = nested_in(mainplot, 10))
+}
 \seealso{
 See \code{\link[=set_units]{set_units()}} for examples of how to use this.
 }

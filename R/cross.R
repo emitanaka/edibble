@@ -10,6 +10,12 @@
 #' @param leading0 Currently not implemented.Whether there should be a leading 0 if labels are made.
 #' @param sep Currently not implemented.A separator added between prefix and the number if prefix is empty.
 #' @param attrs Currently not implemented.
+#' @examples
+#' design("Strip-Plot Design | Strip-Unit Design") %>%
+#'   set_units(block = 3,
+#'             row = nested_in(block, 7),
+#'             col = nested_in(block, 6),
+#'             unit = nested_in(block, crossed_by(row, col)))
 #' @return An object of class "cross_lvls".
 #' @export
 crossed_by <- function(..., prefix = NULL, suffix = NULL, leading0 = NULL, sep = NULL, attrs = NULL) {

@@ -20,6 +20,12 @@ NULL and includes all the treatments.}
 \item{drop}{Whether the resulting list should drop to a vector within each list
 element if there is only one column. Default is FALSE.}
 }
+\value{
+A named list where elements are the data and the names are treatments.
+}
 \description{
 Pivot treatments to a wider list or table format
+}
+\examples{
+pivot_trts_widelist(takeout(menu_crd(t = 5, n = 20)))
 }

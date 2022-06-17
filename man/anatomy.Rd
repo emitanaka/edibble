@@ -19,3 +19,7 @@ This is a convenient wrapper for \code{dae::designAnatomy} where the \code{formu
 automatically determined by the unit and treatment structure specified in \code{edibble} system.
 Note: the computation may be long if the design is quite complicated or there are many units.
 }
+\examples{
+split <- takeout(menu_split(t1 = 3, t2 = 2, r = 2))
+anatomy(split)
+}

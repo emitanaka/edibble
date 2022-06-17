@@ -12,10 +12,13 @@ menu_lsd(t = random_integer_small(), seed = random_seed_number())
 \item{seed}{A scalar value for computational reproducibility.}
 }
 \value{
-A recipe design.
+A recipe Latin square design.
 }
 \description{
 Prepare classical Latin square design
+}
+\examples{
+menu_lsd(t = 3)
 }
 \seealso{
 Other recipe-designs: 

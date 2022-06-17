@@ -18,6 +18,9 @@ for where there are multiple authors.}
 
 \item{overwrite}{A logical indicating whether to overwrite exisitng file or not.}
 }
+\value{
+The input data object.
+}
 \description{
 This function is designed to export the design made using edibble to an
 external xlsx file.

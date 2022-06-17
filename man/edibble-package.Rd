@@ -4,11 +4,11 @@
 \name{edibble-package}
 \alias{edibble-package}
 \alias{_PACKAGE}
-\title{edibble: Design of Comparative Experiments}
+\title{edibble: Designing Comparative Experiments}
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-A system to facilitate designing comparative experiments using a cognitive framework.
+A system to facilitate designing comparative experiments using the grammar of experimental designs <https://emitanaka.org/edibble-book/>. An experimental design is treated as an intermediate, mutable object that is built progressively by fundmamental experimental components like units, treatments, and their relation.
 }
 \details{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}

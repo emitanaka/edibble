@@ -35,6 +35,9 @@ random_seed_number <- function() sample(1000, 1)
 #' @param r The number of replications for each treatment level.
 #' @param seed A scalar value for computational reproducibility.
 #' @family recipe-designs
+#' @examples
+#' menu_rcbd(t = 3, r = 2)
+#' @return A recipe for randomised complete block design.
 #' @export
 menu_rcbd <- function(t = random_integer_small(),
                       r = random_integer_small(),
@@ -61,7 +64,9 @@ menu_rcbd <- function(t = random_integer_small(),
 #'
 #' @inheritParams menu_rcbd
 #' @family recipe-designs
-#' @return A recipe design.
+#' @examples
+#' menu_graeco(t = 3)
+#' @return A recipe for Graeco-Latin square design.
 #' @export
 menu_graeco <- function(t = random_integer_small(),
                         seed = random_seed_number()) {
@@ -98,7 +103,9 @@ menu_graeco <- function(t = random_integer_small(),
 #' @param r (Optional) The number of replicates.
 #' @family recipe-designs
 #' @inheritParams menu_rcbd
-#' @return A recipe design.
+#' @examples
+#' menu_crd(t = 3, n = 10)
+#' @return A recipe for completely randomised design.
 #' @export
 menu_crd <- function(t = random_integer_small(),
                                n = random_integer_medium(min = t),
@@ -139,7 +146,9 @@ menu_crd <- function(t = random_integer_small(),
 #' @param design The unit structure: "crd" or "rcbd". The default is "crd".
 #' @inheritParams menu_rcbd
 #' @family recipe-designs
-#' @return A recipe design.
+#' @examples
+#' menu_factorial(trt = c(3, 2), r = 2, design = "crd")
+#' @return A recipe for factorial design.
 #' @export
 menu_factorial <- function(trt = c(random_integer_small(),
                                              random_integer_small()),
@@ -188,7 +197,9 @@ menu_factorial <- function(trt = c(random_integer_small(),
 #' @inheritParams menu_rcbd
 #' @family recipe-designs
 #' @importFrom cli style_italic
-#' @return A recipe design.
+#' @examples
+#' menu_split(t1 = 3, t2 = 2, r = 4)
+#' @return A recipe split-plot design.
 #' @export
 menu_split <- function(t1 = random_integer_small(),
                                  t2 = random_integer_small(),
@@ -227,7 +238,9 @@ menu_split <- function(t1 = random_integer_small(),
 #' @param k The size of the block. This should be less than the number of
 #'   treatments.
 #' @family recipe-designs
-#' @return A recipe design.
+#' @examples
+#' menu_bibd(t = 3, k = 2, r = 4)
+#' @return A recipe for balance incomplete block design.
 #' @export
 menu_bibd <- function(t = random_integer_small(min = 3),
                       k = random_integer_small(max = t - 1),
@@ -267,7 +280,9 @@ menu_bibd <- function(t = random_integer_small(min = 3),
 #'
 #' @inheritParams menu_split
 #' @family recipe-designs
-#' @return A recipe design.
+#' @examples
+#' menu_strip(t1 = 3, t2 = 3, r = 2)
+#' @return A recipe strip-unit design.
 #' @export
 menu_strip <- function(t1 = random_integer_small(),
                        t2 = random_integer_small(),
@@ -307,7 +322,9 @@ menu_strip <- function(t1 = random_integer_small(),
 #' @param nc The number of columns.
 #' @family recipe-designs
 #' @importFrom cli style_italic
-#' @return A recipe design.
+#' @examples
+#' menu_youden(nc = 4, t = 5)
+#' @return A recipe Youden square design.
 #' @export
 menu_youden <- function(nc = random_integer_small(),
                         t = random_integer_small(min = nc + 1),
@@ -342,7 +359,9 @@ menu_youden <- function(nc = random_integer_small(),
 #' @inheritParams menu_rcbd
 #' @family recipe-designs
 #' @importFrom cli style_italic
-#' @return A recipe design.
+#' @examples
+#' menu_lsd(t = 3)
+#' @return A recipe Latin square design.
 #' @export
 menu_lsd <- function(t = random_integer_small(),
                                seed = random_seed_number()) {
@@ -371,10 +390,12 @@ menu_lsd <- function(t = random_integer_small(),
 #' @param t The number of treatments
 #' @inheritParams menu_rcbd
 #' @family recipe-designs
-#' @return A recipe design.
+#' @examples
+#' menu_hyper_graeco(t = 3)
+#' @return A recipe Hyper-Graeco-Latin square design.
 #' @export
 menu_hyper_graeco <- function(t = random_integer_small(),
-                     seed = random_seed_number()) {
+                              seed = random_seed_number()) {
   des <- new_recipe_design(name = "hyper_graeco",
                            name_full = "Hyper-Graeco-Latin Square Design")
 
@@ -409,6 +430,8 @@ menu_hyper_graeco <- function(t = random_integer_small(),
 #' @param pkgs A character vector containing the package names to search
 #' named designs from. By default it will search edibble and other packages loaded.
 #' @return A character vector of the short names of the named menu designs.
+#' @examples
+#' scan_menu()
 #' @export
 scan_menu <- function(pkgs = NULL) {
   # ignore searching in base pkgs
@@ -507,6 +530,9 @@ print.takeout <- function(x, show = NULL, ...) {
 #'
 #' @param x An edibble design, edibble, or takeout object.
 #' @param ... Not used.
+#' @examples
+#' examine_recipe(takeout())
+#' @return The recipe code.
 #' @export
 examine_recipe <- function(x, ...) {
   UseMethod("examine_recipe")
@@ -551,6 +577,8 @@ examine_recipe.takeout <- function(x, ...) {
 #'
 #' @param x An object.
 #' @return A logical value.
+#' @examples
+#' is_takeout(takeout())
 #' @export
 is_takeout <- function(x) {
   inherits(x, "takeout")

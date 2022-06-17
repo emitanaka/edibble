@@ -36,6 +36,13 @@ This function creates new nodes to edibble graph with the name
 corresponding to either the intended response that will be measured or
 a variable to be recorded.
 }
+\examples{
+takeout(menu_crd(t = 4, n = 10)) \%>\%
+  set_rcrds(y = unit)
+
+takeout(menu_crd(t = 4, n = 10)) \%>\%
+  set_rcrds_of(unit = "y")
+}
 \seealso{
 Other user-facing functions: 
 \code{\link{allot}},
