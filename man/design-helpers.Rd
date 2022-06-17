@@ -37,6 +37,9 @@ edbl_table(x)
 \arguments{
 \item{x}{An object.}
 }
+\value{
+A logical value.
+}
 \description{
 The \code{is} functions tests if an object (or an object in its attribute)
 inherits particular class and returns \code{TRUE} if it does, otherwise \code{FALSE}.

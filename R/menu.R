@@ -304,13 +304,14 @@ menu_strip <- function(t1 = random_integer_small(),
 #' Youden square design
 #'
 #' @inheritParams menu_rcbd
+#' @param nc The number of columns.
 #' @family recipe-designs
 #' @importFrom cli style_italic
 #' @return A recipe design.
 #' @export
 menu_youden <- function(nc = random_integer_small(),
-                                  t = random_integer_small(min = nc + 1),
-                               seed = random_seed_number()) {
+                        t = random_integer_small(min = nc + 1),
+                        seed = random_seed_number()) {
   des <- new_recipe_design(name = "youden",
                           name_full = "Youden Square Design")
 
@@ -417,7 +418,7 @@ scan_menu <- function(pkgs = NULL) {
   pkgs <- unique(c(pkgs, "edibble")) # always add edibble whether it is loaded or not
 
   ls_fns <- lapply(pkgs, function(pkg) {
-    fns <- unclass(lsf.str(envir = asNamespace(pkg), all = TRUE))
+    fns <- unclass(utils::lsf.str(envir = asNamespace(pkg), all = TRUE))
     fns[grep("^menu_", fns)]
   })
   names(ls_fns) <- pkgs
@@ -472,10 +473,10 @@ scan_menu <- function(pkgs = NULL) {
 #' @export
 takeout <- function(recipe = NULL, show = TRUE) {
   if(is.null(recipe)) {
-    cli_alert("No name was supplied so selecting a random named experimental design...")
+    cli::cli_alert("No name was supplied so selecting a random named experimental design...")
     name <- sample(suppressMessages(scan_menu()), 1L)
     recipe <- do.call(paste0("menu_", name), list())
-    cli_alert(sprintf("Selected %s", recipe$name_full))
+    cli::cli_alert(sprintf("Selected %s", recipe$name_full))
   }
   df <- eval(parse(text = ansi_strip(recipe$code)))
 
@@ -512,12 +513,12 @@ examine_recipe <- function(x, ...) {
 }
 
 #' @export
-examine_recipe.default <- function(x) {
+examine_recipe.default <- function(x, ...) {
   abort(sprintf("`examine_recipe` is not implemented for class %s.", .combine_words(class(x))))
 }
 
 #' @export
-examine_recipe.edbl_design <- function(x) {
+examine_recipe.edbl_design <- function(x, ...) {
   recipe <- new_recipe_design(name = x$name, code = x$recipe[1])
   code <- map_chr(x$recipe[-1], function(.x) {
     line <- str2lang(.x)
@@ -535,12 +536,12 @@ examine_recipe.edbl_design <- function(x) {
 }
 
 #' @export
-examine_recipe.edbl_table <- function(x) {
+examine_recipe.edbl_table <- function(x, ...) {
   examine_recipe(edbl_design(x))
 }
 
 #' @export
-examine_recipe.takeout <- function(x) {
+examine_recipe.takeout <- function(x, ...) {
   attr(x, "recipe")
 }
 

@@ -24,9 +24,23 @@ edibble(
 
 \item{...}{Passed to \code{new_tibble}.}
 
+\item{design}{An edibble graph object.}
+
 \item{class}{Subclasses for edibble table. The default is NULL.}
 
-\item{graph}{An edibble graph object.}
+\item{name}{Optional name used as title for printing the design.}
+
+\item{.record}{A logical value. This indicates whether to record this
+code step. The default is TRUE. It should remain TRUE unless this
+function is used as a wrapper in other code.}
+
+\item{seed}{A seed number for reproducibility.}
+
+\item{kitchen}{An environment setup in a manner to manipulate, extract and query
+information on the design.}
+}
+\value{
+An edibble table.
 }
 \description{
 This helps to construct a new edibble table which is a special type

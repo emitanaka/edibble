@@ -15,16 +15,16 @@
       # An edibble: 24 x 2
                unit      trt
        * <unit(24)> <trt(4)>
-       1     unit1      trt1
-       2     unit2      trt3
+       1     unit1      trt4
+       2     unit2      trt1
        3     unit3      trt4
-       4     unit4      trt2
-       5     unit5      trt1
-       6     unit6      trt3
-       7     unit7      trt4
-       8     unit8      trt2
+       4     unit4      trt3
+       5     unit5      trt3
+       6     unit6      trt4
+       7     unit7      trt2
+       8     unit8      trt1
        9     unit9      trt2
-      10     unit10     trt3
+      10     unit10     trt4
       # ... with 14 more rows
 
 # rcbd
@@ -81,18 +81,18 @@
       # An edibble: 12 x 4
           mainplot    subplot     trt1     trt2
        * <unit(6)> <unit(12)> <trt(3)> <trt(2)>
-       1 mainplot1  subplot1     trt11    trt22
-       2 mainplot1  subplot2     trt11    trt21
+       1 mainplot1  subplot1     trt13    trt22
+       2 mainplot1  subplot2     trt13    trt21
        3 mainplot2  subplot3     trt12    trt22
        4 mainplot2  subplot4     trt12    trt21
-       5 mainplot3  subplot5     trt13    trt22
-       6 mainplot3  subplot6     trt13    trt21
-       7 mainplot4  subplot7     trt11    trt21
-       8 mainplot4  subplot8     trt11    trt22
-       9 mainplot5  subplot9     trt12    trt22
-      10 mainplot5  subplot10    trt12    trt21
-      11 mainplot6  subplot11    trt13    trt22
-      12 mainplot6  subplot12    trt13    trt21
+       5 mainplot3  subplot5     trt13    trt21
+       6 mainplot3  subplot6     trt13    trt22
+       7 mainplot4  subplot7     trt11    trt22
+       8 mainplot4  subplot8     trt11    trt21
+       9 mainplot5  subplot9     trt11    trt22
+      10 mainplot5  subplot10    trt11    trt21
+      11 mainplot6  subplot11    trt12    trt21
+      12 mainplot6  subplot12    trt12    trt22
 
 # strip
 
@@ -148,16 +148,16 @@
       # An edibble: 48 x 4
                unit     trt1     trt2     trt3
        * <unit(48)> <trt(2)> <trt(3)> <trt(4)>
-       1     unit1     trt12    trt22    trt31
-       2     unit2     trt11    trt21    trt32
-       3     unit3     trt11    trt21    trt31
-       4     unit4     trt12    trt21    trt31
-       5     unit5     trt11    trt23    trt32
-       6     unit6     trt12    trt21    trt33
-       7     unit7     trt12    trt23    trt33
-       8     unit8     trt12    trt22    trt34
-       9     unit9     trt11    trt23    trt31
-      10     unit10    trt12    trt22    trt33
+       1     unit1     trt12    trt22    trt34
+       2     unit2     trt12    trt21    trt33
+       3     unit3     trt12    trt23    trt34
+       4     unit4     trt12    trt23    trt33
+       5     unit5     trt11    trt23    trt34
+       6     unit6     trt11    trt21    trt32
+       7     unit7     trt11    trt23    trt33
+       8     unit8     trt11    trt22    trt34
+       9     unit9     trt11    trt23    trt32
+      10     unit10    trt11    trt23    trt33
       # ... with 38 more rows
     Code
       fac_rcbd <- takeout(menu_factorial(trt = c(2, 3, 4), design = "rcbd", r = 2,

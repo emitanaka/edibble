@@ -116,13 +116,13 @@ subset_design <- function(prep, unit, rcrds) {
   keep_uids <- prep$fct_id(unit)
   keep_uids_ancestors <- prep$fct_ancestor(keep_uids)
   sprep <- prep$clone()
-  sprep$fct_nodes <- subset(sprep$fct_nodes, id %in% c(keep_uids_ancestors, keep_rids))
-  sprep$fct_edges <- subset(sprep$fct_edges, (to %in% keep_uids_ancestors &
-                                                   from %in% keep_uids_ancestors) |
-                                        to %in% keep_rids)
-  sprep$lvl_nodes <- subset(sprep$lvl_nodes, idvar %in% keep_uids_ancestors)
-  eep_lids_ancestors <- sprep$lvl_ids()
-  sprep$lvl_edges <- subset(sprep$lvl_edges, to %in% keep_lids_ancestors & from %in% keep_lids_ancestors)
+  sprep$fct_nodes <- sprep$fct_nodes[sprep$fct_nodes$id %in% c(keep_uids_ancestors, keep_rids), ]
+  sprep$fct_edges <- sprep$fct_edges[(sprep$fct_edges$to %in% keep_uids_ancestors &
+                                        sprep$fct_edges$from %in% keep_uids_ancestors) |
+                                        sprep$fct_edges$to %in% keep_rids, ]
+  sprep$lvl_nodes <- sprep$lvl_nodes[sprep$lvl_nodes$idvar %in% keep_uids_ancestors, ]
+  keep_lids_ancestors <- sprep$lvl_ids()
+  sprep$lvl_edges <- sprep$lvl_edges[sprep$lvl_edges$to %in% keep_lids_ancestors & sprep$lvl_edges$from %in% keep_lids_ancestors, ]
   if(!is_null(sprep$design$allotment$trts)) {
     units <- map_chr(sprep$design$allotment$trts, function(x) all.vars(f_rhs(x)))
     allotments <- sprep$design$allotment$trts[units %in% sprep$fct_names]
@@ -268,7 +268,7 @@ restriction_for_human <- function(operator, value) {
 #' @family user-facing functions
 #' @export
 export_design <- function(.data, file, author, date = Sys.Date(), overwrite = FALSE) {
-  if(!require("openxlsx")) {
+  if(!requireNamespace("openxlsx")) {
     stop("Please install the `openxlsx` package to use this function.")
   }
 
@@ -301,13 +301,18 @@ export_design <- function(.data, file, author, date = Sys.Date(), overwrite = FA
 save_workbook <- function(wb, file, overwrite, prep) {
   success <- openxlsx::saveWorkbook(wb, file, overwrite = overwrite, returnValue = TRUE)
   if(success) {
-    cli_alert_success("{.emph {prep$design$name}} has been written to {.file {file}}")
+    cli::cli_alert_success("{.emph {prep$design$name}} has been written to {.file {file}}")
   } else {
-    cli_alert_warning("Something went wrong. {.emph {prep$design$name}} failed to be exported.")
+    cli::cli_alert_warning("Something went wrong. {.emph {prep$design$name}} failed to be exported.")
   }
 }
 
-# .data can be a list or data frame
+#' Convert an edibble data frame to normal data frame
+#'
+#' A patch function where there is an issue with edbl factors
+#'
+#' @param .data can be a list or data frame
+#' @return A data.frame.
 #' @export
 as_data_frame <- function(.data) {
   rcrd_names <- names(.data)[map_lgl(.data, function(x) "edbl_rcrd" %in% class(x))]

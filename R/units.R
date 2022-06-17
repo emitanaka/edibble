@@ -4,9 +4,14 @@
 #' This function sets new edibble variables of class `edbl_unit`. More
 #' specifically, this means that new nodes are added to the `edbl_graph`.
 #'
-#' @inheritParams design-context
+#' @param .edibble An edibble design (`edbl_design`), an edibble data frame (`edbl_table`) or an
+#'   object that contains the edibble data frame in the attribute
+#'   `design`.
 #' @param ... Either a name-value pair or a series of the names.
 #' @param .name_repair Same as the argument in `tibble::tibble()`.
+#' @param .record A logical value. This indicates whether to record this
+#'    code step. The default is TRUE. It should remain TRUE unless this
+#'    function is used as a wrapper in other code.
 #' @section Definition of _unit_:
 #' A _unit_, much like _factor_, is an over-used word but due to lack of a
 #' better word, edibble uses the word "unit" to refer to any entity, physical
@@ -21,29 +26,29 @@
 #'
 #' @examples
 #' # 30 rats
-#' start_design() %>%
+#' design() %>%
 #'   set_units(rat = 30) %>%
 #'   serve_table()
 #'
 #' # 4 girls named "Anna", "Betty", "Carol", "Diana"
-#' start_design() %>%
+#' design() %>%
 #'   set_units(girl = c("Anna", "Betty", "Carol", "Diana")) %>%
 #'   serve_table()
 #'
 #' # 3 companies, with 10 boxes each
-#' start_design() %>%
+#' design() %>%
 #'   set_units(company = c("A", "B", "C"),
 #'                 box = nested_in(company, 10))
 #'
 #' # 2 classes, one with 10 students, the other with 20 students
-#' start_design() %>%
+#' design() %>%
 #'   set_units(class = 2,
 #'             student = nested_in(class,
 #'                                 1 ~ 10,
 #'                                 2 ~ 20))
 #'
 #' # 4 countries with 10 people from Australia & New Zealand and 20 from the rest
-#' start_design() %>%
+#' design() %>%
 #'   set_units(country = c("AU", "NZ", "USA", "JPN"),
 #'             person = nested_in(country,
 #'                                c("AU", "NZ") ~ 10,
@@ -54,11 +59,11 @@
 #' @family user-facing functions
 #' @return An edibble design.
 #' @export
-set_units <- function(.design, ...,
+set_units <- function(.edibble, ...,
                       .name_repair = c("check_unique", "unique", "universal", "minimal"),
                       .record = TRUE) {
   if(.record) record_step()
-  set_fcts(.design, ..., .name_repair = .name_repair, .class = "edbl_unit")
+  set_fcts(.edibble, ..., .name_repair = .name_repair, .class = "edbl_unit")
 }
 
 #' Select a subset of units from a cooked design

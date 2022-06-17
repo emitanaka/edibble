@@ -10,8 +10,7 @@
 #' @importFrom cli col_grey
 #' @importFrom tidyselect eval_select
 set_fcts <- function(.edibble, ..., .class = NULL,
-                     .name_repair = c("check_unique", "unique", "universal", "minimal"),
-                     .code = NULL) {
+                     .name_repair = c("check_unique", "unique", "universal", "minimal")) {
 
   not_edibble(.edibble)
 
@@ -58,6 +57,7 @@ set_fcts <- function(.edibble, ..., .class = NULL,
 
 #' Constructor for an edibble variable
 #' @importFrom vctrs new_vctr
+#' @noRd
 new_edibble_fct <- function(labels = character(), levels = unique(labels),
                             name = character(), rep = NULL, ..., class = NULL) {
   x <- new_vctr(labels, levels = levels, name = name,

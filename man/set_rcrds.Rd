@@ -22,9 +22,14 @@ object that contains the edibble data frame in the attribute
 \item{...}{Name-value pair. The value should correspond to a single name of the
 unit defined in \code{set_units}. The name should be the name of the record variable.}
 
+\item{.name_repair}{Same as the argument in \code{tibble::tibble()}.}
+
 \item{.record}{A logical value. This indicates whether to record this
 code step. The default is TRUE. It should remain TRUE unless this
 function is used as a wrapper in other code.}
+}
+\value{
+An edibble design.
 }
 \description{
 This function creates new nodes to edibble graph with the name
@@ -33,8 +38,7 @@ a variable to be recorded.
 }
 \seealso{
 Other user-facing functions: 
-\code{\link{allot_trts}()},
-\code{\link{design-context}},
+\code{\link{allot}},
 \code{\link{design}()},
 \code{\link{expect_rcrds}()},
 \code{\link{export_design}()},

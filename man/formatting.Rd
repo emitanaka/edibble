@@ -19,10 +19,9 @@
 \arguments{
 \item{x}{An edibble graph.}
 
-\item{decorate_trts, decorate_units, decorate_resp, decorate_levels, decorate_title}{A function applied to the name of treatment, unit, response factors or
+\item{decorate_trts, decorate_units, decorate_rcrds, decorate_levels, decorate_title}{A function applied to the name of treatment, unit, response factors or
 design title. The function should return a string. Most often this wraps the name with
-ANSI colored text. Run \code{\link[=edibble_opt]{edibble_opt()}} to see the list of default
-values for the options.}
+ANSI colored text.}
 
 \item{title}{The title of the design.}
 
@@ -35,14 +34,4 @@ Any ANSI coloring or styling are only visible in the console or terminal
 outputs that support it. The print output is best used interactively since
 any text styling are lost in text or R Markdown output. More details can
 be found in \code{vignette("edbl-output", package = "edibble")}.
-}
-\examples{
-# stylizing are only visible in terminal output that supports it
-print(nclassics$split)
-## Split plot design
-## ├─mainplot (4 levels)
-## │ └─subplot (8 levels)
-## ├─subplot (8 levels)
-## ├─variety (2 levels)
-## └─irrigation (2 levels)
 }

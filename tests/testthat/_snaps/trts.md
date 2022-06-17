@@ -1,7 +1,7 @@
 # treatments
 
     Code
-      design() %>% set_trts(vaccine = 2)
+      design(seed = 1) %>% set_trts(vaccine = 2)
     Output
       An edibble design
       \-vaccine (2 levels)
@@ -9,7 +9,7 @@
 ---
 
     Code
-      design() %>% set_trts(vaccine = 2, sex = 2)
+      design(seed = 1) %>% set_trts(vaccine = 2, sex = 2)
     Output
       An edibble design
       +-vaccine (2 levels)
@@ -18,7 +18,7 @@
 ---
 
     Code
-      design() %>% set_units(person = 5) %>% set_trts(vaccine = 2, sex = 2)
+      design(seed = 1) %>% set_units(person = 5) %>% set_trts(vaccine = 2, sex = 2)
     Output
       An edibble design
       +-person (5 levels)
@@ -28,7 +28,7 @@
 ---
 
     Code
-      design() %>% set_trts(vaccine = 2, sex = 2) %>% set_units(person = 5)
+      design(seed = 1) %>% set_trts(vaccine = 2, sex = 2) %>% set_units(person = 5)
     Output
       An edibble design
       +-vaccine (2 levels)
@@ -45,15 +45,15 @@
           vaccine      sex     person
          <trt(3)> <trt(2)> <unit(30)>
        1 vaccine1     sex1   person1 
-       2 vaccine1     sex2   person2 
-       3 vaccine2     sex1   person3 
-       4 vaccine2     sex2   person4 
-       5 vaccine3     sex1   person5 
+       2 vaccine2     sex1   person2 
+       3 vaccine3     sex1   person3 
+       4 vaccine1     sex2   person4 
+       5 vaccine2     sex2   person5 
        6 vaccine3     sex2   person6 
        7 vaccine1     sex1   person7 
-       8 vaccine1     sex2   person8 
-       9 vaccine2     sex1   person9 
-      10 vaccine2     sex2   person10
+       8 vaccine2     sex1   person8 
+       9 vaccine3     sex1   person9 
+      10 vaccine1     sex2   person10
       # ... with 20 more rows
 
 ---
@@ -67,15 +67,15 @@
           vaccine      sex     person
          <trt(3)> <trt(2)> <unit(30)>
        1 vaccine1        F   person1 
-       2 vaccine1        M   person2 
-       3 vaccine2        F   person3 
-       4 vaccine2        M   person4 
-       5 vaccine3        F   person5 
+       2 vaccine2        F   person2 
+       3 vaccine3        F   person3 
+       4 vaccine1        M   person4 
+       5 vaccine2        M   person5 
        6 vaccine3        M   person6 
        7 vaccine1        F   person7 
-       8 vaccine1        M   person8 
-       9 vaccine2        F   person9 
-      10 vaccine2        M   person10
+       8 vaccine2        F   person8 
+       9 vaccine3        F   person9 
+      10 vaccine1        M   person10
       # ... with 20 more rows
 
 ---
@@ -146,11 +146,11 @@
       # An edibble: 5 x 2
          vaccine    person
         <trt(3)> <unit(5)>
-      1 vaccine1   person1
+      1 vaccine3   person1
       2 vaccine2   person2
-      3 vaccine3   person3
-      4 vaccine3   person4
-      5 vaccine2   person5
+      3 vaccine2   person3
+      4 vaccine1   person4
+      5 vaccine3   person5
 
 ---
 
@@ -162,19 +162,19 @@
     Output
                 
                  person1 person10 person11 person12 person13 person14 person15
-        vaccine1       3        3        0        0        0        3        0
-        vaccine2       0        0        0        3        0        0        3
-        vaccine3       0        0        3        0        3        0        0
+        vaccine1       0        3        0        0        3        0        0
+        vaccine2       0        0        0        3        0        3        0
+        vaccine3       3        0        3        0        0        0        3
                 
                  person16 person17 person18 person19 person2 person20 person3 person4
-        vaccine1        0        0        3        0       0        3       0       0
-        vaccine2        3        0        0        3       0        0       3       3
-        vaccine3        0        3        0        0       3        0       0       0
+        vaccine1        3        0        0        0       3        3       3       0
+        vaccine2        0        0        3        3       0        0       0       3
+        vaccine3        0        3        0        0       0        0       0       0
                 
                  person5 person6 person7 person8 person9
-        vaccine1       0       3       3       0       0
-        vaccine2       0       0       0       0       3
-        vaccine3       3       0       0       3       0
+        vaccine1       0       0       0       3       0
+        vaccine2       3       3       0       0       0
+        vaccine3       0       0       3       0       3
 
 ---
 
@@ -186,19 +186,19 @@
     Output
                 
                  person1 person10 person11 person12 person13 person14 person15
-        vaccine1       1        1        1        1        1        1        1
-        vaccine2       1        1        1        1        1        1        1
-        vaccine3       1        1        1        1        1        1        1
+        vaccine1       1        2        0        1        2        2        0
+        vaccine2       0        1        2        2        0        0        2
+        vaccine3       2        0        1        0        1        1        1
                 
                  person16 person17 person18 person19 person2 person20 person3 person4
-        vaccine1        1        1        1        1       1        1       1       1
-        vaccine2        1        1        1        1       1        1       1       1
-        vaccine3        1        1        1        1       1        1       1       1
+        vaccine1        0        2        3        0       1        1       1       1
+        vaccine2        1        1        0        1       1        2       1       2
+        vaccine3        2        0        0        2       1        0       1       0
                 
                  person5 person6 person7 person8 person9
-        vaccine1       1       1       1       1       1
-        vaccine2       1       1       1       1       1
-        vaccine3       1       1       1       1       1
+        vaccine1       1       2       0       0       0
+        vaccine2       1       1       1       1       0
+        vaccine3       1       0       2       2       3
 
 ---
 

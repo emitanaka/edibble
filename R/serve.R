@@ -6,16 +6,16 @@
 #' variables can be reconciled, otherwise it will be a data frame with
 #' zero rows.
 #'
-#' @inheritParams design-context
+#' @inheritParams set_units
 #' @param use_labels To show the labels instead of names.
 #' @return An `edbl` data frame with columns defined by vertices and
 #' rows displayed only if the vertices are connected and reconcile for output.
 #' @family user-facing functions
 #' @export
-serve_table <- function(.design, use_labels = FALSE, ..., .record = TRUE) {
+serve_table <- function(.edibble, use_labels = FALSE, ..., .record = TRUE) {
   if(.record) record_step()
 
-  prep <- cook_design(.design)
+  prep <- cook_design(.edibble)
 
   if(!prep$is_connected) {
     lout <- serve_vars_not_reconciled(prep)
@@ -34,12 +34,12 @@ serve_table <- function(.design, use_labels = FALSE, ..., .record = TRUE) {
 
   namesv <- prep$fct_names()
   if(use_labels) {
-    translate <- setNames(prep$lvl_nodes$label, prep$lvl_nodes$name)
+    translate <- stats::setNames(prep$lvl_nodes$label, prep$lvl_nodes$name)
     # FIXME: it lsoes the classes when this is done
     lout <- lapply(lout, function(.x) translate[.x])
   }
 
-  new_edibble(lout[namesv], design = .design)
+  new_edibble(lout[namesv], design = .edibble)
 }
 
 serve_trts <- function(prep, lunits) {

@@ -15,17 +15,17 @@
 #' @family user-facing functions
 #' @examples
 #'
-#' start_design() %>%
+#' design() %>%
 #'   set_trts(pesticide = c("A", "B", "C"),
 #'            dosage = c(0, 10, 20, 30, 40))
 #'
 #' @return An edibble design.
 #' @export
-set_trts <- function(.design, ...,
+set_trts <- function(.edibble, ...,
                      .name_repair = c("check_unique", "unique", "universal", "minimal"),
                      .record = TRUE) {
   if(.record) record_step()
-  set_fcts(.design, ..., .name_repair = .name_repair, .class = "edbl_trt")
+  set_fcts(.edibble, ..., .name_repair = .name_repair, .class = "edbl_trt")
 }
 
 
@@ -46,7 +46,7 @@ order_trts.dae <- function(order, prep, constrain, trts, ...) {
   out <- dae::designRandomize(allocated = dat[prep$trt_names],
                        recipient = dat[prep$unit_names],
                        nested.recipients = constrain)
-  trtsv <- setNames(1:nrow(trts), do.call(paste0, trts[prep$trt_names]))
+  trtsv <- stats::setNames(1:nrow(trts), do.call(paste0, trts[prep$trt_names]))
   otrtsv <- do.call(paste0, dat[prep$trt_names])
   unname(trtsv[otrtsv])
 }
@@ -77,13 +77,13 @@ permute_parent_one_alg <- function(prep, vid, udf, ntrts) {
   udf <- udf[order(udf[[gparent]]),]
   blocksizes <- table(udf[[gparent]])
   # if(min(blocksizes) > ntrts) {
-  #   permute_parent_one(.design, vid, udf, ntrts)
+  #   permute_parent_one(.edibble, vid, udf, ntrts)
   # } else {
   # AlgDesign::optBlock takes really long when at least one block size > ntrts
   # in this case subtract total trts
   blocksizes_adj <- blocksizes
   blocksizes_adj[blocksizes > ntrts] <- blocksizes_adj[blocksizes > ntrts] %% ntrts
-  capture.output({
+  utils::capture.output({
       # prevent "No improvement over initial random design" print out from AlgDesign
       # where the design is balanced
     res <- tryCatch({
@@ -112,12 +112,12 @@ permute_parent_one <- function(prep, vid, udf, ntrts) {
   blocksizes$size <- as.numeric(as.character(blocksizes$Var1))
   for(isize in seq(nrow(blocksizes))) {
     if(blocksizes$size[isize] <= ntrts) {
-      comb <- combn(ntrts, blocksizes$size[isize])
+      comb <- utils::combn(ntrts, blocksizes$size[isize])
       blocksizes$rows[isize] <- list(comb)
     } else {
       nrep <- floor(blocksizes$size[isize] / ntrts)
       nremain <- blocksizes$size[isize] %% ntrts
-      comb <- combn(ntrts, nremain)
+      comb <- utils::combn(ntrts, nremain)
       blocksizes$rows[isize] <- list(rbind(comb,
                                            matrix(rep(1:ntrts, nrep * ncol(comb)), ncol = ncol(comb))))
     }

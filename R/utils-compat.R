@@ -32,9 +32,9 @@ map_dbl <- function(.x, .f, ...) {
 map2 <- function(.x, .y, .f, ...) {
   out <- mapply(.f, .x, .y, MoreArgs = list(...), SIMPLIFY = FALSE)
   if (length(out) == length(.x)) {
-    setNames(out, names(.x))
+    stats::setNames(out, names(.x))
   } else {
-    setNames(out, NULL)
+    stats::setNames(out, NULL)
   }
 }
 

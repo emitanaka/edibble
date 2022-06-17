@@ -32,11 +32,9 @@ Imports:
     R6
 Suggests: 
     testthat (>= 3.0.0),
-    knitr,
     rmarkdown,
     asciicast,
     openxlsx,
     visNetwork
-VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)

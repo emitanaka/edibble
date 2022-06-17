@@ -44,6 +44,9 @@ by the number of levels of the treatment factor), then the extras are chosen ran
 
 \item{.record}{Whether to record the step.}
 }
+\value{
+An edibble design.
+}
 \description{
 This function assigns specific treatment or unit levels to actual units.
 }

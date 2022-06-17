@@ -31,23 +31,23 @@ nested_in <- function(x, ..., prefix = "", suffix = "",
     ind <- is_cross_levels(.x) | is_formula(.x, lhs = FALSE)
     if(ind) {
       if(is_formula(.x, lhs = FALSE)) {
-        vars <- rownames(attr(terms(.x), "factors"))
+        vars <- rownames(attr(stats::terms(.x), "factors"))
       } else {
         vars <- .x
       }
       child_lvls_by_parent <- map(vars, function(.var) {
-        out <- serve_units(select_units(prep, c(.var, parent_name)))
+        out <- serve_units(select_units(prep, tidyselect::all_of(c(.var, parent_name))))
         split(out[[.var]], out[[parent_name]])
       })
       names(child_lvls_by_parent) <- vars
       cross_lvls_by_parent <- map(parent_vlevels, function(.lvl) {
-        out <- setNames(map(vars, function(.var) child_lvls_by_parent[[.var]][[.lvl]]),
+        out <- stats::setNames(map(vars, function(.var) child_lvls_by_parent[[.var]][[.lvl]]),
                         vars)
         do.call("expand.grid", out)
       })
       names(cross_lvls_by_parent) <- parent_vlevels
       args <- c(args, map(names(cross_lvls_by_parent), function(.parent)
-        as.formula(paste0('"', .parent, '"', " ~ ", nrow(cross_lvls_by_parent[[.parent]])))))
+        stats::as.formula(paste0('"', .parent, '"', " ~ ", nrow(cross_lvls_by_parent[[.parent]])))))
       attr(args, "parents") <- cross_lvls_by_parent
     } else {
       args <- c(args, list(.x))

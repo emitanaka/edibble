@@ -16,6 +16,9 @@ lvl_nodes(edibble)
 
 lvl_edges(edibble)
 }
+\arguments{
+\item{edibble}{An edibble object.}
+}
 \description{
 Get the node or edge data from an edibble design
 }

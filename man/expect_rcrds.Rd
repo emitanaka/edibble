@@ -15,13 +15,15 @@ object that contains the edibble data frame in the attribute
 that are plan to be recorded from \code{set_rcrds()} and the values are
 the expected types and values set by helper functions, see \code{?expect-rcrds}.}
 }
+\value{
+An edibble design.
+}
 \description{
 Set the expected values for recording variables
 }
 \seealso{
 Other user-facing functions: 
-\code{\link{allot_trts}()},
-\code{\link{design-context}},
+\code{\link{allot}},
 \code{\link{design}()},
 \code{\link{export_design}()},
 \code{\link{serve_table}()},

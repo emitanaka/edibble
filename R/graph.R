@@ -7,6 +7,12 @@
 # data or vector --------------------------------------------------
 
 #' Cook the design in the kitchen
+#'
+#' This is a developer function to create a new Kitchen class with
+#' the existing design.
+#'
+#' @param x An edibble object.
+#' @return A Kitchen object.
 #' @export
 cook_design <- function(x) {
   des <- edbl_design(x)
@@ -20,6 +26,7 @@ cook_design <- function(x) {
 
 #' Get the node or edge data from an edibble design
 #'
+#' @param edibble An edibble object.
 #' @family design manipulators
 #' @name design_data
 NULL

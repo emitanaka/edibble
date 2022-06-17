@@ -26,6 +26,9 @@ crossed_by(
 
 \item{attrs}{Currently not implemented.}
 }
+\value{
+An object of class "cross_lvls".
+}
 \description{
 \code{crossed_by(A, B)} is the same as \code{~A:B} but \code{crossed_by} offers more control over the names of the new units
 as well as adding new attributes.

@@ -5,13 +5,17 @@
 \title{Set the treatment variables}
 \usage{
 set_trts(
-  .design,
+  .edibble,
   ...,
   .name_repair = c("check_unique", "unique", "universal", "minimal"),
   .record = TRUE
 )
 }
 \arguments{
+\item{.edibble}{An edibble design (\code{edbl_design}), an edibble data frame (\code{edbl_table}) or an
+object that contains the edibble data frame in the attribute
+\code{design}.}
+
 \item{...}{Either a name-value pair or a series of the names.}
 
 \item{.name_repair}{Same as the argument in \code{tibble::tibble()}.}
@@ -38,15 +42,14 @@ Treatment is the whole description of what is applied in an experiment.
 
 \examples{
 
-start_design() \%>\%
+design() \%>\%
   set_trts(pesticide = c("A", "B", "C"),
            dosage = c(0, 10, 20, 30, 40))
 
 }
 \seealso{
 Other user-facing functions: 
-\code{\link{allot_trts}()},
-\code{\link{design-context}},
+\code{\link{allot}},
 \code{\link{design}()},
 \code{\link{expect_rcrds}()},
 \code{\link{export_design}()},

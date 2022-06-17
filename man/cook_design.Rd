@@ -6,6 +6,13 @@
 \usage{
 cook_design(x)
 }
+\arguments{
+\item{x}{An edibble object.}
+}
+\value{
+A Kitchen object.
+}
 \description{
-Cook the design in the kitchen
+This is a developer function to create a new Kitchen class with
+the existing design.
 }

@@ -81,7 +81,7 @@ levels.edbl_lvls <- function(x, ...) {
   lvl_data(x)$name
 }
 
-#' @export
+
 lvl_data <- function(x) {
   vec_data(x)
 }

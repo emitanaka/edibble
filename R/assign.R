@@ -17,6 +17,7 @@
 #' @param .record Whether to record the step.
 #'
 #' @name assign
+#' @return An edibble design.
 #' @export
 assign_trts <- function(.design, order = "random", seed = NULL, constrain = nesting_structure(.design), ..., .record = TRUE) {
   not_edibble(.design)

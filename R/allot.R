@@ -7,10 +7,11 @@
 #'
 #' @param ... One-sided or two-sided formula. If the input is a one-sided formula
 #' then the whole treatment is applied to the specified unit.
-#' @inheritParams design-context
+#' @inheritParams assign
+#' @inheritParams set_units
 #' @family user-facing functions
 #' @examples
-#' start_design() %>%
+#' design() %>%
 #'   set_units(block = 10,
 #'             plot = nested_in(block, 3)) %>%
 #'   set_trts(treat = c("A", "B", "C"),
@@ -19,13 +20,17 @@
 #'                 pest ~ block)
 #'
 #' @return Return an edibble design.
-#' @export
-allot_trts <- function(.design, ..., .record = TRUE) {
+#' @name allot
+NULL
 
-  not_edibble(.design)
+#' @rdname allot
+#' @export
+allot_trts <- function(.edibble, ..., .record = TRUE) {
+
+  not_edibble(.edibble)
   if(.record) record_step()
 
-  des <- edbl_design(.design)
+  des <- edbl_design(.edibble)
 
   dots <- list2(...)
   if(!is_null(des$allotment)) {
@@ -53,27 +58,28 @@ allot_trts <- function(.design, ..., .record = TRUE) {
     prep$append_fct_edges(data.frame(from = tids, to = uid, alloc = ialloc, type = "allot"))
   }
 
-  if(is_edibble_design(.design)) {
+  if(is_edibble_design(.edibble)) {
     prep$design
-  } else if(is_edibble_table(.design)) {
+  } else if(is_edibble_table(.edibble)) {
     if(length(trts)==0) {
       trts <- prep$trt_names
     }
     for(atrt in trts) {
-      prep$append_lvl_edges(data.frame(from = prep$lvl_id(as.character(.design[[atrt]])),
-                                       to = prep$lvl_id(as.character(.design[[unit]]))))
+      prep$append_lvl_edges(data.frame(from = prep$lvl_id(as.character(.edibble[[atrt]])),
+                                       to = prep$lvl_id(as.character(.edibble[[unit]]))))
     }
-    attr(.design, "design") <- prep$design
-    .design
+    attr(.edibble, "design") <- prep$design
+    .edibble
   }
 }
 
 
+#' @rdname allot
 #' @export
-allot_units <- function(.design, ..., .record = TRUE) {
-  not_edibble(.design)
+allot_units <- function(.edibble, ..., .record = TRUE) {
+  not_edibble(.edibble)
   if(.record) record_step()
-  des <- edbl_design(.design)
+  des <- edbl_design(.edibble)
 
   dots <- list2(...)
   if(!is_null(des$allotment)) {
@@ -105,9 +111,9 @@ allot_units <- function(.design, ..., .record = TRUE) {
 
     }
   }
-  if(is_edibble_design(.design)) {
+  if(is_edibble_design(.edibble)) {
     prep$design
-  } else if(is_edibble_table(.design)) {
+  } else if(is_edibble_table(.edibble)) {
     # Note: for crossed and nested, it's the opposite -> small = big, not big = small.
     if(op %in% c("crossed_by", "nested_in")) {
       for(ismall in seq_along(small_id)) {
@@ -116,37 +122,33 @@ allot_units <- function(.design, ..., .record = TRUE) {
                                          type = "nest"))
         if(op == "crossed_by") {
           cross_df <- expand.grid(from = small_id, to = small_id)
-          cross_df <- subset(cross_df, from!=to)
+          cross_df <- cross_df[cross_df$from!=cross_df$to,]
           cross_df$type <- "cross"
           prep$append_fct_edges(cross_df)
         }
-        prep$append_lvl_edges(data.frame(from = prep$lvl_id(as.character(.design[[small[ismall]]])),
-                                         to = prep$lvl_id(as.character(.design[[big]]))))
+        prep$append_lvl_edges(data.frame(from = prep$lvl_id(as.character(.edibble[[small[ismall]]])),
+                                         to = prep$lvl_id(as.character(.edibble[[big]]))))
 
       }
 
     } else {
       for(asmall in small) {
-        prep$append_lvl_edges(data.frame(from = prep$lvl_id(as.character(.design[[big]])),
-                                         to = prep$lvl_id(as.character(.design[[asmall]]))))
+        prep$append_lvl_edges(data.frame(from = prep$lvl_id(as.character(.edibble[[big]])),
+                                         to = prep$lvl_id(as.character(.edibble[[asmall]]))))
       }
     }
-    attr(.design, "design") <- prep$design
-    .design
+    attr(.edibble, "design") <- prep$design
+    .edibble
   }
 
 }
 
 
-#' A shorthand for allot, assign and serve
-#'
-#' @inheritParams assign
-#' @inheritDotParams allot_trts
-#'
+#' @rdname allot
 #' @export
-allot_table <- function(.design, ..., order = "random", seed = NULL, constrain = nesting_structure(.design)) {
+allot_table <- function(.edibble, ..., order = "random", seed = NULL, constrain = nesting_structure(.edibble)) {
 
-  .design %>%
+  .edibble %>%
     allot_trts(...) %>%
     assign_trts(order = order, seed = seed, constrain = constrain) %>%
     serve_table()

@@ -27,7 +27,10 @@ to_be_factor(levels)
 provided by helper \code{with_value()} that gives the possible range of values
 that the expected type can take.}
 
-\item{value}{A vector of possible values for entry.}
+\item{levels}{A character vector with the factor levels.}
+}
+\value{
+A record type.
 }
 \description{
 These functions should be used within \code{expect_vars} where variables that

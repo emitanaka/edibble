@@ -11,6 +11,8 @@ menu_youden(
 )
 }
 \arguments{
+\item{nc}{The number of columns.}
+
 \item{t}{The number of treatments.}
 
 \item{seed}{A scalar value for computational reproducibility.}

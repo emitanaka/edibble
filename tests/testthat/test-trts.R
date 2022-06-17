@@ -1,26 +1,26 @@
 test_that("treatments", {
   expect_snapshot({
-    design() %>%
+    design(seed = 1) %>%
       set_trts(vaccine = 2)
   })
 
 
   expect_snapshot({
-    design() %>%
+    design(seed = 1) %>%
       set_trts(vaccine = 2,
                sex = 2)
   })
 
 
   expect_snapshot({
-    design() %>%
+    design(seed = 1) %>%
       set_units(person = 5) %>%
       set_trts(vaccine = 2,
                sex = 2)
   })
 
   expect_snapshot({
-    design() %>%
+    design(seed = 1) %>%
       set_trts(vaccine = 2,
                sex = 2) %>%
       set_units(person = 5)
@@ -39,14 +39,14 @@ test_that("treatments", {
 
 
   expect_error({
-    design() %>%
+    design(seed = 1) %>%
       set_trts(irrigation = 2) %>%
       set_units(person = 3) %>%
       allot_trts( ~ peason)
   })
 
   expect_error({
-    design() %>%
+    design(seed = 1) %>%
       set_trts(irrigation = 2) %>%
       set_units(person = 3) %>%
       allot_trts(irr ~ person)
@@ -204,7 +204,7 @@ test_that("treatments", {
               leaf = ~plant:position) %>%
     set_trts(light = c("a", "b", "c", "d")) %>%
     allot_trts(light ~ leaf) %>%
-    assign_trts() %>%
+    assign_trts(seed = 1) %>%
     serve_table()
 
   design("McIntyre (1955)") %>%
@@ -214,6 +214,7 @@ test_that("treatments", {
               leaf = ~site:plant:position) %>%
     set_trts(light = c("a", "b", "c", "d")) %>%
     allot_trts(light ~ leaf) %>%
-    assign_trts() %>% serve_table()
+    assign_trts(seed = 1) %>%
+    serve_table()
 
 })

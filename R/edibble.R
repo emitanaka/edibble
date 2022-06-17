@@ -25,6 +25,7 @@
 #'
 #' @param x An object.
 #' @name design-helpers
+#' @return A logical value.
 #' @export
 is_edibble_design <- function(x) {
   inherits(x, "edbl_design")
@@ -119,11 +120,12 @@ not_edibble <- function(x) {
 #'
 #' @param .data data frame or list of the same size.
 #' @param ... Passed to `new_tibble`.
-#' @param graph An edibble graph object.
+#' @param design An edibble graph object.
 #' @param class Subclasses for edibble table. The default is NULL.
+#' @inheritParams design
 #' @importFrom tibble new_tibble
 #' @importFrom vctrs vec_size_common
-#'
+#' @return An edibble table.
 #' @export
 new_edibble <- function(.data, ..., design = NULL, class = NULL) {
   new_tibble(.data, ..., nrow = vec_size_common(!!!.data),

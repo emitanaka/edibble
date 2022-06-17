@@ -89,23 +89,13 @@ decorate_vars <- function(x, decorate_units, decorate_trts, decorate_rcrds, clas
 #' be found in `vignette("edbl-output", package = "edibble")`.
 #'
 #' @param x An edibble graph.
-#' @param decorate_trts,decorate_units,decorate_resp,decorate_levels,decorate_title
+#' @param decorate_trts,decorate_units,decorate_rcrds,decorate_levels,decorate_title
 #' A function applied to the name of treatment, unit, response factors or
 #' design title. The function should return a string. Most often this wraps the name with
-#' ANSI colored text. Run [edibble_opt()] to see the list of default
-#' values for the options.
+#' ANSI colored text.
 #' @param title The title of the design.
 #' @param ... Unused.
 #'
-#' @examples
-#' # stylizing are only visible in terminal output that supports it
-#' print(nclassics$split)
-#' ## Split plot design
-#' ## ├─mainplot (4 levels)
-#' ## │ └─subplot (8 levels)
-#' ## ├─subplot (8 levels)
-#' ## ├─variety (2 levels)
-#' ## └─irrigation (2 levels)
 #' @importFrom cli tree cli_li
 #' @name formatting
 #' @export
@@ -164,7 +154,7 @@ print.edbl_design <- function(x,
     cli_li(items = paste0(" ", pad, s))
   }
   if(!is_null(x$assignment)) {
-    cat(decorate_title("Assignment:"), x$assignment, "\n")
+    cat(decorate_title("Assignment:"), paste0(x$assignment, collapse = ", "), "\n")
   }
   if(!is_null(x$validation)) {
     cat(decorate_title("Validation:\n"))
@@ -253,18 +243,10 @@ compact <- function(.x) {
 }
 
 
-#' Find how many digits
+# Find how many digits
 ndigits <- function(x) {
   max(c(floor(log10(abs(x))) + 1, edibble_labels_opt("min_ndigits")))
 }
-
-
-is_nested_unit <- function(design, uid) {
-  unit_ids <- fct_nodes_filter(design, class == "edbl_unit")$id
-  out <- fct_edges_filter(design, to %in% uid & from %in% unit_ids)
-  nrow(out) > 0
-}
-
 
 
 rbind_ <- function(df1, df2) {

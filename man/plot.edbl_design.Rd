@@ -3,10 +3,12 @@
 \name{plot.edbl_design}
 \alias{plot.edbl_design}
 \alias{plot.edbl_table}
+\alias{plot_fct_graph}
+\alias{plot_lvl_graph}
 \title{Interactive plot of the edibble design}
 \usage{
 \method{plot}{edbl_design}(
-  .design,
+  x,
   which = c("factors", "levels"),
   width = "100\%",
   height = NULL,
@@ -19,10 +21,36 @@
   ...
 )
 
-\method{plot}{edbl_table}(.table, ...)
+\method{plot}{edbl_table}(x, ...)
+
+plot_fct_graph(
+  x,
+  width = "100\%",
+  height = NULL,
+  seed = 1,
+  title = NULL,
+  subtitle = NULL,
+  footer = NULL,
+  background = "transparent",
+  view = c("show-buttons", "hide-buttons", "static"),
+  ...
+)
+
+plot_lvl_graph(
+  x,
+  width = "100\%",
+  height = NULL,
+  seed = 1,
+  title = NULL,
+  subtitle = NULL,
+  footer = NULL,
+  background = "transparent",
+  view = c("show-buttons", "hide-buttons", "static"),
+  ...
+)
 }
 \arguments{
-\item{.design}{An edibble design.}
+\item{x}{An edibble design.}
 
 \item{which}{A string of either "factors" or "levels".}
 
@@ -31,7 +59,7 @@
 \item{seed}{A seed number so same plot is always generated.}
 
 \item{title, subtitle, footer}{The title, subtitle or footer of the plot.
-By default it uses the name from the \code{.design} object as the title while rest is empty.
+By default it uses the name from the \code{x} object as the title while rest is empty.
 To modify the look of the text, you can pass a character string consisting of valid
 for input style value in an HTML object, e.g. "font-size: 18px;font-family:serif;" as a
 named vector where the name corresponds to the text to display, e.g. \code{c("Title" = "font-size:20px;")}.}
@@ -40,6 +68,8 @@ named vector where the name corresponds to the text to display, e.g. \code{c("Ti
 can be a color name (e.g. "white"), a HEX value ("#FFFFFF"), or rgb/rgba in the format like rgba(0, 0, 0, 0).}
 
 \item{view}{A string of either "show-buttons" (default), "hide-buttons", "static"}
+
+\item{...}{Currently unused.}
 }
 \description{
 Interactive plot of the edibble design

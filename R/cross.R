@@ -10,6 +10,7 @@
 #' @param leading0 Currently not implemented.Whether there should be a leading 0 if labels are made.
 #' @param sep Currently not implemented.A separator added between prefix and the number if prefix is empty.
 #' @param attrs Currently not implemented.
+#' @return An object of class "cross_lvls".
 #' @export
 crossed_by <- function(..., prefix = NULL, suffix = NULL, leading0 = NULL, sep = NULL, attrs = NULL) {
   e <- exprs(...)

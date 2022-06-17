@@ -4,17 +4,16 @@
 \alias{serve_table}
 \title{Serve edibble table}
 \usage{
-serve_table(.design, use_labels = FALSE, ..., .record = TRUE)
+serve_table(.edibble, use_labels = FALSE, ..., .record = TRUE)
 }
 \arguments{
+\item{.edibble}{An edibble design (\code{edbl_design}), an edibble data frame (\code{edbl_table}) or an
+object that contains the edibble data frame in the attribute
+\code{design}.}
+
 \item{use_labels}{To show the labels instead of names.}
 
-\item{...}{Strings of contexts or notes for the experiment. The context
-maybe named. If you context it is wrong, consider writing the context
-in an external file then write the reference to the file in context
-instead. Input strings support inline markup that use \href{https://github.com/tidyverse/glue}{glue braces}
-as well \href{https://cli.r-lib.org/articles/semantic-cli.html#inline-text-formatting}{cli markup formatter}.
-The formatting is evaluated and stored in \code{edbl_design}.}
+\item{...}{Either a name-value pair or a series of the names.}
 
 \item{.record}{A logical value. This indicates whether to record this
 code step. The default is TRUE. It should remain TRUE unless this
@@ -33,8 +32,7 @@ zero rows.
 }
 \seealso{
 Other user-facing functions: 
-\code{\link{allot_trts}()},
-\code{\link{design-context}},
+\code{\link{allot}},
 \code{\link{design}()},
 \code{\link{expect_rcrds}()},
 \code{\link{export_design}()},

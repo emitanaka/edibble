@@ -6,10 +6,11 @@
 #' corresponding to either the intended response that will be measured or
 #' a variable to be recorded.
 #'
-#' @inheritParams design-context
+#' @inheritParams set_units
 #' @param ... Name-value pair. The value should correspond to a single name of the
 #'  unit defined in `set_units`. The name should be the name of the record variable.
 #' @family user-facing functions
+#' @return An edibble design.
 #' @export
 set_rcrds <- function(.edibble, ...,
                       .name_repair = c("check_unique", "unique", "universal", "minimal"),
@@ -62,11 +63,12 @@ set_rcrds_of <- function(.edibble, ...) {
 
 #' Set the expected values for recording variables
 #'
-#' @inheritParams design-context
+#' @inheritParams set_units
 #' @param ... Name-value pairs with the name belonging to the variable
 #'  that are plan to be recorded from `set_rcrds()` and the values are
 #'  the expected types and values set by helper functions, see `?expect-rcrds`.
 #' @family user-facing functions
+#' @return An edibble design.
 #' @export
 expect_rcrds <- function(.edibble, ...) {
   not_edibble(.edibble)
@@ -76,8 +78,9 @@ expect_rcrds <- function(.edibble, ...) {
   prep <- cook_design(.edibble)
   rules_named <- map(dots[dots_nms!=""], eval_tidy)
   rules_unnamed <- map(dots[dots_nms==""], validate_rcrd,
-                       rnames = prep$rcrd_names)
-  rules_unnamed <- setNames(rules_unnamed, map_chr(rules_unnamed, function(x) x$rcrd))
+                        rnames = prep$rcrd_names)
+
+  rules_unnamed <- stats::setNames(rules_unnamed, map_chr(rules_unnamed, function(x) x$rcrd))
   prep$design$validation <- simplify_validation(c(rules_named, rules_unnamed))
   if(is_edibble_table(.edibble)) return(serve_table(prep$design))
   prep$design
@@ -160,7 +163,7 @@ reverse_operator <- function(x) {
 
 
 validate_rcrd <- function(x, rnames = NULL) {
-  l <- as.list(x[[2]])
+  l <- as.list(rlang::quo_get_expr(x))
   operator <- as.character(l[[1]])
   val1 <- validate_values(l[[2]], env = attr(x, ".Environment"))
   val2 <- validate_values(l[[3]], env = attr(x, ".Environment"))
@@ -184,13 +187,6 @@ validate_rcrd <- function(x, rnames = NULL) {
 }
 
 
-
-#' @export
-expect_vars <- function(.edibble, ...) {
-  warn("This function defunct in favour of `expect_rcrds`. Please replace `expect_vars` with `expect_rcrds`")
-  expect_rcrds(.edibble, ...)
-}
-
 has_record <- function(.design) {
   "edbl_rcrd" %in% .design$graph$nodes$class
 }
@@ -205,11 +201,12 @@ has_record <- function(.design) {
 #' value type (numeric, integer, date, time and character) are preceded by
 #' "to_be_" where the corresponding restriction set by `with_value()`.
 #'
-#' @param value A vector of possible values for entry.
 #' @param range,length A named list with two elements: "operator" and "value" as
 #'  provided by helper `with_value()` that gives the possible range of values
 #'  that the expected type can take.
+#' @param levels A character vector with the factor levels.
 #' @name expect-vars
+#' @return A record type.
 #' @export
 to_be_numeric <- function(range) {
   c(list(type = "decimal", record = "numeric"), range)
@@ -283,7 +280,7 @@ with_value <- function(operator = c("=", "==", ">=", "<=", "<", ">", "!="),
        value = value)
 }
 
-fill_symbol <- function() "■"
+fill_symbol <- function() "o"
 dup_symbol <- function() "x"
 
 
