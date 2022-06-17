@@ -1,6 +1,6 @@
 # MIT License
 
-Copyright (c) 2022 edibble authors
+Copyright (c) 2022 Emi Tanaka
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
