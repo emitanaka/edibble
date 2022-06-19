@@ -276,6 +276,7 @@ rbind_ <- function(df1, df2) {
 #'
 #' @param x A numeric vector to format with SI prefix
 #' @source https://en.wikipedia.org/wiki/Metric_prefix
+#' @noRd
 number_si_prefix <- function(x) {
   if(!all(x >= 1)) abort("The numeric vector should be a positive integer.")
 
