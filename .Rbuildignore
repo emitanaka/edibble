@@ -9,3 +9,4 @@
 ^data-raw$
 ^vignettes/dump.Rmd$
 ^cran-comments\.md$
+^CRAN-RELEASE$
