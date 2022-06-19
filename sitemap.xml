@@ -4,6 +4,9 @@
     <loc>https://edibble.emitanaka.org/404.html</loc>
   </url>
   <url>
+    <loc>https://edibble.emitanaka.org/LICENSE-text.html</loc>
+  </url>
+  <url>
     <loc>https://edibble.emitanaka.org/LICENSE.html</loc>
   </url>
   <url>
@@ -19,10 +22,7 @@
     <loc>https://edibble.emitanaka.org/reference/Kitchen.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/allot_table.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/allot_trts.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/allot.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/anatomy.html</loc>
@@ -31,16 +31,16 @@
     <loc>https://edibble.emitanaka.org/reference/as.data.frame.edbl_table.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/assign_trts.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/as_data_frame.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/assign.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/cook_design.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/crossed_by.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/design-context.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/design-helpers.html</loc>
@@ -70,7 +70,13 @@
     <loc>https://edibble.emitanaka.org/reference/fct_attrs.html</loc>
   </url>
   <url>
+    <loc>https://edibble.emitanaka.org/reference/formatting.html</loc>
+  </url>
+  <url>
     <loc>https://edibble.emitanaka.org/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/is_takeout.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/lady_tasting_tea.html</loc>
@@ -80,9 +86,6 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/lvl_attrs.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/make_classical.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/menu_bibd.html</loc>
@@ -115,9 +118,6 @@
     <loc>https://edibble.emitanaka.org/reference/menu_youden.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/ndigits.html</loc>
-  </url>
-  <url>
     <loc>https://edibble.emitanaka.org/reference/nested_in.html</loc>
   </url>
   <url>
@@ -125,12 +125,6 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/new_edibble.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/new_edibble_fct.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/number_si_prefix.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/pipe.html</loc>
@@ -142,12 +136,6 @@
     <loc>https://edibble.emitanaka.org/reference/plot.edbl_design.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/prep_classical_.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/print.edbl_design.html</loc>
-  </url>
-  <url>
     <loc>https://edibble.emitanaka.org/reference/record_step.html</loc>
   </url>
   <url>
@@ -157,10 +145,10 @@
     <loc>https://edibble.emitanaka.org/reference/scan_menu.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/serve_table.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/select_units.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/set_fcts.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/serve_table.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/set_rcrds.html</loc>
@@ -170,9 +158,6 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/set_units.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/simulate_rcrds.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/skittles.html</loc>

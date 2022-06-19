@@ -22,7 +22,7 @@
 <meta property="og:image" content="https://edibble.emitanaka.org/logo.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@statsgen">
-<meta name="twitter:site" content="@MonashEBS">
+<meta name="twitter:site" content="@statsgen">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -42,7 +42,7 @@
     
     <a class="navbar-brand me-2" href="index.html">edibble</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,9 +89,6 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
 <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"emitanaka/edibble"</span><span class="op">)</span></code></pre></div>
-<p>For <code><a href="reference/simulate_rcrds.html">simulate_rcrds()</a></code>, you also need to install the <code>simulate</code> package which is currently only available on GitHub:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"emitanaka/simulate"</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
@@ -103,20 +100,19 @@
 </h2>
 <p>Consider an experiment where you want to know what is an effective way of teaching (flipped or traditional style) for teaching a particular subject and how different forms of exams (take-home, open-book or closed-book) affect student’s marks.</p>
 <p>There are four classes for this subject with each class holding 30 students. The teaching style can only be applied to the whole class but exam can be different for individual students.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://edibble.emitanaka.org/">edibble</a></span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2020</span><span class="op">)</span>
 
-<span class="va">des</span> <span class="op">&lt;-</span> <span class="fu">start_design</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Effective teaching"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+<span class="va">des</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/design.html">design</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Effective teaching"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
     <span class="fu"><a href="reference/set_units.html">set_units</a></span><span class="op">(</span>class <span class="op">=</span> <span class="fl">4</span>,
               student <span class="op">=</span> <span class="fu"><a href="reference/nested_in.html">nested_in</a></span><span class="op">(</span><span class="va">class</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
     <span class="fu"><a href="reference/set_trts.html">set_trts</a></span><span class="op">(</span>style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"flipped"</span>, <span class="st">"traditional"</span><span class="op">)</span>,
              exam <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"take-home"</span>, <span class="st">"open-book"</span>, <span class="st">"closed-book"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="reference/allot_trts.html">allot_trts</a></span><span class="op">(</span><span class="va">style</span> <span class="op">~</span> <span class="va">class</span>,
+    <span class="fu"><a href="reference/allot.html">allot_trts</a></span><span class="op">(</span><span class="va">style</span> <span class="op">~</span> <span class="va">class</span>,
                <span class="va">exam</span> <span class="op">~</span> <span class="va">student</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-    <span class="fu"><a href="reference/assign_trts.html">assign_trts</a></span><span class="op">(</span><span class="st">"random"</span><span class="op">)</span>
-<span class="co">#&gt; Warning: `start_design` is deprecated. Please use `design` instead.</span>
+    <span class="fu"><a href="reference/assign.html">assign_trts</a></span><span class="op">(</span><span class="st">"random"</span><span class="op">)</span>
 
 <span class="fu"><a href="reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="va">des</span><span class="op">)</span>
 <span class="co">#&gt; # Effective teaching </span>
@@ -127,15 +123,15 @@
 <span class="co">#&gt;  2    class1   student2  traditional open-book  </span>
 <span class="co">#&gt;  3    class1   student3  traditional take-home  </span>
 <span class="co">#&gt;  4    class1   student4  traditional closed-book</span>
-<span class="co">#&gt;  5    class1   student5  traditional open-book  </span>
+<span class="co">#&gt;  5    class1   student5  traditional take-home  </span>
 <span class="co">#&gt;  6    class1   student6  traditional take-home  </span>
-<span class="co">#&gt;  7    class1   student7  traditional closed-book</span>
-<span class="co">#&gt;  8    class1   student8  traditional take-home  </span>
-<span class="co">#&gt;  9    class1   student9  traditional take-home  </span>
-<span class="co">#&gt; 10    class1   student10 traditional open-book  </span>
+<span class="co">#&gt;  7    class1   student7  traditional open-book  </span>
+<span class="co">#&gt;  8    class1   student8  traditional open-book  </span>
+<span class="co">#&gt;  9    class1   student9  traditional closed-book</span>
+<span class="co">#&gt; 10    class1   student10 traditional closed-book</span>
 <span class="co">#&gt; # … with 110 more rows</span></code></pre></div>
 <p>Before constructing the experiment, you might want to think about what you are recording for which level of unit and what values these variables can be recorded as.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">out</span> <span class="op">&lt;-</span> <span class="va">des</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
     <span class="fu"><a href="reference/set_rcrds.html">set_rcrds_of</a></span><span class="op">(</span>student <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"exam_mark"</span>,
                              <span class="st">"quiz1_mark"</span>,
@@ -157,28 +153,27 @@
 <span class="co">#&gt; # An edibble: 120 x 10</span>
 <span class="co">#&gt;        class     student       style        exam exam_mark quiz1_mark quiz2_mark</span>
 <span class="co">#&gt;    &lt;unit(4)&gt; &lt;unit(120)&gt;    &lt;trt(2)&gt;    &lt;trt(3)&gt;    &lt;rcrd&gt;     &lt;rcrd&gt;     &lt;rcrd&gt;</span>
-<span class="co">#&gt;  1    class1   student1  traditional closed-book         ■          ■          ■</span>
-<span class="co">#&gt;  2    class1   student2  traditional open-book           ■          ■          ■</span>
-<span class="co">#&gt;  3    class1   student3  traditional take-home           ■          ■          ■</span>
-<span class="co">#&gt;  4    class1   student4  traditional closed-book         ■          ■          ■</span>
-<span class="co">#&gt;  5    class1   student5  traditional open-book           ■          ■          ■</span>
-<span class="co">#&gt;  6    class1   student6  traditional take-home           ■          ■          ■</span>
-<span class="co">#&gt;  7    class1   student7  traditional closed-book         ■          ■          ■</span>
-<span class="co">#&gt;  8    class1   student8  traditional take-home           ■          ■          ■</span>
-<span class="co">#&gt;  9    class1   student9  traditional take-home           ■          ■          ■</span>
-<span class="co">#&gt; 10    class1   student10 traditional open-book           ■          ■          ■</span>
+<span class="co">#&gt;  1    class1   student1  traditional closed-book         o          o          o</span>
+<span class="co">#&gt;  2    class1   student2  traditional open-book           o          o          o</span>
+<span class="co">#&gt;  3    class1   student3  traditional take-home           o          o          o</span>
+<span class="co">#&gt;  4    class1   student4  traditional closed-book         o          o          o</span>
+<span class="co">#&gt;  5    class1   student5  traditional take-home           o          o          o</span>
+<span class="co">#&gt;  6    class1   student6  traditional take-home           o          o          o</span>
+<span class="co">#&gt;  7    class1   student7  traditional open-book           o          o          o</span>
+<span class="co">#&gt;  8    class1   student8  traditional open-book           o          o          o</span>
+<span class="co">#&gt;  9    class1   student9  traditional closed-book         o          o          o</span>
+<span class="co">#&gt; 10    class1   student10 traditional closed-book         o          o          o</span>
 <span class="co">#&gt; # … with 110 more rows, and 3 more variables: gender &lt;rcrd&gt;, room &lt;rcrd&gt;,</span>
 <span class="co">#&gt; #   teacher &lt;rcrd&gt;</span></code></pre></div>
-<p>FIXME: latest core rewrite broke this</p>
 <p>When you export the above edibble design using the <code>export_design</code> function, the variables you are recording are constraint to the values you expect, e.g. for factors, the cells have a drop-down menu to select from possible values.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/export_design.html">export_design</a></span><span class="op">(</span><span class="va">out</span>, file <span class="op">=</span> <span class="st">"/PATH/TO/FILE.xlsx"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-excel_factor_output.png"><!-- --></p>
 <p>In addition, there is a spreadsheet for every observational level. E.g. here <code>room</code> and <code>teacher</code> is the same for all students in one class so rather than entering duplicate information, these are exported to another sheet for data entry.</p>
 <p><img src="reference/figures/README-excel_sheet_output.png" width="400px"></p>
 <p>There is also support for more complex nesting structures. You can always make the structure using edibble and take the resulting data frame to use in other experimental design software. It’s also possible to bring existing data frame into edibble if you want to take advantage of the exporting feature in edibble.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">start_design</span><span class="op">(</span><span class="st">"nesting structure"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/design.html">design</a></span><span class="op">(</span><span class="st">"nesting structure"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
   <span class="co"># there are 3 sites labelled A, B, C</span>
   <span class="fu"><a href="reference/set_units.html">set_units</a></span><span class="op">(</span>site <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span>,
             <span class="co"># each site has 2 blocks except B with 3 sites</span>
@@ -194,7 +189,6 @@
                         <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span> <span class="op">~</span> <span class="fl">40</span>,
                               <span class="va">.</span> <span class="op">~</span> <span class="fl">20</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning: `start_design` is deprecated. Please use `design` instead.</span>
 <span class="co">#&gt; # nesting structure </span>
 <span class="co">#&gt; # An edibble: 190 x 3</span>
 <span class="co">#&gt;         site     block        plot</span>
@@ -224,7 +218,7 @@
 <li>simulate values for record variables,</li>
 <li>make classical named designs see <a href="https://emitanaka.org/edibble-book/cookbook.html" class="external-link">Cookbook chapter</a>.</li>
 </ul>
-<p>Work-in-progress book on this package can be found <a href="https://emitanaka.org/edibble-book" class="external-link">here</a>.</p>
+<p>Work-in-progress book on this package can be found <a href="https://emitanaka.org/edibble-book/" class="external-link">here</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="limitations">Limitations<a class="anchor" aria-label="anchor" href="#limitations"></a>
@@ -246,7 +240,7 @@
 <li>
 <code>sizzled</code> - for experiments that require sample size calculation (WIP).</li>
 </ul>
-<p>Below are some other related work. You can also have a look at the <a href="https://cran.r-project.org/web/views/ExperimentalDesign.html" class="external-link">CRAN Task View for Design of Experiment and Analysis of Experimental Data</a> for a whole collection.</p>
+<p>Below are some other related work. You can also have a look at the <a href="https://CRAN.R-project.org/view=ExperimentalDesign" class="external-link">CRAN Task View for Design of Experiment and Analysis of Experimental Data</a> for a whole collection.</p>
 <ul>
 <li>
 <code>DeclareDesign</code> for survey or sampling designs</li>
@@ -268,7 +262,7 @@
 </h2>
 <p>The implementation in edibble adopt a similar nomenclature and design philosophy as tidyverse (and where it does not, it’s likely my shortcoming) so that tidyverse users can leverage their familiarity of the tidyverse language when using edibble. Specifically, edibble follows the philosophy:</p>
 <ul>
-<li>main functions do one thing and have a consistent form of <code>&lt;verb&gt;_&lt;noun&gt;</code> (e.g. <code>set_units</code> and <code>set_rcrds</code>) where the nouns are generally plural. Exceptions are when the subject matter is clearly singular (e.g. <code>start_design</code> and <code>set_context</code>);</li>
+<li>main functions do one thing and have a consistent form of <code>&lt;verb&gt;_&lt;noun&gt;</code> (e.g. <code>set_units</code> and <code>set_rcrds</code>) where the nouns are generally plural. Exceptions are when the subject matter is clearly singular (e.g. <code>design</code> and <code>set_context</code>);</li>
 <li>pipable functions;</li>
 <li>all dots arguments are <a href="https://rlang.r-lib.org/reference/dyn-dots.html" class="external-link">dynamic dots</a>;</li>
 <li>duplicate names repaired with same option as <code>tibble</code> for additions to edibble graph;</li>
@@ -294,7 +288,7 @@
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></small></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
 
@@ -309,14 +303,14 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Emi Tanaka <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-1455-259X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Emi Tanaka <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0002-1455-259X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
 
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.tidyverse.org/lifecycle/#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
 </ul>
 </div>
 
@@ -331,7 +325,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer>
