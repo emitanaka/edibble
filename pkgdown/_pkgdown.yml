@@ -100,5 +100,7 @@ reference:
   - new_edibble
   - print.edbl_design
   - record_step
-  - set_fcts
   - utility-edibble-var
+  - is_takeout
+  - select_units
+  - as_data_frame
