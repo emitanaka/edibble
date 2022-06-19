@@ -12,7 +12,6 @@ template:
   opengraph:
     twitter:
       creator: "@statsgen"
-      site: "@MonashEBS"
       card: summary_large_image
   params:
     bootswatch: united
@@ -43,7 +42,7 @@ reference:
   #- plot_fct_graph
   #- plot_lvl_graph
   - examine_recipe
-  - simulate_rcrds
+  #- simulate_rcrds
   - anatomy
 - title: "Named experimental designs"
   desc: >
@@ -93,7 +92,7 @@ reference:
   - cook_design
   - Kitchen
   - nesting_structure
-  - design-context
+  #- design-context
   - design-helpers
   - starts_with("fct")
   - starts_with("lvl")
@@ -106,9 +105,3 @@ reference:
   - record_step
   - set_fcts
   - utility-edibble-var
-- title: "Defunct functions"
-  desc: >
-    Please don't use these functions anymore and use suggested alternatives instead.
-  contents:
-  - prep_classical_
-  - make_classical
