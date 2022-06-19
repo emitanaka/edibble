@@ -98,7 +98,6 @@ reference:
   - starts_with("lvl")
   - edibble-package
   - new_edibble
-  - new_edibble_fct
   - print.edbl_design
   - record_step
   - set_fcts
