@@ -78,7 +78,5 @@ A plot.
 Interactive plot of the edibble design
 }
 \examples{
-\dontrun{
- plot(takeout(menu_crd(t = 4, n = 20)))
-}
+plot(takeout(menu_crd(t = 4, n = 20)))
 }

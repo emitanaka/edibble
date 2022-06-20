@@ -7,11 +7,10 @@ Authors@R:
            role = c("aut", "cre", "cph"),
            email = "dr.emi.tanaka@gmail.com",
            comment = c(ORCID = "0000-0002-1455-259X"))
-Description: A system to facilitate designing comparative experiments using the
- grammar of experimental designs <https://emitanaka.org/edibble-book/>. 
- An experimental design is treated as an intermediate, mutable object that is 
- built progressively by fundmamental experimental components like units, 
- treatments, and their relation. 
+Description: A system to facilitate designing comparative experiments using the 
+  grammar of experimental designs <https://emitanaka.org/edibble-book/>. 
+  An experimental design is treated as an intermediate, mutable object that is 
+  built progressively by fundamental experimental components like units, treatments, and their relation.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -36,7 +35,6 @@ Imports:
 Suggests: 
     testthat (>= 3.0.0),
     rmarkdown,
-    asciicast,
     openxlsx,
     visNetwork
 Depends: 

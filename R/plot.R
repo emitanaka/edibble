@@ -14,9 +14,7 @@
 #' @param view A string of either "show-buttons" (default), "hide-buttons", "static"
 #' @param ... Currently unused.
 #' @examples
-#' \dontrun{
-#'  plot(takeout(menu_crd(t = 4, n = 20)))
-#' }
+#' plot(takeout(menu_crd(t = 4, n = 20)))
 #' @return A plot.
 #' @export
 plot.edbl_design <- function(x, which = c("factors", "levels"),
