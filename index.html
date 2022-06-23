@@ -85,8 +85,11 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>Install the development version with:</p>
+<p>You can install the package from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"edibble"</span><span class="op">)</span></code></pre></div>
+<p>You can install the development version with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
 <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"emitanaka/edibble"</span><span class="op">)</span></code></pre></div>
 </div>
@@ -100,7 +103,7 @@
 </h2>
 <p>Consider an experiment where you want to know what is an effective way of teaching (flipped or traditional style) for teaching a particular subject and how different forms of exams (take-home, open-book or closed-book) affect student’s marks.</p>
 <p>There are four classes for this subject with each class holding 30 students. The teaching style can only be applied to the whole class but exam can be different for individual students.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://edibble.emitanaka.org/">edibble</a></span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2020</span><span class="op">)</span>
@@ -131,7 +134,7 @@
 <span class="co">#&gt; 10    class1   student10 traditional closed-book</span>
 <span class="co">#&gt; # … with 110 more rows</span></code></pre></div>
 <p>Before constructing the experiment, you might want to think about what you are recording for which level of unit and what values these variables can be recorded as.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">out</span> <span class="op">&lt;-</span> <span class="va">des</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
     <span class="fu"><a href="reference/set_rcrds.html">set_rcrds_of</a></span><span class="op">(</span>student <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"exam_mark"</span>,
                              <span class="st">"quiz1_mark"</span>,
@@ -166,13 +169,13 @@
 <span class="co">#&gt; # … with 110 more rows, and 3 more variables: gender &lt;rcrd&gt;, room &lt;rcrd&gt;,</span>
 <span class="co">#&gt; #   teacher &lt;rcrd&gt;</span></code></pre></div>
 <p>When you export the above edibble design using the <code>export_design</code> function, the variables you are recording are constraint to the values you expect, e.g. for factors, the cells have a drop-down menu to select from possible values.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/export_design.html">export_design</a></span><span class="op">(</span><span class="va">out</span>, file <span class="op">=</span> <span class="st">"/PATH/TO/FILE.xlsx"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-excel_factor_output.png"><!-- --></p>
 <p>In addition, there is a spreadsheet for every observational level. E.g. here <code>room</code> and <code>teacher</code> is the same for all students in one class so rather than entering duplicate information, these are exported to another sheet for data entry.</p>
 <p><img src="reference/figures/README-excel_sheet_output.png" width="400px"></p>
 <p>There is also support for more complex nesting structures. You can always make the structure using edibble and take the resulting data frame to use in other experimental design software. It’s also possible to bring existing data frame into edibble if you want to take advantage of the exporting feature in edibble.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/design.html">design</a></span><span class="op">(</span><span class="st">"nesting structure"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
   <span class="co"># there are 3 sites labelled A, B, C</span>
   <span class="fu"><a href="reference/set_units.html">set_units</a></span><span class="op">(</span>site <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span>,
@@ -279,6 +282,7 @@
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
+<li><a href="https://cloud.r-project.org/package=edibble" class="external-link">View on CRAN</a></li>
 <li><a href="https://github.com/emitanaka/edibble/" class="external-link">Browse source code</a></li>
 <li><a href="https://github.com/emitanaka/edibble/issues" class="external-link">Report a bug</a></li>
 </ul>
@@ -311,6 +315,7 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="https://CRAN.R-project.org/package=edibble" class="external-link"><img src="https://www.r-pkg.org/badges/version/edibble" alt="CRAN status"></a></li>
 </ul>
 </div>
 
