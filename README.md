@@ -7,11 +7,19 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/edibble)](https://CRAN.R-project.org/package=edibble)
 <!-- badges: end -->
 
 ## Installation
 
-Install the development version with:
+You can install the package from CRAN:
+
+``` r
+install.packages("edibble")
+```
+
+You can install the development version with:
 
 ``` r
 # install.packages("remotes")
