@@ -10,4 +10,3 @@
 ^vignettes/dump.Rmd$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
-^codecov\.yml$
