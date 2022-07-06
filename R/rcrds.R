@@ -197,8 +197,8 @@ validate_rcrd <- function(x, rnames = NULL) {
 }
 
 
-has_record <- function(.design) {
-  "edbl_rcrd" %in% .design$graph$nodes$class
+has_record <- function(prep) {
+  "edbl_rcrd" %in% prep$design$graph$nodes$class
 }
 
 

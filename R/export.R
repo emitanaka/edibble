@@ -119,11 +119,11 @@ subset_design <- function(prep, unit, rcrds) {
                                         sprep$fct_edges$from %in% keep_uids_ancestors) |
                                         sprep$fct_edges$to %in% keep_rids, ]
   sprep$lvl_nodes <- sprep$lvl_nodes[sprep$lvl_nodes$idvar %in% keep_uids_ancestors, ]
-  keep_lids_ancestors <- sprep$lvl_ids()
+  keep_lids_ancestors <- sprep$lvl_id()
   sprep$lvl_edges <- sprep$lvl_edges[sprep$lvl_edges$to %in% keep_lids_ancestors & sprep$lvl_edges$from %in% keep_lids_ancestors, ]
   if(!is_null(sprep$design$allotment$trts)) {
     units <- map_chr(sprep$design$allotment$trts, function(x) all.vars(f_rhs(x)))
-    allotments <- sprep$design$allotment$trts[units %in% sprep$fct_names]
+    allotments <- sprep$design$allotment$trts[units %in% sprep$fct_names()]
     if(is_empty(allotments)) {
       sprep$design$allotment$trts <- NULL
     } else {
