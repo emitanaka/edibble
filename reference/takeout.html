@@ -63,7 +63,7 @@ design by supplying the selected menu named design and prints out by default</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">takeout</span><span class="op">(</span>recipe <span class="op">=</span> <span class="cn">NULL</span>, show <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">takeout</span><span class="op">(</span>recipe <span class="op">=</span> <span class="cn">NULL</span>, show <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -92,7 +92,7 @@ named experimental designs.</p></div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">takeout</span><span class="op">(</span><span class="fu"><a href="menu_crd.html">menu_crd</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">50</span>, t <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">takeout</span><span class="op">(</span><span class="fu"><a href="menu_crd.html">menu_crd</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">50</span>, t <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> design(<span style="color: #00BBBB; font-style: italic;">"Completely Randomised Design"</span>) %&gt;%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   set_units(<span style="color: #BBBB00; background-color: #000000;">unit</span> = 50) %&gt;%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   set_trts(<span style="color: #0000BB;">trt</span> = 5) %&gt;%</span>
@@ -115,9 +115,9 @@ named experimental designs.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>     unit9      trt3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>     unit10     trt1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 40 more rows</span></span>
-<span class="r-in"><span class="co"># if you omit the design parameters then it will use the default</span></span>
-<span class="r-in"><span class="co"># (which may be random)</span></span>
-<span class="r-in"><span class="fu">takeout</span><span class="op">(</span><span class="fu"><a href="menu_crd.html">menu_crd</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># if you omit the design parameters then it will use the default</span></span></span>
+<span class="r-in"><span><span class="co"># (which may be random)</span></span></span>
+<span class="r-in"><span><span class="fu">takeout</span><span class="op">(</span><span class="fu"><a href="menu_crd.html">menu_crd</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> design(<span style="color: #00BBBB; font-style: italic;">"Completely Randomised Design"</span>) %&gt;%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   set_units(<span style="color: #BBBB00; background-color: #000000;">unit</span> = 26) %&gt;%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   set_trts(<span style="color: #0000BB;">trt</span> = 3) %&gt;%</span>
@@ -140,8 +140,8 @@ named experimental designs.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>     unit9      trt1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>     unit10     trt3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 16 more rows</span></span>
-<span class="r-in"><span class="co"># if you don't give any short names then it will generate a random one</span></span>
-<span class="r-in"><span class="fu">takeout</span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># if you don't give any short names then it will generate a random one</span></span></span>
+<span class="r-in"><span><span class="fu">takeout</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → No name was supplied so selecting a random named experimental design...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → Selected Youden Square Design</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> design(<span style="color: #00BBBB; font-style: italic;">"Youden Square Design"</span>) %&gt;%</span>
@@ -179,7 +179,7 @@ named experimental designs.</p></div>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

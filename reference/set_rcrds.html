@@ -63,14 +63,14 @@ a variable to be recorded.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">set_rcrds</span><span class="op">(</span>
-  <span class="va">.edibble</span>,
-  <span class="va">...</span>,
-  .name_repair <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"check_unique"</span>, <span class="st">"unique"</span>, <span class="st">"universal"</span>, <span class="st">"minimal"</span><span class="op">)</span>,
-  .record <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
-
-<span class="fu">set_rcrds_of</span><span class="op">(</span><span class="va">.edibble</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">set_rcrds</span><span class="op">(</span></span>
+<span>  <span class="va">.edibble</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  .name_repair <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"check_unique"</span>, <span class="st">"unique"</span>, <span class="st">"universal"</span>, <span class="st">"minimal"</span><span class="op">)</span>,</span>
+<span>  .record <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">set_rcrds_of</span><span class="op">(</span><span class="va">.edibble</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -116,8 +116,8 @@ function is used as a wrapper in other code.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="takeout.html">takeout</a></span><span class="op">(</span><span class="fu"><a href="menu_crd.html">menu_crd</a></span><span class="op">(</span>t <span class="op">=</span> <span class="fl">4</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">set_rcrds</span><span class="op">(</span>y <span class="op">=</span> <span class="va">unit</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="takeout.html">takeout</a></span><span class="op">(</span><span class="fu"><a href="menu_crd.html">menu_crd</a></span><span class="op">(</span>t <span class="op">=</span> <span class="fl">4</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">set_rcrds</span><span class="op">(</span>y <span class="op">=</span> <span class="va">unit</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># </span><span style="color: #949494; font-weight: bold;">Completely Randomised Design</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An edibble: 10 x 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          unit      trt      y</span>
@@ -132,9 +132,9 @@ function is used as a wrapper in other code.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>     unit8      trt3      o</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>     unit9      trt2      o</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>     unit10     trt2      o</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="takeout.html">takeout</a></span><span class="op">(</span><span class="fu"><a href="menu_crd.html">menu_crd</a></span><span class="op">(</span>t <span class="op">=</span> <span class="fl">4</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">set_rcrds_of</span><span class="op">(</span>unit <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="takeout.html">takeout</a></span><span class="op">(</span><span class="fu"><a href="menu_crd.html">menu_crd</a></span><span class="op">(</span>t <span class="op">=</span> <span class="fl">4</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">set_rcrds_of</span><span class="op">(</span>unit <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># </span><span style="color: #949494; font-weight: bold;">Completely Randomised Design</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An edibble: 10 x 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          unit      trt      y</span>
@@ -160,7 +160,7 @@ function is used as a wrapper in other code.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>
