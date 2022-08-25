@@ -10,3 +10,4 @@
 ^vignettes/dump.Rmd$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
+^R/simulate\.R$

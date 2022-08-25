@@ -9,7 +9,6 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/edibble)](https://CRAN.R-project.org/package=edibble)
-[![R-CMD-check](https://github.com/emitanaka/edibble/workflows/R-CMD-check/badge.svg)](https://github.com/emitanaka/edibble/actions)
 <!-- badges: end -->
 
 ## Installation

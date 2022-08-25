@@ -1,14 +1,9 @@
-## Resubmission
-This is a resubmission. In this version I have:
+## Release summary
 
-* corrected the spelling for fundamental
-
-* removed the repeated blank spaces in the description
-
-* removed \dontrun{} from example
+This is a patch where I have updated the Rd files to remove obsolete attributes for HTML5. 
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+0 errors | 0 warnings | 0 note
 
-* This is a new release.
+R CMD check succeeded

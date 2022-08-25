@@ -61,36 +61,36 @@ Initialise function}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{Kitchen$new()}}
-\item \href{#method-fct_id}{\code{Kitchen$fct_id()}}
-\item \href{#method-lvl_id}{\code{Kitchen$lvl_id()}}
-\item \href{#method-fct_names}{\code{Kitchen$fct_names()}}
-\item \href{#method-lvl_names}{\code{Kitchen$lvl_names()}}
-\item \href{#method-append_fct_nodes}{\code{Kitchen$append_fct_nodes()}}
-\item \href{#method-append_lvl_nodes}{\code{Kitchen$append_lvl_nodes()}}
-\item \href{#method-append_fct_edges}{\code{Kitchen$append_fct_edges()}}
-\item \href{#method-append_lvl_edges}{\code{Kitchen$append_lvl_edges()}}
-\item \href{#method-fct_class}{\code{Kitchen$fct_class()}}
-\item \href{#method-lvl_class}{\code{Kitchen$lvl_class()}}
-\item \href{#method-fct_child}{\code{Kitchen$fct_child()}}
-\item \href{#method-lvl_child}{\code{Kitchen$lvl_child()}}
-\item \href{#method-fct_parent}{\code{Kitchen$fct_parent()}}
-\item \href{#method-lvl_parent}{\code{Kitchen$lvl_parent()}}
-\item \href{#method-fct_ancestor}{\code{Kitchen$fct_ancestor()}}
-\item \href{#method-lvl_ancestor}{\code{Kitchen$lvl_ancestor()}}
-\item \href{#method-fct_levels}{\code{Kitchen$fct_levels()}}
-\item \href{#method-setup_data}{\code{Kitchen$setup_data()}}
-\item \href{#method-add_anatomy}{\code{Kitchen$add_anatomy()}}
-\item \href{#method-fct_exists}{\code{Kitchen$fct_exists()}}
-\item \href{#method-trts_exists}{\code{Kitchen$trts_exists()}}
-\item \href{#method-units_exists}{\code{Kitchen$units_exists()}}
-\item \href{#method-rcrds_exists}{\code{Kitchen$rcrds_exists()}}
-\item \href{#method-clone}{\code{Kitchen$clone()}}
+\item \href{#method-Kitchen-new}{\code{Kitchen$new()}}
+\item \href{#method-Kitchen-fct_id}{\code{Kitchen$fct_id()}}
+\item \href{#method-Kitchen-lvl_id}{\code{Kitchen$lvl_id()}}
+\item \href{#method-Kitchen-fct_names}{\code{Kitchen$fct_names()}}
+\item \href{#method-Kitchen-lvl_names}{\code{Kitchen$lvl_names()}}
+\item \href{#method-Kitchen-append_fct_nodes}{\code{Kitchen$append_fct_nodes()}}
+\item \href{#method-Kitchen-append_lvl_nodes}{\code{Kitchen$append_lvl_nodes()}}
+\item \href{#method-Kitchen-append_fct_edges}{\code{Kitchen$append_fct_edges()}}
+\item \href{#method-Kitchen-append_lvl_edges}{\code{Kitchen$append_lvl_edges()}}
+\item \href{#method-Kitchen-fct_class}{\code{Kitchen$fct_class()}}
+\item \href{#method-Kitchen-lvl_class}{\code{Kitchen$lvl_class()}}
+\item \href{#method-Kitchen-fct_child}{\code{Kitchen$fct_child()}}
+\item \href{#method-Kitchen-lvl_child}{\code{Kitchen$lvl_child()}}
+\item \href{#method-Kitchen-fct_parent}{\code{Kitchen$fct_parent()}}
+\item \href{#method-Kitchen-lvl_parent}{\code{Kitchen$lvl_parent()}}
+\item \href{#method-Kitchen-fct_ancestor}{\code{Kitchen$fct_ancestor()}}
+\item \href{#method-Kitchen-lvl_ancestor}{\code{Kitchen$lvl_ancestor()}}
+\item \href{#method-Kitchen-fct_levels}{\code{Kitchen$fct_levels()}}
+\item \href{#method-Kitchen-setup_data}{\code{Kitchen$setup_data()}}
+\item \href{#method-Kitchen-add_anatomy}{\code{Kitchen$add_anatomy()}}
+\item \href{#method-Kitchen-fct_exists}{\code{Kitchen$fct_exists()}}
+\item \href{#method-Kitchen-trts_exists}{\code{Kitchen$trts_exists()}}
+\item \href{#method-Kitchen-units_exists}{\code{Kitchen$units_exists()}}
+\item \href{#method-Kitchen-rcrds_exists}{\code{Kitchen$rcrds_exists()}}
+\item \href{#method-Kitchen-clone}{\code{Kitchen$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-Kitchen-new"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Kitchen$new(design = NULL)}\if{html}{\out{</div>}}
@@ -105,8 +105,8 @@ Initialise function}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fct_id"></a>}}
-\if{latex}{\out{\hypertarget{method-fct_id}{}}}
+\if{html}{\out{<a id="method-Kitchen-fct_id"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-fct_id}{}}}
 \subsection{Method \code{fct_id()}}{
 Get the id based on either the name of the factor node or
 the class.
@@ -125,8 +125,8 @@ the class.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-lvl_id"></a>}}
-\if{latex}{\out{\hypertarget{method-lvl_id}{}}}
+\if{html}{\out{<a id="method-Kitchen-lvl_id"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-lvl_id}{}}}
 \subsection{Method \code{lvl_id()}}{
 Get the id based on name of level node
 \subsection{Usage}{
@@ -144,8 +144,8 @@ Get the id based on name of level node
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fct_names"></a>}}
-\if{latex}{\out{\hypertarget{method-fct_names}{}}}
+\if{html}{\out{<a id="method-Kitchen-fct_names"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-fct_names}{}}}
 \subsection{Method \code{fct_names()}}{
 Get the factor names based on id or class
 \subsection{Usage}{
@@ -163,8 +163,8 @@ Get the factor names based on id or class
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-lvl_names"></a>}}
-\if{latex}{\out{\hypertarget{method-lvl_names}{}}}
+\if{html}{\out{<a id="method-Kitchen-lvl_names"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-lvl_names}{}}}
 \subsection{Method \code{lvl_names()}}{
 Get the level names based on id or class
 \subsection{Usage}{
@@ -182,8 +182,8 @@ Get the level names based on id or class
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-append_fct_nodes"></a>}}
-\if{latex}{\out{\hypertarget{method-append_fct_nodes}{}}}
+\if{html}{\out{<a id="method-Kitchen-append_fct_nodes"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-append_fct_nodes}{}}}
 \subsection{Method \code{append_fct_nodes()}}{
 Given node data, append the factor nodes
 \subsection{Usage}{
@@ -199,8 +199,8 @@ Given node data, append the factor nodes
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-append_lvl_nodes"></a>}}
-\if{latex}{\out{\hypertarget{method-append_lvl_nodes}{}}}
+\if{html}{\out{<a id="method-Kitchen-append_lvl_nodes"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-append_lvl_nodes}{}}}
 \subsection{Method \code{append_lvl_nodes()}}{
 Given node data, append the level nodes
 \subsection{Usage}{
@@ -216,8 +216,8 @@ Given node data, append the level nodes
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-append_fct_edges"></a>}}
-\if{latex}{\out{\hypertarget{method-append_fct_edges}{}}}
+\if{html}{\out{<a id="method-Kitchen-append_fct_edges"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-append_fct_edges}{}}}
 \subsection{Method \code{append_fct_edges()}}{
 Given edge data, append the factor edges
 \subsection{Usage}{
@@ -233,8 +233,8 @@ Given edge data, append the factor edges
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-append_lvl_edges"></a>}}
-\if{latex}{\out{\hypertarget{method-append_lvl_edges}{}}}
+\if{html}{\out{<a id="method-Kitchen-append_lvl_edges"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-append_lvl_edges}{}}}
 \subsection{Method \code{append_lvl_edges()}}{
 Given edge data, append the level edges
 \subsection{Usage}{
@@ -250,8 +250,8 @@ Given edge data, append the level edges
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fct_class"></a>}}
-\if{latex}{\out{\hypertarget{method-fct_class}{}}}
+\if{html}{\out{<a id="method-Kitchen-fct_class"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-fct_class}{}}}
 \subsection{Method \code{fct_class()}}{
 Get the class of the vertex given the factor id
 \subsection{Usage}{
@@ -267,8 +267,8 @@ Get the class of the vertex given the factor id
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-lvl_class"></a>}}
-\if{latex}{\out{\hypertarget{method-lvl_class}{}}}
+\if{html}{\out{<a id="method-Kitchen-lvl_class"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-lvl_class}{}}}
 \subsection{Method \code{lvl_class()}}{
 Get the class of the vertex given the level id
 \subsection{Usage}{
@@ -284,8 +284,8 @@ Get the class of the vertex given the level id
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fct_child"></a>}}
-\if{latex}{\out{\hypertarget{method-fct_child}{}}}
+\if{html}{\out{<a id="method-Kitchen-fct_child"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-fct_child}{}}}
 \subsection{Method \code{fct_child()}}{
 Get the factor child ids. If \code{class} is
 supplied then the child has to fit \code{class}
@@ -304,8 +304,8 @@ supplied then the child has to fit \code{class}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-lvl_child"></a>}}
-\if{latex}{\out{\hypertarget{method-lvl_child}{}}}
+\if{html}{\out{<a id="method-Kitchen-lvl_child"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-lvl_child}{}}}
 \subsection{Method \code{lvl_child()}}{
 Get the level child ids
 \subsection{Usage}{
@@ -323,8 +323,8 @@ Get the level child ids
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fct_parent"></a>}}
-\if{latex}{\out{\hypertarget{method-fct_parent}{}}}
+\if{html}{\out{<a id="method-Kitchen-fct_parent"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-fct_parent}{}}}
 \subsection{Method \code{fct_parent()}}{
 Get the factor parent ids
 \subsection{Usage}{
@@ -342,8 +342,8 @@ Get the factor parent ids
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-lvl_parent"></a>}}
-\if{latex}{\out{\hypertarget{method-lvl_parent}{}}}
+\if{html}{\out{<a id="method-Kitchen-lvl_parent"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-lvl_parent}{}}}
 \subsection{Method \code{lvl_parent()}}{
 Get the level parent ids
 \subsection{Usage}{
@@ -361,8 +361,8 @@ Get the level parent ids
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fct_ancestor"></a>}}
-\if{latex}{\out{\hypertarget{method-fct_ancestor}{}}}
+\if{html}{\out{<a id="method-Kitchen-fct_ancestor"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-fct_ancestor}{}}}
 \subsection{Method \code{fct_ancestor()}}{
 Get the factor ancestor ids
 \subsection{Usage}{
@@ -380,8 +380,8 @@ Get the factor ancestor ids
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-lvl_ancestor"></a>}}
-\if{latex}{\out{\hypertarget{method-lvl_ancestor}{}}}
+\if{html}{\out{<a id="method-Kitchen-lvl_ancestor"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-lvl_ancestor}{}}}
 \subsection{Method \code{lvl_ancestor()}}{
 Get the level ancestor ids
 \subsection{Usage}{
@@ -399,8 +399,8 @@ Get the level ancestor ids
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fct_levels"></a>}}
-\if{latex}{\out{\hypertarget{method-fct_levels}{}}}
+\if{html}{\out{<a id="method-Kitchen-fct_levels"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-fct_levels}{}}}
 \subsection{Method \code{fct_levels()}}{
 Get the levels for each factor
 \subsection{Usage}{
@@ -418,8 +418,8 @@ Get the levels for each factor
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setup_data"></a>}}
-\if{latex}{\out{\hypertarget{method-setup_data}{}}}
+\if{html}{\out{<a id="method-Kitchen-setup_data"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-setup_data}{}}}
 \subsection{Method \code{setup_data()}}{
 Setup the node and edge data
 \subsection{Usage}{
@@ -439,8 +439,8 @@ Setup the node and edge data
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-add_anatomy"></a>}}
-\if{latex}{\out{\hypertarget{method-add_anatomy}{}}}
+\if{html}{\out{<a id="method-Kitchen-add_anatomy"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-add_anatomy}{}}}
 \subsection{Method \code{add_anatomy()}}{
 Add the anatomy structure
 \subsection{Usage}{
@@ -460,8 +460,8 @@ Add the anatomy structure
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fct_exists"></a>}}
-\if{latex}{\out{\hypertarget{method-fct_exists}{}}}
+\if{html}{\out{<a id="method-Kitchen-fct_exists"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-fct_exists}{}}}
 \subsection{Method \code{fct_exists()}}{
 One of \code{name}, \code{id} or \code{class} is defined to check if it exists.
 If more than one of the arguments \code{name}, \code{id} and \code{class} are supplied, then
@@ -485,8 +485,8 @@ the intersection of it will be checked.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-trts_exists"></a>}}
-\if{latex}{\out{\hypertarget{method-trts_exists}{}}}
+\if{html}{\out{<a id="method-Kitchen-trts_exists"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-trts_exists}{}}}
 \subsection{Method \code{trts_exists()}}{
 Check if treatment exists.
 \subsection{Usage}{
@@ -502,8 +502,8 @@ Check if treatment exists.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-units_exists"></a>}}
-\if{latex}{\out{\hypertarget{method-units_exists}{}}}
+\if{html}{\out{<a id="method-Kitchen-units_exists"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-units_exists}{}}}
 \subsection{Method \code{units_exists()}}{
 Check if unit exists.
 \subsection{Usage}{
@@ -519,8 +519,8 @@ Check if unit exists.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-rcrds_exists"></a>}}
-\if{latex}{\out{\hypertarget{method-rcrds_exists}{}}}
+\if{html}{\out{<a id="method-Kitchen-rcrds_exists"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-rcrds_exists}{}}}
 \subsection{Method \code{rcrds_exists()}}{
 Check if record exists.
 \subsection{Usage}{
@@ -536,8 +536,8 @@ Check if record exists.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-Kitchen-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

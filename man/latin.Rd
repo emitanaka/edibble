@@ -29,13 +29,13 @@ Latin square designs and its generalisations as an array
 }
 \section{Functions}{
 \itemize{
-\item \code{latin_square}: Latin square design
+\item \code{latin_square()}: Latin square design
 
-\item \code{latin_rectangle}: Like a Latin square design but allow different number of rows and columns
+\item \code{latin_rectangle()}: Like a Latin square design but allow different number of rows and columns
 
-\item \code{latin_array}: Returns an array where it stitches up multiple Latin square/rectangle design
+\item \code{latin_array()}: Returns an array where it stitches up multiple Latin square/rectangle design
+
 }}
-
 \examples{
 latin_square(n = 3)
 latin_rectangle(3, 3, 3)
