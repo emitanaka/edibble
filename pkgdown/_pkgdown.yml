@@ -42,7 +42,7 @@ reference:
   #- plot_fct_graph
   #- plot_lvl_graph
   - examine_recipe
-  - simulate_rcrds
+  #- simulate_rcrds
   - anatomy
 - title: "Named experimental designs"
   desc: >
