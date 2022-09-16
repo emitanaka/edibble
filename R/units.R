@@ -76,7 +76,7 @@ set_units <- function(.edibble, ...,
 #' @export
 select_units <- function(prep, ...) {
   vlevs <- prep$fct_levels()
-  loc <- eval_select(tidyselect::all_of(expr(c(...))), vlevs)
+  loc <- eval_select(expr(tidyselect::all_of(c(...))), vlevs)
   keep_units <- names(vlevs)[loc]
   keep_uids <- prep$fct_id(keep_units)
   keep_uids_ancestors <- prep$fct_ancestor(keep_uids, class = "edbl_unit")

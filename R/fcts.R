@@ -35,7 +35,7 @@ set_fcts <- function(.edibble, ..., .class = NULL,
 
   } else if(is_edibble_table(.edibble)) {
 
-    loc <- eval_select(tidyselect::all_of(expr(c(...))), .edibble)
+    loc <- eval_select(expr(tidyselect::all_of(c(...))), .edibble)
     for(i in seq_along(loc)) {
       var <- .edibble[[loc[i]]]
       lvls <- as.character(sort(unique(var)))
