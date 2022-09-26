@@ -78,7 +78,7 @@ assign_trts <- function(.design, order = "random", seed = NULL, constrain = nest
                               # find the grandest ancestor
                               vanc <- prep$fct_ancestor(id = uid)
                               vanc <- vanc[vanc %in% prep$unit_ids]
-                              udf <- as.data.frame(serve_units(select_units(prep, !!prep$fct_names(vanc))))
+                              udf <- as.data.frame(serve_units(select_units(prep, prep$fct_names(vanc))))
 
                               vparents <- prep$fct_parent(id = uid)
                               vparents <- vparents[vparents %in% prep$unit_ids]
@@ -125,7 +125,7 @@ assign_units <- function(.design, order = "random", seed = NULL, constrain = nes
 
     lnodes <- prep$lvl_nodes
     lhs_id <- lnodes[lnodes$idvar == prep$fct_id(lhs), "id"]
-    udf <- as.data.frame(serve_units(select_units(prep, !!rhs)))
+    udf <- as.data.frame(serve_units(select_units(prep, rhs)))
     udf <- udf[rhs]
     small_df <- data.frame(lhs = lhs_id)
     permutation <- switch(order,

@@ -40,7 +40,7 @@ nested_in <- function(x, ..., prefix = "", suffix = "",
         vars <- .x
       }
       child_lvls_by_parent <- map(vars, function(.var) {
-        out <- serve_units(select_units(prep, tidyselect::all_of(c(.var, parent_name))))
+        out <- serve_units(select_units(prep, .var, parent_name))
         split(out[[.var]], out[[parent_name]])
       })
       names(child_lvls_by_parent) <- vars
