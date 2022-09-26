@@ -18,6 +18,7 @@
        9    class1   student9  traditional closed-book         o      x
       10    class1   student10 traditional open-book           o      x
       # ... with 110 more rows
+      # i Use `print(n = ...)` to see more rows
 
 ---
 
@@ -59,6 +60,7 @@
        9    class1   student9  traditional closed-book         o      x
       10    class1   student10 traditional open-book           o      x
       # ... with 110 more rows
+      # i Use `print(n = ...)` to see more rows
 
 ---
 
@@ -90,20 +92,21 @@
     Output
       # Effective teaching 
       # An edibble: 120 x 10
-             class     student       style        exam exam_mark quiz1_mark quiz2_mark
-         <unit(4)> <unit(120)>    <trt(2)>    <trt(3)>    <rcrd>     <rcrd>     <rcrd>
-       1    class1   student1  traditional closed-book         o          o          o
-       2    class1   student2  traditional closed-book         o          o          o
-       3    class1   student3  traditional take-home           o          o          o
-       4    class1   student4  traditional take-home           o          o          o
-       5    class1   student5  traditional open-book           o          o          o
-       6    class1   student6  traditional take-home           o          o          o
-       7    class1   student7  traditional take-home           o          o          o
-       8    class1   student8  traditional closed-book         o          o          o
-       9    class1   student9  traditional closed-book         o          o          o
-      10    class1   student10 traditional open-book           o          o          o
-      # ... with 110 more rows, and 3 more variables: gender <rcrd>, room <rcrd>,
-      #   teacher <rcrd>
+             class     student       style        exam exam_m~1 quiz1~2 quiz2~3 gender
+         <unit(4)> <unit(120)>    <trt(2)>    <trt(3)>   <rcrd>  <rcrd>  <rcrd> <rcrd>
+       1    class1   student1  traditional closed-book        o       o       o      o
+       2    class1   student2  traditional closed-book        o       o       o      o
+       3    class1   student3  traditional take-home          o       o       o      o
+       4    class1   student4  traditional take-home          o       o       o      o
+       5    class1   student5  traditional open-book          o       o       o      o
+       6    class1   student6  traditional take-home          o       o       o      o
+       7    class1   student7  traditional take-home          o       o       o      o
+       8    class1   student8  traditional closed-book        o       o       o      o
+       9    class1   student9  traditional closed-book        o       o       o      o
+      10    class1   student10 traditional open-book          o       o       o      o
+      # ... with 110 more rows, 2 more variables: room <rcrd>, teacher <rcrd>, and
+      #   abbreviated variable names 1: exam_mark, 2: quiz1_mark, 3: quiz2_mark
+      # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
 
 ---
 

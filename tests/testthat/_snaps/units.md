@@ -48,6 +48,7 @@
        9      row3      col1     site1     plot9 
       10      row3      col1     site2     plot10
       # ... with 38 more rows
+      # i Use `print(n = ...)` to see more rows
 
 ---
 
@@ -69,4 +70,5 @@
        9     site2      row5      col1     plot9 
       10     site2      row5      col1     plot10
       # ... with 50 more rows
+      # i Use `print(n = ...)` to see more rows
 
