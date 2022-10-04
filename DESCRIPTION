@@ -1,6 +1,6 @@
 Package: edibble
 Title: Designing Comparative Experiments 
-Version: 0.1.1.9000
+Version: 0.1.2
 Authors@R: 
     person(given = "Emi",
            family = "Tanaka",
@@ -36,7 +36,6 @@ Suggests:
     testthat (>= 3.0.0),
     rmarkdown,
     openxlsx,
-    visNetwork,
-    covr
+    visNetwork
 Depends: 
     R (>= 2.10)

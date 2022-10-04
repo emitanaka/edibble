@@ -1,6 +1,6 @@
 ## Release summary
 
-This is a patch where I have updated the Rd files to remove obsolete attributes for HTML5. 
+This is a patch with fix for upcoming release of tidyselect. 
 
 ## R CMD check results
 

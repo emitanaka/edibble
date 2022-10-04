@@ -9,6 +9,8 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/edibble)](https://CRAN.R-project.org/package=edibble)
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
 ## Installation
@@ -76,6 +78,7 @@ serve_table(des)
 #>  9    class1   student9  traditional closed-book
 #> 10    class1   student10 traditional closed-book
 #> # … with 110 more rows
+#> # ℹ Use `print(n = ...)` to see more rows
 ```
 
 Before constructing the experiment, you might want to think about what
@@ -102,20 +105,21 @@ out <- des %>%
 out
 #> # Effective teaching 
 #> # An edibble: 120 x 10
-#>        class     student       style        exam exam_mark quiz1_mark quiz2_mark
-#>    <unit(4)> <unit(120)>    <trt(2)>    <trt(3)>    <rcrd>     <rcrd>     <rcrd>
-#>  1    class1   student1  traditional closed-book         o          o          o
-#>  2    class1   student2  traditional open-book           o          o          o
-#>  3    class1   student3  traditional take-home           o          o          o
-#>  4    class1   student4  traditional closed-book         o          o          o
-#>  5    class1   student5  traditional take-home           o          o          o
-#>  6    class1   student6  traditional take-home           o          o          o
-#>  7    class1   student7  traditional open-book           o          o          o
-#>  8    class1   student8  traditional open-book           o          o          o
-#>  9    class1   student9  traditional closed-book         o          o          o
-#> 10    class1   student10 traditional closed-book         o          o          o
-#> # … with 110 more rows, and 3 more variables: gender <rcrd>, room <rcrd>,
-#> #   teacher <rcrd>
+#>        class     student       style        exam exam_m…¹ quiz1…² quiz2…³ gender
+#>    <unit(4)> <unit(120)>    <trt(2)>    <trt(3)>   <rcrd>  <rcrd>  <rcrd> <rcrd>
+#>  1    class1   student1  traditional closed-book        o       o       o      o
+#>  2    class1   student2  traditional open-book          o       o       o      o
+#>  3    class1   student3  traditional take-home          o       o       o      o
+#>  4    class1   student4  traditional closed-book        o       o       o      o
+#>  5    class1   student5  traditional take-home          o       o       o      o
+#>  6    class1   student6  traditional take-home          o       o       o      o
+#>  7    class1   student7  traditional open-book          o       o       o      o
+#>  8    class1   student8  traditional open-book          o       o       o      o
+#>  9    class1   student9  traditional closed-book        o       o       o      o
+#> 10    class1   student10 traditional closed-book        o       o       o      o
+#> # … with 110 more rows, 2 more variables: room <rcrd>, teacher <rcrd>, and
+#> #   abbreviated variable names ¹​exam_mark, ²​quiz1_mark, ³​quiz2_mark
+#> # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
 ```
 
 When you export the above edibble design using the `export_design`
@@ -174,6 +178,7 @@ design("nesting structure") %>%
 #>  9         A    block1      plot9 
 #> 10         A    block1      plot10
 #> # … with 180 more rows
+#> # ℹ Use `print(n = ...)` to see more rows
 ```
 
 ## Experimental data
