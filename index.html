@@ -42,7 +42,7 @@
     
     <a class="navbar-brand me-2" href="index.html">edibble</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -132,7 +132,8 @@
 <span><span class="co">#&gt;  8    class1   student8  traditional open-book  </span></span>
 <span><span class="co">#&gt;  9    class1   student9  traditional closed-book</span></span>
 <span><span class="co">#&gt; 10    class1   student10 traditional closed-book</span></span>
-<span><span class="co">#&gt; # … with 110 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt; # … with 110 more rows</span></span>
+<span><span class="co">#&gt; # ℹ Use `print(n = ...)` to see more rows</span></span></code></pre></div>
 <p>Before constructing the experiment, you might want to think about what you are recording for which level of unit and what values these variables can be recorded as.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="va">des</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
@@ -154,20 +155,21 @@
 <span><span class="va">out</span></span>
 <span><span class="co">#&gt; # Effective teaching </span></span>
 <span><span class="co">#&gt; # An edibble: 120 x 10</span></span>
-<span><span class="co">#&gt;        class     student       style        exam exam_mark quiz1_mark quiz2_mark</span></span>
-<span><span class="co">#&gt;    &lt;unit(4)&gt; &lt;unit(120)&gt;    &lt;trt(2)&gt;    &lt;trt(3)&gt;    &lt;rcrd&gt;     &lt;rcrd&gt;     &lt;rcrd&gt;</span></span>
-<span><span class="co">#&gt;  1    class1   student1  traditional closed-book         o          o          o</span></span>
-<span><span class="co">#&gt;  2    class1   student2  traditional open-book           o          o          o</span></span>
-<span><span class="co">#&gt;  3    class1   student3  traditional take-home           o          o          o</span></span>
-<span><span class="co">#&gt;  4    class1   student4  traditional closed-book         o          o          o</span></span>
-<span><span class="co">#&gt;  5    class1   student5  traditional take-home           o          o          o</span></span>
-<span><span class="co">#&gt;  6    class1   student6  traditional take-home           o          o          o</span></span>
-<span><span class="co">#&gt;  7    class1   student7  traditional open-book           o          o          o</span></span>
-<span><span class="co">#&gt;  8    class1   student8  traditional open-book           o          o          o</span></span>
-<span><span class="co">#&gt;  9    class1   student9  traditional closed-book         o          o          o</span></span>
-<span><span class="co">#&gt; 10    class1   student10 traditional closed-book         o          o          o</span></span>
-<span><span class="co">#&gt; # … with 110 more rows, and 3 more variables: gender &lt;rcrd&gt;, room &lt;rcrd&gt;,</span></span>
-<span><span class="co">#&gt; #   teacher &lt;rcrd&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt;        class     student       style        exam exam_m…¹ quiz1…² quiz2…³ gender</span></span>
+<span><span class="co">#&gt;    &lt;unit(4)&gt; &lt;unit(120)&gt;    &lt;trt(2)&gt;    &lt;trt(3)&gt;   &lt;rcrd&gt;  &lt;rcrd&gt;  &lt;rcrd&gt; &lt;rcrd&gt;</span></span>
+<span><span class="co">#&gt;  1    class1   student1  traditional closed-book        o       o       o      o</span></span>
+<span><span class="co">#&gt;  2    class1   student2  traditional open-book          o       o       o      o</span></span>
+<span><span class="co">#&gt;  3    class1   student3  traditional take-home          o       o       o      o</span></span>
+<span><span class="co">#&gt;  4    class1   student4  traditional closed-book        o       o       o      o</span></span>
+<span><span class="co">#&gt;  5    class1   student5  traditional take-home          o       o       o      o</span></span>
+<span><span class="co">#&gt;  6    class1   student6  traditional take-home          o       o       o      o</span></span>
+<span><span class="co">#&gt;  7    class1   student7  traditional open-book          o       o       o      o</span></span>
+<span><span class="co">#&gt;  8    class1   student8  traditional open-book          o       o       o      o</span></span>
+<span><span class="co">#&gt;  9    class1   student9  traditional closed-book        o       o       o      o</span></span>
+<span><span class="co">#&gt; 10    class1   student10 traditional closed-book        o       o       o      o</span></span>
+<span><span class="co">#&gt; # … with 110 more rows, 2 more variables: room &lt;rcrd&gt;, teacher &lt;rcrd&gt;, and</span></span>
+<span><span class="co">#&gt; #   abbreviated variable names ¹​exam_mark, ²​quiz1_mark, ³​quiz2_mark</span></span>
+<span><span class="co">#&gt; # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</span></span></code></pre></div>
 <p>When you export the above edibble design using the <code>export_design</code> function, the variables you are recording are constraint to the values you expect, e.g. for factors, the cells have a drop-down menu to select from possible values.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/export_design.html">export_design</a></span><span class="op">(</span><span class="va">out</span>, file <span class="op">=</span> <span class="st">"/PATH/TO/FILE.xlsx"</span><span class="op">)</span></span></code></pre></div>
@@ -206,7 +208,8 @@
 <span><span class="co">#&gt;  8         A    block1      plot8 </span></span>
 <span><span class="co">#&gt;  9         A    block1      plot9 </span></span>
 <span><span class="co">#&gt; 10         A    block1      plot10</span></span>
-<span><span class="co">#&gt; # … with 180 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt; # … with 180 more rows</span></span>
+<span><span class="co">#&gt; # ℹ Use `print(n = ...)` to see more rows</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="experimental-data">Experimental data<a class="anchor" aria-label="anchor" href="#experimental-data"></a>
@@ -316,6 +319,7 @@
 <ul class="list-unstyled">
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
 <li><a href="https://CRAN.R-project.org/package=edibble" class="external-link"><img src="https://www.r-pkg.org/badges/version/edibble" alt="CRAN status"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
 </ul>
 </div>
 
