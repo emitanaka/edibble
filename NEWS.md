@@ -1,5 +1,6 @@
-# edibble (development version)
+# edibble 0.1.3
 
+* Make S3 generic/method consistent
 
 # edibble 0.1.2
 
