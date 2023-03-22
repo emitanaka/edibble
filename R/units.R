@@ -95,12 +95,12 @@ select_units <- function(prep, ...) {
 
 #' @importFrom vctrs vec_ptype_abbr
 #' @export
-vec_ptype_abbr.edbl_unit <- function(x)  {
+vec_ptype_abbr.edbl_unit <- function(x, ...)  {
   paste0("unit(", number_si_prefix(nlevels(x)), ")")
 }
 #' @importFrom vctrs vec_ptype_full
 #' @export
-vec_ptype_full.edbl_unit <- function(x) paste0("unit(", nlevels(x), ")")
+vec_ptype_full.edbl_unit <- function(x, ...) paste0("unit(", nlevels(x), ")")
 #' @importFrom vctrs vec_cast
 #' @export
 vec_cast.edbl_unit.edbl_unit <- function(x, to, ...) {

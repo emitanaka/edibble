@@ -136,8 +136,8 @@ new_edibble <- function(.data, ..., design = NULL, class = NULL) {
 
 #' @importFrom tibble tbl_sum
 #' @export
-tbl_sum.edbl_table <- function(.data) {
-  c("An edibble" = dim_desc(.data))
+tbl_sum.edbl_table <- function(x) {
+  c("An edibble" = dim_desc(x))
 }
 
 #' @export
