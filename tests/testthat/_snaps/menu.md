@@ -26,7 +26,6 @@
        9     unit9      trt2
       10     unit10     trt4
       # ... with 14 more rows
-      # i Use `print(n = ...)` to see more rows
 
 # rcbd
 
@@ -128,7 +127,6 @@
        9    block2       row6      col3     unit9     trt11    trt22
       10    block2       row4      col4     unit10    trt12    trt21
       # ... with 14 more rows
-      # i Use `print(n = ...)` to see more rows
 
 # factorial
 
@@ -161,7 +159,6 @@
        9     unit9     trt11    trt23    trt32
       10     unit10    trt11    trt23    trt33
       # ... with 38 more rows
-      # i Use `print(n = ...)` to see more rows
     Code
       fac_rcbd <- takeout(menu_factorial(trt = c(2, 3, 4), design = "rcbd", r = 2,
       seed = 1))
@@ -192,7 +189,6 @@
        9    block1     unit9     trt12    trt21    trt31
       10    block1     unit10    trt11    trt21    trt31
       # ... with 38 more rows
-      # i Use `print(n = ...)` to see more rows
 
 # lsd
 
@@ -224,7 +220,6 @@
        9      row9        col1      unit9      trt2 
       10      row10       col1      unit10     trt8 
       # ... with 90 more rows
-      # i Use `print(n = ...)` to see more rows
 
 # youden
 
@@ -256,5 +251,4 @@
        9      row9       col1     unit9      trt2 
       10      row10      col1     unit10     trt8 
       # ... with 60 more rows
-      # i Use `print(n = ...)` to see more rows
 

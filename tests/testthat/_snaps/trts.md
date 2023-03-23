@@ -55,7 +55,6 @@
        9 vaccine3     sex1   person9 
       10 vaccine1     sex2   person10
       # ... with 20 more rows
-      # i Use `print(n = ...)` to see more rows
 
 ---
 
@@ -78,7 +77,6 @@
        9 vaccine3        F   person9 
       10 vaccine1        M   person10
       # ... with 20 more rows
-      # i Use `print(n = ...)` to see more rows
 
 ---
 
@@ -101,7 +99,6 @@
        9 vaccine3        F   person9 
       10 vaccine1        M   person10
       # ... with 20 more rows
-      # i Use `print(n = ...)` to see more rows
 
 ---
 
@@ -123,7 +120,6 @@
        9 vaccine3   person9 
       10 vaccine1   person10
       # ... with 20 more rows
-      # i Use `print(n = ...)` to see more rows
 
 ---
 

@@ -7,7 +7,6 @@
       # unlinked units with table 
       # An edibble: 0 x 2
       # ... with 2 variables: block <unit(3)>, plot <unit(2)>
-      # i Use `colnames()` to see all variable names
 
 ---
 

@@ -18,7 +18,6 @@
        9    class1   student9  traditional closed-book         o      x
       10    class1   student10 traditional open-book           o      x
       # ... with 110 more rows
-      # i Use `print(n = ...)` to see more rows
 
 ---
 
@@ -60,7 +59,6 @@
        9    class1   student9  traditional closed-book         o      x
       10    class1   student10 traditional open-book           o      x
       # ... with 110 more rows
-      # i Use `print(n = ...)` to see more rows
 
 ---
 
@@ -106,7 +104,6 @@
       10    class1   student10 traditional open-book          o       o       o      o
       # ... with 110 more rows, 2 more variables: room <rcrd>, teacher <rcrd>, and
       #   abbreviated variable names 1: exam_mark, 2: quiz1_mark, 3: quiz2_mark
-      # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
 
 ---
 
