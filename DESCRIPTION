@@ -1,6 +1,6 @@
 Package: edibble
 Title: Designing Comparative Experiments 
-Version: 0.1.3
+Version: 0.1.3.9000
 Authors@R: 
     person(given = "Emi",
            family = "Tanaka",
