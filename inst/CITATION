@@ -1,12 +1,11 @@
-citHeader("To cite edibble in publications use:")
-
-citEntry(
-  entry    = "Misc",
+bibentry(
+  bibtype    = "Misc",
   title    = "edibble: An R-package for experimental design",
   author   = "Emi Tanaka",
-  year     = "2022",
+  header = "To cite edibble in publications use:",
+  year     = "2023",
   publisher = "GitHub",
   journal = "GitHub repository",
   url      = "https://github.com/emitanaka/edibble",
-  textVersion = "Tanaka, E. (2022) edibble: An R-package for experimental design. GitHub repository. https://github.com/emitanaka/edibble"
+  textVersion = "Tanaka, E. (2023) edibble: An R-package for experimental design. GitHub repository. https://github.com/emitanaka/edibble"
 )
