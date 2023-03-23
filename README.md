@@ -78,7 +78,6 @@ serve_table(des)
 #>  9    class1   student9  traditional closed-book
 #> 10    class1   student10 traditional closed-book
 #> # … with 110 more rows
-#> # ℹ Use `print(n = ...)` to see more rows
 ```
 
 Before constructing the experiment, you might want to think about what
@@ -119,7 +118,6 @@ out
 #> 10    class1   student10 traditional closed-book        o       o       o      o
 #> # … with 110 more rows, 2 more variables: room <rcrd>, teacher <rcrd>, and
 #> #   abbreviated variable names ¹​exam_mark, ²​quiz1_mark, ³​quiz2_mark
-#> # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
 ```
 
 When you export the above edibble design using the `export_design`
@@ -131,7 +129,7 @@ from possible values.
 export_design(out, file = "/PATH/TO/FILE.xlsx")
 ```
 
-![](man/figures/README-excel_factor_output.png)<!-- -->
+<img src="man/figures/README-excel_factor_output.png" width="1266" />
 
 In addition, there is a spreadsheet for every observational level. E.g.
 here `room` and `teacher` is the same for all students in one class so
@@ -178,7 +176,6 @@ design("nesting structure") %>%
 #>  9         A    block1      plot9 
 #> 10         A    block1      plot10
 #> # … with 180 more rows
-#> # ℹ Use `print(n = ...)` to see more rows
 ```
 
 ## Experimental data
@@ -196,15 +193,15 @@ constructing experimental design with a focus on the whole process and
 less on the randomisation process (which the other software generally
 focus and do well on). Some features include:
 
--   declaratively create experimental designs based on experimental
-    components (e.g. units and treatments),
--   explicitly specify variables that are to be recorded
-    (e.g. response), and
--   set expected values for variables to be recorded which restrict the
-    data entry when the design is exported as an xlsx file,
--   simulate values for record variables,
--   make classical named designs see [Cookbook
-    chapter](https://emitanaka.org/edibble-book/cookbook.html).
+- declaratively create experimental designs based on experimental
+  components (e.g. units and treatments),
+- explicitly specify variables that are to be recorded (e.g. response),
+  and
+- set expected values for variables to be recorded which restrict the
+  data entry when the design is exported as an xlsx file,
+- simulate values for record variables,
+- make classical named designs see [Cookbook
+  chapter](https://emitanaka.org/edibble-book/cookbook.html).
 
 Work-in-progress book on this package can be found
 [here](https://emitanaka.org/edibble-book/).
@@ -213,13 +210,13 @@ Work-in-progress book on this package can be found
 
 Currently, edibble:
 
--   expects you to know the number of units available from the start.
-    Unknown numbers will be supported in future versions.
--   in theory, edibble should support experiments that are not
-    comparative experiments but this is not tested.
--   does not do enough testing so design should be diagnosed after
-    construction (which should be done regardless of how much testing
-    edibble implements).
+- expects you to know the number of units available from the start.
+  Unknown numbers will be supported in future versions.
+- in theory, edibble should support experiments that are not comparative
+  experiments but this is not tested.
+- does not do enough testing so design should be diagnosed after
+  construction (which should be done regardless of how much testing
+  edibble implements).
 
 ## Related Work
 
@@ -227,22 +224,22 @@ The way that edibble specifies experimental design is largely novel (if
 I say so myself) and there are no work that resembles it. I’m
 concurrently working on two extension packages:
 
--   `deggust` - to visualise the designs constructed from edibble as
-    ggplot2 objects (WIP).
--   `sizzled` - for experiments that require sample size calculation
-    (WIP).
+- `deggust` - to visualise the designs constructed from edibble as
+  ggplot2 objects (WIP).
+- `sizzled` - for experiments that require sample size calculation
+  (WIP).
 
 Below are some other related work. You can also have a look at the [CRAN
 Task View for Design of Experiment and Analysis of Experimental
 Data](https://CRAN.R-project.org/view=ExperimentalDesign) for a whole
 collection.
 
--   `DeclareDesign` for survey or sampling designs
--   `designr` for balanced factorial designs with crossed and nested
-    random and fixed effect to data frame
--   `dae` for functions useful in the design and ANOVA of experiments
-    (this is in fact powering the randomisation in edibble)
--   `plotdesignr` for designing agronomic field experiments
+- `DeclareDesign` for survey or sampling designs
+- `designr` for balanced factorial designs with crossed and nested
+  random and fixed effect to data frame
+- `dae` for functions useful in the design and ANOVA of experiments
+  (this is in fact powering the randomisation in edibble)
+- `plotdesignr` for designing agronomic field experiments
 
 ## Acknowledgement
 
@@ -261,21 +258,20 @@ shortcoming) so that tidyverse users can leverage their familiarity of
 the tidyverse language when using edibble. Specifically, edibble follows
 the philosophy:
 
--   main functions do one thing and have a consistent form of
-    `<verb>_<noun>` (e.g. `set_units` and `set_rcrds`) where the nouns
-    are generally plural. Exceptions are when the subject matter is
-    clearly singular (e.g. `design` and `set_context`);
--   pipable functions;
--   all dots arguments are [dynamic
-    dots](https://rlang.r-lib.org/reference/dyn-dots.html);
--   duplicate names repaired with same option as `tibble` for additions
-    to edibble graph;
--   ability for developers to extend certain components. Currently only
-    supported for others to contribute their own classical named
-    experimental designs via `prep_classical_`;
--   the specification of complex nested structure drawing similarity to
-    `dplyr::case_when` (LHS is character or integer for edibble
-    however).
+- main functions do one thing and have a consistent form of
+  `<verb>_<noun>` (e.g. `set_units` and `set_rcrds`) where the nouns are
+  generally plural. Exceptions are when the subject matter is clearly
+  singular (e.g. `design` and `set_context`);
+- pipable functions;
+- all dots arguments are [dynamic
+  dots](https://rlang.r-lib.org/reference/dyn-dots.html);
+- duplicate names repaired with same option as `tibble` for additions to
+  edibble graph;
+- ability for developers to extend certain components. Currently only
+  supported for others to contribute their own classical named
+  experimental designs via `prep_classical_`;
+- the specification of complex nested structure drawing similarity to
+  `dplyr::case_when` (LHS is character or integer for edibble however).
 
 ## Code of Conduct
 

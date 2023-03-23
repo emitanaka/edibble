@@ -1,6 +1,7 @@
 # edibble 0.1.3
 
 * Make S3 generic/method consistent
+* Updated old-style citEntry() to bibentry()
 
 # edibble 0.1.2
 
