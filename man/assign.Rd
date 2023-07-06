@@ -28,7 +28,7 @@ assign_units(
 \item{.design}{An edibble design which should have units, treatments and allotment defined.}
 
 \item{order}{A character vector signifying the apportion of treatments to units.
-The value should be either "random", "systematic" or "systematic-random".
+The value should be either "random", "systematic", "systematic-random" or a class name corresponding to the algorithm for order_trts().
 "random" allocates the treatment randomly to units based on specified allotment with restrictions
 implied by unit structure.
 "systematic" allocates the treatment in a systematic order to units.
