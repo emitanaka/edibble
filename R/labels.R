@@ -1,5 +1,8 @@
 #' Generate a sequence of labels with custom formatting options
 #'
+#' These can be handy for generating pseudo labels for the levels or
+#' factor names using `fct_generator`
+#'
 #' @param from An integer specifying the starting value (inclusive) of the sequence.
 #' @param to An integer specifying the ending value (inclusive) of the sequence.
 #' @param by An integer specifying the increment between values in the sequence.
@@ -14,8 +17,9 @@
 #' @return A character vector containing the labels generated from the sequence.
 #'
 #' @examples
-#' # Example usage of the function
 #' label_seq_to_length(to = 10, length = 5, by = 2)
+#' label_seq_from_to(from = 8, to = 10, leading_zero = 3)
+#' label_seq_length(10, leading_zero = FALSE)
 #' @name label_seq
 NULL
 
@@ -73,8 +77,6 @@ label_seq_length <- function(length = 1L,
 
 
 
-
-
 label_form <- function(levels, leading_zero,
                        prefix, suffix,
                        sep_prefix, sep_suffix) {
@@ -85,4 +87,29 @@ label_form <- function(levels, leading_zero,
                         "%s%s%d%s%s"))
 
   sprintf(form, prefix, sep_prefix, levels, sep_suffix, suffix)
+}
+
+
+#' Factor name generator
+#'
+#' Generate a factor with custom levels and repetitions.
+#'
+#' This function creates a factor with custom labels and specified repetitions for each label.
+#'
+#' @param labels A character vector specifying the custom labels for the factor levels.
+#' @param nlevels An integer or a vector of integers indicating the number of repetitions for each label.
+#'               If a single integer is provided, it is recycled to match the length of \code{labels}.
+#'               If a vector is provided, it should have the same length as \code{labels}.
+#'
+#' @return A factor with custom levels and repetitions.
+#'
+#' @examples
+#' # Example usage of the function
+#' fct_generator(labels = c("A", "B", "C"), nlevels = 3)
+#'
+#' @export
+fct_generator <- function(labels, nlevels) {
+  nlevels <- as.list(vctrs::vec_recycle(nlevels, length(labels)))
+  names(nlevels) <- labels
+  structure(nlevels, class = "fct_names")
 }
