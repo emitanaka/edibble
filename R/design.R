@@ -20,7 +20,7 @@ design <- function(name = NULL, .record = TRUE, seed = NULL, kitchen = Kitchen) 
   if(.record) record_step()
   save_seed(seed)
   structure(list(name = name,
-                 graph = initialise_edibble_graph(),
+                 graph = empty_edibble_graph(),
                  kitchen = kitchen),
             class = c("edbl_design", "edbl"))
 }
@@ -34,16 +34,26 @@ redesign <- function(.data, name = NULL, .record = TRUE, seed = NULL, kitchen = 
 
 # initialise graph structure -----------------------------------------------
 
-initialise_edibble_graph <- function() {
-  fnodes <- data.frame(id = integer(), name = character(), class = character(), stringsAsFactors = FALSE)
-  lnodes <- data.frame(idvar = integer(), id = integer(), name = character(), stringsAsFactors = FALSE)
-  edges <-  data.frame(from = integer(), to = integer(),
-                       alloc = integer(), type = character(),
-                       stringsAsFactors = FALSE)
-  structure(list(nodes = fnodes,
-                 edges = edges,
+empty_edibble_graph <- function() {
+  fnodes <- tibble::tibble(id = integer(),
+                           role = character(),
+                           name = character(),
+                           attrs = list())
+  lnodes <- list()
+  fedges <-  tibble::tibble(from = integer(), to = integer(),
+                            type = character(), group = integer(),
+                            attrs = list())
+  ledges <-  tibble::tibble(from = integer(), to = integer(),
+                            attrs = list())
+  structure(list(factors = list(nodes = fnodes,
+                                edges = fedges),
                  levels = list(nodes = lnodes,
-                               edges = edges)),
+                               edges = ledges)),
             class = "edbl_graph")
 }
 
+new_lnode <- function(ids, vals, data) {
+  tibble::tibble(id = ids,
+                 value = vals,
+                 attrs = data)
+}
