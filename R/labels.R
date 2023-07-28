@@ -28,7 +28,7 @@ NULL
 label_seq_from_to <- function(from = 1L, to = 1L, by = 1L,
                               prefix = "", suffix = "",
                               sep_prefix = "", sep_suffix = "",
-                              leading_zero = TRUE) {
+                              leading_zero = edibble_labels_opt("leading_zero")) {
 
   levels <- seq(from = from, to = to, by = by)
   label_form(levels, leading_zero,
@@ -41,7 +41,7 @@ label_seq_from_to <- function(from = 1L, to = 1L, by = 1L,
 label_seq_from_length <- function(from = 1L, length = 1L, by = 1L,
                                   prefix = "", suffix = "",
                                   sep_prefix = "", sep_suffix = "",
-                                  leading_zero = TRUE) {
+                                  leading_zero = edibble_labels_opt("leading_zero")) {
 
   levels <- seq(from = from, by = by, length.out = length)
   label_form(levels, leading_zero,
@@ -54,7 +54,7 @@ label_seq_from_length <- function(from = 1L, length = 1L, by = 1L,
 label_seq_to_length <- function(to = 1L, length = 1L, by = 1L,
                                   prefix = "", suffix = "",
                                   sep_prefix = "", sep_suffix = "",
-                                  leading_zero = TRUE) {
+                                  leading_zero = edibble_labels_opt("leading_zero")) {
 
   levels <- seq(to = to, by = by, length.out = length)
   label_form(levels, leading_zero,
@@ -67,7 +67,7 @@ label_seq_to_length <- function(to = 1L, length = 1L, by = 1L,
 label_seq_length <- function(length = 1L,
                              prefix = "", suffix = "",
                              sep_prefix = "", sep_suffix = "",
-                             leading_zero = TRUE) {
+                             leading_zero = edibble_labels_opt("leading_zero")) {
 
   levels <- seq_len(length)
   label_form(levels, leading_zero,
@@ -109,7 +109,7 @@ label_form <- function(levels, leading_zero,
 #'
 #' @export
 fct_generator <- function(labels, nlevels) {
-  nlevels <- as.list(vctrs::vec_recycle(nlevels, length(labels)))
-  names(nlevels) <- labels
-  structure(nlevels, class = "fct_names")
+  lvl_list <- as.list(vctrs::vec_recycle(nlevels, length(labels)))
+  names(lvl_list) <- labels
+  structure(lvl_list, class = "fct_names")
 }
