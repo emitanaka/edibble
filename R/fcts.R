@@ -187,3 +187,5 @@ vec_cast.edbl_trt.character <- function(x, to, ...) as.character(x)
 vec_cast.character.edbl_trt <- function(x, to, ...) x
 
 
+# ADDME add_units(exist = TRUE), reset_units(exist = FALSE)
+
