@@ -5,7 +5,7 @@
 #' The Kitchen contains a set of operations to manipulate the nodes and edges of
 #' the edibble design object.
 #'
-#' @param class The class for the vertex/node.
+#' @param role The role for the vertex/node.
 #' @param data The nodes data
 #' @param name The name of the vertex.
 #' @param id The id of the corresponding node.
@@ -28,44 +28,49 @@ Kitchen <- R6::R6Class("Kitchen",
 
 
                          #' @description
-                         #' Get the id based on either the name of the factor node or
-                         #' the class.
-                         fct_id = function(name = NULL, class = NULL) {
+                         #' Get the id based on either the name of the factor node.
+                         #' If none supplied then it will give all.
+                         fct_id_by_name = function(name = NULL) {
                            fnodes <- self$fct_nodes
-                           if(is_null(class)) {
-                             name_to_id <- pull(fnodes, id, name)
-                             name <- name %||% names(name_to_id)
-                             unname(name_to_id[as.character(name)])
-                           } else {
-                             fnodes[fnodes$class %in% class, "id"]
-                           }
+                           name_to_id <- pull(fnodes, id, name)
+                           name <- name %||% names(name_to_id)
+                           unname(name_to_id[as.character(name)])
                          },
 
                          #' @description
-                         #' Get the id based on name of level node
-                         lvl_id = function(name = NULL, class = NULL) {
+                         #' Get all ids associated with a role.
+                         fct_id_by_role = function(role = NULL) {
                            fnodes <- self$fct_nodes
+                           fnodes[fnodes$role %in% role, "id"]
+                         },
+
+                         #' @description
+                         #' Get the id based on name of level node.
+                         #' If no name provided, all names returned.
+                         #' FIXME
+                         lvl_id_by_name = function(name = NULL) {
                            lnodes <- self$lvl_nodes
-                           if(is_null(class)) {
-                             name_to_id <- pull(self$lvl_nodes, id, name)
-                             name <- name %||% names(name_to_id)
-                             unname(name_to_id[as.character(name)])
+                           name_to_id <- pull(self$lvl_nodes, id, name)
+                           name <- name %||% names(name_to_id)
+                           unname(name_to_id[as.character(name)])
+                           if(is_null(role)) {
+
                            } else {
-                             ids <- fnodes[fnodes$class %in% class, "id"]
+                             ids <- fnodes[fnodes$role %in% role, "id"]
                              lnodes[lnodes$idvar %in% ids, "id"]
                            }
                          },
 
                          #' @description
-                         #' Get the factor names based on id or class
-                         fct_names = function(id = NULL, class = NULL) {
-                           private$var_names(self$fct_nodes, id, class)
+                         #' Get the factor names based on id or role
+                         fct_names = function(id = NULL, role = NULL) {
+                           private$var_names(self$fct_nodes, id, role)
                          },
 
                          #' @description
-                         #' Get the level names based on id or class
-                         lvl_names = function(id = NULL, class = NULL) {
-                           private$var_names(self$lvl_nodes, id, class)
+                         #' Get the level names based on id or role
+                         lvl_names = function(id = NULL, role = NULL) {
+                           private$var_names(self$lvl_nodes, id, role)
                          },
 
                          #' @description
@@ -76,8 +81,14 @@ Kitchen <- R6::R6Class("Kitchen",
 
                          #' @description
                          #' Given node data, append the level nodes
-                         append_lvl_nodes = function(data) {
-                           self$lvl_nodes <- rbind_(self$lvl_nodes, data)
+                         append_lvl_nodes = function(data, fid = NULL) {
+                           lnodes <- self$lvl_nodes
+                           if(is.null(lnodes[[as.character(fid)]])) {
+                             lnodes[[as.character(fid)]] <- new_lnode(data$id, data$value, data$attrs)
+                           } else {
+                             lnodes[[as.character(fid)]] <- rbind_(lnodes[[as.character(fid)]], data)
+                           }
+                           self$lvl_nodes <- lnodes
                          },
 
                          #' @description
@@ -93,70 +104,70 @@ Kitchen <- R6::R6Class("Kitchen",
                          },
 
                          #' @description
-                         #' Get the class of the vertex given the factor id
-                         fct_class = function(id = NULL) {
+                         #' Get the role of the vertex given the factor id
+                         fct_role = function(id = NULL) {
                            nodes <- self$fct_nodes
-                           id_to_class_fct <- pull(nodes, class, id)
+                           id_to_role_fct <- pull(nodes, role, id)
                            ids_fct <-  id %||% nodes$id
-                           unname(id_to_class_fct[as.character(ids_fct)])
+                           unname(id_to_role_fct[as.character(ids_fct)])
                          },
 
                          #' @description
-                         #' Get the class of the vertex given the level id
-                         lvl_class = function(id = NULL) {
+                         #' Get the role of the vertex given the level id
+                         lvl_role = function(id = NULL) {
                            nodes <- self$lvl_nodes
-                           id_to_class_fct <- pull(nodes, class, id)
+                           id_to_role_fct <- pull(nodes, role, id)
                            ids_fct <-  id %||% nodes$id
-                           unname(id_to_class_fct[as.character(ids_fct)])
+                           unname(id_to_role_fct[as.character(ids_fct)])
                          },
 
                          #' @description
-                         #' Get the factor child ids. If `class` is
-                         #' supplied then the child has to fit `class`
-                         fct_child = function(id = NULL, class = NULL) {
+                         #' Get the factor child ids. If `role` is
+                         #' supplied then the child has to fit `role`
+                         fct_child = function(id = NULL, role = NULL) {
                            edges <- subset(self$fct_edges, !type %in% c("depends", "cross"))
                            child_ids <- edges$to
                            parent_ids <- edges$from
-                           child_ids[parent_ids %in% id & child_ids %in% self$fct_id(class = class)]
+                           child_ids[parent_ids %in% id & child_ids %in% self$fct_id_by_role(role = role)]
                          },
 
                          #' @description
                          #' Get the level child ids
-                         lvl_child = function(id = NULL, class = NULL) {
+                         lvl_child = function(id = NULL, role = NULL) {
                            edges <- self$lvl_edges
                            child_ids <- edges$to
                            parent_ids <- edges$from
-                           child_ids[parent_ids %in% id & child_ids %in% self$lvl_id(class = class)]
+                           child_ids[parent_ids %in% id & child_ids %in% self$lvl_id(role = role)]
                          },
 
                          #' @description
                          #' Get the factor parent ids
-                         fct_parent = function(id = NULL, class = NULL) {
+                         fct_parent = function(id = NULL, role = NULL) {
                            edges <- subset(self$fct_edges, !type %in% c("depends", "cross"))
-                           class_ids <- self$fct_id(class = class)
+                           role_ids <- self$fct_id_by_role(role = role)
                            parent_ids <- edges$from
                            child_ids <- edges$to
-                           parent_ids[child_ids %in% id & parent_ids %in% class_ids & child_ids %in% class_ids]
+                           parent_ids[child_ids %in% id & parent_ids %in% role_ids & child_ids %in% role_ids]
                          },
 
                          #' @description
                          #' Get the level parent ids
-                         lvl_parent = function(id = NULL, class = NULL) {
+                         lvl_parent = function(id = NULL, role = NULL) {
                            edges <- self$lvl_edges
-                           class_ids <- self$lvl_id(class = class)
+                           role_ids <- self$lvl_id(role = role)
                            parent_ids <- edges$from
                            child_ids <- edges$to
-                           parent_ids[child_ids %in% id & parent_ids %in% class_ids & child_ids %in% class_ids]
+                           parent_ids[child_ids %in% id & parent_ids %in% role_ids & child_ids %in% role_ids]
                          },
 
 
                          #' @description
                          #' Get the factor ancestor ids
-                         fct_ancestor = function(id = NULL, class = NULL) {
+                         fct_ancestor = function(id = NULL, role = NULL) {
                            out <- unique(id)
-                           parent_ids <- self$fct_parent(id = id, class = class)
+                           parent_ids <- self$fct_parent(id = id, role = role)
                            if(!is_empty(parent_ids)) {
-                             out <- unique(c(out, self$fct_ancestor(id = parent_ids, class = class)))
+                             out <- unique(c(out, self$fct_ancestor(id = parent_ids, role = role)))
                            }
                            out
                          },
@@ -164,11 +175,11 @@ Kitchen <- R6::R6Class("Kitchen",
 
                          #' @description
                          #' Get the level ancestor ids
-                         lvl_ancestor = function(id = NULL, class = NULL) {
+                         lvl_ancestor = function(id = NULL, role = NULL) {
                            out <- id
-                           parent_ids <- self$lvl_parent(id = id, class = class)
+                           parent_ids <- self$lvl_parent(id = id, role = role)
                            if(!is_empty(parent_ids)) {
-                             out <- c(out, self$lvl_ancestor(id = parent_ids, class = class))
+                             out <- c(out, self$lvl_ancestor(id = parent_ids, role = role))
                            }
                            out
                          },
@@ -176,26 +187,24 @@ Kitchen <- R6::R6Class("Kitchen",
                          #' @description
                          #' Get the levels for each factor
                          fct_levels = function(id = NULL, name = NULL) {
-                           qid <- id %||% self$fct_id(name)
+                           qid <- id %||% self$fct_id_by_name(name)
                            lnodes <- self$lvl_nodes
-                           out <- lnodes[lnodes$idvar %in% qid, ]
-                           out$var <- self$fct_names(out$idvar)
-                           split(out$name, out$var)
+                           lnodes[as.character(qid)]
                          },
 
 
 
                          #' @description
                          #' Setup the node and edge data
-                         setup_data = function(fresh, name, class) {
+                         setup_data = function(fresh, name, role) {
                            setup_data_internal <- private$next_method("setup_data", class(fresh))
-                           setup_data_internal(fresh, name, class)
+                           setup_data_internal(fresh, name, role)
                          },
 
                          #' @description
                          #' Add the anatomy structure
-                         add_anatomy = function(fresh, name, class) {
-                           if(class=="edbl_unit") {
+                         add_anatomy = function(fresh, name, role) {
+                           if(role=="edbl_unit") {
                              if(is.null(self$design$anatomy)) {
                                self$design$anatomy <- as.formula(paste0("~", name))
                              } else {
@@ -210,11 +219,11 @@ Kitchen <- R6::R6Class("Kitchen",
 
 
                          #' @description
-                         #' One of `name`, `id` or `class` is defined to check if it exists.
-                         #' If more than one of the arguments `name`, `id` and `class` are supplied, then
+                         #' One of `name`, `id` or `role` is defined to check if it exists.
+                         #' If more than one of the arguments `name`, `id` and `role` are supplied, then
                          #' the intersection of it will be checked.
                          #' @param abort A logical value to indicate whether to abort if it doesn't exist.
-                         fct_exists = function(name = NULL, id = NULL, class = NULL, abort = TRUE) {
+                         fct_exists = function(name = NULL, id = NULL, role = NULL, abort = TRUE) {
 
                            exist <- TRUE
                            abort_missing <- function(vars = NULL, msg = NULL) {
@@ -231,38 +240,38 @@ Kitchen <- R6::R6Class("Kitchen",
 
                            fnodes <- self$fct_nodes
                            # at least one node exists
-                           if(is_null(name) & is_null(id) & is_null(class)) {
+                           if(is_null(name) & is_null(id) & is_null(role)) {
                              exist <- nrow(fnodes) > 0
                              abort_missing(msg = "There are no factor nodes.")
 
-                           } else if(!is_null(name) & is_null(id) & is_null(class)) {
+                           } else if(!is_null(name) & is_null(id) & is_null(role)) {
                              vexist <- name %in% fnodes$name
                              exist <- all(vexist)
                              abort_missing(vars = name[!vexist])
 
-                           } else if(is_null(name) & !is_null(id) & is_null(class)) {
+                           } else if(is_null(name) & !is_null(id) & is_null(role)) {
                              vexist <- id %in% fnodes$id
                              exist <- all(vexist)
                              abort_missing(vars = id[!vexist])
 
-                           } else if(is_null(name) & is_null(id) & !is_null(class)) {
-                             exist <- any(class %in% fnodes$class)
-                             abort_missing(msg = sprintf("There are no factors with class%s",
-                                                         .combine_words(paste0("`", class, "`"))))
+                           } else if(is_null(name) & is_null(id) & !is_null(role)) {
+                             exist <- any(role %in% fnodes$role)
+                             abort_missing(msg = sprintf("There are no factors with role%s",
+                                                         .combine_words(paste0("`", role, "`"))))
 
-                           } else if(is_null(name) & !is_null(id) & !is_null(class)) {
-                             sclass <- fnodes[match(id, fnodes$id), "class"]
-                             vexist <- sclass == class
+                           } else if(is_null(name) & !is_null(id) & !is_null(role)) {
+                             srole <- fnodes[match(id, fnodes$id), "role"]
+                             vexist <- srole == role
                              exist <- all(vexist)
                              abort_missing(vars = id[!vexist])
 
-                           } else if(!is_null(name) & is_null(id) & !is_null(class)) {
-                             sclass <- fnodes[match(name, fnodes$name), "class"]
-                             vexist <- sclass == class
+                           } else if(!is_null(name) & is_null(id) & !is_null(role)) {
+                             srole <- fnodes[match(name, fnodes$name), "role"]
+                             vexist <- srole == role
                              exist <- all(vexist)
                              abort_missing(vars = name[!vexist])
 
-                           } else if(!is_null(name) & !is_null(id) & is_null(class)) {
+                           } else if(!is_null(name) & !is_null(id) & is_null(role)) {
                              sid <- fnodes[match(name, fnodes$name), "id"]
                              vexist <- sid == id
                              exist <- all(vexist)
@@ -270,7 +279,7 @@ Kitchen <- R6::R6Class("Kitchen",
 
                            } else {
                              snodes <- fnodes[match(name, fnodes$name), ]
-                             vexist <- snodes$id == id & snodes$class == class
+                             vexist <- snodes$id == id & snodes$role == role
                              exist <- all(vexist)
                              abort_missing(vars = name[!vexist])
                            }
@@ -281,19 +290,19 @@ Kitchen <- R6::R6Class("Kitchen",
                          #' @description
                          #' Check if treatment exists.
                          trts_exists = function(abort = TRUE) {
-                           self$fct_exists(class = "edbl_trt", abort = abort)
+                           self$fct_exists(role = "edbl_trt", abort = abort)
                          },
 
                          #' @description
                          #' Check if unit exists.
                          units_exists = function(abort = TRUE) {
-                           self$fct_exists(class = "edbl_unit", abort = abort)
+                           self$fct_exists(role = "edbl_unit", abort = abort)
                          },
 
                          #' @description
                          #' Check if record exists.
                          rcrds_exists = function(abort = TRUE) {
-                           self$fct_exists(class = "edbl_rcrd", abort = abort)
+                           self$fct_exists(role = "edbl_rcrd", abort = abort)
                          }
 
                        ),
@@ -303,8 +312,8 @@ Kitchen <- R6::R6Class("Kitchen",
                          #' @field fct_nodes
                          #' Get the factor nodes
                          fct_nodes = function(data) {
-                           if(missing(data)) return(self$design$graph$nodes)
-                           else self$design$graph$nodes <- data
+                           if(missing(data)) return(self$design$graph$factors$nodes)
+                           else self$design$graph$factors$nodes <- data
                          },
 
                          #' @field lvl_nodes
@@ -312,7 +321,6 @@ Kitchen <- R6::R6Class("Kitchen",
                          lvl_nodes = function(data) {
                            if(missing(data)) {
                              nodes <- self$design$graph$levels$nodes
-                             nodes$var <- self$fct_names(id = nodes$idvar)
                              return(nodes)
                            }
                            else self$design$graph$levels$nodes <- data
@@ -322,12 +330,12 @@ Kitchen <- R6::R6Class("Kitchen",
                          #' Get the factor edges
                          fct_edges = function(data) {
                            if(missing(data)) {
-                             edges <- self$design$graph$edges
+                             edges <- self$design$graph$factors$edges
                              edges$var_from <- self$fct_names(id = edges$from)
                              edges$var_to <- self$fct_names(id = edges$to)
                              return(edges)
                            } else {
-                             self$design$graph$edges <- data
+                             self$design$graph$factors$edges <- data
                            }
                          },
 
@@ -358,28 +366,18 @@ Kitchen <- R6::R6Class("Kitchen",
                          #' Get the number of nodes in level graph
                          lvl_n = function(value) {
                            if (missing(value)) {
-                             nrow(self$lvl_nodes)
+                             sum(lengths(self$lvl_nodes_list))
                            } else {
                              stop("Can't set `$lvl_n`.")
                            }
                          },
 
-                         #' @field fct_last_id
-                         #' Get the last factor id.
-                         fct_last_id = function() {
-                           ifelse(self$fct_n, max(self$fct_id()), 0L)
-                         },
 
-                         #' @field lvl_last_id
-                         #' Get the last level id.
-                         lvl_last_id = function() {
-                           ifelse(self$lvl_n, max(self$lvl_id()), 0L)
-                         },
 
                          #' @field fct_leaves
                          #' Get the leave factor ids.
                          fct_leaves = function() {
-                           uids <- self$fct_id(class = "edbl_unit")
+                           uids <- self$fct_id_by_role("edbl_unit")
                            has_child <- map_lgl(uids, function(id) length(intersect(self$fct_child(id), uids)) > 0)
                            uids[!has_child]
                          },
@@ -387,37 +385,37 @@ Kitchen <- R6::R6Class("Kitchen",
                          #' @field rcrd_ids
                          #' Get the ids for all edbl_rcrd factors.
                          rcrd_ids = function() {
-                           self$fct_id(class = "edbl_rcrd")
+                           self$fct_id_by_role("edbl_rcrd")
                          },
 
                          #' @field unit_ids
                          #' Get the ids for all edbl_unit factors.
                          unit_ids = function() {
-                           self$fct_id(class = "edbl_unit")
+                           self$fct_id_by_role("edbl_unit")
                          },
 
                          #' @field trt_ids
                          #' Get the ids for all edbl_trt factors.
                          trt_ids = function() {
-                           self$fct_id(class = "edbl_trt")
+                           self$fct_id_by_role("edbl_trt")
                          },
 
                          #' @field trt_names
                          #' Get the node labels for treatments
                          trt_names = function() {
-                           private$var_names(self$fct_nodes, class = "edbl_trt")
+                           private$var_names(self$fct_nodes, role = "edbl_trt")
                          },
 
                          #' @field unit_names
                          #' Get the node labels for units
                          unit_names = function() {
-                           private$var_names(self$fct_nodes, class = "edbl_unit")
+                           private$var_names(self$fct_nodes, role = "edbl_unit")
                          },
 
                          #' @field rcrd_names
                          #' Get the node labels for record
                          rcrd_names = function() {
-                           private$var_names(self$fct_nodes, class = "edbl_rcrd")
+                           private$var_names(self$fct_nodes, role = "edbl_rcrd")
                          },
 
                          #' @field is_connected
@@ -435,18 +433,36 @@ Kitchen <- R6::R6Class("Kitchen",
                        ),
                        private = list(
                          version = NULL,
+                         fct_last_id = 0L,
+                         lvl_last_id = 0L,
 
-                         var_names = function(nodes, id, class) {
-                           if(is_null(class)) {
+                         #' @field fct_new_id
+                         #' Get a new factor id.
+                         fct_new_id = function(n = 1) {
+                           ids <- seq(private$fct_last_id + 1, private$fct_last_id + n)
+                           private$fct_last_id <- private$fct_last_id + n
+                           ids
+                         },
+
+                         #' @field lvl_new_id
+                         #' Get a new level id.
+                         lvl_new_id = function(n = 1) {
+                           ids <- seq(private$lvl_last_id + 1, private$lvl_last_id + n)
+                           private$lvl_last_id <- private$lvl_last_id + n
+                           ids
+                         },
+
+                         var_names = function(nodes, id, role) {
+                           if(is_null(role)) {
                              id_to_name <- pull(nodes, name, id)
                              ids <-  id %||% nodes$id
                              unname(id_to_name[as.character(ids)])
                            } else {
                              nodes <- self$fct_nodes
-                             if(is_null(class)) {
+                             if(is_null(role)) {
                                nodes$name
                              } else {
-                               nodes[nodes$class %in% class, "name"]
+                               nodes[nodes$role %in% role, "name"]
                              }
                            }
                          },
@@ -461,16 +477,16 @@ Kitchen <- R6::R6Class("Kitchen",
                            return("unimplemented")
                          },
 
-                         next_method = function(generic, class) {
+                         next_method = function(generic, role) {
                            fns <- ls(envir = private)
-                           method <- paste0(generic, ".", class[1])
+                           method <- paste0(generic, ".", role[1])
                            if(method %in% fns) {
                              private[[method]]
                            } else {
-                             if(length(class)==1L) {
+                             if(length(role)==1L) {
                                private[[paste0(generic, ".default")]]
                              } else {
-                               private$next_method(generic, class[-1])
+                               private$next_method(generic, role[-1])
                              }
                            }
                          },
@@ -479,70 +495,57 @@ Kitchen <- R6::R6Class("Kitchen",
                          setup_data.default = function(fresh, name, class) {
                            type <- private$fresh_type(fresh)
                            levels <- switch(type,
-                                            "numeric" = fct_attrs(levels = lvl_attrs(1:fresh, prefix = name),
+                                            "numeric" = fct_attrs(levels = lvl_attrs(label_seq_length(fresh, prefix = name)),
                                                                   class = class),
                                             "unnamed_vector" = fct_attrs(levels = lvl_attrs(fresh),
                                                                          class = class),
                                             "named_vector" = fct_attrs(levels = lvl_attrs(names(fresh),
                                                                                           rep = unname(fresh)),
                                                                        class = class),
-                                            "unimplemented" = abort(paste0("Not sure how to handle ", class(fresh)[1])))
+                                            "unimplemented" = abort(paste0("Not sure how to handle ", role(fresh)[1])))
                            private$setup_data.edbl_lvls(levels, name, class)
                          },
 
                          setup_data.edbl_lvls = function(fresh, name, class) {
-                           fid <- self$fct_last_id + 1L
-                           lid <- self$lvl_last_id + 1L
+                           fid <- private$fct_new_id(n = 1)
                            attrs <- attributes(fresh)
 
-                           fattrs <- do.call(data.frame, c(attrs[setdiff(names(attrs), c("names", "class"))],
-                                                           list(stringsAsFactors = FALSE,
-                                                                id = fid,
-                                                                name = name,
-                                                                class = class)))
+                           fattrs <- data.frame(id = fid, name = name, role = class)
                            self$append_fct_nodes(fattrs)
 
                            lattrs <- lvl_data(fresh)
-                           lattrs$idvar <- fid
-                           lattrs$var <- name
-                           lattrs$id <- lid:(lid + length(fresh) - 1)
+                           lattrs$id <- private$lvl_new_id(length(fresh))
 
-                           self$append_lvl_nodes(lattrs)
+                           self$append_lvl_nodes(lattrs, fid)
                          },
 
-                         setup_data.formula = function(fresh, name, class) {
+                         setup_data.formula = function(fresh, name, role) {
                            flevels <- self$fct_levels()
                            tt <- terms(fresh)
                            vars <- rownames(attr(tt, "factor"))
 
-                           private$setup_data.cross_lvls(vars, name, class)
+                           private$setup_data.cross_lvls(vars, name, role)
                          },
 
-                         setup_data.edbl_fct = function(fresh, name, class) {
-                           fid <- self$fct_last_id + 1L
-                           lid <- self$lvl_last_id + 1L
-
-                           self$append_fct_nodes(data.frame(id = fid, name = name, class = class,
-                                                            stringsAsFactors = FALSE))
+                         setup_data.edbl_fct = function(fresh, name, role) {
+                           fid <- private$fct_new_id
+                           self$append_fct_nodes(tibble(id = fid, name = name, role = role))
 
                            lvls <- levels(fresh)
-                           lattrs <- data.frame(name = lvls,
-                                                label = lvls,
-                                                idvar = fid,
-                                                var = name,
-                                                id = lid:(lid + length(lvls) - 1))
+                           lattrs <- tibble(id = private$lvl_new_id(length(lvls)),
+                                            value = lvls)
 
-                           self$append_lvl_nodes(lattrs)
+                           self$append_lvl_nodes(lattrs, fid)
                          },
 
-                         setup_data.cross_lvls = function(fresh, name, class) {
+                         setup_data.cross_lvls = function(fresh, name, role) {
                            flevels <- self$fct_levels()
                            vars <- fresh
 
                            pdf <- expand.grid(flevels[vars])
                            pdf[[name]] <- fct_attrs(levels = lvl_attrs(1:nrow(pdf), prefix = name),
-                                                    class = class)
-                           private$setup_data.edbl_lvls(pdf[[name]], name, class)
+                                                    role = role)
+                           private$setup_data.edbl_lvls(pdf[[name]], name, role)
                            fnodes <- self$fct_nodes
                            idv <- fnodes[fnodes$name == name, "id"]
                            for(avar in vars) {
@@ -558,19 +561,19 @@ Kitchen <- R6::R6Class("Kitchen",
                            self$append_fct_edges(cross_df)
                          },
 
-                         setup_data.nest_lvls = function(fresh, name, class) {
-                           idv <- self$fct_last_id + 1L
-                           idl <- self$lvl_last_id + 1L
+                         setup_data.nest_lvls = function(fresh, name, role) {
+                           idv <- private$fct_new_id
+                           idl <- private$lvl_new_id
                            parent <- fresh %@% "keyname"
                            cross_parents <- fresh %@% "parents"
                            clabels <- fresh %@% "labels"
-                           idp <- self$fct_id(name = c(parent, colnames(cross_parents[[1]])))
+                           idp <- self$fct_id_by_name(c(parent, colnames(cross_parents[[1]])))
                            attrs <- attributes(fresh)
-                           fattrs <- do.call(data.frame, c(attrs[setdiff(names(attrs), c("names", "keyname", "class", "parents", "labels"))],
+                           fattrs <- do.call(data.frame, c(attrs[setdiff(names(attrs), c("names", "keyname", "role", "parents", "labels"))],
                                                            list(stringsAsFactors = FALSE,
                                                                 id = idv,
                                                                 name = name,
-                                                                class = class)))
+                                                                role = role)))
                            self$append_fct_nodes(fattrs)
                            self$append_fct_edges(data.frame(from = idp, to = idv, type = "nest"))
                            plevels <- rep(names(fresh), lengths(fresh))

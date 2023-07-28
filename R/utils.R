@@ -116,18 +116,18 @@ print.edbl_design <- function(x,
                        label = as.character(decorate_title(title)))
   } else {
 
-    classes <- prep$fct_class()
+    roles <- prep$fct_role()
     label_names <- decorate_vars(fnames,
                                  decorate_units,
                                  decorate_trts,
                                  decorate_rcrds,
-                                 classes)
+                                 roles)
     var_nlevels <- lengths(prep$fct_levels()[fnames])
     nvar <- length(fnames)
     ll <- lapply(fnames,
                  function(v) {
-                   id <- prep$fct_id(v)
-                   class <- prep$fct_class(id = id)
+                   id <- prep$fct_id_by_name(v)
+                   class <- prep$fct_role(id = id)
                    children <- prep$fct_child(id = id)
                    if(class!="edbl_trt" & !is_empty(children)) {
                      prep$fct_names(id = children)
@@ -137,7 +137,7 @@ print.edbl_design <- function(x,
                  })
     nodes_with_parents <- unname(unlist(ll))
     label_names_with_levels <- paste(label_names, map_chr(var_nlevels, decorate_levels))
-    label_names_with_levels[classes=="edbl_rcrd"] <- label_names[classes=="edbl_rcrd"]
+    label_names_with_levels[roles=="edbl_rcrd"] <- label_names[roles=="edbl_rcrd"]
 
     data <- data.frame(var = c("root", fnames),
                        child = I(c(list(setdiff(fnames, nodes_with_parents)), ll)),
@@ -213,9 +213,9 @@ perm <- function(x) {
 #' @export
 print.edbl_graph <- function(x, show_levels = FALSE, ...) {
   cat(cli::col_green("factor nodes\n"))
-  print(x$nodes)
+  print(x$factors$nodes)
   cat(cli::col_green("factor edges\n"))
-  print(x$edges)
+  print(x$factors$edges)
   if(show_levels) {
     cat(cli::col_blue("level nodes\n"))
     print(x$levels$nodes)
@@ -225,7 +225,7 @@ print.edbl_graph <- function(x, show_levels = FALSE, ...) {
 }
 
 names.edbl_graph <- function(graph) {
-  graph$nodes$name
+  graph$factors$nodes$name
 }
 
 names.edbl_design <- function(design) {
