@@ -18,6 +18,10 @@ the edibble design object.
 \describe{
 \item{\code{design}}{An edibble design object
 Initialise function}
+
+\item{\code{fct_last_id}}{Get the last factor id.}
+
+\item{\code{lvl_last_id}}{Get the last level id.}
 }
 \if{html}{\out{</div>}}
 }
@@ -62,16 +66,17 @@ Initialise function}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-Kitchen-new}{\code{Kitchen$new()}}
-\item \href{#method-Kitchen-fct_id}{\code{Kitchen$fct_id()}}
-\item \href{#method-Kitchen-lvl_id}{\code{Kitchen$lvl_id()}}
+\item \href{#method-Kitchen-fct_id_by_name}{\code{Kitchen$fct_id_by_name()}}
+\item \href{#method-Kitchen-fct_id_by_role}{\code{Kitchen$fct_id_by_role()}}
+\item \href{#method-Kitchen-lvl_id_by_name}{\code{Kitchen$lvl_id_by_name()}}
 \item \href{#method-Kitchen-fct_names}{\code{Kitchen$fct_names()}}
 \item \href{#method-Kitchen-lvl_names}{\code{Kitchen$lvl_names()}}
 \item \href{#method-Kitchen-append_fct_nodes}{\code{Kitchen$append_fct_nodes()}}
 \item \href{#method-Kitchen-append_lvl_nodes}{\code{Kitchen$append_lvl_nodes()}}
 \item \href{#method-Kitchen-append_fct_edges}{\code{Kitchen$append_fct_edges()}}
 \item \href{#method-Kitchen-append_lvl_edges}{\code{Kitchen$append_lvl_edges()}}
-\item \href{#method-Kitchen-fct_class}{\code{Kitchen$fct_class()}}
-\item \href{#method-Kitchen-lvl_class}{\code{Kitchen$lvl_class()}}
+\item \href{#method-Kitchen-fct_role}{\code{Kitchen$fct_role()}}
+\item \href{#method-Kitchen-lvl_role}{\code{Kitchen$lvl_role()}}
 \item \href{#method-Kitchen-fct_child}{\code{Kitchen$fct_child()}}
 \item \href{#method-Kitchen-lvl_child}{\code{Kitchen$lvl_child()}}
 \item \href{#method-Kitchen-fct_parent}{\code{Kitchen$fct_parent()}}
@@ -105,40 +110,55 @@ Initialise function}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Kitchen-fct_id"></a>}}
-\if{latex}{\out{\hypertarget{method-Kitchen-fct_id}{}}}
-\subsection{Method \code{fct_id()}}{
-Get the id based on either the name of the factor node or
-the class.
+\if{html}{\out{<a id="method-Kitchen-fct_id_by_name"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-fct_id_by_name}{}}}
+\subsection{Method \code{fct_id_by_name()}}{
+Get the id based on either the name of the factor node.
+If none supplied then it will give all.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Kitchen$fct_id(name = NULL, class = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Kitchen$fct_id_by_name(name = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{name}}{The name of the vertex.}
-
-\item{\code{class}}{The class for the vertex/node.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Kitchen-lvl_id"></a>}}
-\if{latex}{\out{\hypertarget{method-Kitchen-lvl_id}{}}}
-\subsection{Method \code{lvl_id()}}{
-Get the id based on name of level node
+\if{html}{\out{<a id="method-Kitchen-fct_id_by_role"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-fct_id_by_role}{}}}
+\subsection{Method \code{fct_id_by_role()}}{
+Get all ids associated with a role.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Kitchen$lvl_id(name = NULL, class = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Kitchen$fct_id_by_role(role = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{role}}{The role for the vertex/node.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Kitchen-lvl_id_by_name"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-lvl_id_by_name}{}}}
+\subsection{Method \code{lvl_id_by_name()}}{
+Get the id based on name of level node.
+If no name provided, all names returned.
+FIXME
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Kitchen$lvl_id_by_name(name = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{name}}{The name of the vertex.}
-
-\item{\code{class}}{The class for the vertex/node.}
 }
 \if{html}{\out{</div>}}
 }
@@ -147,9 +167,9 @@ Get the id based on name of level node
 \if{html}{\out{<a id="method-Kitchen-fct_names"></a>}}
 \if{latex}{\out{\hypertarget{method-Kitchen-fct_names}{}}}
 \subsection{Method \code{fct_names()}}{
-Get the factor names based on id or class
+Get the factor names based on id or role
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Kitchen$fct_names(id = NULL, class = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Kitchen$fct_names(id = NULL, role = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -157,7 +177,7 @@ Get the factor names based on id or class
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
 
-\item{\code{class}}{The class for the vertex/node.}
+\item{\code{role}}{The role for the vertex/node.}
 }
 \if{html}{\out{</div>}}
 }
@@ -166,9 +186,9 @@ Get the factor names based on id or class
 \if{html}{\out{<a id="method-Kitchen-lvl_names"></a>}}
 \if{latex}{\out{\hypertarget{method-Kitchen-lvl_names}{}}}
 \subsection{Method \code{lvl_names()}}{
-Get the level names based on id or class
+Get the level names based on id or role
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Kitchen$lvl_names(id = NULL, class = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Kitchen$lvl_names(id = NULL, role = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -176,7 +196,7 @@ Get the level names based on id or class
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
 
-\item{\code{class}}{The class for the vertex/node.}
+\item{\code{role}}{The role for the vertex/node.}
 }
 \if{html}{\out{</div>}}
 }
@@ -250,12 +270,12 @@ Given edge data, append the level edges
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Kitchen-fct_class"></a>}}
-\if{latex}{\out{\hypertarget{method-Kitchen-fct_class}{}}}
-\subsection{Method \code{fct_class()}}{
-Get the class of the vertex given the factor id
+\if{html}{\out{<a id="method-Kitchen-fct_role"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-fct_role}{}}}
+\subsection{Method \code{fct_role()}}{
+Get the role of the vertex given the factor id
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Kitchen$fct_class(id = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Kitchen$fct_role(id = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -267,12 +287,12 @@ Get the class of the vertex given the factor id
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Kitchen-lvl_class"></a>}}
-\if{latex}{\out{\hypertarget{method-Kitchen-lvl_class}{}}}
-\subsection{Method \code{lvl_class()}}{
-Get the class of the vertex given the level id
+\if{html}{\out{<a id="method-Kitchen-lvl_role"></a>}}
+\if{latex}{\out{\hypertarget{method-Kitchen-lvl_role}{}}}
+\subsection{Method \code{lvl_role()}}{
+Get the role of the vertex given the level id
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Kitchen$lvl_class(id = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Kitchen$lvl_role(id = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -287,10 +307,10 @@ Get the class of the vertex given the level id
 \if{html}{\out{<a id="method-Kitchen-fct_child"></a>}}
 \if{latex}{\out{\hypertarget{method-Kitchen-fct_child}{}}}
 \subsection{Method \code{fct_child()}}{
-Get the factor child ids. If \code{class} is
-supplied then the child has to fit \code{class}
+Get the factor child ids. If \code{role} is
+supplied then the child has to fit \code{role}
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Kitchen$fct_child(id = NULL, class = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Kitchen$fct_child(id = NULL, role = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -298,7 +318,7 @@ supplied then the child has to fit \code{class}
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
 
-\item{\code{class}}{The class for the vertex/node.}
+\item{\code{role}}{The role for the vertex/node.}
 }
 \if{html}{\out{</div>}}
 }
@@ -309,7 +329,7 @@ supplied then the child has to fit \code{class}
 \subsection{Method \code{lvl_child()}}{
 Get the level child ids
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Kitchen$lvl_child(id = NULL, class = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Kitchen$lvl_child(id = NULL, role = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -317,7 +337,7 @@ Get the level child ids
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
 
-\item{\code{class}}{The class for the vertex/node.}
+\item{\code{role}}{The role for the vertex/node.}
 }
 \if{html}{\out{</div>}}
 }
@@ -328,7 +348,7 @@ Get the level child ids
 \subsection{Method \code{fct_parent()}}{
 Get the factor parent ids
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Kitchen$fct_parent(id = NULL, class = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Kitchen$fct_parent(id = NULL, role = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -336,7 +356,7 @@ Get the factor parent ids
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
 
-\item{\code{class}}{The class for the vertex/node.}
+\item{\code{role}}{The role for the vertex/node.}
 }
 \if{html}{\out{</div>}}
 }
@@ -347,7 +367,7 @@ Get the factor parent ids
 \subsection{Method \code{lvl_parent()}}{
 Get the level parent ids
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Kitchen$lvl_parent(id = NULL, class = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Kitchen$lvl_parent(id = NULL, role = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -355,7 +375,7 @@ Get the level parent ids
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
 
-\item{\code{class}}{The class for the vertex/node.}
+\item{\code{role}}{The role for the vertex/node.}
 }
 \if{html}{\out{</div>}}
 }
@@ -366,7 +386,7 @@ Get the level parent ids
 \subsection{Method \code{fct_ancestor()}}{
 Get the factor ancestor ids
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Kitchen$fct_ancestor(id = NULL, class = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Kitchen$fct_ancestor(id = NULL, role = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -374,7 +394,7 @@ Get the factor ancestor ids
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
 
-\item{\code{class}}{The class for the vertex/node.}
+\item{\code{role}}{The role for the vertex/node.}
 }
 \if{html}{\out{</div>}}
 }
@@ -385,7 +405,7 @@ Get the factor ancestor ids
 \subsection{Method \code{lvl_ancestor()}}{
 Get the level ancestor ids
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Kitchen$lvl_ancestor(id = NULL, class = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Kitchen$lvl_ancestor(id = NULL, role = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -393,7 +413,7 @@ Get the level ancestor ids
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
 
-\item{\code{class}}{The class for the vertex/node.}
+\item{\code{role}}{The role for the vertex/node.}
 }
 \if{html}{\out{</div>}}
 }
@@ -423,7 +443,7 @@ Get the levels for each factor
 \subsection{Method \code{setup_data()}}{
 Setup the node and edge data
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Kitchen$setup_data(fresh, name, class)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Kitchen$setup_data(fresh, name, role)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -433,7 +453,7 @@ Setup the node and edge data
 
 \item{\code{name}}{The name of the vertex.}
 
-\item{\code{class}}{The class for the vertex/node.}
+\item{\code{role}}{The role for the vertex/node.}
 }
 \if{html}{\out{</div>}}
 }
@@ -444,7 +464,7 @@ Setup the node and edge data
 \subsection{Method \code{add_anatomy()}}{
 Add the anatomy structure
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Kitchen$add_anatomy(fresh, name, class)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Kitchen$add_anatomy(fresh, name, role)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -454,7 +474,7 @@ Add the anatomy structure
 
 \item{\code{name}}{The name of the vertex.}
 
-\item{\code{class}}{The class for the vertex/node.}
+\item{\code{role}}{The role for the vertex/node.}
 }
 \if{html}{\out{</div>}}
 }
@@ -463,11 +483,11 @@ Add the anatomy structure
 \if{html}{\out{<a id="method-Kitchen-fct_exists"></a>}}
 \if{latex}{\out{\hypertarget{method-Kitchen-fct_exists}{}}}
 \subsection{Method \code{fct_exists()}}{
-One of \code{name}, \code{id} or \code{class} is defined to check if it exists.
-If more than one of the arguments \code{name}, \code{id} and \code{class} are supplied, then
+One of \code{name}, \code{id} or \code{role} is defined to check if it exists.
+If more than one of the arguments \code{name}, \code{id} and \code{role} are supplied, then
 the intersection of it will be checked.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Kitchen$fct_exists(name = NULL, id = NULL, class = NULL, abort = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Kitchen$fct_exists(name = NULL, id = NULL, role = NULL, abort = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -477,7 +497,7 @@ the intersection of it will be checked.
 
 \item{\code{id}}{The id of the corresponding node.}
 
-\item{\code{class}}{The class for the vertex/node.}
+\item{\code{role}}{The role for the vertex/node.}
 
 \item{\code{abort}}{A logical value to indicate whether to abort if it doesn't exist.}
 }

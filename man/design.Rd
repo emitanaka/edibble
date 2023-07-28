@@ -46,7 +46,8 @@ Add variables to this design with \code{\link[=set_units]{set_units()}}, \code{\
 \code{\link[=set_rcrds]{set_rcrds()}}.
 
 Other user-facing functions: 
-\code{\link{allot}},
+\code{\link{allot_trts}()},
+\code{\link{allot_units}()},
 \code{\link{expect_rcrds}()},
 \code{\link{export_design}()},
 \code{\link{serve_table}()},

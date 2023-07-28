@@ -28,7 +28,8 @@ takeout(menu_crd(t = 4, n = 10)) \%>\%
 }
 \seealso{
 Other user-facing functions: 
-\code{\link{allot}},
+\code{\link{allot_trts}()},
+\code{\link{allot_units}()},
 \code{\link{design}()},
 \code{\link{export_design}()},
 \code{\link{serve_table}()},

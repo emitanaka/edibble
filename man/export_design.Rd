@@ -27,7 +27,8 @@ external xlsx file.
 }
 \seealso{
 Other user-facing functions: 
-\code{\link{allot}},
+\code{\link{allot_trts}()},
+\code{\link{allot_units}()},
 \code{\link{design}()},
 \code{\link{expect_rcrds}()},
 \code{\link{serve_table}()},

@@ -8,7 +8,7 @@ fct_attrs(
   levels = NULL,
   label = NULL,
   description = NULL,
-  unit_of_measure = NULL,
+  n = NULL,
   class = NULL,
   ...
 )
@@ -20,8 +20,6 @@ in the factor.}
 \item{label}{A string that denotes the long name of the factor.}
 
 \item{description}{The text description of the factor.}
-
-\item{unit_of_measure}{A string denoting the unit of measurement if applicable.}
 
 \item{class}{An optional subclass.}
 
