@@ -7,7 +7,6 @@
 #'   in the factor.
 #' @param label A string that denotes the long name of the factor.
 #' @param description The text description of the factor.
-#' @param unit_of_measure A string denoting the unit of measurement if applicable.
 #' @param class An optional subclass.
 #' @param ... A name-value pair of attributes. The value must be a scalar and
 #' attributed to the whole factor (not individual levels).
@@ -19,16 +18,15 @@
 #' @return An `edbl_lvls` object.
 #' @export
 fct_attrs <- function(levels = NULL,
-                       label = NULL,
-                       description = NULL,
-                       unit_of_measure = NULL,
-                       class = NULL,
-                       ...) {
+                      label = NULL,
+                      description = NULL,
+                      n = NULL,
+                      class = NULL,
+                      ...) {
 
   class(levels) <- c(class, class(levels))
   attr(levels, "label") <- label
   attr(levels, "description") <- description
-  attr(levels, "unit_of_measure") <- unit_of_measure
   dots <- dots_list(..., .named = TRUE, .homonyms = "keep", .ignore_empty = "all")
   dots_names <- names(dots)
   for(i in seq_along(dots)) {
@@ -60,20 +58,9 @@ fct_attrs <- function(levels = NULL,
 #' @return An edbl_lvls object.
 #' @export
 lvl_attrs <- function(levels = NULL,
-                       labels = NULL,
-                       prefix = "",
-                       suffix = "",
-                       sep = edibble_labels_opt("sep"),
-                       include_leading_zero = edibble_labels_opt("leading_zero"),
-                       data = NULL, ...) {
-  form <- ifelse(vec_is(levels, numeric(), 1),
-                 ifelse(include_leading_zero,
-                        paste0("%s%s%.", ndigits(max(levels)), "d%s"),
-                        "%s%s%d%s"),
-                 "%s%s%s%s")
-  name <- sprintf(form, prefix, sep, levels, suffix)
-  labels <- labels %||% name
-  new_rcrd(c(list2(name = name, label = labels, ...), data), class = "edbl_lvls")
+                      data = NULL, ...) {
+
+  new_rcrd(c(list2(value = levels, ...), data), class = "edbl_lvls")
 }
 
 #' @export
@@ -83,7 +70,7 @@ format.edbl_lvls <- function(x, ...) {
 
 #' @export
 levels.edbl_lvls <- function(x, ...) {
-  lvl_data(x)$name
+  lvl_data(x)$value
 }
 
 
