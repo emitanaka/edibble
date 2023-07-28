@@ -1,9 +1,9 @@
-#' Define the possible allocation of treatments to units
+#' Define allotment of treatments to units
 #'
 #' @description
-#' This function adds the edges between variable nodes to
-#' specify the mapping of units to treatment. This function
-#' does not actually assign specific treatment levels onto actual units.
+#' This function adds the edges between factor nodes to describe the
+#' high-level relationship between factors.
+#' This function does not actually assign edges between level nodes.
 #'
 #' @param ... One-sided or two-sided formula. If the input is a one-sided formula
 #' then the whole treatment is applied to the specified unit.
@@ -20,11 +20,7 @@
 #'               pest ~ block)
 #'
 #' @return Return an edibble design.
-#' @name allot
 #' @seealso assign
-NULL
-
-#' @rdname allot
 #' @export
 allot_trts <- function(.edibble, ..., .record = TRUE) {
 
@@ -75,7 +71,26 @@ allot_trts <- function(.edibble, ..., .record = TRUE) {
 }
 
 
-#' @rdname allot
+
+#' Define allotment of units to nested units
+#'
+#' @description
+#' This function adds the edges between factor nodes to describe the
+#' high-level relationship between factors.
+#' This function does not actually assign edges between level nodes.
+#'
+#' @param ... A two-sided formula.
+#' @inheritParams assign
+#' @inheritParams set_units
+#' @family user-facing functions
+#' @examples
+#' design() %>%
+#'   set_units(block = 10,
+#'             plot = 20) %>%
+#'   allot_units(block ~ plot)
+#'
+#' @return Return an edibble design.
+#' @seealso assign
 #' @export
 allot_units <- function(.edibble, ..., .record = TRUE) {
   not_edibble(.edibble)
@@ -145,7 +160,11 @@ allot_units <- function(.edibble, ..., .record = TRUE) {
 }
 
 
-#' @rdname allot
+#' Allot treatments to units and serve table
+#'
+#' This function is a short hand that combines `allot_trts()`, `assign_trts()`
+#'  and `serve_table()`.
+#'
 #' @export
 allot_table <- function(.edibble, ..., order = "random", seed = NULL, constrain = nesting_structure(.edibble)) {
 
