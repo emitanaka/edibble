@@ -38,10 +38,10 @@
 assign_trts <- function(.design, order = "random", seed = NULL, constrain = nesting_structure(.design), ..., .record = TRUE) {
   not_edibble(.design)
 
-  if(.record) record_step()
-
-  save_seed(seed)
   prep <- cook_design(.design)
+  if(.record) prep$record_step()
+
+  prep$save_seed(seed)
 
   order <- rep(order, length.out = length(.design$allotment$trts))
 
@@ -49,18 +49,18 @@ assign_trts <- function(.design, order = "random", seed = NULL, constrain = nest
     trts <- all.vars(f_lhs(.design$allotment$trts[[ialloc]]))
     # there should be only one unit
     unit <- all.vars(f_rhs(.design$allotment$trts[[ialloc]]))
-    uid <- prep$fct_id(unit)
+    uid <- prep$fct_id_by_name(unit)
     if(length(trts)) {
-      tids <- prep$fct_id(trts)
+      tids <- prep$fct_id_by_name(trts)
     } else {
       classes <- prep$fct_class()
       tids <- prep$trt_ids
     }
 
     lnodes <- prep$lvl_nodes
-    luids <- lnodes[lnodes$idvar == uid, "id"]
-    tdf <- lnodes[lnodes$idvar %in% tids, ]
-    tidf <- expand.grid(split(tdf$name, prep$fct_names(tdf$idvar))[prep$fct_names(tids)], stringsAsFactors = FALSE)
+    luids <- lnodes[[as.character(uid)]]$id
+    tdf <- prep$fct_levels()[prep$fct_names(tids)]
+    tidf <- expand.grid(tdf, stringsAsFactors = FALSE)
     ntrts <- nrow(tidf)
     permutation <- switch(order[ialloc],
                           "systematic" = rep(1:nrow(tidf), length.out = length(luids)),
@@ -97,15 +97,16 @@ assign_trts <- function(.design, order = "random", seed = NULL, constrain = nest
 
 
     for(itvar in seq_along(tout)) {
-      prep$lvl_edges <- prep$append_lvl_edges(data.frame(from = prep$lvl_id(tout[[itvar]]),
-                                                         to = luids,
-                                                         alloc = ialloc))
+      fid <- prep$fct_id_by_name(names(tout)[itvar])
+      prep$append_lvl_edges(data.frame(from = prep$lvl_id_by_value(tout[[itvar]], fid),
+                                       to = luids,
+                                      lloc = ialloc))
     }
   }
 
-  prep$design$assignment <- order
-
-  prep$design
+  .design$graph <- prep$graph
+  .design$assignment <- order
+  .design
 }
 
 
@@ -124,7 +125,8 @@ assign_units <- function(.design, order = "random", seed = NULL, constrain = nes
     rhs <- all.vars(f_rhs(.design$allotment$units[[ialloc]]))
 
     lnodes <- prep$lvl_nodes
-    lhs_id <- lnodes[lnodes$idvar == prep$fct_id(lhs), "id"]
+
+    lhs_id <- lnodes[[prep$fct_id_by_name(lhs)]]$id
     udf <- as.data.frame(serve_units(select_units(prep, rhs)))
     udf <- udf[rhs]
     small_df <- data.frame(lhs = lhs_id)
@@ -135,7 +137,7 @@ assign_units <- function(.design, order = "random", seed = NULL, constrain = nes
 
                               # FIXME the ancestor should be found
                               # based on `constrain`??
-                              vparents <- prep$fct_id(rhs[-length(rhs)])
+                              vparents <- prep$fct_id_by_name(rhs[-length(rhs)])
 
                               if(length(rhs)==1L) {
                                 out <- as.vector(replicate(ceiling(nrow(udf)/nrow(small_df)),
@@ -150,6 +152,7 @@ assign_units <- function(.design, order = "random", seed = NULL, constrain = nes
 
     tout <- small_df[permutation, , drop = FALSE]
 
+    browser()
     for(itvar in seq_along(tout)) {
       prep$append_lvl_edges(data.frame(from = tout[[itvar]],
                                        to = prep$lvl_id(udf[[rhs[length(rhs)]]]),

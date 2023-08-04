@@ -23,11 +23,10 @@
 #' @seealso assign
 #' @export
 allot_trts <- function(.edibble, ..., .record = TRUE) {
-
   not_edibble(.edibble)
-  if(.record) record_step()
-
   des <- edbl_design(.edibble)
+  prep <- cook_design(des)
+  if(.record) prep$record_step()
 
   dots <- list2(...)
   if(!is_null(des$allotment)) {
@@ -35,17 +34,17 @@ allot_trts <- function(.edibble, ..., .record = TRUE) {
   } else {
     des$allotment <- list(trts = dots, units = NULL)
   }
-  prep <- cook_design(des)
+
 
   for(ialloc in seq_along(dots)) {
     trts <- all.vars(f_lhs(dots[[ialloc]]))
     # there should be only one unit
     unit <- all.vars(f_rhs(dots[[ialloc]]))
     prep$fct_exists(name = unit, class = "edbl_unit")
-    uid <- prep$fct_id(unit)
+    uid <- prep$fct_id_by_name(unit)
     if(length(trts)) {
       prep$fct_exists(name = trts, class = "edbl_trt")
-      tids <- prep$fct_id(trts)
+      tids <- prep$fct_id_by_name(trts)
     } else {
       prep$trts_exists()
       classes <- prep$fct_class()
@@ -55,9 +54,9 @@ allot_trts <- function(.edibble, ..., .record = TRUE) {
     prep$append_fct_edges(data.frame(from = tids, to = uid, alloc = ialloc, type = "allot"))
   }
 
-  if(is_edibble_design(.edibble)) {
-    prep$design
-  } else if(is_edibble_table(.edibble)) {
+  des$graph <- prep$graph
+
+  if(is_edibble_table(.edibble)) {
     if(length(trts)==0) {
       trts <- prep$trt_names
     }
@@ -65,8 +64,10 @@ allot_trts <- function(.edibble, ..., .record = TRUE) {
       prep$append_lvl_edges(data.frame(from = prep$lvl_id(as.character(.edibble[[atrt]])),
                                        to = prep$lvl_id(as.character(.edibble[[unit]]))))
     }
-    attr(.edibble, "design") <- prep$design
+    attr(.edibble, "design") <- des
     .edibble
+  } else {
+    des
   }
 }
 
@@ -167,7 +168,6 @@ allot_units <- function(.edibble, ..., .record = TRUE) {
 #'
 #' @export
 allot_table <- function(.edibble, ..., order = "random", seed = NULL, constrain = nesting_structure(.edibble)) {
-
   .edibble %>%
     allot_trts(...) %>%
     assign_trts(order = order, seed = seed, constrain = constrain) %>%

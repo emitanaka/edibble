@@ -16,7 +16,7 @@ label_seq_from_to(
   suffix = "",
   sep_prefix = "",
   sep_suffix = "",
-  leading_zero = TRUE
+  leading_zero = edibble_labels_opt("leading_zero")
 )
 
 label_seq_from_length(
@@ -27,7 +27,7 @@ label_seq_from_length(
   suffix = "",
   sep_prefix = "",
   sep_suffix = "",
-  leading_zero = TRUE
+  leading_zero = edibble_labels_opt("leading_zero")
 )
 
 label_seq_to_length(
@@ -38,7 +38,7 @@ label_seq_to_length(
   suffix = "",
   sep_prefix = "",
   sep_suffix = "",
-  leading_zero = TRUE
+  leading_zero = edibble_labels_opt("leading_zero")
 )
 
 label_seq_length(
@@ -47,7 +47,7 @@ label_seq_length(
   suffix = "",
   sep_prefix = "",
   sep_suffix = "",
-  leading_zero = TRUE
+  leading_zero = edibble_labels_opt("leading_zero")
 )
 }
 \arguments{
@@ -74,7 +74,8 @@ If integer, then pad based on the number supplied.}
 A character vector containing the labels generated from the sequence.
 }
 \description{
-Generate a sequence of labels with custom formatting options
+These can be handy for generating pseudo labels for the levels or
+factor names using \code{fct_generator}
 }
 \examples{
 label_seq_to_length(to = 10, length = 5, by = 2)

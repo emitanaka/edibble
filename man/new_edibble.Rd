@@ -35,9 +35,6 @@ code step. The default is TRUE. It should remain TRUE unless this
 function is used as a wrapper in other code.}
 
 \item{seed}{A seed number for reproducibility.}
-
-\item{kitchen}{An environment setup in a manner to manipulate, extract and query
-information on the design.}
 }
 \value{
 An edibble table.

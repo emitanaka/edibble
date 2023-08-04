@@ -134,6 +134,30 @@ new_edibble <- function(.data, ..., design = NULL, class = NULL) {
              class = c(class, "edbl_table", "edbl"), design = design)
 }
 
+
+new_trackable <- function(internal_cmd = character(),
+                          time_internal = Sys.time(),
+                          time_zone_internal = character(),
+                          external_cmd = NULL,
+                          time_external = NULL,
+                          time_zone_external = NULL) {
+  new_tibble(tibble::tibble(internal_cmd = internal_cmd,
+                            execution_time = time_internal,
+                            time_zone = time_zone_internal),
+             class = "trck_table",
+             external_cmd = external_cmd,
+             execution_time = time_external,
+             time_zone = time_zone_external)
+}
+
+#' @export
+tbl_sum.trck_table <- function(x) {
+  c("A history table" = dim_desc(x),
+    "External command" = attr(x, "external_cmd"),
+    "Execution time" = paste(as.character(attr(x, "execution_time")),
+                             as.character(attr(x, "time_zone"))))
+}
+
 #' @importFrom tibble tbl_sum
 #' @export
 tbl_sum.edbl_table <- function(x) {

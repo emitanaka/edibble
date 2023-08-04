@@ -7,8 +7,8 @@
 #' @inheritParams set_units
 #' @param seed A seed number for reproducibility.
 #' @param .data An edibble table.
-#' @param kitchen An environment setup in a manner to manipulate, extract and query
-#'   information on the design.
+#' @param provenance An environment setup in a manner to store methods and
+#'   information to trace the origin of the design
 #' @return An empty `edbl_design` object.
 #' @examples
 #' design("My design")
@@ -16,19 +16,22 @@
 #' [set_rcrds()].
 #' @family user-facing functions
 #' @export
-design <- function(name = NULL, .record = TRUE, seed = NULL, kitchen = Kitchen) {
-  if(.record) record_step()
-  save_seed(seed)
-  structure(list(name = name,
-                 graph = empty_edibble_graph(),
-                 kitchen = kitchen),
+design <- function(title = NULL, name = "edibble", .record = TRUE, seed = NULL, provenance = Provenance$new()) {
+  if(.record) provenance$record_step()
+  if(!is.null(title)) provenance$set_name(title)
+  provenance$set_name(name)
+  provenance$save_seed(seed)
+  structure(list(graph = provenance$graph,
+                 provenance = provenance,
+                 anatomy = NULL,
+                 recipe = NULL),
             class = c("edbl_design", "edbl"))
 }
 
 #' @rdname design
 #' @export
-redesign <- function(.data, name = NULL, .record = TRUE, seed = NULL, kitchen = Kitchen, ...) {
-  des <- design(name = name, .record = .record, seed = seed, kitchen = kitchen)
+redesign <- function(.data, name = NULL, .record = TRUE, seed = NULL, provenance = provenance, ...) {
+  des <- design(name = name, .record = .record, seed = seed, provenance = provenance)
   new_edibble(.data, ..., design = des)
 }
 
@@ -52,8 +55,12 @@ empty_edibble_graph <- function() {
             class = "edbl_graph")
 }
 
-new_lnode <- function(ids, vals, data) {
-  tibble::tibble(id = ids,
-                 value = vals,
-                 attrs = data)
+new_lnode <- function(ids, vals, data = NULL) {
+  res <- tibble::tibble(id = ids,
+                        value = vals)
+  if(!is.null(data)) {
+    stopifnot(nrow(data) == length(ids))
+    res$attrs <- data
+  }
+  res
 }

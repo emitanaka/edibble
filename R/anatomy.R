@@ -26,3 +26,19 @@ anatomy <- function(.edibble, ...) {
 print.des_anatomy <- function(x, ...) {
   print(summary(x, ...))
 }
+
+
+add_anatomy <- function(anatomy, fresh, name, role) {
+  if(role=="edbl_unit") {
+    if(is.null(anatomy)) {
+      anatomy <- as.formula(paste0("~", name))
+    } else {
+      term <- ifelse(inherits(fresh, "nest_lvls"),
+                     paste0(attr(fresh, "keyname"), "/", name),
+                     name)
+      anatomy <- update(anatomy,
+                             as.formula(paste0("~ . + ", term)), evaluate = FALSE)
+    }
+  }
+  anatomy
+}

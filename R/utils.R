@@ -1,66 +1,7 @@
 
 
 
-#' Record the coding step
-#'
-#' Call this function in functions that modify the edibble design or table so
-#' the step is tracked. The output of functions using `record_step()` should
-#' be returning an edibble design or table.
-#'
-#' @return Returns nothing.
-#' @export
-record_step <- function() {
-  do.call("on.exit",
-          list(quote(return(add_edibble_code(returnValue(default = FALSE),
-                                             paste(gsub("(^ +| +$)", "", deparse(match.call())), collapse = "")))),
-               add = TRUE),
-          envir = parent.frame())
-}
 
-add_edibble_seed <- function(.edibble, seed) {
-  if(!isFALSE(.edibble)) {
-    if(is_edibble_design(.edibble)) {
-      .edibble$seed <- seed
-      .edibble
-    } else {
-      des <- edbl_design(.edibble)
-      des$seed <- seed
-      attr(.edibble, "design") <- des
-      .edibble
-    }
-  }
-}
-
-add_edibble_code <- function(.edibble, code) {
-  if(!isFALSE(.edibble)) {
-    if(is_edibble_design(.edibble)) {
-      .edibble$recipe <- c(.edibble$recipe, code)
-      .edibble
-    } else {
-      des <- edbl_design(.edibble)
-      des$recipe <- c(des$recipe, code)
-      attr(.edibble, "design") <- des
-      .edibble
-    }
-  }
-}
-
-save_seed <- function(seed) {
-  if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE))
-    stats::runif(1)
-  if (is.null(seed))
-    RNGstate <- get(".Random.seed", envir = .GlobalEnv)
-  else {
-    set.seed(seed)
-    RNGstate <- structure(seed, kind = as.list(RNGkind()))
-  }
-  assign(".RNGstate", RNGstate, envir = parent.frame())
-  do.call("on.exit",
-          list(quote(return(add_edibble_seed(returnValue(default = FALSE),
-                                             .RNGstate))),
-               add = TRUE),
-          envir = parent.frame())
-}
 
 
 
@@ -106,28 +47,28 @@ print.edbl_design <- function(x,
                               decorate_levels = edibble_decorate("levels"),
                               decorate_title  = edibble_decorate("title"),
                               title = NULL, ...) {
-  title <- title %||% x$name %||% "An edibble design"
-  fnames <- names(x)
+  title <- title %||% x$provenance$name
   prep <- cook_design(x)
+  fids <- prep$fct_nodes$id
+  fnames <- prep$fct_names(id = fids)
 
-  if(is_empty(fnames)) {
+  if(is_empty(fids)) {
     data <- data.frame(var = "root",
                        child = NA,
                        label = as.character(decorate_title(title)))
   } else {
 
-    roles <- prep$fct_role()
+    classes <- prep$fct_class()
     label_names <- decorate_vars(fnames,
                                  decorate_units,
                                  decorate_trts,
                                  decorate_rcrds,
-                                 roles)
+                                 classes)
     var_nlevels <- lengths(prep$fct_levels()[fnames])
-    nvar <- length(fnames)
-    ll <- lapply(fnames,
-                 function(v) {
-                   id <- prep$fct_id_by_name(v)
-                   class <- prep$fct_role(id = id)
+    nvar <- length(fids)
+    ll <- lapply(fids,
+                 function(id) {
+                   class <- prep$fct_class(id = id)
                    children <- prep$fct_child(id = id)
                    if(class!="edbl_trt" & !is_empty(children)) {
                      prep$fct_names(id = children)
@@ -137,10 +78,10 @@ print.edbl_design <- function(x,
                  })
     nodes_with_parents <- unname(unlist(ll))
     label_names_with_levels <- paste(label_names, map_chr(var_nlevels, decorate_levels))
-    label_names_with_levels[roles=="edbl_rcrd"] <- label_names[roles=="edbl_rcrd"]
+    label_names_with_levels[classes=="edbl_rcrd"] <- label_names[classes=="edbl_rcrd"]
 
-    data <- data.frame(var = c("root", fnames),
-                       child = I(c(list(setdiff(fnames, nodes_with_parents)), ll)),
+    data <- data.frame(var = c("root", fids),
+                       child = I(c(list(setdiff(fids, nodes_with_parents)), ll)),
                        label = c(decorate_title(title),
                                  label_names_with_levels))
   }
@@ -326,4 +267,24 @@ as.data.frame.edbl_table <- function(x,
     }
   })
   as.data.frame(out)
+}
+
+append_recipe_code <- function(.design, new) {
+  .design$recipe <- c(.design$recipe, new)
+  prov <- activate_provenance(.design)
+  prov$record_history_external(new)
+  .design
+}
+
+add_edibble_code <- function(.edibble, code) {
+  if(!isFALSE(.edibble)) {
+    if(is_edibble_design(.edibble)) {
+      append_recipe_code(.edibble, code)
+    } else {
+      des <- edbl_design(.edibble) %>%
+        append_recipe_code(code)
+      attr(.edibble, "design") <- des
+      .edibble
+    }
+  }
 }

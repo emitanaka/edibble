@@ -5,12 +5,6 @@
 #' left-hand side corresponds to the name of the level (or the level number) of `x`
 #' and the right-hand side is an integer specifying the number of levels nested under the
 #' corresponding levels.
-#' @param prefix The prefix of the label.
-#' @param suffix The suffix of the label.
-#' @param leading0 Whether there should be a leading 0 if labels are made.
-#' @param sep A separator added between prefix and the number if prefix is empty.
-#' @param attrs A named vector where names and values correspond to attribute names and values of the variable, or
-#'   a data frame.
 #' @seealso See [set_units()] for examples of how to use this.
 #' @return A nested level.
 #' @examples
@@ -18,15 +12,11 @@
 #'   set_units(mainplot = 60,
 #'             subplot = nested_in(mainplot, 10))
 #' @export
-nested_in <- function(x, ..., prefix = "", suffix = "",
-                      leading0 = FALSE,
-                      sep = edibble_labels_opt("sep"),
-                      attrs = NULL) {
+nested_in <- function(x, ...) {
   top <- caller_env()$.top_env
   if(is.null(top$.fname)) abort("The `nested_in` function must be used within `set_units` function.")
   prep <- top$prep
   vlevs <- prep$fct_levels()
-  if(prefix=="") prefix <- paste0(top$.fname, sep)
   parent_name <- as_string(enexpr(x))
   parent_vlevels <- vlevs[[parent_name]]
   dots <- list2(...)
@@ -60,22 +50,21 @@ nested_in <- function(x, ..., prefix = "", suffix = "",
 
   child_levels <- nestr::nest_in(parent_vlevels,
                                  !!!args,
-                                 prefix = prefix,
-                                 suffix = suffix,
+                                 prefix = top$.fname,
+                                 suffix = "",
                                  distinct = TRUE,
-                                 leading0 = leading0,
+                                 leading0 = TRUE,
                                  compact = FALSE,
                                  keyname = parent_name)
   child_labels <- nestr::nest_in(parent_vlevels,
                                  !!!args,
-                                 prefix = prefix,
-                                 suffix = suffix,
+                                 prefix = top$.fname,
+                                 suffix = "",
                                  distinct = FALSE,
-                                 leading0 = leading0,
+                                 leading0 = TRUE,
                                  compact = FALSE,
                                  keyname = parent_name)
-  lattrs <- as.list(attrs)
-  attributes(child_levels) <- c(lattrs, attributes(child_levels),
+  attributes(child_levels) <- c(attributes(child_levels),
                                 list(parents = attr(args, "parents"),
                                      labels = child_labels))
   class(child_levels) <- c("nest_lvls", class(child_levels))

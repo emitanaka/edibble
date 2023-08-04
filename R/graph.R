@@ -6,7 +6,7 @@
 
 # data or vector --------------------------------------------------
 
-#' Cook the design in the kitchen
+#' Activate the provenance in the edibble design object
 #'
 #' This is a developer function to create a new Kitchen class with
 #' the existing design.
@@ -14,16 +14,18 @@
 #' @param x An edibble object.
 #' @return A Kitchen object.
 #' @examples
-#' cook_design(takeout())
+#' activate_provenance(takeout())
 #' @export
-cook_design <- function(x) {
-  des <- edbl_design(x)
-  if(!is_environment(des$kitchen)) {
-    abort("The kitchen is not included in the design.")
+activate_provenance <- function(.edibble,
+                                overwrite = c("graph", "anatomy", "recipe")) {
+  des <- edbl_design(.edibble)
+  prov <- des$provenance
+  if(!is_environment(prov)) {
+    abort("The provenance is not included in the design.")
   }
-  return(des$kitchen$new(des))
+  prov$reactivate(des, overwrite)
+  return(prov)
 }
-
 
 
 #' Get the node or edge data from an edibble design
@@ -36,14 +38,14 @@ NULL
 #' @rdname design_data
 #' @export
 fct_nodes <- function(edibble) {
-  prep <- cook_design(edibble)
+  prep <- activate_provenance(edibble)
   prep$fct_nodes
 }
 
 #' @rdname design_data
 #' @export
 fct_edges <- function(edibble) {
-  prep <- cook_design(edibble)
+  prep <- activate_provenance(edibble)
   prep$fct_edges
 }
 
@@ -52,14 +54,14 @@ fct_edges <- function(edibble) {
 #' @rdname design_data
 #' @export
 lvl_nodes <- function(edibble) {
-  prep <- cook_design(edibble)
+  prep <- activate_provenance(edibble)
   prep$lvl_nodes
 }
 
 #' @rdname design_data
 #' @export
 lvl_edges <- function(edibble) {
-  prep <- cook_design(edibble)
+  prep <- activate_provenance(edibble)
   prep$lvl_edges
 }
 

@@ -4,19 +4,15 @@
 \alias{lvl_attrs}
 \title{Setting the traits of the levels}
 \usage{
-lvl_attrs(
-  levels = NULL,
-  labels = NULL,
-  prefix = "",
-  suffix = "",
-  sep = edibble_labels_opt("sep"),
-  include_leading_zero = edibble_labels_opt("leading_zero"),
-  data = NULL,
-  ...
-)
+lvl_attrs(levels = NULL, data = NULL, ...)
 }
 \arguments{
 \item{levels}{A vector that either denotes the index number or short name of the levels.}
+
+\item{data}{A list or data frame of the same size as the \code{levels}.}
+
+\item{...}{Name-value pair denoting other level attributes. The value should be the same
+length as \code{levels} or a single value.}
 
 \item{labels}{An optional character vector that is the long name format of \code{levels}.}
 
@@ -28,11 +24,6 @@ lvl_attrs(
 
 \item{include_leading_zero}{A logical value to indicate whether there should
 be a leading zero added to level indexes. This is ignored if \code{levels} is not numeric.}
-
-\item{data}{A list or data frame of the same size as the \code{levels}.}
-
-\item{...}{Name-value pair denoting other level attributes. The value should be the same
-length as \code{levels} or a single value.}
 }
 \value{
 An edbl_lvls object.

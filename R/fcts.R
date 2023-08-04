@@ -22,16 +22,16 @@ set_fcts <- function(.edibble, ..., .class = NULL,
 
     dots <- enquos(..., .named = TRUE, .homonyms = "error", .check_assign = TRUE)
     fnames_new <- names(dots)
-    fnames_old <- names(prep$design)
+    fnames_old <- names(prep$graph)
     fnames <- vec_as_names(c(fnames_old, fnames_new), repair = .name_repair)
 
     for(i in seq_along(dots)) {
       fname <- fnames[i + length(fnames_old)]
       fresh <- eval_tidy(dots[[i]], data = c(prep$fct_levels(), list(prep = prep, .fname = fname)))
-      prep$add_anatomy(fresh, fname, .class)
+      .edibble$anatomy <- add_anatomy(.edibble$anatomy, fresh, fname, .class)
       prep$setup_data(fresh, fname, .class)
     }
-    prep$design
+    .edibble$graph <- prep$graph
 
   } else if(is_edibble_table(.edibble)) {
 
@@ -45,11 +45,13 @@ set_fcts <- function(.edibble, ..., .class = NULL,
                                             class = .class,
                                             name = fname)
       prep$setup_data(.edibble[[loc[i]]], fname, .class)
+      # FIXME
       attr(.edibble, "design") <- prep$design
 
     }
-    .edibble
+
   }
+  .edibble
 }
 
 

@@ -20,13 +20,13 @@
 #'   serve_table()
 #' @export
 serve_table <- function(.edibble, use_labels = FALSE, ..., .record = TRUE) {
-  if(.record) record_step()
-
   prep <- cook_design(.edibble)
+  if(.record) prep$record_step()
 
   if(!prep$is_connected) {
     lout <- serve_vars_not_reconciled(prep)
   } else {
+    #browser()
     classes <- prep$fct_class()
     lunit <- ltrt <- lrcrd <- list()
     if("edbl_unit" %in% classes) lunit <- serve_units(prep)
@@ -50,7 +50,7 @@ serve_table <- function(.edibble, use_labels = FALSE, ..., .record = TRUE) {
 }
 
 serve_trts <- function(prep, lunits) {
-  tids <- prep$unit_ids()
+  tids <- prep$trt_ids()
   vnames <- prep$fct_names(id = tids)
   lvs <- lapply(tids, function(i) {
     serve_trt(prep, i, lunits)
@@ -91,7 +91,7 @@ serve_vars_not_reconciled <- function(prep) {
                 function(avar) {
                   new_edibble_fct(levels = prep$fct_levels(name = avar)[[avar]],
                                   name = avar,
-                                  class = prep$fct_class(id = prep$fct_id(avar)))
+                                  class = prep$fct_class(id = prep$fct_id_by_name(avar)))
                 })
   names(res) <- namesv
   res
@@ -100,8 +100,8 @@ serve_vars_not_reconciled <- function(prep) {
 # Return edibble unit
 serve_unit_with_child <- function(parent_levels, parent_vname, parent_class,
                                   child_labels, child_vname, prep) {
-  pids <- prep$lvl_id(name = parent_levels)
-  cids <- prep$lvl_id(name = unique(child_labels))
+  pids <- prep$lvl_id_by_value(parent_levels, prep$fct_id_by_name(parent_vname))
+  cids <- prep$lvl_id_by_value(unique(child_labels), prep$fct_id_by_name(child_vname))
   ledges <- prep$lvl_edges
   ledges <- ledges[ledges$to %in% cids & ledges$from %in% pids, ]
   dict <- set_names(prep$lvl_names(ledges$from), prep$lvl_names(ledges$to))
@@ -147,7 +147,7 @@ serve_units <- function(prep) {
     names(lvs) <- prep$fct_names(id = lid)
     res <- c(res, lvs)
     wid <- setdiff(wid, lid)
-    wprep <- select_units(prep, prep$fct_names(wid))
+    wprep <- select_units(prep, prep$fct_names(id = wid))
     lid <- wprep$fct_leaves
   }
   res
@@ -166,7 +166,7 @@ serve_trts <- function(prep, lunits) {
 serve_trt <- function(prep, tid, lunits) {
   lnodes <- prep$lvl_nodes
   ledges <- prep$lvl_edges
-  tdf <- lnodes[lnodes$idvar == tid, ]
+  tdf <- lnodes[[as.character(tid)]]
   ltids <- tdf$id
   luids <- prep$lvl_child(id = ltids)
   ledges <- ledges[ledges$to %in% luids & ledges$from %in% ltids,]

@@ -24,7 +24,8 @@
 set_trts <- function(.edibble, ...,
                      .name_repair = c("check_unique", "unique", "universal", "minimal"),
                      .record = TRUE) {
-  if(.record) record_step()
+  prov <- cook_design(.edibble)
+  if(.record) prov$record_step()
   set_fcts(.edibble, ..., .name_repair = .name_repair, .class = "edbl_trt")
 }
 
