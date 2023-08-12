@@ -5,7 +5,7 @@
 #' The Provenance contains a set of operations to manipulate the nodes and edges of
 #' the edibble design object.
 #'
-#' @param class The class for the vertex/node.
+#' @param role The role for the vertex/node.
 #' @param data The nodes data
 #' @param name The name of the vertex.
 #' @param id The id of the corresponding node.
@@ -25,7 +25,7 @@ Provenance <- R6::R6Class("Provenance",
                            private$graph <- graph %||% empty_edibble_graph()
                            private$edbl_version <- packageVersion("edibble")
                            private$session_info <- utils::sessionInfo()
-                           private$tracker <- list(new_trackable())
+                           private$trail <- list(new_trackable())
                          },
 
                          # add_tracker_to_set_fns = function(fnames) {
@@ -77,7 +77,7 @@ Provenance <- R6::R6Class("Provenance",
                            }
                            name_to_id <- set_names(fnodes$id, fnodes$name)
                            name <- name %||% names(name_to_id)
-                           unname(name_to_id[as.character(name)])
+                           unname(name_to_id[name])
                          },
 
 
@@ -118,23 +118,22 @@ Provenance <- R6::R6Class("Provenance",
                            if(!is_null(role)) {
                              private$validate_role(role)
                              private$validate_id(fid, 1)
-                             lnodes_list <- lnodes_list[as.character(fct_id(role = role))]
+                             lnodes_list <- lnodes_list[self$fct_id(role = role)]
                            }
                            if(is_null(fid)) {
                              if(is_null(value)) {
                                # return all lvl ids
-                               return(unname(unlist(lapply(lnodes_list, function(x) x$id))))
+                               return(lnodes_list$id)
                              } else {
                                fid_search <- as.integer(names(lnodes_list))
                                fid <- self$fct_id_from_lvl_values(value = value, fid_search = fid_search)
                                return(self$lvl_id(value = value, role = role, fid = fid))
                              }
                            } else {
-                             private$validate_id(fid , 1)
-                             lnodes <- lnodes_list[[as.character(fid)]]
+                             private$validate_id(fid, 1)
+                             lnodes <- lnodes_list[[fid]]
                              if(!is_null(value)) {
-                               value_to_id <- set_names(lnodes$id, lnodes$value)
-                               unname(value_to_id[as.character(value)])
+                               lnodes[match(value, lnodes$value), ]$id
                              } else {
                                lnodes$id
                              }
@@ -143,7 +142,7 @@ Provenance <- R6::R6Class("Provenance",
 
                          #' @description
                          #' Get the level parent ids
-                         lvl_id_parent = function(id = NULL, class = NULL) {
+                         lvl_id_parent = function(id = NULL, role = NULL) {
                            private$node_id_parent_child(id = id, role = role, node = "level", return = "parent")
                          },
 
@@ -163,7 +162,7 @@ Provenance <- R6::R6Class("Provenance",
                          #' @param fid_search A vector of fids to search from.
                          fct_id_from_lvl_id = function(id = NULL, fid_search = NULL) {
                            lnodes_list <- self$lvl_nodes
-                           if(!is_null(fid_search)) lnodes_list <- lnodes_list[as.character(fid_search)]
+                           if(!is_null(fid_search)) lnodes_list <- lnodes_list[fid_search]
                            for(fname in names(lnodes_list)) {
                              if(all(id %in% lnodes_list[[fname]]$id)) return(as.integer(fname))
                            }
@@ -171,7 +170,7 @@ Provenance <- R6::R6Class("Provenance",
 
                          fct_id_from_lvl_values = function(value = NULL, fid_search = NULL) {
                            lnodes_list <- self$lvl_nodes
-                           if(!is_null(fid_search)) lnodes_list <- lnodes_list[as.character(fid_search)]
+                           if(!is_null(fid_search)) lnodes_list <- lnodes_list[fid_search]
                            for(fname in names(lnodes_list)) {
                              if(all(value %in% lnodes_list[[fname]]$value)) return(as.integer(fname))
                            }
@@ -179,20 +178,19 @@ Provenance <- R6::R6Class("Provenance",
 
                          lvl_id_from_fct_id = function(fid = NULL) {
                            lnodes_list <- self$lvl_nodes
-                           lnodes_list[[as.character(fid)]]$id
+                           lnodes_list[[fid]]$id
                          },
 
                          #' @description
-                         #' Get the factor names based on id or class
+                         #' Get the factor names based on id or role
                          fct_names = function(id = NULL, role = NULL) {
                            fnodes <- self$fct_nodes
                            if(!is_null(role)) {
                              private$validate_role(role)
                              fnodes <- fnodes[fnodes$role == role, ]
                            }
-                           id_to_name <- set_names(fnodes$name, fnodes$id)
-                           ids <-  id %||% fnodes$id
-                           unname(id_to_name[as.character(ids)])
+                           id <-  id %||% fnodes$id
+                           fnodes[match(id, fnodes$id), ]$name
                          },
 
                          unit_names = function(id = NULL) {
@@ -208,16 +206,16 @@ Provenance <- R6::R6Class("Provenance",
                          },
 
                          #' @description
-                         #' Get the level values based on id or class
+                         #' Get the level values based on id or role
                          #' cannot have just role only defined.
                          #' id must be from the same fid
                          lvl_values = function(id = NULL, role = NULL, fid = NULL) {
                            lnodes_list <- self$lvl_nodes
                            if(!is_null(fid)) {
                              private$validate_id(fid, 1, role = role)
-                             lnodes <- lnodes_list[[as.character(fid)]]
+                             lnodes <- lnodes_list[[fid]]
                              id <- id %||% lnodes$id
-                             return(lnodes[lnodes$id %in% id, "value"])
+                             return(lnodes[match(id, lnodes$id), ]$value)
                            }
                            if(!is_null(id)) {
                              fid <- self$fct_id_from_lvl_id(id = id)
@@ -241,7 +239,7 @@ Provenance <- R6::R6Class("Provenance",
                            if(is_null(fid)) abort("The rcrd id must be supplied.")
                            private$validate_id(fid, 1, role = "edbl_rcrd")
                            uid_fct <- self$fct_id_child(id = fid, role = "edbl_unit")
-                           lnodes <- lnodes_list[[as.character(uid_fct)]]
+                           lnodes <- lnodes_list[[uid_fct]]
                            id <- uid %||% lnodes$id
                            return(lnodes[["attr"]][lnodes$id %in% id, self$fct_names(id = fid)])
                          },
@@ -249,21 +247,57 @@ Provenance <- R6::R6Class("Provenance",
 
 
                          #' @description
-                         #' Get the class of the vertex given the factor id
+                         #' Get the role of the vertex given the factor id
                          fct_role = function(id = NULL) {
                            fnodes <- self$fct_nodes
-                           id_to_role <- pull(nodes, class, id)
-                           ids_fct <-  id %||% nodes$id
-                           unname(id_to_class_fct[as.character(ids_fct)])
+                           id <- id %||% fnodes$id
+                           fnodes[match(id, fnodes$id), ]$role
                          },
 
                          #' @description
                          #' Get the levels for each factor
-                         fct_levels = function(id = NULL, name = NULL) {
+                         fct_levels = function(id = NULL, name = NULL, return = c("id", "value")) {
+                           return <- match.arg(return)
                            qid <- id %||% self$fct_id(name = name)
                            lnodes <- self$lvl_nodes
-                           out <- lapply(lnodes[as.character(qid)], function(x) x$value)
-                           names(out) <- self$fct_names(id = qid)
+                           switch(return,
+                                  id = lapply(lnodes[qid], function(x) x$id),
+                                  value = {
+                                    out <- lapply(lnodes[qid], function(x) x$value)
+                                    names(out) <- self$fct_names(id = qid)
+                                    out
+                                  })
+                         },
+
+                         fct_levels_id_to_edbl_fct = function(fct_levels, role) {
+                           ret <- lapply(names(fct_levels), function(fid) {
+                             lvls <- fct_levels[[fid]]
+                             fid <- as.numeric(fid)
+                             fname <- self$fct_names(id = fid)
+                             lvls_value <- self$lvl_values(id = lvls, fid = fid)
+                             new_edibble_fct(labels = lvls_value,
+                                             name = fname,
+                                             class = role)
+                           })
+                           names(ret) <- self$fct_names(id = as.numeric(names(fct_levels)))
+                           ret
+                         },
+
+                         fct_levels_id_to_value = function(fct_levels) {
+                           out <- lapply(names(fct_levels), function(fid) {
+                             lvls <- fct_levels[[fid]]
+                             self$lvl_values(id = lvls, fid = fid)
+                           })
+                           names(out) <- self$fct_names(id = as.numeric(names(fct_levels)))
+                           out
+                         },
+
+                         fct_levels_value_to_id = function(fct_levels) {
+                           out <- lapply(names(fct_levels), function(fname) {
+                             lvls <- fct_levels[[fname]]
+                             self$lvl_id(value = lvls, fid = self$fct_id(name = fname))
+                           })
+                           names(out) <- self$fct_id(name = names(fct_levels))
                            out
                          },
 
@@ -304,7 +338,7 @@ Provenance <- R6::R6Class("Provenance",
                              abort_missing(vars = id[!vexist])
 
                            } else if(is_null(name) & is_null(id) & !is_null(role)) {
-                             exist <- any(class %in% fnodes$class)
+                             exist <- any(role %in% fnodes$role)
                              abort_missing(msg = sprintf("There are no factors with role%s",
                                                          .combine_words(paste0("`", role, "`"))))
 
@@ -315,7 +349,7 @@ Provenance <- R6::R6Class("Provenance",
                              abort_missing(vars = id[!vexist])
 
                            } else if(!is_null(name) & is_null(id) & !is_null(role)) {
-                             srole <- fnodes[match(name, fnodes$name), "class"]
+                             srole <- fnodes[match(name, fnodes$name), "role"]
                              vexist <- srole == role
                              exist <- all(vexist)
                              abort_missing(vars = name[!vexist])
@@ -377,14 +411,14 @@ Provenance <- R6::R6Class("Provenance",
                            lnodes <- self$lvl_nodes
                            id <- private$lvl_new_id(n = length(value))
                            data <- tibble::tibble(id = id, value = value, attrs = attrs)
-                           if(is.null(lnodes[[as.character(fid)]])) {
+                           if(is.null(lnodes[[fid]])) {
                              if(!is_null(attrs)) {
-                               lnodes[[as.character(fid)]] <- new_lnode(id, value, attrs)
+                               lnodes[[fid]] <- new_lnode(id, value, attrs)
                              } else {
-                               lnodes[[as.character(fid)]] <- new_lnode(id, value)
+                               lnodes[[fid]] <- new_lnode(id, value)
                              }
                            } else {
-                             lnodes[[as.character(fid)]] <- rbind_(lnodes[[as.character(fid)]], data)
+                             lnodes[[fid]] <- rbind_(lnodes[[fid]], data)
                            }
                            self$lvl_nodes <- lnodes
                          },
@@ -407,6 +441,116 @@ Provenance <- R6::R6Class("Provenance",
                                                                                    attrs = attrs))
                          },
 
+                         serve_units = function(id = NULL, return = c("id", "value")) {
+                           return <- match.arg(return)
+                           id <- id %||% self$fct_id(role = "edbl_unit")
+                           if(length(id) == 0) abort("There needs to be at least one unit supplied.")
+                           id_ancestors <- self$fct_id_ancestor(id = id, role = "edbl_unit")
+                           sub_graph <- self$graph_subset(id = id_ancestors, include = "self")
+                           top_graph <- private$graph_reverse_topological_order(sub_graph)
+                           sub_fnodes <- top_graph$factors$nodes
+                           sub_fedges <- top_graph$factors$edges
+                           sub_lnodes <- top_graph$levels$nodes
+                           sub_ledges <- top_graph$levels$edges
+
+                           out <- list()
+                           for(irow in seq(nrow(sub_fnodes))) {
+                             # check if children.
+                             iunit <- sub_fnodes$id[irow]
+                             if(sub_fnodes$child[irow] == 0) {
+                               # if no children, just render it
+                               out[[as.character(iunit)]] <- self$lvl_id(fid = iunit)
+                             } else {
+                               children_id <- sub_fedges$to[sub_fedges$from == iunit]
+                               # all children id should have levels in the `out`
+                               # any children should be the same -- take the first one
+                               cid <- out[[as.character(children_id[1])]]
+                               pid <- sub_lnodes[[iunit]]$id
+                               cid_to_pid <- map_int(cid, function(id) sub_ledges$from[sub_ledges$to == id & sub_ledges$from %in% pid])
+                               out[[as.character(iunit)]] <- cid_to_pid
+                             }
+                           }
+                           private$table$units <- out
+                           switch(return,
+                                  id = out,
+                                  value = self$fct_levels_id_to_edbl_fct(out, role = "edbl_unit"))
+                         },
+
+                         serve_trts = function(id = NULL, return = c("id", "value")) {
+
+                           return <- match.arg(return)
+                           lnodes <- self$lvl_nodes
+                           ledges <- self$lvl_edges
+
+                           serve_trt = function(fid) {
+                             # linked unit -
+                             # each treatment factor should only be applied to a single unit factor
+                             uid <- self$fct_id_child(id = fid, role = "edbl_unit")
+                             vctrs::vec_assert(uid, integer(), size = 1)
+                             if(!uid %in% as.integer(names(private$table$units))) self$serve_units(id = uid)
+                             tids <- self$lvl_id(fid = fid, role = "edbl_trt")
+                             uids <- private$table$units[[as.character(uid)]]
+                             ledges <- ledges[ledges$to %in% uids & ledges$from %in% tids, ]
+                             ledges[match(uids, ledges$to), ]$from
+                           }
+                           id <- id %||% self$trt_ids
+                           out <- lapply(id, serve_trt)
+                           names(out) <- as.character(id)
+                           private$table$trts <- out
+                           switch(return,
+                                  id = out,
+                                  value = self$fct_levels_id_to_edbl_fct(out, role = "edbl_trt"))
+                         },
+
+
+                         serve_rcrds = function(id = NULL, return = c("id", "value")) {
+                           id <- id %||% self$rcrd_ids
+                           out <- lapply(id, function(rid) {
+                             uid <- self$fct_id_child(id = rid, role = "edbl_unit")
+                             # should be only a single unit factor
+                             vctrs::vec_assert(uid, integer(), size = 1)
+                             if(!uid %in% as.integer(names(private$table$units))) self$serve_units(id = uid)
+                             uid
+                           })
+                           names(out) <- as.character(id)
+                           switch(return,
+                                  id = out,
+                                  value = {
+                                    N <- max(lengths(private$table$units))
+                                    lvs <- lapply(id, function(rid) {
+                                      uid <- out[[as.character(rid)]]
+                                      uids <- private$table$units[[as.character(uid)]]
+                                      new_edibble_rcrd(rep(NA_real_, N), uids)
+                                    })
+                                    names(lvs) <- self$fct_names(id = id)
+                                    lvs
+                                  })
+                         },
+
+                         #' @param include "self" for only input id, "child" for child also,
+                         #'   "parent" for parent also,
+                         #'   nodes immediately related, and "ancestors" for all ancestors
+                         #' @return subsetted graph
+                         graph_subset = function(id = NULL, include = c("self", "child", "parent", "ancestors")) {
+                           include <- match.arg(include)
+                           idx <- switch(include,
+                                    "self" = id,
+                                    "child" = c(id, self$fct_id_child(id = id)),
+                                    "parent" = c(id, self$fct_id_parent(id = id)),
+                                    "ancestors" = unique(c(id, self$fct_id_ancestor(id = id))))
+                           fnodes <- self$fct_nodes
+                           fedges <- self$fct_edges
+                           lnodes <- self$lvl_nodes
+                           ledges <- self$lvl_edges
+                           # subset
+                           fnodes <- fnodes[fnodes$id %in% idx, ]
+                           fedges <- fedges[fedges$from %in% idx & fedges$to %in% idx, ]
+                           lnodes <- lnodes[fnodes$id]
+                           ledges <- ledges[ledges$from %in% lnodes$id & ledges$to %in% lnodes$id, ]
+
+                           new_edibble_graph(fnodes, lnodes, fedges, ledges)
+                         },
+
                          save_seed = function(seed) {
                            private$record_track_internal()
                            if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE))
@@ -420,8 +564,16 @@ Provenance <- R6::R6Class("Provenance",
                            private$seed <- RNGstate
                          },
 
+                         get_title = function() {
+                           private$title
+                         },
+
                          get_trail = function() {
                            private$trail[-length(private$trail)]
+                         },
+
+                         get_graph = function() {
+                           private$graph
                          },
 
                          get_seed = function() {
@@ -458,30 +610,30 @@ Provenance <- R6::R6Class("Provenance",
                          #' @field fct_nodes
                          #' Get the factor nodes
                          fct_nodes = function(data) {
-                           if(missing(data)) return(self$graph$factors$nodes)
-                           else self$graph$factors$nodes <- data
+                           if(missing(data)) return(private$graph$factors$nodes)
+                           else private$graph$factors$nodes <- data
                          },
 
                          #' @field lvl_nodes
                          #' Get the level nodes
                          lvl_nodes = function(data) {
                            if(missing(data)) {
-                             nodes <- self$graph$levels$nodes
+                             nodes <- private$graph$levels$nodes
                              return(nodes)
                            }
-                           else self$graph$levels$nodes <- data
+                           else private$graph$levels$nodes <- data
                          },
 
                          #' @field fct_edges
                          #' Get the factor edges
                          fct_edges = function(data) {
                            if(missing(data)) {
-                             edges <- self$graph$factors$edges
+                             edges <- private$graph$factors$edges
                              edges$var_from <- self$fct_names(id = edges$from)
                              edges$var_to <- self$fct_names(id = edges$to)
                              return(edges)
                            } else {
-                             self$graph$factors$edges <- data
+                             private$graph$factors$edges <- data
                            }
                          },
 
@@ -489,12 +641,10 @@ Provenance <- R6::R6Class("Provenance",
                          #' Get the level edges
                          lvl_edges = function(data) {
                            if(missing(data)) {
-                             edges <- self$graph$levels$edges
-                             edges$lvl_from <- self$lvl_names(id = edges$from)
-                             edges$lvl_to <- self$lvl_names(id = edges$to)
+                             edges <- private$graph$levels$edges
                              return(edges)
                            } else {
-                             self$graph$levels$edges <- data
+                             private$graph$levels$edges <- data
                            }
                          },
 
@@ -512,7 +662,7 @@ Provenance <- R6::R6Class("Provenance",
                          #' Get the number of nodes in level graph
                          lvl_n = function(value) {
                            if (missing(value)) {
-                             sum(lengths(self$lvl_nodes_list))
+                             sum(lengths(self$lvl_nodes))
                            } else {
                              stop("Can't set `$lvl_n`.")
                            }
@@ -547,7 +697,7 @@ Provenance <- R6::R6Class("Provenance",
                            if(nvar==0) return(FALSE)
                            if(nvar==1) return(TRUE)
                            ledges <- self$lvl_edges
-                           all(self$lvl_id %in% c(ledges$to, ledges$from))
+                           all(self$lvl_id() %in% c(ledges$to, ledges$from))
                          }
                        ),
                        private = list(
@@ -564,6 +714,8 @@ Provenance <- R6::R6Class("Provenance",
                          anatomy = NULL,
                          recipe = NULL,
                          graph = NULL,
+                         # table should only contain the id of levels and factors
+                         table = list(units = NULL, trts = NULL, rcrds = NULL),
 
                          validate_id = function(id, n = NULL, role = NULL) {
                            id <- vctrs::vec_cast(id, integer())
@@ -584,11 +736,11 @@ Provenance <- R6::R6Class("Provenance",
                          },
 
                          node_id_parent_child = function(id = NULL, role = NULL, node = c("factor", "level"), return = c("child", "parent")) {
-                           type <- match.arg(type)
+                           return <- match.arg(return)
                            node <- match.arg(node)
                            if(node == "factor") {
                              edges <- self$fct_edges
-                             edges <- edges[!edges$type %in% c("depends", "cross"), ]
+                             #edges <- edges[!edges$type %in% c("depends", "cross"), ]
                            } else if(node == "level") {
                              edges <- self$lvl_edges
                            }
@@ -626,16 +778,30 @@ Provenance <- R6::R6Class("Provenance",
                          #' @field fct_new_id
                          #' Get a new factor id.
                          fct_new_id = function(n = 1) {
-                           ids <- seq(private$fct_last_id + 1, private$fct_last_id + n)
-                           private$fct_last_id <- private$fct_last_id + n
+                           ids <- seq(private$fct_id_last + 1, private$fct_id_last + n)
+                           private$fct_id_last <- private$fct_id_last + n
                            ids
                          },
 
                          #' @field lvl_new_id
                          #' Get a new level id.
                          lvl_new_id = function(n = 1) {
-                           ids <- seq(private$lvl_last_id + 1, private$lvl_last_id + n)
-                           private$lvl_last_id <- private$lvl_last_id + n
+                           ids <- seq(private$lvl_id_last + 1, private$lvl_id_last + n)
+                           private$lvl_id_last <- private$lvl_id_last + n
                            ids
-                         }
+                         },
+
+                        #' Given a particular DAG, return a topological order
+                        #' Remember that there could be more than one order.
+                        graph_reverse_topological_order = function(graph) {
+                          fnodes <- graph$factors$nodes
+                          lnodes <- graph$levels$nodes
+                          fedges <- graph$factors$edges
+                          ledges <- graph$levels$edges
+                          fnodes$parent <- map_int(fnodes$id, function(id) sum(fedges$to %in% id))
+                          fnodes$child <- map_int(fnodes$id, function(id) sum(fedges$from %in% id))
+                          fnodes$nlevels <- map_int(fnodes$id, function(id) nrow(lnodes[[id]]))
+                          fnodes <- fnodes[order(fnodes$child, -fnodes$nlevels), ]
+                          new_edibble_graph(fnodes = fnodes, lnodes = lnodes, fedges = fedges, ledges = ledges)
+                        }
                        ))

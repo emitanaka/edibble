@@ -14,9 +14,9 @@
 pivot_trts_widelist <- function(.data, trts = NULL, fcts = NULL, drop = FALSE) {
   not_edibble(.data)
   data <- as.data.frame(.data, levels_as = "character")
-  des <- cook_design(.data)
+  prov <- activate_provenance(.data)
   if(is.null(trts)) {
-    trt_names <- des$trt_names
+    trt_names <- prov$trt_names()
   } else {
     tloc <- eval_select(enexpr(trts), .data)
     trt_names <- names(tloc)

@@ -8,31 +8,41 @@ test_that("nested-units", {
   })
 
   expect_equal(fct_nodes(des1),
-               data.frame(id = c(1L, 2L),
-                          name = c("block", "plot"),
-                          class = "edbl_unit"))
+               tibble::tibble(id = c(1L, 2L),
+                              role = "edbl_unit",
+                              name = c("block", "plot"),
+                              attrs = NA))
   expect_equal(lvl_nodes(des1),
-               data.frame(idvar = rep(1:2, c(3, 6)),
-                          id = 1:9,
-                          name = c(paste0("block", 1:3), paste0("plot", 1:6)),
-                          var = rep(c("block", "plot"), c(3, 6)),
-                          label = c(paste0("block", 1:3), rep(paste0("plot", 1:2), 3))))
+               structure(list(`1` = tibble::tibble(id = 1:3,
+                                                   value = c("block1", "block2", "block3")),
+                              `2` = tibble::tibble(id = 4:9,
+                                                   value = c("plot1", "plot2", "plot3", "plot4", "plot5", "plot6"))),
+                         class = c("edbl_lnodes", "list")))
 
   des2 <- des1 %>%
     set_units(sample = nested_in(plot,
                                  1 ~ 20,
-                                 . ~ 3, leading0 = 3))
+                                 . ~ 3))
   expect_equal(fct_nodes(des2),
-               data.frame(id = c(1L, 2L, 3L),
-                          name = c("block", "plot", "sample"),
-                          class = "edbl_unit"))
+               tibble::tibble(id = c(1L, 2L, 3L),
+                              role = "edbl_unit",
+                              name = c("block", "plot", "sample"),
+                              attrs = NA))
   expect_equal(lvl_nodes(des2),
-               data.frame(idvar = rep(1:3, c(3, 6, 35)),
-                          id = 1:44,
-                          name = c(paste0("block", 1:3), paste0("plot", 1:6), sprintf("sample%.3d", 1:35)),
-                          var = rep(c("block", "plot", "sample"), c(3, 6, 35)),
-                          label = c(paste0("block", 1:3), rep(paste0("plot", 1:2), 3), sprintf("sample%.3d", 1:20),
-                                    rep(sprintf("sample%.3d", 1:3), 5))))
+               structure(list(`1` = tibble::tibble(id = 1:3,
+                                                   value = c("block1", "block2", "block3")),
+                              `2` = tibble::tibble(id = 4:9,
+                                                   value = c("plot1", "plot2", "plot3", "plot4", "plot5", "plot6")),
+                              `3` = tibble::tibble(id = 10:44,
+                                                   value = c("sample01", "sample02", "sample03",
+                                                             "sample04", "sample05", "sample06", "sample07", "sample08",
+                                                             "sample09", "sample10", "sample11", "sample12", "sample13",
+                                                             "sample14", "sample15", "sample16", "sample17", "sample18",
+                                                             "sample19", "sample20", "sample21", "sample22", "sample23",
+                                                             "sample24", "sample25", "sample26", "sample27", "sample28",
+                                                             "sample29", "sample30", "sample31", "sample32", "sample33",
+                                                             "sample34", "sample35"))),
+                          class = c("edbl_lnodes", "list")))
 
 
 

@@ -1,4 +1,5 @@
 test_that("treatments", {
+  # FIXME
   expect_snapshot({
     design(seed = 1) %>%
       set_trts(vaccine = 2)

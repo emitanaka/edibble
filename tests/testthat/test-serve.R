@@ -1,4 +1,5 @@
 test_that("serve", {
+  # FIXME
   expect_snapshot({
     design(name = "unlinked units with table") %>%
       set_units(block = 3,

@@ -25,8 +25,8 @@
 allot_trts <- function(.edibble, ..., .record = TRUE) {
   not_edibble(.edibble)
   des <- edbl_design(.edibble)
-  prep <- cook_design(des)
-  if(.record) prep$record_step()
+  prov <- activate_provenance(des)
+  if(.record) prov$record_step()
 
   dots <- list2(...)
   if(!is_null(des$allotment)) {
@@ -40,29 +40,28 @@ allot_trts <- function(.edibble, ..., .record = TRUE) {
     trts <- all.vars(f_lhs(dots[[ialloc]]))
     # there should be only one unit
     unit <- all.vars(f_rhs(dots[[ialloc]]))
-    prep$fct_exists(name = unit, class = "edbl_unit")
-    uid <- prep$fct_id_by_name(unit)
+    prov$fct_exists(name = unit, role = "edbl_unit")
+    uid <- prov$fct_id(name = unit)
     if(length(trts)) {
-      prep$fct_exists(name = trts, class = "edbl_trt")
-      tids <- prep$fct_id_by_name(trts)
+      prov$trt_exists(name = trts)
+      tids <- prov$fct_id(name = trts)
     } else {
-      prep$trts_exists()
-      classes <- prep$fct_class()
-      tids <- prep$trt_ids
+      prov$trt_exists()
+      tids <- prov$trt_ids
     }
 
-    prep$append_fct_edges(data.frame(from = tids, to = uid, alloc = ialloc, type = "allot"))
+    prov$append_fct_edges(from = tids, to = uid, group = ialloc, type = "allot")
   }
 
-  des$graph <- prep$graph
+  des$graph <- prov$get_graph()
 
   if(is_edibble_table(.edibble)) {
     if(length(trts)==0) {
-      trts <- prep$trt_names
+      trts <- prov$trt_names()
     }
     for(atrt in trts) {
-      prep$append_lvl_edges(data.frame(from = prep$lvl_id(as.character(.edibble[[atrt]])),
-                                       to = prep$lvl_id(as.character(.edibble[[unit]]))))
+      prov$append_lvl_edges(from = prov$lvl_id(name = as.character(.edibble[[atrt]])),
+                            to = prov$lvl_id(name = as.character(.edibble[[unit]])))
     }
     attr(.edibble, "design") <- des
     .edibble
@@ -104,24 +103,24 @@ allot_units <- function(.edibble, ..., .record = TRUE) {
   } else {
     des$allotment <- list(trts = NULL, units = dots)
   }
-  prep <- cook_design(des)
+  prov <- activate_provenance(des)
 
   for(ialloc in seq_along(dots)) {
     # there should be only one unit for `big`
     big <- all.vars(f_lhs(dots[[ialloc]]))
     small <- all.vars(f_rhs(dots[[ialloc]]))
     op <- as.character(as.list(f_rhs(dots[[ialloc]]))[[1]])
-    prep$fct_exists(name = small, class = "edbl_unit")
-    big_id <- prep$fct_id(big)
-    prep$fct_exists(name = big, class = "edbl_unit")
-    small_id <- prep$fct_id(small)
+    prov$fct_exists(name = small, role = "edbl_unit")
+    big_id <- prov$fct_id(big)
+    prov$fct_exists(name = big, role = "edbl_unit")
+    small_id <- prov$fct_id(small)
 
     if(!op %in% c("crossed_by", "nested_in")) {
-      prep$append_fct_edges(data.frame(from = big_id,
+      prov$append_fct_edges(data.frame(from = big_id,
                                        to = small_id[length(small_id)],
                                        type = "nest"))
       if(length(small) > 1) {
-        prep$append_fct_edges(data.frame(from =  big_id,
+        prov$append_fct_edges(data.frame(from =  big_id,
                                          to = small_id[length(small_id) - 1],
                                          type = "depends"))
       }
@@ -129,32 +128,32 @@ allot_units <- function(.edibble, ..., .record = TRUE) {
     }
   }
   if(is_edibble_design(.edibble)) {
-    prep$design
+    prov$design
   } else if(is_edibble_table(.edibble)) {
     # Note: for crossed and nested, it's the opposite -> small = big, not big = small.
     if(op %in% c("crossed_by", "nested_in")) {
       for(ismall in seq_along(small_id)) {
-        prep$append_fct_edges(data.frame(from = small_id[ismall],
+        prov$append_fct_edges(data.frame(from = small_id[ismall],
                                          to = big_id,
                                          type = "nest"))
         if(op == "crossed_by") {
           cross_df <- expand.grid(from = small_id, to = small_id)
           cross_df <- cross_df[cross_df$from!=cross_df$to,]
           cross_df$type <- "cross"
-          prep$append_fct_edges(cross_df)
+          prov$append_fct_edges(cross_df)
         }
-        prep$append_lvl_edges(data.frame(from = prep$lvl_id(as.character(.edibble[[small[ismall]]])),
-                                         to = prep$lvl_id(as.character(.edibble[[big]]))))
+        prov$append_lvl_edges(data.frame(from = prov$lvl_id(as.character(.edibble[[small[ismall]]])),
+                                         to = prov$lvl_id(as.character(.edibble[[big]]))))
 
       }
 
     } else {
       for(asmall in small) {
-        prep$append_lvl_edges(data.frame(from = prep$lvl_id(as.character(.edibble[[big]])),
-                                         to = prep$lvl_id(as.character(.edibble[[asmall]]))))
+        prov$append_lvl_edges(data.frame(from = prov$lvl_id(as.character(.edibble[[big]])),
+                                         to = prov$lvl_id(as.character(.edibble[[asmall]]))))
       }
     }
-    attr(.edibble, "design") <- prep$design
+    attr(.edibble, "design") <- prov$design
     .edibble
   }
 

@@ -16,22 +16,22 @@ set_fcts <- function(.edibble, ..., .class = NULL,
   not_edibble(.edibble)
 
   .name_repair <- match.arg(.name_repair)
-  prep <- cook_design(.edibble)
+  prov <- activate_provenance(.edibble)
 
   if(is_edibble_design(.edibble)) {
 
     dots <- enquos(..., .named = TRUE, .homonyms = "error", .check_assign = TRUE)
     fnames_new <- names(dots)
-    fnames_old <- names(prep$graph)
+    fnames_old <- names(prov$graph)
     fnames <- vec_as_names(c(fnames_old, fnames_new), repair = .name_repair)
 
     for(i in seq_along(dots)) {
       fname <- fnames[i + length(fnames_old)]
-      fresh <- eval_tidy(dots[[i]], data = c(prep$fct_levels(), list(prep = prep, .fname = fname)))
-      .edibble$anatomy <- add_anatomy(.edibble$anatomy, fresh, fname, .class)
-      prep$setup_data(fresh, fname, .class)
+      input <- eval_tidy(dots[[i]], data = c(prov$fct_levels(return = "value"), list(prov = prov, .fname = fname)))
+      .edibble$anatomy <- add_anatomy(.edibble$anatomy, input, fname, .class)
+      graph_input(input, prov, fname, .class)
     }
-    .edibble$graph <- prep$graph
+    .edibble$graph <- prov$get_graph()
 
   } else if(is_edibble_table(.edibble)) {
 
@@ -44,9 +44,9 @@ set_fcts <- function(.edibble, ..., .class = NULL,
                                             levels = lvls,
                                             class = .class,
                                             name = fname)
-      prep$setup_data(.edibble[[loc[i]]], fname, .class)
+      graph_input(.edibble[[loc[i]]], prov, fname, .class)
       # FIXME
-      attr(.edibble, "design") <- prep$design
+      attr(.edibble, "design") <- prov$design
 
     }
 

@@ -16,15 +16,21 @@ the edibble design object.
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
+\item{\code{fct_leaves}}{Get the leave factor ids.}
+
 \item{\code{fct_new_id}}{Get a new factor id.}
 
-\item{\code{lvl_new_id}}{Get a new level id.}
+\item{\code{lvl_new_id}}{Get a new level id.
+Given a particular DAG, return a topological order
+Remember that there could be more than one order.}
 }
 \if{html}{\out{</div>}}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
+\item{\code{fct_leaves}}{Get the leave factor ids.}
+
 \item{\code{fct_nodes}}{Get the factor nodes}
 
 \item{\code{lvl_nodes}}{Get the level nodes}
@@ -37,25 +43,19 @@ the edibble design object.
 
 \item{\code{lvl_n}}{Get the number of nodes in level graph}
 
-\item{\code{fct_leaves}}{Get the leave factor ids.}
-
 \item{\code{rcrd_ids}}{Get the ids for all edbl_rcrd factors.}
 
 \item{\code{unit_ids}}{Get the ids for all edbl_unit factors.}
 
 \item{\code{trt_ids}}{Get the ids for all edbl_trt factors.}
 
-\item{\code{trt_names}}{Get the node labels for treatments}
-
-\item{\code{unit_names}}{Get the node labels for units}
-
-\item{\code{rcrd_names}}{Get the node labels for record}
-
 \item{\code{is_connected}}{Check if nodes are connected.}
 
 \item{\code{fct_new_id}}{Get a new factor id.}
 
-\item{\code{lvl_new_id}}{Get a new level id.}
+\item{\code{lvl_new_id}}{Get a new level id.
+Given a particular DAG, return a topological order
+Remember that there could be more than one order.}
 }
 \if{html}{\out{</div>}}
 }
@@ -63,41 +63,53 @@ the edibble design object.
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-Provenance-new}{\code{Provenance$new()}}
+\item \href{#method-Provenance-set_title}{\code{Provenance$set_title()}}
 \item \href{#method-Provenance-set_name}{\code{Provenance$set_name()}}
 \item \href{#method-Provenance-reactivate}{\code{Provenance$reactivate()}}
 \item \href{#method-Provenance-deactivate}{\code{Provenance$deactivate()}}
-\item \href{#method-Provenance-fct_id_by_name}{\code{Provenance$fct_id_by_name()}}
-\item \href{#method-Provenance-fct_id_by_class}{\code{Provenance$fct_id_by_class()}}
-\item \href{#method-Provenance-lvl_id_by_value}{\code{Provenance$lvl_id_by_value()}}
+\item \href{#method-Provenance-fct_id}{\code{Provenance$fct_id()}}
+\item \href{#method-Provenance-fct_id_parent}{\code{Provenance$fct_id_parent()}}
+\item \href{#method-Provenance-fct_id_child}{\code{Provenance$fct_id_child()}}
+\item \href{#method-Provenance-fct_id_ancestor}{\code{Provenance$fct_id_ancestor()}}
+\item \href{#method-Provenance-fct_id_leaves}{\code{Provenance$fct_id_leaves()}}
+\item \href{#method-Provenance-lvl_id}{\code{Provenance$lvl_id()}}
+\item \href{#method-Provenance-lvl_id_parent}{\code{Provenance$lvl_id_parent()}}
+\item \href{#method-Provenance-lvl_id_child}{\code{Provenance$lvl_id_child()}}
+\item \href{#method-Provenance-lvl_id_ancestor}{\code{Provenance$lvl_id_ancestor()}}
+\item \href{#method-Provenance-fct_id_from_lvl_id}{\code{Provenance$fct_id_from_lvl_id()}}
+\item \href{#method-Provenance-fct_id_from_lvl_values}{\code{Provenance$fct_id_from_lvl_values()}}
+\item \href{#method-Provenance-lvl_id_from_fct_id}{\code{Provenance$lvl_id_from_fct_id()}}
 \item \href{#method-Provenance-fct_names}{\code{Provenance$fct_names()}}
-\item \href{#method-Provenance-lvl_names}{\code{Provenance$lvl_names()}}
+\item \href{#method-Provenance-unit_names}{\code{Provenance$unit_names()}}
+\item \href{#method-Provenance-trt_names}{\code{Provenance$trt_names()}}
+\item \href{#method-Provenance-rcrd_names}{\code{Provenance$rcrd_names()}}
+\item \href{#method-Provenance-lvl_values}{\code{Provenance$lvl_values()}}
+\item \href{#method-Provenance-unit_values}{\code{Provenance$unit_values()}}
+\item \href{#method-Provenance-trt_values}{\code{Provenance$trt_values()}}
+\item \href{#method-Provenance-rcrd_values}{\code{Provenance$rcrd_values()}}
+\item \href{#method-Provenance-fct_role}{\code{Provenance$fct_role()}}
+\item \href{#method-Provenance-fct_levels_id}{\code{Provenance$fct_levels_id()}}
+\item \href{#method-Provenance-fct_levels_value}{\code{Provenance$fct_levels_value()}}
+\item \href{#method-Provenance-fct_exists}{\code{Provenance$fct_exists()}}
+\item \href{#method-Provenance-trt_exists}{\code{Provenance$trt_exists()}}
+\item \href{#method-Provenance-unit_exists}{\code{Provenance$unit_exists()}}
+\item \href{#method-Provenance-rcrd_exists}{\code{Provenance$rcrd_exists()}}
+\item \href{#method-Provenance-lvl_exists}{\code{Provenance$lvl_exists()}}
 \item \href{#method-Provenance-append_fct_nodes}{\code{Provenance$append_fct_nodes()}}
 \item \href{#method-Provenance-append_lvl_nodes}{\code{Provenance$append_lvl_nodes()}}
 \item \href{#method-Provenance-append_fct_edges}{\code{Provenance$append_fct_edges()}}
 \item \href{#method-Provenance-append_lvl_edges}{\code{Provenance$append_lvl_edges()}}
-\item \href{#method-Provenance-fct_class}{\code{Provenance$fct_class()}}
-\item \href{#method-Provenance-lvl_class}{\code{Provenance$lvl_class()}}
-\item \href{#method-Provenance-fct_child}{\code{Provenance$fct_child()}}
-\item \href{#method-Provenance-lvl_child}{\code{Provenance$lvl_child()}}
-\item \href{#method-Provenance-lvl_id_by_class}{\code{Provenance$lvl_id_by_class()}}
-\item \href{#method-Provenance-fct_parent}{\code{Provenance$fct_parent()}}
-\item \href{#method-Provenance-lvl_parent}{\code{Provenance$lvl_parent()}}
-\item \href{#method-Provenance-fct_ancestor}{\code{Provenance$fct_ancestor()}}
-\item \href{#method-Provenance-lvl_ancestor}{\code{Provenance$lvl_ancestor()}}
-\item \href{#method-Provenance-fct_levels}{\code{Provenance$fct_levels()}}
-\item \href{#method-Provenance-fct_exists}{\code{Provenance$fct_exists()}}
-\item \href{#method-Provenance-trts_exists}{\code{Provenance$trts_exists()}}
-\item \href{#method-Provenance-units_exists}{\code{Provenance$units_exists()}}
-\item \href{#method-Provenance-rcrds_exists}{\code{Provenance$rcrds_exists()}}
+\item \href{#method-Provenance-serve_units}{\code{Provenance$serve_units()}}
+\item \href{#method-Provenance-graph_subset}{\code{Provenance$graph_subset()}}
 \item \href{#method-Provenance-save_seed}{\code{Provenance$save_seed()}}
-\item \href{#method-Provenance-get_history}{\code{Provenance$get_history()}}
+\item \href{#method-Provenance-get_title}{\code{Provenance$get_title()}}
+\item \href{#method-Provenance-get_trail}{\code{Provenance$get_trail()}}
+\item \href{#method-Provenance-get_graph}{\code{Provenance$get_graph()}}
 \item \href{#method-Provenance-get_seed}{\code{Provenance$get_seed()}}
 \item \href{#method-Provenance-get_session_info}{\code{Provenance$get_session_info()}}
 \item \href{#method-Provenance-get_edibble_version}{\code{Provenance$get_edibble_version()}}
 \item \href{#method-Provenance-record_step}{\code{Provenance$record_step()}}
-\item \href{#method-Provenance-record_history_external}{\code{Provenance$record_history_external()}}
-\item \href{#method-Provenance-record_history_internal}{\code{Provenance$record_history_internal()}}
-\item \href{#method-Provenance-add_history_internal}{\code{Provenance$add_history_internal()}}
+\item \href{#method-Provenance-record_track_external}{\code{Provenance$record_track_external()}}
 \item \href{#method-Provenance-clone}{\code{Provenance$clone()}}
 }
 }
@@ -116,6 +128,15 @@ the edibble design object.
 }
 \if{html}{\out{</div>}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-set_title"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-set_title}{}}}
+\subsection{Method \code{set_title()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$set_title(title)}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Provenance-set_name"></a>}}
@@ -152,47 +173,207 @@ the edibble design object.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-fct_id_by_name"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-fct_id_by_name}{}}}
-\subsection{Method \code{fct_id_by_name()}}{
+\if{html}{\out{<a id="method-Provenance-fct_id"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-fct_id}{}}}
+\subsection{Method \code{fct_id()}}{
 Get the id based on either the name of the factor node.
 If none supplied then it will give all.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_id_by_name(name = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_id(name = NULL, role = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{name}}{The name of the vertex.}
+
+\item{\code{role}}{The role for the vertex/node.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-fct_id_by_class"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-fct_id_by_class}{}}}
-\subsection{Method \code{fct_id_by_class()}}{
-Get all ids associated with a class.
+\if{html}{\out{<a id="method-Provenance-fct_id_parent"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-fct_id_parent}{}}}
+\subsection{Method \code{fct_id_parent()}}{
+Get the factor parent ids
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_id_by_class(class = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_id_parent(id = NULL, role = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{class}}{The class for the vertex/node.}
+\item{\code{id}}{The id of the corresponding node.}
+
+\item{\code{role}}{The role for the vertex/node.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-lvl_id_by_value"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-lvl_id_by_value}{}}}
-\subsection{Method \code{lvl_id_by_value()}}{
-Get the id based on name of level node.
+\if{html}{\out{<a id="method-Provenance-fct_id_child"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-fct_id_child}{}}}
+\subsection{Method \code{fct_id_child()}}{
+Get the factor child ids. If \code{role} is
+supplied then the child has to fit \code{role}
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$lvl_id_by_value(value = NULL, fid)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_id_child(id = NULL, role = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{The id of the corresponding node.}
+
+\item{\code{role}}{The role for the vertex/node.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-fct_id_ancestor"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-fct_id_ancestor}{}}}
+\subsection{Method \code{fct_id_ancestor()}}{
+Get the factor ancestor ids
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_id_ancestor(id = NULL, role = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{The id of the corresponding node.}
+
+\item{\code{role}}{The role for the vertex/node.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-fct_id_leaves"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-fct_id_leaves}{}}}
+\subsection{Method \code{fct_id_leaves()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_id_leaves(role = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{role}}{The role for the vertex/node.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-lvl_id"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-lvl_id}{}}}
+\subsection{Method \code{lvl_id()}}{
+Get the id based on name of level node.
+Assumes that level ids obtained are all from the same fid
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$lvl_id(value = NULL, role = NULL, fid = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{role}}{The role for the vertex/node.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-lvl_id_parent"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-lvl_id_parent}{}}}
+\subsection{Method \code{lvl_id_parent()}}{
+Get the level parent ids
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$lvl_id_parent(id = NULL, role = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{The id of the corresponding node.}
+
+\item{\code{role}}{The role for the vertex/node.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-lvl_id_child"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-lvl_id_child}{}}}
+\subsection{Method \code{lvl_id_child()}}{
+Get the level child ids
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$lvl_id_child(id = NULL, role = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{The id of the corresponding node.}
+
+\item{\code{role}}{The role for the vertex/node.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-lvl_id_ancestor"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-lvl_id_ancestor}{}}}
+\subsection{Method \code{lvl_id_ancestor()}}{
+Get the level ancestor ids
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$lvl_id_ancestor(id = NULL, role = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{The id of the corresponding node.}
+
+\item{\code{role}}{The role for the vertex/node.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-fct_id_from_lvl_id"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-fct_id_from_lvl_id}{}}}
+\subsection{Method \code{fct_id_from_lvl_id()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_id_from_lvl_id(id = NULL, fid_search = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{The id of the corresponding node.}
+
+\item{\code{fid_search}}{A vector of fids to search from.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-fct_id_from_lvl_values"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-fct_id_from_lvl_values}{}}}
+\subsection{Method \code{fct_id_from_lvl_values()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_id_from_lvl_values(value = NULL, fid_search = NULL)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-lvl_id_from_fct_id"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-lvl_id_from_fct_id}{}}}
+\subsection{Method \code{lvl_id_from_fct_id()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$lvl_id_from_fct_id(fid = NULL)}\if{html}{\out{</div>}}
 }
 
 }
@@ -200,9 +381,9 @@ Get the id based on name of level node.
 \if{html}{\out{<a id="method-Provenance-fct_names"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-fct_names}{}}}
 \subsection{Method \code{fct_names()}}{
-Get the factor names based on id or class
+Get the factor names based on id or role
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_names(id = NULL, class = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_names(id = NULL, role = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -210,105 +391,17 @@ Get the factor names based on id or class
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
 
-\item{\code{class}}{The class for the vertex/node.}
+\item{\code{role}}{The role for the vertex/node.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-lvl_names"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-lvl_names}{}}}
-\subsection{Method \code{lvl_names()}}{
-Get the level names based on id or class
+\if{html}{\out{<a id="method-Provenance-unit_names"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-unit_names}{}}}
+\subsection{Method \code{unit_names()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$lvl_names(id = NULL, class = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{id}}{The id of the corresponding node.}
-
-\item{\code{class}}{The class for the vertex/node.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-append_fct_nodes"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-append_fct_nodes}{}}}
-\subsection{Method \code{append_fct_nodes()}}{
-Given node data, append the factor nodes
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$append_fct_nodes(data)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data}}{The nodes data}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-append_lvl_nodes"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-append_lvl_nodes}{}}}
-\subsection{Method \code{append_lvl_nodes()}}{
-Given node data, append the level nodes
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$append_lvl_nodes(data, fid = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data}}{The nodes data}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-append_fct_edges"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-append_fct_edges}{}}}
-\subsection{Method \code{append_fct_edges()}}{
-Given edge data, append the factor edges
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$append_fct_edges(data)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data}}{The nodes data}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-append_lvl_edges"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-append_lvl_edges}{}}}
-\subsection{Method \code{append_lvl_edges()}}{
-Given edge data, append the level edges
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$append_lvl_edges(data)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data}}{The nodes data}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-fct_class"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-fct_class}{}}}
-\subsection{Method \code{fct_class()}}{
-Get the class of the vertex given the factor id
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_class(id = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$unit_names(id = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -320,12 +413,11 @@ Get the class of the vertex given the factor id
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-lvl_class"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-lvl_class}{}}}
-\subsection{Method \code{lvl_class()}}{
-Get the class of the vertex given the level id
+\if{html}{\out{<a id="method-Provenance-trt_names"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-trt_names}{}}}
+\subsection{Method \code{trt_names()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$lvl_class(id = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$trt_names(id = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -337,13 +429,30 @@ Get the class of the vertex given the level id
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-fct_child"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-fct_child}{}}}
-\subsection{Method \code{fct_child()}}{
-Get the factor child ids. If \code{class} is
-supplied then the child has to fit \code{class}
+\if{html}{\out{<a id="method-Provenance-rcrd_names"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-rcrd_names}{}}}
+\subsection{Method \code{rcrd_names()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_child(id = NULL, class = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$rcrd_names(id = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{The id of the corresponding node.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-lvl_values"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-lvl_values}{}}}
+\subsection{Method \code{lvl_values()}}{
+Get the level values based on id or role
+cannot have just role only defined.
+id must be from the same fid
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$lvl_values(id = NULL, role = NULL, fid = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -351,129 +460,101 @@ supplied then the child has to fit \code{class}
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
 
-\item{\code{class}}{The class for the vertex/node.}
+\item{\code{role}}{The role for the vertex/node.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-lvl_child"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-lvl_child}{}}}
-\subsection{Method \code{lvl_child()}}{
-Get the level child ids
+\if{html}{\out{<a id="method-Provenance-unit_values"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-unit_values}{}}}
+\subsection{Method \code{unit_values()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$lvl_child(id = NULL, class = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$unit_values(id = NULL, fid = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
-
-\item{\code{class}}{The class for the vertex/node.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-lvl_id_by_class"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-lvl_id_by_class}{}}}
-\subsection{Method \code{lvl_id_by_class()}}{
+\if{html}{\out{<a id="method-Provenance-trt_values"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-trt_values}{}}}
+\subsection{Method \code{trt_values()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$lvl_id_by_class(class)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{class}}{The class for the vertex/node.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-fct_parent"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-fct_parent}{}}}
-\subsection{Method \code{fct_parent()}}{
-Get the factor parent ids
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_parent(id = NULL, class = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$trt_values(id = NULL, fid = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
-
-\item{\code{class}}{The class for the vertex/node.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-lvl_parent"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-lvl_parent}{}}}
-\subsection{Method \code{lvl_parent()}}{
-Get the level parent ids
+\if{html}{\out{<a id="method-Provenance-rcrd_values"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-rcrd_values}{}}}
+\subsection{Method \code{rcrd_values()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$lvl_parent(id = NULL, class = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$rcrd_values(uid = NULL, fid = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{uid}}{The unit level id}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-fct_role"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-fct_role}{}}}
+\subsection{Method \code{fct_role()}}{
+Get the role of the vertex given the factor id
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_role(id = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
-
-\item{\code{class}}{The class for the vertex/node.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-fct_ancestor"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-fct_ancestor}{}}}
-\subsection{Method \code{fct_ancestor()}}{
-Get the factor ancestor ids
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_ancestor(id = NULL, class = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{id}}{The id of the corresponding node.}
-
-\item{\code{class}}{The class for the vertex/node.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-lvl_ancestor"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-lvl_ancestor}{}}}
-\subsection{Method \code{lvl_ancestor()}}{
-Get the level ancestor ids
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$lvl_ancestor(id = NULL, class = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{id}}{The id of the corresponding node.}
-
-\item{\code{class}}{The class for the vertex/node.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-fct_levels"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-fct_levels}{}}}
-\subsection{Method \code{fct_levels()}}{
+\if{html}{\out{<a id="method-Provenance-fct_levels_id"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-fct_levels_id}{}}}
+\subsection{Method \code{fct_levels_id()}}{
 Get the levels for each factor
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_levels(id = NULL, name = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_levels_id(id = NULL, name = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{The id of the corresponding node.}
+
+\item{\code{name}}{The name of the vertex.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-fct_levels_value"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-fct_levels_value}{}}}
+\subsection{Method \code{fct_levels_value()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_levels_value(id = NULL, name = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -490,21 +571,21 @@ Get the levels for each factor
 \if{html}{\out{<a id="method-Provenance-fct_exists"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-fct_exists}{}}}
 \subsection{Method \code{fct_exists()}}{
-One of \code{name}, \code{id} or \code{class} is defined to check if it exists.
-If more than one of the arguments \code{name}, \code{id} and \code{class} are supplied, then
+One of \code{name}, \code{id} or \code{role} is defined to check if it exists.
+If more than one of the arguments \code{name}, \code{id} and \code{role} are supplied, then
 the intersection of it will be checked.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_exists(name = NULL, id = NULL, class = NULL, abort = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_exists(id = NULL, name = NULL, role = NULL, abort = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{name}}{The name of the vertex.}
-
 \item{\code{id}}{The id of the corresponding node.}
 
-\item{\code{class}}{The class for the vertex/node.}
+\item{\code{name}}{The name of the vertex.}
+
+\item{\code{role}}{The role for the vertex/node.}
 
 \item{\code{abort}}{A logical value to indicate whether to abort if it doesn't exist.}
 }
@@ -512,54 +593,177 @@ the intersection of it will be checked.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-trts_exists"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-trts_exists}{}}}
-\subsection{Method \code{trts_exists()}}{
+\if{html}{\out{<a id="method-Provenance-trt_exists"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-trt_exists}{}}}
+\subsection{Method \code{trt_exists()}}{
 Check if treatment exists.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$trts_exists(abort = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$trt_exists(id = NULL, name = NULL, abort = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{id}}{The id of the corresponding node.}
+
+\item{\code{name}}{The name of the vertex.}
+
 \item{\code{abort}}{Whether to abort.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-units_exists"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-units_exists}{}}}
-\subsection{Method \code{units_exists()}}{
+\if{html}{\out{<a id="method-Provenance-unit_exists"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-unit_exists}{}}}
+\subsection{Method \code{unit_exists()}}{
 Check if unit exists.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$units_exists(abort = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$unit_exists(id = NULL, name = NULL, abort = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{id}}{The id of the corresponding node.}
+
+\item{\code{name}}{The name of the vertex.}
+
 \item{\code{abort}}{Whether to abort.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-rcrds_exists"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-rcrds_exists}{}}}
-\subsection{Method \code{rcrds_exists()}}{
+\if{html}{\out{<a id="method-Provenance-rcrd_exists"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-rcrd_exists}{}}}
+\subsection{Method \code{rcrd_exists()}}{
 Check if record exists.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$rcrds_exists(abort = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$rcrd_exists(id = NULL, name = NULL, abort = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{id}}{The id of the corresponding node.}
+
+\item{\code{name}}{The name of the vertex.}
+
 \item{\code{abort}}{Whether to abort.}
 }
 \if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-lvl_exists"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-lvl_exists}{}}}
+\subsection{Method \code{lvl_exists()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$lvl_exists(id = NULL, name = NULL, abort = TRUE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{The id of the corresponding node.}
+
+\item{\code{name}}{The name of the vertex.}
+
+\item{\code{abort}}{Whether to abort.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-append_fct_nodes"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-append_fct_nodes}{}}}
+\subsection{Method \code{append_fct_nodes()}}{
+Given node data, append the factor nodes
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$append_fct_nodes(name, role, attrs = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{name}}{The name of the vertex.}
+
+\item{\code{role}}{The role for the vertex/node.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-append_lvl_nodes"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-append_lvl_nodes}{}}}
+\subsection{Method \code{append_lvl_nodes()}}{
+Given node data, append the level nodes
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$append_lvl_nodes(value, attrs = NULL, fid = NULL)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-append_fct_edges"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-append_fct_edges}{}}}
+\subsection{Method \code{append_fct_edges()}}{
+Given edge data, append the factor edges
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$append_fct_edges(from, to, type = NULL, group = NULL, attrs = NULL)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-append_lvl_edges"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-append_lvl_edges}{}}}
+\subsection{Method \code{append_lvl_edges()}}{
+Given edge data, append the level edges
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$append_lvl_edges(from, to, attrs = NULL)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-serve_units"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-serve_units}{}}}
+\subsection{Method \code{serve_units()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$serve_units(id = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{The id of the corresponding node.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-graph_subset"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-graph_subset}{}}}
+\subsection{Method \code{graph_subset()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$graph_subset(
+  id = NULL,
+  include = c("self", "child", "parent", "ancestors")
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{The id of the corresponding node.}
+
+\item{\code{include}}{"self" for only input id, "child" for child also,
+"parent" for parent also,
+nodes immediately related, and "ancestors" for all ancestors}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+subsetted graph
 }
 }
 \if{html}{\out{<hr>}}
@@ -572,11 +776,29 @@ Check if record exists.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-get_history"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-get_history}{}}}
-\subsection{Method \code{get_history()}}{
+\if{html}{\out{<a id="method-Provenance-get_title"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-get_title}{}}}
+\subsection{Method \code{get_title()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$get_history()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$get_title()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-get_trail"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-get_trail}{}}}
+\subsection{Method \code{get_trail()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$get_trail()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-get_graph"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-get_graph}{}}}
+\subsection{Method \code{get_graph()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$get_graph()}\if{html}{\out{</div>}}
 }
 
 }
@@ -617,29 +839,11 @@ Check if record exists.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-record_history_external"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-record_history_external}{}}}
-\subsection{Method \code{record_history_external()}}{
+\if{html}{\out{<a id="method-Provenance-record_track_external"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-record_track_external}{}}}
+\subsection{Method \code{record_track_external()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$record_history_external(code)}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-record_history_internal"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-record_history_internal}{}}}
-\subsection{Method \code{record_history_internal()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$record_history_internal()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-add_history_internal"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-add_history_internal}{}}}
-\subsection{Method \code{add_history_internal()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$add_history_internal(code)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$record_track_external(code)}\if{html}{\out{</div>}}
 }
 
 }

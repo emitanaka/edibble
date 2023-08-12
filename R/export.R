@@ -276,7 +276,7 @@ export_design <- function(.data, file, author, date = Sys.Date(), overwrite = FA
   } else {
     abort("The input is not an edibble table.")
   }
-  prep <- cook_design(.design)
+  prep <- activate_provenance(.design)
 
   title <- .design$name
   sheet_names <- make_sheet_names(prep)

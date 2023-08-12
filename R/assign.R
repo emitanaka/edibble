@@ -38,73 +38,63 @@
 assign_trts <- function(.design, order = "random", seed = NULL, constrain = nesting_structure(.design), ..., .record = TRUE) {
   not_edibble(.design)
 
-  prep <- cook_design(.design)
-  if(.record) prep$record_step()
+  prov <- activate_provenance(.design)
+  if(.record) prov$record_step()
 
-  prep$save_seed(seed)
+  prov$save_seed(seed)
 
-  order <- rep(order, length.out = length(.design$allotment$trts))
-
-  for(ialloc in seq_along(.design$allotment$trts)) {
-    trts <- all.vars(f_lhs(.design$allotment$trts[[ialloc]]))
+  fedges <- prov$fct_edges
+  allotments <- fedges[fedges$type == "allot", ]
+  alloc_groups <- unique(allotments$group)
+  order <- rep(order, length.out = length(alloc_groups))
+  for(igroup in alloc_groups) {
+    trts_id <- allotments[allotments$group == igroup, ]$from
     # there should be only one unit
-    unit <- all.vars(f_rhs(.design$allotment$trts[[ialloc]]))
-    uid <- prep$fct_id_by_name(unit)
-    if(length(trts)) {
-      tids <- prep$fct_id_by_name(trts)
-    } else {
-      classes <- prep$fct_class()
-      tids <- prep$trt_ids
-    }
+    unit_id <- unique(allotments[allotments$group == igroup, ]$to)
+    unit_nm <- prov$fct_names(id = unit_id)
+    lnodes <- prov$lvl_nodes
+    unit_level_ids <- lnodes[[unit_id]]$id
+    nunits <- length(unit_level_ids)
 
-    lnodes <- prep$lvl_nodes
-    luids <- lnodes[[as.character(uid)]]$id
-    tdf <- prep$fct_levels()[prep$fct_names(tids)]
-    tidf <- expand.grid(tdf, stringsAsFactors = FALSE)
-    ntrts <- nrow(tidf)
-    permutation <- switch(order[ialloc],
-                          "systematic" = rep(1:nrow(tidf), length.out = length(luids)),
-                          "systematic-random" = rep(sample(nrow(tidf)), length.out = length(luids)),
+    trts_list <- prov$fct_levels(id = trts_id, return = "id")
+    # only allows for factorial treatment structure for now
+    trts_df <- expand.grid(trts_list, stringsAsFactors = FALSE)
+    ntrts <- nrow(trts_df)
+    permutation <- switch(order[igroup],
+                          "systematic" = rep(1:ntrts, length.out = nunits),
+                          "systematic-random" = rep(sample(ntrts), length.out = nunits),
                           "random" = {
-                            if(is_empty(constrain[[unit]])) {
-                              out <- as.vector(replicate(ceiling(length(luids) / nrow(tidf)),
-                                                          sample(nrow(tidf))))
-                              sample(out[1:length(luids)])
+                            if(is_empty(constrain[[unit_nm]])) {
+                              out <- as.vector(replicate(ceiling(nunits / ntrts),
+                                                         sample(ntrts)))
+                              sample(out[1:nunits])
                             } else {
 
                               # FIXME the ancestor should be found
                               # based on `constrain`
 
                               # find the grandest ancestor
-                              vanc <- prep$fct_ancestor(id = uid)
-                              vanc <- vanc[vanc %in% prep$unit_ids]
-                              udf <- as.data.frame(serve_units(select_units(prep, prep$fct_names(vanc))))
-
-                              vparents <- prep$fct_parent(id = uid)
-                              vparents <- vparents[vparents %in% prep$unit_ids]
-                              vparents <- setdiff(vparents, uid)
-
+                              vanc <- prov$fct_id_ancestor(id = unit_id, role = "edbl_unit")
+                              units_df <- tibble::as_tibble(prov$serve_units(id = vanc))
+                              vparents <- prov$fct_id_parent(id = unit_id, role = "edbl_unit")
                               if(length(vparents)==1L) {
-                                permute_parent_one_alg(prep, vparents, udf, ntrts)
+                                permute_parent_one_alg(prov, vparents, units_df, ntrts)
                               } else {
-                                permute_parent_more_than_one(prep, vparents, udf, ntrts)
+                                permute_parent_more_than_one(prov, vparents, units_df, ntrts)
                               }
                             }
                           },
-                          order_trts(structure(order, class = order), prep, constrain, tidf, ...))
+                          order_trts(structure(order, class = order), prov, constrain, trts_df, ...))
 
-    tout <- tidf[permutation, , drop = FALSE]
+    trts_full_df <- trts_df[permutation, , drop = FALSE]
 
-
-    for(itvar in seq_along(tout)) {
-      fid <- prep$fct_id_by_name(names(tout)[itvar])
-      prep$append_lvl_edges(data.frame(from = prep$lvl_id_by_value(tout[[itvar]], fid),
-                                       to = luids,
-                                      lloc = ialloc))
+    for(itvar in seq_along(trts_full_df)) {
+      prov$append_lvl_edges(from = trts_full_df[[itvar]],
+                            to = unit_level_ids)
     }
   }
 
-  .design$graph <- prep$graph
+  .design$graph <- prov$get_graph()
   .design$assignment <- order
   .design
 }
@@ -118,16 +108,16 @@ assign_units <- function(.design, order = "random", seed = NULL, constrain = nes
   if(.record) record_step()
 
   save_seed(seed)
-  prep <- cook_design(.design)
+  prov <- activate_provenance(.design)
 
   for(ialloc in seq_along(.design$allotment$units)) {
     lhs <- all.vars(f_lhs(.design$allotment$units[[ialloc]]))
     rhs <- all.vars(f_rhs(.design$allotment$units[[ialloc]]))
 
-    lnodes <- prep$lvl_nodes
+    lnodes <- prov$lvl_nodes
 
-    lhs_id <- lnodes[[prep$fct_id_by_name(lhs)]]$id
-    udf <- as.data.frame(serve_units(select_units(prep, rhs)))
+    lhs_id <- lnodes[[prov$fct_id(name = lhs)]]$id
+    udf <- as.data.frame(serve_units(select_units(prov, rhs)))
     udf <- udf[rhs]
     small_df <- data.frame(lhs = lhs_id)
     permutation <- switch(order,
@@ -137,16 +127,16 @@ assign_units <- function(.design, order = "random", seed = NULL, constrain = nes
 
                               # FIXME the ancestor should be found
                               # based on `constrain`??
-                              vparents <- prep$fct_id_by_name(rhs[-length(rhs)])
+                              vparents <- prov$fct_id_by_name(rhs[-length(rhs)])
 
                               if(length(rhs)==1L) {
                                 out <- as.vector(replicate(ceiling(nrow(udf)/nrow(small_df)),
                                                         sample(nrow(small_df))))
                                 out[1:nrow(udf)]
                               } else if(length(rhs)==2L) {
-                                permute_parent_one_alg(prep, vparents, udf, nrow(small_df))
+                                permute_parent_one_alg(prov, vparents, udf, nrow(small_df))
                               } else {
-                                permute_parent_more_than_one(prep, vparents, udf, nrow(small_df))
+                                permute_parent_more_than_one(prov, vparents, udf, nrow(small_df))
                               }
                           }, abort("not implemented yet"))
 
@@ -154,12 +144,12 @@ assign_units <- function(.design, order = "random", seed = NULL, constrain = nes
 
     browser()
     for(itvar in seq_along(tout)) {
-      prep$append_lvl_edges(data.frame(from = tout[[itvar]],
-                                       to = prep$lvl_id(udf[[rhs[length(rhs)]]]),
+      prov$append_lvl_edges(data.frame(from = tout[[itvar]],
+                                       to = prov$lvl_id(udf[[rhs[length(rhs)]]]),
                                        alloc = ialloc))
     }
 
   }
 
-  prep$design
+  prov$design
 }

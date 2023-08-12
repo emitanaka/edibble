@@ -24,7 +24,7 @@
 set_trts <- function(.edibble, ...,
                      .name_repair = c("check_unique", "unique", "universal", "minimal"),
                      .record = TRUE) {
-  prov <- cook_design(.edibble)
+  prov <- activate_provenance(.edibble)
   if(.record) prov$record_step()
   set_fcts(.edibble, ..., .name_repair = .name_repair, .class = "edbl_trt")
 }
@@ -35,48 +35,43 @@ order_trts <- function(x, ...) {
   UseMethod("order_trts")
 }
 
-order_trts.default <- function(order, prep, constrain, ...) {
+order_trts.default <- function(order, prov, constrain, ...) {
   abort(paste("The", order, "`order` is not implemented."))
 }
 
-order_trts.dae <- function(order, prep, constrain, trts, ...) {
-  dat <- assign_trts(prep$design, order = "systematic", constrain = constrain, .record = FALSE) %>%
+order_trts.dae <- function(order, prov, constrain, trts, ...) {
+  # FIXME
+  dat <- assign_trts(prov$design, order = "systematic", constrain = constrain, .record = FALSE) %>%
     serve_table(use_labels = TRUE) %>%
     lapply(as.factor) %>%
     as.data.frame()
-  out <- dae::designRandomize(allocated = dat[prep$trt_names],
-                       recipient = dat[prep$unit_names],
+  out <- dae::designRandomize(allocated = dat[prov$trt_names],
+                       recipient = dat[prov$unit_names],
                        nested.recipients = constrain)
-  trtsv <- stats::setNames(1:nrow(trts), do.call(paste0, trts[prep$trt_names]))
-  otrtsv <- do.call(paste0, dat[prep$trt_names])
+  trtsv <- stats::setNames(1:nrow(trts), do.call(paste0, trts[prov$trt_names]))
+  otrtsv <- do.call(paste0, dat[prov$trt_names])
   unname(trtsv[otrtsv])
 }
 
-permute_parent_more_than_one <- function(prep, vids, udf, ntrts) {
-  gparents <- prep$fct_names(vids)
-  vlevs <- prep$fct_levels()
-
-  lvls <- lengths(vlevs[gparents])
+permute_parent_more_than_one <- function(prov, vids, udf, ntrts) {
+  vlevs <- prov$fct_levels(return = "id")
+  lvls <- lengths(vlevs[as.character(vids)])
   oa <- latin_array(dim = lvls, ntrts)
-
-  index <- lapply(gparents, function(gparent) match(udf[[gparent]], vlevs[[gparent]]))
+  index <- lapply(vids, function(id) match(udf[[as.character(id)]], vlevs[[as.character(id)]]))
 
   out <- vector("integer", length = nrow(udf))
   for(i in seq(nrow(udf))) {
     out[i] <- do.call("[", c(list(oa), lapply(index, function(x) x[i])))
   }
-
   out
-
 }
 
 
 
-permute_parent_one_alg <- function(prep, vid, udf, ntrts) {
-  gparent <- prep$fct_names(vid)
+permute_parent_one_alg <- function(prov, vid, udf, ntrts) {
   udf$.id <- 1:nrow(udf)
-  udf <- udf[order(udf[[gparent]]),]
-  blocksizes <- table(udf[[gparent]])
+  udf <- udf[order(udf[[as.character(vid)]]),]
+  blocksizes <- table(udf[[as.character(vid)]])
   # if(min(blocksizes) > ntrts) {
   #   permute_parent_one(.edibble, vid, udf, ntrts)
   # } else {
@@ -92,7 +87,7 @@ permute_parent_one_alg <- function(prep, vid, udf, ntrts) {
                                    withinData = data.frame(tindex = factor(1:ntrts)),
                                    blocksizes = blocksizes_adj)
       }, error = function(x) {
-        return(permute_parent_one(prep, vid, udf, ntrts))
+        return(permute_parent_one(prov, vid, udf, ntrts))
       })
   })
   if(is.integer(res)) return(res)
@@ -103,12 +98,12 @@ permute_parent_one_alg <- function(prep, vid, udf, ntrts) {
     if(length(xv)==1) xv else sample(xv)
   })))
   udf$.res <- out
-  udf[order(udf$.id), ".res"]
+  udf[order(udf$.id), ".res", drop = TRUE]
 }
 
 
-permute_parent_one <- function(prep, vid, udf, ntrts) {
-  gparent <- prep$fct_names(vid)
+permute_parent_one <- function(prov, vid, udf, ntrts) {
+  gparent <- prov$fct_names(vid)
   blocksizes <- as.data.frame(table(table(udf[[gparent]])))
   blocksizes$size <- as.numeric(as.character(blocksizes$Var1))
   for(isize in seq(nrow(blocksizes))) {

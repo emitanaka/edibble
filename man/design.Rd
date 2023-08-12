@@ -5,7 +5,13 @@
 \alias{redesign}
 \title{Start the edibble design}
 \usage{
-design(name = NULL, .record = TRUE, seed = NULL, provenance = Provenance$new())
+design(
+  title = NULL,
+  name = "edibble",
+  .record = TRUE,
+  seed = NULL,
+  provenance = Provenance$new()
+)
 
 redesign(
   .data,

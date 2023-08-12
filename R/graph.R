@@ -38,15 +38,15 @@ NULL
 #' @rdname design_data
 #' @export
 fct_nodes <- function(edibble) {
-  prep <- activate_provenance(edibble)
-  prep$fct_nodes
+  prov <- activate_provenance(edibble)
+  prov$fct_nodes
 }
 
 #' @rdname design_data
 #' @export
 fct_edges <- function(edibble) {
-  prep <- activate_provenance(edibble)
-  prep$fct_edges
+  prov <- activate_provenance(edibble)
+  prov$fct_edges
 }
 
 
@@ -54,15 +54,15 @@ fct_edges <- function(edibble) {
 #' @rdname design_data
 #' @export
 lvl_nodes <- function(edibble) {
-  prep <- activate_provenance(edibble)
-  prep$lvl_nodes
+  prov <- activate_provenance(edibble)
+  prov$lvl_nodes
 }
 
 #' @rdname design_data
 #' @export
 lvl_edges <- function(edibble) {
-  prep <- activate_provenance(edibble)
-  prep$lvl_edges
+  prov <- activate_provenance(edibble)
+  prov$lvl_edges
 }
 
 

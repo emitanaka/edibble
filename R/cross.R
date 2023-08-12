@@ -5,10 +5,6 @@
 #' as well as adding new attributes.
 #'
 #' @param ... a sequence of units
-#' @param prefix Currently not implemented.The prefix of the label.
-#' @param suffix Currently not implemented.The suffix of the label.
-#' @param leading0 Currently not implemented.Whether there should be a leading 0 if labels are made.
-#' @param sep Currently not implemented.A separator added between prefix and the number if prefix is empty.
 #' @param attrs Currently not implemented.
 #' @examples
 #' design("Strip-Plot Design | Strip-Unit Design") %>%
@@ -18,7 +14,7 @@
 #'             unit = nested_in(block, crossed_by(row, col)))
 #' @return An object of class "cross_lvls".
 #' @export
-crossed_by <- function(..., prefix = NULL, suffix = NULL, leading0 = NULL, sep = NULL, attrs = NULL) {
+crossed_by <- function(..., attrs = NULL) {
   e <- exprs(...)
   structure(as.character(e),
             attrs = attrs, class = "cross_lvls")

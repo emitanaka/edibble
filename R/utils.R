@@ -47,10 +47,10 @@ print.edbl_design <- function(x,
                               decorate_levels = edibble_decorate("levels"),
                               decorate_title  = edibble_decorate("title"),
                               title = NULL, ...) {
-  title <- title %||% x$provenance$name
-  prep <- cook_design(x)
-  fids <- prep$fct_nodes$id
-  fnames <- prep$fct_names(id = fids)
+  prov <- activate_provenance(x)
+  title <- title %||% prov$get_title()
+  fids <- prov$fct_nodes$id
+  fnames <- prov$fct_names(id = fids)
 
   if(is_empty(fids)) {
     data <- data.frame(var = "root",
@@ -58,20 +58,20 @@ print.edbl_design <- function(x,
                        label = as.character(decorate_title(title)))
   } else {
 
-    classes <- prep$fct_class()
+    classes <- prov$fct_role()
     label_names <- decorate_vars(fnames,
                                  decorate_units,
                                  decorate_trts,
                                  decorate_rcrds,
                                  classes)
-    var_nlevels <- lengths(prep$fct_levels()[fnames])
+    var_nlevels <- lengths(prov$fct_levels(name = fnames, return = "id"))
     nvar <- length(fids)
     ll <- lapply(fids,
                  function(id) {
-                   class <- prep$fct_class(id = id)
-                   children <- prep$fct_child(id = id)
+                   class <- prov$fct_role(id = id)
+                   children <- prov$fct_id_child(id = id)
                    if(class!="edbl_trt" & !is_empty(children)) {
-                     prep$fct_names(id = children)
+                     prov$fct_names(id = children)
                    } else {
                      character()
                    }
@@ -272,7 +272,7 @@ as.data.frame.edbl_table <- function(x,
 append_recipe_code <- function(.design, new) {
   .design$recipe <- c(.design$recipe, new)
   prov <- activate_provenance(.design)
-  prov$record_history_external(new)
+  prov$record_track_external(new)
   .design
 }
 

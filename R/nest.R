@@ -15,22 +15,17 @@
 nested_in <- function(x, ...) {
   top <- caller_env()$.top_env
   if(is.null(top$.fname)) abort("The `nested_in` function must be used within `set_units` function.")
-  prep <- top$prep
-  vlevs <- prep$fct_levels()
+  prov <- top$prov
+  vlevs <- prov$fct_levels(return = "value")
   parent_name <- as_string(enexpr(x))
   parent_vlevels <- vlevs[[parent_name]]
   dots <- list2(...)
   args <- list()
   for(.x in dots) {
-    ind <- is_cross_levels(.x) | is_formula(.x, lhs = FALSE)
-    if(ind) {
-      if(is_formula(.x, lhs = FALSE)) {
-        vars <- rownames(attr(stats::terms(.x), "factors"))
-      } else {
-        vars <- .x
-      }
+    if(is_cross_levels(.x) | is_formula(.x, lhs = FALSE)) {
+      vars <- if(is_formula(.x, lhs = FALSE)) rownames(attr(stats::terms(.x), "factors")) else .x
       child_lvls_by_parent <- map(vars, function(.var) {
-        out <- serve_units(select_units(prep, .var, parent_name))
+        out <- prov$serve_units(id = prov$fct_id(name = c(.var, parent_name)), return = "value")
         split(out[[.var]], out[[parent_name]])
       })
       names(child_lvls_by_parent) <- vars
@@ -79,12 +74,12 @@ nested_in <- function(x, ...) {
 #' @return Return a named list. Only shows the direct parent.
 #' @export
 nesting_structure <- function(design) {
-    prep <- cook_design(design)
-    uids <- prep$unit_ids
-    fedges <- prep$fct_edges
-    ndf <- fedges[fedges$from %in% uids & fedges$to %in% uids & !fedges$type %in% c("depends", "cross"),]
-    from <- prep$fct_names(ndf$from)
-    to <- prep$fct_names(ndf$to)
+    prov <- activate_provenance(design)
+    uids <- prov$unit_ids
+    fedges <- prov$fct_edges
+    ndf <- fedges[fedges$from %in% uids & fedges$to %in% uids, ]
+    from <- prov$fct_names(id = ndf$from)
+    to <- prov$fct_names(id = ndf$to)
     split(from, to)
 }
 

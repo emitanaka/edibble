@@ -166,9 +166,10 @@ tbl_sum.edbl_table <- function(x) {
 
 #' @export
 print.edbl_table <- function(x, ..., n = NULL, width = NULL, n_extra = NULL) {
-  name <- edbl_design(x)$name
-  format_name <- style_subtle(paste("#", cli::style_bold(name)))
-  if(!is.null(name)) cat(format_name, "\n")
+  prov <- activate_provenance(x)
+  title <- prov$get_title()
+  format_title <- style_subtle(paste("#", cli::style_bold(title)))
+  if(!is.null(title)) cat(format_title, "\n")
   NextMethod()
 }
 

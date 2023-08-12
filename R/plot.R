@@ -24,11 +24,12 @@ plot.edbl_design <- function(x, which = c("factors", "levels"),
   if(!requireNamespace("visNetwork")) abort("You need to install `visNetwork` package.")
   which <- match.arg(which)
   view <- match.arg(view)
-  prep <- cook_design(x)
+  prov <- activate_provenance(x)
 
   nodes <- switch(which,
-                  "factors" = prep$fct_nodes,
-                  "levels" = prep$lvl_nodes)
+                  "factors" = prov$fct_nodes,
+                  # FIXME
+                  "levels" = prov$lvl_nodes)
   nodes$group <- switch(which,
                         "factors" = gsub("edbl_", "", nodes$class),
                         "levels" = nodes$var)
@@ -36,7 +37,7 @@ plot.edbl_design <- function(x, which = c("factors", "levels"),
   class2shape <- c("edbl_unit" = "circle",
                    "edbl_trt" = "diamond",
                    "edbl_rcrd" = "database")
-  nodes$shape <- class2shape[prep$fct_class(nodes$idvar)]
+  nodes$shape <- class2shape[prov$fct_class(nodes$idvar)]
 
   main <- names(title) %||% title %||% x$name
   main_style <- ifelse(is_named(title), title, "")
@@ -46,8 +47,8 @@ plot.edbl_design <- function(x, which = c("factors", "levels"),
   footer_style <- ifelse(is_named(footer), footer, "")
   background <- ifelse(background=="transparent", "rgba(0, 0, 0, 0)", background)
   edges <- switch(which,
-                  "factors" = prep$fct_edges,
-                  "levels" = prep$lvl_edges)
+                  "factors" = prov$fct_edges,
+                  "levels" = prov$lvl_edges)
   if(nrow(edges)) {
     if(which=="factors") {
       # this doesn't seem to work

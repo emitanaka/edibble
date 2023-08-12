@@ -5,7 +5,7 @@
         block, 2))
       des1
     Output
-      nested units
-      \-block (3 levels)
-        \-plot (6 levels)
+      An edibble design
+      +-block (3 levels)
+      \-plot (6 levels)
 

@@ -1,5 +1,5 @@
 test_that("measure response", {
-
+  # FIXME
 
   des0 <- design(name = "Effective teaching") %>%
     set_units(class = 4,
