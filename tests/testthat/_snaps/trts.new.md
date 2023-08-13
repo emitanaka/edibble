@@ -41,7 +41,7 @@
       design() %>% set_trts(vaccine = 3, sex = 2) %>% set_units(person = 30) %>%
         allot_trts(~person) %>% assign_trts("systematic") %>% serve_table()
     Output
-      # An edibble design 
+      [38;5;246m# An edibble design[39m 
       # An edibble: 30 x 3
           vaccine      sex     person
          <trt(3)> <trt(2)> <unit(30)>

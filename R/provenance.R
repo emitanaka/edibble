@@ -704,7 +704,7 @@ Provenance <- R6::R6Class("Provenance",
                          fct_id_last = 0L,
                          lvl_id_last = 0L,
 
-                         title = "An edibble design",
+                         title = NULL,
                          name = NULL,
                          seed = NULL,
                          edbl_version = NULL,

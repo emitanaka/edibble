@@ -1,7 +1,7 @@
 # set_units
 
     Code
-      design(name = "unlinked units") %>% set_units(block = 3, plot = 2)
+      design(title = "unlinked units") %>% set_units(block = 3, plot = 2)
     Output
       unlinked units
       +-block (3 levels)
@@ -47,7 +47,7 @@
        8      row2      col1     site4     plot8 
        9      row3      col1     site1     plot9 
       10      row3      col1     site2     plot10
-      # ... with 38 more rows
+      # i 38 more rows
 
 ---
 
@@ -68,5 +68,5 @@
        8     site2      row4      col1     plot8 
        9     site2      row5      col1     plot9 
       10     site2      row5      col1     plot10
-      # ... with 50 more rows
+      # i 50 more rows
 

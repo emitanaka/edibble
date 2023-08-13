@@ -48,7 +48,7 @@ print.edbl_design <- function(x,
                               decorate_title  = edibble_decorate("title"),
                               title = NULL, ...) {
   prov <- activate_provenance(x)
-  title <- title %||% prov$get_title()
+  title <- title %||% prov$get_title() %||% "An edibble design"
   fids <- prov$fct_nodes$id
   fnames <- prov$fct_names(id = fids)
 

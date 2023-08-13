@@ -152,7 +152,7 @@ new_trackable <- function(internal_cmd = character(),
 
 #' @export
 tbl_sum.trck_table <- function(x) {
-  c("A history table" = dim_desc(x),
+  c("A tracking table" = dim_desc(x),
     "External command" = attr(x, "external_cmd"),
     "Execution time" = paste(as.character(attr(x, "execution_time")),
                              as.character(attr(x, "time_zone"))))
