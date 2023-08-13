@@ -80,7 +80,7 @@ NULL
 #' @rdname extract-lvl-nodes
 #' @export
 "$.edbl_lnodes" <- function(x, name) {
-  unname(unlist(lapply(x, function(.x) .x[[name]])))
+  unname(unlist(lapply(unclass(x), function(.x) .x[[name]])))
 }
 
 #' @rdname extract-lvl-nodes

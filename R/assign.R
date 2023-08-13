@@ -47,6 +47,7 @@ assign_trts <- function(.design, order = "random", seed = NULL, constrain = nest
   allotments <- fedges[fedges$type == "allot", ]
   alloc_groups <- unique(allotments$group)
   order <- rep(order, length.out = length(alloc_groups))
+
   for(igroup in alloc_groups) {
     trts_id <- allotments[allotments$group == igroup, ]$from
     # there should be only one unit

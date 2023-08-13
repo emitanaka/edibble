@@ -54,7 +54,7 @@
        8 vaccine2     sex1   person8 
        9 vaccine3     sex1   person9 
       10 vaccine1     sex2   person10
-      # ... with 20 more rows
+      # i 20 more rows
 
 ---
 
@@ -76,7 +76,7 @@
        8 vaccine2        F   person8 
        9 vaccine3        F   person9 
       10 vaccine1        M   person10
-      # ... with 20 more rows
+      # i 20 more rows
 
 ---
 
@@ -98,7 +98,7 @@
        8 vaccine2        M   person8 
        9 vaccine3        F   person9 
       10 vaccine1        M   person10
-      # ... with 20 more rows
+      # i 20 more rows
 
 ---
 
@@ -119,7 +119,7 @@
        8 vaccine2   person8 
        9 vaccine3   person9 
       10 vaccine1   person10
-      # ... with 20 more rows
+      # i 20 more rows
 
 ---
 
@@ -234,19 +234,19 @@
     Output
                 
                  person1 person10 person11 person12 person13 person14 person15
-        vaccine1       1        1        0        0        1        1        0
-        vaccine2       1        0        1        1        0        1        1
-        vaccine3       0        1        1        1        1        0        1
+        vaccine1       1        0        1        1        1        0        1
+        vaccine2       1        1        0        1        1        1        0
+        vaccine3       0        1        1        0        0        1        1
                 
                  person16 person17 person18 person19 person2 person20 person3 person4
-        vaccine1        1        1        0        1       1        1       0       1
-        vaccine2        1        0        1        0       1        1       1       0
-        vaccine3        0        1        1        1       0        0       1       1
+        vaccine1        0        1        1        1       1        0       0       0
+        vaccine2        1        1        0        0       0        1       1       1
+        vaccine3        1        0        1        1       1        1       1       1
                 
                  person5 person6 person7 person8 person9
-        vaccine1       0       1       1       1       0
-        vaccine2       1       1       0       0       1
-        vaccine3       1       0       1       1       1
+        vaccine1       1       1       0       1       1
+        vaccine2       0       1       1       1       0
+        vaccine3       1       0       1       0       1
 
 ---
 
@@ -258,19 +258,19 @@
     Output
                 
                  person1 person10 person11 person12 person13 person14 person15
-        vaccine1       3        3        2        2        3        3        2
-        vaccine2       3        2        3        3        2        3        3
-        vaccine3       2        3        3        3        3        2        3
+        vaccine1       3        2        3        3        3        2        3
+        vaccine2       3        3        2        3        3        3        2
+        vaccine3       2        3        3        2        2        3        3
                 
                  person16 person17 person18 person19 person2 person20 person3 person4
-        vaccine1        3        3        2        3       3        3       2       3
-        vaccine2        3        2        3        2       3        3       3       2
-        vaccine3        2        3        3        3       2        2       3       3
+        vaccine1        2        3        3        3       3        2       2       2
+        vaccine2        3        3        2        2       2        3       3       3
+        vaccine3        3        2        3        3       3        3       3       3
                 
                  person5 person6 person7 person8 person9
-        vaccine1       2       3       3       3       2
-        vaccine2       3       3       2       2       3
-        vaccine3       3       2       3       3       3
+        vaccine1       3       3       2       3       3
+        vaccine2       2       3       3       3       2
+        vaccine3       3       2       3       2       3
 
 ---
 
@@ -282,19 +282,19 @@
     Output
                 
                  person1 person10 person11 person12 person13 person14 person15
-        vaccine1       3        1        2        1        1        2        1
-        vaccine2       3        1        1        2        1        1        2
-        vaccine3       2        2        1        1        2        1        1
+        vaccine1       3        2        1        1        2        1        1
+        vaccine2       3        1        2        1        1        2        1
+        vaccine3       2        1        1        2        1        1        2
                 
                  person16 person17 person18 person19 person2 person20 person3 person4
-        vaccine1        1        2        1        1       1        2       1       1
-        vaccine2        1        1        2        1       1        1       2       1
-        vaccine3        2        1        1        2       1        1       1       2
+        vaccine1        2        1        1        2       1        1       1       2
+        vaccine2        1        2        1        1       1        2       1       1
+        vaccine3        1        1        2        1       1        1       2       1
                 
                  person5 person6 person7 person8 person9
-        vaccine1       2       1       1       2       1
-        vaccine2       1       2       1       1       2
-        vaccine3       1       1       2       1       1
+        vaccine1       1       1       2       1       1
+        vaccine2       2       1       1       2       1
+        vaccine3       1       2       1       1       2
 
 ---
 
@@ -305,323 +305,123 @@
       table(tab$fert, tab$plot)
     Output
              
-              plot1 plot10 plot100 plot11 plot12 plot13 plot14 plot15 plot16 plot17
-        fert1     1      0       0      0      1      0      0      1      0      0
-        fert2     1      1       1      0      1      1      0      1      0      0
-        fert3     1      0       0      1      0      0      1      0      1      1
-        fert4     1      1       0      0      1      1      0      1      0      0
-        fert5     1      0       1      1      0      0      1      0      1      1
-        fert6     1      0       1      0      0      0      1      0      0      0
-        fert7     1      1       0      1      1      1      0      0      1      1
-        fert8     1      1       1      1      0      1      1      1      1      1
+              plot001 plot002 plot003 plot004 plot005 plot006 plot007 plot008 plot009
+        fert1       1       1       0       0       0       0       1       1       1
+        fert2       1       0       1       1       1       0       0       1       0
+        fert3       1       0       0       1       1       0       0       1       1
+        fert4       1       1       1       0       0       1       0       0       1
+        fert5       1       0       0       0       0       1       1       0       0
+        fert6       1       1       1       0       1       1       1       0       1
+        fert7       1       0       0       1       0       0       1       1       0
+        fert8       1       0       1       1       1       1       0       0       0
              
-              plot18 plot19 plot2 plot20 plot21 plot22 plot23 plot24 plot25 plot26
-        fert1      1      1     0      0      1      1      1      0      0      1
-        fert2      0      1     1      0      0      0      1      0      1      0
-        fert3      0      1     0      1      1      0      0      0      1      0
-        fert4      1      1     1      1      0      0      0      1      1      1
-        fert5      0      0     0      1      0      1      0      1      0      1
-        fert6      1      0     1      1      1      1      0      1      0      0
-        fert7      1      0     0      0      1      0      1      1      0      1
-        fert8      0      0     0      0      0      1      1      0      1      0
+              plot010 plot011 plot012 plot013 plot014 plot015 plot016 plot017 plot018
+        fert1       1       1       1       0       1       0       0       0       1
+        fert2       0       0       1       1       1       0       1       0       1
+        fert3       1       0       0       0       0       1       0       0       1
+        fert4       0       1       1       0       1       0       1       1       0
+        fert5       1       0       0       1       0       1       1       1       0
+        fert6       1       1       0       0       0       1       1       1       0
+        fert7       0       1       1       1       1       1       0       0       0
+        fert8       0       0       0       1       0       0       0       1       1
              
-              plot27 plot28 plot29 plot3 plot30 plot31 plot32 plot33 plot34 plot35
-        fert1      0      1      1     0      1      0      1      0      1      0
-        fert2      1      0      0     0      0      1      0      1      0      1
-        fert3      1      1      0     1      0      1      1      1      0      0
-        fert4      0      0      1     1      0      1      0      0      0      1
-        fert5      0      1      1     0      1      1      0      1      0      1
-        fert6      1      0      1     0      1      0      0      1      1      0
-        fert7      0      0      0     1      1      0      1      0      1      1
-        fert8      1      1      0     1      0      0      1      0      1      0
+              plot019 plot020 plot021 plot022 plot023 plot024 plot025 plot026 plot027
+        fert1       0       1       1       0       1       0       1       1       0
+        fert2       0       1       0       0       1       0       1       0       1
+        fert3       0       1       1       0       0       1       1       0       1
+        fert4       1       0       1       0       1       1       0       0       0
+        fert5       0       0       0       1       0       0       0       1       1
+        fert6       1       1       1       1       0       0       0       1       0
+        fert7       1       0       0       1       1       1       1       1       0
+        fert8       1       0       0       1       0       1       0       0       1
              
-              plot36 plot37 plot38 plot39 plot4 plot40 plot41 plot42 plot43 plot44
-        fert1      0      1      1      1     0      1      0      1      0      0
-        fert2      0      1      0      0     1      1      0      0      1      0
-        fert3      1      0      1      1     0      0      1      1      0      1
-        fert4      1      0      1      0     0      1      1      0      0      1
-        fert5      1      1      0      1     0      1      1      0      1      0
-        fert6      0      0      0      1     1      0      1      0      1      1
-        fert7      0      0      1      0     1      0      0      1      0      0
-        fert8      1      1      0      0     1      0      0      1      1      1
+              plot028 plot029 plot030 plot031 plot032 plot033 plot034 plot035 plot036
+        fert1       1       1       1       0       0       1       0       0       1
+        fert2       1       0       1       0       1       0       1       1       0
+        fert3       1       0       0       1       1       0       1       0       0
+        fert4       1       1       0       1       0       0       1       1       0
+        fert5       0       1       0       0       1       1       1       0       1
+        fert6       0       0       1       0       1       0       0       0       0
+        fert7       0       1       0       1       0       1       0       1       1
+        fert8       0       0       1       1       0       1       0       1       1
              
-              plot45 plot46 plot47 plot48 plot49 plot5 plot50 plot51 plot52 plot53
-        fert1      1      0      1      1      0     1      0      0      1      1
-        fert2      1      1      0      0      1     1      1      1      1      0
-        fert3      0      0      1      0      1     0      1      1      0      1
-        fert4      1      1      1      0      1     0      1      0      1      0
-        fert5      1      1      0      1      0     0      0      1      0      1
-        fert6      0      0      1      0      0     1      1      0      1      0
-        fert7      0      1      0      1      0     0      0      1      0      0
-        fert8      0      0      0      1      1     1      0      0      0      1
+              plot037 plot038 plot039 plot040 plot041 plot042 plot043 plot044 plot045
+        fert1       1       0       1       0       1       0       1       1       0
+        fert2       1       1       0       1       0       1       0       1       0
+        fert3       1       1       0       1       0       0       1       0       1
+        fert4       0       1       0       0       1       0       1       1       1
+        fert5       0       1       0       0       1       0       0       1       0
+        fert6       1       0       1       0       1       1       0       0       0
+        fert7       0       0       1       1       0       1       0       0       1
+        fert8       0       0       1       1       0       1       1       0       1
              
-              plot54 plot55 plot56 plot57 plot58 plot59 plot6 plot60 plot61 plot62
-        fert1      0      0      1      1      0      0     1      0      1      1
-        fert2      1      1      0      0      1      0     1      0      1      0
-        fert3      0      1      0      1      0      1     0      1      0      1
-        fert4      1      0      1      0      1      1     0      1      0      1
-        fert5      0      1      1      0      1      0     1      0      0      1
-        fert6      1      1      0      1      0      1     0      0      1      0
-        fert7      1      0      1      0      0      1     1      1      0      0
-        fert8      0      0      0      1      1      0     0      1      1      0
+              plot046 plot047 plot048 plot049 plot050 plot051 plot052 plot053 plot054
+        fert1       0       1       0       0       1       0       1       0       1
+        fert2       1       0       0       0       1       1       0       1       1
+        fert3       0       1       1       0       0       0       1       1       0
+        fert4       0       1       0       1       0       1       1       0       0
+        fert5       1       1       1       1       0       1       0       1       0
+        fert6       1       0       0       1       1       0       0       1       1
+        fert7       0       0       1       0       1       0       1       0       0
+        fert8       1       0       1       1       0       1       0       0       1
              
-              plot63 plot64 plot65 plot66 plot67 plot68 plot69 plot7 plot70 plot71
-        fert1      0      0      0      1      0      1      0     1      0      1
-        fert2      1      0      1      0      1      1      0     0      1      1
-        fert3      0      0      1      0      0      1      1     0      0      1
-        fert4      0      0      0      0      0      0      0     1      1      0
-        fert5      1      1      0      0      0      0      1     0      1      0
-        fert6      1      1      1      1      1      0      1     1      0      0
-        fert7      0      1      1      1      1      1      1     0      1      1
-        fert8      1      1      0      1      1      0      0     1      0      0
+              plot055 plot056 plot057 plot058 plot059 plot060 plot061 plot062 plot063
+        fert1       0       0       1       0       1       1       0       0       1
+        fert2       0       1       0       0       0       0       1       0       0
+        fert3       1       0       1       1       0       0       1       1       1
+        fert4       1       0       0       0       0       1       0       1       0
+        fert5       0       1       1       1       0       1       0       0       1
+        fert6       0       0       1       1       1       0       1       1       0
+        fert7       1       1       0       1       1       0       1       1       0
+        fert8       1       1       0       0       1       1       0       0       1
              
-              plot72 plot73 plot74 plot75 plot76 plot77 plot78 plot79 plot8 plot80
-        fert1      1      1      0      1      0      1      0      1     1      1
-        fert2      0      1      1      1      0      0      1      1     0      1
-        fert3      0      1      0      1      1      0      1      1     0      0
-        fert4      1      0      1      0      1      1      0      0     1      0
-        fert5      1      0      0      0      1      0      1      0     1      1
-        fert6      0      1      0      0      1      1      0      0     0      1
-        fert7      0      0      1      1      0      0      1      0     0      0
-        fert8      1      0      1      0      0      1      0      1     1      0
+              plot064 plot065 plot066 plot067 plot068 plot069 plot070 plot071 plot072
+        fert1       0       1       1       0       0       0       1       1       0
+        fert2       1       0       0       1       1       0       1       0       0
+        fert3       0       1       0       1       0       1       0       0       1
+        fert4       1       1       1       0       0       1       0       1       0
+        fert5       0       0       1       1       1       0       0       1       0
+        fert6       1       0       0       0       1       1       1       0       1
+        fert7       1       0       0       1       1       0       0       1       1
+        fert8       0       1       1       0       0       1       1       0       1
              
-              plot81 plot82 plot83 plot84 plot85 plot86 plot87 plot88 plot89 plot9
-        fert1      0      0      1      1      0      0      0      1      1     0
-        fert2      0      0      1      0      1      1      0      0      1     1
-        fert3      0      1      1      0      1      0      1      0      1     0
-        fert4      1      0      1      1      0      0      1      0      0     1
-        fert5      0      1      0      1      0      1      0      1      0     1
-        fert6      1      0      0      1      1      1      1      1      0     0
-        fert7      1      1      0      0      1      1      0      1      0     0
-        fert8      1      1      0      0      0      0      1      0      1     1
+              plot073 plot074 plot075 plot076 plot077 plot078 plot079 plot080 plot081
+        fert1       1       0       1       1       0       0       1       1       0
+        fert2       0       1       1       1       0       1       0       1       1
+        fert3       1       0       1       0       1       0       1       0       1
+        fert4       0       1       0       1       1       1       0       0       1
+        fert5       1       1       0       1       0       1       0       1       0
+        fert6       0       0       0       0       1       1       1       0       1
+        fert7       0       1       0       0       1       0       0       1       0
+        fert8       1       0       1       0       0       0       1       0       0
              
-              plot90 plot91 plot92 plot93 plot94 plot95 plot96 plot97 plot98 plot99
-        fert1      1      0      1      1      0      1      0      1      0      0
-        fert2      0      0      1      0      1      1      0      0      1      0
-        fert3      0      1      1      1      0      0      0      1      1      0
-        fert4      1      1      0      1      0      0      1      0      1      1
-        fert5      0      1      0      0      1      1      0      1      0      0
-        fert6      1      0      1      0      1      0      1      0      1      1
-        fert7      1      0      0      1      1      0      1      1      0      1
-        fert8      0      1      0      0      0      1      1      0      0      1
-
----
-
-    Code
-      tab <- design() %>% set_trts(fert = 2, irr = 2) %>% set_units(block = 10,
-        wplot = nested_in(block, 3), splot = nested_in(wplot, 4)) %>% allot_trts(
-        fert ~ splot, irr ~ wplot) %>% assign_trts("random", seed = 2) %>%
-        serve_table()
-      table(tab$fert, tab$irr, tab$wplot)
-    Output
-      , ,  = wplot1
-      
+              plot082 plot083 plot084 plot085 plot086 plot087 plot088 plot089 plot090
+        fert1       1       0       0       1       0       0       1       1       0
+        fert2       1       0       1       0       1       0       0       0       1
+        fert3       0       1       1       0       0       0       1       1       1
+        fert4       0       1       1       0       1       1       1       0       0
+        fert5       0       1       0       1       1       0       0       1       1
+        fert6       0       0       1       1       0       1       0       0       0
+        fert7       1       0       0       1       0       1       1       0       1
+        fert8       1       1       0       0       1       1       0       1       0
              
-              irr1 irr2
-        fert1    0    2
-        fert2    0    2
-      
-      , ,  = wplot10
-      
+              plot091 plot092 plot093 plot094 plot095 plot096 plot097 plot098 plot099
+        fert1       1       1       0       0       0       1       0       0       1
+        fert2       0       1       1       0       0       1       1       0       1
+        fert3       0       0       0       1       1       1       0       1       0
+        fert4       0       0       1       0       1       0       1       0       1
+        fert5       1       0       1       1       1       1       0       1       0
+        fert6       1       1       0       0       1       0       1       1       0
+        fert7       0       0       1       1       0       0       0       1       0
+        fert8       1       1       0       1       0       0       1       0       1
              
-              irr1 irr2
-        fert1    2    0
-        fert2    2    0
-      
-      , ,  = wplot11
-      
-             
-              irr1 irr2
-        fert1    0    2
-        fert2    0    2
-      
-      , ,  = wplot12
-      
-             
-              irr1 irr2
-        fert1    2    0
-        fert2    2    0
-      
-      , ,  = wplot13
-      
-             
-              irr1 irr2
-        fert1    2    0
-        fert2    2    0
-      
-      , ,  = wplot14
-      
-             
-              irr1 irr2
-        fert1    0    2
-        fert2    0    2
-      
-      , ,  = wplot15
-      
-             
-              irr1 irr2
-        fert1    2    0
-        fert2    2    0
-      
-      , ,  = wplot16
-      
-             
-              irr1 irr2
-        fert1    0    2
-        fert2    0    2
-      
-      , ,  = wplot17
-      
-             
-              irr1 irr2
-        fert1    2    0
-        fert2    2    0
-      
-      , ,  = wplot18
-      
-             
-              irr1 irr2
-        fert1    0    2
-        fert2    0    2
-      
-      , ,  = wplot19
-      
-             
-              irr1 irr2
-        fert1    2    0
-        fert2    2    0
-      
-      , ,  = wplot2
-      
-             
-              irr1 irr2
-        fert1    2    0
-        fert2    2    0
-      
-      , ,  = wplot20
-      
-             
-              irr1 irr2
-        fert1    0    2
-        fert2    0    2
-      
-      , ,  = wplot21
-      
-             
-              irr1 irr2
-        fert1    0    2
-        fert2    0    2
-      
-      , ,  = wplot22
-      
-             
-              irr1 irr2
-        fert1    0    2
-        fert2    0    2
-      
-      , ,  = wplot23
-      
-             
-              irr1 irr2
-        fert1    2    0
-        fert2    2    0
-      
-      , ,  = wplot24
-      
-             
-              irr1 irr2
-        fert1    2    0
-        fert2    2    0
-      
-      , ,  = wplot25
-      
-             
-              irr1 irr2
-        fert1    0    2
-        fert2    0    2
-      
-      , ,  = wplot26
-      
-             
-              irr1 irr2
-        fert1    0    2
-        fert2    0    2
-      
-      , ,  = wplot27
-      
-             
-              irr1 irr2
-        fert1    2    0
-        fert2    2    0
-      
-      , ,  = wplot28
-      
-             
-              irr1 irr2
-        fert1    2    0
-        fert2    2    0
-      
-      , ,  = wplot29
-      
-             
-              irr1 irr2
-        fert1    2    0
-        fert2    2    0
-      
-      , ,  = wplot3
-      
-             
-              irr1 irr2
-        fert1    0    2
-        fert2    0    2
-      
-      , ,  = wplot30
-      
-             
-              irr1 irr2
-        fert1    0    2
-        fert2    0    2
-      
-      , ,  = wplot4
-      
-             
-              irr1 irr2
-        fert1    0    2
-        fert2    0    2
-      
-      , ,  = wplot5
-      
-             
-              irr1 irr2
-        fert1    0    2
-        fert2    0    2
-      
-      , ,  = wplot6
-      
-             
-              irr1 irr2
-        fert1    2    0
-        fert2    2    0
-      
-      , ,  = wplot7
-      
-             
-              irr1 irr2
-        fert1    2    0
-        fert2    2    0
-      
-      , ,  = wplot8
-      
-             
-              irr1 irr2
-        fert1    2    0
-        fert2    2    0
-      
-      , ,  = wplot9
-      
-             
-              irr1 irr2
-        fert1    0    2
-        fert2    0    2
-      
+              plot100
+        fert1       1
+        fert2       0
+        fert3       0
+        fert4       1
+        fert5       0
+        fert6       1
+        fert7       1
+        fert8       0
 

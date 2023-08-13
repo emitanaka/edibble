@@ -69,7 +69,7 @@ test_that("treatments", {
                sex = c("F", "M")) %>%
       set_units(person = 30) %>%
       allot_trts(vaccine ~ person,
-                        sex ~ person) %>%
+                 sex ~ person) %>%
       assign_trts("systematic") %>%
       serve_table()
   })

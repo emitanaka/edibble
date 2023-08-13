@@ -261,7 +261,7 @@ Provenance <- R6::R6Class("Provenance",
                            qid <- id %||% self$fct_id(name = name)
                            lnodes <- self$lvl_nodes
                            switch(return,
-                                  id = lapply(lnodes[qid], function(x) x$id),
+                                  id = lapply(unclass(lnodes[qid]), function(x) x$id),
                                   value = {
                                     out <- lapply(lnodes[qid], function(x) x$value)
                                     names(out) <- self$fct_names(id = qid)
