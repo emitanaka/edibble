@@ -1,7 +1,7 @@
 test_that("measure response", {
   # FIXME
 
-  des0 <- design(name = "Effective teaching") %>%
+  des0 <- design(title = "Effective teaching") %>%
     set_units(class = 4,
               student = nested_in(class, 30)) %>%
     set_trts(style = c("flipped", "traditional"),
@@ -12,9 +12,9 @@ test_that("measure response", {
 
   expect_snapshot({
     des0 %>%
-      serve_table() %>%
       set_rcrds(exam_mark = student,
-                room = class)
+                room = class) %>%
+      serve_table()
   })
 
 

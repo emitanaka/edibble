@@ -272,3 +272,24 @@
       10    class1   student10 traditional open-book           o      x
       # ... with 110 more rows
 
+---
+
+    Code
+      serve_table(des1)
+    Output
+      # Effective teaching 
+      # An edibble: 120 x 6
+             class     student       style        exam exam_mark   room
+         <unit(4)> <unit(120)>    <trt(2)>    <trt(3)>    <rcrd> <rcrd>
+       1    class1   student1  traditional closed-book         o      o
+       2    class1   student2  traditional closed-book         o      x
+       3    class1   student3  traditional take-home           o      x
+       4    class1   student4  traditional take-home           o      x
+       5    class1   student5  traditional open-book           o      x
+       6    class1   student6  traditional take-home           o      x
+       7    class1   student7  traditional take-home           o      x
+       8    class1   student8  traditional closed-book         o      x
+       9    class1   student9  traditional closed-book         o      x
+      10    class1   student10 traditional open-book           o      x
+      # ... with 110 more rows
+
