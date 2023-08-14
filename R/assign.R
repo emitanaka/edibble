@@ -2,7 +2,7 @@
 #'
 #' This function assigns specific treatment or unit levels to actual units.
 #'
-#' @param .design An edibble design which should have units, treatments and allotment defined.
+#' @param .edibble An edibble design which should have units, treatments and allotment defined.
 #' @param order A character vector signifying the apportion of treatments to units.
 #' The value should be either "random", "systematic", "systematic-random" or a class name corresponding to the algorithm for order_trts().
 #' "random" allocates the treatment randomly to units based on specified allotment with restrictions
@@ -35,11 +35,11 @@
 #'   serve_table()
 #' @return An edibble design.
 #' @export
-assign_trts <- function(.design, order = "random", seed = NULL, constrain = nesting_structure(.design), ..., .record = TRUE) {
-  not_edibble(.design)
+assign_trts <- function(.edibble, order = "random", seed = NULL, constrain = nesting_structure(.edibble), ..., .record = TRUE) {
+  not_edibble(.edibble)
   force(constrain) # evaluate this now rather than later
 
-  prov <- activate_provenance(.design)
+  prov <- activate_provenance(.edibble)
   if(.record) prov$record_step()
   prov$save_seed(seed)
 
@@ -95,31 +95,32 @@ assign_trts <- function(.design, order = "random", seed = NULL, constrain = nest
     }
   }
 
-  .design$graph <- prov$get_graph()
-  .design$assignment <- order
-  .design
+  return_edibble_with_graph(.edibble, prov)
+
+  # .edibble$assignment <- order
 }
 
 
 #' @rdname assign
 #' @export
-assign_units <- function(.design, order = "random", seed = NULL, constrain = nesting_structure(.design), ..., .record = TRUE) {
-  not_edibble(.design)
+assign_units <- function(.edibble, order = "random", seed = NULL, constrain = nesting_structure(.edibble), ..., .record = TRUE) {
+  not_edibble(.edibble)
+  prov <- activate_provenance(prov)
+  if(.record) prov$record_step()
+  prov$save_seed(seed)
+  # FIXME: check
 
-  if(.record) record_step()
-
-  save_seed(seed)
-  prov <- activate_provenance(.design)
-
-  for(ialloc in seq_along(.design$allotment$units)) {
-    lhs <- all.vars(f_lhs(.design$allotment$units[[ialloc]]))
-    rhs <- all.vars(f_rhs(.design$allotment$units[[ialloc]]))
+  for(ialloc in seq_along(.edibble$allotment$units)) {
+    lhs <- all.vars(f_lhs(.edibble$allotment$units[[ialloc]]))
+    rhs <- all.vars(f_rhs(.edibble$allotment$units[[ialloc]]))
 
     lnodes <- prov$lvl_nodes
 
-    lhs_id <- lnodes[[prov$fct_id(name = lhs)]]$id
-    udf <- as.data.frame(serve_units(select_units(prov, rhs)))
-    udf <- udf[rhs]
+    lid <- prov$fct_id(name = lhs)
+    rid <- prov$fct_id(name = rhs)
+    lhs_id <- lnodes[[lid]]$id
+    udf <- as.data.frame(prov$serve_units(id = lid, return = "id"))
+    udf <- udf[rid]
     small_df <- data.frame(lhs = lhs_id)
     permutation <- switch(order,
                           "systematic" = rep(1:nrow(small_df), length.out = nrow(udf)),
@@ -143,14 +144,13 @@ assign_units <- function(.design, order = "random", seed = NULL, constrain = nes
 
     tout <- small_df[permutation, , drop = FALSE]
 
-    browser()
     for(itvar in seq_along(tout)) {
-      prov$append_lvl_edges(data.frame(from = tout[[itvar]],
-                                       to = prov$lvl_id(udf[[rhs[length(rhs)]]]),
-                                       alloc = ialloc))
+      prov$append_lvl_edges(from = tout[[itvar]],
+                            to = udf[[rhs[length(rhs)]]],
+                            group = ialloc)
     }
 
   }
 
-  prov$design
+  return_edibble_with_graph(.edibble, prov)
 }
