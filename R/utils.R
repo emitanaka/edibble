@@ -1,5 +1,14 @@
 
-
+return_edibble_with_graph <- function(edibble, prov) {
+  des <- edbl_design(edibble)
+  des$graph <- prov$get_graph()
+  if(is_edibble_table(edibble)) {
+    attr(edibble, "design") <- des
+    edibble
+  } else {
+    des
+  }
+}
 
 
 
@@ -47,10 +56,13 @@ print.edbl_design <- function(x,
                               decorate_levels = edibble_decorate("levels"),
                               decorate_title  = edibble_decorate("title"),
                               title = NULL, ...) {
+
   prov <- activate_provenance(x)
   title <- title %||% prov$get_title() %||% "An edibble design"
   fids <- prov$fct_nodes$id
   fnames <- prov$fct_names(id = fids)
+
+
 
   if(is_empty(fids)) {
     data <- data.frame(var = "root",
