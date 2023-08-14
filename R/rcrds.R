@@ -23,33 +23,29 @@ set_rcrds <- function(.edibble, ...,
                       .record = TRUE) {
 
   not_edibble(.edibble)
-  if(.record) record_step()
-  prov <- activate_provenance(.edibble)
-
+  des <- edbl_design(.edibble)
+  prov <- activate_provenance(des)
+  if(.record) prov$record_step()
   .name_repair <- match.arg(.name_repair)
+
   units <- map(enexprs(...), function(x) {
       if(is.character(x)) return(x)
       if(is_symbol(x)) return(quo_text(x))
       return(eval(x))
     })
+
   rcrds <- names(units)
 
-  prov$fct_exists(name = unlist(units), class = "edbl_unit")
+  prov$fct_exists(name = unlist(units), role = "edbl_unit")
 
   for(i in seq_along(units)) {
-    rid <- prov$fct_last_id + 1L
-    uid <- prov$fct_id(units[[i]])
-    attrs <- attributes(units[[i]])
-    fattrs <- do.call(data.frame, c(attrs[setdiff(names(attrs), c("names", "class"))],
-                                    list(stringsAsFactors = FALSE,
-                                         id = rid,
-                                         name = rcrds[i],
-                                         class = "edbl_rcrd")))
-    prov$append_fct_nodes(fattrs)
-    prov$append_fct_edges(data.frame(from = uid, to = rid))
+    prov$append_fct_nodes(name = rcrds[i], role = "edbl_rcrd")
+    uid <- prov$fct_id(name = units[[i]])
+    rid <- prov$fct_id(name = rcrds[i])
+    prov$append_fct_edges(from = rid, to = uid)
   }
-  if(is_edibble_table(.edibble)) return(serve_table(prov$design))
-  prov$design
+
+  return_edibble_with_graph(.edibble, prov)
 }
 
 #' @rdname set_rcrds
@@ -80,20 +76,20 @@ set_rcrds_of <- function(.edibble, ...) {
 #'   expect_rcrds(y > 0)
 #' @return An edibble design.
 #' @export
-expect_rcrds <- function(.edibble, ...) {
+expect_rcrds <- function(.edibble, ..., .record = TRUE) {
   not_edibble(.edibble)
-  record_step()
+  prov <- activate_provenance(.edibble)
+  if(.record) prov$record_step()
   dots <- enquos(...)
   dots_nms <- names(dots)
-  prov <- activate_provenance(.edibble)
   rules_named <- map(dots[dots_nms!=""], eval_tidy)
   rules_unnamed <- map(dots[dots_nms==""], validate_rcrd,
                         rnames = prov$rcrd_names)
 
   rules_unnamed <- stats::setNames(rules_unnamed, map_chr(rules_unnamed, function(x) x$rcrd))
-  prov$design$validation <- simplify_validation(c(rules_named, rules_unnamed))
-  if(is_edibble_table(.edibble)) return(serve_table(prov$design))
-  prov$design
+  prov$set_validation(simplify_validation(c(rules_named, rules_unnamed)), type = "rcrds")
+
+  return_edibble_with_graph(.edibble, prov)
 }
 
 simplify_validation <- function(x) {
@@ -196,10 +192,6 @@ validate_rcrd <- function(x, rnames = NULL) {
   }
 }
 
-
-has_record <- function(prov) {
-  "edbl_rcrd" %in% prov$design$graph$nodes$class
-}
 
 
 #' Expected type of data entry
