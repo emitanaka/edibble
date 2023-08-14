@@ -31,10 +31,9 @@ set_fcts <- function(.edibble, ..., .class = NULL,
       .edibble$anatomy <- add_anatomy(.edibble$anatomy, input, fname, .class)
       graph_input(input, prov, fname, .class)
     }
-    .edibble$graph <- prov$get_graph()
 
   } else if(is_edibble_table(.edibble)) {
-
+    # FIXME
     loc <- eval_select(expr(tidyselect::all_of(c(...))), .edibble)
     for(i in seq_along(loc)) {
       var <- .edibble[[loc[i]]]
@@ -45,13 +44,12 @@ set_fcts <- function(.edibble, ..., .class = NULL,
                                             class = .class,
                                             name = fname)
       graph_input(.edibble[[loc[i]]], prov, fname, .class)
-      # FIXME
-      attr(.edibble, "design") <- prov$design
+
 
     }
 
   }
-  .edibble
+  return_edibble_with_graph(.edibble, prov)
 }
 
 
