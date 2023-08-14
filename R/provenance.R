@@ -52,14 +52,14 @@ Provenance <- R6::R6Class("Provenance",
                          },
 
                          reactivate = function(des, overwrite = c("graph", "anatomy", "recipe")) {
-                           private$record_track_internal()
+                           #private$record_track_internal()
                            for(obj in overwrite) {
                              private[[obj]] <- des[[obj]]
                            }
                          },
 
                          deactivate = function(delete = c("graph", "anatomy", "recipe")) {
-                           private$record_track_internal()
+                           #private$record_track_internal()
                            for(obj in delete) {
                              private[[obj]] <- NULL
                            }
@@ -395,6 +395,7 @@ Provenance <- R6::R6Class("Provenance",
                          #' @description
                          #' Given node data, append the factor nodes
                          append_fct_nodes = function(name, role, attrs = NULL) {
+                           private$record_track_internal()
                            n <- length(name)
                            role <- vctrs::vec_recycle(role, n)
                            data <- tibble::tibble(id = private$fct_new_id(n = n),
@@ -408,6 +409,7 @@ Provenance <- R6::R6Class("Provenance",
                          #' @description
                          #' Given node data, append the level nodes
                          append_lvl_nodes = function(value, attrs = NULL, fid = NULL) {
+                           private$record_track_internal()
                            lnodes <- self$lvl_nodes
                            id <- private$lvl_new_id(n = length(value))
                            data <- tibble::tibble(id = id, value = value, attrs = attrs)
@@ -426,6 +428,7 @@ Provenance <- R6::R6Class("Provenance",
                          #' @description
                          #' Given edge data, append the factor edges
                          append_fct_edges = function(from, to, type = NULL, group = NULL, attrs = NULL) {
+                           private$record_track_internal()
                            self$fct_edges <- rbind_(self$fct_edges, tibble::tibble(from = from,
                                                                                    to = to,
                                                                                    type = type,
@@ -436,6 +439,7 @@ Provenance <- R6::R6Class("Provenance",
                          #' @description
                          #' Given edge data, append the level edges
                          append_lvl_edges = function(from, to, attrs = NULL) {
+                           private$record_track_internal()
                            self$lvl_edges <- rbind_(self$lvl_edges, tibble::tibble(from = from,
                                                                                    to = to,
                                                                                    attrs = attrs))
@@ -481,6 +485,8 @@ Provenance <- R6::R6Class("Provenance",
                            return <- match.arg(return)
                            lnodes <- self$lvl_nodes
                            ledges <- self$lvl_edges
+
+
 
                            serve_trt = function(fid) {
                              # linked unit -
