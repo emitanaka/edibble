@@ -49,9 +49,9 @@ allot_trts <- function(.edibble, ..., .record = TRUE) {
       prov$trt_exists()
       tids <- prov$trt_ids
     }
-
     prov$append_fct_edges(from = tids, to = uid, group = ialloc, type = "allot")
   }
+
 
   des$graph <- prov$get_graph()
 
@@ -166,9 +166,12 @@ allot_units <- function(.edibble, ..., .record = TRUE) {
 #'  and `serve_table()`.
 #'
 #' @export
-allot_table <- function(.edibble, ..., order = "random", seed = NULL, constrain = nesting_structure(.edibble)) {
+allot_table <- function(.edibble, ..., order = "random", seed = NULL, constrain = nesting_structure(.edibble), .record = TRUE) {
+  prov <- activate_provenance(.edibble)
+  if(.record) prov$record_step()
+
   .edibble %>%
-    allot_trts(...) %>%
-    assign_trts(order = order, seed = seed, constrain = constrain) %>%
-    serve_table()
+    allot_trts(..., .record = FALSE) %>%
+    assign_trts(order = order, seed = seed, constrain = constrain, .record = FALSE) %>%
+    serve_table(.record = FALSE)
 }
