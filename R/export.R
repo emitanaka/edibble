@@ -1,11 +1,12 @@
 
-make_sheet_names <- function(prep = NULL) {
-  if(is_null(prep)) {
+make_sheet_names <- function(prov = NULL) {
+  if(is_null(prov)) {
     data_sheet_names <- "Data"
   } else {
-    if(has_record(prep)) {
-      rids <- prep$rcrd_ids
-      rcrds <- rcrd_to_unit_dict(prep, rids)
+    if(prov$rcrd_exists(abort = FALSE)) {
+      rids <- prov$rcrd_ids
+      # FIXME
+      rcrds <- rcrd_to_unit_dict(prov, rids)
       units <- unique(unname(rcrds))
       if(length(units) == 1) {
         data_sheet_names <- "Data"
@@ -66,9 +67,9 @@ add_worksheets <- function(wb, sheet_names, title) {
 
 
 
-write_title_sheet <- function(wb, sheet_name, cell_styles, prep, author, date = Sys.Date()) {
+write_title_sheet <- function(wb, sheet_name, cell_styles, prov, author, date = Sys.Date()) {
   # title
-  openxlsx::writeData(wb, sheet = sheet_name, x = prep$design$name,
+  openxlsx::writeData(wb, sheet = sheet_name, x = prov$design$name,
             startRow = 1, startCol = 1, name = "title")
   openxlsx::addStyle(wb, sheet = sheet_name,
            style = cell_styles$title, 1, 1, stack = TRUE)
@@ -86,15 +87,15 @@ write_title_sheet <- function(wb, sheet_name, cell_styles, prep, author, date = 
   }
 
   # context
-  ncontext <- length(prep$design$context)
+  ncontext <- length(prov$design$context)
   openxlsx::writeData(wb, sheet = sheet_name,
-            x = unlist(prep$design$context),
+            x = unlist(prov$design$context),
             startRow = 5, startCol = 2)
   openxlsx::addStyle(wb, sheet_name, cell_styles$context, 5:(5 + ncontext), 2,
            stack = TRUE)
 
   openxlsx::writeData(wb, sheet = sheet_name,
-            x = names(prep$design$context),
+            x = names(prov$design$context),
             startCol = 1, startRow = 5)
   openxlsx::addStyle(wb, sheet_name, cell_styles$context_name, 5:(5 + ncontext), 1,
            stack = TRUE)
@@ -109,48 +110,48 @@ data_sheet_name <- function(name) {
   paste0("Data.", name)
 }
 
-subset_design <- function(prep, unit, rcrds) {
-  keep_rids <- prep$fct_id(rcrds)
-  keep_uids <- prep$fct_id(unit)
-  keep_uids_ancestors <- prep$fct_ancestor(keep_uids)
-  sprep <- prep$clone()
-  sprep$fct_nodes <- sprep$fct_nodes[sprep$fct_nodes$id %in% c(keep_uids_ancestors, keep_rids), ]
-  sprep$fct_edges <- sprep$fct_edges[(sprep$fct_edges$to %in% keep_uids_ancestors &
-                                        sprep$fct_edges$from %in% keep_uids_ancestors) |
-                                        sprep$fct_edges$to %in% keep_rids, ]
-  sprep$lvl_nodes <- sprep$lvl_nodes[sprep$lvl_nodes$idvar %in% keep_uids_ancestors, ]
-  keep_lids_ancestors <- sprep$lvl_id()
-  sprep$lvl_edges <- sprep$lvl_edges[sprep$lvl_edges$to %in% keep_lids_ancestors & sprep$lvl_edges$from %in% keep_lids_ancestors, ]
-  if(!is_null(sprep$design$allotment$trts)) {
-    units <- map_chr(sprep$design$allotment$trts, function(x) all.vars(f_rhs(x)))
-    allotments <- sprep$design$allotment$trts[units %in% sprep$fct_names()]
+subset_design <- function(prov, unit, rcrds) {
+  keep_rids <- prov$fct_id(rcrds)
+  keep_uids <- prov$fct_id(unit)
+  keep_uids_ancestors <- prov$fct_ancestor(keep_uids)
+  sprov <- prov$clone()
+  sprov$fct_nodes <- sprov$fct_nodes[sprov$fct_nodes$id %in% c(keep_uids_ancestors, keep_rids), ]
+  sprov$fct_edges <- sprov$fct_edges[(sprov$fct_edges$to %in% keep_uids_ancestors &
+                                        sprov$fct_edges$from %in% keep_uids_ancestors) |
+                                        sprov$fct_edges$to %in% keep_rids, ]
+  sprov$lvl_nodes <- sprov$lvl_nodes[sprov$lvl_nodes$idvar %in% keep_uids_ancestors, ]
+  keep_lids_ancestors <- sprov$lvl_id()
+  sprov$lvl_edges <- sprov$lvl_edges[sprov$lvl_edges$to %in% keep_lids_ancestors & sprov$lvl_edges$from %in% keep_lids_ancestors, ]
+  if(!is_null(sprov$design$allotment$trts)) {
+    units <- map_chr(sprov$design$allotment$trts, function(x) all.vars(f_rhs(x)))
+    allotments <- sprov$design$allotment$trts[units %in% sprov$fct_names()]
     if(is_empty(allotments)) {
-      sprep$design$allotment$trts <- NULL
+      sprov$design$allotment$trts <- NULL
     } else {
-      sprep$design$allotment$trts <- allotments
+      sprov$design$allotment$trts <- allotments
     }
   }
-  if(!is_null(sprep$design$validation)) {
-    rcrds <- sprep$fct_names(keep_rids)
-    if(!any(rcrds %in% names(sprep$design$validation))) {
-      sprep$design$validation <- NULL
+  if(!is_null(sprov$design$validation)) {
+    rcrds <- sprov$fct_names(keep_rids)
+    if(!any(rcrds %in% names(sprov$design$validation))) {
+      sprov$design$validation <- NULL
     } else {
-      sprep$design$validation <- sprep$design$validation[rcrds]
+      sprov$design$validation <- sprov$design$validation[rcrds]
     }
   }
 
-  sprep$design
+  sprov$design
 }
 
-write_data_sheet <- function(wb, sheet_names, cell_styles, prep, .data) {
+write_data_sheet <- function(wb, sheet_names, cell_styles, prov, .data) {
   if(nrow(.data) && ncol(.data)) {
     if(length(sheet_names) > 1) {
-      rids <- prep$rcrd_ids
-      rcrds2unit <- rcrd_to_unit_dict(prep, rids)
+      rids <- prov$rcrd_ids
+      rcrds2unit <- rcrd_to_unit_dict(prov, rids)
       units <- unique(unname(rcrds2unit))
       for(aunit in units) {
         rcrds <- names(rcrds2unit)[rcrds2unit==aunit]
-        des <- subset_design(prep, aunit, rcrds)
+        des <- subset_design(prov, aunit, rcrds)
         data <- as_data_frame(serve_table(des))
         openxlsx::writeData(wb, sheet = data_sheet_name(aunit),
                   x = data, startCol = 1,
@@ -175,7 +176,7 @@ write_data_sheet <- function(wb, sheet_names, cell_styles, prep, .data) {
 }
 
 
-write_variables_sheet <- function(wb, sheet_name, cell_styles, prep, .data) {
+write_variables_sheet <- function(wb, sheet_name, cell_styles, prov, .data) {
 
   type <- map_chr(.data, function(var) {
       cls <- class(var)
@@ -187,13 +188,13 @@ write_variables_sheet <- function(wb, sheet_name, cell_styles, prep, .data) {
   data <- data.frame(variable = names(.data),
                     type = unname(type),
                     stringsAsFactors = FALSE)
-  if(!is_null(prep$design$validation)) {
+  if(!is_null(prov$design$validation)) {
     data$record <- ""
     data$value <- ""
-    valid <- prep$design$validation
+    valid <- prov$design$validation
     valid_names <- names(valid)
-    rids <- prep$rcrd_ids
-    rcrds <- rcrd_to_unit_dict(prep, rids)
+    rids <- prov$rcrd_ids
+    rcrds <- rcrd_to_unit_dict(prov, rids)
     n_ounits <- length(unique(rcrds))
     for(i in seq_along(valid)) {
       unit <- rcrds[valid_names[i]]
@@ -276,10 +277,10 @@ export_design <- function(.data, file, author, date = Sys.Date(), overwrite = FA
   } else {
     abort("The input is not an edibble table.")
   }
-  prep <- activate_provenance(.design)
+  prov <- activate_provenance(.design)
 
   title <- .design$name
-  sheet_names <- make_sheet_names(prep)
+  sheet_names <- make_sheet_names(prov)
   cell_styles_list <- make_cell_styles()
 
   wb <- openxlsx::createWorkbook()
@@ -287,22 +288,22 @@ export_design <- function(.data, file, author, date = Sys.Date(), overwrite = FA
   add_creator(wb, author)
 
   write_title_sheet(wb, sheet_names[1],
-                    cell_styles_list$context, prep, author, date)
+                    cell_styles_list$context, prov, author, date)
   write_data_sheet(wb, sheet_names[-c(1, length(sheet_names))],
-                     cell_styles_list$data, prep, .data)
+                     cell_styles_list$data, prov, .data)
   write_variables_sheet(wb, sheet_names[length(sheet_names)],
-                        cell_styles_list$variables, prep, .data)
+                        cell_styles_list$variables, prov, .data)
 
-  save_workbook(wb, file, overwrite, prep)
+  save_workbook(wb, file, overwrite, prov)
   invisible(.data)
 }
 
-save_workbook <- function(wb, file, overwrite, prep) {
+save_workbook <- function(wb, file, overwrite, prov) {
   success <- openxlsx::saveWorkbook(wb, file, overwrite = overwrite, returnValue = TRUE)
   if(success) {
-    cli::cli_alert_success("{.emph {prep$design$name}} has been written to {.file {file}}")
+    cli::cli_alert_success("{.emph {prov$design$name}} has been written to {.file {file}}")
   } else {
-    cli::cli_alert_warning("Something went wrong. {.emph {prep$design$name}} failed to be exported.")
+    cli::cli_alert_warning("Something went wrong. {.emph {prov$design$name}} failed to be exported.")
   }
 }
 
