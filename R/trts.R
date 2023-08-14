@@ -103,9 +103,9 @@ permute_parent_one_alg <- function(prov, vid, udf, ntrts) {
 
 
 permute_parent_one <- function(prov, vid, udf, ntrts) {
-  gparent <- prov$fct_names(vid)
-  blocksizes <- as.data.frame(table(table(udf[[gparent]])))
+  blocksizes <- as.data.frame(table(table(udf[[as.character(vid)]])))
   blocksizes$size <- as.numeric(as.character(blocksizes$Var1))
+
   for(isize in seq(nrow(blocksizes))) {
     if(blocksizes$size[isize] <= ntrts) {
       comb <- utils::combn(ntrts, blocksizes$size[isize])
@@ -120,13 +120,13 @@ permute_parent_one <- function(prov, vid, udf, ntrts) {
     blocksizes$select[isize] <- list(sample(rep(sample(ncol(comb)), length.out = blocksizes$Freq[isize])))
   }
   blocksizes$wselect <- blocksizes$select
-  gpar_tab <- as.data.frame(table(udf[[gparent]]))
+  gpar_tab <- as.data.frame(table(udf[[as.character(vid)]]))
   out <- vector("integer", length = nrow(udf))
   for(ianc in seq(nrow(gpar_tab))) {
     imatch <- which(blocksizes$size == gpar_tab$Freq[ianc])
     iselect <- blocksizes$wselect[imatch][[1]][1]
     blocksizes$wselect[imatch] <- list(blocksizes$wselect[imatch][[1]][-1])
-    out[as.character(udf[[gparent]])==as.character(gpar_tab$Var1[ianc])] <- sample(blocksizes$rows[imatch][[1]][,iselect])
+    out[as.character(udf[[as.character(vid)]])==as.character(gpar_tab$Var1[ianc])] <- sample(blocksizes$rows[imatch][[1]][,iselect])
   }
   out
 }

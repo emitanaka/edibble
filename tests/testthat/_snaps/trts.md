@@ -425,3 +425,223 @@
         fert7       1
         fert8       0
 
+---
+
+    Code
+      tab <- design() %>% set_trts(fert = 2, irr = 2) %>% set_units(block = 10,
+        wplot = nested_in(block, 3), splot = nested_in(wplot, 4)) %>% allot_trts(
+        fert ~ splot, irr ~ wplot) %>% assign_trts("random", seed = 2) %>%
+        serve_table()
+      table(tab$fert, tab$irr, tab$wplot)
+    Output
+      , ,  = wplot01
+      
+             
+              irr1 irr2
+        fert1    0    2
+        fert2    0    2
+      
+      , ,  = wplot02
+      
+             
+              irr1 irr2
+        fert1    2    0
+        fert2    2    0
+      
+      , ,  = wplot03
+      
+             
+              irr1 irr2
+        fert1    0    2
+        fert2    0    2
+      
+      , ,  = wplot04
+      
+             
+              irr1 irr2
+        fert1    0    2
+        fert2    0    2
+      
+      , ,  = wplot05
+      
+             
+              irr1 irr2
+        fert1    0    2
+        fert2    0    2
+      
+      , ,  = wplot06
+      
+             
+              irr1 irr2
+        fert1    2    0
+        fert2    2    0
+      
+      , ,  = wplot07
+      
+             
+              irr1 irr2
+        fert1    2    0
+        fert2    2    0
+      
+      , ,  = wplot08
+      
+             
+              irr1 irr2
+        fert1    2    0
+        fert2    2    0
+      
+      , ,  = wplot09
+      
+             
+              irr1 irr2
+        fert1    0    2
+        fert2    0    2
+      
+      , ,  = wplot10
+      
+             
+              irr1 irr2
+        fert1    2    0
+        fert2    2    0
+      
+      , ,  = wplot11
+      
+             
+              irr1 irr2
+        fert1    0    2
+        fert2    0    2
+      
+      , ,  = wplot12
+      
+             
+              irr1 irr2
+        fert1    2    0
+        fert2    2    0
+      
+      , ,  = wplot13
+      
+             
+              irr1 irr2
+        fert1    2    0
+        fert2    2    0
+      
+      , ,  = wplot14
+      
+             
+              irr1 irr2
+        fert1    0    2
+        fert2    0    2
+      
+      , ,  = wplot15
+      
+             
+              irr1 irr2
+        fert1    2    0
+        fert2    2    0
+      
+      , ,  = wplot16
+      
+             
+              irr1 irr2
+        fert1    0    2
+        fert2    0    2
+      
+      , ,  = wplot17
+      
+             
+              irr1 irr2
+        fert1    2    0
+        fert2    2    0
+      
+      , ,  = wplot18
+      
+             
+              irr1 irr2
+        fert1    0    2
+        fert2    0    2
+      
+      , ,  = wplot19
+      
+             
+              irr1 irr2
+        fert1    2    0
+        fert2    2    0
+      
+      , ,  = wplot20
+      
+             
+              irr1 irr2
+        fert1    0    2
+        fert2    0    2
+      
+      , ,  = wplot21
+      
+             
+              irr1 irr2
+        fert1    0    2
+        fert2    0    2
+      
+      , ,  = wplot22
+      
+             
+              irr1 irr2
+        fert1    0    2
+        fert2    0    2
+      
+      , ,  = wplot23
+      
+             
+              irr1 irr2
+        fert1    2    0
+        fert2    2    0
+      
+      , ,  = wplot24
+      
+             
+              irr1 irr2
+        fert1    2    0
+        fert2    2    0
+      
+      , ,  = wplot25
+      
+             
+              irr1 irr2
+        fert1    0    2
+        fert2    0    2
+      
+      , ,  = wplot26
+      
+             
+              irr1 irr2
+        fert1    0    2
+        fert2    0    2
+      
+      , ,  = wplot27
+      
+             
+              irr1 irr2
+        fert1    2    0
+        fert2    2    0
+      
+      , ,  = wplot28
+      
+             
+              irr1 irr2
+        fert1    2    0
+        fert2    2    0
+      
+      , ,  = wplot29
+      
+             
+              irr1 irr2
+        fert1    2    0
+        fert2    2    0
+      
+      , ,  = wplot30
+      
+             
+              irr1 irr2
+        fert1    0    2
+        fert2    0    2
+      
+
