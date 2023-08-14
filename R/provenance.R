@@ -51,6 +51,11 @@ Provenance <- R6::R6Class("Provenance",
                            private$name <- name
                          },
 
+                         set_validation = function(validation, type) {
+                           private$record_track_internal()
+                           private$validation[[type]] <- validation
+                         }
+
                          reactivate = function(des, overwrite = c("graph", "anatomy", "recipe")) {
                            #private$record_track_internal()
                            for(obj in overwrite) {
@@ -510,7 +515,9 @@ Provenance <- R6::R6Class("Provenance",
 
 
                          serve_rcrds = function(id = NULL, return = c("id", "value")) {
+
                            id <- id %||% self$rcrd_ids
+                           return <- match.arg(return)
                            out <- lapply(id, function(rid) {
                              uid <- self$fct_id_child(id = rid, role = "edbl_unit")
                              # should be only a single unit factor
@@ -572,6 +579,10 @@ Provenance <- R6::R6Class("Provenance",
 
                          get_title = function() {
                            private$title
+                         },
+
+                         get_validation = function(type) {
+                           private$validation[[type]]
                          },
 
                          get_trail = function() {
@@ -720,6 +731,7 @@ Provenance <- R6::R6Class("Provenance",
                          anatomy = NULL,
                          recipe = NULL,
                          graph = NULL,
+                         validation = list(rcrds = NULL),
                          # table should only contain the id of levels and factors
                          table = list(units = NULL, trts = NULL, rcrds = NULL),
 
