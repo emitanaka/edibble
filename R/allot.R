@@ -52,22 +52,7 @@ allot_trts <- function(.edibble, ..., .record = TRUE) {
     prov$append_fct_edges(from = tids, to = uid, group = ialloc, type = "allot")
   }
 
-
-  des$graph <- prov$get_graph()
-
-  if(is_edibble_table(.edibble)) {
-    if(length(trts)==0) {
-      trts <- prov$trt_names()
-    }
-    for(atrt in trts) {
-      prov$append_lvl_edges(from = prov$lvl_id(name = as.character(.edibble[[atrt]])),
-                            to = prov$lvl_id(name = as.character(.edibble[[unit]])))
-    }
-    attr(.edibble, "design") <- des
-    .edibble
-  } else {
-    des
-  }
+  return_edibble_with_graph(.edibble, prov)
 }
 
 
