@@ -1,7 +1,6 @@
 test_that("serve", {
-  # FIXME
-  expect_snapshot({
-    design(name = "unlinked units with table") %>%
+  expect_error({
+    design(title = "unlinked units with table") %>%
       set_units(block = 3,
                 plot = 2) %>%
       serve_table()
@@ -10,27 +9,27 @@ test_that("serve", {
   # The cut-off seems to have only happened for when the title was "unlinked units with table"
   # and the ANSI styling was cut
   expect_equal({
-    design(name = "unlinked units with table") %>%
+    design(title = "unlinked units with table") %>%
       set_units(block = 3,
                 plot = 2) %>%
-      serve_table()
+      serve_table(fail = "ignore")
   }, data.frame(block = character(), plot = character()), ignore_attr = TRUE)
 
   expect_snapshot({
-    design(name = "one unit") %>%
+    design(title = "one unit") %>%
       set_units(block = 3) %>%
       serve_table()
   })
 
 
   expect_equal({
-    design(name = "one unit") %>%
+    design(title = "one unit") %>%
       set_units(block = 3) %>%
       serve_table()
   }, data.frame(block = c("block1", "block2", "block3")), ignore_attr = TRUE)
 
   expect_snapshot({
-    design(name = "serve nested units") %>%
+    design(title = "serve nested units") %>%
       set_units(block = 3,
                 plot = nested_in(block, 2)) %>%
       serve_table()
@@ -55,10 +54,10 @@ test_that("serve", {
   expect_equal(ncol(tabs[[3]]), 3)
   expect_equal(as.character(tabs[[3]]$site), rep(c("site1", "site2"), each = 3 * 2))
   expect_equal(as.character(tabs[[3]]$block), rep(paste0("block", 1:6), each = 2))
-  expect_equal(as.character(tabs[[3]]$plot), paste0("plot", 1:12))
+  expect_equal(as.character(tabs[[3]]$plot), sprintf("plot%.2d", 1:12))
 
 
-  expect_snapshot({
+  expect_error({
     design() %>%
       set_trts(vaccine = c("AZ", "M", "P")) %>%
       serve_table()
