@@ -37,10 +37,10 @@
 #' @export
 assign_trts <- function(.design, order = "random", seed = NULL, constrain = nesting_structure(.design), ..., .record = TRUE) {
   not_edibble(.design)
+  force(constrain) # evaluate this now rather than later
 
   prov <- activate_provenance(.design)
   if(.record) prov$record_step()
-
   prov$save_seed(seed)
 
   fedges <- prov$fct_edges
