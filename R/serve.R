@@ -8,6 +8,7 @@
 #'
 #' @inheritParams set_units
 #' @param use_labels To show the labels instead of names.
+#' @param fail What to do when failing to convert graph to table.
 #' @return An `edbl` data frame with columns defined by vertices and
 #' rows displayed only if the vertices are connected and reconcile for output.
 #' @family user-facing functions
@@ -19,11 +20,14 @@
 #'   assign_trts("random", seed = 521) %>%
 #'   serve_table()
 #' @export
-serve_table <- function(.edibble, use_labels = FALSE, ..., .record = TRUE) {
+serve_table <- function(.edibble, use_labels = FALSE, fail = c("error", "warn", "ignore"),  .record = TRUE) {
   prov <- activate_provenance(.edibble)
+  fail <- match.arg(fail)
   if(.record) prov$record_step()
 
   if(!prov$is_connected) {
+    if(fail == "error") abort("The graph cannot be converted to a table format.")
+    if(fail == "warn") warn("The graph cannot be converted to a table format.")
     lout <- serve_vars_not_reconciled(prov)
   } else {
     roles <- prov$fct_role()
