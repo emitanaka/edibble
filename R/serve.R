@@ -39,7 +39,7 @@ serve_table <- function(.edibble, use_labels = FALSE, fail = c("error", "warn", 
     }
     if("edbl_trt" %in% roles) ltrt <- prov$serve_trts(return = "value")
     if(length(lunit) | length(ltrt)) {
-      if("edbl_rcrd" %in% roles) lrcrd <- prov$serve_rcrds()
+      if("edbl_rcrd" %in% roles) lrcrd <- prov$serve_rcrds(return = "value")
       lout <- c(lunit, ltrt, lrcrd)
     } else {
       lout <- serve_vars_not_reconciled(prov)
