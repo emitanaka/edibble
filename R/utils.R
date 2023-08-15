@@ -62,8 +62,6 @@ print.edbl_design <- function(x,
   fids <- prov$fct_nodes$id
   fnames <- prov$fct_names(id = fids)
 
-
-
   if(is_empty(fids)) {
     data <- data.frame(var = "root",
                        child = NA,
@@ -81,14 +79,16 @@ print.edbl_design <- function(x,
     ll <- lapply(fids,
                  function(id) {
                    class <- prov$fct_role(id = id)
-                   children <- prov$fct_id_child(id = id)
-                   if(class!="edbl_trt" & !is_empty(children)) {
-                     prov$fct_names(id = children)
-                   } else {
-                     character()
+                   children <- prov$fct_id_child(id = id, role = "edbl_unit")
+                   parents <- prov$fct_id_parent(id = id, role = c("edbl_trt", "edbl_rcrd"))
+                   if(class=="edbl_unit") {
+                     if(!is_empty(children)) return(children)
+                     if(!is_empty(parents)) return(parents)
                    }
+                   return(character())
                  })
-    nodes_with_parents <- unname(unlist(ll))
+    names(ll) <- as.character(fids)
+    nodes_with_parents <- as.integer(unname(unlist(ll)))
     label_names_with_levels <- paste(label_names, map_chr(var_nlevels, decorate_levels))
     label_names_with_levels[classes=="edbl_rcrd"] <- label_names[classes=="edbl_rcrd"]
 
@@ -98,23 +98,31 @@ print.edbl_design <- function(x,
                                  label_names_with_levels))
   }
   cat(tree(data, root = "root"), sep = "\n")
-  if(!is_null(x$allotment)) {
+
+  fedges <- prov$fct_edges
+  if("allot" %in% fedges$type) {
     cat(decorate_title("Allotment:\n"))
-    s <- as.character(c(x$allotment$trts, x$allotment$units))
-    tilde_pos <- unlist(gregexpr("~", s))
-    tilde_pos_max <- max(tilde_pos)
-    pad <- map_chr(tilde_pos_max - tilde_pos, function(n) ifelse(n==0, "", paste0(rep(" ", n), collapse = "")))
-    cli_li(items = paste0(" ", pad, s))
+    allots <- fedges[fedges$type=="allot", ]
+    trts_to_units <- paste(fedges$var_from, "~", fedges$var_to)
+    # this is so it aligns the tilde position
+    # it seems that it's automatically strips away the padding now
+    # so below no longer works
+    #tilde_pos <- unlist(gregexpr("~", trts_to_units))
+    #tilde_pos_max <- max(tilde_pos)
+    #pad <- map_chr(tilde_pos_max - tilde_pos, function(n) ifelse(n==0, "", paste0(rep(" ", n), collapse = "")))
+    #cli_li(items = paste0(" ", pad, trts_to_units))
+    cli_li(items = trts_to_units)
   }
+  # FIXME: should this be included - currently it is not
   if(!is_null(x$assignment)) {
     cat(decorate_title("Assignment:"), paste0(x$assignment, collapse = ", "), "\n")
   }
-  if(!is_null(x$validation)) {
+  if(!is_null(valids <- prov$get_validation())) {
     cat(decorate_title("Validation:\n"))
-    rnames <- names(x$validation)
-    items <- map_chr(seq_along(x$validation), function(i) {
-      paste0(rnames[i], ": ", style_italic(x$validation[[i]]$record), " ",
-             validation_interval(x$validation[[i]]))
+    rnames <- names(valids)
+    items <- map_chr(seq_along(valids), function(i) {
+      paste0(rnames[i], ": ", style_italic(valids[[i]]$record), " ",
+             validation_interval(valids[[i]]))
     })
     cli_li(items = items)
   }

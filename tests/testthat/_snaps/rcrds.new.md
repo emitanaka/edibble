@@ -27,11 +27,18 @@
     Output
       Effective teaching
       +-class (4 levels)
-      +-student (120 levels)
+      | \-student (120 levels)
+      |   +-exam (3 levels)
+      |   \-exam_mark
       +-style (2 levels)
-      +-exam (3 levels)
-      +-exam_mark
       \-room
+      Allotment:
+    Message <cliMessage>
+      * class ~ student
+      * style ~ class
+      * exam ~ student
+      * exam_mark ~ student
+      * room ~ class
 
 ---
 
@@ -61,15 +68,26 @@
     Output
       Effective teaching
       +-class (4 levels)
-      +-student (120 levels)
+      | \-student (120 levels)
+      |   +-exam (3 levels)
+      |   +-exam_mark
+      |   +-quiz1_mark
+      |   +-quiz2_mark
+      |   \-gender
       +-style (2 levels)
-      +-exam (3 levels)
-      +-exam_mark
-      +-quiz1_mark
-      +-quiz2_mark
-      +-gender
       +-room
       \-teacher
+      Allotment:
+    Message <cliMessage>
+      * class ~ student
+      * style ~ class
+      * exam ~ student
+      * exam_mark ~ student
+      * quiz1_mark ~ student
+      * quiz2_mark ~ student
+      * gender ~ student
+      * room ~ class
+      * teacher ~ class
 
 ---
 
@@ -92,4 +110,36 @@
       10    class1  student010 traditional open-book           o          o          o
       # i 110 more rows
       # i 3 more variables: gender <rcrd>, room <rcrd>, teacher <rcrd>
+
+---
+
+    Code
+      des2 %>% expect_rcrds(exam_mark = to_be_numeric(with_value(between = c(0, 100))),
+      quiz1_mark = to_be_integer(with_value(between = c(0, 15))), quiz2_mark = to_be_integer(
+        with_value(between = c(0, 30))), gender = to_be_factor(levels = c("female",
+        "male", "non-binary")), teacher = to_be_character(length = with_value("<=",
+        100)), room = to_be_character(length = with_value(">=", 1)))
+    Output
+      Effective teaching
+      +-class (4 levels)
+      | \-student (120 levels)
+      |   +-exam (3 levels)
+      |   +-exam_mark
+      |   +-quiz1_mark
+      |   +-quiz2_mark
+      |   \-gender
+      +-style (2 levels)
+      +-room
+      \-teacher
+      Allotment:
+    Message <cliMessage>
+      * class ~ student
+      * style ~ class
+      * exam ~ student
+      * exam_mark ~ student
+      * quiz1_mark ~ student
+      * quiz2_mark ~ student
+      * gender ~ student
+      * room ~ class
+      * teacher ~ class
 

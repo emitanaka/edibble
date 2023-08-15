@@ -1,23 +1,23 @@
 # measure response
 
     Code
-      des0 %>% serve_table() %>% set_rcrds(exam_mark = student, room = class)
+      des0 %>% set_rcrds(exam_mark = student, room = class) %>% serve_table()
     Output
-      # Effective teaching 
+      [38;5;246m# Effective teaching[39m 
       # An edibble: 120 x 6
              class     student       style        exam exam_mark   room
          <unit(4)> <unit(120)>    <trt(2)>    <trt(3)>    <rcrd> <rcrd>
-       1    class1   student1  traditional closed-book         o      o
-       2    class1   student2  traditional closed-book         o      x
-       3    class1   student3  traditional take-home           o      x
-       4    class1   student4  traditional take-home           o      x
-       5    class1   student5  traditional open-book           o      x
-       6    class1   student6  traditional take-home           o      x
-       7    class1   student7  traditional take-home           o      x
-       8    class1   student8  traditional closed-book         o      x
-       9    class1   student9  traditional closed-book         o      x
-      10    class1   student10 traditional open-book           o      x
-      # ... with 110 more rows
+       1    class1  student001 traditional closed-book         o      o
+       2    class1  student002 traditional closed-book         o      x
+       3    class1  student003 traditional take-home           o      x
+       4    class1  student004 traditional take-home           o      x
+       5    class1  student005 traditional open-book           o      x
+       6    class1  student006 traditional take-home           o      x
+       7    class1  student007 traditional take-home           o      x
+       8    class1  student008 traditional closed-book         o      x
+       9    class1  student009 traditional closed-book         o      x
+      10    class1  student010 traditional open-book           o      x
+      # i 110 more rows
 
 ---
 
@@ -27,17 +27,18 @@
     Output
       Effective teaching
       +-class (4 levels)
-      | +-student (120 levels)
-      | | \-exam_mark
-      | \-room
+      | \-student (120 levels)
+      |   +-exam (3 levels)
+      |   \-exam_mark
       +-style (2 levels)
-      \-exam (3 levels)
+      \-room
       Allotment:
     Message <cliMessage>
+      * class ~ student
       * style ~ class
       * exam ~ student
-    Output
-      Assignment: random, random 
+      * exam_mark ~ student
+      * room ~ class
 
 ---
 
@@ -48,17 +49,17 @@
       # An edibble: 120 x 6
              class     student       style        exam exam_mark   room
          <unit(4)> <unit(120)>    <trt(2)>    <trt(3)>    <rcrd> <rcrd>
-       1    class1   student1  traditional closed-book         o      o
-       2    class1   student2  traditional closed-book         o      x
-       3    class1   student3  traditional take-home           o      x
-       4    class1   student4  traditional take-home           o      x
-       5    class1   student5  traditional open-book           o      x
-       6    class1   student6  traditional take-home           o      x
-       7    class1   student7  traditional take-home           o      x
-       8    class1   student8  traditional closed-book         o      x
-       9    class1   student9  traditional closed-book         o      x
-      10    class1   student10 traditional open-book           o      x
-      # ... with 110 more rows
+       1    class1  student001 traditional closed-book         o      o
+       2    class1  student002 traditional closed-book         o      x
+       3    class1  student003 traditional take-home           o      x
+       4    class1  student004 traditional take-home           o      x
+       5    class1  student005 traditional open-book           o      x
+       6    class1  student006 traditional take-home           o      x
+       7    class1  student007 traditional take-home           o      x
+       8    class1  student008 traditional closed-book         o      x
+       9    class1  student009 traditional closed-book         o      x
+      10    class1  student010 traditional open-book           o      x
+      # i 110 more rows
 
 ---
 
@@ -67,21 +68,26 @@
     Output
       Effective teaching
       +-class (4 levels)
-      | +-student (120 levels)
-      | | +-exam_mark
-      | | +-quiz1_mark
-      | | +-quiz2_mark
-      | | \-gender
-      | +-room
-      | \-teacher
+      | \-student (120 levels)
+      |   +-exam (3 levels)
+      |   +-exam_mark
+      |   +-quiz1_mark
+      |   +-quiz2_mark
+      |   \-gender
       +-style (2 levels)
-      \-exam (3 levels)
+      +-room
+      \-teacher
       Allotment:
     Message <cliMessage>
+      * class ~ student
       * style ~ class
       * exam ~ student
-    Output
-      Assignment: random, random 
+      * exam_mark ~ student
+      * quiz1_mark ~ student
+      * quiz2_mark ~ student
+      * gender ~ student
+      * room ~ class
+      * teacher ~ class
 
 ---
 
@@ -90,20 +96,20 @@
     Output
       # Effective teaching 
       # An edibble: 120 x 10
-             class     student       style        exam exam_m~1 quiz1~2 quiz2~3 gender
-         <unit(4)> <unit(120)>    <trt(2)>    <trt(3)>   <rcrd>  <rcrd>  <rcrd> <rcrd>
-       1    class1   student1  traditional closed-book        o       o       o      o
-       2    class1   student2  traditional closed-book        o       o       o      o
-       3    class1   student3  traditional take-home          o       o       o      o
-       4    class1   student4  traditional take-home          o       o       o      o
-       5    class1   student5  traditional open-book          o       o       o      o
-       6    class1   student6  traditional take-home          o       o       o      o
-       7    class1   student7  traditional take-home          o       o       o      o
-       8    class1   student8  traditional closed-book        o       o       o      o
-       9    class1   student9  traditional closed-book        o       o       o      o
-      10    class1   student10 traditional open-book          o       o       o      o
-      # ... with 110 more rows, 2 more variables: room <rcrd>, teacher <rcrd>, and
-      #   abbreviated variable names 1: exam_mark, 2: quiz1_mark, 3: quiz2_mark
+             class     student       style        exam exam_mark quiz1_mark quiz2_mark
+         <unit(4)> <unit(120)>    <trt(2)>    <trt(3)>    <rcrd>     <rcrd>     <rcrd>
+       1    class1  student001 traditional closed-book         o          o          o
+       2    class1  student002 traditional closed-book         o          o          o
+       3    class1  student003 traditional take-home           o          o          o
+       4    class1  student004 traditional take-home           o          o          o
+       5    class1  student005 traditional open-book           o          o          o
+       6    class1  student006 traditional take-home           o          o          o
+       7    class1  student007 traditional take-home           o          o          o
+       8    class1  student008 traditional closed-book         o          o          o
+       9    class1  student009 traditional closed-book         o          o          o
+      10    class1  student010 traditional open-book           o          o          o
+      # i 110 more rows
+      # i 3 more variables: gender <rcrd>, room <rcrd>, teacher <rcrd>
 
 ---
 
@@ -116,180 +122,24 @@
     Output
       Effective teaching
       +-class (4 levels)
-      | +-student (120 levels)
-      | | +-exam_mark
-      | | +-quiz1_mark
-      | | +-quiz2_mark
-      | | \-gender
-      | +-room
-      | \-teacher
+      | \-student (120 levels)
+      |   +-exam (3 levels)
+      |   +-exam_mark
+      |   +-quiz1_mark
+      |   +-quiz2_mark
+      |   \-gender
       +-style (2 levels)
-      \-exam (3 levels)
+      +-room
+      \-teacher
       Allotment:
     Message <cliMessage>
+      * class ~ student
       * style ~ class
       * exam ~ student
-    Output
-      Assignment: random, random 
-      Validation:
-    Message <cliMessage>
-      * exam_mark: numeric [0, 100]
-      * quiz1_mark: integer [0, 15]
-      * quiz2_mark: integer [0, 30]
-      * gender: factor [female, male, non-binary]
-      * teacher: text
-      * room: text
-
----
-
-    Code
-      des2 %>% expect_rcrds(exam_mark = to_be_numeric(with_value(between = c(0, 100))),
-      quiz1_mark >= 0L, quiz1_mark <= 15L, quiz2_mark < 12, factor(gender, levels = c(
-        "female", "male", "non-binary")))
-    Output
-      Effective teaching
-      +-class (4 levels)
-      | +-student (120 levels)
-      | | +-exam_mark
-      | | +-quiz1_mark
-      | | +-quiz2_mark
-      | | \-gender
-      | +-room
-      | \-teacher
-      +-style (2 levels)
-      \-exam (3 levels)
-      Allotment:
-    Message <cliMessage>
-      * style ~ class
-      * exam ~ student
-    Output
-      Assignment: random, random 
-      Validation:
-    Message <cliMessage>
-      * exam_mark: numeric [0, 100]
-      * quiz1_mark: integer [0, 15]
-      * quiz2_mark: numeric [-Inf, 12)
-      * gender: factor [female, male, non-binary]
-
----
-
-    Code
-      des2 %>% expect_rcrds(exam_mark >= 0, exam_mark <= 100, factor(gender, levels = c(
-        "female", "male", "non-binary")))
-    Output
-      Effective teaching
-      +-class (4 levels)
-      | +-student (120 levels)
-      | | +-exam_mark
-      | | +-quiz1_mark
-      | | +-quiz2_mark
-      | | \-gender
-      | +-room
-      | \-teacher
-      +-style (2 levels)
-      \-exam (3 levels)
-      Allotment:
-    Message <cliMessage>
-      * style ~ class
-      * exam ~ student
-    Output
-      Assignment: random, random 
-      Validation:
-    Message <cliMessage>
-      * exam_mark: numeric [0, 100]
-      * gender: factor [female, male, non-binary]
-
----
-
-    Code
-      des2 %>% expect_rcrds(exam_mark < -1)
-    Output
-      Effective teaching
-      +-class (4 levels)
-      | +-student (120 levels)
-      | | +-exam_mark
-      | | +-quiz1_mark
-      | | +-quiz2_mark
-      | | \-gender
-      | +-room
-      | \-teacher
-      +-style (2 levels)
-      \-exam (3 levels)
-      Allotment:
-    Message <cliMessage>
-      * style ~ class
-      * exam ~ student
-    Output
-      Assignment: random, random 
-      Validation:
-    Message <cliMessage>
-      * exam_mark: numeric [-Inf, -1)
-
----
-
-    Code
-      des2 %>% expect_rcrds(0 < exam_mark)
-    Output
-      Effective teaching
-      +-class (4 levels)
-      | +-student (120 levels)
-      | | +-exam_mark
-      | | +-quiz1_mark
-      | | +-quiz2_mark
-      | | \-gender
-      | +-room
-      | \-teacher
-      +-style (2 levels)
-      \-exam (3 levels)
-      Allotment:
-    Message <cliMessage>
-      * style ~ class
-      * exam ~ student
-    Output
-      Assignment: random, random 
-      Validation:
-    Message <cliMessage>
-      * exam_mark: numeric (0, Inf]
-
----
-
-    Code
-      des0 %>% serve_table() %>% set_rcrds(exam_mark = student, room = class)
-    Output
-      # Effective teaching 
-      # An edibble: 120 x 6
-             class     student       style        exam exam_mark   room
-         <unit(4)> <unit(120)>    <trt(2)>    <trt(3)>    <rcrd> <rcrd>
-       1    class1   student1  traditional closed-book         o      o
-       2    class1   student2  traditional closed-book         o      x
-       3    class1   student3  traditional take-home           o      x
-       4    class1   student4  traditional take-home           o      x
-       5    class1   student5  traditional open-book           o      x
-       6    class1   student6  traditional take-home           o      x
-       7    class1   student7  traditional take-home           o      x
-       8    class1   student8  traditional closed-book         o      x
-       9    class1   student9  traditional closed-book         o      x
-      10    class1   student10 traditional open-book           o      x
-      # ... with 110 more rows
-
----
-
-    Code
-      serve_table(des1)
-    Output
-      # Effective teaching 
-      # An edibble: 120 x 6
-             class     student       style        exam exam_mark   room
-         <unit(4)> <unit(120)>    <trt(2)>    <trt(3)>    <rcrd> <rcrd>
-       1    class1   student1  traditional closed-book         o      o
-       2    class1   student2  traditional closed-book         o      x
-       3    class1   student3  traditional take-home           o      x
-       4    class1   student4  traditional take-home           o      x
-       5    class1   student5  traditional open-book           o      x
-       6    class1   student6  traditional take-home           o      x
-       7    class1   student7  traditional take-home           o      x
-       8    class1   student8  traditional closed-book         o      x
-       9    class1   student9  traditional closed-book         o      x
-      10    class1   student10 traditional open-book           o      x
-      # ... with 110 more rows
+      * exam_mark ~ student
+      * quiz1_mark ~ student
+      * quiz2_mark ~ student
+      * gender ~ student
+      * room ~ class
+      * teacher ~ class
 
