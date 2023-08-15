@@ -54,7 +54,7 @@ Provenance <- R6::R6Class("Provenance",
                          set_validation = function(validation, type) {
                            private$record_track_internal()
                            private$validation[[type]] <- validation
-                         }
+                         },
 
                          reactivate = function(des, overwrite = c("graph", "anatomy", "recipe")) {
                            #private$record_track_internal()
@@ -77,8 +77,7 @@ Provenance <- R6::R6Class("Provenance",
                          fct_id = function(name = NULL, role = NULL) {
                            fnodes <- self$fct_nodes
                            if(!is_null(role)) {
-                             private$validate_role(role)
-                             fnodes <- fnodes[fnodes$role == role, ]
+                             fnodes <- fnodes[fnodes$role %in% role, ]
                            }
                            name_to_id <- set_names(fnodes$id, fnodes$name)
                            name <- name %||% names(name_to_id)
@@ -192,7 +191,7 @@ Provenance <- R6::R6Class("Provenance",
                            fnodes <- self$fct_nodes
                            if(!is_null(role)) {
                              private$validate_role(role)
-                             fnodes <- fnodes[fnodes$role == role, ]
+                             fnodes <- fnodes[fnodes$role %in% role, ]
                            }
                            id <-  id %||% fnodes$id
                            fnodes[match(id, fnodes$id), ]$name
@@ -344,30 +343,30 @@ Provenance <- R6::R6Class("Provenance",
 
                            } else if(is_null(name) & is_null(id) & !is_null(role)) {
                              exist <- any(role %in% fnodes$role)
-                             abort_missing(msg = sprintf("There are no factors with role%s",
+                             abort_missing(msg = sprintf("There are no factors with role %s",
                                                          .combine_words(paste0("`", role, "`"))))
 
                            } else if(is_null(name) & !is_null(id) & !is_null(role)) {
-                             srole <- fnodes[match(id, fnodes$id), "role"]
-                             vexist <- srole == role
+                             srole <- fnodes[match(id, fnodes$id), "role", drop = TRUE]
+                             vexist <- srole %in% role
                              exist <- all(vexist)
                              abort_missing(vars = id[!vexist])
 
                            } else if(!is_null(name) & is_null(id) & !is_null(role)) {
-                             srole <- fnodes[match(name, fnodes$name), "role"]
-                             vexist <- srole == role
+                             srole <- fnodes[match(name, fnodes$name), "role", drop = TRUE]
+                             vexist <- srole %in% role
                              exist <- all(vexist)
                              abort_missing(vars = name[!vexist])
 
                            } else if(!is_null(name) & !is_null(id) & is_null(role)) {
-                             sid <- fnodes[match(name, fnodes$name), "id"]
-                             vexist <- sid == id
+                             sid <- fnodes[match(name, fnodes$name), "id", drop = TRUE]
+                             vexist <- sid %in% id
                              exist <- all(vexist)
                              abort_missing(vars = name[!vexist])
 
                            } else {
                              snodes <- fnodes[match(name, fnodes$name), ]
-                             vexist <- snodes$id == id & snodes$role == role
+                             vexist <- snodes$id %in% id & snodes$role %in% role
                              exist <- all(vexist)
                              abort_missing(vars = name[!vexist])
                            }
@@ -393,8 +392,9 @@ Provenance <- R6::R6Class("Provenance",
                            self$fct_exists(id = id, name = name, role = "edbl_rcrd", abort = abort)
                          },
 
-                         lvl_exists = function(id = NULL, name = NULL, abort = TRUE) {
-                           self$fct_exists(id = id, name = name, role = "edbl_rcrd", abort = abort)
+
+                         lvl_exists = function(id = NULL, value = NULL, fid = NULL, abort = TRUE) {
+                           # FIXME
                          },
 
                          #' @description
