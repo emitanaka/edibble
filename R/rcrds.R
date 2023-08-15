@@ -36,13 +36,14 @@ set_rcrds <- function(.edibble, ...,
 
   rcrds <- names(units)
 
+
   prov$fct_exists(name = unlist(units), role = "edbl_unit")
 
   for(i in seq_along(units)) {
     prov$append_fct_nodes(name = rcrds[i], role = "edbl_rcrd")
     uid <- prov$fct_id(name = units[[i]])
     rid <- prov$fct_id(name = rcrds[i])
-    prov$append_fct_edges(from = rid, to = uid)
+    prov$append_fct_edges(from = rid, to = uid, type = "record")
   }
 
   return_edibble_with_graph(.edibble, prov)
