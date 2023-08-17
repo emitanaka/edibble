@@ -117,7 +117,7 @@ print.edbl_design <- function(x,
   if(!is_null(x$assignment)) {
     cat(decorate_title("Assignment:"), paste0(x$assignment, collapse = ", "), "\n")
   }
-  if(!is_null(valids <- prov$get_validation())) {
+  if(!is_null(valids <- prov$get_validation(type = "rcrds"))) {
     cat(decorate_title("Validation:\n"))
     rnames <- names(valids)
     items <- map_chr(seq_along(valids), function(i) {
