@@ -457,7 +457,7 @@ scan_menu <- function(pkgs = NULL) {
       tryCatch({
         short_names <- c(short_names, set_names(des$name, pkg_names[i]))
         cli_li("{.pkg {des$name}} with the arguments {.field {names(args)}}
-             for a {.combine_words(des$name_full, fun = style_bold, and = ' / ')}.")
+             for a { .combine_words(des$name_full, fun = cli::style_bold, and = ' / ')}.")
       }, error = function(x)  {
         cli_li("{.pkg {gsub('menu_', '', menu_fn)}} seems to be {cli::col_red('unavailable')}.")
       })
