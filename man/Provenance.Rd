@@ -2,35 +2,19 @@
 % Please edit documentation in R/provenance.R
 \name{Provenance}
 \alias{Provenance}
-\title{A manipulator for the edbl_design.}
+\title{An object to query, record and modify an edibble graph}
 \description{
-A manipulator for the edbl_design.
+An object to query, record and modify an edibble graph
 
-A manipulator for the edbl_design.
+An object to query, record and modify an edibble graph
 }
 \details{
-Internal functions should create a new Provenance object.
 The Provenance contains a set of operations to manipulate the nodes and edges of
-the edibble design object.
-}
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{fct_leaves}}{Get the leave factor ids.}
-
-\item{\code{fct_new_id}}{Get a new factor id.}
-
-\item{\code{lvl_new_id}}{Get a new level id.
-Given a particular DAG, return a topological order
-Remember that there could be more than one order.}
-}
-\if{html}{\out{</div>}}
+the edibble graph object.
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{fct_leaves}}{Get the leave factor ids.}
-
 \item{\code{fct_nodes}}{Get the factor nodes}
 
 \item{\code{lvl_nodes}}{Get the level nodes}
@@ -49,11 +33,9 @@ Remember that there could be more than one order.}
 
 \item{\code{trt_ids}}{Get the ids for all edbl_trt factors.}
 
-\item{\code{is_connected}}{Check if nodes are connected.}
-
-\item{\code{fct_new_id}}{Get a new factor id.}
-
-\item{\code{lvl_new_id}}{Get a new level id.
+\item{\code{is_connected}}{Check if nodes are connected.
+Get a new factor id.
+Get a new level id.
 Given a particular DAG, return a topological order
 Remember that there could be more than one order.}
 }
@@ -65,6 +47,7 @@ Remember that there could be more than one order.}
 \item \href{#method-Provenance-new}{\code{Provenance$new()}}
 \item \href{#method-Provenance-set_title}{\code{Provenance$set_title()}}
 \item \href{#method-Provenance-set_name}{\code{Provenance$set_name()}}
+\item \href{#method-Provenance-set_validation}{\code{Provenance$set_validation()}}
 \item \href{#method-Provenance-reactivate}{\code{Provenance$reactivate()}}
 \item \href{#method-Provenance-deactivate}{\code{Provenance$deactivate()}}
 \item \href{#method-Provenance-fct_id}{\code{Provenance$fct_id()}}
@@ -88,21 +71,25 @@ Remember that there could be more than one order.}
 \item \href{#method-Provenance-trt_values}{\code{Provenance$trt_values()}}
 \item \href{#method-Provenance-rcrd_values}{\code{Provenance$rcrd_values()}}
 \item \href{#method-Provenance-fct_role}{\code{Provenance$fct_role()}}
-\item \href{#method-Provenance-fct_levels_id}{\code{Provenance$fct_levels_id()}}
-\item \href{#method-Provenance-fct_levels_value}{\code{Provenance$fct_levels_value()}}
+\item \href{#method-Provenance-fct_levels}{\code{Provenance$fct_levels()}}
+\item \href{#method-Provenance-fct_levels_id_to_edbl_fct}{\code{Provenance$fct_levels_id_to_edbl_fct()}}
+\item \href{#method-Provenance-fct_levels_id_to_value}{\code{Provenance$fct_levels_id_to_value()}}
+\item \href{#method-Provenance-fct_levels_value_to_id}{\code{Provenance$fct_levels_value_to_id()}}
 \item \href{#method-Provenance-fct_exists}{\code{Provenance$fct_exists()}}
 \item \href{#method-Provenance-trt_exists}{\code{Provenance$trt_exists()}}
 \item \href{#method-Provenance-unit_exists}{\code{Provenance$unit_exists()}}
 \item \href{#method-Provenance-rcrd_exists}{\code{Provenance$rcrd_exists()}}
-\item \href{#method-Provenance-lvl_exists}{\code{Provenance$lvl_exists()}}
 \item \href{#method-Provenance-append_fct_nodes}{\code{Provenance$append_fct_nodes()}}
 \item \href{#method-Provenance-append_lvl_nodes}{\code{Provenance$append_lvl_nodes()}}
 \item \href{#method-Provenance-append_fct_edges}{\code{Provenance$append_fct_edges()}}
 \item \href{#method-Provenance-append_lvl_edges}{\code{Provenance$append_lvl_edges()}}
 \item \href{#method-Provenance-serve_units}{\code{Provenance$serve_units()}}
+\item \href{#method-Provenance-serve_trts}{\code{Provenance$serve_trts()}}
+\item \href{#method-Provenance-serve_rcrds}{\code{Provenance$serve_rcrds()}}
 \item \href{#method-Provenance-graph_subset}{\code{Provenance$graph_subset()}}
 \item \href{#method-Provenance-save_seed}{\code{Provenance$save_seed()}}
 \item \href{#method-Provenance-get_title}{\code{Provenance$get_title()}}
+\item \href{#method-Provenance-get_validation}{\code{Provenance$get_validation()}}
 \item \href{#method-Provenance-get_trail}{\code{Provenance$get_trail()}}
 \item \href{#method-Provenance-get_graph}{\code{Provenance$get_graph()}}
 \item \href{#method-Provenance-get_seed}{\code{Provenance$get_seed()}}
@@ -117,6 +104,7 @@ Remember that there could be more than one order.}
 \if{html}{\out{<a id="method-Provenance-new"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-new}{}}}
 \subsection{Method \code{new()}}{
+Initialise function
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$new(graph = NULL)}\if{html}{\out{</div>}}
 }
@@ -124,7 +112,7 @@ Remember that there could be more than one order.}
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{design}}{An edibble design.}
+\item{\code{graph}}{An edibble graph.}
 }
 \if{html}{\out{</div>}}
 }
@@ -133,15 +121,24 @@ Remember that there could be more than one order.}
 \if{html}{\out{<a id="method-Provenance-set_title"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-set_title}{}}}
 \subsection{Method \code{set_title()}}{
+Set the title.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$set_title(title)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{title}}{The title of the experiment}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Provenance-set_name"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-set_name}{}}}
 \subsection{Method \code{set_name()}}{
+Set the name.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$set_name(name)}\if{html}{\out{</div>}}
 }
@@ -149,7 +146,26 @@ Remember that there could be more than one order.}
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{name}}{The name of the vertex.}
+\item{\code{name}}{The name of the edibble graph object.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-set_validation"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-set_validation}{}}}
+\subsection{Method \code{set_validation()}}{
+Set the validation.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$set_validation(validation, type = "rcrds")}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{validation}}{The validation statement.}
+
+\item{\code{type}}{The type of validation.}
 }
 \if{html}{\out{</div>}}
 }
@@ -158,19 +174,38 @@ Remember that there could be more than one order.}
 \if{html}{\out{<a id="method-Provenance-reactivate"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-reactivate}{}}}
 \subsection{Method \code{reactivate()}}{
+Reactivate the graph in the provenance object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$reactivate(des, overwrite = c("graph", "anatomy", "recipe"))}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$reactivate(design, overwrite = c("graph", "anatomy", "recipe"))}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{design}}{An edibble design}
+
+\item{\code{overwrite}}{A vector of character to overwrite from the
+supplied design object.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Provenance-deactivate"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-deactivate}{}}}
 \subsection{Method \code{deactivate()}}{
+Deactivate the provenance object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$deactivate(delete = c("graph", "anatomy", "recipe"))}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{delete}}{A vector of character to delete.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Provenance-fct_id"></a>}}
@@ -185,9 +220,9 @@ If none supplied then it will give all.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{name}}{The name of the vertex.}
+\item{\code{name}}{The name of the node.}
 
-\item{\code{role}}{The role for the vertex/node.}
+\item{\code{role}}{The role for the node.}
 }
 \if{html}{\out{</div>}}
 }
@@ -206,7 +241,7 @@ Get the factor parent ids
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
 
-\item{\code{role}}{The role for the vertex/node.}
+\item{\code{role}}{The role for the node.}
 }
 \if{html}{\out{</div>}}
 }
@@ -226,7 +261,7 @@ supplied then the child has to fit \code{role}
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
 
-\item{\code{role}}{The role for the vertex/node.}
+\item{\code{role}}{The role for the node.}
 }
 \if{html}{\out{</div>}}
 }
@@ -245,7 +280,7 @@ Get the factor ancestor ids
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
 
-\item{\code{role}}{The role for the vertex/node.}
+\item{\code{role}}{The role for the node.}
 }
 \if{html}{\out{</div>}}
 }
@@ -254,6 +289,7 @@ Get the factor ancestor ids
 \if{html}{\out{<a id="method-Provenance-fct_id_leaves"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-fct_id_leaves}{}}}
 \subsection{Method \code{fct_id_leaves()}}{
+Get the leave factor ids.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_id_leaves(role = NULL)}\if{html}{\out{</div>}}
 }
@@ -261,7 +297,7 @@ Get the factor ancestor ids
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{role}}{The role for the vertex/node.}
+\item{\code{role}}{The role for the node.}
 }
 \if{html}{\out{</div>}}
 }
@@ -279,7 +315,11 @@ Assumes that level ids obtained are all from the same fid
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{role}}{The role for the vertex/node.}
+\item{\code{value}}{The value of the node.}
+
+\item{\code{role}}{The role for the node.}
+
+\item{\code{fid}}{The factor id.}
 }
 \if{html}{\out{</div>}}
 }
@@ -298,7 +338,7 @@ Get the level parent ids
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
 
-\item{\code{role}}{The role for the vertex/node.}
+\item{\code{role}}{The role for the node.}
 }
 \if{html}{\out{</div>}}
 }
@@ -317,7 +357,7 @@ Get the level child ids
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
 
-\item{\code{role}}{The role for the vertex/node.}
+\item{\code{role}}{The role for the node.}
 }
 \if{html}{\out{</div>}}
 }
@@ -336,7 +376,7 @@ Get the level ancestor ids
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
 
-\item{\code{role}}{The role for the vertex/node.}
+\item{\code{role}}{The role for the node.}
 }
 \if{html}{\out{</div>}}
 }
@@ -345,6 +385,7 @@ Get the level ancestor ids
 \if{html}{\out{<a id="method-Provenance-fct_id_from_lvl_id"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-fct_id_from_lvl_id}{}}}
 \subsection{Method \code{fct_id_from_lvl_id()}}{
+Find the factor id from level ids.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_id_from_lvl_id(id = NULL, fid_search = NULL)}\if{html}{\out{</div>}}
 }
@@ -363,19 +404,37 @@ Get the level ancestor ids
 \if{html}{\out{<a id="method-Provenance-fct_id_from_lvl_values"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-fct_id_from_lvl_values}{}}}
 \subsection{Method \code{fct_id_from_lvl_values()}}{
+Find the factor id from level values.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_id_from_lvl_values(value = NULL, fid_search = NULL)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{value}}{The value of the node.}
+
+\item{\code{fid_search}}{A vector of fids to search from.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Provenance-lvl_id_from_fct_id"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-lvl_id_from_fct_id}{}}}
 \subsection{Method \code{lvl_id_from_fct_id()}}{
+Find the level id from the given fid
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$lvl_id_from_fct_id(fid = NULL)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{fid}}{The factor id.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Provenance-fct_names"></a>}}
@@ -391,7 +450,7 @@ Get the factor names based on id or role
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
 
-\item{\code{role}}{The role for the vertex/node.}
+\item{\code{role}}{The role for the node.}
 }
 \if{html}{\out{</div>}}
 }
@@ -400,6 +459,7 @@ Get the factor names based on id or role
 \if{html}{\out{<a id="method-Provenance-unit_names"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-unit_names}{}}}
 \subsection{Method \code{unit_names()}}{
+Get the unit names
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$unit_names(id = NULL)}\if{html}{\out{</div>}}
 }
@@ -416,6 +476,7 @@ Get the factor names based on id or role
 \if{html}{\out{<a id="method-Provenance-trt_names"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-trt_names}{}}}
 \subsection{Method \code{trt_names()}}{
+Get the treatment names
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$trt_names(id = NULL)}\if{html}{\out{</div>}}
 }
@@ -432,6 +493,7 @@ Get the factor names based on id or role
 \if{html}{\out{<a id="method-Provenance-rcrd_names"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-rcrd_names}{}}}
 \subsection{Method \code{rcrd_names()}}{
+Get the record names.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$rcrd_names(id = NULL)}\if{html}{\out{</div>}}
 }
@@ -460,7 +522,9 @@ id must be from the same fid
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
 
-\item{\code{role}}{The role for the vertex/node.}
+\item{\code{role}}{The role for the node.}
+
+\item{\code{fid}}{The factor id.}
 }
 \if{html}{\out{</div>}}
 }
@@ -469,6 +533,7 @@ id must be from the same fid
 \if{html}{\out{<a id="method-Provenance-unit_values"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-unit_values}{}}}
 \subsection{Method \code{unit_values()}}{
+Get the unit values.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$unit_values(id = NULL, fid = NULL)}\if{html}{\out{</div>}}
 }
@@ -477,6 +542,8 @@ id must be from the same fid
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
+
+\item{\code{fid}}{The factor id.}
 }
 \if{html}{\out{</div>}}
 }
@@ -485,6 +552,7 @@ id must be from the same fid
 \if{html}{\out{<a id="method-Provenance-trt_values"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-trt_values}{}}}
 \subsection{Method \code{trt_values()}}{
+Get the treatment values.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$trt_values(id = NULL, fid = NULL)}\if{html}{\out{</div>}}
 }
@@ -493,6 +561,8 @@ id must be from the same fid
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
+
+\item{\code{fid}}{The factor id.}
 }
 \if{html}{\out{</div>}}
 }
@@ -501,6 +571,7 @@ id must be from the same fid
 \if{html}{\out{<a id="method-Provenance-rcrd_values"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-rcrd_values}{}}}
 \subsection{Method \code{rcrd_values()}}{
+Get the record values.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$rcrd_values(uid = NULL, fid = NULL)}\if{html}{\out{</div>}}
 }
@@ -509,6 +580,8 @@ id must be from the same fid
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{uid}}{The unit level id}
+
+\item{\code{fid}}{The factor id.}
 }
 \if{html}{\out{</div>}}
 }
@@ -531,12 +604,12 @@ Get the role of the vertex given the factor id
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-fct_levels_id"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-fct_levels_id}{}}}
-\subsection{Method \code{fct_levels_id()}}{
+\if{html}{\out{<a id="method-Provenance-fct_levels"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-fct_levels}{}}}
+\subsection{Method \code{fct_levels()}}{
 Get the levels for each factor
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_levels_id(id = NULL, name = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_levels(id = NULL, name = NULL, return = c("id", "value"))}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -544,25 +617,62 @@ Get the levels for each factor
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
 
-\item{\code{name}}{The name of the vertex.}
+\item{\code{name}}{The name of the node.}
+
+\item{\code{return}}{To return in "id" or "value" format.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-fct_levels_value"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-fct_levels_value}{}}}
-\subsection{Method \code{fct_levels_value()}}{
+\if{html}{\out{<a id="method-Provenance-fct_levels_id_to_edbl_fct"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-fct_levels_id_to_edbl_fct}{}}}
+\subsection{Method \code{fct_levels_id_to_edbl_fct()}}{
+Factor levels to edble factor
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_levels_value(id = NULL, name = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_levels_id_to_edbl_fct(fct_levels, role)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{id}}{The id of the corresponding node.}
+\item{\code{fct_levels}}{The factor levels in id.}
 
-\item{\code{name}}{The name of the vertex.}
+\item{\code{role}}{The role for the node.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-fct_levels_id_to_value"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-fct_levels_id_to_value}{}}}
+\subsection{Method \code{fct_levels_id_to_value()}}{
+Get the factor levels in value given id format
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_levels_id_to_value(fct_levels)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{fct_levels}}{A list of factor levels in id format.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-fct_levels_value_to_id"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-fct_levels_value_to_id}{}}}
+\subsection{Method \code{fct_levels_value_to_id()}}{
+Get the factor levels in id given value format.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_levels_value_to_id(fct_levels)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{fct_levels}}{A list of factor levels in id format.}
 }
 \if{html}{\out{</div>}}
 }
@@ -583,11 +693,11 @@ the intersection of it will be checked.
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
 
-\item{\code{name}}{The name of the vertex.}
+\item{\code{name}}{The name of the node.}
 
-\item{\code{role}}{The role for the vertex/node.}
+\item{\code{role}}{The role for the node.}
 
-\item{\code{abort}}{A logical value to indicate whether to abort if it doesn't exist.}
+\item{\code{abort}}{Whether to abort.}
 }
 \if{html}{\out{</div>}}
 }
@@ -606,7 +716,7 @@ Check if treatment exists.
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
 
-\item{\code{name}}{The name of the vertex.}
+\item{\code{name}}{The name of the node.}
 
 \item{\code{abort}}{Whether to abort.}
 }
@@ -627,7 +737,7 @@ Check if unit exists.
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
 
-\item{\code{name}}{The name of the vertex.}
+\item{\code{name}}{The name of the node.}
 
 \item{\code{abort}}{Whether to abort.}
 }
@@ -648,27 +758,7 @@ Check if record exists.
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
 
-\item{\code{name}}{The name of the vertex.}
-
-\item{\code{abort}}{Whether to abort.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Provenance-lvl_exists"></a>}}
-\if{latex}{\out{\hypertarget{method-Provenance-lvl_exists}{}}}
-\subsection{Method \code{lvl_exists()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$lvl_exists(id = NULL, name = NULL, abort = TRUE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{id}}{The id of the corresponding node.}
-
-\item{\code{name}}{The name of the vertex.}
+\item{\code{name}}{The name of the node.}
 
 \item{\code{abort}}{Whether to abort.}
 }
@@ -687,9 +777,11 @@ Given node data, append the factor nodes
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{name}}{The name of the vertex.}
+\item{\code{name}}{The name of the node.}
 
-\item{\code{role}}{The role for the vertex/node.}
+\item{\code{role}}{The role for the node.}
+
+\item{\code{attrs}}{The attributes.}
 }
 \if{html}{\out{</div>}}
 }
@@ -703,6 +795,17 @@ Given node data, append the level nodes
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$append_lvl_nodes(value, attrs = NULL, fid = NULL)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{value}}{The value of the node.}
+
+\item{\code{attrs}}{The attributes.}
+
+\item{\code{fid}}{The factor id.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Provenance-append_fct_edges"></a>}}
@@ -713,6 +816,21 @@ Given edge data, append the factor edges
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$append_fct_edges(from, to, type = NULL, group = NULL, attrs = NULL)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{from}}{The node id from.}
+
+\item{\code{to}}{The node id to.}
+
+\item{\code{type}}{The type of edges.}
+
+\item{\code{group}}{The group id.}
+
+\item{\code{attrs}}{The attributes.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Provenance-append_lvl_edges"></a>}}
@@ -723,19 +841,71 @@ Given edge data, append the level edges
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$append_lvl_edges(from, to, attrs = NULL)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{from}}{The node id from.}
+
+\item{\code{to}}{The node id to.}
+
+\item{\code{attrs}}{The attributes.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Provenance-serve_units"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-serve_units}{}}}
 \subsection{Method \code{serve_units()}}{
+Serve the units.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$serve_units(id = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$serve_units(id = NULL, return = c("id", "value"))}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
+
+\item{\code{return}}{To return in "id" or "value" format.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-serve_trts"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-serve_trts}{}}}
+\subsection{Method \code{serve_trts()}}{
+Serve treatments
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$serve_trts(id = NULL, return = c("id", "value"))}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{The id of the corresponding node.}
+
+\item{\code{return}}{To return in "id" or "value" format.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-serve_rcrds"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-serve_rcrds}{}}}
+\subsection{Method \code{serve_rcrds()}}{
+Serve records
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$serve_rcrds(id = NULL, return = c("id", "value"))}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{The id of the corresponding node.}
+
+\item{\code{return}}{To return in "id" or "value" format.}
 }
 \if{html}{\out{</div>}}
 }
@@ -744,6 +914,7 @@ Given edge data, append the level edges
 \if{html}{\out{<a id="method-Provenance-graph_subset"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-graph_subset}{}}}
 \subsection{Method \code{graph_subset()}}{
+Subset graph
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$graph_subset(
   id = NULL,
@@ -770,24 +941,51 @@ subsetted graph
 \if{html}{\out{<a id="method-Provenance-save_seed"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-save_seed}{}}}
 \subsection{Method \code{save_seed()}}{
+Save the seed
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$save_seed(seed)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{seed}}{A seed.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Provenance-get_title"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-get_title}{}}}
 \subsection{Method \code{get_title()}}{
+Get the title
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$get_title()}\if{html}{\out{</div>}}
 }
 
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-get_validation"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-get_validation}{}}}
+\subsection{Method \code{get_validation()}}{
+Get the validation
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$get_validation(type)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{type}}{A type.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Provenance-get_trail"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-get_trail}{}}}
 \subsection{Method \code{get_trail()}}{
+Get the trail.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$get_trail()}\if{html}{\out{</div>}}
 }
@@ -797,6 +995,7 @@ subsetted graph
 \if{html}{\out{<a id="method-Provenance-get_graph"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-get_graph}{}}}
 \subsection{Method \code{get_graph()}}{
+Get the graph
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$get_graph()}\if{html}{\out{</div>}}
 }
@@ -806,6 +1005,7 @@ subsetted graph
 \if{html}{\out{<a id="method-Provenance-get_seed"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-get_seed}{}}}
 \subsection{Method \code{get_seed()}}{
+Get the seed
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$get_seed()}\if{html}{\out{</div>}}
 }
@@ -815,6 +1015,7 @@ subsetted graph
 \if{html}{\out{<a id="method-Provenance-get_session_info"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-get_session_info}{}}}
 \subsection{Method \code{get_session_info()}}{
+Get the session information
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$get_session_info()}\if{html}{\out{</div>}}
 }
@@ -824,6 +1025,7 @@ subsetted graph
 \if{html}{\out{<a id="method-Provenance-get_edibble_version"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-get_edibble_version}{}}}
 \subsection{Method \code{get_edibble_version()}}{
+Get the edibble version.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$get_edibble_version()}\if{html}{\out{</div>}}
 }
@@ -833,6 +1035,7 @@ subsetted graph
 \if{html}{\out{<a id="method-Provenance-record_step"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-record_step}{}}}
 \subsection{Method \code{record_step()}}{
+Record step.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$record_step()}\if{html}{\out{</div>}}
 }
@@ -842,10 +1045,18 @@ subsetted graph
 \if{html}{\out{<a id="method-Provenance-record_track_external"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-record_track_external}{}}}
 \subsection{Method \code{record_track_external()}}{
+Record track external.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$record_track_external(code)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{code}}{The code to record.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Provenance-clone"></a>}}

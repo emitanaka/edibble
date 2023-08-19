@@ -7,9 +7,7 @@
 allot_units(.edibble, ..., .record = TRUE)
 }
 \arguments{
-\item{.edibble}{An edibble design (\code{edbl_design}), an edibble data frame (\code{edbl_table}) or an
-object that contains the edibble data frame in the attribute
-\code{design}.}
+\item{.edibble}{An edibble design which should have units, treatments and allotment defined.}
 
 \item{...}{A two-sided formula.}
 

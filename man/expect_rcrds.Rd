@@ -4,7 +4,7 @@
 \alias{expect_rcrds}
 \title{Set the expected values for recording variables}
 \usage{
-expect_rcrds(.edibble, ...)
+expect_rcrds(.edibble, ..., .record = TRUE)
 }
 \arguments{
 \item{.edibble}{An edibble design (\code{edbl_design}), an edibble data frame (\code{edbl_table}) or an
@@ -14,6 +14,10 @@ object that contains the edibble data frame in the attribute
 \item{...}{Name-value pairs with the name belonging to the variable
 that are plan to be recorded from \code{set_rcrds()} and the values are
 the expected types and values set by helper functions, see \code{?expect-rcrds}.}
+
+\item{.record}{A logical value. This indicates whether to record this
+code step. The default is TRUE. It should remain TRUE unless this
+function is used as a wrapper in other code.}
 }
 \value{
 An edibble design.

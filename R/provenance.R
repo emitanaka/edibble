@@ -1,24 +1,25 @@
 
-#' A manipulator for the edbl_design.
+#' An object to query, record and modify an edibble graph
 #'
-#' Internal functions should create a new Provenance object.
 #' The Provenance contains a set of operations to manipulate the nodes and edges of
-#' the edibble design object.
+#' the edibble graph object.
 #'
-#' @param role The role for the vertex/node.
-#' @param data The nodes data
-#' @param name The name of the vertex.
+#' @param role The role for the node.
+#' @param name The name of the node.
+#' @param value The value of the node.
 #' @param id The id of the corresponding node.
-#' @param input The value of the new graph structure to add.
-#' @param initial The intial id.
+#' @param fid The factor id.
+#' @param attrs The attributes.
 #' @param abort Whether to abort.
+#' @param return To return in "id" or "value" format.
 #' @importFrom vctrs vec_is
 #' @export
 Provenance <- R6::R6Class("Provenance",
                        public = list(
 
+                         #' @description
                          #' Initialise function
-                         #' @param design An edibble design.
+                         #' @param graph An edibble graph.
                          initialize = function(graph = NULL) {
                            private$record_track_internal()
                            #self$add_tracker_to_set_fns(track_fns)
@@ -37,6 +38,9 @@ Provenance <- R6::R6Class("Provenance",
                          #   }
                          # },
 
+                         #' @description
+                         #' Set the title.
+                         #' @param title The title of the experiment
                          set_title = function(title) {
                            private$record_track_internal()
                            title <- vctrs::vec_cast(title, character())
@@ -44,6 +48,9 @@ Provenance <- R6::R6Class("Provenance",
                            private$title <- title
                          },
 
+                         #' @description
+                         #' Set the name.
+                         #' @param name The name of the edibble graph object.
                          set_name = function(name) {
                            private$record_track_internal()
                            name <- vctrs::vec_cast(name, character())
@@ -51,18 +58,30 @@ Provenance <- R6::R6Class("Provenance",
                            private$name <- name
                          },
 
-                         set_validation = function(validation, type) {
+                         #' @description
+                         #' Set the validation.
+                         #' @param validation The validation statement.
+                         #' @param type The type of validation.
+                         set_validation = function(validation, type = "rcrds") {
                            private$record_track_internal()
                            private$validation[[type]] <- validation
                          },
 
-                         reactivate = function(des, overwrite = c("graph", "anatomy", "recipe")) {
+                         #' @description
+                         #' Reactivate the graph in the provenance object.
+                         #' @param design An edibble design
+                         #' @param overwrite A vector of character to overwrite from the
+                         #' supplied design object.
+                         reactivate = function(design, overwrite = c("graph", "anatomy", "recipe")) {
                            #private$record_track_internal()
                            for(obj in overwrite) {
-                             private[[obj]] <- des[[obj]]
+                             private[[obj]] <- design[[obj]]
                            }
                          },
 
+                         #' @description
+                         #' Deactivate the provenance object.
+                         #' @param delete A vector of character to delete.
                          deactivate = function(delete = c("graph", "anatomy", "recipe")) {
                            #private$record_track_internal()
                            for(obj in delete) {
@@ -106,7 +125,8 @@ Provenance <- R6::R6Class("Provenance",
                          },
 
 
-                         #' @field fct_leaves
+
+                         #' @description
                          #' Get the leave factor ids.
                          fct_id_leaves = function(role = NULL) {
                            fids <- self$fct_id(role = role)
@@ -163,6 +183,8 @@ Provenance <- R6::R6Class("Provenance",
                            private$var_id_ancestor(id = id, role = role, node = "level")
                          },
 
+                         #' @description
+                         #' Find the factor id from level ids.
                          #' @param fid_search A vector of fids to search from.
                          fct_id_from_lvl_id = function(id = NULL, fid_search = NULL) {
                            lnodes_list <- self$lvl_nodes
@@ -172,6 +194,9 @@ Provenance <- R6::R6Class("Provenance",
                            }
                          },
 
+                         #' @description
+                         #' Find the factor id from level values.
+                         #' @param fid_search A vector of fids to search from.
                          fct_id_from_lvl_values = function(value = NULL, fid_search = NULL) {
                            lnodes_list <- self$lvl_nodes
                            if(!is_null(fid_search)) lnodes_list <- lnodes_list[fid_search]
@@ -180,6 +205,8 @@ Provenance <- R6::R6Class("Provenance",
                            }
                          },
 
+                         #' @description
+                         #' Find the level id from the given fid
                          lvl_id_from_fct_id = function(fid = NULL) {
                            lnodes_list <- self$lvl_nodes
                            lnodes_list[[fid]]$id
@@ -197,14 +224,20 @@ Provenance <- R6::R6Class("Provenance",
                            fnodes[match(id, fnodes$id), ]$name
                          },
 
+                         #' @description
+                         #' Get the unit names
                          unit_names = function(id = NULL) {
                            self$fct_names(id = id, role = "edbl_unit")
                          },
 
+                         #' @description
+                         #' Get the treatment names
                          trt_names = function(id = NULL) {
                            self$fct_names(id = id, role = "edbl_trt")
                          },
 
+                         #' @description
+                         #' Get the record names.
                          rcrd_names = function(id = NULL) {
                            self$fct_names(id = id, role = "edbl_rcrd")
                          },
@@ -229,14 +262,20 @@ Provenance <- R6::R6Class("Provenance",
                            }
                          },
 
+                         #' @description
+                         #' Get the unit values.
                          unit_values = function(id = NULL, fid = NULL) {
                            self$lvl_values(id = id, role = "edbl_unit", fid = fid)
                          },
 
+                         #' @description
+                         #' Get the treatment values.
                          trt_values = function(id = NULL, fid = NULL) {
                            self$lvl_values(id = id, role = "edbl_trt", fid = fid)
                          },
 
+                         #' @description
+                         #' Get the record values.
                          #' @param uid The unit level id
                          rcrd_values = function(uid = NULL, fid = NULL) {
                            lnodes_list <- self$lvl_nodes
@@ -273,6 +312,9 @@ Provenance <- R6::R6Class("Provenance",
                                   })
                          },
 
+                         #' @description
+                         #' Factor levels to edble factor
+                         #' @param fct_levels The factor levels in id.
                          fct_levels_id_to_edbl_fct = function(fct_levels, role) {
                            ret <- lapply(names(fct_levels), function(fid) {
                              lvls <- fct_levels[[fid]]
@@ -287,6 +329,9 @@ Provenance <- R6::R6Class("Provenance",
                            ret
                          },
 
+                         #' @description
+                         #' Get the factor levels in value given id format
+                         #' @param  fct_levels A list of factor levels in id format.
                          fct_levels_id_to_value = function(fct_levels) {
                            out <- lapply(names(fct_levels), function(fid) {
                              lvls <- fct_levels[[fid]]
@@ -296,6 +341,9 @@ Provenance <- R6::R6Class("Provenance",
                            out
                          },
 
+                         #' @description
+                         #' Get the factor levels in id given value format.
+                         #' @param  fct_levels A list of factor levels in id format.
                          fct_levels_value_to_id = function(fct_levels) {
                            out <- lapply(names(fct_levels), function(fname) {
                              lvls <- fct_levels[[fname]]
@@ -310,7 +358,6 @@ Provenance <- R6::R6Class("Provenance",
                          #' One of `name`, `id` or `role` is defined to check if it exists.
                          #' If more than one of the arguments `name`, `id` and `role` are supplied, then
                          #' the intersection of it will be checked.
-                         #' @param abort A logical value to indicate whether to abort if it doesn't exist.
                          fct_exists = function(id = NULL, name = NULL, role = NULL, abort = TRUE) {
                            exist <- TRUE
                            abort_missing <- function(vars = NULL, msg = NULL) {
@@ -393,9 +440,10 @@ Provenance <- R6::R6Class("Provenance",
                          },
 
 
-                         lvl_exists = function(id = NULL, value = NULL, fid = NULL, abort = TRUE) {
+
+                         #lvl_exists = function(id = NULL, value = NULL, fid = NULL, abort = TRUE) {
                            # FIXME
-                         },
+                         #},
 
                          #' @description
                          #' Given node data, append the factor nodes
@@ -432,6 +480,10 @@ Provenance <- R6::R6Class("Provenance",
 
                          #' @description
                          #' Given edge data, append the factor edges
+                         #' @param from The node id from.
+                         #' @param to The node id to.
+                         #' @param type The type of edges.
+                         #' @param group The group id.
                          append_fct_edges = function(from, to, type = NULL, group = NULL, attrs = NULL) {
                            private$record_track_internal()
                            self$fct_edges <- rbind_(self$fct_edges, tibble::tibble(from = from,
@@ -443,6 +495,8 @@ Provenance <- R6::R6Class("Provenance",
 
                          #' @description
                          #' Given edge data, append the level edges
+                         #' @param from The node id from.
+                         #' @param to The node id to.
                          append_lvl_edges = function(from, to, attrs = NULL) {
                            private$record_track_internal()
                            self$lvl_edges <- rbind_(self$lvl_edges, tibble::tibble(from = from,
@@ -450,6 +504,8 @@ Provenance <- R6::R6Class("Provenance",
                                                                                    attrs = attrs))
                          },
 
+                         #' @description
+                         #' Serve the units.
                          serve_units = function(id = NULL, return = c("id", "value")) {
                            return <- match.arg(return)
                            id <- id %||% self$fct_id(role = "edbl_unit")
@@ -485,6 +541,8 @@ Provenance <- R6::R6Class("Provenance",
                                   value = self$fct_levels_id_to_edbl_fct(out, role = "edbl_unit"))
                          },
 
+                         #' @description
+                         #' Serve treatments
                          serve_trts = function(id = NULL, return = c("id", "value")) {
 
                            return <- match.arg(return)
@@ -514,6 +572,8 @@ Provenance <- R6::R6Class("Provenance",
                          },
 
 
+                         #' @description
+                         #' Serve records
                          serve_rcrds = function(id = NULL, return = c("id", "value")) {
 
                            id <- id %||% self$rcrd_ids
@@ -540,6 +600,8 @@ Provenance <- R6::R6Class("Provenance",
                                   })
                          },
 
+                         #' @description
+                         #' Subset graph
                          #' @param include "self" for only input id, "child" for child also,
                          #'   "parent" for parent also,
                          #'   nodes immediately related, and "ancestors" for all ancestors
@@ -564,6 +626,9 @@ Provenance <- R6::R6Class("Provenance",
                            new_edibble_graph(fnodes, lnodes, fedges, ledges)
                          },
 
+                         #' @description
+                         #' Save the seed
+                         #' @param seed A seed.
                          save_seed = function(seed) {
                            private$record_track_internal()
                            if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE))
@@ -577,34 +642,51 @@ Provenance <- R6::R6Class("Provenance",
                            private$seed <- RNGstate
                          },
 
+                         #' @description
+                         #' Get the title
                          get_title = function() {
                            private$title
                          },
 
+                         #' @description
+                         #' Get the validation
+                         #' @param type A type.
                          get_validation = function(type) {
                            private$validation[[type]]
                          },
 
+                         #' @description
+                         #' Get the trail.
                          get_trail = function() {
                            private$trail[-length(private$trail)]
                          },
 
+                         #' @description
+                         #' Get the graph
                          get_graph = function() {
                            private$graph
                          },
 
+                         #' @description
+                         #' Get the seed
                          get_seed = function() {
                            private$seed
                          },
 
+                         #' @description
+                         #' Get the session information
                          get_session_info = function() {
                            private$session_info
                          },
 
+                         #' @description
+                         #' Get the edibble version.
                          get_edibble_version = function() {
                            private$edibble_version
                          },
 
+                         #' @description
+                         #' Record step.
                          record_step = function() {
                            do.call("on.exit",
                                    list(quote(return(add_edibble_code(returnValue(default = FALSE),
@@ -613,6 +695,9 @@ Provenance <- R6::R6Class("Provenance",
                                    envir = parent.frame())
                          },
 
+                         #' @description
+                         #' Record track external.
+                         #' @param code The code to record.
                          record_track_external = function(code) {
                            ncmds <- length(private$trail)
                            attr(private$trail[[ncmds]], "external_cmd") <- code
@@ -793,7 +878,6 @@ Provenance <- R6::R6Class("Provenance",
                         },
 
 
-                         #' @field fct_new_id
                          #' Get a new factor id.
                          fct_new_id = function(n = 1) {
                            ids <- seq(private$fct_id_last + 1, private$fct_id_last + n)
@@ -801,7 +885,6 @@ Provenance <- R6::R6Class("Provenance",
                            ids
                          },
 
-                         #' @field lvl_new_id
                          #' Get a new level id.
                          lvl_new_id = function(n = 1) {
                            ids <- seq(private$lvl_id_last + 1, private$lvl_id_last + n)

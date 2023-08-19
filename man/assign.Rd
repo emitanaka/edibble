@@ -7,25 +7,25 @@
 \title{Assign treatments or units to units}
 \usage{
 assign_trts(
-  .design,
+  .edibble,
   order = "random",
   seed = NULL,
-  constrain = nesting_structure(.design),
+  constrain = nesting_structure(.edibble),
   ...,
   .record = TRUE
 )
 
 assign_units(
-  .design,
+  .edibble,
   order = "random",
   seed = NULL,
-  constrain = nesting_structure(.design),
+  constrain = nesting_structure(.edibble),
   ...,
   .record = TRUE
 )
 }
 \arguments{
-\item{.design}{An edibble design which should have units, treatments and allotment defined.}
+\item{.edibble}{An edibble design which should have units, treatments and allotment defined.}
 
 \item{order}{A character vector signifying the apportion of treatments to units.
 The value should be either "random", "systematic", "systematic-random" or a class name corresponding to the algorithm for order_trts().

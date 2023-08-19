@@ -4,7 +4,12 @@
 \alias{serve_table}
 \title{Serve edibble table}
 \usage{
-serve_table(.edibble, use_labels = FALSE, ..., .record = TRUE)
+serve_table(
+  .edibble,
+  use_labels = FALSE,
+  fail = c("error", "warn", "ignore"),
+  .record = TRUE
+)
 }
 \arguments{
 \item{.edibble}{An edibble design (\code{edbl_design}), an edibble data frame (\code{edbl_table}) or an
@@ -13,7 +18,7 @@ object that contains the edibble data frame in the attribute
 
 \item{use_labels}{To show the labels instead of names.}
 
-\item{...}{Either a name-value pair or a series of the names.}
+\item{fail}{What to do when failing to convert graph to table.}
 
 \item{.record}{A logical value. This indicates whether to record this
 code step. The default is TRUE. It should remain TRUE unless this

@@ -9,7 +9,8 @@ allot_table(
   ...,
   order = "random",
   seed = NULL,
-  constrain = nesting_structure(.edibble)
+  constrain = nesting_structure(.edibble),
+  .record = TRUE
 )
 }
 \description{
