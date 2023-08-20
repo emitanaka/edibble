@@ -6,6 +6,6 @@
       des1
     Output
       An edibble design
-      +-block (3 levels)
-      \-plot (6 levels)
+      \-block (3 levels)
+        \-plot (6 levels)
 

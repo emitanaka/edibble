@@ -3,7 +3,7 @@
     Code
       des0 %>% set_rcrds(exam_mark = student, room = class) %>% serve_table()
     Output
-      [38;5;246m# Effective teaching[39m 
+      # Effective teaching 
       # An edibble: 120 x 6
              class     student       style        exam exam_mark   room
          <unit(4)> <unit(120)>    <trt(2)>    <trt(3)>    <rcrd> <rcrd>
@@ -34,11 +34,8 @@
       \-room
       Allotment:
     Message <cliMessage>
-      * class ~ student
       * style ~ class
       * exam ~ student
-      * exam_mark ~ student
-      * room ~ class
 
 ---
 
@@ -79,15 +76,8 @@
       \-teacher
       Allotment:
     Message <cliMessage>
-      * class ~ student
       * style ~ class
       * exam ~ student
-      * exam_mark ~ student
-      * quiz1_mark ~ student
-      * quiz2_mark ~ student
-      * gender ~ student
-      * room ~ class
-      * teacher ~ class
 
 ---
 
@@ -133,13 +123,122 @@
       \-teacher
       Allotment:
     Message <cliMessage>
-      * class ~ student
       * style ~ class
       * exam ~ student
-      * exam_mark ~ student
-      * quiz1_mark ~ student
-      * quiz2_mark ~ student
-      * gender ~ student
-      * room ~ class
-      * teacher ~ class
+    Output
+      Validation:
+    Message <cliMessage>
+      * exam_mark: numeric [0, 100]
+      * quiz1_mark: integer [0, 15]
+      * quiz2_mark: integer [0, 30]
+      * gender: factor [female, male, non-binary]
+      * teacher: text
+      * room: text
+
+---
+
+    Code
+      des2 %>% expect_rcrds(exam_mark = to_be_numeric(with_value(between = c(0, 100))),
+      quiz1_mark >= 0L, quiz1_mark <= 15L, quiz2_mark < 12, factor(gender, levels = c(
+        "female", "male", "non-binary")))
+    Output
+      Effective teaching
+      +-class (4 levels)
+      | \-student (120 levels)
+      |   +-exam (3 levels)
+      |   +-exam_mark
+      |   +-quiz1_mark
+      |   +-quiz2_mark
+      |   \-gender
+      +-style (2 levels)
+      +-room
+      \-teacher
+      Allotment:
+    Message <cliMessage>
+      * style ~ class
+      * exam ~ student
+    Output
+      Validation:
+    Message <cliMessage>
+      * exam_mark: numeric [0, 100]
+      * quiz1_mark: integer [0, 15]
+      * quiz2_mark: numeric [-Inf, 12)
+      * gender: factor [female, male, non-binary]
+
+---
+
+    Code
+      des2 %>% expect_rcrds(exam_mark >= 0, exam_mark <= 100, factor(gender, levels = c(
+        "female", "male", "non-binary")))
+    Output
+      Effective teaching
+      +-class (4 levels)
+      | \-student (120 levels)
+      |   +-exam (3 levels)
+      |   +-exam_mark
+      |   +-quiz1_mark
+      |   +-quiz2_mark
+      |   \-gender
+      +-style (2 levels)
+      +-room
+      \-teacher
+      Allotment:
+    Message <cliMessage>
+      * style ~ class
+      * exam ~ student
+    Output
+      Validation:
+    Message <cliMessage>
+      * exam_mark: numeric [0, 100]
+      * gender: factor [female, male, non-binary]
+
+---
+
+    Code
+      des2 %>% expect_rcrds(exam_mark < -1)
+    Output
+      Effective teaching
+      +-class (4 levels)
+      | \-student (120 levels)
+      |   +-exam (3 levels)
+      |   +-exam_mark
+      |   +-quiz1_mark
+      |   +-quiz2_mark
+      |   \-gender
+      +-style (2 levels)
+      +-room
+      \-teacher
+      Allotment:
+    Message <cliMessage>
+      * style ~ class
+      * exam ~ student
+    Output
+      Validation:
+    Message <cliMessage>
+      * exam_mark: numeric [-Inf, -1)
+
+---
+
+    Code
+      des2 %>% expect_rcrds(0 < exam_mark)
+    Output
+      Effective teaching
+      +-class (4 levels)
+      | \-student (120 levels)
+      |   +-exam (3 levels)
+      |   +-exam_mark
+      |   +-quiz1_mark
+      |   +-quiz2_mark
+      |   \-gender
+      +-style (2 levels)
+      +-room
+      \-teacher
+      Allotment:
+    Message <cliMessage>
+      * style ~ class
+      * exam ~ student
+    Output
+      Validation:
+    Message <cliMessage>
+      * exam_mark: numeric (0, Inf]
 
