@@ -187,8 +187,9 @@ as_edibble.default <- function(.data, ...) {
 
 #' @rdname new_edibble
 #' @export
-edibble <- function(.data, name = NULL, .record = TRUE, seed = NULL, provenance = Provenance$new(), ...) {
-  des <- design(name = name, .record = .record, seed = seed, provenance = provenance)
+edibble <- function(.data, title = NULL, name = "edibble", .record = TRUE, seed = NULL, provenance = Provenance$new(), ...) {
+  if(.record) provenance$record_step()
+  des <- design(title = title, name = name, .record = FALSE, seed = seed, provenance = provenance)
   new_edibble(.data, ..., design = des)
 }
 
