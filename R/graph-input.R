@@ -13,8 +13,8 @@ graph_input_type = function(input) {
   if(is_nest_levels(input)) return("nest_lvls")
   if(vec_is(input, numeric(), 1)) return("numeric")
   if(vec_is(input, integer(), 1)) return("numeric")
-  if(is.vector(input) && !is_named(input)) return("unnamed_vector")
-  if(is.vector(input) && is_named(input)) return("named_vector")
+  if(is_vector(input) && !is_named(input)) return("unnamed_vector")
+  if(is_vector(input) && is_named(input)) return("named_vector")
   return("unimplemented")
 }
 
