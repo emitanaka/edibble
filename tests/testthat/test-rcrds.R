@@ -1,5 +1,4 @@
 test_that("measure response", {
-  # FIXME
 
   des0 <- design(title = "Effective teaching") %>%
     set_units(class = 4,
@@ -39,6 +38,7 @@ test_that("measure response", {
     des2
   })
 
+  # FIXME: not sure why this fails
   expect_snapshot({
     serve_table(des2)
   })

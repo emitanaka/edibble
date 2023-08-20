@@ -15,6 +15,7 @@
       # An edibble: 24 x 2
                unit      trt
        * <unit(24)> <trt(4)>
+              <chr>    <chr>                                                          
        1     unit1      trt4
        2     unit2      trt1
        3     unit3      trt4
@@ -45,6 +46,7 @@
       # An edibble: 15 x 3
              block       unit      trt
        * <unit(3)> <unit(15)> <trt(5)>
+             <chr>      <chr>    <chr>                                                
        1    block1     unit01     trt3
        2    block1     unit02     trt2
        3    block1     unit03     trt4
@@ -81,6 +83,7 @@
       # An edibble: 12 x 4
           mainplot    subplot     trt1     trt2
        * <unit(6)> <unit(12)> <trt(3)> <trt(2)>
+             <chr>      <chr>    <chr>    <chr>                                       
        1 mainplot1  subplot01    trt13    trt22
        2 mainplot1  subplot02    trt13    trt21
        3 mainplot2  subplot03    trt12    trt22
@@ -116,6 +119,7 @@
       # An edibble: 24 x 6
              block        row       col       unit     trt1     trt2
        * <unit(4)> <unit(12)> <unit(8)> <unit(24)> <trt(3)> <trt(2)>
+             <chr>      <chr>     <chr>      <chr>    <chr>    <chr>                  
        1    block1      row01      col1     unit01    trt12    trt21
        2    block1      row02      col1     unit02    trt13    trt21
        3    block1      row03      col1     unit03    trt11    trt21
@@ -148,6 +152,7 @@
       # An edibble: 48 x 4
                unit     trt1     trt2     trt3
        * <unit(48)> <trt(2)> <trt(3)> <trt(4)>
+              <chr>    <chr>    <chr>    <chr>                                        
        1     unit1     trt12    trt22    trt34
        2     unit2     trt12    trt21    trt33
        3     unit3     trt12    trt23    trt34
@@ -178,6 +183,7 @@
       # An edibble: 48 x 5
              block       unit     trt1     trt2     trt3
        * <unit(2)> <unit(48)> <trt(2)> <trt(3)> <trt(4)>
+             <chr>      <chr>    <chr>    <chr>    <chr>                              
        1    block1     unit01    trt11    trt23    trt31
        2    block1     unit02    trt11    trt21    trt32
        3    block1     unit03    trt12    trt23    trt34
@@ -209,6 +215,7 @@
       # An edibble: 100 x 4
                 row        col        unit       trt
        * <unit(10)> <unit(10)> <unit(100)> <trt(10)>
+              <chr>      <chr>       <chr>     <chr>                                  
        1      row1        col1      unit1      trt3 
        2      row2        col1      unit2      trt9 
        3      row3        col1      unit3      trt7 
@@ -240,6 +247,7 @@
       # An edibble: 70 x 4
                 row       col       unit       trt
        * <unit(10)> <unit(7)> <unit(70)> <trt(10)>
+              <chr>     <chr>      <chr>     <chr>                                    
        1      row1       col1     unit1      trt3 
        2      row2       col1     unit2      trt9 
        3      row3       col1     unit3      trt7 

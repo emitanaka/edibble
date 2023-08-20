@@ -8,41 +8,32 @@ test_that("nested-units", {
   })
 
   expect_equal(fct_nodes(des1),
-               tibble::tibble(id = c(1L, 2L),
+               tibble::tibble(name = c("block", "plot"),
                               role = "edbl_unit",
-                              name = c("block", "plot"),
                               attrs = NA))
   expect_equal(lvl_nodes(des1),
-               structure(list(`1` = tibble::tibble(id = 1:3,
-                                                   value = c("block1", "block2", "block3")),
-                              `2` = tibble::tibble(id = 4:9,
-                                                   value = c("plot1", "plot2", "plot3", "plot4", "plot5", "plot6"))),
-                         class = c("edbl_lnodes", "list")))
+               list(block = tibble::tibble(value = c("block1", "block2", "block3")),
+                              plot = tibble::tibble(value = c("plot1", "plot2", "plot3", "plot4", "plot5", "plot6")))                         )
 
   des2 <- des1 %>%
     set_units(sample = nested_in(plot,
                                  1 ~ 20,
                                  . ~ 3))
   expect_equal(fct_nodes(des2),
-               tibble::tibble(id = c(1L, 2L, 3L),
+               tibble::tibble(name = c("block", "plot", "sample"),
                               role = "edbl_unit",
-                              name = c("block", "plot", "sample"),
                               attrs = NA))
   expect_equal(lvl_nodes(des2),
-               structure(list(`1` = tibble::tibble(id = 1:3,
-                                                   value = c("block1", "block2", "block3")),
-                              `2` = tibble::tibble(id = 4:9,
-                                                   value = c("plot1", "plot2", "plot3", "plot4", "plot5", "plot6")),
-                              `3` = tibble::tibble(id = 10:44,
-                                                   value = c("sample01", "sample02", "sample03",
+               list(block = tibble::tibble(value = c("block1", "block2", "block3")),
+                              plot = tibble::tibble(value = c("plot1", "plot2", "plot3", "plot4", "plot5", "plot6")),
+                              sample = tibble::tibble(value = c("sample01", "sample02", "sample03",
                                                              "sample04", "sample05", "sample06", "sample07", "sample08",
                                                              "sample09", "sample10", "sample11", "sample12", "sample13",
                                                              "sample14", "sample15", "sample16", "sample17", "sample18",
                                                              "sample19", "sample20", "sample21", "sample22", "sample23",
                                                              "sample24", "sample25", "sample26", "sample27", "sample28",
                                                              "sample29", "sample30", "sample31", "sample32", "sample33",
-                                                             "sample34", "sample35"))),
-                          class = c("edbl_lnodes", "list")))
+                                                             "sample34", "sample35"))))
 
 
 

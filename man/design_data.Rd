@@ -8,13 +8,13 @@
 \alias{lvl_edges}
 \title{Get the node or edge data from an edibble design}
 \usage{
-fct_nodes(edibble)
+fct_nodes(x)
 
-fct_edges(edibble)
+fct_edges(x)
 
-lvl_nodes(edibble)
+lvl_nodes(x)
 
-lvl_edges(edibble)
+lvl_edges(x)
 }
 \arguments{
 \item{edibble}{An edibble object.}

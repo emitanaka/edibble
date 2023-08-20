@@ -12,10 +12,11 @@ as_edibble(.data, ...)
 
 edibble(
   .data,
-  name = NULL,
+  title = NULL,
+  name = "edibble",
   .record = TRUE,
   seed = NULL,
-  kitchen = Kitchen,
+  provenance = Provenance$new(),
   ...
 )
 }
@@ -35,6 +36,9 @@ code step. The default is TRUE. It should remain TRUE unless this
 function is used as a wrapper in other code.}
 
 \item{seed}{A seed number for reproducibility.}
+
+\item{provenance}{An environment setup in a manner to store methods and
+information to trace the origin of the design}
 }
 \value{
 An edibble table.

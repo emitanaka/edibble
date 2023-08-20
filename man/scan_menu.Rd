@@ -4,14 +4,16 @@
 \alias{scan_menu}
 \title{Find the short names of the named designs}
 \usage{
-scan_menu(pkgs = NULL)
+scan_menu(packages = NULL, exclude = NULL)
 }
 \arguments{
-\item{pkgs}{A character vector containing the package names to search
+\item{packages}{A character vector containing the package names to search
 named designs from. By default it will search edibble and other packages loaded.}
+
+\item{exclude}{A character vector denoting the packages to exclude search from.}
 }
 \value{
-A character vector of the short names of the named menu designs.
+A data.frame with package, name, arguments, and full name.
 }
 \description{
 Find the short names of the named designs

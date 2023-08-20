@@ -18,4 +18,10 @@ test_that("allot works", {
   fedges2 <- fct_edges(des2)
   expect_equal(fedges2$var_from, c("block", "treat", "pest"))
   expect_equal(fedges2$var_to, c("plot", "plot", "block"))
+
+  df <- as.data.frame(takeout(menu_split()))
+  attr(df, "design") <- NULL
+  attr(df, "recipe") <- NULL
+
+
 })
