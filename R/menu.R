@@ -503,7 +503,7 @@ scan_menu <- function(packages = NULL, exclude = NULL) {
 takeout <- function(recipe = NULL, show = TRUE) {
   if(is.null(recipe)) {
     cli::cli_alert("No name was supplied so selecting a random named experimental design...")
-    name <- sample(suppressMessages(scan_menu()), 1L)
+    name <- sample(scan_menu()$name, 1L)
     recipe <- do.call(paste0("menu_", name), list())
     cli::cli_alert(sprintf("Selected %s", recipe$name_full))
   }
