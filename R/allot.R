@@ -79,7 +79,8 @@ allot_trts <- function(.edibble, ..., .record = TRUE) {
 #' @export
 allot_units <- function(.edibble, ..., .record = TRUE) {
   not_edibble(.edibble)
-  if(.record) record_step()
+  prov <- activate_provenance(.edibble)
+  if(.record) prov$record_step()
   des <- edbl_design(.edibble)
 
   dots <- list2(...)
@@ -88,7 +89,6 @@ allot_units <- function(.edibble, ..., .record = TRUE) {
   } else {
     des$allotment <- list(trts = NULL, units = dots)
   }
-  prov <- activate_provenance(des)
 
   for(ialloc in seq_along(dots)) {
     # there should be only one unit for `big`
@@ -96,24 +96,23 @@ allot_units <- function(.edibble, ..., .record = TRUE) {
     small <- all.vars(f_rhs(dots[[ialloc]]))
     op <- as.character(as.list(f_rhs(dots[[ialloc]]))[[1]])
     prov$fct_exists(name = small, role = "edbl_unit")
-    big_id <- prov$fct_id(big)
+    big_id <- prov$fct_id(name = big)
     prov$fct_exists(name = big, role = "edbl_unit")
-    small_id <- prov$fct_id(small)
+    small_id <- prov$fct_id(name = small)
 
     if(!op %in% c("crossed_by", "nested_in")) {
-      prov$append_fct_edges(data.frame(from = big_id,
-                                       to = small_id[length(small_id)],
-                                       type = "nest"))
+      prov$append_fct_edges(from = big_id,
+                            to = small_id[length(small_id)],
+                            type = "nest")
       if(length(small) > 1) {
-        prov$append_fct_edges(data.frame(from =  big_id,
-                                         to = small_id[length(small_id) - 1],
-                                         type = "depends"))
+        prov$append_fct_edges(from = big_id,
+                              to = small_id[length(small_id) - 1],
+                              type = "depends")
       }
-
     }
   }
   if(is_edibble_design(.edibble)) {
-    prov$design
+    return_edibble_with_graph(.edibble, prov)
   } else if(is_edibble_table(.edibble)) {
     # Note: for crossed and nested, it's the opposite -> small = big, not big = small.
     if(op %in% c("crossed_by", "nested_in")) {
@@ -124,18 +123,17 @@ allot_units <- function(.edibble, ..., .record = TRUE) {
         if(op == "crossed_by") {
           cross_df <- expand.grid(from = small_id, to = small_id)
           cross_df <- cross_df[cross_df$from!=cross_df$to,]
-          cross_df$type <- "cross"
-          prov$append_fct_edges(cross_df)
+          prov$append_fct_edges(from = cross_df$from, to = cross_df$to, type = "cross")
         }
-        prov$append_lvl_edges(data.frame(from = prov$lvl_id(as.character(.edibble[[small[ismall]]])),
-                                         to = prov$lvl_id(as.character(.edibble[[big]]))))
+        prov$append_lvl_edges(from = prov$lvl_id(name = as.character(.edibble[[small[ismall]]])),
+                              to = prov$lvl_id(name = as.character(.edibble[[big]])))
 
       }
 
     } else {
       for(asmall in small) {
-        prov$append_lvl_edges(data.frame(from = prov$lvl_id(as.character(.edibble[[big]])),
-                                         to = prov$lvl_id(as.character(.edibble[[asmall]]))))
+        prov$append_lvl_edges(from = prov$lvl_id(name = as.character(.edibble[[big]])),
+                              to = prov$lvl_id(name = as.character(.edibble[[asmall]])))
       }
     }
     attr(.edibble, "design") <- prov$design
