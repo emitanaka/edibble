@@ -33,19 +33,17 @@ set_fcts <- function(.edibble, ..., .class = NULL,
     }
 
   } else if(is_edibble_table(.edibble)) {
-    # FIXME
-    loc <- eval_select(expr(tidyselect::all_of(c(...))), .edibble)
+
+    loc <- eval_select(expr(c(...)), .edibble)
     for(i in seq_along(loc)) {
       var <- .edibble[[loc[i]]]
-      lvls <- as.character(sort(unique(var)))
+      lvls <- sort(unique(var))
       fname <- names(loc)[i]
-      .edibble[[loc[i]]] <- new_edibble_fct(labels = as.character(.edibble[[loc[[i]]]]),
+      .edibble[[loc[i]]] <- new_edibble_fct(labels = var,
                                             levels = lvls,
                                             class = .class,
                                             name = fname)
-      graph_input(.edibble[[loc[i]]], prov, fname, .class)
-
-
+      graph_input.default(lvls, prov, fname, .class)
     }
 
   }
@@ -62,7 +60,7 @@ set_fcts <- function(.edibble, ..., .class = NULL,
 new_edibble_fct <- function(labels = character(), levels = unique(labels),
                             name = character(), rep = NULL, ..., class = NULL) {
   x <- new_vctr(labels, levels = levels, name = name,
-                ..., class = c("edbl_fct", "character"))
+                ..., class = c("edbl_fct", class(labels)))
   class(x) <- c(class, class(x))
   x
 }
