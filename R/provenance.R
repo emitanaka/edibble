@@ -906,3 +906,18 @@ Provenance <- R6::R6Class("Provenance",
                           new_edibble_graph(fnodes = fnodes, lnodes = lnodes, fedges = fedges, ledges = ledges)
                         }
                        ))
+
+
+#' Check if an object is an instance of the "Provenance" class.
+#'
+#' This function determines whether the given object is an instance of the
+#' "Provenance" class.
+#'
+#' @param x An object to be checked for its class membership.
+#'
+#' @return \code{TRUE} if the object is an instance of the "Provenance" class,
+#'   \code{FALSE} otherwise.
+#' @export
+is_provenance <- function(x) {
+  inherits(x, "Provenance")
+}
