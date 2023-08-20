@@ -82,6 +82,36 @@ vec_cast.edbl_unit.edbl_unit <- function(x, to, ...) {
   x
 }
 
+#' @importFrom pillar tbl_format_body
+#' @export
+tbl_format_body.edbl_table <- function(x, setup, ...) {
+  # this is a bit of a hack to get the type
+  # it probably should get the alignement from pillar
+  edbl_types <- cli::ansi_strip(setup$body[2])
+  pos <- gregexpr(">", edbl_types)[[1]]
+  types <- map_chr(x, vec_ptype_abbr2)
+  string <- paste0(rep(" ", length.out = setup$width), collapse = "")
+  for(i in 1:length(types)) {
+    start <- pos[i] - length(types[i]) - 3
+    end <- pos[i]
+    new <- paste0("<", types[i], ">")
+    if(substr(edbl_types, start, end) != new) substr(string, start, end) <- new
+  }
+  setup$body <- c(setup$body[1:2], cli::style_italic(cli::col_silver(string)),
+                  setup$body[3:length(setup$body)])
+  NextMethod()
+}
+
+vec_ptype_abbr2 <- function(x, ...) {
+  cls <- class(x)
+  class(x) <- setdiff(cls, c("edbl_unit", "edbl_trt", "edbl_rcrd", "edbl_fct", "vctrs_vctr"))
+  vctrs::vec_ptype_abbr(x, ...)
+}
+
+
+
+
+
 ### below may not be working as intended
 
 #' @export
