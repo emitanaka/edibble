@@ -85,7 +85,7 @@ expect_rcrds <- function(.edibble, ..., .record = TRUE) {
   dots_nms <- names(dots)
   rules_named <- map(dots[dots_nms!=""], eval_tidy)
   rules_unnamed <- map(dots[dots_nms==""], validate_rcrd,
-                        rnames = prov$rcrd_names)
+                       rnames = prov$rcrd_names())
 
   rules_unnamed <- stats::setNames(rules_unnamed, map_chr(rules_unnamed, function(x) x$rcrd))
   prov$set_validation(simplify_validation(c(rules_named, rules_unnamed)), type = "rcrds")
