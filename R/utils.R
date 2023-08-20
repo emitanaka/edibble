@@ -103,7 +103,7 @@ print.edbl_design <- function(x,
   if("allot" %in% fedges$type) {
     cat(decorate_title("Allotment:\n"))
     allots <- fedges[fedges$type=="allot", ]
-    trts_to_units <- paste(fedges$var_from, "~", fedges$var_to)
+    trts_to_units <- paste(allots$var_from, "~", allots$var_to)
     # this is so it aligns the tilde position
     # it seems that it's automatically strips away the padding now
     # so below no longer works
