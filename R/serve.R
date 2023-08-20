@@ -69,6 +69,7 @@ serve_vars_not_reconciled <- function(prov) {
   namesv <- prov$fct_names()
   res <- lapply(namesv,
                 function(avar) {
+                  # FIXME: labels should not necessary be character?
                   new_edibble_fct(levels = prov$lvl_values(fid = prov$fct_id(name = avar)),
                                   name = avar,
                                   class = prov$fct_role(id = prov$fct_id(name = avar)))
