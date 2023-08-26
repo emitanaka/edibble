@@ -44,6 +44,7 @@
       # An edibble: 30 x 3
           vaccine      sex     person
          <trt(3)> <trt(2)> <unit(30)>
+            <chr>    <chr>      <chr>                                                 
        1 vaccine1     sex1   person1 
        2 vaccine2     sex1   person2 
        3 vaccine3     sex1   person3 
@@ -66,6 +67,7 @@
       # An edibble: 30 x 3
           vaccine      sex     person
          <trt(3)> <trt(2)> <unit(30)>
+            <chr>    <chr>      <chr>                                                 
        1 vaccine1        F   person1 
        2 vaccine2        F   person2 
        3 vaccine3        F   person3 
@@ -88,6 +90,7 @@
       # An edibble: 30 x 3
           vaccine      sex     person
          <trt(3)> <trt(2)> <unit(30)>
+            <chr>    <chr>      <chr>                                                 
        1 vaccine1        F   person1 
        2 vaccine2        M   person2 
        3 vaccine3        F   person3 
@@ -109,6 +112,7 @@
       # An edibble: 30 x 2
           vaccine     person
          <trt(3)> <unit(30)>
+            <chr>      <chr>                                                          
        1 vaccine1   person1 
        2 vaccine2   person2 
        3 vaccine3   person3 
@@ -131,6 +135,7 @@
       # An edibble: 5 x 2
          vaccine    person
         <trt(3)> <unit(5)>
+           <chr>     <chr>                                                            
       1 vaccine1   person1
       2 vaccine3   person2
       3 vaccine2   person3
@@ -146,6 +151,7 @@
       # An edibble: 5 x 2
          vaccine    person
         <trt(3)> <unit(5)>
+           <chr>     <chr>                                                            
       1 vaccine3   person1
       2 vaccine2   person2
       3 vaccine2   person3
