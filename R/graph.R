@@ -38,7 +38,7 @@ NULL
 #' @rdname design_data
 #' @export
 fct_nodes <- function(x) {
-  prov <- get_provenance(x)
+  prov <- activate_provenance(x)
   fnodes <- prov$fct_nodes
   fnodes[, c("name", "role", "attrs")]
 }
@@ -46,7 +46,7 @@ fct_nodes <- function(x) {
 #' @rdname design_data
 #' @export
 fct_edges <- function(x) {
-  prov <- get_provenance(x)
+  prov <- activate_provenance(x)
   fedges <- prov$fct_edges
   fedges[, c("var_from", "var_to", "type", "group", "attrs")]
 }
@@ -55,7 +55,7 @@ fct_edges <- function(x) {
 #' @rdname design_data
 #' @export
 lvl_nodes <- function(x) {
-  prov <- get_provenance(x)
+  prov <- activate_provenance(x)
   lnodes <- prov$lvl_nodes
   lnodes <- lapply(lnodes, function(x) x[, "value", drop = FALSE])
   names(lnodes) <- prov$fct_names(id = as.numeric(names(lnodes)))
@@ -65,7 +65,7 @@ lvl_nodes <- function(x) {
 #' @rdname design_data
 #' @export
 lvl_edges <- function(x) {
-  prov <- get_provenance(x)
+  prov <- activate_provenance(x)
   ledges <- prov$lvl_edges
   lnodes <- prov$lvl_nodes
   lnodes_df <- do.call("rbind", lapply(names(lnodes), function(x) data.frame(fid = as.numeric(x), id = lnodes[[x]]$id)))
@@ -80,12 +80,10 @@ lvl_edges <- function(x) {
 }
 
 
-get_provenance <- function(x) {
-  if(is_provenance(x)) {
-    x
-  } else {
-    not_edibble(x)
-    activate_provenance(x)
-  }
+fct_graph <- function(x) {
+  prov <- activate_provenance(x)
+  fnodes <- fct_nodes(x)
+  fedges <- fct_edges(x)
+  new_edibble_graph(fnodes = fnodes, fedges = fedges)
 }
 
