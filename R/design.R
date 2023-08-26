@@ -130,8 +130,8 @@ NULL
   invisible(structure(lx, class = class(x)))
 }
 
-new_edibble_graph <- function(fnodes, lnodes, fedges, ledges) {
-  if(!inherits(lnodes, "edbl_lnodes")) class(lnodes) <- c("edbl_lnodes", class(lnodes))
+new_edibble_graph <- function(fnodes = NULL, lnodes = NULL, fedges = NULL, ledges = NULL) {
+  if(!is_null(lnodes) && !inherits(lnodes, "edbl_lnodes")) class(lnodes) <- c("edbl_lnodes", class(lnodes))
   structure(list(factors = list(nodes = fnodes,
                                 edges = fedges),
                  levels = list(nodes = lnodes,
