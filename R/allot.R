@@ -111,9 +111,7 @@ allot_units <- function(.edibble, ..., .record = TRUE) {
       }
     }
   }
-  if(is_edibble_design(.edibble)) {
-    return_edibble_with_graph(.edibble, prov)
-  } else if(is_edibble_table(.edibble)) {
+  if(is_edibble_table(.edibble)) {
     # Note: for crossed and nested, it's the opposite -> small = big, not big = small.
     if(op %in% c("crossed_by", "nested_in")) {
       for(ismall in seq_along(small_id)) {
@@ -136,9 +134,8 @@ allot_units <- function(.edibble, ..., .record = TRUE) {
                               to = prov$lvl_id(name = as.character(.edibble[[asmall]])))
       }
     }
-    attr(.edibble, "design") <- prov$design
-    .edibble
   }
+  return_edibble_with_graph(.edibble, prov)
 
 }
 
