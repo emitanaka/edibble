@@ -38,7 +38,6 @@ test_that("measure response", {
     des2
   })
 
-  # FIXME: not sure why this fails
   expect_snapshot({
     serve_table(des2)
   })
