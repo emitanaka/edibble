@@ -172,12 +172,15 @@ perm <- function(x) {
 }
 
 #' @export
-print.edbl_graph <- function(x, show_levels = FALSE, ...) {
-  cat(cli::col_green("factor nodes\n"))
-  print(x$factors$nodes)
-  cat(cli::col_green("factor edges\n"))
-  print(x$factors$edges)
-  if(show_levels) {
+print.edbl_graph <- function(x, show = c("factors", "levels", "both"), ...) {
+  show <- match.arg(show)
+  if(show %in% c("factors", "both")) {
+    cat(cli::col_green("factor nodes\n"))
+    print(x$factors$nodes)
+    cat(cli::col_green("factor edges\n"))
+    print(x$factors$edges)
+  }
+  if(show %in% c("levels", "both")) {
     cat(cli::col_blue("level nodes\n"))
     print(x$levels$nodes)
     cat(cli::col_blue("level edges\n"))
