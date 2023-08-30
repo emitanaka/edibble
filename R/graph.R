@@ -73,17 +73,25 @@ lvl_edges <- function(x) {
   ledges$var_to <- prov$fct_names(id = lnodes_df[match(ledges$to, lnodes_df$id), "fid"])
   ledges <- split(ledges, paste(ledges$var_from, "->", ledges$var_to))
   lapply(ledges, function(df) {
-    df$val_from <- prov$lvl_values(id = df$from, fid = prov$fct_id(name = df$var_from[1]))
-    df$val_to <- prov$lvl_values(id = df$to, fid = prov$fct_id(name = df$var_to[1]))
+    df$val_from <- prov$lvl_values(id = df$from, fid = prov$fct_id(name = df$var_from[1])) %||% character(0)
+    df$val_to <- prov$lvl_values(id = df$to, fid = prov$fct_id(name = df$var_to[1])) %||% character(0)
     df[, c("var_from", "var_to", "val_from", "val_to", "attrs")]
   })
 }
 
-
+#' @export
 fct_graph <- function(x) {
   prov <- activate_provenance(x)
   fnodes <- fct_nodes(x)
   fedges <- fct_edges(x)
   new_edibble_graph(fnodes = fnodes, fedges = fedges)
+}
+
+
+lvl_graph <- function(x) {
+  prov <- activate_provenance(x)
+  lnodes <- lvl_nodes(x)
+  ledges <- lvl_edges(x)
+  new_edibble_graph(lnodes = lnodes, ledges = ledges)
 }
 

@@ -457,7 +457,11 @@ Provenance <- R6::R6Class("Provenance",
                                                   role = role)
 
                            out <- rbind_(fnodes[setdiff(names(fnodes), "attrs")], data)
-                           out$attrs <- rbind_(fnodes$attrs, attrs)
+                           out_attrs <- rbind_(fnodes$attrs, attrs)
+                           if(nrow(out_attrs)==0) {
+                             out_attrs <- data.frame(row.names = nrow(out))
+                           }
+                           out$attrs <- out_attrs
                            self$fct_nodes <- out
                          },
 

@@ -14,8 +14,7 @@
 #' fct_attrs(levels = c("A", "B"))
 #' @return An `edbl_lvls` object.
 #' @export
-fct_attrs <- function(.levels = NULL,
-                      ...) {
+fct_attrs <- function(.levels, ...) {
   dots <- dots_list(..., .named = TRUE, .homonyms = "keep", .ignore_empty = "all")
   attr(.levels, "attrs") <- dots
   .levels
@@ -36,8 +35,7 @@ fct_attrs <- function(.levels = NULL,
 #' lvl_attrs(c("A", "B"))
 #' @return An edbl_lvls object.
 #' @export
-lvls <- function(value = NULL,
-                      data = NULL, ...) {
+lvls <- function(value = NULL, data = NULL, ...) {
   if(!is_null(data) && isTRUE(attr(value, "column"))) {
     pos <- eval_select(value[[1]], data)
     value <- data[[pos]]
