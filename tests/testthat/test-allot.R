@@ -3,6 +3,7 @@ test_that("allot works", {
        set_units(block = 10,
                  plot = 20) %>%
        allot_units(block ~ plot)
+
   fedges1 <- fct_edges(des1)
   expect_equal(fedges1$var_from, "block")
   expect_equal(fedges1$var_to, "plot")
@@ -15,13 +16,19 @@ test_that("allot works", {
               pest = c("a", "b")) %>%
      allot_trts(treat ~ plot,
                  pest ~ block)
-  fedges2 <- fct_edges(des2)
+
+    fedges2 <- fct_edges(des2)
   expect_equal(fedges2$var_from, c("block", "treat", "pest"))
   expect_equal(fedges2$var_to, c("plot", "plot", "block"))
 
-  df <- as.data.frame(takeout(menu_split()))
-  attr(df, "design") <- NULL
-  attr(df, "recipe") <- NULL
+  # it seems that factor has precedence in printing over other types
+  # in tibble
+  ChickWeight %>%
+    edibble() %>%
+    set_units(Diet)
 
+  ChickWeight %>%
+    edibble() %>%
+    set_units(Chick, Time)
 
 })
