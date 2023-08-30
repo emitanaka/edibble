@@ -449,14 +449,16 @@ Provenance <- R6::R6Class("Provenance",
                          #' Given node data, append the factor nodes
                          append_fct_nodes = function(name, role, attrs = NULL) {
                            private$record_track_internal()
+                           fnodes <- self$fct_nodes
                            n <- length(name)
                            role <- vctrs::vec_recycle(role, n)
                            data <- tibble::tibble(id = private$fct_new_id(n = n),
                                                   name = name,
-                                                  role = role,
-                                                  attrs = attrs)
+                                                  role = role)
 
-                           self$fct_nodes <- rbind_(self$fct_nodes, data)
+                           out <- rbind_(fnodes[setdiff(names(fnodes), "attrs")], data)
+                           out$attrs <- rbind_(fnodes$attrs, attrs)
+                           self$fct_nodes <- out
                          },
 
                          #' @description

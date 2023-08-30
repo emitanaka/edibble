@@ -41,13 +41,13 @@ empty_edibble_graph <- function() {
   fnodes <- tibble::tibble(id = integer(),
                            role = character(),
                            name = character(),
-                           attrs = list())
+                           attrs = data.frame())
   lnodes <- structure(list(), class = c("edbl_lnodes", "list"))
   fedges <- tibble::tibble(from = integer(), to = integer(),
                             type = character(), group = integer(),
-                            attrs = list())
+                            attrs = data.frame())
   ledges <-  tibble::tibble(from = integer(), to = integer(),
-                            attrs = list())
+                            attrs = data.frame())
   new_edibble_graph(fnodes, lnodes, fedges, ledges)
 }
 

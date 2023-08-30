@@ -3,11 +3,8 @@
 #'
 #' This function is used to set characteristics of the factors.
 #'
-#' @param levels An `edbl_lvls` object that should contain information about the levels
+#' @param .levels An `edbl_lvls` object that should contain information about the levels
 #'   in the factor.
-#' @param label A string that denotes the long name of the factor.
-#' @param description The text description of the factor.
-#' @param class An optional subclass.
 #' @param ... A name-value pair of attributes. The value must be a scalar and
 #' attributed to the whole factor (not individual levels).
 #' The values are added as attributes to the output object.
@@ -17,22 +14,11 @@
 #' fct_attrs(levels = c("A", "B"))
 #' @return An `edbl_lvls` object.
 #' @export
-fct_attrs <- function(levels = NULL,
-                      label = NULL,
-                      description = NULL,
-                      n = NULL,
-                      class = NULL,
+fct_attrs <- function(.levels = NULL,
                       ...) {
-
-  class(levels) <- c(class, class(levels))
-  attr(levels, "label") <- label
-  attr(levels, "description") <- description
   dots <- dots_list(..., .named = TRUE, .homonyms = "keep", .ignore_empty = "all")
-  dots_names <- names(dots)
-  for(i in seq_along(dots)) {
-    attr(levels, dots_names[i]) <- dots[[i]]
-  }
-  levels
+  attr(.levels, "attrs") <- dots
+  .levels
 }
 
 
@@ -42,8 +28,6 @@ fct_attrs <- function(levels = NULL,
 #' data frame with a column `labels` and other columns with corresponding level attribute (if any).
 #'
 #' @param levels A vector that either denotes the index number or short name of the levels.
-#' @param labels An optional character vector that is the long name format of `levels`.
-#'  be a leading zero added to level indexes. This is ignored if `levels` is not numeric.
 #' @param data A list or data frame of the same size as the `levels`.
 #' @param ... Name-value pair denoting other level attributes. The value should be the same
 #'  length as `levels` or a single value.
@@ -52,27 +36,22 @@ fct_attrs <- function(levels = NULL,
 #' lvl_attrs(c("A", "B"))
 #' @return An edbl_lvls object.
 #' @export
-lvl_attrs <- function(levels = NULL,
+lvls <- function(value = NULL,
                       data = NULL, ...) {
-
-  new_rcrd(c(list2(value = levels, ...), data), class = "edbl_lvls")
-}
-
-#' @export
-lvls <- function(.x, ...) {
-  new_rcrd(list2(.value = .x, ...), class = "edbl_lvls")
-}
-
-#' @export
-lvls_data <- function(data, value = NULL) {
-  value <- enexpr(value)
-  if(is_null(value)) {
-    pos <- 1L
-  } else {
-    pos <- eval_select(value, data)
+  if(!is_null(data) && isTRUE(attr(value, "column"))) {
+    pos <- eval_select(value[[1]], data)
+    value <- data[[pos]]
+    data <- data[-pos]
   }
-  new_rcrd(c(list2(.value = data[[pos]]), data[-pos]), class = "edbl_lvls")
+
+  new_rcrd(c(list2(..value.. = value, ...), data), class = "edbl_lvls")
 }
+
+#' @export
+column <- function(x) {
+  structure(list(enexpr(x)), column = TRUE)
+}
+
 
 #' @export
 format.edbl_lvls <- function(x, ...) {
@@ -81,7 +60,7 @@ format.edbl_lvls <- function(x, ...) {
 
 #' @export
 levels.edbl_lvls <- function(x, ...) {
-  vec_data(x)$.value
+  vec_data(x)[["..value.."]]
 }
 
 
