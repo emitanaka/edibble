@@ -33,7 +33,6 @@ set_fcts <- function(.edibble, ..., .class = NULL,
     }
 
   } else if(is_edibble_table(.edibble)) {
-
     loc <- eval_select(expr(c(...)), .edibble)
     for(i in seq_along(loc)) {
       var <- .edibble[[loc[i]]]

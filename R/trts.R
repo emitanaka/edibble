@@ -21,7 +21,7 @@
 #'
 #' @return An edibble design.
 #' @export
-set_trts <- function(.edibble, ...,
+set_trts <- function(.edibble = design(), ...,
                      .name_repair = c("check_unique", "unique", "universal", "minimal"),
                      .record = TRUE) {
   prov <- activate_provenance(.edibble)

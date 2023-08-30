@@ -5,7 +5,7 @@
 \title{Set units used in experiment}
 \usage{
 set_units(
-  .edibble,
+  .edibble = design(),
   ...,
   .name_repair = c("check_unique", "unique", "universal", "minimal"),
   .record = TRUE

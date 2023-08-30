@@ -5,7 +5,7 @@
 \title{Set the treatment variables}
 \usage{
 set_trts(
-  .edibble,
+  .edibble = design(),
   ...,
   .name_repair = c("check_unique", "unique", "universal", "minimal"),
   .record = TRUE
