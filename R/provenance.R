@@ -467,11 +467,7 @@ Provenance <- R6::R6Class("Provenance",
                            id <- private$lvl_new_id(n = length(value))
                            data <- tibble::tibble(id = id, value = value, attrs = attrs)
                            if(is.null(lnodes[[fid]])) {
-                             if(!is_null(attrs)) {
-                               lnodes[[fid]] <- new_lnode(id, value, attrs)
-                             } else {
-                               lnodes[[fid]] <- new_lnode(id, value)
-                             }
+                             lnodes[[fid]] <- data
                            } else {
                              lnodes[[fid]] <- rbind_(lnodes[[fid]], data)
                            }

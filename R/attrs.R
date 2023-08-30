@@ -40,14 +40,9 @@ fct_attrs <- function(levels = NULL,
 #'
 #' Use this function to create a "vector" of levels. The vector is actually comprised of a
 #' data frame with a column `labels` and other columns with corresponding level attribute (if any).
-#' This data frame can be accessed with `lvl_data()`.
 #'
 #' @param levels A vector that either denotes the index number or short name of the levels.
 #' @param labels An optional character vector that is the long name format of `levels`.
-#' @param prefix The prefix of the labels.
-#' @param suffix The suffix of the labels.
-#' @param sep A string to add between `prefix` and `levels`.
-#' @param include_leading_zero A logical value to indicate whether there should
 #'  be a leading zero added to level indexes. This is ignored if `levels` is not numeric.
 #' @param data A list or data frame of the same size as the `levels`.
 #' @param ... Name-value pair denoting other level attributes. The value should be the same
@@ -64,16 +59,29 @@ lvl_attrs <- function(levels = NULL,
 }
 
 #' @export
+lvls <- function(.x, ...) {
+  new_rcrd(list2(.value = .x, ...), class = "edbl_lvls")
+}
+
+#' @export
+lvls_data <- function(data, value = NULL) {
+  value <- enexpr(value)
+  if(is_null(value)) {
+    pos <- 1L
+  } else {
+    pos <- eval_select(value, data)
+  }
+  new_rcrd(c(list2(.value = data[[pos]]), data[-pos]), class = "edbl_lvls")
+}
+
+#' @export
 format.edbl_lvls <- function(x, ...) {
   levels(x)
 }
 
 #' @export
 levels.edbl_lvls <- function(x, ...) {
-  lvl_data(x)$value
+  vec_data(x)$.value
 }
 
 
-lvl_data <- function(x) {
-  vec_data(x)
-}

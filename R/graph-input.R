@@ -35,8 +35,10 @@ graph_input.default <- function(input, prov, name, class) {
 graph_input.edbl_lvls <- function(input, prov, name, class) {
   attrs <- NULL # attributes(input)
   prov$append_fct_nodes(name = name, role = class, attrs = attrs)
-  lattrs <- lvl_data(input)
-  prov$append_lvl_nodes(value = lattrs$value, fid = prov$fct_id(name = name))
+  lattrs <- vec_data(input)
+  value <- lattrs$.value
+  lattrs <- lattrs[setdiff(names(lattrs), ".value")]
+  prov$append_lvl_nodes(value = value, fid = prov$fct_id(name = name), attrs = lattrs)
 }
 
 graph_input.formula <- function(input, prov, name, class) {

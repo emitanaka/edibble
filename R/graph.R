@@ -57,7 +57,7 @@ fct_edges <- function(x) {
 lvl_nodes <- function(x) {
   prov <- activate_provenance(x)
   lnodes <- prov$lvl_nodes
-  lnodes <- lapply(lnodes, function(x) x[, "value", drop = FALSE])
+  lnodes <- lapply(lnodes, function(x) x[setdiff(names(x), "id")])
   names(lnodes) <- prov$fct_names(id = as.numeric(names(lnodes)))
   lnodes
 }
