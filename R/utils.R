@@ -61,7 +61,7 @@ print.edbl_design <- function(x,
   title <- title %||% prov$get_title() %||% "An edibble design"
   fids <- prov$fct_nodes$id
   fnames <- prov$fct_names(id = fids)
-
+  valids <- prov$get_validation(type = "rcrds")
   if(is_empty(fids)) {
     data <- data.frame(var = "root",
                        child = NA,
@@ -90,8 +90,16 @@ print.edbl_design <- function(x,
     names(ll) <- as.character(fids)
     nodes_with_parents <- as.integer(unname(unlist(ll)))
     label_names_with_levels <- paste(label_names, map_chr(var_nlevels, decorate_levels))
-    label_names_with_levels[classes=="edbl_rcrd"] <- label_names[classes=="edbl_rcrd"]
-
+    #browser()
+    rcrd_names <- prov$rcrd_names()
+    for(arcrd in rcrd_names) {
+      ipos <- which(fnames == arcrd)
+      label_names_with_levels[ipos] <- label_names[ipos]
+      if(!is_null(valids[[arcrd]])) {
+        label_names_with_levels[ipos] <- paste(label_names_with_levels[ipos],
+                                               cli::col_grey(validation_interval(valids[[arcrd]])))
+      }
+    }
     data <- data.frame(var = c("root", fids),
                        child = I(c(list(setdiff(fids, nodes_with_parents)), ll)),
                        label = c(decorate_title(title),
@@ -99,33 +107,7 @@ print.edbl_design <- function(x,
   }
   cat(tree(data, root = "root"), sep = "\n")
 
-  fedges <- prov$fct_edges
-  if("allot" %in% fedges$type) {
-    cat(decorate_title("Allotment:\n"))
-    allots <- fedges[fedges$type=="allot", ]
-    trts_to_units <- paste(allots$var_from, "~", allots$var_to)
-    # this is so it aligns the tilde position
-    # it seems that it's automatically strips away the padding now
-    # so below no longer works
-    #tilde_pos <- unlist(gregexpr("~", trts_to_units))
-    #tilde_pos_max <- max(tilde_pos)
-    #pad <- map_chr(tilde_pos_max - tilde_pos, function(n) ifelse(n==0, "", paste0(rep(" ", n), collapse = "")))
-    #cli_li(items = paste0(" ", pad, trts_to_units))
-    cli_li(items = trts_to_units)
-  }
-  # FIXME: should this be included - currently it is not
-  if(!is_null(x$assignment)) {
-    cat(decorate_title("Assignment:"), paste0(x$assignment, collapse = ", "), "\n")
-  }
-  if(!is_null(valids <- prov$get_validation(type = "rcrds"))) {
-    cat(decorate_title("Validation:\n"))
-    rnames <- names(valids)
-    items <- map_chr(seq_along(valids), function(i) {
-      paste0(rnames[i], ": ", style_italic(valids[[i]]$record), " ",
-             validation_interval(valids[[i]]))
-    })
-    cli_li(items = items)
-  }
+ #  validation_interval(valids[[i]])
 }
 
 validation_interval <- function(x) {
