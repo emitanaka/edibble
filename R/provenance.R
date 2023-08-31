@@ -453,12 +453,11 @@ Provenance <- R6::R6Class("Provenance",
                            n <- length(name)
                            role <- vctrs::vec_recycle(role, n)
                            data <- tibble::tibble(id = private$fct_new_id(n = n),
-                                                  name = name,
-                                                  role = role)
-
+                                                  role = role,
+                                                  name = name)
                            out <- rbind_(fnodes[setdiff(names(fnodes), "attrs")], data)
-                           out_attrs <- rbind_(fnodes$attrs, attrs)
-                           if(nrow(out_attrs)==0) {
+                           out_attrs <- rbind_(fnodes$attrs, attrs %||% data.frame())
+                           if(nrow(out_attrs) < nrow(out)) {
                              out_attrs <- data.frame(row.names = nrow(out))
                            }
                            out$attrs <- out_attrs

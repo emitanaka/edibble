@@ -21,13 +21,10 @@ graph_input_type = function(input) {
 graph_input.default <- function(input, prov, name, class) {
   type <- graph_input_type(input)
   levels <- switch(type,
-                   "numeric" = fct_attrs(lvls(label_seq_length(input, prefix = name)),
-                                         class = class),
-                   "unnamed_vector" = fct_attrs(lvls(input),
-                                                class = class),
+                   "numeric" = fct_attrs(lvls(label_seq_length(input, prefix = name))),
+                   "unnamed_vector" = fct_attrs(lvls(input)),
                    "named_vector" = fct_attrs(lvls(names(input),
-                                              rep = unname(input)),
-                                              class = class),
+                                              rep = unname(input))),
                    "unimplemented" = abort(paste0("Not sure how to handle ", class(input)[1])))
   graph_input.edbl_lvls(levels, prov, name, class)
 }

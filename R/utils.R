@@ -217,7 +217,7 @@ rbind_ <- function(df1, df2) {
   if(nrow(df1) & nrow(df2)) {
     df1[setdiff(names(df2), names(df1))] <- NA
     df2[setdiff(names(df1), names(df2))] <- NA
-    out <- rbind(df1, df2)
+    out <- rbind(df1, df2[names(df1)])
   } else if(nrow(df1)) {
     df1[setdiff(names(df2), names(df1))] <- NA
     out <- df1
