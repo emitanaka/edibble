@@ -49,8 +49,7 @@ graph_input.cross_lvls <- function(input, prov, name, class) {
   vars <- input
 
   pdf <- expand.grid(flevels[vars])
-  pdf[[name]] <- fct_attrs(levels = lvls(label_seq_length(nrow(pdf), prefix = name)),
-                           class = class)
+  pdf[[name]] <- fct_attrs(lvls(label_seq_length(nrow(pdf), prefix = name)))
   # create notes for the crossed unit
   graph_input.edbl_lvls(pdf[[name]], prov, name, class)
   # for every parent unit, draw edges for factor and level graphs

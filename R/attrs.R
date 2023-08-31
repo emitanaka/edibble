@@ -11,7 +11,7 @@
 #'
 #' @seealso lvl_traits
 #' @examples
-#' fct_attrs(levels = c("A", "B"))
+#' fct_attrs(c("A", "B"))
 #' @return An `edbl_lvls` object.
 #' @export
 fct_attrs <- function(.levels, ...) {

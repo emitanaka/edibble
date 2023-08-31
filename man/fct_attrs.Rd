@@ -4,7 +4,7 @@
 \alias{fct_attrs}
 \title{Setting the traits of factors}
 \usage{
-fct_attrs(.levels = NULL, ...)
+fct_attrs(.levels, ...)
 }
 \arguments{
 \item{.levels}{An \code{edbl_lvls} object that should contain information about the levels
@@ -21,7 +21,7 @@ An \code{edbl_lvls} object.
 This function is used to set characteristics of the factors.
 }
 \examples{
-fct_attrs(levels = c("A", "B"))
+fct_attrs(c("A", "B"))
 }
 \seealso{
 lvl_traits

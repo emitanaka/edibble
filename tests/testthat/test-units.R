@@ -19,7 +19,7 @@ test_that("set_units", {
   expect_equal(des$graph$levels$nodes[["2"]]$id, 4:5)
   expect_equal(des$graph$levels$nodes[["1"]]$value, c("block1", "block2", "block3"))
   expect_equal(des$graph$levels$nodes[["2"]]$value, c("plot1", "plot2"))
-  expect_equal(names(des$graph$levels$nodes[["1"]]), c("id", "value"))
+  expect_equal(names(des$graph$levels$nodes[["1"]]), c("id", "value", "attrs"))
 
 
   expect_snapshot({
