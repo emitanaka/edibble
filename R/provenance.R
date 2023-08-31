@@ -306,7 +306,7 @@ Provenance <- R6::R6Class("Provenance",
                            switch(return,
                                   id = lapply(unclass(lnodes[qid]), function(x) x$id),
                                   value = {
-                                    out <- lapply(lnodes[qid], function(x) x$value)
+                                    out <- lapply(unclass(lnodes[qid]), function(x) x$value)
                                     names(out) <- self$fct_names(id = qid)
                                     out
                                   })
