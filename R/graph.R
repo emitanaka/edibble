@@ -40,6 +40,7 @@ NULL
 fct_nodes <- function(x) {
   prov <- activate_provenance(x)
   fnodes <- prov$fct_nodes
+  if(ncol(fnodes$attrs) == 0) return(fnodes[, c("name", "role")])
   fnodes[, c("name", "role", "attrs")]
 }
 
@@ -57,7 +58,11 @@ fct_edges <- function(x) {
 lvl_nodes <- function(x) {
   prov <- activate_provenance(x)
   lnodes <- prov$lvl_nodes
-  olnodes <- lapply(unclass(lnodes), function(.x) .x[setdiff(names(.x), "id")])
+  olnodes <- lapply(unclass(lnodes), function(.x) {
+      out <- .x[setdiff(names(.x), "id")]
+      if(ncol(out$attrs)==0) out$attrs <- NULL
+      out
+    })
   names(olnodes) <- prov$fct_names(id = as.numeric(names(olnodes)))
   olnodes
 }
