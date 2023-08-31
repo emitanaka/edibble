@@ -60,7 +60,7 @@ lvl_nodes <- function(x) {
   lnodes <- prov$lvl_nodes
   olnodes <- lapply(unclass(lnodes), function(.x) {
       out <- .x[setdiff(names(.x), "id")]
-      if(ncol(out$attrs)==0) out$attrs <- NULL
+      if("attrs" %in% names(out) && ncol(out$attrs)==0) out$attrs <- NULL
       out
     })
   names(olnodes) <- prov$fct_names(id = as.numeric(names(olnodes)))
