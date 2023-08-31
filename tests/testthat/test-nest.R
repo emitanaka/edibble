@@ -9,12 +9,10 @@ test_that("nested-units", {
 
   expect_equal(fct_nodes(des1),
                tibble::tibble(name = c("block", "plot"),
-                              role = "edbl_unit",
-                              attrs = data.frame(row.names = 1:2)))
+                              role = "edbl_unit"))
   # FIXME there is no attrs for the second factor
   expect_equal(lvl_nodes(des1),
-               list(block = tibble::tibble(value = c("block1", "block2", "block3"),
-                                           attrs = data.frame(row.names = 1:3)),
+               list(block = tibble::tibble(value = c("block1", "block2", "block3")),
                     plot = tibble::tibble(value = c("plot1", "plot2", "plot3", "plot4", "plot5", "plot6")))                         )
 
   des2 <- des1 %>%
@@ -23,11 +21,9 @@ test_that("nested-units", {
                                  . ~ 3))
   expect_equal(fct_nodes(des2),
                tibble::tibble(name = c("block", "plot", "sample"),
-                              role = "edbl_unit",
-                              attrs = data.frame(row.names = 1:3)))
+                              role = "edbl_unit"))
   expect_equal(lvl_nodes(des2),
-               list(block = tibble::tibble(value = c("block1", "block2", "block3"),
-                                           attrs = data.frame(row.names = 1:3)),
+               list(block = tibble::tibble(value = c("block1", "block2", "block3")),
                               plot = tibble::tibble(value = c("plot1", "plot2", "plot3", "plot4", "plot5", "plot6")),
                               sample = tibble::tibble(value = c("sample01", "sample02", "sample03",
                                                              "sample04", "sample05", "sample06", "sample07", "sample08",

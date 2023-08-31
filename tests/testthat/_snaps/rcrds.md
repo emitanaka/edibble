@@ -33,10 +33,6 @@
       |   \-exam_mark
       +-style (2 levels)
       \-room
-      Allotment:
-    Message <cliMessage>
-      * style ~ class
-      * exam ~ student
 
 ---
 
@@ -76,10 +72,6 @@
       +-style (2 levels)
       +-room
       \-teacher
-      Allotment:
-    Message <cliMessage>
-      * style ~ class
-      * exam ~ student
 
 ---
 
@@ -117,26 +109,13 @@
       +-class (4 levels)
       | \-student (120 levels)
       |   +-exam (3 levels)
-      |   +-exam_mark
-      |   +-quiz1_mark
-      |   +-quiz2_mark
-      |   \-gender
+      |   +-exam_mark [0, 100]
+      |   +-quiz1_mark [0, 15]
+      |   +-quiz2_mark [0, 30]
+      |   \-gender [female, male, non-binary]
       +-style (2 levels)
-      +-room
-      \-teacher
-      Allotment:
-    Message <cliMessage>
-      * style ~ class
-      * exam ~ student
-    Output
-      Validation:
-    Message <cliMessage>
-      * exam_mark: numeric [0, 100]
-      * quiz1_mark: integer [0, 15]
-      * quiz2_mark: integer [0, 30]
-      * gender: factor [female, male, non-binary]
-      * teacher: text
-      * room: text
+      +-room 
+      \-teacher 
 
 ---
 
@@ -149,24 +128,13 @@
       +-class (4 levels)
       | \-student (120 levels)
       |   +-exam (3 levels)
-      |   +-exam_mark
-      |   +-quiz1_mark
-      |   +-quiz2_mark
-      |   \-gender
+      |   +-exam_mark [0, 100]
+      |   +-quiz1_mark [0, 15]
+      |   +-quiz2_mark [-Inf, 12)
+      |   \-gender [female, male, non-binary]
       +-style (2 levels)
       +-room
       \-teacher
-      Allotment:
-    Message <cliMessage>
-      * style ~ class
-      * exam ~ student
-    Output
-      Validation:
-    Message <cliMessage>
-      * exam_mark: numeric [0, 100]
-      * quiz1_mark: integer [0, 15]
-      * quiz2_mark: numeric [-Inf, 12)
-      * gender: factor [female, male, non-binary]
 
 ---
 
@@ -178,22 +146,13 @@
       +-class (4 levels)
       | \-student (120 levels)
       |   +-exam (3 levels)
-      |   +-exam_mark
+      |   +-exam_mark [0, 100]
       |   +-quiz1_mark
       |   +-quiz2_mark
-      |   \-gender
+      |   \-gender [female, male, non-binary]
       +-style (2 levels)
       +-room
       \-teacher
-      Allotment:
-    Message <cliMessage>
-      * style ~ class
-      * exam ~ student
-    Output
-      Validation:
-    Message <cliMessage>
-      * exam_mark: numeric [0, 100]
-      * gender: factor [female, male, non-binary]
 
 ---
 
@@ -204,21 +163,13 @@
       +-class (4 levels)
       | \-student (120 levels)
       |   +-exam (3 levels)
-      |   +-exam_mark
+      |   +-exam_mark [-Inf, -1)
       |   +-quiz1_mark
       |   +-quiz2_mark
       |   \-gender
       +-style (2 levels)
       +-room
       \-teacher
-      Allotment:
-    Message <cliMessage>
-      * style ~ class
-      * exam ~ student
-    Output
-      Validation:
-    Message <cliMessage>
-      * exam_mark: numeric [-Inf, -1)
 
 ---
 
@@ -229,19 +180,11 @@
       +-class (4 levels)
       | \-student (120 levels)
       |   +-exam (3 levels)
-      |   +-exam_mark
+      |   +-exam_mark (0, Inf]
       |   +-quiz1_mark
       |   +-quiz2_mark
       |   \-gender
       +-style (2 levels)
       +-room
       \-teacher
-      Allotment:
-    Message <cliMessage>
-      * style ~ class
-      * exam ~ student
-    Output
-      Validation:
-    Message <cliMessage>
-      * exam_mark: numeric (0, Inf]
 
