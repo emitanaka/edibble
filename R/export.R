@@ -186,48 +186,29 @@ add_creator <- function(wb, authors) {
 
 
 write_data_sheet <- function(wb, sheet_names, prov, data) {
+  for(iunit in seq_along(sheet_names)) {
+    if(prov$rcrd_exists()) {
+      uid <- prov$fct_id(name = names(sheet_names)[iunit])
+      data <- as_tibble.edbl_table(prov$serve_units(id = uid, return = "value"))
+      rids <- prov$fct_id_parent(id = uid, role = "edbl_rcrd")
+      for(rid in rids) {
+        data[[prov$fct_names(id = rid)]] <- NA
+      }
+    }
 
-  if(!prov$rcrd_exists()) {
-    wb$add_data_table(sheet = sheet_names,
+    wb$add_data_table(sheet = sheet_names[iunit],
                       x = data,
                       table_style = "TableStyleMedium9",
                       na.strings = "",
                       with_filter = FALSE)
+
     col_width <- vapply(data, function(x) max(nchar(format(x))),
                         NA_real_)
 
-    wb$set_col_widths(sheet = sheet_names[uname],
+    wb$set_col_widths(sheet = sheet_names[iunit],
                       cols = 1:ncol(data),
                       widths = max(col_width))
 
-  } else {
-    rids <- prov$rcrd_ids
-    rcrds2unit <- prov$mapping("edbl_rcrd", "edbl_unit")
-    uids <- unique(rcrds2unit)
-    for(uid in uids) {
-      uname <- prov$fct_names(id = uid)
-      rids <- names(rcrds2unit)[rcrds2unit==uid]
-      data <- as_tibble.edbl_table(prov$serve_units(id = uid, return = "value"))
-      for(rid in rids) {
-        data[[prov$fct_names(id = rid)]] <- NA
-      }
-
-      wb$add_data_table(sheet = sheet_names[uname],
-                        x = data,
-                        # below causes XML error so omit
-                        #table_name = sheet_names[uname],
-                        table_style = "TableStyleMedium9",
-                        na.strings = "",
-                        with_filter = FALSE)
-
-      col_width <- vapply(data, function(x) max(nchar(format(x))),
-                          NA_real_)
-
-      wb$set_col_widths(sheet = sheet_names[uname],
-                        cols = 1:ncol(data),
-                        widths = max(col_width))
-
-    }
   }
 }
 
