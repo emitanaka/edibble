@@ -186,10 +186,20 @@ add_creator <- function(wb, authors) {
 
 
 write_data_sheet <- function(wb, sheet_names, prov, data) {
+
   if(!prov$rcrd_exists()) {
     wb$add_data_table(sheet = sheet_names,
                       x = data,
-                      table_name = sheet_names)
+                      table_style = "TableStyleMedium9",
+                      na.strings = "",
+                      with_filter = FALSE)
+    col_width <- vapply(data, function(x) max(nchar(format(x))),
+                        NA_real_)
+
+    wb$set_col_widths(sheet = sheet_names[uname],
+                      cols = 1:ncol(data),
+                      widths = max(col_width))
+
   } else {
     rids <- prov$rcrd_ids
     rcrds2unit <- prov$mapping("edbl_rcrd", "edbl_unit")
@@ -201,9 +211,22 @@ write_data_sheet <- function(wb, sheet_names, prov, data) {
       for(rid in rids) {
         data[[prov$fct_names(id = rid)]] <- NA
       }
+
       wb$add_data_table(sheet = sheet_names[uname],
                         x = data,
-                        table_name = sheet_names[uname])
+                        # below causes XML error so omit
+                        #table_name = sheet_names[uname],
+                        table_style = "TableStyleMedium9",
+                        na.strings = "",
+                        with_filter = FALSE)
+
+      col_width <- vapply(data, function(x) max(nchar(format(x))),
+                          NA_real_)
+
+      wb$set_col_widths(sheet = sheet_names[uname],
+                        cols = 1:ncol(data),
+                        widths = max(col_width))
+
     }
   }
 }
@@ -306,6 +329,7 @@ as_tibble.edbl_table <- function(.data) {
   structure(lapply(.data, function(x) {
     class(x) <- setdiff(class(x), c("edbl_unit", "edbl_rcrd", "edbl_trt", "edbl_fct", "vctrs_vctr"))
     attr(x, "levels") <- NULL
+    attr(x, "name") <- NULL
     return(x) }),
             names = names(.data),
             class = c("tbl_df", "tbl", "data.frame"),
