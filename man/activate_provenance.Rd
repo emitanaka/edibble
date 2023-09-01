@@ -4,7 +4,10 @@
 \alias{activate_provenance}
 \title{Activate the provenance in the edibble design object}
 \usage{
-activate_provenance(.edibble, overwrite = c("graph", "anatomy", "recipe"))
+activate_provenance(
+  .edibble,
+  overwrite = c("graph", "anatomy", "recipe", "validation")
+)
 }
 \arguments{
 \item{x}{An edibble object.}

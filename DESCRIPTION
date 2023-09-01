@@ -35,7 +35,7 @@ Imports:
 Suggests: 
     testthat (>= 3.0.0),
     rmarkdown,
-    openxlsx,
+    openxlsx2 (>= 1.0.0),
     visNetwork
 Depends: 
     R (>= 2.10)

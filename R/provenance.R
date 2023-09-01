@@ -72,7 +72,7 @@ Provenance <- R6::R6Class("Provenance",
                          #' @param design An edibble design
                          #' @param overwrite A vector of character to overwrite from the
                          #' supplied design object.
-                         reactivate = function(design, overwrite = c("graph", "anatomy", "recipe")) {
+                         reactivate = function(design, overwrite = c("graph", "anatomy", "recipe", "validation")) {
                            #private$record_track_internal()
                            for(obj in overwrite) {
                              private[[obj]] <- design[[obj]]
@@ -82,7 +82,7 @@ Provenance <- R6::R6Class("Provenance",
                          #' @description
                          #' Deactivate the provenance object.
                          #' @param delete A vector of character to delete.
-                         deactivate = function(delete = c("graph", "anatomy", "recipe")) {
+                         deactivate = function(delete = c("graph", "anatomy", "recipe", "validation")) {
                            #private$record_track_internal()
                            for(obj in delete) {
                              private[[obj]] <- NULL
@@ -652,7 +652,8 @@ Provenance <- R6::R6Class("Provenance",
                          #' @description
                          #' Get the validation
                          #' @param type A type.
-                         get_validation = function(type) {
+                         get_validation = function(type = NULL) {
+                           if(is_null(type)) return(private$validation)
                            private$validation[[type]]
                          },
 
@@ -685,6 +686,20 @@ Provenance <- R6::R6Class("Provenance",
                          get_edibble_version = function() {
                            private$edibble_version
                          },
+
+                         #' @description
+                         #' Mapping of a role to role
+                         mapping = function(role_from, role_to) {
+                           ids <- self$fct_id(role = role_from)
+                           out <- map_int(ids, function(id_from) {
+                             id_to <- self$fct_id_child(id = id_from, role = role_to)
+                             vctrs::vec_assert(id_to, integer(), size = 1)
+                             id_to
+                           })
+                           names(out) <- ids
+                           out
+                         },
+
 
                          #' @description
                          #' Record step.

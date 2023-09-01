@@ -89,7 +89,6 @@ expect_rcrds <- function(.edibble, ..., .record = TRUE) {
 
   rules_unnamed <- stats::setNames(rules_unnamed, map_chr(rules_unnamed, function(x) x$rcrd))
   prov$set_validation(simplify_validation(c(rules_named, rules_unnamed)), type = "rcrds")
-
   return_edibble_with_graph(.edibble, prov)
 }
 

@@ -95,6 +95,7 @@ Remember that there could be more than one order.}
 \item \href{#method-Provenance-get_seed}{\code{Provenance$get_seed()}}
 \item \href{#method-Provenance-get_session_info}{\code{Provenance$get_session_info()}}
 \item \href{#method-Provenance-get_edibble_version}{\code{Provenance$get_edibble_version()}}
+\item \href{#method-Provenance-mapping}{\code{Provenance$mapping()}}
 \item \href{#method-Provenance-record_step}{\code{Provenance$record_step()}}
 \item \href{#method-Provenance-record_track_external}{\code{Provenance$record_track_external()}}
 \item \href{#method-Provenance-clone}{\code{Provenance$clone()}}
@@ -176,7 +177,10 @@ Set the validation.
 \subsection{Method \code{reactivate()}}{
 Reactivate the graph in the provenance object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$reactivate(design, overwrite = c("graph", "anatomy", "recipe"))}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$reactivate(
+  design,
+  overwrite = c("graph", "anatomy", "recipe", "validation")
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -196,7 +200,7 @@ supplied design object.}
 \subsection{Method \code{deactivate()}}{
 Deactivate the provenance object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$deactivate(delete = c("graph", "anatomy", "recipe"))}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$deactivate(delete = c("graph", "anatomy", "recipe", "validation"))}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -970,7 +974,7 @@ Get the title
 \subsection{Method \code{get_validation()}}{
 Get the validation
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$get_validation(type)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$get_validation(type = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -1028,6 +1032,16 @@ Get the session information
 Get the edibble version.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$get_edibble_version()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-mapping"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-mapping}{}}}
+\subsection{Method \code{mapping()}}{
+Mapping of a role to role
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$mapping(role_from, role_to)}\if{html}{\out{</div>}}
 }
 
 }

@@ -2,6 +2,7 @@
 return_edibble_with_graph <- function(edibble, prov) {
   des <- edbl_design(edibble)
   des$graph <- prov$get_graph()
+  des$validation <- prov$get_validation()
   if(is_edibble_table(edibble)) {
     attr(edibble, "design") <- des
     edibble

@@ -4,7 +4,16 @@
 \alias{export_design}
 \title{Export the design to xlsx}
 \usage{
-export_design(.data, file, author, date = Sys.Date(), overwrite = FALSE)
+export_design(
+  .data,
+  file,
+  author = NULL,
+  date = Sys.Date(),
+  theme = NULL,
+  overwrite = FALSE,
+  subject = NULL,
+  category = NULL
+)
 }
 \arguments{
 \item{.data}{An edibble data frame or design.}
