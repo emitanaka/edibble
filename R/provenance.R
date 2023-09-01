@@ -689,6 +689,8 @@ Provenance <- R6::R6Class("Provenance",
 
                          #' @description
                          #' Mapping of a role to role
+                         #' @param role_from The role from.
+                         #' @param role_to The role to.
                          mapping = function(role_from, role_to) {
                            ids <- self$fct_id(role = role_from)
                            out <- map_int(ids, function(id_from) {

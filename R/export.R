@@ -7,14 +7,15 @@
 #' This function is designed to export the design made using edibble to an
 #' external xlsx file.
 #'
-#' @param .data An edibble data frame or design.
+#' @param .data An edibble table to export.
 #' @param file File, including the path, to export the data to.
-#' @param author Name of the author in character. A vector of character is supported
+#' @param author (Optional) name of the author in character. A vector of character is supported
 #'  for where there are multiple authors.
-#' @param date The date to be inserted in header.
-#' @param overwrite A logical indicating whether to overwrite exisitng file or not.
-#'
-#' @importFrom cli cli_alert_success
+#' @param date The date to be inserted in header (defaults to today).
+#' @param overwrite A logical indicating whether to overwrite existing file or not.
+#' @param subject The subject of the workbook (optional).
+#' @param category The category of the workbook (optional).
+#' @param table_style The table style to apply to the exported data (default: "TableStyleMedium9").
 #' @family user-facing functions
 #' @return The input data object.
 #' @export
@@ -22,10 +23,10 @@ export_design <- function(.data,
                           file,
                           author = NULL,
                           date = Sys.Date(),
-                          theme = NULL,
                           overwrite = FALSE,
                           subject = NULL,
-                          category = NULL) {
+                          category = NULL,
+                          table_style = "TableStyleMedium9") {
 
   if(!is_edibble_table(.data)) {
     abort("The input is not an edibble table.")
@@ -57,24 +58,12 @@ export_design <- function(.data,
   add_worksheets(wb, sheet_names, title)
   add_creator(wb, author)
 
-  write_title_sheet(wb,
-                    sheet_names[1],
-                    title,
-                    author,
-                    date)
+  write_title_sheet(wb, sheet_names[1], title, author, date)
 
-
-  # FIXME: producing some recovery error - idk why
-  write_data_sheet(wb,
-                   sheet_names[-c(1, length(sheet_names))],
-                   prov,
-                   .data)
+  write_data_sheet(wb, sheet_names[-c(1, length(sheet_names))], prov, .data,
+                   table_style)
   # FIXME: validation not implemented yet
-  # write_variables_sheet(wb,
-  #                       sheet_names[length(sheet_names)],
-  #                       cell_styles_list$variables,
-  #                       prov,
-  #                       .data)
+  write_variables_sheet(wb, sheet_names[length(sheet_names)], prov, .data)
 
   save_workbook(wb, file, overwrite, title)
 
@@ -185,7 +174,7 @@ add_creator <- function(wb, authors) {
 
 
 
-write_data_sheet <- function(wb, sheet_names, prov, data) {
+write_data_sheet <- function(wb, sheet_names, prov, data, table_style) {
   for(iunit in seq_along(sheet_names)) {
     if(prov$rcrd_exists()) {
       uid <- prov$fct_id(name = names(sheet_names)[iunit])
@@ -198,7 +187,7 @@ write_data_sheet <- function(wb, sheet_names, prov, data) {
 
     wb$add_data_table(sheet = sheet_names[iunit],
                       x = data,
-                      table_style = "TableStyleMedium9",
+                      table_style = table_style,
                       na.strings = "",
                       with_filter = FALSE)
 

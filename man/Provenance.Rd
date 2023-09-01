@@ -1044,6 +1044,15 @@ Mapping of a role to role
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$mapping(role_from, role_to)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{role_from}}{The role from.}
+
+\item{\code{role_to}}{The role to.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Provenance-record_step"></a>}}

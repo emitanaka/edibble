@@ -9,23 +9,29 @@ export_design(
   file,
   author = NULL,
   date = Sys.Date(),
-  theme = NULL,
   overwrite = FALSE,
   subject = NULL,
-  category = NULL
+  category = NULL,
+  table_style = "TableStyleMedium9"
 )
 }
 \arguments{
-\item{.data}{An edibble data frame or design.}
+\item{.data}{An edibble table to export.}
 
 \item{file}{File, including the path, to export the data to.}
 
-\item{author}{Name of the author in character. A vector of character is supported
+\item{author}{(Optional) name of the author in character. A vector of character is supported
 for where there are multiple authors.}
 
-\item{date}{The date to be inserted in header.}
+\item{date}{The date to be inserted in header (defaults to today).}
 
-\item{overwrite}{A logical indicating whether to overwrite exisitng file or not.}
+\item{overwrite}{A logical indicating whether to overwrite existing file or not.}
+
+\item{subject}{The subject of the workbook (optional).}
+
+\item{category}{The category of the workbook (optional).}
+
+\item{table_style}{The table style to apply to the exported data (default: "TableStyleMedium9").}
 }
 \value{
 The input data object.
