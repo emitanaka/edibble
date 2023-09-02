@@ -1,6 +1,16 @@
-test_that("export works", {
+test_that("export with no record", {
   set.seed(1)
-  des0 <- takeout(menu_split()) %>%
+  des <- takeout()
+  fn <- tempfile()
+  export_design(des0, file = fn, overwrite = TRUE)
+  dat <- openxlsx2::read_xlsx(fn, sheet = 2)
+
+  expect_equal(dat, as_tibble(des), ignore_attr = TRUE)
+})
+
+test_that("export with record", {
+  set.seed(1)
+  des <- takeout(menu_split()) %>%
     set_rcrds(yield = mainplot,
               height = subplot,
               genotype = subplot,
@@ -11,11 +21,11 @@ test_that("export works", {
                  height > 0,
                  factor(genotype, levels = c("A", "B")))
 
-  prov <- activate_provenance(des0)
-  prov$get_validation("rcrd")
 
-  ## validation by writing file and reading it in
+  fn <- tempfile()
+  export_design(des, file = fn, overwrite = TRUE)
 
-  export_design(des0, file = "~/Downloads/test.xlsx", overwrite = TRUE)
+  dat <- openxlsx2::read_xlsx(fn, sheet = 2)
+  #expect_equal(dat, as_tibble(des), ignore_attr = TRUE)
 
 })

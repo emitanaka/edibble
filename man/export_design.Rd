@@ -10,6 +10,7 @@ export_design(
   author = NULL,
   date = Sys.Date(),
   overwrite = FALSE,
+  theme = NULL,
   subject = NULL,
   category = NULL,
   table_style = "TableStyleMedium9"
@@ -26,6 +27,8 @@ for where there are multiple authors.}
 \item{date}{The date to be inserted in header (defaults to today).}
 
 \item{overwrite}{A logical indicating whether to overwrite existing file or not.}
+
+\item{theme}{The Excel theme to use (optional). One of "Atlas", "Badge", "Berlin", "Celestial", "Crop", "Depth", "Droplet", "Facet", "Feathered", "Gallery", "Headlines", "Integral", "Ion", "Ion Boardroom", "Madison", "Main Event", "Mesh", "Office Theme", "Old Office Theme", "Organic", "Parallax", "Parcel", "Retrospect", "Savon", "Slice", "Vapor Trail", "View", "Wisp", "Wood Type".}
 
 \item{subject}{The subject of the workbook (optional).}
 

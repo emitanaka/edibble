@@ -360,7 +360,7 @@ Provenance <- R6::R6Class("Provenance",
                          #' the intersection of it will be checked.
                          fct_exists = function(id = NULL, name = NULL, role = NULL, abort = TRUE) {
                            exist <- TRUE
-                           abort_missing <- function(vars = NULL, msg = NULL) {
+                           abort_missing <- function(vars = NULL, msg = NULL, abort = NULL) {
                              if(abort & !exist) {
                                if(!is_null(vars)) {
                                  abort(sprintf("%s does not exist in the design.",
@@ -376,46 +376,47 @@ Provenance <- R6::R6Class("Provenance",
                            # at least one node exists
                            if(is_null(name) & is_null(id) & is_null(role)) {
                              exist <- nrow(fnodes) > 0
-                             abort_missing(msg = "There are no factor nodes.")
+                             abort_missing(msg = "There are no factor nodes.", abort = abort)
 
                            } else if(!is_null(name) & is_null(id) & is_null(role)) {
                              vexist <- name %in% fnodes$name
                              exist <- all(vexist)
-                             abort_missing(vars = name[!vexist])
+                             abort_missing(vars = name[!vexist], abort = abort)
 
                            } else if(is_null(name) & !is_null(id) & is_null(role)) {
                              vexist <- id %in% fnodes$id
                              exist <- all(vexist)
-                             abort_missing(vars = id[!vexist])
+                             abort_missing(vars = id[!vexist], abort = abort)
 
                            } else if(is_null(name) & is_null(id) & !is_null(role)) {
                              exist <- any(role %in% fnodes$role)
                              abort_missing(msg = sprintf("There are no factors with role %s",
-                                                         .combine_words(paste0("`", role, "`"))))
+                                                         .combine_words(paste0("`", role, "`"))),
+                                           abort = abort)
 
                            } else if(is_null(name) & !is_null(id) & !is_null(role)) {
                              srole <- fnodes[match(id, fnodes$id), "role", drop = TRUE]
                              vexist <- srole %in% role
                              exist <- all(vexist)
-                             abort_missing(vars = id[!vexist])
+                             abort_missing(vars = id[!vexist], abort = abort)
 
                            } else if(!is_null(name) & is_null(id) & !is_null(role)) {
                              srole <- fnodes[match(name, fnodes$name), "role", drop = TRUE]
                              vexist <- srole %in% role
                              exist <- all(vexist)
-                             abort_missing(vars = name[!vexist])
+                             abort_missing(vars = name[!vexist], abort = abort)
 
                            } else if(!is_null(name) & !is_null(id) & is_null(role)) {
                              sid <- fnodes[match(name, fnodes$name), "id", drop = TRUE]
                              vexist <- sid %in% id
                              exist <- all(vexist)
-                             abort_missing(vars = name[!vexist])
+                             abort_missing(vars = name[!vexist], abort = abort)
 
                            } else {
                              snodes <- fnodes[match(name, fnodes$name), ]
                              vexist <- snodes$id %in% id & snodes$role %in% role
                              exist <- all(vexist)
-                             abort_missing(vars = name[!vexist])
+                             abort_missing(vars = name[!vexist], abort = abort)
                            }
 
                            return(exist)
@@ -549,8 +550,6 @@ Provenance <- R6::R6Class("Provenance",
                            return <- match.arg(return)
                            lnodes <- self$lvl_nodes
                            ledges <- self$lvl_edges
-
-
 
                            serve_trt = function(fid) {
                              # linked unit -
