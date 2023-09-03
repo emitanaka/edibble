@@ -1,5 +1,8 @@
 # edibble (development version)
 
+* Format change for the title page in the export
+* Bug fix for export_design when no record factor exists
+
 # edibble 1.0.0
 
 * Major internal change. R6 class is completely changed to a Provenance object.
