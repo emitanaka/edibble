@@ -10,10 +10,12 @@ activate_provenance(
 )
 }
 \arguments{
-\item{x}{An edibble object.}
+\item{.edibble}{An edibble object.}
+
+\item{overwrite}{What object to overwrite in the provenance object.}
 }
 \value{
-A Kitchen object.
+A Provenance object.
 }
 \description{
 This is a developer function to create a new Kitchen class with

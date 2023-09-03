@@ -4,9 +4,11 @@
 \alias{as_tibble.edbl_table}
 \title{Convert an edibble data frame to normal data frame}
 \usage{
-\method{as_tibble}{edbl_table}(.data)
+\method{as_tibble}{edbl_table}(x, ...)
 }
 \arguments{
+\item{...}{Not currently used.}
+
 \item{.data}{can be a list or data frame}
 }
 \value{

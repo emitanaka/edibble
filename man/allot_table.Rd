@@ -17,3 +17,8 @@ allot_table(
 This function is a short hand that combines \code{allot_trts()}, \code{assign_trts()}
 and \code{serve_table()}.
 }
+\details{
+@inheritParams allot_trts
+@inheritParams assign_trts
+@inheritParams serve_table
+}
