@@ -1,4 +1,9 @@
-# edibble (development version)
+# edibble 1.0.0
+
+* Major internal change. R6 class is completely changed to a Provenance object.
+* Provenance object now track the internal and external commands. 
+* Changed export to use `openxlsx2` instead of `openxlsx`. 
+* The display now shows the variable class (and not just the role).
 
 # edibble 0.1.3
 
