@@ -39,7 +39,7 @@ graph_input.edbl_lvls <- function(input, prov, name, class) {
 }
 
 graph_input.formula <- function(input, prov, name, class) {
-  tt <- terms(input)
+  tt <- stats::terms(input)
   vars <- rownames(attr(tt, "factors"))
   graph_input.cross_lvls(vars, prov, name, class)
 }
