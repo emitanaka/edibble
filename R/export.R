@@ -68,11 +68,25 @@ export_design <- function(.data,
   write_data_sheet(wb, sheet_names[-c(1, 2, length(sheet_names))], prov,
                    as_tibble(.data), table_style, hide_treatments)
 
+
   write_grand_data_sheet(wb, sheet_names[2], prov,
                          as_tibble(.data), table_style)
 
-  # FIXME: validation not implemented yet
-  #write_variables_sheet(wb, sheet_names[length(sheet_names)], prov, .data)
+  wb$protect_worksheet(sheet = sheet_names[2],
+                       protect = TRUE,
+                       properties = c("formatCells",
+                                      "formatColumns",
+                                      "formatRows",
+                                      "insertRows",
+                                      "deleteColumns",
+                                      "deleteRows",
+                                      "sort",
+                                      "autoFilter",
+                                      "pivotTables",
+                                      "objects",
+                                      "scenarios"))
+
+  write_variables_sheet(wb, sheet_names[length(sheet_names)], prov, .data)
 
   save_workbook(wb, file, overwrite, title)
 
@@ -232,7 +246,7 @@ write_grand_data_sheet <- function(wb, sheet_name, prov, data, table_style)  {
       df <- wb$to_df(sheet = dname)
       col <- match(rname, names(df))
       rows <- match(data[[uname]], df[[uname]])
-      data[[rname]] <- paste0(dname, "!", map_chr(rows, function(row) wb_dims(row + 1L, col)))
+      data[[rname]] <- paste0(dname, "!", map_chr(rows, function(row) openxlsx2::wb_dims(row + 1L, col)))
       class(data[[rname]]) <- c(class(data[[rname]]), "formula")
     }
 
@@ -242,74 +256,77 @@ write_grand_data_sheet <- function(wb, sheet_name, prov, data, table_style)  {
 
 
 
-write_variables_sheet <- function(wb, sheet_name, cell_styles, prov, .data) {
-
-  type <- map_chr(.data, function(var) {
-    cls <- class(var)
-    if("edbl_unit" %in% cls) return("unit")
-    if("edbl_trt" %in% cls) return("trt")
-    if("edbl_rcrd" %in% cls) return("rcrd")
-    "var"
+write_variables_sheet <- function(wb, sheet_name, prov, data) {
+  type <- map_chr(data, function(var) {
+    if(inherits(var, "edbl_unit")) return("unit")
+    if(inherits(var, "edbl_trt")) return("trt")
+    if(inherits(var, "edbl_rcrd")) return("rcrd")
+    "fct"
   })
-  data <- data.frame(variable = names(.data),
-                     type = unname(type),
-                     stringsAsFactors = FALSE)
+  vardf <- data.frame(variable = names(data),
+                   type = unname(type),
+                   nlevels = map_int(names(data), function(var) {
+                     id <- prov$fct_id(name = var)
+                     role <- prov$fct_role(id = id)
+                     if(role == "edbl_rcrd") {
+                       uid <- prov$mapping_to_unit(id = id)
+                       var <- prov$fct_names(id = uid)
+                     }
+                     length(unique(data[[var]]))
+                   }),
+                   stringsAsFactors = FALSE)
 
-  # FIXME
   valids <- prov$get_validation("rcrds")
   if(!is_null(valids)) {
-    data$record <- ""
-    data$value <- ""
+    vardf$record <- ""
+    vardf$value <- ""
     valid_names <- names(valids)
-    rids <- prov$rcrd_ids
-    rcrds <- rcrd_to_unit_dict(prov, rids)
-    n_ounits <- length(unique(rcrds))
-    for(i in seq_along(valid)) {
-      unit <- rcrds[valid_names[i]]
-      data_sheet <- ifelse(n_ounits > 1,
-                           data_sheet_name(unit),
-                           "Data")
-      dat <- openxlsx::read.xlsx(wb, namedRegion = data_sheet)
-      j <- which(data$variable == valid_names[i])
-      data$record[j] <- valid[[i]]$record
-      if(valid[[i]]$type != "list") {
-        data$value[j] <- restriction_for_human(valid[[i]]$operator, valid[[i]]$value)
-        openxlsx::dataValidation(wb, sheet = data_sheet,
-                                 rows = 1:nrow(dat) + 1,
-                                 cols = j,
-                                 type = valid[[i]]$type,
-                                 operator = valid[[i]]$operator,
-                                 value = valid[[i]]$value)
-      } else {
-        k <- which(names(data) == "value")
-        values <- valid[[i]]$values
-        data$value[j] <- values[1]
-        L <- LETTERS[c(k, k + length(values) - 1)]
-        openxlsx::writeData(wb,
-                            sheet = sheet_name,
-                            x = data.frame(t(values), stringsAsFactors = FALSE),
+    for(ivalid in seq_along(valids)) {
+      valid <- valids[[ivalid]]
+      rname <- valid_names[ivalid]
+      rid <- prov$fct_id(name = rname)
+      uid <- prov$mapping_to_unit(id = rid)
+      uname <- prov$fct_names(id = uid)
+      data_sheet <- data_sheet_name(uname)
 
-                            startCol = k,
-                            startRow = j + 1, colNames = FALSE)
-        openxlsx::dataValidation(wb,
-                                 sheet = data_sheet,
-                                 rows = 1:nrow(dat) + 1,
-                                 cols = j,
-                                 type = "list",
-                                 operator = NULL,
-                                 value = paste0("'", sheet_name, "'!$",
-                                                L[1], "$", j + 1, ":$", L[2], "$", j + 1))
+      dat <- wb$to_df(sheet = data_sheet)
+      i <- which(vardf$variable == rname)
+      jdata <- which(names(dat) == rname)
+      vardf$record[i] <- valid$record
+
+      if(valid$type != "list") {
+        vardf$value[i] <- restriction_for_human(valid$operator, valid$value)
+        wb$add_data_validation(sheet = data_sheet,
+                               dims = openxlsx2::wb_dims(1:nrow(dat) + 1L, jdata),
+                               type = valid$type,
+                               operator = valid$operator,
+                               value = valid$value)
+      } else {
+        j <- which(names(vardf) == "value")
+
+        values <- valid$values
+        vardf$value[i] <- values[1]
+        dim_list <- openxlsx2::wb_dims(i + 1L, j:(j + length(values) - 1))
+        wb$add_data(sheet = sheet_name,
+                    x = t(data.frame(x = values)),
+                    dims = dim_list,
+                    col_names = FALSE)
+        L <- gsub("[0-9]+", "", strsplit(dim_list, ":")[[1]])
+        wb$add_data_validation(sheet = data_sheet,
+                               dims = openxlsx2::wb_dims(1:nrow(dat) + 1L, jdata),
+                               type = "list",
+                               value = paste0("'", sheet_name, "'!$",
+                                      L[1], "$", i + 1L, ":$", L[2], "$", i + 1L))
       }
 
     }
   }
-  openxlsx::writeData(wb,
-                      sheet = sheet_name,
-                      x = data,
-                      startCol = 1,
-                      headerStyle = cell_styles$header,
-                      name = "Variables")
+  wb$add_data(sheet = sheet_name,
+              x = vardf)
 
+  wb$add_font(sheet = sheet_name,
+              dims = openxlsx2::wb_dims(1, 1:ncol(vardf)),
+              bold = TRUE)
 }
 
 restriction_for_human <- function(operator, value) {
