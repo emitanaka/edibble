@@ -36,7 +36,6 @@ set_rcrds <- function(.edibble, ...,
 
   rcrds <- names(units)
 
-
   prov$fct_exists(name = unlist(units), role = "edbl_unit")
 
   for(i in seq_along(units)) {
@@ -44,6 +43,20 @@ set_rcrds <- function(.edibble, ...,
     uid <- prov$fct_id(name = units[[i]])
     rid <- prov$fct_id(name = rcrds[i])
     prov$append_fct_edges(from = rid, to = uid, type = "record")
+  }
+
+  if(is_edibble_table(.edibble)) {
+    rcrds <- prov$serve_rcrds(return = "value")
+    for(arcrd in names(rcrds)) {
+      if(arcrd %in% names(.edibble)) {
+        uid <- prov$mapping_to_unit(id = prov$fct_id(name = arcrd))
+        uname <- prov$fct_names(id = uid)
+        uids <- prov$fct_id(name = .edibble[[uname]])
+        .edibble[[arcrd]] <- new_edibble_rcrd(rep(NA_real_, nrow(.edibble)), uids)
+      } else {
+        .edibble[[arcrd]] <- rcrds[[arcrd]]
+      }
+    }
   }
 
   return_edibble_with_graph(.edibble, prov)
