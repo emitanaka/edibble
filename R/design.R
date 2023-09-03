@@ -85,6 +85,7 @@ NULL
 }
 
 #' @param i The index.
+#' @param ... Unused
 #' @rdname extract-lvl-nodes
 #' @export
 "[.edbl_lnodes" <- function(x, i, ...) {
@@ -111,6 +112,7 @@ NULL
 }
 
 #' @rdname extract-lvl-nodes
+#' @keywords internal
 #' @export
 "[[.edbl_lnodes" <- function(x, i, ...) {
   lx <- as.list(x)

@@ -4,6 +4,7 @@
 #' @param input An input.
 #' @param prov A provenance object.
 #' @param ... Unused.
+#' @keywords internal
 graph_input <- function(input, prov, ...) {
   UseMethod("graph_input")
 }

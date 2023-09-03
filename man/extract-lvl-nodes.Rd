@@ -26,6 +26,8 @@
 
 \item{i}{The index.}
 
+\item{...}{Unused}
+
 \item{value}{The value to replace with.}
 }
 \description{
@@ -38,3 +40,4 @@ id of the level nodes, you have to iterate over every list.
 crd <- takeout(menu_crd())
 
 }
+\keyword{internal}

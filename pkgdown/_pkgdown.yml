@@ -29,7 +29,9 @@ reference:
   - set_units
   - set_trts
   - allot_trts
+  - allot_units
   - assign_trts
+  - assign_units
   - serve_table
   - allot_table
   - nested_in
@@ -85,11 +87,13 @@ reference:
   - pivot_trts_widelist
   - pivot_trts_widetable
   - as.data.frame.edbl_table
+  - as_tibble.edbl_table
 - title: "Utility functions"
   desc: >
     These are mostly for internal usage and for those who wish to extend edibble functions.
   contents:
   - Provenance
+  - activate_provenance
   - nesting_structure
   #- design-context
   - design-helpers
@@ -100,4 +104,6 @@ reference:
   - print.edbl_design
   - utility-edibble-var
   - is_takeout
-  - as_tibble
+  - column
+  - is_provenance
+  - label_seq
