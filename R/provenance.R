@@ -13,6 +13,7 @@
 #' @param abort Whether to abort.
 #' @param return To return in "id" or "value" format.
 #' @importFrom vctrs vec_is
+#' @importFrom R6 R6Class
 #' @export
 Provenance <- R6::R6Class("Provenance",
                        public = list(
