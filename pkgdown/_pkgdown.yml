@@ -89,8 +89,7 @@ reference:
   desc: >
     These are mostly for internal usage and for those who wish to extend edibble functions.
   contents:
-  - cook_design
-  - Kitchen
+  - Provenance
   - nesting_structure
   #- design-context
   - design-helpers
@@ -99,8 +98,6 @@ reference:
   - edibble-package
   - new_edibble
   - print.edbl_design
-  - record_step
   - utility-edibble-var
   - is_takeout
-  - select_units
-  - as_data_frame
+  - as_tibble
