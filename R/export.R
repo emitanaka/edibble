@@ -43,7 +43,7 @@ export_design <- function(.data,
 
   prov <- activate_provenance(.data)
 
-  title <- prov$get_title()
+  title <- prov$get_title() %||% "An edibble experiment"
   sheet_names <- make_sheet_names(prov)
 
   wb <- openxlsx2::wb_workbook(creator = author,
@@ -347,18 +347,19 @@ restriction_for_human <- function(operator, value) {
 #' A patch function where there is an issue with edbl factors
 #'
 #' @param .data can be a list or data frame
+#' @param ... Not currently used.
 #' @return A data.frame.
 #' @importFrom tibble as_tibble
 #' @export
-as_tibble.edbl_table <- function(.data) {
-  rcrd_names <- names(.data)[map_lgl(.data, function(x) "edbl_rcrd" %in% class(x))]
-  .data[rcrd_names] <- lapply(.data[rcrd_names], unclass)
-  structure(lapply(.data, function(x) {
-    class(x) <- setdiff(class(x), c("edbl_unit", "edbl_rcrd", "edbl_trt", "edbl_fct", "vctrs_vctr"))
-    attr(x, "levels") <- NULL
-    attr(x, "name") <- NULL
-    return(x) }),
-            names = names(.data),
+as_tibble.edbl_table <- function(x, ...) {
+  rcrd_names <- names(x)[map_lgl(x, function(.x) "edbl_rcrd" %in% class(.x))]
+  x[rcrd_names] <- lapply(x[rcrd_names], unclass)
+  structure(lapply(x, function(.x) {
+    class(.x) <- setdiff(class(.x), c("edbl_unit", "edbl_rcrd", "edbl_trt", "edbl_fct", "vctrs_vctr"))
+    attr(.x, "levels") <- NULL
+    attr(.x, "name") <- NULL
+    return(.x) }),
+            names = names(x),
             class = c("tbl_df", "tbl", "data.frame"),
-            row.names = 1:vec_size_common(!!!.data))
+            row.names = 1:vec_size_common(!!!x))
 }
