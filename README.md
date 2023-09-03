@@ -63,21 +63,21 @@ des <- design(name = "Effective teaching") %>%
     assign_trts("random")
 
 serve_table(des)
-#> # Effective teaching 
 #> # An edibble: 120 x 4
 #>        class     student       style        exam
 #>    <unit(4)> <unit(120)>    <trt(2)>    <trt(3)>
-#>  1    class1   student1  traditional closed-book
-#>  2    class1   student2  traditional open-book  
-#>  3    class1   student3  traditional take-home  
-#>  4    class1   student4  traditional closed-book
-#>  5    class1   student5  traditional take-home  
-#>  6    class1   student6  traditional take-home  
-#>  7    class1   student7  traditional open-book  
-#>  8    class1   student8  traditional open-book  
-#>  9    class1   student9  traditional closed-book
-#> 10    class1   student10 traditional closed-book
-#> # … with 110 more rows
+#>        <chr>       <chr>       <chr>       <chr>                                
+#>  1    class1  student001 traditional closed-book
+#>  2    class1  student002 traditional open-book  
+#>  3    class1  student003 traditional take-home  
+#>  4    class1  student004 traditional closed-book
+#>  5    class1  student005 traditional take-home  
+#>  6    class1  student006 traditional take-home  
+#>  7    class1  student007 traditional open-book  
+#>  8    class1  student008 traditional open-book  
+#>  9    class1  student009 traditional closed-book
+#> 10    class1  student010 traditional closed-book
+#> # ℹ 110 more rows
 ```
 
 Before constructing the experiment, you might want to think about what
@@ -102,22 +102,22 @@ out <- des %>%
     serve_table()
 
 out
-#> # Effective teaching 
 #> # An edibble: 120 x 10
-#>        class     student       style        exam exam_m…¹ quiz1…² quiz2…³ gender
-#>    <unit(4)> <unit(120)>    <trt(2)>    <trt(3)>   <rcrd>  <rcrd>  <rcrd> <rcrd>
-#>  1    class1   student1  traditional closed-book        o       o       o      o
-#>  2    class1   student2  traditional open-book          o       o       o      o
-#>  3    class1   student3  traditional take-home          o       o       o      o
-#>  4    class1   student4  traditional closed-book        o       o       o      o
-#>  5    class1   student5  traditional take-home          o       o       o      o
-#>  6    class1   student6  traditional take-home          o       o       o      o
-#>  7    class1   student7  traditional open-book          o       o       o      o
-#>  8    class1   student8  traditional open-book          o       o       o      o
-#>  9    class1   student9  traditional closed-book        o       o       o      o
-#> 10    class1   student10 traditional closed-book        o       o       o      o
-#> # … with 110 more rows, 2 more variables: room <rcrd>, teacher <rcrd>, and
-#> #   abbreviated variable names ¹​exam_mark, ²​quiz1_mark, ³​quiz2_mark
+#>        class     student       style        exam exam_mark quiz1_mark quiz2_mark
+#>    <unit(4)> <unit(120)>    <trt(2)>    <trt(3)>    <rcrd>     <rcrd>     <rcrd>
+#>        <chr>       <chr>       <chr>       <chr>     <dbl>      <dbl>      <dbl>
+#>  1    class1  student001 traditional closed-book         o          o          o
+#>  2    class1  student002 traditional open-book           o          o          o
+#>  3    class1  student003 traditional take-home           o          o          o
+#>  4    class1  student004 traditional closed-book         o          o          o
+#>  5    class1  student005 traditional take-home           o          o          o
+#>  6    class1  student006 traditional take-home           o          o          o
+#>  7    class1  student007 traditional open-book           o          o          o
+#>  8    class1  student008 traditional open-book           o          o          o
+#>  9    class1  student009 traditional closed-book         o          o          o
+#> 10    class1  student010 traditional closed-book         o          o          o
+#> # ℹ 110 more rows
+#> # ℹ 3 more variables: gender <rcrd>, room <rcrd>, teacher <rcrd>
 ```
 
 When you export the above edibble design using the `export_design`
@@ -129,7 +129,7 @@ from possible values.
 export_design(out, file = "/PATH/TO/FILE.xlsx")
 ```
 
-<img src="man/figures/README-excel_factor_output.png" width="1266" />
+<img src="man/figures/README-excel_factor_output.png" width="2080" />
 
 In addition, there is a spreadsheet for every observational level. E.g.
 here `room` and `teacher` is the same for all students in one class so
@@ -165,17 +165,18 @@ design("nesting structure") %>%
 #> # An edibble: 190 x 3
 #>         site     block        plot
 #>    <unit(3)> <unit(7)> <unit(190)>
-#>  1         A    block1      plot1 
-#>  2         A    block1      plot2 
-#>  3         A    block1      plot3 
-#>  4         A    block1      plot4 
-#>  5         A    block1      plot5 
-#>  6         A    block1      plot6 
-#>  7         A    block1      plot7 
-#>  8         A    block1      plot8 
-#>  9         A    block1      plot9 
-#> 10         A    block1      plot10
-#> # … with 180 more rows
+#>        <chr>     <chr>       <chr>                                              
+#>  1         A    block1     plot001
+#>  2         A    block1     plot002
+#>  3         A    block1     plot003
+#>  4         A    block1     plot004
+#>  5         A    block1     plot005
+#>  6         A    block1     plot006
+#>  7         A    block1     plot007
+#>  8         A    block1     plot008
+#>  9         A    block1     plot009
+#> 10         A    block1     plot010
+#> # ℹ 180 more rows
 ```
 
 ## Experimental data
@@ -203,8 +204,12 @@ focus and do well on). Some features include:
 - make classical named designs see [Cookbook
   chapter](https://emitanaka.org/edibble-book/cookbook.html).
 
-Work-in-progress book on this package can be found
-[here](https://emitanaka.org/edibble-book/).
+## Documents
+
+- Work-in-progress book on this package can be found
+  [here](https://emitanaka.org/edibble-book/).
+- The preprint about the framework can be found
+  [here](https://arxiv.org/abs/2307.11593).
 
 ## Limitations
 
@@ -212,8 +217,7 @@ Currently, edibble:
 
 - expects you to know the number of units available from the start.
   Unknown numbers will be supported in future versions.
-- in theory, edibble should support experiments that are not comparative
-  experiments but this is not tested.
+- edibble supports experiments that are not comparative experiments.
 - does not do enough testing so design should be diagnosed after
   construction (which should be done regardless of how much testing
   edibble implements).
@@ -267,9 +271,7 @@ the philosophy:
   dots](https://rlang.r-lib.org/reference/dyn-dots.html);
 - duplicate names repaired with same option as `tibble` for additions to
   edibble graph;
-- ability for developers to extend certain components. Currently only
-  supported for others to contribute their own classical named
-  experimental designs via `prep_classical_`;
+- ability for developers to extend certain components.
 - the specification of complex nested structure drawing similarity to
   `dplyr::case_when` (LHS is character or integer for edibble however).
 

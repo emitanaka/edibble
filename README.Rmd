@@ -141,14 +141,17 @@ The edibble R-package differ considerably to other packages for constructing exp
 * simulate values for record variables,
 * make classical named designs see [Cookbook chapter](https://emitanaka.org/edibble-book/cookbook.html).
 
-Work-in-progress book on this package can be found [here](https://emitanaka.org/edibble-book/).
+## Documents
+
+- Work-in-progress book on this package can be found [here](https://emitanaka.org/edibble-book/).
+- The preprint about the framework can be found [here](https://arxiv.org/abs/2307.11593).
 
 ## Limitations 
 
 Currently, edibble:
 
 - expects you to know the number of units available from the start. Unknown numbers will be supported in future versions.
-- in theory, edibble should support experiments that are not comparative experiments but this is not tested. 
+- edibble supports experiments that are not comparative experiments. 
 - does not do enough testing so design should be diagnosed after construction (which should be done regardless of how much testing edibble implements).
 
 ## Related Work
@@ -178,7 +181,7 @@ The implementation in edibble adopt a similar nomenclature and design philosophy
 - pipable functions;
 - all dots arguments are [dynamic dots](https://rlang.r-lib.org/reference/dyn-dots.html);
 - duplicate names repaired with same option as `tibble` for additions to edibble graph;
-- ability for developers to extend certain components. Currently only supported for others to contribute their own classical named experimental designs via `prep_classical_`;
+- ability for developers to extend certain components. 
 - the specification of complex nested structure drawing similarity to `dplyr::case_when` (LHS is character or integer for edibble however).
 
 
