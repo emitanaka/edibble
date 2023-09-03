@@ -701,6 +701,11 @@ Provenance <- R6::R6Class("Provenance",
                            out
                          },
 
+                         #' @description
+                         #' Mapping of an id to a unit
+                         mapping_to_unit = function(id = NULL) {
+                           self$fct_id_child(id = id, role = "edbl_unit")
+                         },
 
                          #' @description
                          #' Record step.

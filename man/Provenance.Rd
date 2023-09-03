@@ -96,6 +96,7 @@ Remember that there could be more than one order.}
 \item \href{#method-Provenance-get_session_info}{\code{Provenance$get_session_info()}}
 \item \href{#method-Provenance-get_edibble_version}{\code{Provenance$get_edibble_version()}}
 \item \href{#method-Provenance-mapping}{\code{Provenance$mapping()}}
+\item \href{#method-Provenance-mapping_to_unit}{\code{Provenance$mapping_to_unit()}}
 \item \href{#method-Provenance-record_step}{\code{Provenance$record_step()}}
 \item \href{#method-Provenance-record_track_external}{\code{Provenance$record_track_external()}}
 \item \href{#method-Provenance-clone}{\code{Provenance$clone()}}
@@ -1050,6 +1051,23 @@ Mapping of a role to role
 \item{\code{role_from}}{The role from.}
 
 \item{\code{role_to}}{The role to.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-mapping_to_unit"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-mapping_to_unit}{}}}
+\subsection{Method \code{mapping_to_unit()}}{
+Mapping of an id to a unit
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$mapping_to_unit(id = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{The id of the corresponding node.}
 }
 \if{html}{\out{</div>}}
 }
