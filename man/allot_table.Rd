@@ -13,12 +13,28 @@ allot_table(
   .record = TRUE
 )
 }
+\arguments{
+\item{.edibble}{An edibble design which should have units, treatments and allotment defined.}
+
+\item{...}{One-sided or two-sided formula. If the input is a one-sided formula
+then the whole treatment is applied to the specified unit.}
+
+\item{order}{A character vector signifying the apportion of treatments to units.
+The value should be either "random", "systematic", "systematic-random" or a class name corresponding to the algorithm for order_trts().
+"random" allocates the treatment randomly to units based on specified allotment with restrictions
+implied by unit structure.
+"systematic" allocates the treatment in a systematic order to units.
+"systematic-random" allocates the treatment in a systematic order to units but
+where it is not possible to divide treatments equally (as the number of units are not divisible
+by the number of levels of the treatment factor), then the extras are chosen randomly.}
+
+\item{seed}{A scalar value used to set the seed so that the result is reproducible.}
+
+\item{constrain}{The nesting structure for units.}
+
+\item{.record}{Whether to record the step.}
+}
 \description{
 This function is a short hand that combines \code{allot_trts()}, \code{assign_trts()}
 and \code{serve_table()}.
-}
-\details{
-@inheritParams allot_trts
-@inheritParams assign_trts
-@inheritParams serve_table
 }

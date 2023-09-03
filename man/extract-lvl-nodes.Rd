@@ -19,6 +19,11 @@
 
 \method{[[}{edbl_lnodes}(x, i, ...) <- value
 }
+\arguments{
+\item{x}{An edibble level nodes.}
+
+\item{name}{The name to extract.}
+}
 \description{
 The level nodes are stored as a named list of nodes where the name
 corresponds to the id of the corresponding factor. This makes the
@@ -27,7 +32,5 @@ id of the level nodes, you have to iterate over every list.
 }
 \examples{
 crd <- takeout(menu_crd())
-
-
 
 }

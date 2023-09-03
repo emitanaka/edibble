@@ -3,7 +3,6 @@
 #'
 #' @param input An input.
 #' @param prov A provenance object.
-#' @export
 graph_input <- function(input, prov, ...) {
   UseMethod("graph_input")
 }

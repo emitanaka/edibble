@@ -7,9 +7,9 @@
 \method{as_tibble}{edbl_table}(x, ...)
 }
 \arguments{
-\item{...}{Not currently used.}
+\item{x}{can be a list or data frame}
 
-\item{.data}{can be a list or data frame}
+\item{...}{Not currently used.}
 }
 \value{
 A data.frame.

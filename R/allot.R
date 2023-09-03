@@ -145,9 +145,9 @@ allot_units <- function(.edibble, ..., .record = TRUE) {
 #' This function is a short hand that combines `allot_trts()`, `assign_trts()`
 #'  and `serve_table()`.
 #'
-#'  @inheritParams allot_trts
-#'  @inheritParams assign_trts
-#'  @inheritParams serve_table
+#' @inheritParams allot_trts
+#' @inheritParams serve_table
+#' @inheritParams assign
 #'
 #' @export
 allot_table <- function(.edibble, ..., order = "random", seed = NULL, constrain = nesting_structure(.edibble), .record = TRUE) {

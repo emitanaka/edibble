@@ -346,7 +346,7 @@ restriction_for_human <- function(operator, value) {
 #'
 #' A patch function where there is an issue with edbl factors
 #'
-#' @param .data can be a list or data frame
+#' @param x can be a list or data frame
 #' @param ... Not currently used.
 #' @return A data.frame.
 #' @importFrom tibble as_tibble

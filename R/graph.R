@@ -37,6 +37,7 @@ activate_provenance <- function(.edibble,
 NULL
 
 #' @rdname design_data
+#' @param x An object.
 #' @export
 fct_nodes <- function(x) {
   prov <- activate_provenance(x)

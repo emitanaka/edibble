@@ -3,7 +3,8 @@
 #' @description
 #' This function doesn't really do much besides create a new edibble design object.
 #'
-#' @param name Optional name used as title for printing the design.
+#' @param title Optional title of the experiment.
+#' @param name Optional name of the experiment.
 #' @inheritParams set_units
 #' @param seed A seed number for reproducibility.
 #' @param .data An edibble table.
@@ -72,12 +73,12 @@ as.list.edbl_lnodes <- function(x, ...) {
 #' @examples
 #' crd <- takeout(menu_crd())
 #'
-#'
-#'
 #' @name extract-lvl-nodes
 NULL
 
 #' @rdname extract-lvl-nodes
+#' @param x An edibble level nodes.
+#' @param name The name to extract.
 #' @export
 "$.edbl_lnodes" <- function(x, name) {
   unname(unlist(lapply(unclass(x), function(.x) .x[[name]])))

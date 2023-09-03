@@ -23,7 +23,9 @@ redesign(
 )
 }
 \arguments{
-\item{name}{Optional name used as title for printing the design.}
+\item{title}{Optional title of the experiment.}
+
+\item{name}{Optional name of the experiment.}
 
 \item{.record}{A logical value. This indicates whether to record this
 code step. The default is TRUE. It should remain TRUE unless this

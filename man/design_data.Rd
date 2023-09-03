@@ -17,6 +17,8 @@ lvl_nodes(x)
 lvl_edges(x)
 }
 \arguments{
+\item{x}{An object.}
+
 \item{edibble}{An edibble object.}
 }
 \description{
