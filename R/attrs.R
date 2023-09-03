@@ -53,6 +53,12 @@ lvls <- function(value = NULL, data = NULL, ...) {
   new_rcrd(c(list2(..value.. = value, ...), data), class = "edbl_lvls")
 }
 
+#' Select a column.
+#'
+#' This is a helper function to select a column when data is supplied
+#' for `lvls`.
+#'
+#' @param x The column to select. Can be unquoted name or the column index.
 #' @export
 column <- function(x) {
   structure(list(enexpr(x)), column = TRUE)
