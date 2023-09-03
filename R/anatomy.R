@@ -15,8 +15,8 @@
 anatomy <- function(.edibble, ...) {
   des <- edbl_design(.edibble)
   tab <- edbl_table(.edibble)
-  prep <- cook_design(des)
-  trt_str <- stats::as.formula(paste0("~", paste0(prep$trt_names, collapse = "*")))
+  prov <- activate_provenance(des)
+  trt_str <- stats::as.formula(paste0("~", paste0(prov$trt_names, collapse = "*")))
   out <- dae::designAnatomy(list(unit = des$anatomy, trt = trt_str), data = tab, ...)
   structure(out,
             class = c("des_anatomy", class(out)))
@@ -25,4 +25,20 @@ anatomy <- function(.edibble, ...) {
 #' @export
 print.des_anatomy <- function(x, ...) {
   print(summary(x, ...))
+}
+
+
+add_anatomy <- function(anatomy, fresh, name, role) {
+  if(role=="edbl_unit") {
+    if(is.null(anatomy)) {
+      anatomy <- as.formula(paste0("~", name))
+    } else {
+      term <- ifelse(inherits(fresh, "nest_lvls"),
+                     paste0(attr(fresh, "keyname"), "/", name),
+                     name)
+      anatomy <- update(anatomy,
+                             as.formula(paste0("~ . + ", term)), evaluate = FALSE)
+    }
+  }
+  anatomy
 }

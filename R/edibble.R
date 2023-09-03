@@ -134,6 +134,30 @@ new_edibble <- function(.data, ..., design = NULL, class = NULL) {
              class = c(class, "edbl_table", "edbl"), design = design)
 }
 
+
+new_trackable <- function(internal_cmd = character(),
+                          time_internal = Sys.time(),
+                          time_zone_internal = character(),
+                          external_cmd = NULL,
+                          time_external = NULL,
+                          time_zone_external = NULL) {
+  new_tibble(tibble::tibble(internal_cmd = internal_cmd,
+                            execution_time = time_internal,
+                            time_zone = time_zone_internal),
+             class = "trck_table",
+             external_cmd = external_cmd,
+             execution_time = time_external,
+             time_zone = time_zone_external)
+}
+
+#' @export
+tbl_sum.trck_table <- function(x) {
+  c("A tracking table" = dim_desc(x),
+    "External command" = attr(x, "external_cmd"),
+    "Execution time" = paste(as.character(attr(x, "execution_time")),
+                             as.character(attr(x, "time_zone"))))
+}
+
 #' @importFrom tibble tbl_sum
 #' @export
 tbl_sum.edbl_table <- function(x) {
@@ -142,9 +166,10 @@ tbl_sum.edbl_table <- function(x) {
 
 #' @export
 print.edbl_table <- function(x, ..., n = NULL, width = NULL, n_extra = NULL) {
-  name <- edbl_design(x)$name
-  format_name <- style_subtle(paste("#", cli::style_bold(name)))
-  if(!is.null(name)) cat(format_name, "\n")
+  prov <- activate_provenance(x)
+  title <- prov$get_title()
+  format_title <- style_subtle(paste("#", cli::style_bold(title)))
+  if(!is.null(title)) cat(format_title, "\n")
   NextMethod()
 }
 
@@ -162,8 +187,9 @@ as_edibble.default <- function(.data, ...) {
 
 #' @rdname new_edibble
 #' @export
-edibble <- function(.data, name = NULL, .record = TRUE, seed = NULL, kitchen = Kitchen, ...) {
-  des <- design(name = name, .record = .record, seed = seed, kitchen = kitchen)
+edibble <- function(.data, title = NULL, name = "edibble", .record = TRUE, seed = NULL, provenance = Provenance$new(), ...) {
+  if(.record) provenance$record_step()
+  des <- design(title = title, name = name, .record = FALSE, seed = seed, provenance = provenance)
   new_edibble(.data, ..., design = des)
 }
 

@@ -4,25 +4,10 @@
 \alias{crossed_by}
 \title{Specify the units to cross to index a new unit}
 \usage{
-crossed_by(
-  ...,
-  prefix = NULL,
-  suffix = NULL,
-  leading0 = NULL,
-  sep = NULL,
-  attrs = NULL
-)
+crossed_by(..., attrs = NULL)
 }
 \arguments{
 \item{...}{a sequence of units}
-
-\item{prefix}{Currently not implemented.The prefix of the label.}
-
-\item{suffix}{Currently not implemented.The suffix of the label.}
-
-\item{leading0}{Currently not implemented.Whether there should be a leading 0 if labels are made.}
-
-\item{sep}{Currently not implemented.A separator added between prefix and the number if prefix is empty.}
 
 \item{attrs}{Currently not implemented.}
 }

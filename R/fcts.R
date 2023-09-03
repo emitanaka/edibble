@@ -16,40 +16,37 @@ set_fcts <- function(.edibble, ..., .class = NULL,
   not_edibble(.edibble)
 
   .name_repair <- match.arg(.name_repair)
-  prep <- cook_design(.edibble)
+  prov <- activate_provenance(.edibble)
 
   if(is_edibble_design(.edibble)) {
 
     dots <- enquos(..., .named = TRUE, .homonyms = "error", .check_assign = TRUE)
     fnames_new <- names(dots)
-    fnames_old <- names(prep$design)
+    fnames_old <- names(prov$graph)
     fnames <- vec_as_names(c(fnames_old, fnames_new), repair = .name_repair)
 
     for(i in seq_along(dots)) {
       fname <- fnames[i + length(fnames_old)]
-      fresh <- eval_tidy(dots[[i]], data = c(prep$fct_levels(), list(prep = prep, .fname = fname)))
-      prep$add_anatomy(fresh, fname, .class)
-      prep$setup_data(fresh, fname, .class)
+      input <- eval_tidy(dots[[i]], data = c(prov$fct_levels(return = "value"), list(prov = prov, .fname = fname)))
+      .edibble$anatomy <- add_anatomy(.edibble$anatomy, input, fname, .class)
+      graph_input(input, prov, fname, .class)
     }
-    prep$design
 
   } else if(is_edibble_table(.edibble)) {
-
-    loc <- eval_select(expr(tidyselect::all_of(c(...))), .edibble)
+    loc <- eval_select(expr(c(...)), .edibble)
     for(i in seq_along(loc)) {
       var <- .edibble[[loc[i]]]
-      lvls <- as.character(sort(unique(var)))
+      lvls <- sort(unique(var))
       fname <- names(loc)[i]
-      .edibble[[loc[i]]] <- new_edibble_fct(labels = as.character(.edibble[[loc[[i]]]]),
+      .edibble[[loc[i]]] <- new_edibble_fct(labels = var,
                                             levels = lvls,
                                             class = .class,
                                             name = fname)
-      prep$setup_data(.edibble[[loc[i]]], fname, .class)
-      attr(.edibble, "design") <- prep$design
-
+      graph_input.default(lvls, prov, fname, .class)
     }
-    .edibble
+
   }
+  return_edibble_with_graph(.edibble, prov)
 }
 
 
@@ -62,7 +59,7 @@ set_fcts <- function(.edibble, ..., .class = NULL,
 new_edibble_fct <- function(labels = character(), levels = unique(labels),
                             name = character(), rep = NULL, ..., class = NULL) {
   x <- new_vctr(labels, levels = levels, name = name,
-                ..., class = c("edbl_fct", "character"))
+                ..., class = c("edbl_fct", class(labels)))
   class(x) <- c(class, class(x))
   x
 }
@@ -186,4 +183,6 @@ vec_cast.edbl_trt.character <- function(x, to, ...) as.character(x)
 #' @export
 vec_cast.character.edbl_trt <- function(x, to, ...) x
 
+
+# ADDME add_units(exist = TRUE), reset_units(exist = FALSE)
 

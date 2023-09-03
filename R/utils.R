@@ -1,66 +1,17 @@
 
-
-
-#' Record the coding step
-#'
-#' Call this function in functions that modify the edibble design or table so
-#' the step is tracked. The output of functions using `record_step()` should
-#' be returning an edibble design or table.
-#'
-#' @return Returns nothing.
-#' @export
-record_step <- function() {
-  do.call("on.exit",
-          list(quote(return(add_edibble_code(returnValue(default = FALSE),
-                                             paste(gsub("(^ +| +$)", "", deparse(match.call())), collapse = "")))),
-               add = TRUE),
-          envir = parent.frame())
-}
-
-add_edibble_seed <- function(.edibble, seed) {
-  if(!isFALSE(.edibble)) {
-    if(is_edibble_design(.edibble)) {
-      .edibble$seed <- seed
-      .edibble
-    } else {
-      des <- edbl_design(.edibble)
-      des$seed <- seed
-      attr(.edibble, "design") <- des
-      .edibble
-    }
+return_edibble_with_graph <- function(edibble, prov) {
+  des <- edbl_design(edibble)
+  des$graph <- prov$get_graph()
+  des$validation <- prov$get_validation()
+  if(is_edibble_table(edibble)) {
+    attr(edibble, "design") <- des
+    edibble
+  } else {
+    des
   }
 }
 
-add_edibble_code <- function(.edibble, code) {
-  if(!isFALSE(.edibble)) {
-    if(is_edibble_design(.edibble)) {
-      .edibble$recipe <- c(.edibble$recipe, code)
-      .edibble
-    } else {
-      des <- edbl_design(.edibble)
-      des$recipe <- c(des$recipe, code)
-      attr(.edibble, "design") <- des
-      .edibble
-    }
-  }
-}
 
-save_seed <- function(seed) {
-  if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE))
-    stats::runif(1)
-  if (is.null(seed))
-    RNGstate <- get(".Random.seed", envir = .GlobalEnv)
-  else {
-    set.seed(seed)
-    RNGstate <- structure(seed, kind = as.list(RNGkind()))
-  }
-  assign(".RNGstate", RNGstate, envir = parent.frame())
-  do.call("on.exit",
-          list(quote(return(add_edibble_seed(returnValue(default = FALSE),
-                                             .RNGstate))),
-               add = TRUE),
-          envir = parent.frame())
-}
 
 
 
@@ -106,65 +57,58 @@ print.edbl_design <- function(x,
                               decorate_levels = edibble_decorate("levels"),
                               decorate_title  = edibble_decorate("title"),
                               title = NULL, ...) {
-  title <- title %||% x$name %||% "An edibble design"
-  fnames <- names(x)
-  prep <- cook_design(x)
 
-  if(is_empty(fnames)) {
+  prov <- activate_provenance(x)
+  title <- title %||% prov$get_title() %||% "An edibble design"
+  fids <- prov$fct_nodes$id
+  fnames <- prov$fct_names(id = fids)
+  valids <- prov$get_validation(type = "rcrds")
+  if(is_empty(fids)) {
     data <- data.frame(var = "root",
                        child = NA,
                        label = as.character(decorate_title(title)))
   } else {
 
-    classes <- prep$fct_class()
+    classes <- prov$fct_role()
     label_names <- decorate_vars(fnames,
                                  decorate_units,
                                  decorate_trts,
                                  decorate_rcrds,
                                  classes)
-    var_nlevels <- lengths(prep$fct_levels()[fnames])
-    nvar <- length(fnames)
-    ll <- lapply(fnames,
-                 function(v) {
-                   id <- prep$fct_id(v)
-                   class <- prep$fct_class(id = id)
-                   children <- prep$fct_child(id = id)
-                   if(class!="edbl_trt" & !is_empty(children)) {
-                     prep$fct_names(id = children)
-                   } else {
-                     character()
+    var_nlevels <- lengths(prov$fct_levels(name = fnames, return = "id"))
+    nvar <- length(fids)
+    ll <- lapply(fids,
+                 function(id) {
+                   class <- prov$fct_role(id = id)
+                   children <- prov$fct_id_child(id = id, role = "edbl_unit")
+                   parents <- prov$fct_id_parent(id = id, role = c("edbl_trt", "edbl_rcrd"))
+                   if(class=="edbl_unit") {
+                     if(!is_empty(children)) return(children)
+                     if(!is_empty(parents)) return(parents)
                    }
+                   return(character())
                  })
-    nodes_with_parents <- unname(unlist(ll))
+    names(ll) <- as.character(fids)
+    nodes_with_parents <- as.integer(unname(unlist(ll)))
     label_names_with_levels <- paste(label_names, map_chr(var_nlevels, decorate_levels))
-    label_names_with_levels[classes=="edbl_rcrd"] <- label_names[classes=="edbl_rcrd"]
-
-    data <- data.frame(var = c("root", fnames),
-                       child = I(c(list(setdiff(fnames, nodes_with_parents)), ll)),
+    #browser()
+    rcrd_names <- prov$rcrd_names()
+    for(arcrd in rcrd_names) {
+      ipos <- which(fnames == arcrd)
+      label_names_with_levels[ipos] <- label_names[ipos]
+      if(!is_null(valids[[arcrd]])) {
+        label_names_with_levels[ipos] <- paste(label_names_with_levels[ipos],
+                                               cli::col_grey(validation_interval(valids[[arcrd]])))
+      }
+    }
+    data <- data.frame(var = c("root", fids),
+                       child = I(c(list(setdiff(fids, nodes_with_parents)), ll)),
                        label = c(decorate_title(title),
                                  label_names_with_levels))
   }
   cat(tree(data, root = "root"), sep = "\n")
-  if(!is_null(x$allotment)) {
-    cat(decorate_title("Allotment:\n"))
-    s <- as.character(c(x$allotment$trts, x$allotment$units))
-    tilde_pos <- unlist(gregexpr("~", s))
-    tilde_pos_max <- max(tilde_pos)
-    pad <- map_chr(tilde_pos_max - tilde_pos, function(n) ifelse(n==0, "", paste0(rep(" ", n), collapse = "")))
-    cli_li(items = paste0(" ", pad, s))
-  }
-  if(!is_null(x$assignment)) {
-    cat(decorate_title("Assignment:"), paste0(x$assignment, collapse = ", "), "\n")
-  }
-  if(!is_null(x$validation)) {
-    cat(decorate_title("Validation:\n"))
-    rnames <- names(x$validation)
-    items <- map_chr(seq_along(x$validation), function(i) {
-      paste0(rnames[i], ": ", style_italic(x$validation[[i]]$record), " ",
-             validation_interval(x$validation[[i]]))
-    })
-    cli_li(items = items)
-  }
+
+ #  validation_interval(valids[[i]])
 }
 
 validation_interval <- function(x) {
@@ -211,12 +155,15 @@ perm <- function(x) {
 }
 
 #' @export
-print.edbl_graph <- function(x, show_levels = FALSE, ...) {
-  cat(cli::col_green("factor nodes\n"))
-  print(x$nodes)
-  cat(cli::col_green("factor edges\n"))
-  print(x$edges)
-  if(show_levels) {
+print.edbl_graph <- function(x, show = c("factors", "levels", "both"), ...) {
+  show <- match.arg(show)
+  if(show %in% c("factors", "both")) {
+    cat(cli::col_green("factor nodes\n"))
+    print(x$factors$nodes)
+    cat(cli::col_green("factor edges\n"))
+    print(x$factors$edges)
+  }
+  if(show %in% c("levels", "both")) {
     cat(cli::col_blue("level nodes\n"))
     print(x$levels$nodes)
     cat(cli::col_blue("level edges\n"))
@@ -225,7 +172,7 @@ print.edbl_graph <- function(x, show_levels = FALSE, ...) {
 }
 
 names.edbl_graph <- function(graph) {
-  graph$nodes$name
+  graph$factors$nodes$name
 }
 
 names.edbl_design <- function(design) {
@@ -253,7 +200,7 @@ rbind_ <- function(df1, df2) {
   if(nrow(df1) & nrow(df2)) {
     df1[setdiff(names(df2), names(df1))] <- NA
     df2[setdiff(names(df1), names(df2))] <- NA
-    out <- rbind(df1, df2)
+    out <- rbind(df1, df2[names(df1)])
   } else if(nrow(df1)) {
     df1[setdiff(names(df2), names(df1))] <- NA
     out <- df1
@@ -326,4 +273,24 @@ as.data.frame.edbl_table <- function(x,
     }
   })
   as.data.frame(out)
+}
+
+append_recipe_code <- function(.design, new) {
+  .design$recipe <- c(.design$recipe, new)
+  prov <- activate_provenance(.design)
+  prov$record_track_external(new)
+  .design
+}
+
+add_edibble_code <- function(.edibble, code) {
+  if(!isFALSE(.edibble)) {
+    if(is_edibble_design(.edibble)) {
+      append_recipe_code(.edibble, code)
+    } else {
+      des <- edbl_design(.edibble) %>%
+        append_recipe_code(code)
+      attr(.edibble, "design") <- des
+      .edibble
+    }
+  }
 }

@@ -1,7 +1,7 @@
 # set_units
 
     Code
-      design(name = "unlinked units") %>% set_units(block = 3, plot = 2)
+      design(title = "unlinked units") %>% set_units(block = 3, plot = 2)
     Output
       unlinked units
       +-block (3 levels)
@@ -15,6 +15,7 @@
       # An edibble: 12 x 3
                row       col       plot
          <unit(3)> <unit(4)> <unit(12)>
+             <chr>     <chr>      <chr>                                               
        1      row1      col1     plot1 
        2      row2      col1     plot2 
        3      row3      col1     plot3 
@@ -37,6 +38,7 @@
       # An edibble: 48 x 4
                row       col      site       plot
          <unit(3)> <unit(4)> <unit(4)> <unit(48)>
+             <chr>     <chr>     <chr>      <chr>                                     
        1      row1      col1     site1     plot1 
        2      row1      col1     site2     plot2 
        3      row1      col1     site3     plot3 
@@ -47,7 +49,7 @@
        8      row2      col1     site4     plot8 
        9      row3      col1     site1     plot9 
       10      row3      col1     site2     plot10
-      # ... with 38 more rows
+      # i 38 more rows
 
 ---
 
@@ -58,6 +60,7 @@
       # An edibble: 60 x 4
               site       row       col       plot
          <unit(2)> <unit(5)> <unit(6)> <unit(60)>
+             <chr>     <chr>     <chr>      <chr>                                     
        1     site1      row1      col1     plot1 
        2     site1      row1      col1     plot2 
        3     site1      row2      col1     plot3 
@@ -68,5 +71,5 @@
        8     site2      row4      col1     plot8 
        9     site2      row5      col1     plot9 
       10     site2      row5      col1     plot10
-      # ... with 50 more rows
+      # i 50 more rows
 

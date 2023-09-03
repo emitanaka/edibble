@@ -1,25 +1,25 @@
 test_that("set_units", {
 
   expect_snapshot({
-    design(name = "unlinked units") %>%
+    design(title = "unlinked units") %>%
       set_units(block = 3,
                 plot = 2)
   })
 
-  des <- design(name = "unlinked units") %>%
+  des <- design(title = "unlinked units") %>%
     set_units(block = 3,
               plot = 2)
 
-  expect_equal(nrow(des$graph$nodes), 2)
-  expect_equal(names(des$graph$nodes), c("id", "name", "class"))
-  expect_equal(nrow(des$graph$levels$nodes), 5)
-  expect_equal(des$graph$nodes$id, c(1L, 2L))
-  expect_equal(des$graph$nodes$name, c("block", "plot"))
-  expect_equal(des$graph$nodes$class, c("edbl_unit", "edbl_unit"))
-  expect_equal(des$graph$levels$nodes$idvar, c(1L, 1L, 1L, 2L, 2L))
-  expect_equal(des$graph$levels$nodes$id, 1:5)
-  expect_equal(des$graph$levels$nodes$name, c("block1", "block2", "block3", "plot1", "plot2"))
-  expect_equal(names(des$graph$levels$nodes), c("idvar", "id", "name", "var", "label"))
+  expect_equal(nrow(des$graph$factors$nodes), 2)
+  expect_equal(names(des$graph$factors$nodes), c("id", "role", "name", "attrs"))
+  expect_equal(des$graph$factors$nodes$id, c(1L, 2L))
+  expect_equal(des$graph$factors$nodes$name, c("block", "plot"))
+  expect_equal(des$graph$factors$nodes$role, c("edbl_unit", "edbl_unit"))
+  expect_equal(des$graph$levels$nodes[["1"]]$id, 1:3)
+  expect_equal(des$graph$levels$nodes[["2"]]$id, 4:5)
+  expect_equal(des$graph$levels$nodes[["1"]]$value, c("block1", "block2", "block3"))
+  expect_equal(des$graph$levels$nodes[["2"]]$value, c("plot1", "plot2"))
+  expect_equal(names(des$graph$levels$nodes[["1"]]), c("id", "value", "attrs"))
 
 
   expect_snapshot({

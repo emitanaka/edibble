@@ -59,39 +59,14 @@
 #' @family user-facing functions
 #' @return An edibble design.
 #' @export
-set_units <- function(.edibble, ...,
+set_units <- function(.edibble = design(), ...,
                       .name_repair = c("check_unique", "unique", "universal", "minimal"),
                       .record = TRUE) {
-  if(.record) record_step()
+  prov <- activate_provenance(.edibble)
+  if(.record) prov$record_step()
   set_fcts(.edibble, ..., .name_repair = .name_repair, .class = "edbl_unit")
 }
 
-#' Select a subset of units from a cooked design
-#'
-#' @param prep A cooked design.
-#' @param ... The units to select.
-#'
-#' @importFrom tidyselect eval_select
-#' @return An edibble design.
-#' @export
-select_units <- function(prep, ...) {
-  vlevs <- prep$fct_levels()
-  loc <- eval_select(expr(tidyselect::all_of(c(...))), vlevs)
-  keep_units <- names(vlevs)[loc]
-  keep_uids <- prep$fct_id(keep_units)
-  keep_uids_ancestors <- prep$fct_ancestor(keep_uids, class = "edbl_unit")
-  sprep <- prep$clone()
-  fnodes <- prep$fct_nodes
-  fedges <- prep$fct_edges
-  lnodes <- prep$lvl_nodes
-  ledges <- prep$lvl_edges
-  sprep$fct_nodes <- fnodes[fnodes$id %in% keep_uids_ancestors, ]
-  sprep$fct_edges <- fedges[fedges$to %in% keep_uids_ancestors & fedges$from %in% keep_uids_ancestors,]
-  sprep$lvl_nodes <- lnodes[lnodes$idvar %in% keep_uids_ancestors, ]
-  keep_lids_ancestors <- sprep$lvl_id()
-  sprep$lvl_edges <- ledges[ledges$to %in% keep_lids_ancestors & ledges$from %in% keep_lids_ancestors,]
-  sprep
-}
 
 #' @importFrom vctrs vec_ptype_abbr
 #' @export
@@ -106,6 +81,38 @@ vec_ptype_full.edbl_unit <- function(x, ...) paste0("unit(", nlevels(x), ")")
 vec_cast.edbl_unit.edbl_unit <- function(x, to, ...) {
   x
 }
+
+#' @importFrom pillar tbl_format_body
+#' @export
+tbl_format_body.edbl_table <- function(x, setup, ...) {
+  # this is a bit of a hack to get the type
+  # it probably should get the alignement from pillar
+  edbl_types <- cli::ansi_strip(setup$body[2])
+  # pos is shorter than types, since it is limited to print width
+  # note if class abbreviation contains ">", it will be an issue below
+  pos <- gregexpr(">", edbl_types)[[1]]
+  types <- map_chr(x, vec_ptype_abbr2)
+  string <- paste0(rep(" ", length.out = setup$width), collapse = "")
+  for(i in 1:length(pos)) {
+    start <- pos[i] - length(types[i]) - 3
+    end <- pos[i]
+    new <- paste0("<", types[i], ">")
+    if(substr(edbl_types, start, end) != new) substr(string, start, end) <- new
+  }
+  setup$body <- c(setup$body[1:2], cli::style_italic(cli::col_silver(string)),
+                  setup$body[3:length(setup$body)])
+  NextMethod()
+}
+
+vec_ptype_abbr2 <- function(x, ...) {
+  cls <- class(x)
+  class(x) <- setdiff(cls, c("edbl_unit", "edbl_trt", "edbl_rcrd", "edbl_fct", "vctrs_vctr"))
+  vctrs::vec_ptype_abbr(x, ...)
+}
+
+
+
+
 
 ### below may not be working as intended
 

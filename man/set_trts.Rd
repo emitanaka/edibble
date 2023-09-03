@@ -5,7 +5,7 @@
 \title{Set the treatment variables}
 \usage{
 set_trts(
-  .edibble,
+  .edibble = design(),
   ...,
   .name_repair = c("check_unique", "unique", "universal", "minimal"),
   .record = TRUE
@@ -49,7 +49,8 @@ design() \%>\%
 }
 \seealso{
 Other user-facing functions: 
-\code{\link{allot}},
+\code{\link{allot_trts}()},
+\code{\link{allot_units}()},
 \code{\link{design}()},
 \code{\link{expect_rcrds}()},
 \code{\link{export_design}()},

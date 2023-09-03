@@ -4,15 +4,7 @@
 \alias{nested_in}
 \title{Specify the nesting structure for units}
 \usage{
-nested_in(
-  x,
-  ...,
-  prefix = "",
-  suffix = "",
-  leading0 = FALSE,
-  sep = edibble_labels_opt("sep"),
-  attrs = NULL
-)
+nested_in(x, ...)
 }
 \arguments{
 \item{x}{The name of the parent unit to nest under.}
@@ -21,17 +13,6 @@ nested_in(
 left-hand side corresponds to the name of the level (or the level number) of \code{x}
 and the right-hand side is an integer specifying the number of levels nested under the
 corresponding levels.}
-
-\item{prefix}{The prefix of the label.}
-
-\item{suffix}{The suffix of the label.}
-
-\item{leading0}{Whether there should be a leading 0 if labels are made.}
-
-\item{sep}{A separator added between prefix and the number if prefix is empty.}
-
-\item{attrs}{A named vector where names and values correspond to attribute names and values of the variable, or
-a data frame.}
 }
 \value{
 A nested level.

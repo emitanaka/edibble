@@ -4,26 +4,11 @@
 \alias{fct_attrs}
 \title{Setting the traits of factors}
 \usage{
-fct_attrs(
-  levels = NULL,
-  label = NULL,
-  description = NULL,
-  unit_of_measure = NULL,
-  class = NULL,
-  ...
-)
+fct_attrs(.levels, ...)
 }
 \arguments{
-\item{levels}{An \code{edbl_lvls} object that should contain information about the levels
+\item{.levels}{An \code{edbl_lvls} object that should contain information about the levels
 in the factor.}
-
-\item{label}{A string that denotes the long name of the factor.}
-
-\item{description}{The text description of the factor.}
-
-\item{unit_of_measure}{A string denoting the unit of measurement if applicable.}
-
-\item{class}{An optional subclass.}
 
 \item{...}{A name-value pair of attributes. The value must be a scalar and
 attributed to the whole factor (not individual levels).
@@ -36,7 +21,7 @@ An \code{edbl_lvls} object.
 This function is used to set characteristics of the factors.
 }
 \examples{
-fct_attrs(levels = c("A", "B"))
+fct_attrs(c("A", "B"))
 }
 \seealso{
 lvl_traits

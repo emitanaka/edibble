@@ -427,43 +427,49 @@ menu_hyper_graeco <- function(t = random_integer_small(),
 
 #' Find the short names of the named designs
 #'
-#' @param pkgs A character vector containing the package names to search
+#' @param packages A character vector containing the package names to search
 #' named designs from. By default it will search edibble and other packages loaded.
-#' @return A character vector of the short names of the named menu designs.
+#' @param exclude A character vector denoting the packages to exclude search from.
+#' @return A data.frame with package, name, arguments, and full name.
 #' @examples
 #' scan_menu()
 #' @export
-scan_menu <- function(pkgs = NULL) {
+scan_menu <- function(packages = NULL, exclude = NULL) {
   # ignore searching in base pkgs
   base_pkgs <- c("stats", "graphics", "grDevices", "utils", "datasets",
                  "methods", "base")
-  pkgs <- pkgs %||% setdiff(.packages(), base_pkgs)
-  pkgs <- unique(c(pkgs, "edibble")) # always add edibble whether it is loaded or not
+  packages <- packages %||% setdiff(.packages(), base_pkgs)
+  packages <- setdiff(packages, exclude)
+  packages <- unique(c(packages, "edibble")) # always add edibble whether it is loaded or not
 
-  ls_fns <- lapply(pkgs, function(pkg) {
+  ls_fns <- lapply(packages, function(pkg) {
     fns <- unclass(utils::lsf.str(envir = asNamespace(pkg), all = TRUE))
     fns[grep("^menu_", fns)]
   })
-  names(ls_fns) <- pkgs
+  names(ls_fns) <- packages
   ls_fns <- compact(ls_fns)
 
   pkg_names <- names(ls_fns)
-  short_names <- NULL
+  ret <- tibble::tibble(package = character(),
+                        name = character(),
+                        args = character(),
+                        name_full = character())
   for(i in seq_along(ls_fns)) {
-    cli_h2(pkg_names[i])
     for(menu_fn in ls_fns[[i]]) {
       args <- as.list(formals(menu_fn))
       des <- do.call(menu_fn, list())
       tryCatch({
-        short_names <- c(short_names, set_names(des$name, pkg_names[i]))
-        cli_li("{.pkg {des$name}} with the arguments {.field {names(args)}}
-             for a {.combine_words(des$name_full, fun = style_bold, and = ' / ')}.")
+        ret <- tibble::add_row(ret,
+                               package = pkg_names[i],
+                               name = des$name,
+                               args = paste0(names(args), collapse = ", "),
+                               name_full = paste0(des$name_full, collapse = ", "))
       }, error = function(x)  {
         cli_li("{.pkg {gsub('menu_', '', menu_fn)}} seems to be {cli::col_red('unavailable')}.")
       })
     }
   }
-  invisible(short_names)
+  ret
 }
 
 
@@ -497,7 +503,7 @@ scan_menu <- function(pkgs = NULL) {
 takeout <- function(recipe = NULL, show = TRUE) {
   if(is.null(recipe)) {
     cli::cli_alert("No name was supplied so selecting a random named experimental design...")
-    name <- sample(suppressMessages(scan_menu()), 1L)
+    name <- sample(scan_menu()$name, 1L)
     recipe <- do.call(paste0("menu_", name), list())
     cli::cli_alert(sprintf("Selected %s", recipe$name_full))
   }

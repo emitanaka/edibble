@@ -23,33 +23,43 @@ set_rcrds <- function(.edibble, ...,
                       .record = TRUE) {
 
   not_edibble(.edibble)
-  if(.record) record_step()
-  prep <- cook_design(.edibble)
-
+  des <- edbl_design(.edibble)
+  prov <- activate_provenance(des)
+  if(.record) prov$record_step()
   .name_repair <- match.arg(.name_repair)
+
   units <- map(enexprs(...), function(x) {
       if(is.character(x)) return(x)
       if(is_symbol(x)) return(quo_text(x))
       return(eval(x))
     })
+
   rcrds <- names(units)
 
-  prep$fct_exists(name = unlist(units), class = "edbl_unit")
+  prov$fct_exists(name = unlist(units), role = "edbl_unit")
 
   for(i in seq_along(units)) {
-    rid <- prep$fct_last_id + 1L
-    uid <- prep$fct_id(units[[i]])
-    attrs <- attributes(units[[i]])
-    fattrs <- do.call(data.frame, c(attrs[setdiff(names(attrs), c("names", "class"))],
-                                    list(stringsAsFactors = FALSE,
-                                         id = rid,
-                                         name = rcrds[i],
-                                         class = "edbl_rcrd")))
-    prep$append_fct_nodes(fattrs)
-    prep$append_fct_edges(data.frame(from = uid, to = rid))
+    prov$append_fct_nodes(name = rcrds[i], role = "edbl_rcrd")
+    uid <- prov$fct_id(name = units[[i]])
+    rid <- prov$fct_id(name = rcrds[i])
+    prov$append_fct_edges(from = rid, to = uid, type = "record")
   }
-  if(is_edibble_table(.edibble)) return(serve_table(prep$design))
-  prep$design
+
+  if(is_edibble_table(.edibble)) {
+    rcrds <- prov$serve_rcrds(return = "value")
+    for(arcrd in names(rcrds)) {
+      if(arcrd %in% names(.edibble)) {
+        uid <- prov$mapping_to_unit(id = prov$fct_id(name = arcrd))
+        uname <- prov$fct_names(id = uid)
+        uids <- prov$fct_id(name = .edibble[[uname]])
+        .edibble[[arcrd]] <- new_edibble_rcrd(rep(NA_real_, nrow(.edibble)), uids)
+      } else {
+        .edibble[[arcrd]] <- rcrds[[arcrd]]
+      }
+    }
+  }
+
+  return_edibble_with_graph(.edibble, prov)
 }
 
 #' @rdname set_rcrds
@@ -80,20 +90,19 @@ set_rcrds_of <- function(.edibble, ...) {
 #'   expect_rcrds(y > 0)
 #' @return An edibble design.
 #' @export
-expect_rcrds <- function(.edibble, ...) {
+expect_rcrds <- function(.edibble, ..., .record = TRUE) {
   not_edibble(.edibble)
-  record_step()
+  prov <- activate_provenance(.edibble)
+  if(.record) prov$record_step()
   dots <- enquos(...)
   dots_nms <- names(dots)
-  prep <- cook_design(.edibble)
   rules_named <- map(dots[dots_nms!=""], eval_tidy)
   rules_unnamed <- map(dots[dots_nms==""], validate_rcrd,
-                        rnames = prep$rcrd_names)
+                       rnames = prov$rcrd_names())
 
   rules_unnamed <- stats::setNames(rules_unnamed, map_chr(rules_unnamed, function(x) x$rcrd))
-  prep$design$validation <- simplify_validation(c(rules_named, rules_unnamed))
-  if(is_edibble_table(.edibble)) return(serve_table(prep$design))
-  prep$design
+  prov$set_validation(simplify_validation(c(rules_named, rules_unnamed)), type = "rcrds")
+  return_edibble_with_graph(.edibble, prov)
 }
 
 simplify_validation <- function(x) {
@@ -197,10 +206,6 @@ validate_rcrd <- function(x, rnames = NULL) {
 }
 
 
-has_record <- function(prep) {
-  "edbl_rcrd" %in% prep$design$graph$nodes$class
-}
-
 
 #' Expected type of data entry
 #'
@@ -294,9 +299,9 @@ fill_symbol <- function() "o"
 dup_symbol <- function() "x"
 
 
-new_edibble_rcrd <- function(x, unit_name = NULL, unit_values = NULL, class = NULL, ...) {
+new_edibble_rcrd <- function(x, unit_values = NULL, class = NULL, ...) {
   res <- new_vctr(x, class = c("edbl_rcrd", "edbl_fct"),
-                  unit = unit_name %||% attr(x, "unit_name"),
+                  #unit = unit_name %||% attr(x, "unit_name"),
                   unit_values = unit_values %||% attr(x, "unit_values"),
                   ...)
   class(res) <- c(class, class(res))

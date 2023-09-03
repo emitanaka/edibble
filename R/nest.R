@@ -5,12 +5,6 @@
 #' left-hand side corresponds to the name of the level (or the level number) of `x`
 #' and the right-hand side is an integer specifying the number of levels nested under the
 #' corresponding levels.
-#' @param prefix The prefix of the label.
-#' @param suffix The suffix of the label.
-#' @param leading0 Whether there should be a leading 0 if labels are made.
-#' @param sep A separator added between prefix and the number if prefix is empty.
-#' @param attrs A named vector where names and values correspond to attribute names and values of the variable, or
-#'   a data frame.
 #' @seealso See [set_units()] for examples of how to use this.
 #' @return A nested level.
 #' @examples
@@ -18,29 +12,20 @@
 #'   set_units(mainplot = 60,
 #'             subplot = nested_in(mainplot, 10))
 #' @export
-nested_in <- function(x, ..., prefix = "", suffix = "",
-                      leading0 = FALSE,
-                      sep = edibble_labels_opt("sep"),
-                      attrs = NULL) {
+nested_in <- function(x, ...) {
   top <- caller_env()$.top_env
   if(is.null(top$.fname)) abort("The `nested_in` function must be used within `set_units` function.")
-  prep <- top$prep
-  vlevs <- prep$fct_levels()
-  if(prefix=="") prefix <- paste0(top$.fname, sep)
+  prov <- top$prov
+  vlevs <- prov$fct_levels(return = "value")
   parent_name <- as_string(enexpr(x))
   parent_vlevels <- vlevs[[parent_name]]
   dots <- list2(...)
   args <- list()
   for(.x in dots) {
-    ind <- is_cross_levels(.x) | is_formula(.x, lhs = FALSE)
-    if(ind) {
-      if(is_formula(.x, lhs = FALSE)) {
-        vars <- rownames(attr(stats::terms(.x), "factors"))
-      } else {
-        vars <- .x
-      }
+    if(is_cross_levels(.x) | is_formula(.x, lhs = FALSE)) {
+      vars <- if(is_formula(.x, lhs = FALSE)) rownames(attr(stats::terms(.x), "factors")) else .x
       child_lvls_by_parent <- map(vars, function(.var) {
-        out <- serve_units(select_units(prep, .var, parent_name))
+        out <- prov$serve_units(id = prov$fct_id(name = c(.var, parent_name)), return = "value")
         split(out[[.var]], out[[parent_name]])
       })
       names(child_lvls_by_parent) <- vars
@@ -60,22 +45,21 @@ nested_in <- function(x, ..., prefix = "", suffix = "",
 
   child_levels <- nestr::nest_in(parent_vlevels,
                                  !!!args,
-                                 prefix = prefix,
-                                 suffix = suffix,
+                                 prefix = top$.fname,
+                                 suffix = "",
                                  distinct = TRUE,
-                                 leading0 = leading0,
+                                 leading0 = TRUE,
                                  compact = FALSE,
                                  keyname = parent_name)
   child_labels <- nestr::nest_in(parent_vlevels,
                                  !!!args,
-                                 prefix = prefix,
-                                 suffix = suffix,
+                                 prefix = top$.fname,
+                                 suffix = "",
                                  distinct = FALSE,
-                                 leading0 = leading0,
+                                 leading0 = TRUE,
                                  compact = FALSE,
                                  keyname = parent_name)
-  lattrs <- as.list(attrs)
-  attributes(child_levels) <- c(lattrs, attributes(child_levels),
+  attributes(child_levels) <- c(attributes(child_levels),
                                 list(parents = attr(args, "parents"),
                                      labels = child_labels))
   class(child_levels) <- c("nest_lvls", class(child_levels))
@@ -90,12 +74,12 @@ nested_in <- function(x, ..., prefix = "", suffix = "",
 #' @return Return a named list. Only shows the direct parent.
 #' @export
 nesting_structure <- function(design) {
-    prep <- cook_design(design)
-    uids <- prep$unit_ids
-    fedges <- prep$fct_edges
-    ndf <- fedges[fedges$from %in% uids & fedges$to %in% uids & !fedges$type %in% c("depends", "cross"),]
-    from <- prep$fct_names(ndf$from)
-    to <- prep$fct_names(ndf$to)
+    prov <- activate_provenance(design)
+    uids <- prov$unit_ids
+    fedges <- prov$fct_edges
+    ndf <- fedges[fedges$from %in% uids & fedges$to %in% uids, ]
+    from <- prov$fct_names(id = ndf$from)
+    to <- prov$fct_names(id = ndf$to)
     split(from, to)
 }
 

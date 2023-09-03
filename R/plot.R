@@ -24,21 +24,36 @@ plot.edbl_design <- function(x, which = c("factors", "levels"),
   if(!requireNamespace("visNetwork")) abort("You need to install `visNetwork` package.")
   which <- match.arg(which)
   view <- match.arg(view)
-  prep <- cook_design(x)
+  prov <- activate_provenance(x)
 
   nodes <- switch(which,
-                  "factors" = prep$fct_nodes,
-                  "levels" = prep$lvl_nodes)
+                  "factors" = prov$fct_nodes,
+                  # FIXME
+                  "levels" = prov$lvl_nodes)
+
+  if(which=="levels") {
+    nodes <- lapply(names(nodes), function(avar) {
+      out <- unclass(nodes)[[avar]]
+      out$name <- as.character(out$value)
+      out$attrs <- NULL
+      out$fct_var <- prov$fct_names(id = as.integer(avar))
+      out$role <- prov$fct_role(id = as.integer(avar))
+      out
+    })
+    nodes <- do.call(rbind, nodes)
+  }
+
+
   nodes$group <- switch(which,
-                        "factors" = gsub("edbl_", "", nodes$class),
-                        "levels" = nodes$var)
+                        "factors" = gsub("edbl_", "", nodes$role),
+                        "levels" = nodes$fct_var)
   nodes$label <- nodes$name
   class2shape <- c("edbl_unit" = "circle",
                    "edbl_trt" = "diamond",
                    "edbl_rcrd" = "database")
-  nodes$shape <- class2shape[prep$fct_class(nodes$idvar)]
+  nodes$shape <- class2shape[nodes$role]
 
-  main <- names(title) %||% title %||% x$name
+  main <- names(title) %||% title %||% prov$get_title()
   main_style <- ifelse(is_named(title), title, "")
   submain <- names(subtitle) %||% subtitle %||% ""
   submain_style <- ifelse(is_named(submain), submain, "")
@@ -46,8 +61,8 @@ plot.edbl_design <- function(x, which = c("factors", "levels"),
   footer_style <- ifelse(is_named(footer), footer, "")
   background <- ifelse(background=="transparent", "rgba(0, 0, 0, 0)", background)
   edges <- switch(which,
-                  "factors" = prep$fct_edges,
-                  "levels" = prep$lvl_edges)
+                  "factors" = prov$fct_edges,
+                  "levels" = prov$lvl_edges)
   if(nrow(edges)) {
     if(which=="factors") {
       # this doesn't seem to work
@@ -62,6 +77,9 @@ plot.edbl_design <- function(x, which = c("factors", "levels"),
       edges$arrows <- "to"
     }
   }
+  # the data.frame column causes issue
+  nodes$attrs <- NULL
+  edges$attrs <- NULL
 
   out <- visNetwork::visNetwork(nodes = nodes,
                                edges = edges,

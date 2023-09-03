@@ -4,19 +4,41 @@
 \alias{export_design}
 \title{Export the design to xlsx}
 \usage{
-export_design(.data, file, author, date = Sys.Date(), overwrite = FALSE)
+export_design(
+  .data,
+  file,
+  author = NULL,
+  date = Sys.Date(),
+  overwrite = FALSE,
+  hide_treatments = FALSE,
+  theme = NULL,
+  subject = NULL,
+  category = NULL,
+  table_style = "TableStyleMedium9"
+)
 }
 \arguments{
-\item{.data}{An edibble data frame or design.}
+\item{.data}{An edibble table to export.}
 
 \item{file}{File, including the path, to export the data to.}
 
-\item{author}{Name of the author in character. A vector of character is supported
+\item{author}{(Optional) name of the author in character. A vector of character is supported
 for where there are multiple authors.}
 
-\item{date}{The date to be inserted in header.}
+\item{date}{The date to be inserted in header (defaults to today).}
 
-\item{overwrite}{A logical indicating whether to overwrite exisitng file or not.}
+\item{overwrite}{A logical value indicating whether to overwrite existing file or not.}
+
+\item{hide_treatments}{A logical value indicating whether treatments should be included in the data entry sheet.
+Default is true.}
+
+\item{theme}{The Excel theme to use (optional). One of "Atlas", "Badge", "Berlin", "Celestial", "Crop", "Depth", "Droplet", "Facet", "Feathered", "Gallery", "Headlines", "Integral", "Ion", "Ion Boardroom", "Madison", "Main Event", "Mesh", "Office Theme", "Old Office Theme", "Organic", "Parallax", "Parcel", "Retrospect", "Savon", "Slice", "Vapor Trail", "View", "Wisp", "Wood Type".}
+
+\item{subject}{The subject of the workbook (optional).}
+
+\item{category}{The category of the workbook (optional).}
+
+\item{table_style}{The table style to apply to the exported data (default: "TableStyleMedium9").}
 }
 \value{
 The input data object.
@@ -27,7 +49,8 @@ external xlsx file.
 }
 \seealso{
 Other user-facing functions: 
-\code{\link{allot}},
+\code{\link{allot_trts}()},
+\code{\link{allot_units}()},
 \code{\link{design}()},
 \code{\link{expect_rcrds}()},
 \code{\link{serve_table}()},
