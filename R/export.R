@@ -106,7 +106,7 @@ make_sheet_names <- function(prov) {
   } else {
     map_rcrd_to_unit <- prov$mapping("edbl_rcrd", "edbl_unit")
     map_trt_to_unit <- prov$mapping("edbl_trt", "edbl_unit")
-    uname <- prov$fct_names(id = unique(c(map_rcrd_to_unit)))
+    uname <- prov$fct_names(id = unique(c(map_rcrd_to_unit, map_trt_to_unit)))
   }
   data_sheet_names <- data_sheet_name(uname)
   names(data_sheet_names) <- uname
@@ -136,15 +136,16 @@ save_workbook <- function(wb, file, overwrite, title) {
 
 
 write_title_sheet <- function(wb, sheet_name, title, author, date) {
+  metadata <- data.frame(name = c("title", "date", ifelse(is_null(author), NULL, "author")),
+                         value = c(title, format(date), author))
   # title
-  title_pos <- openxlsx2::wb_dims(from_row = 1, from_col = 1)
+  title_pos <- openxlsx2::wb_dims(from_row = 1, from_col = 2)
   wb$set_col_widths(sheet = sheet_name,
-                    cols = 1,
+                    cols = 2,
                     widths = 100) # 250 is max
   wb$add_data(sheet = sheet_name,
-              x = title,
-              dims = title_pos,
-              name = "title",
+              x = metadata,
+              name = "metadata",
               col_names = FALSE)
   wb$add_font(sheet = sheet_name,
               dims = title_pos,
@@ -155,12 +156,7 @@ write_title_sheet <- function(wb, sheet_name, title, author, date) {
                     wrap_text = TRUE)
 
   # date
-  date_pos <- openxlsx2::wb_dims(from_row = 2, from_col = 1)
-  wb$add_data(sheet = sheet_name,
-              x = date,
-              dims = date_pos,
-              name = "date",
-              col_names = FALSE)
+  date_pos <- openxlsx2::wb_dims(from_row = 2, from_col = 2)
   wb$add_font(sheet = sheet_name,
               dims = date_pos,
               size = 25)
@@ -170,12 +166,7 @@ write_title_sheet <- function(wb, sheet_name, title, author, date) {
 
   # author
   if(!is_null(author)) {
-    author_pos <- openxlsx2::wb_dims(from_row = 3, from_col = 1)
-    wb$add_data(sheet = sheet_name,
-                x = author,
-                dims = author_pos,
-                name = "author",
-                col_names = FALSE)
+    author_pos <- openxlsx2::wb_dims(from_row = 3, from_col = 2)
     wb$add_font(sheet = sheet_name,
                 dims = author_pos,
                 size = 25)
