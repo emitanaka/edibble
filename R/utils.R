@@ -259,9 +259,9 @@ number_si_prefix <- function(x) {
 #' @param ... Unused.
 #'  i.e. don't coerce numeric factors.
 as.data.frame.edbl_table <- function(x,
+                                     ...,
                                      levels_as = "factor",
-                                     ignore_numeric = TRUE,
-                                     ...) {
+                                     ignore_numeric = TRUE) {
   out <- lapply(x, function(.x) {
     if(is_edibble_unit(.x) | is_edibble_trt(.x)) {
       if(ignore_numeric) {
