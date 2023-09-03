@@ -35,11 +35,11 @@ order_trts <- function(x, ...) {
   UseMethod("order_trts")
 }
 
-order_trts.default <- function(order, prov, constrain, ...) {
+order_trts.default <- function(x, prov, constrain, ...) {
   abort(paste("The", order, "`order` is not implemented."))
 }
 
-order_trts.dae <- function(order, prov, constrain, trts, ...) {
+order_trts.dae <- function(x, prov, constrain, trts, ...) {
   # FIXME
   dat <- assign_trts(prov$design, order = "systematic", constrain = constrain, .record = FALSE) %>%
     serve_table(use_labels = TRUE) %>%

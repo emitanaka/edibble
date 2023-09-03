@@ -4,14 +4,16 @@
 \alias{as.data.frame.edbl_table}
 \title{Convert edibble table to normal data frame}
 \usage{
-\method{as.data.frame}{edbl_table}(x, levels_as = "factor", ignore_numeric = TRUE)
+\method{as.data.frame}{edbl_table}(x, levels_as = "factor", ignore_numeric = TRUE, ...)
 }
 \arguments{
 \item{x}{An edibble table}
 
 \item{levels_as}{Coerce the edibble factors to either "factor" or "character".}
 
-\item{ignore_numeric}{Whether to coerce numeric factors or not. Default is TRUE,
+\item{ignore_numeric}{Whether to coerce numeric factors or not. Default is TRUE,}
+
+\item{...}{Unused.
 i.e. don't coerce numeric factors.}
 }
 \description{

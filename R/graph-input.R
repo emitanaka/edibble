@@ -19,7 +19,7 @@ graph_input_type = function(input) {
   return("unimplemented")
 }
 
-graph_input.default <- function(input, prov, name, class) {
+graph_input.default <- function(input, prov, name, class, ...) {
   type <- graph_input_type(input)
   levels <- switch(type,
                    "numeric" = fct_attrs(lvls(label_seq_length(input, prefix = name))),
@@ -30,7 +30,7 @@ graph_input.default <- function(input, prov, name, class) {
   graph_input.edbl_lvls(levels, prov, name, class)
 }
 
-graph_input.edbl_lvls <- function(input, prov, name, class) {
+graph_input.edbl_lvls <- function(input, prov, name, class, ...) {
   fattrs <- as.data.frame(attr(input, "attrs"))
   prov$append_fct_nodes(name = name, role = class, attrs = fattrs)
   lattrs <- vec_data(input)
@@ -39,13 +39,13 @@ graph_input.edbl_lvls <- function(input, prov, name, class) {
   prov$append_lvl_nodes(value = value, fid = prov$fct_id(name = name), attrs = lattrs)
 }
 
-graph_input.formula <- function(input, prov, name, class) {
+graph_input.formula <- function(input, prov, name, class, ...) {
   tt <- stats::terms(input)
   vars <- rownames(attr(tt, "factors"))
   graph_input.cross_lvls(vars, prov, name, class)
 }
 
-graph_input.cross_lvls <- function(input, prov, name, class) {
+graph_input.cross_lvls <- function(input, prov, name, class, ...) {
   flevels <- prov$fct_levels(return = "value")
   vars <- input
 
@@ -66,7 +66,7 @@ graph_input.cross_lvls <- function(input, prov, name, class) {
   }
 }
 
-graph_input.nest_lvls <- function(input, prov, name, class) {
+graph_input.nest_lvls <- function(input, prov, name, class, ...) {
   parent <- input %@% "keyname"
   cross_parents <- input %@% "parents"
   clabels <- input %@% "labels"

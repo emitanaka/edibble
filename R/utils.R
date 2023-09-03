@@ -171,12 +171,12 @@ print.edbl_graph <- function(x, show = c("factors", "levels", "both"), ...) {
   }
 }
 
-names.edbl_graph <- function(graph) {
-  graph$factors$nodes$name
+names.edbl_graph <- function(x) {
+  x$factors$nodes$name
 }
 
-names.edbl_design <- function(design) {
-  names(design$graph)
+names.edbl_design <- function(x) {
+  names(x$graph)
 }
 
 
@@ -256,10 +256,12 @@ number_si_prefix <- function(x) {
 #' @param x An edibble table
 #' @param levels_as Coerce the edibble factors to either "factor" or "character".
 #' @param ignore_numeric Whether to coerce numeric factors or not. Default is TRUE,
+#' @param ... Unused.
 #'  i.e. don't coerce numeric factors.
 as.data.frame.edbl_table <- function(x,
                                      levels_as = "factor",
-                                     ignore_numeric = TRUE) {
+                                     ignore_numeric = TRUE,
+                                     ...) {
   out <- lapply(x, function(.x) {
     if(is_edibble_unit(.x) | is_edibble_trt(.x)) {
       if(ignore_numeric) {
