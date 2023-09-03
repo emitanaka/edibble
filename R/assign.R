@@ -105,7 +105,7 @@ assign_trts <- function(.edibble, order = "random", seed = NULL, constrain = nes
 #' @export
 assign_units <- function(.edibble, order = "random", seed = NULL, constrain = nesting_structure(.edibble), ..., .record = TRUE) {
   not_edibble(.edibble)
-  prov <- activate_provenance(prov)
+  prov <- activate_provenance(.edibble)
   if(.record) prov$record_step()
   prov$save_seed(seed)
   # FIXME: check
