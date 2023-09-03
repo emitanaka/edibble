@@ -2,7 +2,7 @@ test_that("export with no record", {
   set.seed(1)
   des <- suppressMessages(takeout())
   fn <- tempfile()
-  suppressMessages(export_design(des, file = fn, overwrite = TRUE))
+  suppressMessages(export_design(des, file = fn, overwrite = TRUE, author = "Emi Tanaka"))
   dat <- openxlsx2::read_xlsx(fn, sheet = 2)
 
   expect_equal(dat, as_tibble(des), ignore_attr = TRUE)
