@@ -1,6 +1,8 @@
 ## Release summary
 
-This is a patch that fixes so that the S3 generics/methods are consistent and old-style citEntry() are updated to bibentry().
+This is a major internal change that the R6 class is completely changed to a Provenance class object that ensures a more consistent and cognitive access to internal structure. 
+
+Other changes include the change of dependency to use `openxlsx2` instead of `openxlsx` and the change in print for the object with class `ebdl_table`.
 
 ## R CMD check results
 
