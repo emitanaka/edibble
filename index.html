@@ -42,7 +42,7 @@
     
     <a class="navbar-brand me-2" href="index.html">edibble</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -113,26 +113,26 @@
 <span>              student <span class="op">=</span> <span class="fu"><a href="reference/nested_in.html">nested_in</a></span><span class="op">(</span><span class="va">class</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="reference/set_trts.html">set_trts</a></span><span class="op">(</span>style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"flipped"</span>, <span class="st">"traditional"</span><span class="op">)</span>,</span>
 <span>             exam <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"take-home"</span>, <span class="st">"open-book"</span>, <span class="st">"closed-book"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>    <span class="fu"><a href="reference/allot.html">allot_trts</a></span><span class="op">(</span><span class="va">style</span> <span class="op">~</span> <span class="va">class</span>,</span>
+<span>    <span class="fu"><a href="reference/allot_trts.html">allot_trts</a></span><span class="op">(</span><span class="va">style</span> <span class="op">~</span> <span class="va">class</span>,</span>
 <span>               <span class="va">exam</span> <span class="op">~</span> <span class="va">student</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="reference/assign.html">assign_trts</a></span><span class="op">(</span><span class="st">"random"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="va">des</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # Effective teaching </span></span>
 <span><span class="co">#&gt; # An edibble: 120 x 4</span></span>
 <span><span class="co">#&gt;        class     student       style        exam</span></span>
 <span><span class="co">#&gt;    &lt;unit(4)&gt; &lt;unit(120)&gt;    &lt;trt(2)&gt;    &lt;trt(3)&gt;</span></span>
-<span><span class="co">#&gt;  1    class1   student1  traditional closed-book</span></span>
-<span><span class="co">#&gt;  2    class1   student2  traditional open-book  </span></span>
-<span><span class="co">#&gt;  3    class1   student3  traditional take-home  </span></span>
-<span><span class="co">#&gt;  4    class1   student4  traditional closed-book</span></span>
-<span><span class="co">#&gt;  5    class1   student5  traditional take-home  </span></span>
-<span><span class="co">#&gt;  6    class1   student6  traditional take-home  </span></span>
-<span><span class="co">#&gt;  7    class1   student7  traditional open-book  </span></span>
-<span><span class="co">#&gt;  8    class1   student8  traditional open-book  </span></span>
-<span><span class="co">#&gt;  9    class1   student9  traditional closed-book</span></span>
-<span><span class="co">#&gt; 10    class1   student10 traditional closed-book</span></span>
-<span><span class="co">#&gt; # … with 110 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt;        &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;                                </span></span>
+<span><span class="co">#&gt;  1    class1  student001 traditional closed-book</span></span>
+<span><span class="co">#&gt;  2    class1  student002 traditional open-book  </span></span>
+<span><span class="co">#&gt;  3    class1  student003 traditional take-home  </span></span>
+<span><span class="co">#&gt;  4    class1  student004 traditional closed-book</span></span>
+<span><span class="co">#&gt;  5    class1  student005 traditional take-home  </span></span>
+<span><span class="co">#&gt;  6    class1  student006 traditional take-home  </span></span>
+<span><span class="co">#&gt;  7    class1  student007 traditional open-book  </span></span>
+<span><span class="co">#&gt;  8    class1  student008 traditional open-book  </span></span>
+<span><span class="co">#&gt;  9    class1  student009 traditional closed-book</span></span>
+<span><span class="co">#&gt; 10    class1  student010 traditional closed-book</span></span>
+<span><span class="co">#&gt; # ℹ 110 more rows</span></span></code></pre></div>
 <p>Before constructing the experiment, you might want to think about what you are recording for which level of unit and what values these variables can be recorded as.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="va">des</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
@@ -152,26 +152,26 @@
 <span>    <span class="fu"><a href="reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">out</span></span>
-<span><span class="co">#&gt; # Effective teaching </span></span>
 <span><span class="co">#&gt; # An edibble: 120 x 10</span></span>
-<span><span class="co">#&gt;        class     student       style        exam exam_m…¹ quiz1…² quiz2…³ gender</span></span>
-<span><span class="co">#&gt;    &lt;unit(4)&gt; &lt;unit(120)&gt;    &lt;trt(2)&gt;    &lt;trt(3)&gt;   &lt;rcrd&gt;  &lt;rcrd&gt;  &lt;rcrd&gt; &lt;rcrd&gt;</span></span>
-<span><span class="co">#&gt;  1    class1   student1  traditional closed-book        o       o       o      o</span></span>
-<span><span class="co">#&gt;  2    class1   student2  traditional open-book          o       o       o      o</span></span>
-<span><span class="co">#&gt;  3    class1   student3  traditional take-home          o       o       o      o</span></span>
-<span><span class="co">#&gt;  4    class1   student4  traditional closed-book        o       o       o      o</span></span>
-<span><span class="co">#&gt;  5    class1   student5  traditional take-home          o       o       o      o</span></span>
-<span><span class="co">#&gt;  6    class1   student6  traditional take-home          o       o       o      o</span></span>
-<span><span class="co">#&gt;  7    class1   student7  traditional open-book          o       o       o      o</span></span>
-<span><span class="co">#&gt;  8    class1   student8  traditional open-book          o       o       o      o</span></span>
-<span><span class="co">#&gt;  9    class1   student9  traditional closed-book        o       o       o      o</span></span>
-<span><span class="co">#&gt; 10    class1   student10 traditional closed-book        o       o       o      o</span></span>
-<span><span class="co">#&gt; # … with 110 more rows, 2 more variables: room &lt;rcrd&gt;, teacher &lt;rcrd&gt;, and</span></span>
-<span><span class="co">#&gt; #   abbreviated variable names ¹​exam_mark, ²​quiz1_mark, ³​quiz2_mark</span></span></code></pre></div>
+<span><span class="co">#&gt;        class     student       style        exam exam_mark quiz1_mark quiz2_mark</span></span>
+<span><span class="co">#&gt;    &lt;unit(4)&gt; &lt;unit(120)&gt;    &lt;trt(2)&gt;    &lt;trt(3)&gt;    &lt;rcrd&gt;     &lt;rcrd&gt;     &lt;rcrd&gt;</span></span>
+<span><span class="co">#&gt;        &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;     &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1    class1  student001 traditional closed-book         o          o          o</span></span>
+<span><span class="co">#&gt;  2    class1  student002 traditional open-book           o          o          o</span></span>
+<span><span class="co">#&gt;  3    class1  student003 traditional take-home           o          o          o</span></span>
+<span><span class="co">#&gt;  4    class1  student004 traditional closed-book         o          o          o</span></span>
+<span><span class="co">#&gt;  5    class1  student005 traditional take-home           o          o          o</span></span>
+<span><span class="co">#&gt;  6    class1  student006 traditional take-home           o          o          o</span></span>
+<span><span class="co">#&gt;  7    class1  student007 traditional open-book           o          o          o</span></span>
+<span><span class="co">#&gt;  8    class1  student008 traditional open-book           o          o          o</span></span>
+<span><span class="co">#&gt;  9    class1  student009 traditional closed-book         o          o          o</span></span>
+<span><span class="co">#&gt; 10    class1  student010 traditional closed-book         o          o          o</span></span>
+<span><span class="co">#&gt; # ℹ 110 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 3 more variables: gender &lt;rcrd&gt;, room &lt;rcrd&gt;, teacher &lt;rcrd&gt;</span></span></code></pre></div>
 <p>When you export the above edibble design using the <code>export_design</code> function, the variables you are recording are constraint to the values you expect, e.g. for factors, the cells have a drop-down menu to select from possible values.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/export_design.html">export_design</a></span><span class="op">(</span><span class="va">out</span>, file <span class="op">=</span> <span class="st">"/PATH/TO/FILE.xlsx"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-excel_factor_output.png" width="1266"></p>
+<p><img src="reference/figures/README-excel_factor_output.png" width="2080"></p>
 <p>In addition, there is a spreadsheet for every observational level. E.g. here <code>room</code> and <code>teacher</code> is the same for all students in one class so rather than entering duplicate information, these are exported to another sheet for data entry.</p>
 <p><img src="reference/figures/README-excel_sheet_output.png" width="400px"></p>
 <p>There is also support for more complex nesting structures. You can always make the structure using edibble and take the resulting data frame to use in other experimental design software. It’s also possible to bring existing data frame into edibble if you want to take advantage of the exporting feature in edibble.</p>
@@ -196,17 +196,18 @@
 <span><span class="co">#&gt; # An edibble: 190 x 3</span></span>
 <span><span class="co">#&gt;         site     block        plot</span></span>
 <span><span class="co">#&gt;    &lt;unit(3)&gt; &lt;unit(7)&gt; &lt;unit(190)&gt;</span></span>
-<span><span class="co">#&gt;  1         A    block1      plot1 </span></span>
-<span><span class="co">#&gt;  2         A    block1      plot2 </span></span>
-<span><span class="co">#&gt;  3         A    block1      plot3 </span></span>
-<span><span class="co">#&gt;  4         A    block1      plot4 </span></span>
-<span><span class="co">#&gt;  5         A    block1      plot5 </span></span>
-<span><span class="co">#&gt;  6         A    block1      plot6 </span></span>
-<span><span class="co">#&gt;  7         A    block1      plot7 </span></span>
-<span><span class="co">#&gt;  8         A    block1      plot8 </span></span>
-<span><span class="co">#&gt;  9         A    block1      plot9 </span></span>
-<span><span class="co">#&gt; 10         A    block1      plot10</span></span>
-<span><span class="co">#&gt; # … with 180 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt;        &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;                                              </span></span>
+<span><span class="co">#&gt;  1         A    block1     plot001</span></span>
+<span><span class="co">#&gt;  2         A    block1     plot002</span></span>
+<span><span class="co">#&gt;  3         A    block1     plot003</span></span>
+<span><span class="co">#&gt;  4         A    block1     plot004</span></span>
+<span><span class="co">#&gt;  5         A    block1     plot005</span></span>
+<span><span class="co">#&gt;  6         A    block1     plot006</span></span>
+<span><span class="co">#&gt;  7         A    block1     plot007</span></span>
+<span><span class="co">#&gt;  8         A    block1     plot008</span></span>
+<span><span class="co">#&gt;  9         A    block1     plot009</span></span>
+<span><span class="co">#&gt; 10         A    block1     plot010</span></span>
+<span><span class="co">#&gt; # ℹ 180 more rows</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="experimental-data">Experimental data<a class="anchor" aria-label="anchor" href="#experimental-data"></a>
@@ -221,7 +222,14 @@
 <li>simulate values for record variables,</li>
 <li>make classical named designs see <a href="https://emitanaka.org/edibble-book/cookbook.html" class="external-link">Cookbook chapter</a>.</li>
 </ul>
-<p>Work-in-progress book on this package can be found <a href="https://emitanaka.org/edibble-book/" class="external-link">here</a>.</p>
+</div>
+<div class="section level2">
+<h2 id="documents">Documents<a class="anchor" aria-label="anchor" href="#documents"></a>
+</h2>
+<ul>
+<li>Work-in-progress book on this package can be found <a href="https://emitanaka.org/edibble-book/" class="external-link">here</a>.</li>
+<li>The preprint about the framework can be found <a href="https://arxiv.org/abs/2307.11593" class="external-link">here</a>.</li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="limitations">Limitations<a class="anchor" aria-label="anchor" href="#limitations"></a>
@@ -229,7 +237,7 @@
 <p>Currently, edibble:</p>
 <ul>
 <li>expects you to know the number of units available from the start. Unknown numbers will be supported in future versions.</li>
-<li>in theory, edibble should support experiments that are not comparative experiments but this is not tested.</li>
+<li>edibble supports experiments that are not comparative experiments.</li>
 <li>does not do enough testing so design should be diagnosed after construction (which should be done regardless of how much testing edibble implements).</li>
 </ul>
 </div>
@@ -269,8 +277,8 @@
 <li>pipable functions;</li>
 <li>all dots arguments are <a href="https://rlang.r-lib.org/reference/dyn-dots.html" class="external-link">dynamic dots</a>;</li>
 <li>duplicate names repaired with same option as <code>tibble</code> for additions to edibble graph;</li>
-<li>ability for developers to extend certain components. Currently only supported for others to contribute their own classical named experimental designs via <code>prep_classical_</code>;</li>
-<li>the specification of complex nested structure drawing similarity to <code>dplyr::case_when</code> (LHS is character or integer for edibble however).</li>
+<li>ability for developers to extend certain components.</li>
+<li>the specification of complex nested structure drawing similarity to <code><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">dplyr::case_when</a></code> (LHS is character or integer for edibble however).</li>
 </ul>
 </div>
 <div class="section level2">

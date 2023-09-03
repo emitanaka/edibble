@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">edibble</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,19 +58,19 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">assign_trts</span><span class="op">(</span></span>
-<span>  <span class="va">.design</span>,</span>
+<span>  <span class="va">.edibble</span>,</span>
 <span>  order <span class="op">=</span> <span class="st">"random"</span>,</span>
 <span>  seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  constrain <span class="op">=</span> <span class="fu"><a href="nesting_structure.html">nesting_structure</a></span><span class="op">(</span><span class="va">.design</span><span class="op">)</span>,</span>
+<span>  constrain <span class="op">=</span> <span class="fu"><a href="nesting_structure.html">nesting_structure</a></span><span class="op">(</span><span class="va">.edibble</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  .record <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">assign_units</span><span class="op">(</span></span>
-<span>  <span class="va">.design</span>,</span>
+<span>  <span class="va">.edibble</span>,</span>
 <span>  order <span class="op">=</span> <span class="st">"random"</span>,</span>
 <span>  seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  constrain <span class="op">=</span> <span class="fu"><a href="nesting_structure.html">nesting_structure</a></span><span class="op">(</span><span class="va">.design</span><span class="op">)</span>,</span>
+<span>  constrain <span class="op">=</span> <span class="fu"><a href="nesting_structure.html">nesting_structure</a></span><span class="op">(</span><span class="va">.edibble</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  .record <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -78,7 +78,7 @@
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>.design</dt>
+    <dl><dt>.edibble</dt>
 <dd><p>An edibble design which should have units, treatments and allotment defined.</p></dd>
 
 
@@ -122,53 +122,32 @@ by the number of levels of the treatment factor), then the extras are chosen ran
 <span class="r-in"><span><span class="fu"><a href="design.html">design</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="set_units.html">set_units</a></span><span class="op">(</span>subject <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="set_trts.html">set_trts</a></span><span class="op">(</span>vaccine <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="allot.html">allot_trts</a></span><span class="op">(</span><span class="va">vaccine</span> <span class="op">~</span> <span class="va">subject</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="allot_trts.html">allot_trts</a></span><span class="op">(</span><span class="va">vaccine</span> <span class="op">~</span> <span class="va">subject</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">assign_trts</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="serve_table.html">serve_table</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An edibble: 10 x 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       subject  vaccine</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;unit(10)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;trt(2)&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555; font-style: italic;">        &lt;chr&gt;    &lt;chr&gt;                                                          </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>  subject1  vaccine1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>  subject2  vaccine2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>  subject2  vaccine1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>  subject3  vaccine1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>  subject4  vaccine1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>  subject4  vaccine2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>  subject5  vaccine2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>  subject6  vaccine2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>  subject7  vaccine1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>  subject8  vaccine2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>  subject9  vaccine1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>  subject10 vaccine2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>  subject7  vaccine2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>  subject8  vaccine1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>  subject9  vaccine2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>  subject10 vaccine1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># 20 subjects, 2 blocks, assign subjects to blocks</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="design.html">design</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="set_units.html">set_units</a></span><span class="op">(</span>subject <span class="op">=</span> <span class="fl">20</span>,</span></span>
 <span class="r-in"><span>            block <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="allot.html">allot_units</a></span><span class="op">(</span><span class="va">block</span> <span class="op">~</span> <span class="va">subject</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="allot_units.html">allot_units</a></span><span class="op">(</span><span class="va">block</span> <span class="op">~</span> <span class="va">subject</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">assign_units</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="serve_table.html">serve_table</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An edibble: 20 x 2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       subject     block</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;unit(20)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;unit(2)&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>  subject1     block2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>  subject2     block1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>  subject3     block1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>  subject4     block2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>  subject5     block1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>  subject6     block2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>  subject7     block1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>  subject8     block2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>  subject9     block1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>  subject10    block2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span>  subject11    block1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span>  subject12    block2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span>  subject13    block2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span>  subject14    block1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span>  subject15    block1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span>  subject16    block2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span>  subject17    block2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">18</span>  subject18    block1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">19</span>  subject19    block1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">20</span>  subject20    block2</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in serve_table(.):</span> The graph cannot be converted to a table format.</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

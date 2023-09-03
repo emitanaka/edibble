@@ -18,7 +18,7 @@ of tibble."><meta property="og:image" content="https://edibble.emitanaka.org/log
     
     <a class="navbar-brand me-2" href="../index.html">edibble</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,10 +66,11 @@ of tibble.</p>
 <span></span>
 <span><span class="fu">edibble</span><span class="op">(</span></span>
 <span>  <span class="va">.data</span>,</span>
-<span>  name <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  title <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  name <span class="op">=</span> <span class="st">"edibble"</span>,</span>
 <span>  .record <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  kitchen <span class="op">=</span> <span class="va">Kitchen</span>,</span>
+<span>  provenance <span class="op">=</span> <span class="va"><a href="Provenance.html">Provenance</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -92,8 +93,12 @@ of tibble.</p>
 <dd><p>Subclasses for edibble table. The default is NULL.</p></dd>
 
 
+<dt>title</dt>
+<dd><p>Optional title of the experiment.</p></dd>
+
+
 <dt>name</dt>
-<dd><p>Optional name used as title for printing the design.</p></dd>
+<dd><p>Optional name of the experiment.</p></dd>
 
 
 <dt>.record</dt>
@@ -106,9 +111,9 @@ function is used as a wrapper in other code.</p></dd>
 <dd><p>A seed number for reproducibility.</p></dd>
 
 
-<dt>kitchen</dt>
-<dd><p>An environment setup in a manner to manipulate, extract and query
-information on the design.</p></dd>
+<dt>provenance</dt>
+<dd><p>An environment setup in a manner to store methods and
+information to trace the origin of the design</p></dd>
 
 </dl></div>
     <div class="section level2">

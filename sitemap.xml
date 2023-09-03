@@ -19,10 +19,19 @@
     <loc>https://edibble.emitanaka.org/news/index.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/Kitchen.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/Provenance.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/allot.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/activate_provenance.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/allot_table.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/allot_trts.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/allot_units.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/anatomy.html</loc>
@@ -31,13 +40,13 @@
     <loc>https://edibble.emitanaka.org/reference/as.data.frame.edbl_table.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/as_data_frame.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/as_tibble.edbl_table.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/assign.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/cook_design.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/column.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/crossed_by.html</loc>
@@ -67,16 +76,34 @@
     <loc>https://edibble.emitanaka.org/reference/export_design.html</loc>
   </url>
   <url>
+    <loc>https://edibble.emitanaka.org/reference/extract-lvl-nodes.html</loc>
+  </url>
+  <url>
     <loc>https://edibble.emitanaka.org/reference/fct_attrs.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/fct_generator.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/fct_graph.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/formatting.html</loc>
   </url>
   <url>
+    <loc>https://edibble.emitanaka.org/reference/graph_input.html</loc>
+  </url>
+  <url>
     <loc>https://edibble.emitanaka.org/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://edibble.emitanaka.org/reference/is_provenance.html</loc>
+  </url>
+  <url>
     <loc>https://edibble.emitanaka.org/reference/is_takeout.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/label_seq.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/lady_tasting_tea.html</loc>
@@ -85,7 +112,7 @@
     <loc>https://edibble.emitanaka.org/reference/latin.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/lvl_attrs.html</loc>
+    <loc>https://edibble.emitanaka.org/reference/lvls.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/menu_bibd.html</loc>
@@ -136,16 +163,10 @@
     <loc>https://edibble.emitanaka.org/reference/plot.edbl_design.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/record_step.html</loc>
-  </url>
-  <url>
     <loc>https://edibble.emitanaka.org/reference/reexports.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/scan_menu.html</loc>
-  </url>
-  <url>
-    <loc>https://edibble.emitanaka.org/reference/select_units.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/serve_table.html</loc>

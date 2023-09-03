@@ -18,7 +18,7 @@ external xlsx file."><meta property="og:image" content="https://edibble.emitanak
     
     <a class="navbar-brand me-2" href="../index.html">edibble</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,13 +60,24 @@ external xlsx file.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">export_design</span><span class="op">(</span><span class="va">.data</span>, <span class="va">file</span>, <span class="va">author</span>, date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, overwrite <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">export_design</span><span class="op">(</span></span>
+<span>  <span class="va">.data</span>,</span>
+<span>  <span class="va">file</span>,</span>
+<span>  author <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  overwrite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  hide_treatments <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  theme <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  subject <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  category <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table_style <span class="op">=</span> <span class="st">"TableStyleMedium9"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>.data</dt>
-<dd><p>An edibble data frame or design.</p></dd>
+<dd><p>An edibble table to export.</p></dd>
 
 
 <dt>file</dt>
@@ -74,16 +85,37 @@ external xlsx file.</p>
 
 
 <dt>author</dt>
-<dd><p>Name of the author in character. A vector of character is supported
+<dd><p>(Optional) name of the author in character. A vector of character is supported
 for where there are multiple authors.</p></dd>
 
 
 <dt>date</dt>
-<dd><p>The date to be inserted in header.</p></dd>
+<dd><p>The date to be inserted in header (defaults to today).</p></dd>
 
 
 <dt>overwrite</dt>
-<dd><p>A logical indicating whether to overwrite exisitng file or not.</p></dd>
+<dd><p>A logical value indicating whether to overwrite existing file or not.</p></dd>
+
+
+<dt>hide_treatments</dt>
+<dd><p>A logical value indicating whether treatments should be included in the data entry sheet.
+Default is true.</p></dd>
+
+
+<dt>theme</dt>
+<dd><p>The Excel theme to use (optional). One of "Atlas", "Badge", "Berlin", "Celestial", "Crop", "Depth", "Droplet", "Facet", "Feathered", "Gallery", "Headlines", "Integral", "Ion", "Ion Boardroom", "Madison", "Main Event", "Mesh", "Office Theme", "Old Office Theme", "Organic", "Parallax", "Parcel", "Retrospect", "Savon", "Slice", "Vapor Trail", "View", "Wisp", "Wood Type".</p></dd>
+
+
+<dt>subject</dt>
+<dd><p>The subject of the workbook (optional).</p></dd>
+
+
+<dt>category</dt>
+<dd><p>The category of the workbook (optional).</p></dd>
+
+
+<dt>table_style</dt>
+<dd><p>The table style to apply to the exported data (default: "TableStyleMedium9").</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -95,7 +127,8 @@ for where there are multiple authors.</p></dd>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other user-facing functions: 
-<code><a href="allot.html">allot</a></code>,
+<code><a href="allot_trts.html">allot_trts</a>()</code>,
+<code><a href="allot_units.html">allot_units</a>()</code>,
 <code><a href="design.html">design</a>()</code>,
 <code><a href="expect_rcrds.html">expect_rcrds</a>()</code>,
 <code><a href="serve_table.html">serve_table</a>()</code>,
