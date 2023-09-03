@@ -7,20 +7,19 @@
 lvls(value = NULL, data = NULL, ...)
 }
 \arguments{
+\item{value}{A vector of the level values.}
+
 \item{data}{A list or data frame of the same size as the \code{levels}.}
 
 \item{...}{Name-value pair denoting other level attributes. The value should be the same
 length as \code{levels} or a single value.}
-
-\item{levels}{A vector that either denotes the index number or short name of the levels.}
 }
 \value{
 An edbl_lvls object.
 }
 \description{
-Use this function to create a "vector" of levels. The vector is actually comprised of a
-data frame with a column \code{labels} and other columns with corresponding level attribute (if any).
+Setting the traits of the levels
 }
 \examples{
-lvl_attrs(c("A", "B"))
+lvls(c("A", "B"))
 }

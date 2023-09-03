@@ -84,6 +84,7 @@ NULL
   unname(unlist(lapply(unclass(x), function(.x) .x[[name]])))
 }
 
+#' @param i The index.
 #' @rdname extract-lvl-nodes
 #' @export
 "[.edbl_lnodes" <- function(x, i, ...) {
@@ -95,6 +96,7 @@ NULL
   }
 }
 
+#' @param value The value to replace with.
 #' @rdname extract-lvl-nodes
 #' @export
 "[<-.edbl_lnodes" <- function(x, i, ..., value) {

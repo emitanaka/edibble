@@ -31,13 +31,12 @@ activate_provenance <- function(.edibble,
 
 #' Get the node or edge data from an edibble design
 #'
-#' @param edibble An edibble object.
+#' @param x An edibble object.
 #' @family design manipulators
 #' @name design_data
 NULL
 
 #' @rdname design_data
-#' @param x An object.
 #' @export
 fct_nodes <- function(x) {
   prov <- activate_provenance(x)

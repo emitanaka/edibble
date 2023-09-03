@@ -31,16 +31,14 @@ fct_attrs <- function(.levels, ...) {
 
 #' Setting the traits of the levels
 #'
-#' Use this function to create a "vector" of levels. The vector is actually comprised of a
-#' data frame with a column `labels` and other columns with corresponding level attribute (if any).
 #'
-#' @param levels A vector that either denotes the index number or short name of the levels.
+#' @param value A vector of the level values.
 #' @param data A list or data frame of the same size as the `levels`.
 #' @param ... Name-value pair denoting other level attributes. The value should be the same
 #'  length as `levels` or a single value.
 #' @importFrom vctrs new_rcrd vec_data
 #' @examples
-#' lvl_attrs(c("A", "B"))
+#' lvls(c("A", "B"))
 #' @return An edbl_lvls object.
 #' @export
 lvls <- function(value = NULL, data = NULL, ...) {

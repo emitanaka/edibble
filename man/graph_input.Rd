@@ -10,6 +10,8 @@ graph_input(input, prov, ...)
 \item{input}{An input.}
 
 \item{prov}{A provenance object.}
+
+\item{...}{Unused.}
 }
 \description{
 A function to process input as input for graph manipulation

@@ -17,9 +17,7 @@ lvl_nodes(x)
 lvl_edges(x)
 }
 \arguments{
-\item{x}{An object.}
-
-\item{edibble}{An edibble object.}
+\item{x}{An edibble object.}
 }
 \description{
 Get the node or edge data from an edibble design

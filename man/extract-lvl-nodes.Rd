@@ -23,6 +23,10 @@
 \item{x}{An edibble level nodes.}
 
 \item{name}{The name to extract.}
+
+\item{i}{The index.}
+
+\item{value}{The value to replace with.}
 }
 \description{
 The level nodes are stored as a named list of nodes where the name
