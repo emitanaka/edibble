@@ -11,8 +11,9 @@
 #' This is a developer function to create a new Kitchen class with
 #' the existing design.
 #'
-#' @param x An edibble object.
-#' @return A Kitchen object.
+#' @param .edibble An edibble object.
+#' @param overwrite What object to overwrite in the provenance object.
+#' @return A Provenance object.
 #' @examples
 #' activate_provenance(takeout())
 #' @export
@@ -84,6 +85,11 @@ lvl_edges <- function(x) {
   })
 }
 
+#' Factor graph
+#'
+#' Get the factor graph.
+#'
+#' @param x An edibble object.
 #' @export
 fct_graph <- function(x) {
   prov <- activate_provenance(x)
