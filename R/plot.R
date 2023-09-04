@@ -28,7 +28,6 @@ plot.edbl_design <- function(x, which = c("factors", "levels"),
 
   nodes <- switch(which,
                   "factors" = prov$fct_nodes,
-                  # FIXME
                   "levels" = prov$lvl_nodes)
 
   if(which=="levels") {
@@ -43,13 +42,12 @@ plot.edbl_design <- function(x, which = c("factors", "levels"),
     nodes <- do.call(rbind, nodes)
   }
 
-
   nodes$group <- switch(which,
                         "factors" = gsub("edbl_", "", nodes$role),
                         "levels" = nodes$fct_var)
   nodes$label <- nodes$name
   class2shape <- c("edbl_unit" = "circle",
-                   "edbl_trt" = "diamond",
+                   "edbl_trt" = ifelse(which=="factors", "diamond", "circle"),
                    "edbl_rcrd" = "database")
   nodes$shape <- class2shape[nodes$role]
 
@@ -70,7 +68,7 @@ plot.edbl_design <- function(x, which = c("factors", "levels"),
       edges$arrows.middle.type = type2arrowtype[edges$type]
 
       type2dash <- c("cross" = TRUE, "depends" = TRUE, "nest" = FALSE, "allot" = FALSE)
-      type2arrow <- c("cross" = NA, "depends" = "middle", "nest" = "to", "allot" = "to")
+      type2arrow <- c("cross" = "to", "depends" = "middle", "nest" = "to", "allot" = "to")
       edges$dashes <- type2dash[edges$type]
       edges$arrows <- type2arrow[edges$type] # list(to = list(type = type2arrowtype[edges$type]))
     } else {
