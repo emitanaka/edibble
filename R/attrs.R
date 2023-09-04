@@ -21,9 +21,7 @@ fct_attrs <- function(.levels, ...) {
       vctrs::vec_assert(x, size = 1)
     }
   }
-  if(!inherits(.levels, "edbl_lvls")) {
-    .levels <- new_rcrd(list2(..value.. = .levels), class = "edbl_lvls")
-  }
+
   attr(.levels, "attrs") <- dots
   .levels
 }
