@@ -47,3 +47,8 @@ test_that("check fct_attrs works", {
                                                                   label = c(NA, "Exercise"))))
 
 })
+
+
+test_that("lvls works", {
+  expect_error(lvls(value = sample(c("A", "A", "B", "B", "C"))))
+})
