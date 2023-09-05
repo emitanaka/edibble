@@ -18,7 +18,11 @@ fct_attrs <- function(.levels, ...) {
   dots <- dots_list(..., .named = TRUE, .homonyms = "keep", .ignore_empty = "all")
   if(length(dots)) {
     for(x in dots) {
-      vctrs::vec_assert(x, size = 1)
+      if(!is_null(x)) {
+        vctrs::vec_assert(x, size = 1)
+      } else {
+        dots <- NULL
+      }
     }
   }
 
@@ -44,6 +48,11 @@ lvls <- function(value = NULL, data = NULL, ...) {
     pos <- eval_select(value[[1]], data)
     value <- data[[pos]]
     data <- data[-pos]
+  }
+  if(length(unique(value)) != length(value)) {
+    dups <- value[duplicated(value)]
+    abort(paste0("The level values should be distinct.",
+                 " The values ", .combine_words(dups), " are duplicated."))
   }
 
   new_rcrd(c(list2(..value.. = value, ...), data), class = "edbl_lvls")
