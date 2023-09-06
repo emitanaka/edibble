@@ -3,8 +3,8 @@
 #'
 #' This function is used to set characteristics of the factors.
 #'
-#' @param .levels An `edbl_lvls` object that should contain information about the levels
-#'   in the factor.
+#' @param .levels Either a short hand given as either as a single integer (number of levels),
+#'  a vector or levels created from `lvls()`.
 #' @param ... A name-value pair of attributes. The value must be a scalar and
 #' attributed to the whole factor (not individual levels).
 #' The values are added as attributes to the output object.
@@ -12,7 +12,6 @@
 #' @seealso lvl_traits
 #' @examples
 #' fct_attrs(c("A", "B"))
-#' @return An `edbl_lvls` object.
 #' @export
 fct_attrs <- function(.levels, ...) {
   dots <- dots_list(..., .named = TRUE, .homonyms = "keep", .ignore_empty = "all")

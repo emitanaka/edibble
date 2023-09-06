@@ -7,15 +7,12 @@
 fct_attrs(.levels, ...)
 }
 \arguments{
-\item{.levels}{An \code{edbl_lvls} object that should contain information about the levels
-in the factor.}
+\item{.levels}{Either a short hand given as either as a single integer (number of levels),
+a vector or levels created from \code{lvls()}.}
 
 \item{...}{A name-value pair of attributes. The value must be a scalar and
 attributed to the whole factor (not individual levels).
 The values are added as attributes to the output object.}
-}
-\value{
-An \code{edbl_lvls} object.
 }
 \description{
 This function is used to set characteristics of the factors.
