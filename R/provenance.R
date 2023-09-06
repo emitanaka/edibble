@@ -361,63 +361,67 @@ Provenance <- R6::R6Class("Provenance",
                          #' the intersection of it will be checked.
                          fct_exists = function(id = NULL, name = NULL, role = NULL, abort = TRUE) {
                            exist <- TRUE
-                           abort_missing <- function(vars = NULL, msg = NULL, abort = NULL) {
+                           abort_missing <- function(vars = NULL, msg = NULL) {
                              if(abort & !exist) {
-                               if(!is_null(vars)) {
-                                 abort(sprintf("%s does not exist in the design.",
-                                               .combine_words(paste0("`", vars, "`"))))
-                               }
-                               if(!is_null(msg)) {
-                                 abort(msg)
-                               }
+                               abort(msg)
                              }
+                           }
+
+                           msg_vars_missing <- function(vars, post_msg) {
+                             sprintf(paste0("%s ", post_msg),
+                                     .combine_words(paste0("`", vars, "`")))
                            }
 
                            fnodes <- self$fct_nodes
                            # at least one node exists
                            if(is_null(name) & is_null(id) & is_null(role)) {
                              exist <- nrow(fnodes) > 0
-                             abort_missing(msg = "There are no factor nodes.", abort = abort)
+                             abort_missing(msg = "There are no factor nodes.")
 
                            } else if(!is_null(name) & is_null(id) & is_null(role)) {
                              vexist <- name %in% fnodes$name
                              exist <- all(vexist)
-                             abort_missing(vars = name[!vexist], abort = abort)
+                             abort_missing(vars = name[!vexist],
+                                           msg = msg_vars_missing(name[!vexist], "does not exist in the design."))
 
                            } else if(is_null(name) & !is_null(id) & is_null(role)) {
                              vexist <- id %in% fnodes$id
                              exist <- all(vexist)
-                             abort_missing(vars = id[!vexist], abort = abort)
+                             abort_missing(vars = id[!vexist],
+                                           msg = msg_vars_missing(id[!vexist], "does not exist in the design."))
 
                            } else if(is_null(name) & is_null(id) & !is_null(role)) {
                              exist <- any(role %in% fnodes$role)
                              abort_missing(msg = sprintf("There are no factors with role %s",
-                                                         .combine_words(paste0("`", role, "`"))),
-                                           abort = abort)
+                                                         .combine_words(paste0("`", role, "`"))))
 
                            } else if(is_null(name) & !is_null(id) & !is_null(role)) {
                              srole <- fnodes[match(id, fnodes$id), "role", drop = TRUE]
                              vexist <- srole %in% role
                              exist <- all(vexist)
-                             abort_missing(vars = id[!vexist], abort = abort)
+                             abort_missing(vars = id[!vexist],
+                                           msg = msg_vars_missing(id[!vexist], "doesn't exist or don't have the specified role."))
 
                            } else if(!is_null(name) & is_null(id) & !is_null(role)) {
                              srole <- fnodes[match(name, fnodes$name), "role", drop = TRUE]
                              vexist <- srole %in% role
                              exist <- all(vexist)
-                             abort_missing(vars = name[!vexist], abort = abort)
+                             abort_missing(vars = name[!vexist],
+                                           msg = msg_vars_missing(name[!vexist], "doesn't exist or don't have the specified role."))
 
                            } else if(!is_null(name) & !is_null(id) & is_null(role)) {
                              sid <- fnodes[match(name, fnodes$name), "id", drop = TRUE]
                              vexist <- sid %in% id
                              exist <- all(vexist)
-                             abort_missing(vars = name[!vexist], abort = abort)
+                             abort_missing(vars = name[!vexist],
+                                           msg = msg_vars_missing(name[!vexist], "doesn't exist or have a specified id."))
 
                            } else {
                              snodes <- fnodes[match(name, fnodes$name), ]
                              vexist <- snodes$id %in% id & snodes$role %in% role
                              exist <- all(vexist)
-                             abort_missing(vars = name[!vexist], abort = abort)
+                             abort_missing(vars = name[!vexist],
+                                           msg = msg_vars_missing(name[!vexist], "doesn't exist or have a specified id or role."))
                            }
 
                            return(exist)
@@ -511,6 +515,7 @@ Provenance <- R6::R6Class("Provenance",
                          #' Serve the units.
                          serve_units = function(id = NULL, return = c("id", "value")) {
                            return <- match.arg(return)
+                           self$fct_exists(id = id, role = "edbl_unit")
                            id <- id %||% self$fct_id(role = "edbl_unit")
                            if(length(id) == 0) abort("There needs to be at least one unit supplied.")
                            id_ancestors <- self$fct_id_ancestor(id = id, role = "edbl_unit")
