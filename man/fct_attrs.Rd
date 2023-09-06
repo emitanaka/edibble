@@ -21,5 +21,5 @@ This function is used to set characteristics of the factors.
 fct_attrs(c("A", "B"))
 }
 \seealso{
-lvl_traits
+lvls
 }
