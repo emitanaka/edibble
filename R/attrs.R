@@ -9,7 +9,7 @@
 #' attributed to the whole factor (not individual levels).
 #' The values are added as attributes to the output object.
 #'
-#' @seealso lvl_traits
+#' @seealso lvls
 #' @examples
 #' fct_attrs(c("A", "B"))
 #' @export
