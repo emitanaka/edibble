@@ -29,3 +29,4 @@ Pivot treatments to a wider list or table format
 \examples{
 pivot_trts_widelist(takeout(menu_crd(t = 5, n = 20)))
 }
+\keyword{internal}

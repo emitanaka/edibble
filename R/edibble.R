@@ -75,6 +75,9 @@ is_cross_levels <- function(x) {
   inherits(x, "cross_lvls")
 }
 
+
+
+
 # `get` functions ---------------------------------------------------------
 
 #' @rdname design-helpers

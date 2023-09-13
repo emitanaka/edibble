@@ -31,7 +31,8 @@ Imports:
     stats,
     AlgDesign,
     dae,
-    R6
+    R6,
+    lifecycle
 Suggests: 
     testthat (>= 3.0.0),
     rmarkdown,
