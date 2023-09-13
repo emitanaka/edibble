@@ -1,54 +1,4 @@
 
-# FIXME
-
-#' Pivot factor to a wider list
-#'
-#' This function makes it easier to see which units or records are associated
-#' with a particular level of factor.
-#' The arguments closely follow [tidyr::pivot_wider()], but the major difference
-#' is that it is aware of the relationships between columns and makes use of
-#' this to present to you information without unnecessary duplication.
-#'
-#' @param data An edibble table
-#' @param id_cols Columns in the data where the levels correspond to a unique
-#'   level on the row.
-#' @param id_expand If multiple columns are selected, whether all combinations of
-#'   the levels should be taken into account.
-#' @param names_from An expression specifying which columns to pivot from.
-#' @param names_prefix A prefix to add to the resulting column names.
-#' @param names_sep A separator to use between column names in the resulting wide format.
-#' @param names_glue A glue specification to control column names.
-#' @param names_sort A logical indicating whether to sort the resulting column names.
-#' @param names_vary A character vector of options to specify how to handle varying identifiers.
-#' @param names_expand A logical indicating whether to expand identifiers in the column names.
-#' @param names_repair A method to handle non-unique resulting column names.
-#' @param values_from A character vector specifying columns to use as values in the wide format.
-#' @param values_fill A value or function to fill missing values.
-#' @param values_fn A function to aggregate values.
-#' @seealso [split_by()] and [count_by()]
-pivot_wider_by <- function(data,
-                           id_cols = NULL,
-                           id_expand = FALSE,
-                           names_from = where(is_trt),
-                           names_prefix = "",
-                           names_sep = ":",
-                           names_glue = NULL,
-                           names_sort = FALSE,
-                           names_vary = "fastest",
-                           names_expand = FALSE,
-                           names_repair = "check_unique",
-                           values_from = NULL,
-                           values_fill = NULL,
-                           values_fn = NULL) {
-  not_edibble(data)
-
-  prov <- activate_provenance(data)
-  names_from <- enquo(names_from)
-  values_from <- enquo(values_from)
-
-
-
-}
 
 
 #' Split or count the data according to certain factors
@@ -199,4 +149,57 @@ pivot_trts_widetable <- function(.data, trts = NULL, fcts = NULL) {
   colnames(res) <- rep(names(out), each = ncol(out[[1]]))
   rownames(res) <- 1:nrow(res)
   res
+}
+
+
+
+
+# ADD?
+#' Pivot factor to a wider list
+#'
+#' This function makes it easier to see which units or records are associated
+#' with a particular level of factor.
+#' The arguments closely follow [tidyr::pivot_wider()], but the major difference
+#' is that it is aware of the relationships between columns and makes use of
+#' this to present to you information without unnecessary duplication.
+#'
+#' @param data An edibble table
+#' @param id_cols Columns in the data where the levels correspond to a unique
+#'   level on the row.
+#' @param id_expand If multiple columns are selected, whether all combinations of
+#'   the levels should be taken into account.
+#' @param names_from An expression specifying which columns to pivot from.
+#' @param names_prefix A prefix to add to the resulting column names.
+#' @param names_sep A separator to use between column names in the resulting wide format.
+#' @param names_glue A glue specification to control column names.
+#' @param names_sort A logical indicating whether to sort the resulting column names.
+#' @param names_vary A character vector of options to specify how to handle varying identifiers.
+#' @param names_expand A logical indicating whether to expand identifiers in the column names.
+#' @param names_repair A method to handle non-unique resulting column names.
+#' @param values_from A character vector specifying columns to use as values in the wide format.
+#' @param values_fill A value or function to fill missing values.
+#' @param values_fn A function to aggregate values.
+#' @seealso [split_by()] and [count_by()]
+pivot_wider_by <- function(data,
+                           id_cols = NULL,
+                           id_expand = FALSE,
+                           names_from = where(is_trt),
+                           names_prefix = "",
+                           names_sep = ":",
+                           names_glue = NULL,
+                           names_sort = FALSE,
+                           names_vary = "fastest",
+                           names_expand = FALSE,
+                           names_repair = "check_unique",
+                           values_from = NULL,
+                           values_fill = NULL,
+                           values_fn = NULL) {
+  not_edibble(data)
+
+  prov <- activate_provenance(data)
+  names_from <- enquo(names_from)
+  values_from <- enquo(values_from)
+
+
+
 }
