@@ -4,6 +4,7 @@
 * Bug fix for export_design when no record factor exists
 * Change behaviour of `fct_attrs()` when levels supplied as numeric or vector 
   instead of `lvls()`. 
+* Added new functions `count_by()` and `split_by()`.
 
 # edibble 1.0.0
 
