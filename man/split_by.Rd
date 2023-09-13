@@ -38,6 +38,10 @@ spd \%>\% split(trt1)
 spd \%>\% split_by(trt1)
 spd \%>\% split_by(trt2)
 spd \%>\% split_by(mainplot)
+spd \%>\% count_by(trt1)
+
+fac <- takeout(menu_factorial(trt = c(2, 2, 2)))
+fac \%>\% count_by(where(~is_trt(.x)))
 
 }
 \seealso{

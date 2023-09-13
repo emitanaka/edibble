@@ -74,6 +74,10 @@ pivot_wider_by <- function(data,
 #' spd %>% split_by(trt1)
 #' spd %>% split_by(trt2)
 #' spd %>% split_by(mainplot)
+#' spd %>% count_by(trt1)
+#'
+#' fac <- takeout(menu_factorial(trt = c(2, 2, 2)))
+#' fac %>% count_by(where(~is_trt(.x)))
 #'
 #' @return A named list.
 #' @seealso [pivot_wider_by()]
@@ -124,14 +128,22 @@ print.split_by <- function(x, ...) {
 #' @rdname split_by
 #' @export
 count_by <- function(.data, ...) {
-  out <- split_by(.data, ...)
+  # pick a dummy sep that is unlikely used
+  dummy_sep <- "#####SEP#####"
+  out <- split_by(.data, ..., .sep = dummy_sep)
   by <- attr(out, "by")
-  paste_by <- paste(by, collapse = ":")
   n <- function(.x) length(unique(.x))
   out2 <- as.data.frame(do.call(rbind, lapply(out, function(df) lapply(df, n))))
-  out2[[paste_by]] <- rownames(out2)
+  if(length(by) == 1) {
+    out2[[by]] <- rownames(out2)
+  } else {
+    rnames <- strsplit(rownames(out2), dummy_sep)
+    for(i in seq_along(by)) {
+      out2[[by[i]]] <- map_chr(rnames, function(x) x[i])
+    }
+  }
   rownames(out2) <- NULL
-  out2[c(paste_by, setdiff(names(out2), paste_by))]
+  out2[c(by, setdiff(names(out2), by))]
 }
 
 #' Pivot treatments to a wider list or table format
