@@ -263,7 +263,7 @@ as.data.frame.edbl_table <- function(x,
                                      levels_as = "factor",
                                      ignore_numeric = TRUE) {
   out <- lapply(x, function(.x) {
-    if(is_edibble_unit(.x) | is_edibble_trt(.x)) {
+    if(is_unit(.x) | is_trt(.x)) {
       if(ignore_numeric) {
         if(is.numeric(.x)) return(as.numeric(.x))
       }
