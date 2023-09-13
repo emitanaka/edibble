@@ -4,23 +4,23 @@
 \alias{utility-edibble-var}
 \alias{as.character.edbl_fct}
 \alias{as.integer.edbl_fct}
-\alias{is_edibble_var}
-\alias{is_edibble_unit}
-\alias{is_edibble_trt}
-\alias{is_edibble_rcrd}
+\alias{is_fct}
+\alias{is_unit}
+\alias{is_trt}
+\alias{is_rcrd}
 \title{Utility functions for edibble variable}
 \usage{
 \method{as.character}{edbl_fct}(x, ...)
 
 \method{as.integer}{edbl_fct}(x, ...)
 
-is_edibble_var(x)
+is_fct(x)
 
-is_edibble_unit(x)
+is_unit(x)
 
-is_edibble_trt(x)
+is_trt(x)
 
-is_edibble_rcrd(x)
+is_rcrd(x)
 }
 \arguments{
 \item{x}{An \code{edbl_fct} object.}

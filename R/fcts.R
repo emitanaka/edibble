@@ -117,25 +117,25 @@ levels.edbl_fct <- function(x) {
 
 #' @rdname utility-edibble-var
 #' @export
-is_edibble_var <- function(x) {
+is_fct <- function(x) {
   inherits(x, "edbl_fct")
 }
 
 #' @rdname utility-edibble-var
 #' @export
-is_edibble_unit <- function(x) {
+is_unit <- function(x) {
   inherits(x, "edbl_unit")
 }
 
 #' @rdname utility-edibble-var
 #' @export
-is_edibble_trt <- function(x) {
+is_trt <- function(x) {
   inherits(x, "edbl_trt")
 }
 
 #' @rdname utility-edibble-var
 #' @export
-is_edibble_rcrd <- function(x) {
+is_rcrd <- function(x) {
   inherits(x, "edbl_rcrd")
 }
 
