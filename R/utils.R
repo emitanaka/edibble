@@ -15,6 +15,7 @@ return_edibble_with_graph <- function(edibble, prov) {
 
 
 
+
 decorate_vars <- function(x, decorate_units, decorate_trts, decorate_rcrds, classes) {
   edbl_classes <- c("edbl_unit", "edbl_trt", "edbl_rcrd")
   decorate_fns <- list(decorate_units, decorate_trts, decorate_rcrds)

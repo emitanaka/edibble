@@ -25,7 +25,8 @@ design <- function(title = NULL, name = "edibble", .record = TRUE, seed = NULL, 
   structure(list(graph = provenance$get_graph(),
                  provenance = provenance,
                  anatomy = NULL,
-                 recipe = NULL),
+                 recipe = NULL,
+                 context = NULL),
             class = c("edbl_design", "edbl"))
 }
 

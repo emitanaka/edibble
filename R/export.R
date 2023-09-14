@@ -63,7 +63,23 @@ export_design <- function(.data,
   add_worksheets(wb, sheet_names, title)
   add_creator(wb, author)
 
-  write_title_sheet(wb, sheet_names[1], title, author, date)
+  des <- edbl_design(.data)
+  context <- des$context
+  write_title_sheet(wb, sheet_names[1], title, author, date, context)
+
+  wb$protect_worksheet(sheet = sheet_names[1],
+                       protect = TRUE,
+                       properties = c("formatCells",
+                                      "formatColumns",
+                                      "formatRows",
+                                      "insertRows",
+                                      "deleteColumns",
+                                      "deleteRows",
+                                      "sort",
+                                      "autoFilter",
+                                      "pivotTables",
+                                      "objects",
+                                      "scenarios"))
 
   write_data_sheet(wb, sheet_names[-c(1, 2, length(sheet_names))], prov,
                    as_tibble(.data), table_style, hide_treatments)
@@ -129,15 +145,17 @@ add_worksheets <- function(wb, sheet_names, title) {
 save_workbook <- function(wb, file, overwrite, title) {
   tryCatch(wb$save(file = file, overwrite = overwrite),
            error = function(e) {
-             cli::cli_alert_warning("Something went wrong. {.emph {title}} failed to be exported.")
+             cli::cli_abort("Something went wrong. {.emph {title}} failed to be exported.")
            })
   cli::cli_alert_success("{.emph {title}} has been written to {.file {file}}")
 }
 
 
-write_title_sheet <- function(wb, sheet_name, title, author, date) {
-  metadata <- data.frame(name = c("title", "date", ifelse(is_null(author), NULL, "author")),
-                         value = c(title, format(date), author))
+write_title_sheet <- function(wb, sheet_name, title, author, date, context) {
+  metadata <- data.frame(name = c("title", "date", "author", names(context)),
+                         value = c(title, format(date), author %||% "unknown",
+                                   unname(map_chr(context, function(x) paste(x, collapse = ";")))))
+
   # title
   title_pos <- openxlsx2::wb_dims(from_row = 1, from_col = 2)
   wb$set_col_widths(sheet = sheet_name,
@@ -164,13 +182,10 @@ write_title_sheet <- function(wb, sheet_name, title, author, date) {
                     dims = date_pos,
                     horizontal = "left")
 
-  # author
-  if(!is_null(author)) {
-    author_pos <- openxlsx2::wb_dims(from_row = 3, from_col = 2)
-    wb$add_font(sheet = sheet_name,
-                dims = author_pos,
-                size = 25)
-  }
+  author_pos <- openxlsx2::wb_dims(from_row = 3, from_col = 2)
+  wb$add_font(sheet = sheet_name,
+              dims = author_pos,
+              size = 25)
 
 }
 
