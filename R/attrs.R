@@ -15,6 +15,7 @@
 #' @export
 fct_attrs <- function(.levels, ...) {
   dots <- dots_list(..., .named = TRUE, .homonyms = "keep", .ignore_empty = "all")
+
   if(length(dots)) {
     for(x in dots) {
       if(!is_null(x)) {
