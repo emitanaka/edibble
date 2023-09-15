@@ -43,10 +43,15 @@ fct_attrs <- function(.levels, ...) {
 #' lvls(c("A", "B"))
 #' @return An edbl_lvls object.
 #' @export
-lvls <- function(value = NULL, data = NULL, ...) {
+lvls <- function(value = NULL, n = NA_integer_, data = NULL, ...) {
   if(!is_null(data) && isTRUE(attr(value, "column"))) {
     pos <- eval_select(value[[1]], data)
     value <- data[[pos]]
+    data <- data[-pos]
+  }
+  if(!is_null(data) && isTRUE(attr(n, "column"))) {
+    pos <- eval_select(n[[1]], data)
+    n <- data[[pos]]
     data <- data[-pos]
   }
   if(length(unique(value)) != length(value)) {
@@ -54,8 +59,9 @@ lvls <- function(value = NULL, data = NULL, ...) {
     abort(paste0("The level values should be distinct.",
                  " The values ", .combine_words(dups), " are duplicated."))
   }
+  n <- vctrs::vec_recycle(n, length(value))
 
-  new_rcrd(c(list2(..value.. = value, ...), data), class = "edbl_lvls")
+  new_rcrd(c(list2(..value.. = value, ..n.. = n, ...), data), class = "edbl_lvls")
 }
 
 #' Select a column.

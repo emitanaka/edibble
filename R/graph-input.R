@@ -23,7 +23,7 @@ graph_input.default <- function(input, prov, name, class, ...) {
   levels <- switch(type,
                    "numeric" = fct_attrs(lvls(label_seq_length(input, prefix = name)), !!!attr(input, "attrs")),
                    "unnamed_vector" = fct_attrs(lvls(input), !!!attr(input, "attrs")),
-                   "named_vector" = fct_attrs(lvls(names(input), rep = unname(input)),
+                   "named_vector" = fct_attrs(lvls(names(input), n = unname(input)),
                                               !!!attr(input, "attrs")),
                    "unimplemented" = abort(paste0("Not sure how to handle ", class(input)[1])))
   graph_input.edbl_lvls(levels, prov, name, class)
@@ -34,8 +34,9 @@ graph_input.edbl_lvls <- function(input, prov, name, class, ...) {
   prov$append_fct_nodes(name = name, role = class, attrs = fattrs)
   lattrs <- vec_data(input)
   value <- lattrs$..value..
-  lattrs <- lattrs[setdiff(names(lattrs), "..value..")]
-  prov$append_lvl_nodes(value = value, fid = prov$fct_id(name = name), attrs = lattrs)
+  n <- lattrs$..n..
+  lattrs <- lattrs[setdiff(names(lattrs), c("..value..", "..n.."))]
+  prov$append_lvl_nodes(value = value, n = n, fid = prov$fct_id(name = name), attrs = lattrs)
 }
 
 graph_input.formula <- function(input, prov, name, class, ...) {

@@ -145,12 +145,4 @@ new_edibble_graph <- function(fnodes = NULL, lnodes = NULL, fedges = NULL, ledge
             class = "edbl_graph")
 }
 
-new_lnode <- function(ids, vals, data = NULL) {
-  res <- tibble::tibble(id = ids,
-                        value = vals)
-  if(!is.null(data)) {
-    stopifnot(nrow(data) == length(ids))
-    res$attrs <- data
-  }
-  res
-}
+

@@ -472,11 +472,11 @@ Provenance <- R6::R6Class("Provenance",
 
                          #' @description
                          #' Given node data, append the level nodes
-                         append_lvl_nodes = function(value, attrs = NULL, fid = NULL) {
+                         append_lvl_nodes = function(value, n = NA_integer_, attrs = NULL, fid = NULL) {
                            private$record_track_internal()
                            lnodes <- self$lvl_nodes
                            id <- private$lvl_new_id(n = length(value))
-                           data <- tibble::tibble(id = id, value = value, attrs = attrs)
+                           data <- tibble::tibble(id = id, value = value, n = n, attrs = attrs)
                            if(is.null(lnodes[[fid]])) {
                              lnodes[[fid]] <- data
                            } else {
