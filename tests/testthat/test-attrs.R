@@ -9,6 +9,7 @@ test_that("check lvls works", {
   des3 <- set_trts(diet = fct_attrs(lvls(value = c("A", "B", "C"),
                                          data = trtinfo)))
   out <- list(diet = tibble::tibble(value = LETTERS[1:3],
+                                    n = NA_integer_,
                                     attrs = trtinfo))
 
   trtinfo$value <- LETTERS[1:3]
@@ -30,6 +31,7 @@ test_that("check lvls works", {
                              height = attrs_lvls$height)) %>%
     lvl_nodes() %>%
     expect_equal(c(out, list(subject = tibble::tibble(value = 1:6,
+                                                      n = NA_integer_,
                                                       attrs = attrs_lvls))))
 
 

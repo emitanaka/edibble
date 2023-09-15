@@ -12,8 +12,10 @@ test_that("nested-units", {
                               role = "edbl_unit"))
   # FIXME there is no attrs for the second factor
   expect_equal(lvl_nodes(des1),
-               list(block = tibble::tibble(value = c("block1", "block2", "block3")),
-                    plot = tibble::tibble(value = c("plot1", "plot2", "plot3", "plot4", "plot5", "plot6")))                         )
+               list(block = tibble::tibble(value = c("block1", "block2", "block3"),
+                                           n = NA_integer_),
+                    plot = tibble::tibble(value = c("plot1", "plot2", "plot3", "plot4", "plot5", "plot6"),
+                                          n = NA_integer_))                         )
 
   des2 <- des1 %>%
     set_units(sample = nested_in(plot,
@@ -23,8 +25,10 @@ test_that("nested-units", {
                tibble::tibble(name = c("block", "plot", "sample"),
                               role = "edbl_unit"))
   expect_equal(lvl_nodes(des2),
-               list(block = tibble::tibble(value = c("block1", "block2", "block3")),
-                              plot = tibble::tibble(value = c("plot1", "plot2", "plot3", "plot4", "plot5", "plot6")),
+               list(block = tibble::tibble(value = c("block1", "block2", "block3"),
+                                           n = NA_integer_),
+                              plot = tibble::tibble(value = c("plot1", "plot2", "plot3", "plot4", "plot5", "plot6"),
+                                                    n = NA_integer_),
                               sample = tibble::tibble(value = c("sample01", "sample02", "sample03",
                                                              "sample04", "sample05", "sample06", "sample07", "sample08",
                                                              "sample09", "sample10", "sample11", "sample12", "sample13",
@@ -32,7 +36,8 @@ test_that("nested-units", {
                                                              "sample19", "sample20", "sample21", "sample22", "sample23",
                                                              "sample24", "sample25", "sample26", "sample27", "sample28",
                                                              "sample29", "sample30", "sample31", "sample32", "sample33",
-                                                             "sample34", "sample35"))))
+                                                             "sample34", "sample35"),
+                                                      n = NA_integer_)))
 
 
 
