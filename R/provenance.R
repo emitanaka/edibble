@@ -341,7 +341,7 @@ Provenance <- R6::R6Class("Provenance",
                          fct_levels_id_to_value = function(fct_levels) {
                            out <- lapply(names(fct_levels), function(fid) {
                              lvls <- fct_levels[[fid]]
-                             self$lvl_values(id = lvls, fid = fid)
+                             self$lvl_values(id = lvls, fid = as.numeric(fid))
                            })
                            names(out) <- self$fct_names(id = as.numeric(names(fct_levels)))
                            out
@@ -526,7 +526,7 @@ Provenance <- R6::R6Class("Provenance",
                            if(length(id) == 0) abort("There needs to be at least one unit supplied.")
                            id_ancestors <- self$fct_id_ancestor(id = id, role = "edbl_unit")
                            sub_graph <- self$graph_subset(id = id_ancestors, include = "self")
-                           out <- private$build_subtable(sub_graph)
+                           out <- private$build_subtable(sub_graph, return = "id")
                            private$table$units <- out
                            switch(return,
                                   id = out,
@@ -598,21 +598,21 @@ Provenance <- R6::R6Class("Provenance",
                            return <- match.arg(return)
                            self$fct_exists(id = id, role = "edbl_trt")
                            fnodes <- self$fct_graph_components(id = id)
-                           trts_list <- self$fct_levels(id = id, return = return)
                            ncomp <- length(unique(fnodes$component))
                            scomps <- split(fnodes$id, fnodes$component)
-                           if(ncomp == length(trts_list)) {
+                           if(ncomp == length(id)) {
+                             trts_list <- self$fct_levels(id = id, return = return)
                              trts_tbl <- expand.grid(trts_list, stringsAsFactors = FALSE)
                            } else {
                              for(i in seq(ncomp)) {
                                if(i == 1L) {
                                  sub_graph <- self$graph_subset(id = scomps[[i]], include = "self")
-                                 out <- private$build_subtable(sub_graph)
+                                 out <- private$build_subtable(sub_graph, return = return)
                                  trts_tbl <- as.data.frame(out)
                                  colnames(trts_tbl) <- names(out)
                                } else {
                                  sub_graph <- self$graph_subset(id = scomps[[i]], include = "self")
-                                 out <- private$build_subtable(sub_graph)
+                                 out <- private$build_subtable(sub_graph, return = return)
                                  new_trts_tbl <- as.data.frame(out)
                                  colnames(new_trts_tbl) <- names(out)
                                  xtabs <- expand.grid(old = seq(nrow(trts_tbl)), new = seq(nrow(new_trts_tbl)))
@@ -620,7 +620,10 @@ Provenance <- R6::R6Class("Provenance",
                                }
                              }
                            }
-                           trts_tbl
+                           rownames(trts_tbl) <- NULL
+                           switch(return,
+                                  id = trts_tbl[as.character(id)],
+                                  value = trts_tbl[self$fct_names(id = id)])
                          },
 
                          #' @description
@@ -1041,7 +1044,7 @@ Provenance <- R6::R6Class("Provenance",
                           new_edibble_graph(fnodes = fnodes, lnodes = lnodes, fedges = fedges, ledges = ledges)
                         },
 
-                        build_subtable = function(subgraph) {
+                        build_subtable = function(subgraph, return) {
                           top_graph <- private$graph_reverse_topological_order(subgraph)
                           sub_fnodes <- top_graph$factors$nodes
                           sub_fedges <- top_graph$factors$edges
@@ -1065,7 +1068,9 @@ Provenance <- R6::R6Class("Provenance",
                               out[[as.character(iunit)]] <- cid_to_pid
                             }
                           }
-                          out
+                          switch(return,
+                                 id = out,
+                                 value = self$fct_levels_id_to_value(out))
                         }
                        ))
 

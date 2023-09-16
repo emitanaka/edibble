@@ -151,7 +151,15 @@ vec_ptype_abbr.edbl_trt <- function(x, ...)  {
 vec_ptype_full.edbl_trt <- function(x, ...) paste0("trt(", nlevels(x), ")")
 
 
-
+#' Treatments table
+#'
+#' @param .edibble An edibble table
+#' @export
+trts_table <- function(.edibble) {
+  prov <- activate_provenance(.edibble)
+  tids <- prov$trt_ids
+  prov$make_trts_table(id = tids, return = "value")
+}
 
 # TODO
 # add_trts()
