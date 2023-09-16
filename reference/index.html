@@ -102,9 +102,9 @@
         <dd>Allot treatments to units and serve table</dd>
       </dl><dl><dt>
           
-          <code><a href="nested_in.html">nested_in()</a></code> 
+          <code><a href="nested_in.html">nested_in()</a></code> <code><a href="nested_in.html">conditioned_on()</a></code> 
         </dt>
-        <dd>Specify the nesting structure for units</dd>
+        <dd>Specify the nesting or conditional structure for units or treatments</dd>
       </dl><dl><dt>
           
           <code><a href="crossed_by.html">crossed_by()</a></code> 
@@ -309,9 +309,19 @@
 
       <dl><dt>
           
-          <code><a href="pivot_trts_widelist.html">pivot_trts_widelist()</a></code> <code><a href="pivot_trts_widelist.html">pivot_trts_widetable()</a></code> 
+          <code><a href="pivot_wider_by.html">pivot_wider_by()</a></code> 
         </dt>
-        <dd>Pivot treatments to a wider list or table format</dd>
+        <dd>Pivot factor to a wider list</dd>
+      </dl><dl><dt>
+          
+          <code><a href="split_by.html">split_by()</a></code> <code><a href="split_by.html">count_by()</a></code> 
+        </dt>
+        <dd>Split or count the data according to certain factors</dd>
+      </dl><dl><dt>
+          
+          <code><a href="trts_table.html">trts_table()</a></code> 
+        </dt>
+        <dd>Treatments table</dd>
       </dl><dl><dt>
           
           <code><a href="as.data.frame.edbl_table.html">as.data.frame(<i>&lt;edbl_table&gt;</i>)</a></code> 
@@ -348,6 +358,11 @@
           <code><a href="nesting_structure.html">nesting_structure()</a></code> 
         </dt>
         <dd>Get the nesting structure for the units</dd>
+      </dl><dl><dt>
+          
+          <code><a href="set_context.html">set_context()</a></code> 
+        </dt>
+        <dd>Set the experimental context as metadata</dd>
       </dl><dl><dt>
           
           <code><a href="design-helpers.html">is_edibble_design()</a></code> <code><a href="design-helpers.html">is_named_design()</a></code> <code><a href="design-helpers.html">is_edibble_table()</a></code> <code><a href="design-helpers.html">is_edibble_graph()</a></code> <code><a href="design-helpers.html">is_edibble()</a></code> <code><a href="design-helpers.html">is_edibble_levels()</a></code> <code><a href="design-helpers.html">is_nest_levels()</a></code> <code><a href="design-helpers.html">is_cross_levels()</a></code> <code><a href="design-helpers.html">edbl_design()</a></code> <code><a href="design-helpers.html">edbl_table()</a></code> 
@@ -395,7 +410,7 @@
         <dd>Print intermediate experimental design to terminal</dd>
       </dl><dl><dt>
           
-          <code><a href="utility-edibble-var.html">as.character(<i>&lt;edbl_fct&gt;</i>)</a></code> <code><a href="utility-edibble-var.html">as.integer(<i>&lt;edbl_fct&gt;</i>)</a></code> <code><a href="utility-edibble-var.html">is_edibble_var()</a></code> <code><a href="utility-edibble-var.html">is_edibble_unit()</a></code> <code><a href="utility-edibble-var.html">is_edibble_trt()</a></code> <code><a href="utility-edibble-var.html">is_edibble_rcrd()</a></code> 
+          <code><a href="utility-edibble-var.html">as.character(<i>&lt;edbl_fct&gt;</i>)</a></code> <code><a href="utility-edibble-var.html">as.integer(<i>&lt;edbl_fct&gt;</i>)</a></code> <code><a href="utility-edibble-var.html">is_fct()</a></code> <code><a href="utility-edibble-var.html">is_unit()</a></code> <code><a href="utility-edibble-var.html">is_trt()</a></code> <code><a href="utility-edibble-var.html">is_rcrd()</a></code> 
         </dt>
         <dd>Utility functions for edibble variable</dd>
       </dl><dl><dt>

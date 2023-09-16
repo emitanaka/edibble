@@ -128,6 +128,7 @@ Remember that there could be more than one order.</p></dd>
 <li><p><a href="#method-Provenance-fct_id_parent"><code>Provenance$fct_id_parent()</code></a></p></li>
 <li><p><a href="#method-Provenance-fct_id_child"><code>Provenance$fct_id_child()</code></a></p></li>
 <li><p><a href="#method-Provenance-fct_id_ancestor"><code>Provenance$fct_id_ancestor()</code></a></p></li>
+<li><p><a href="#method-Provenance-fct_id_descendant"><code>Provenance$fct_id_descendant()</code></a></p></li>
 <li><p><a href="#method-Provenance-fct_id_leaves"><code>Provenance$fct_id_leaves()</code></a></p></li>
 <li><p><a href="#method-Provenance-lvl_id"><code>Provenance$lvl_id()</code></a></p></li>
 <li><p><a href="#method-Provenance-lvl_id_parent"><code>Provenance$lvl_id_parent()</code></a></p></li>
@@ -160,6 +161,7 @@ Remember that there could be more than one order.</p></dd>
 <li><p><a href="#method-Provenance-serve_units"><code>Provenance$serve_units()</code></a></p></li>
 <li><p><a href="#method-Provenance-serve_trts"><code>Provenance$serve_trts()</code></a></p></li>
 <li><p><a href="#method-Provenance-serve_rcrds"><code>Provenance$serve_rcrds()</code></a></p></li>
+<li><p><a href="#method-Provenance-make_trts_table"><code>Provenance$make_trts_table()</code></a></p></li>
 <li><p><a href="#method-Provenance-graph_subset"><code>Provenance$graph_subset()</code></a></p></li>
 <li><p><a href="#method-Provenance-save_seed"><code>Provenance$save_seed()</code></a></p></li>
 <li><p><a href="#method-Provenance-get_title"><code>Provenance$get_title()</code></a></p></li>
@@ -172,7 +174,11 @@ Remember that there could be more than one order.</p></dd>
 <li><p><a href="#method-Provenance-mapping"><code>Provenance$mapping()</code></a></p></li>
 <li><p><a href="#method-Provenance-mapping_to_unit"><code>Provenance$mapping_to_unit()</code></a></p></li>
 <li><p><a href="#method-Provenance-record_step"><code>Provenance$record_step()</code></a></p></li>
+<li><p><a href="#method-Provenance-lvl_mapping"><code>Provenance$lvl_mapping()</code></a></p></li>
 <li><p><a href="#method-Provenance-record_track_external"><code>Provenance$record_track_external()</code></a></p></li>
+<li><p><a href="#method-Provenance-fct_id_links"><code>Provenance$fct_id_links()</code></a></p></li>
+<li><p><a href="#method-Provenance-fct_graph_components"><code>Provenance$fct_graph_components()</code></a></p></li>
+<li><p><a href="#method-Provenance-lvl_graph_components"><code>Provenance$lvl_graph_components()</code></a></p></li>
 <li><p><a href="#method-Provenance-clone"><code>Provenance$clone()</code></a></p></li>
 </ul></div><p></p><hr><a id="method-Provenance-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
@@ -364,15 +370,35 @@ supplied then the child has to fit <code>role</code></p><div class="section">
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-Provenance-fct_id_leaves"></a><div class="section">
-<h3 id="method-fct-id-leaves-">Method <code>fct_id_leaves()</code><a class="anchor" aria-label="anchor" href="#method-fct-id-leaves-"></a></h3>
-<p>Get the leave factor ids.</p><div class="section">
+</div><p></p><hr><a id="method-Provenance-fct_id_descendant"></a><div class="section">
+<h3 id="method-fct-id-descendant-">Method <code>fct_id_descendant()</code><a class="anchor" aria-label="anchor" href="#method-fct-id-descendant-"></a></h3>
+<p>Get the factor descendant ids</p><div class="section">
 <h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">fct_id_leaves</span><span class="op">(</span>role <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">fct_id_descendant</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, role <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="arguments-10">Arguments<a class="anchor" aria-label="anchor" href="#arguments-10"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>id</code></dt>
+<dd><p>The id of the corresponding node.</p></dd>
+
+
+<dt><code>role</code></dt>
+<dd><p>The role for the node.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
+</div><p></p><hr><a id="method-Provenance-fct_id_leaves"></a><div class="section">
+<h3 id="method-fct-id-leaves-">Method <code>fct_id_leaves()</code><a class="anchor" aria-label="anchor" href="#method-fct-id-leaves-"></a></h3>
+<p>Get the leave factor ids.</p><div class="section">
+<h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">fct_id_leaves</span><span class="op">(</span>role <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-11">Arguments<a class="anchor" aria-label="anchor" href="#arguments-11"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>role</code></dt>
 <dd><p>The role for the node.</p></dd>
 
@@ -384,12 +410,12 @@ supplied then the child has to fit <code>role</code></p><div class="section">
 <h3 id="method-lvl-id-">Method <code>lvl_id()</code><a class="anchor" aria-label="anchor" href="#method-lvl-id-"></a></h3>
 <p>Get the id based on name of level node.
 Assumes that level ids obtained are all from the same fid</p><div class="section">
-<h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
+<h4 id="usage-12">Usage<a class="anchor" aria-label="anchor" href="#usage-12"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">lvl_id</span><span class="op">(</span>value <span class="op">=</span> <span class="cn">NULL</span>, role <span class="op">=</span> <span class="cn">NULL</span>, fid <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-11">Arguments<a class="anchor" aria-label="anchor" href="#arguments-11"></a></h4>
+<h4 id="arguments-12">Arguments<a class="anchor" aria-label="anchor" href="#arguments-12"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>value</code></dt>
 <dd><p>The value of the node.</p></dd>
 
@@ -408,28 +434,8 @@ Assumes that level ids obtained are all from the same fid</p><div class="section
 </div><p></p><hr><a id="method-Provenance-lvl_id_parent"></a><div class="section">
 <h3 id="method-lvl-id-parent-">Method <code>lvl_id_parent()</code><a class="anchor" aria-label="anchor" href="#method-lvl-id-parent-"></a></h3>
 <p>Get the level parent ids</p><div class="section">
-<h4 id="usage-12">Usage<a class="anchor" aria-label="anchor" href="#usage-12"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">lvl_id_parent</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, role <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
-<h4 id="arguments-12">Arguments<a class="anchor" aria-label="anchor" href="#arguments-12"></a></h4>
-<p></p><div class="arguments"><dl><dt><code>id</code></dt>
-<dd><p>The id of the corresponding node.</p></dd>
-
-
-<dt><code>role</code></dt>
-<dd><p>The role for the node.</p></dd>
-
-
-</dl><p></p></div>
-</div>
-
-</div><p></p><hr><a id="method-Provenance-lvl_id_child"></a><div class="section">
-<h3 id="method-lvl-id-child-">Method <code>lvl_id_child()</code><a class="anchor" aria-label="anchor" href="#method-lvl-id-child-"></a></h3>
-<p>Get the level child ids</p><div class="section">
 <h4 id="usage-13">Usage<a class="anchor" aria-label="anchor" href="#usage-13"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">lvl_id_child</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, role <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">lvl_id_parent</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, role <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -445,11 +451,11 @@ Assumes that level ids obtained are all from the same fid</p><div class="section
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-Provenance-lvl_id_ancestor"></a><div class="section">
-<h3 id="method-lvl-id-ancestor-">Method <code>lvl_id_ancestor()</code><a class="anchor" aria-label="anchor" href="#method-lvl-id-ancestor-"></a></h3>
-<p>Get the level ancestor ids</p><div class="section">
+</div><p></p><hr><a id="method-Provenance-lvl_id_child"></a><div class="section">
+<h3 id="method-lvl-id-child-">Method <code>lvl_id_child()</code><a class="anchor" aria-label="anchor" href="#method-lvl-id-child-"></a></h3>
+<p>Get the level child ids</p><div class="section">
 <h4 id="usage-14">Usage<a class="anchor" aria-label="anchor" href="#usage-14"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">lvl_id_ancestor</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, role <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">lvl_id_child</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, role <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -465,15 +471,35 @@ Assumes that level ids obtained are all from the same fid</p><div class="section
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-Provenance-fct_id_from_lvl_id"></a><div class="section">
-<h3 id="method-fct-id-from-lvl-id-">Method <code>fct_id_from_lvl_id()</code><a class="anchor" aria-label="anchor" href="#method-fct-id-from-lvl-id-"></a></h3>
-<p>Find the factor id from level ids.</p><div class="section">
+</div><p></p><hr><a id="method-Provenance-lvl_id_ancestor"></a><div class="section">
+<h3 id="method-lvl-id-ancestor-">Method <code>lvl_id_ancestor()</code><a class="anchor" aria-label="anchor" href="#method-lvl-id-ancestor-"></a></h3>
+<p>Get the level ancestor ids</p><div class="section">
 <h4 id="usage-15">Usage<a class="anchor" aria-label="anchor" href="#usage-15"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">fct_id_from_lvl_id</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, fid_search <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">lvl_id_ancestor</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, role <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="arguments-15">Arguments<a class="anchor" aria-label="anchor" href="#arguments-15"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>id</code></dt>
+<dd><p>The id of the corresponding node.</p></dd>
+
+
+<dt><code>role</code></dt>
+<dd><p>The role for the node.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
+</div><p></p><hr><a id="method-Provenance-fct_id_from_lvl_id"></a><div class="section">
+<h3 id="method-fct-id-from-lvl-id-">Method <code>fct_id_from_lvl_id()</code><a class="anchor" aria-label="anchor" href="#method-fct-id-from-lvl-id-"></a></h3>
+<p>Find the factor id from level ids.</p><div class="section">
+<h4 id="usage-16">Usage<a class="anchor" aria-label="anchor" href="#usage-16"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">fct_id_from_lvl_id</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, fid_search <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-16">Arguments<a class="anchor" aria-label="anchor" href="#arguments-16"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>id</code></dt>
 <dd><p>The id of the corresponding node.</p></dd>
 
@@ -488,12 +514,12 @@ Assumes that level ids obtained are all from the same fid</p><div class="section
 </div><p></p><hr><a id="method-Provenance-fct_id_from_lvl_values"></a><div class="section">
 <h3 id="method-fct-id-from-lvl-values-">Method <code>fct_id_from_lvl_values()</code><a class="anchor" aria-label="anchor" href="#method-fct-id-from-lvl-values-"></a></h3>
 <p>Find the factor id from level values.</p><div class="section">
-<h4 id="usage-16">Usage<a class="anchor" aria-label="anchor" href="#usage-16"></a></h4>
+<h4 id="usage-17">Usage<a class="anchor" aria-label="anchor" href="#usage-17"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">fct_id_from_lvl_values</span><span class="op">(</span>value <span class="op">=</span> <span class="cn">NULL</span>, fid_search <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-16">Arguments<a class="anchor" aria-label="anchor" href="#arguments-16"></a></h4>
+<h4 id="arguments-17">Arguments<a class="anchor" aria-label="anchor" href="#arguments-17"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>value</code></dt>
 <dd><p>The value of the node.</p></dd>
 
@@ -508,12 +534,12 @@ Assumes that level ids obtained are all from the same fid</p><div class="section
 </div><p></p><hr><a id="method-Provenance-lvl_id_from_fct_id"></a><div class="section">
 <h3 id="method-lvl-id-from-fct-id-">Method <code>lvl_id_from_fct_id()</code><a class="anchor" aria-label="anchor" href="#method-lvl-id-from-fct-id-"></a></h3>
 <p>Find the level id from the given fid</p><div class="section">
-<h4 id="usage-17">Usage<a class="anchor" aria-label="anchor" href="#usage-17"></a></h4>
+<h4 id="usage-18">Usage<a class="anchor" aria-label="anchor" href="#usage-18"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">lvl_id_from_fct_id</span><span class="op">(</span>fid <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-17">Arguments<a class="anchor" aria-label="anchor" href="#arguments-17"></a></h4>
+<h4 id="arguments-18">Arguments<a class="anchor" aria-label="anchor" href="#arguments-18"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>fid</code></dt>
 <dd><p>The factor id.</p></dd>
 
@@ -524,12 +550,12 @@ Assumes that level ids obtained are all from the same fid</p><div class="section
 </div><p></p><hr><a id="method-Provenance-fct_names"></a><div class="section">
 <h3 id="method-fct-names-">Method <code>fct_names()</code><a class="anchor" aria-label="anchor" href="#method-fct-names-"></a></h3>
 <p>Get the factor names based on id or role</p><div class="section">
-<h4 id="usage-18">Usage<a class="anchor" aria-label="anchor" href="#usage-18"></a></h4>
+<h4 id="usage-19">Usage<a class="anchor" aria-label="anchor" href="#usage-19"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">fct_names</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, role <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-18">Arguments<a class="anchor" aria-label="anchor" href="#arguments-18"></a></h4>
+<h4 id="arguments-19">Arguments<a class="anchor" aria-label="anchor" href="#arguments-19"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>id</code></dt>
 <dd><p>The id of the corresponding node.</p></dd>
 
@@ -544,24 +570,8 @@ Assumes that level ids obtained are all from the same fid</p><div class="section
 </div><p></p><hr><a id="method-Provenance-unit_names"></a><div class="section">
 <h3 id="method-unit-names-">Method <code>unit_names()</code><a class="anchor" aria-label="anchor" href="#method-unit-names-"></a></h3>
 <p>Get the unit names</p><div class="section">
-<h4 id="usage-19">Usage<a class="anchor" aria-label="anchor" href="#usage-19"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">unit_names</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
-<h4 id="arguments-19">Arguments<a class="anchor" aria-label="anchor" href="#arguments-19"></a></h4>
-<p></p><div class="arguments"><dl><dt><code>id</code></dt>
-<dd><p>The id of the corresponding node.</p></dd>
-
-
-</dl><p></p></div>
-</div>
-
-</div><p></p><hr><a id="method-Provenance-trt_names"></a><div class="section">
-<h3 id="method-trt-names-">Method <code>trt_names()</code><a class="anchor" aria-label="anchor" href="#method-trt-names-"></a></h3>
-<p>Get the treatment names</p><div class="section">
 <h4 id="usage-20">Usage<a class="anchor" aria-label="anchor" href="#usage-20"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">trt_names</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">unit_names</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -573,15 +583,31 @@ Assumes that level ids obtained are all from the same fid</p><div class="section
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-Provenance-rcrd_names"></a><div class="section">
-<h3 id="method-rcrd-names-">Method <code>rcrd_names()</code><a class="anchor" aria-label="anchor" href="#method-rcrd-names-"></a></h3>
-<p>Get the record names.</p><div class="section">
+</div><p></p><hr><a id="method-Provenance-trt_names"></a><div class="section">
+<h3 id="method-trt-names-">Method <code>trt_names()</code><a class="anchor" aria-label="anchor" href="#method-trt-names-"></a></h3>
+<p>Get the treatment names</p><div class="section">
 <h4 id="usage-21">Usage<a class="anchor" aria-label="anchor" href="#usage-21"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">rcrd_names</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">trt_names</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="arguments-21">Arguments<a class="anchor" aria-label="anchor" href="#arguments-21"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>id</code></dt>
+<dd><p>The id of the corresponding node.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
+</div><p></p><hr><a id="method-Provenance-rcrd_names"></a><div class="section">
+<h3 id="method-rcrd-names-">Method <code>rcrd_names()</code><a class="anchor" aria-label="anchor" href="#method-rcrd-names-"></a></h3>
+<p>Get the record names.</p><div class="section">
+<h4 id="usage-22">Usage<a class="anchor" aria-label="anchor" href="#usage-22"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">rcrd_names</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-22">Arguments<a class="anchor" aria-label="anchor" href="#arguments-22"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>id</code></dt>
 <dd><p>The id of the corresponding node.</p></dd>
 
@@ -594,12 +620,12 @@ Assumes that level ids obtained are all from the same fid</p><div class="section
 <p>Get the level values based on id or role
 cannot have just role only defined.
 id must be from the same fid</p><div class="section">
-<h4 id="usage-22">Usage<a class="anchor" aria-label="anchor" href="#usage-22"></a></h4>
+<h4 id="usage-23">Usage<a class="anchor" aria-label="anchor" href="#usage-23"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">lvl_values</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, role <span class="op">=</span> <span class="cn">NULL</span>, fid <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-22">Arguments<a class="anchor" aria-label="anchor" href="#arguments-22"></a></h4>
+<h4 id="arguments-23">Arguments<a class="anchor" aria-label="anchor" href="#arguments-23"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>id</code></dt>
 <dd><p>The id of the corresponding node.</p></dd>
 
@@ -618,28 +644,8 @@ id must be from the same fid</p><div class="section">
 </div><p></p><hr><a id="method-Provenance-unit_values"></a><div class="section">
 <h3 id="method-unit-values-">Method <code>unit_values()</code><a class="anchor" aria-label="anchor" href="#method-unit-values-"></a></h3>
 <p>Get the unit values.</p><div class="section">
-<h4 id="usage-23">Usage<a class="anchor" aria-label="anchor" href="#usage-23"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">unit_values</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, fid <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
-<h4 id="arguments-23">Arguments<a class="anchor" aria-label="anchor" href="#arguments-23"></a></h4>
-<p></p><div class="arguments"><dl><dt><code>id</code></dt>
-<dd><p>The id of the corresponding node.</p></dd>
-
-
-<dt><code>fid</code></dt>
-<dd><p>The factor id.</p></dd>
-
-
-</dl><p></p></div>
-</div>
-
-</div><p></p><hr><a id="method-Provenance-trt_values"></a><div class="section">
-<h3 id="method-trt-values-">Method <code>trt_values()</code><a class="anchor" aria-label="anchor" href="#method-trt-values-"></a></h3>
-<p>Get the treatment values.</p><div class="section">
 <h4 id="usage-24">Usage<a class="anchor" aria-label="anchor" href="#usage-24"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">trt_values</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, fid <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">unit_values</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, fid <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -655,15 +661,35 @@ id must be from the same fid</p><div class="section">
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-Provenance-rcrd_values"></a><div class="section">
-<h3 id="method-rcrd-values-">Method <code>rcrd_values()</code><a class="anchor" aria-label="anchor" href="#method-rcrd-values-"></a></h3>
-<p>Get the record values.</p><div class="section">
+</div><p></p><hr><a id="method-Provenance-trt_values"></a><div class="section">
+<h3 id="method-trt-values-">Method <code>trt_values()</code><a class="anchor" aria-label="anchor" href="#method-trt-values-"></a></h3>
+<p>Get the treatment values.</p><div class="section">
 <h4 id="usage-25">Usage<a class="anchor" aria-label="anchor" href="#usage-25"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">rcrd_values</span><span class="op">(</span>uid <span class="op">=</span> <span class="cn">NULL</span>, fid <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">trt_values</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, fid <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="arguments-25">Arguments<a class="anchor" aria-label="anchor" href="#arguments-25"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>id</code></dt>
+<dd><p>The id of the corresponding node.</p></dd>
+
+
+<dt><code>fid</code></dt>
+<dd><p>The factor id.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
+</div><p></p><hr><a id="method-Provenance-rcrd_values"></a><div class="section">
+<h3 id="method-rcrd-values-">Method <code>rcrd_values()</code><a class="anchor" aria-label="anchor" href="#method-rcrd-values-"></a></h3>
+<p>Get the record values.</p><div class="section">
+<h4 id="usage-26">Usage<a class="anchor" aria-label="anchor" href="#usage-26"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">rcrd_values</span><span class="op">(</span>uid <span class="op">=</span> <span class="cn">NULL</span>, fid <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-26">Arguments<a class="anchor" aria-label="anchor" href="#arguments-26"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>uid</code></dt>
 <dd><p>The unit level id</p></dd>
 
@@ -678,12 +704,12 @@ id must be from the same fid</p><div class="section">
 </div><p></p><hr><a id="method-Provenance-fct_role"></a><div class="section">
 <h3 id="method-fct-role-">Method <code>fct_role()</code><a class="anchor" aria-label="anchor" href="#method-fct-role-"></a></h3>
 <p>Get the role of the vertex given the factor id</p><div class="section">
-<h4 id="usage-26">Usage<a class="anchor" aria-label="anchor" href="#usage-26"></a></h4>
+<h4 id="usage-27">Usage<a class="anchor" aria-label="anchor" href="#usage-27"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">fct_role</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-26">Arguments<a class="anchor" aria-label="anchor" href="#arguments-26"></a></h4>
+<h4 id="arguments-27">Arguments<a class="anchor" aria-label="anchor" href="#arguments-27"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>id</code></dt>
 <dd><p>The id of the corresponding node.</p></dd>
 
@@ -694,12 +720,12 @@ id must be from the same fid</p><div class="section">
 </div><p></p><hr><a id="method-Provenance-fct_levels"></a><div class="section">
 <h3 id="method-fct-levels-">Method <code>fct_levels()</code><a class="anchor" aria-label="anchor" href="#method-fct-levels-"></a></h3>
 <p>Get the levels for each factor</p><div class="section">
-<h4 id="usage-27">Usage<a class="anchor" aria-label="anchor" href="#usage-27"></a></h4>
+<h4 id="usage-28">Usage<a class="anchor" aria-label="anchor" href="#usage-28"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">fct_levels</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, name <span class="op">=</span> <span class="cn">NULL</span>, return <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"value"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-27">Arguments<a class="anchor" aria-label="anchor" href="#arguments-27"></a></h4>
+<h4 id="arguments-28">Arguments<a class="anchor" aria-label="anchor" href="#arguments-28"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>id</code></dt>
 <dd><p>The id of the corresponding node.</p></dd>
 
@@ -718,12 +744,12 @@ id must be from the same fid</p><div class="section">
 </div><p></p><hr><a id="method-Provenance-fct_levels_id_to_edbl_fct"></a><div class="section">
 <h3 id="method-fct-levels-id-to-edbl-fct-">Method <code>fct_levels_id_to_edbl_fct()</code><a class="anchor" aria-label="anchor" href="#method-fct-levels-id-to-edbl-fct-"></a></h3>
 <p>Factor levels to edble factor</p><div class="section">
-<h4 id="usage-28">Usage<a class="anchor" aria-label="anchor" href="#usage-28"></a></h4>
+<h4 id="usage-29">Usage<a class="anchor" aria-label="anchor" href="#usage-29"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">fct_levels_id_to_edbl_fct</span><span class="op">(</span><span class="va">fct_levels</span>, <span class="va">role</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-28">Arguments<a class="anchor" aria-label="anchor" href="#arguments-28"></a></h4>
+<h4 id="arguments-29">Arguments<a class="anchor" aria-label="anchor" href="#arguments-29"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>fct_levels</code></dt>
 <dd><p>The factor levels in id.</p></dd>
 
@@ -738,12 +764,12 @@ id must be from the same fid</p><div class="section">
 </div><p></p><hr><a id="method-Provenance-fct_levels_id_to_value"></a><div class="section">
 <h3 id="method-fct-levels-id-to-value-">Method <code>fct_levels_id_to_value()</code><a class="anchor" aria-label="anchor" href="#method-fct-levels-id-to-value-"></a></h3>
 <p>Get the factor levels in value given id format</p><div class="section">
-<h4 id="usage-29">Usage<a class="anchor" aria-label="anchor" href="#usage-29"></a></h4>
+<h4 id="usage-30">Usage<a class="anchor" aria-label="anchor" href="#usage-30"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">fct_levels_id_to_value</span><span class="op">(</span><span class="va">fct_levels</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-29">Arguments<a class="anchor" aria-label="anchor" href="#arguments-29"></a></h4>
+<h4 id="arguments-30">Arguments<a class="anchor" aria-label="anchor" href="#arguments-30"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>fct_levels</code></dt>
 <dd><p>A list of factor levels in id format.</p></dd>
 
@@ -754,12 +780,12 @@ id must be from the same fid</p><div class="section">
 </div><p></p><hr><a id="method-Provenance-fct_levels_value_to_id"></a><div class="section">
 <h3 id="method-fct-levels-value-to-id-">Method <code>fct_levels_value_to_id()</code><a class="anchor" aria-label="anchor" href="#method-fct-levels-value-to-id-"></a></h3>
 <p>Get the factor levels in id given value format.</p><div class="section">
-<h4 id="usage-30">Usage<a class="anchor" aria-label="anchor" href="#usage-30"></a></h4>
+<h4 id="usage-31">Usage<a class="anchor" aria-label="anchor" href="#usage-31"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">fct_levels_value_to_id</span><span class="op">(</span><span class="va">fct_levels</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-30">Arguments<a class="anchor" aria-label="anchor" href="#arguments-30"></a></h4>
+<h4 id="arguments-31">Arguments<a class="anchor" aria-label="anchor" href="#arguments-31"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>fct_levels</code></dt>
 <dd><p>A list of factor levels in id format.</p></dd>
 
@@ -772,12 +798,12 @@ id must be from the same fid</p><div class="section">
 <p>One of <code>name</code>, <code>id</code> or <code>role</code> is defined to check if it exists.
 If more than one of the arguments <code>name</code>, <code>id</code> and <code>role</code> are supplied, then
 the intersection of it will be checked.</p><div class="section">
-<h4 id="usage-31">Usage<a class="anchor" aria-label="anchor" href="#usage-31"></a></h4>
+<h4 id="usage-32">Usage<a class="anchor" aria-label="anchor" href="#usage-32"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">fct_exists</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, name <span class="op">=</span> <span class="cn">NULL</span>, role <span class="op">=</span> <span class="cn">NULL</span>, abort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-31">Arguments<a class="anchor" aria-label="anchor" href="#arguments-31"></a></h4>
+<h4 id="arguments-32">Arguments<a class="anchor" aria-label="anchor" href="#arguments-32"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>id</code></dt>
 <dd><p>The id of the corresponding node.</p></dd>
 
@@ -800,32 +826,8 @@ the intersection of it will be checked.</p><div class="section">
 </div><p></p><hr><a id="method-Provenance-trt_exists"></a><div class="section">
 <h3 id="method-trt-exists-">Method <code>trt_exists()</code><a class="anchor" aria-label="anchor" href="#method-trt-exists-"></a></h3>
 <p>Check if treatment exists.</p><div class="section">
-<h4 id="usage-32">Usage<a class="anchor" aria-label="anchor" href="#usage-32"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">trt_exists</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, name <span class="op">=</span> <span class="cn">NULL</span>, abort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
-<h4 id="arguments-32">Arguments<a class="anchor" aria-label="anchor" href="#arguments-32"></a></h4>
-<p></p><div class="arguments"><dl><dt><code>id</code></dt>
-<dd><p>The id of the corresponding node.</p></dd>
-
-
-<dt><code>name</code></dt>
-<dd><p>The name of the node.</p></dd>
-
-
-<dt><code>abort</code></dt>
-<dd><p>Whether to abort.</p></dd>
-
-
-</dl><p></p></div>
-</div>
-
-</div><p></p><hr><a id="method-Provenance-unit_exists"></a><div class="section">
-<h3 id="method-unit-exists-">Method <code>unit_exists()</code><a class="anchor" aria-label="anchor" href="#method-unit-exists-"></a></h3>
-<p>Check if unit exists.</p><div class="section">
 <h4 id="usage-33">Usage<a class="anchor" aria-label="anchor" href="#usage-33"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">unit_exists</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, name <span class="op">=</span> <span class="cn">NULL</span>, abort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">trt_exists</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, name <span class="op">=</span> <span class="cn">NULL</span>, abort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -845,11 +847,11 @@ the intersection of it will be checked.</p><div class="section">
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-Provenance-rcrd_exists"></a><div class="section">
-<h3 id="method-rcrd-exists-">Method <code>rcrd_exists()</code><a class="anchor" aria-label="anchor" href="#method-rcrd-exists-"></a></h3>
-<p>Check if record exists.</p><div class="section">
+</div><p></p><hr><a id="method-Provenance-unit_exists"></a><div class="section">
+<h3 id="method-unit-exists-">Method <code>unit_exists()</code><a class="anchor" aria-label="anchor" href="#method-unit-exists-"></a></h3>
+<p>Check if unit exists.</p><div class="section">
 <h4 id="usage-34">Usage<a class="anchor" aria-label="anchor" href="#usage-34"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">rcrd_exists</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, name <span class="op">=</span> <span class="cn">NULL</span>, abort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">unit_exists</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, name <span class="op">=</span> <span class="cn">NULL</span>, abort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -869,15 +871,39 @@ the intersection of it will be checked.</p><div class="section">
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-Provenance-append_fct_nodes"></a><div class="section">
-<h3 id="method-append-fct-nodes-">Method <code>append_fct_nodes()</code><a class="anchor" aria-label="anchor" href="#method-append-fct-nodes-"></a></h3>
-<p>Given node data, append the factor nodes</p><div class="section">
+</div><p></p><hr><a id="method-Provenance-rcrd_exists"></a><div class="section">
+<h3 id="method-rcrd-exists-">Method <code>rcrd_exists()</code><a class="anchor" aria-label="anchor" href="#method-rcrd-exists-"></a></h3>
+<p>Check if record exists.</p><div class="section">
 <h4 id="usage-35">Usage<a class="anchor" aria-label="anchor" href="#usage-35"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">append_fct_nodes</span><span class="op">(</span><span class="va">name</span>, <span class="va">role</span>, attrs <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">rcrd_exists</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, name <span class="op">=</span> <span class="cn">NULL</span>, abort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="arguments-35">Arguments<a class="anchor" aria-label="anchor" href="#arguments-35"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>id</code></dt>
+<dd><p>The id of the corresponding node.</p></dd>
+
+
+<dt><code>name</code></dt>
+<dd><p>The name of the node.</p></dd>
+
+
+<dt><code>abort</code></dt>
+<dd><p>Whether to abort.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
+</div><p></p><hr><a id="method-Provenance-append_fct_nodes"></a><div class="section">
+<h3 id="method-append-fct-nodes-">Method <code>append_fct_nodes()</code><a class="anchor" aria-label="anchor" href="#method-append-fct-nodes-"></a></h3>
+<p>Given node data, append the factor nodes</p><div class="section">
+<h4 id="usage-36">Usage<a class="anchor" aria-label="anchor" href="#usage-36"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">append_fct_nodes</span><span class="op">(</span><span class="va">name</span>, <span class="va">role</span>, attrs <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-36">Arguments<a class="anchor" aria-label="anchor" href="#arguments-36"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>name</code></dt>
 <dd><p>The name of the node.</p></dd>
 
@@ -896,14 +922,18 @@ the intersection of it will be checked.</p><div class="section">
 </div><p></p><hr><a id="method-Provenance-append_lvl_nodes"></a><div class="section">
 <h3 id="method-append-lvl-nodes-">Method <code>append_lvl_nodes()</code><a class="anchor" aria-label="anchor" href="#method-append-lvl-nodes-"></a></h3>
 <p>Given node data, append the level nodes</p><div class="section">
-<h4 id="usage-36">Usage<a class="anchor" aria-label="anchor" href="#usage-36"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">append_lvl_nodes</span><span class="op">(</span><span class="va">value</span>, attrs <span class="op">=</span> <span class="cn">NULL</span>, fid <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<h4 id="usage-37">Usage<a class="anchor" aria-label="anchor" href="#usage-37"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">append_lvl_nodes</span><span class="op">(</span><span class="va">value</span>, n <span class="op">=</span> <span class="cn">NA_integer_</span>, attrs <span class="op">=</span> <span class="cn">NULL</span>, fid <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-36">Arguments<a class="anchor" aria-label="anchor" href="#arguments-36"></a></h4>
+<h4 id="arguments-37">Arguments<a class="anchor" aria-label="anchor" href="#arguments-37"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>value</code></dt>
 <dd><p>The value of the node.</p></dd>
+
+
+<dt><code>n</code></dt>
+<dd><p>The number of replications.</p></dd>
 
 
 <dt><code>attrs</code></dt>
@@ -920,12 +950,12 @@ the intersection of it will be checked.</p><div class="section">
 </div><p></p><hr><a id="method-Provenance-append_fct_edges"></a><div class="section">
 <h3 id="method-append-fct-edges-">Method <code>append_fct_edges()</code><a class="anchor" aria-label="anchor" href="#method-append-fct-edges-"></a></h3>
 <p>Given edge data, append the factor edges</p><div class="section">
-<h4 id="usage-37">Usage<a class="anchor" aria-label="anchor" href="#usage-37"></a></h4>
+<h4 id="usage-38">Usage<a class="anchor" aria-label="anchor" href="#usage-38"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">append_fct_edges</span><span class="op">(</span><span class="va">from</span>, <span class="va">to</span>, type <span class="op">=</span> <span class="cn">NULL</span>, group <span class="op">=</span> <span class="cn">NULL</span>, attrs <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-37">Arguments<a class="anchor" aria-label="anchor" href="#arguments-37"></a></h4>
+<h4 id="arguments-38">Arguments<a class="anchor" aria-label="anchor" href="#arguments-38"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>from</code></dt>
 <dd><p>The node id from.</p></dd>
 
@@ -952,12 +982,12 @@ the intersection of it will be checked.</p><div class="section">
 </div><p></p><hr><a id="method-Provenance-append_lvl_edges"></a><div class="section">
 <h3 id="method-append-lvl-edges-">Method <code>append_lvl_edges()</code><a class="anchor" aria-label="anchor" href="#method-append-lvl-edges-"></a></h3>
 <p>Given edge data, append the level edges</p><div class="section">
-<h4 id="usage-38">Usage<a class="anchor" aria-label="anchor" href="#usage-38"></a></h4>
+<h4 id="usage-39">Usage<a class="anchor" aria-label="anchor" href="#usage-39"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">append_lvl_edges</span><span class="op">(</span><span class="va">from</span>, <span class="va">to</span>, attrs <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-38">Arguments<a class="anchor" aria-label="anchor" href="#arguments-38"></a></h4>
+<h4 id="arguments-39">Arguments<a class="anchor" aria-label="anchor" href="#arguments-39"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>from</code></dt>
 <dd><p>The node id from.</p></dd>
 
@@ -976,28 +1006,8 @@ the intersection of it will be checked.</p><div class="section">
 </div><p></p><hr><a id="method-Provenance-serve_units"></a><div class="section">
 <h3 id="method-serve-units-">Method <code>serve_units()</code><a class="anchor" aria-label="anchor" href="#method-serve-units-"></a></h3>
 <p>Serve the units.</p><div class="section">
-<h4 id="usage-39">Usage<a class="anchor" aria-label="anchor" href="#usage-39"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">serve_units</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, return <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"value"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
-<h4 id="arguments-39">Arguments<a class="anchor" aria-label="anchor" href="#arguments-39"></a></h4>
-<p></p><div class="arguments"><dl><dt><code>id</code></dt>
-<dd><p>The id of the corresponding node.</p></dd>
-
-
-<dt><code>return</code></dt>
-<dd><p>To return in "id" or "value" format.</p></dd>
-
-
-</dl><p></p></div>
-</div>
-
-</div><p></p><hr><a id="method-Provenance-serve_trts"></a><div class="section">
-<h3 id="method-serve-trts-">Method <code>serve_trts()</code><a class="anchor" aria-label="anchor" href="#method-serve-trts-"></a></h3>
-<p>Serve treatments</p><div class="section">
 <h4 id="usage-40">Usage<a class="anchor" aria-label="anchor" href="#usage-40"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">serve_trts</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, return <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"value"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">serve_units</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, return <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"value"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -1013,11 +1023,11 @@ the intersection of it will be checked.</p><div class="section">
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-Provenance-serve_rcrds"></a><div class="section">
-<h3 id="method-serve-rcrds-">Method <code>serve_rcrds()</code><a class="anchor" aria-label="anchor" href="#method-serve-rcrds-"></a></h3>
-<p>Serve records</p><div class="section">
+</div><p></p><hr><a id="method-Provenance-serve_trts"></a><div class="section">
+<h3 id="method-serve-trts-">Method <code>serve_trts()</code><a class="anchor" aria-label="anchor" href="#method-serve-trts-"></a></h3>
+<p>Serve treatments</p><div class="section">
 <h4 id="usage-41">Usage<a class="anchor" aria-label="anchor" href="#usage-41"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">serve_rcrds</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, return <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"value"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">serve_trts</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, return <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"value"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -1033,10 +1043,54 @@ the intersection of it will be checked.</p><div class="section">
 </dl><p></p></div>
 </div>
 
+</div><p></p><hr><a id="method-Provenance-serve_rcrds"></a><div class="section">
+<h3 id="method-serve-rcrds-">Method <code>serve_rcrds()</code><a class="anchor" aria-label="anchor" href="#method-serve-rcrds-"></a></h3>
+<p>Serve records</p><div class="section">
+<h4 id="usage-42">Usage<a class="anchor" aria-label="anchor" href="#usage-42"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">serve_rcrds</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, return <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"value"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-42">Arguments<a class="anchor" aria-label="anchor" href="#arguments-42"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>id</code></dt>
+<dd><p>The id of the corresponding node.</p></dd>
+
+
+<dt><code>return</code></dt>
+<dd><p>To return in "id" or "value" format.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
+</div><p></p><hr><a id="method-Provenance-make_trts_table"></a><div class="section">
+<h3 id="method-make-trts-table-">Method <code>make_trts_table()</code><a class="anchor" aria-label="anchor" href="#method-make-trts-table-"></a></h3>
+<p>Make the treatments table</p><div class="section">
+<h4 id="usage-43">Usage<a class="anchor" aria-label="anchor" href="#usage-43"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">make_trts_table</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, return <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"value"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-43">Arguments<a class="anchor" aria-label="anchor" href="#arguments-43"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>id</code></dt>
+<dd><p>The id of the corresponding node.</p></dd>
+
+
+<dt><code>return</code></dt>
+<dd><p>To return in "id" or "value" format.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
+<p>A treatment table</p>
+</div>
+
 </div><p></p><hr><a id="method-Provenance-graph_subset"></a><div class="section">
 <h3 id="method-graph-subset-">Method <code>graph_subset()</code><a class="anchor" aria-label="anchor" href="#method-graph-subset-"></a></h3>
 <p>Subset graph</p><div class="section">
-<h4 id="usage-42">Usage<a class="anchor" aria-label="anchor" href="#usage-42"></a></h4>
+<h4 id="usage-44">Usage<a class="anchor" aria-label="anchor" href="#usage-44"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">graph_subset</span><span class="op">(</span></span>
 <span>  id <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  include <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"self"</span>, <span class="st">"child"</span>, <span class="st">"parent"</span>, <span class="st">"ancestors"</span><span class="op">)</span></span>
@@ -1044,7 +1098,7 @@ the intersection of it will be checked.</p><div class="section">
 </div>
 
 <div class="section">
-<h4 id="arguments-42">Arguments<a class="anchor" aria-label="anchor" href="#arguments-42"></a></h4>
+<h4 id="arguments-44">Arguments<a class="anchor" aria-label="anchor" href="#arguments-44"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>id</code></dt>
 <dd><p>The id of the corresponding node.</p></dd>
 
@@ -1058,19 +1112,19 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
+<h4 id="returns-1">Returns<a class="anchor" aria-label="anchor" href="#returns-1"></a></h4>
 <p>subsetted graph</p>
 </div>
 
 </div><p></p><hr><a id="method-Provenance-save_seed"></a><div class="section">
 <h3 id="method-save-seed-">Method <code>save_seed()</code><a class="anchor" aria-label="anchor" href="#method-save-seed-"></a></h3>
 <p>Save the seed</p><div class="section">
-<h4 id="usage-43">Usage<a class="anchor" aria-label="anchor" href="#usage-43"></a></h4>
+<h4 id="usage-45">Usage<a class="anchor" aria-label="anchor" href="#usage-45"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">save_seed</span><span class="op">(</span><span class="va">seed</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-43">Arguments<a class="anchor" aria-label="anchor" href="#arguments-43"></a></h4>
+<h4 id="arguments-45">Arguments<a class="anchor" aria-label="anchor" href="#arguments-45"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>seed</code></dt>
 <dd><p>A seed.</p></dd>
 
@@ -1081,7 +1135,7 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </div><p></p><hr><a id="method-Provenance-get_title"></a><div class="section">
 <h3 id="method-get-title-">Method <code>get_title()</code><a class="anchor" aria-label="anchor" href="#method-get-title-"></a></h3>
 <p>Get the title</p><div class="section">
-<h4 id="usage-44">Usage<a class="anchor" aria-label="anchor" href="#usage-44"></a></h4>
+<h4 id="usage-46">Usage<a class="anchor" aria-label="anchor" href="#usage-46"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">get_title</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -1089,12 +1143,12 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </div><p></p><hr><a id="method-Provenance-get_validation"></a><div class="section">
 <h3 id="method-get-validation-">Method <code>get_validation()</code><a class="anchor" aria-label="anchor" href="#method-get-validation-"></a></h3>
 <p>Get the validation</p><div class="section">
-<h4 id="usage-45">Usage<a class="anchor" aria-label="anchor" href="#usage-45"></a></h4>
+<h4 id="usage-47">Usage<a class="anchor" aria-label="anchor" href="#usage-47"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">get_validation</span><span class="op">(</span>type <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-44">Arguments<a class="anchor" aria-label="anchor" href="#arguments-44"></a></h4>
+<h4 id="arguments-46">Arguments<a class="anchor" aria-label="anchor" href="#arguments-46"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>type</code></dt>
 <dd><p>A type.</p></dd>
 
@@ -1105,7 +1159,7 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </div><p></p><hr><a id="method-Provenance-get_trail"></a><div class="section">
 <h3 id="method-get-trail-">Method <code>get_trail()</code><a class="anchor" aria-label="anchor" href="#method-get-trail-"></a></h3>
 <p>Get the trail.</p><div class="section">
-<h4 id="usage-46">Usage<a class="anchor" aria-label="anchor" href="#usage-46"></a></h4>
+<h4 id="usage-48">Usage<a class="anchor" aria-label="anchor" href="#usage-48"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">get_trail</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -1113,7 +1167,7 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </div><p></p><hr><a id="method-Provenance-get_graph"></a><div class="section">
 <h3 id="method-get-graph-">Method <code>get_graph()</code><a class="anchor" aria-label="anchor" href="#method-get-graph-"></a></h3>
 <p>Get the graph</p><div class="section">
-<h4 id="usage-47">Usage<a class="anchor" aria-label="anchor" href="#usage-47"></a></h4>
+<h4 id="usage-49">Usage<a class="anchor" aria-label="anchor" href="#usage-49"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">get_graph</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -1121,7 +1175,7 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </div><p></p><hr><a id="method-Provenance-get_seed"></a><div class="section">
 <h3 id="method-get-seed-">Method <code>get_seed()</code><a class="anchor" aria-label="anchor" href="#method-get-seed-"></a></h3>
 <p>Get the seed</p><div class="section">
-<h4 id="usage-48">Usage<a class="anchor" aria-label="anchor" href="#usage-48"></a></h4>
+<h4 id="usage-50">Usage<a class="anchor" aria-label="anchor" href="#usage-50"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">get_seed</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -1129,7 +1183,7 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </div><p></p><hr><a id="method-Provenance-get_session_info"></a><div class="section">
 <h3 id="method-get-session-info-">Method <code>get_session_info()</code><a class="anchor" aria-label="anchor" href="#method-get-session-info-"></a></h3>
 <p>Get the session information</p><div class="section">
-<h4 id="usage-49">Usage<a class="anchor" aria-label="anchor" href="#usage-49"></a></h4>
+<h4 id="usage-51">Usage<a class="anchor" aria-label="anchor" href="#usage-51"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">get_session_info</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -1137,7 +1191,7 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </div><p></p><hr><a id="method-Provenance-get_edibble_version"></a><div class="section">
 <h3 id="method-get-edibble-version-">Method <code>get_edibble_version()</code><a class="anchor" aria-label="anchor" href="#method-get-edibble-version-"></a></h3>
 <p>Get the edibble version.</p><div class="section">
-<h4 id="usage-50">Usage<a class="anchor" aria-label="anchor" href="#usage-50"></a></h4>
+<h4 id="usage-52">Usage<a class="anchor" aria-label="anchor" href="#usage-52"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">get_edibble_version</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -1145,12 +1199,12 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </div><p></p><hr><a id="method-Provenance-mapping"></a><div class="section">
 <h3 id="method-mapping-">Method <code>mapping()</code><a class="anchor" aria-label="anchor" href="#method-mapping-"></a></h3>
 <p>Mapping of a role to role</p><div class="section">
-<h4 id="usage-51">Usage<a class="anchor" aria-label="anchor" href="#usage-51"></a></h4>
+<h4 id="usage-53">Usage<a class="anchor" aria-label="anchor" href="#usage-53"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">mapping</span><span class="op">(</span><span class="va">role_from</span>, <span class="va">role_to</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-45">Arguments<a class="anchor" aria-label="anchor" href="#arguments-45"></a></h4>
+<h4 id="arguments-47">Arguments<a class="anchor" aria-label="anchor" href="#arguments-47"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>role_from</code></dt>
 <dd><p>The role from.</p></dd>
 
@@ -1165,12 +1219,12 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </div><p></p><hr><a id="method-Provenance-mapping_to_unit"></a><div class="section">
 <h3 id="method-mapping-to-unit-">Method <code>mapping_to_unit()</code><a class="anchor" aria-label="anchor" href="#method-mapping-to-unit-"></a></h3>
 <p>Mapping of an id to a unit</p><div class="section">
-<h4 id="usage-52">Usage<a class="anchor" aria-label="anchor" href="#usage-52"></a></h4>
+<h4 id="usage-54">Usage<a class="anchor" aria-label="anchor" href="#usage-54"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">mapping_to_unit</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-46">Arguments<a class="anchor" aria-label="anchor" href="#arguments-46"></a></h4>
+<h4 id="arguments-48">Arguments<a class="anchor" aria-label="anchor" href="#arguments-48"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>id</code></dt>
 <dd><p>The id of the corresponding node.</p></dd>
 
@@ -1181,20 +1235,40 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </div><p></p><hr><a id="method-Provenance-record_step"></a><div class="section">
 <h3 id="method-record-step-">Method <code>record_step()</code><a class="anchor" aria-label="anchor" href="#method-record-step-"></a></h3>
 <p>Record step.</p><div class="section">
-<h4 id="usage-53">Usage<a class="anchor" aria-label="anchor" href="#usage-53"></a></h4>
+<h4 id="usage-55">Usage<a class="anchor" aria-label="anchor" href="#usage-55"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">record_step</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
+</div><p></p><hr><a id="method-Provenance-lvl_mapping"></a><div class="section">
+<h3 id="method-lvl-mapping-">Method <code>lvl_mapping()</code><a class="anchor" aria-label="anchor" href="#method-lvl-mapping-"></a></h3>
+<p>Get the level edges by factor</p><div class="section">
+<h4 id="usage-56">Usage<a class="anchor" aria-label="anchor" href="#usage-56"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">lvl_mapping</span><span class="op">(</span><span class="va">from</span>, <span class="va">to</span>, return <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"vector"</span>, <span class="st">"table"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-49">Arguments<a class="anchor" aria-label="anchor" href="#arguments-49"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>from, to</code></dt>
+<dd><p>The factor id.</p></dd>
+
+
+<dt><code>return</code></dt>
+<dd><p>To return in "id" or "value" format.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
 </div><p></p><hr><a id="method-Provenance-record_track_external"></a><div class="section">
 <h3 id="method-record-track-external-">Method <code>record_track_external()</code><a class="anchor" aria-label="anchor" href="#method-record-track-external-"></a></h3>
 <p>Record track external.</p><div class="section">
-<h4 id="usage-54">Usage<a class="anchor" aria-label="anchor" href="#usage-54"></a></h4>
+<h4 id="usage-57">Usage<a class="anchor" aria-label="anchor" href="#usage-57"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">record_track_external</span><span class="op">(</span><span class="va">code</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-47">Arguments<a class="anchor" aria-label="anchor" href="#arguments-47"></a></h4>
+<h4 id="arguments-50">Arguments<a class="anchor" aria-label="anchor" href="#arguments-50"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>code</code></dt>
 <dd><p>The code to record.</p></dd>
 
@@ -1202,15 +1276,67 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </dl><p></p></div>
 </div>
 
+</div><p></p><hr><a id="method-Provenance-fct_id_links"></a><div class="section">
+<h3 id="method-fct-id-links-">Method <code>fct_id_links()</code><a class="anchor" aria-label="anchor" href="#method-fct-id-links-"></a></h3>
+<p>Find all id that is linked.</p><div class="section">
+<h4 id="usage-58">Usage<a class="anchor" aria-label="anchor" href="#usage-58"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">fct_id_links</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, role <span class="op">=</span> <span class="cn">NULL</span>, link <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"direct"</span>, <span class="st">"indirect"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-51">Arguments<a class="anchor" aria-label="anchor" href="#arguments-51"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>id</code></dt>
+<dd><p>The id of the corresponding node.</p></dd>
+
+
+<dt><code>role</code></dt>
+<dd><p>The role for the node.</p></dd>
+
+
+<dt><code>link</code></dt>
+<dd><p>Whether the link should be direct or indirect</p></dd>
+
+
+</dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="returns-2">Returns<a class="anchor" aria-label="anchor" href="#returns-2"></a></h4>
+<p>id of linked factors, excluding itself.</p>
+</div>
+
+</div><p></p><hr><a id="method-Provenance-fct_graph_components"></a><div class="section">
+<h3 id="method-fct-graph-components-">Method <code>fct_graph_components()</code><a class="anchor" aria-label="anchor" href="#method-fct-graph-components-"></a></h3>
+<p>Get the nodes with components (subgraph number)</p><div class="section">
+<h4 id="usage-59">Usage<a class="anchor" aria-label="anchor" href="#usage-59"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">fct_graph_components</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-52">Arguments<a class="anchor" aria-label="anchor" href="#arguments-52"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>id</code></dt>
+<dd><p>The id of the corresponding node.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
+</div><p></p><hr><a id="method-Provenance-lvl_graph_components"></a><div class="section">
+<h3 id="method-lvl-graph-components-">Method <code>lvl_graph_components()</code><a class="anchor" aria-label="anchor" href="#method-lvl-graph-components-"></a></h3>
+<p>Get the nodes with components (subgraph number)</p><div class="section">
+<h4 id="usage-60">Usage<a class="anchor" aria-label="anchor" href="#usage-60"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">lvl_graph_components</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+
 </div><p></p><hr><a id="method-Provenance-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
-<h4 id="usage-55">Usage<a class="anchor" aria-label="anchor" href="#usage-55"></a></h4>
+<h4 id="usage-61">Usage<a class="anchor" aria-label="anchor" href="#usage-61"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-48">Arguments<a class="anchor" aria-label="anchor" href="#arguments-48"></a></h4>
+<h4 id="arguments-53">Arguments<a class="anchor" aria-label="anchor" href="#arguments-53"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
 

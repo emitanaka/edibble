@@ -160,6 +160,9 @@
     <loc>https://edibble.emitanaka.org/reference/pivot_trts_widelist.html</loc>
   </url>
   <url>
+    <loc>https://edibble.emitanaka.org/reference/pivot_wider_by.html</loc>
+  </url>
+  <url>
     <loc>https://edibble.emitanaka.org/reference/plot.edbl_design.html</loc>
   </url>
   <url>
@@ -170,6 +173,9 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/serve_table.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/set_context.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/set_rcrds.html</loc>
@@ -184,7 +190,13 @@
     <loc>https://edibble.emitanaka.org/reference/skittles.html</loc>
   </url>
   <url>
+    <loc>https://edibble.emitanaka.org/reference/split_by.html</loc>
+  </url>
+  <url>
     <loc>https://edibble.emitanaka.org/reference/takeout.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/trts_table.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/utility-edibble-var.html</loc>

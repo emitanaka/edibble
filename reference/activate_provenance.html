@@ -87,23 +87,26 @@ the existing design.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">activate_provenance</span><span class="op">(</span><span class="fu"><a href="takeout.html">takeout</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → No name was supplied so selecting a random named experimental design...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Selected Balanced Incomplete Block Design</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Selected Split-Plot DesignSelected Split-Unit Design</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;Provenance&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Public:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     append_fct_edges: function (from, to, type = NULL, group = NULL, attrs = NULL) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     append_fct_nodes: function (name, role, attrs = NULL) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     append_lvl_edges: function (from, to, attrs = NULL) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     append_lvl_nodes: function (value, attrs = NULL, fid = NULL) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     append_lvl_nodes: function (value, n = NA_integer_, attrs = NULL, fid = NULL) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     clone: function (deep = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     deactivate: function (delete = c("graph", "anatomy", "recipe", "validation")) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     fct_edges: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     fct_exists: function (id = NULL, name = NULL, role = NULL, abort = TRUE) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     fct_graph_components: function (id = NULL) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     fct_id: function (name = NULL, role = NULL) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     fct_id_ancestor: function (id = NULL, role = NULL) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     fct_id_child: function (id = NULL, role = NULL) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     fct_id_descendant: function (id = NULL, role = NULL) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     fct_id_from_lvl_id: function (id = NULL, fid_search = NULL) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     fct_id_from_lvl_values: function (value = NULL, fid_search = NULL) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     fct_id_leaves: function (role = NULL) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     fct_id_links: function (id = NULL, role = NULL, link = c("direct", "indirect")) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     fct_id_parent: function (id = NULL, role = NULL) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     fct_levels: function (id = NULL, name = NULL, return = c("id", "value")) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     fct_levels_id_to_edbl_fct: function (fct_levels, role) </span>
@@ -124,14 +127,17 @@ the existing design.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     initialize: function (graph = NULL) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     is_connected: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     lvl_edges: active binding</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     lvl_graph_components: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     lvl_id: function (value = NULL, role = NULL, fid = NULL) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     lvl_id_ancestor: function (id = NULL, role = NULL) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     lvl_id_child: function (id = NULL, role = NULL) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     lvl_id_from_fct_id: function (fid = NULL) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     lvl_id_parent: function (id = NULL, role = NULL) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     lvl_mapping: function (from, to, return = c("vector", "table")) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     lvl_n: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     lvl_nodes: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     lvl_values: function (id = NULL, role = NULL, fid = NULL) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     make_trts_table: function (id = NULL, return = c("id", "value")) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     mapping: function (role_from, role_to) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     mapping_to_unit: function (id = NULL) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     rcrd_exists: function (id = NULL, name = NULL, abort = TRUE) </span>
@@ -159,27 +165,30 @@ the existing design.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Private:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     add_trail_internal: function (code) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     anatomy: formula</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     build_condtable: function (subgraph, return) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     build_subtable: function (subgraph, return) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     edbl_version: package_version, numeric_version</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     fct_id_last: 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     fct_id_last: 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     fct_new_id: function (n = 1) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     graph: edbl_graph</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     graph_reverse_topological_order: function (graph) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     lvl_id_last: 16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     graph_topological_order: function (graph, reverse = TRUE) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     lvl_id_last: 109</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     lvl_new_id: function (n = 1) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     name: edibble</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     node_id_parent_child: function (id = NULL, role = NULL, node = c("factor", "level"), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     recipe: design(title = "Balanced Incomplete Block Design") set_u ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     recipe: design(title = "Split-Plot Design | Split-Unit Design")  ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     record_track_internal: function () </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     seed: 764</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     seed: 697</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     session_info: sessionInfo</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     table: list</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     title: Balanced Incomplete Block Design</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     title: Split-Plot Design | Split-Unit Design</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     trail: list</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_id: function (id, n = NULL, role = NULL) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_name: function (name) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_role: function (role) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validation: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     var_id_ancestor: function (id = NULL, role = NULL, node = c("factor", "level")) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     var_id_descendant: function (id = NULL, role = NULL, node = c("factor", "level")) </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
