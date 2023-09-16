@@ -607,14 +607,10 @@ Provenance <- R6::R6Class("Provenance",
                              for(i in seq(ncomp)) {
                                if(i == 1L) {
                                  sub_graph <- self$graph_subset(id = scomps[[i]], include = "self")
-                                 out <- private$build_subtable(sub_graph, return = return)
-                                 trts_tbl <- as.data.frame(out)
-                                 colnames(trts_tbl) <- names(out)
+                                 trts_tbl <- private$build_condtable(sub_graph, return = return)
                                } else {
                                  sub_graph <- self$graph_subset(id = scomps[[i]], include = "self")
-                                 out <- private$build_subtable(sub_graph, return = return)
-                                 new_trts_tbl <- as.data.frame(out)
-                                 colnames(new_trts_tbl) <- names(out)
+                                 new_trts_tbl <- private$build_condtable(sub_graph, return = return)
                                  xtabs <- expand.grid(old = seq(nrow(trts_tbl)), new = seq(nrow(new_trts_tbl)))
                                  trts_tbl <- cbind(trts_tbl[xtabs[[1]], , drop = FALSE], new_trts_tbl[xtabs[[2]], , drop = FALSE])
                                }
@@ -746,13 +742,16 @@ Provenance <- R6::R6Class("Provenance",
                          #' @description
                          #' Get the level edges by factor
                          #' @param from,to The factor id.
-                         lvl_mapping = function(from, to) {
+                         lvl_mapping = function(from, to, return = c("vector", "table")) {
+                           return <- match.arg(return)
                            lnodes <- self$lvl_nodes
                            nodes_from <- lnodes[[as.character(from)]]$id
                            nodes_to <- lnodes[[as.character(to)]]$id
                            ledges <- self$lvl_edges
-                           map <- subset(ledges, from %in% nodes_from & to %in% nodes_to)
-                           setNames(map$to, map$from)
+                           map <- subset(ledges, from %in% nodes_from & to %in% nodes_to,
+                                         select = c(from, to))
+                           if(return=="vector") return(setNames(map$to, map$from))
+                           map
                          },
 
 
@@ -1032,7 +1031,7 @@ Provenance <- R6::R6Class("Provenance",
 
                         #' Given a particular DAG, return a topological order
                         #' Remember that there could be more than one order.
-                        graph_reverse_topological_order = function(graph) {
+                        graph_topological_order = function(graph, reverse = TRUE) {
                           fnodes <- graph$factors$nodes
                           lnodes <- graph$levels$nodes
                           fedges <- graph$factors$edges
@@ -1040,12 +1039,52 @@ Provenance <- R6::R6Class("Provenance",
                           fnodes$parent <- map_int(fnodes$id, function(id) sum(fedges$to %in% id))
                           fnodes$child <- map_int(fnodes$id, function(id) sum(fedges$from %in% id))
                           fnodes$nlevels <- map_int(fnodes$id, function(id) nrow(lnodes[[id]]))
-                          fnodes <- fnodes[order(fnodes$child, -fnodes$nlevels), ]
+                          if(reverse) {
+                            fnodes <- fnodes[order(fnodes$child, -fnodes$nlevels), ]
+                          } else {
+                            fnodes <- fnodes[order(-fnodes$child, -fnodes$nlevels), ]
+                          }
                           new_edibble_graph(fnodes = fnodes, lnodes = lnodes, fedges = fedges, ledges = ledges)
                         },
 
+                        build_condtable = function(subgraph, return) {
+                          top_graph <- private$graph_topological_order(subgraph, reverse = FALSE)
+                          sub_fnodes <- top_graph$factors$nodes
+                          sub_fedges <- top_graph$factors$edges
+                          sub_lnodes <- top_graph$levels$nodes
+                          sub_ledges <- top_graph$levels$edges
+
+                          out <- list()
+                          if(nrow(sub_fnodes) == 1) {
+                            iunit <- sub_fnodes$id[1]
+                            out[[as.character(iunit)]] <- self$lvl_id(fid = iunit)
+                          } else {
+                            for(irow in 2:nrow(sub_fnodes)) {
+                              iunit <- sub_fnodes$id[irow]
+                              if(sub_fnodes$parent[irow] == 0) {
+                                abort("This factor has no parents. This shouldn't happen.")
+                              } else {
+                                parent_id <- sub_fedges$from[sub_fedges$to == iunit]
+                                map_tbl <- self$lvl_mapping(parent_id, iunit, return = "table")
+                                colnames(map_tbl) <- c(parent_id, iunit)
+                                if(as.character(parent_id) %in% names(out)) {
+                                  trts_tbl <- do.call(tibble::tibble, out)
+                                  map_tbl <- merge(trts_tbl, map_tbl)
+                                }
+                                for(anm in names(map_tbl)) {
+                                  out[[anm]] <- map_tbl[[anm]]
+                                }
+                              }
+                            }
+                          }
+                          ret <- switch(return,
+                                        id = out,
+                                        value = self$fct_levels_id_to_value(out))
+                          do.call(tibble::tibble, ret)
+                        },
+
                         build_subtable = function(subgraph, return) {
-                          top_graph <- private$graph_reverse_topological_order(subgraph)
+                          top_graph <- private$graph_topological_order(subgraph, reverse = TRUE)
                           sub_fnodes <- top_graph$factors$nodes
                           sub_fedges <- top_graph$factors$edges
                           sub_lnodes <- top_graph$levels$nodes

@@ -140,7 +140,7 @@ conditioned_on <- function(x, ...) {
   attributes(child_levels) <- c(attributes(child_levels),
                                 list(parents = attr(args, "parents"),
                                      labels = child_levels))
-  class(child_levels) <- c("nest_lvls", class(child_levels))
+  class(child_levels) <- c("cond_lvls", class(child_levels))
   return(child_levels)
 
 

@@ -92,3 +92,34 @@ graph_input.nest_lvls <- function(input, prov, name, class, ...) {
     }
   }
 }
+
+
+
+graph_input.cond_lvls <- function(input, prov, name, class, ...) {
+  parent <- input %@% "keyname"
+  cross_parents <- input %@% "parents"
+  clabels <- input %@% "labels"
+  attrs <- NULL # attributes(input)
+  prov$append_fct_nodes(name = name, role = class)
+  idp <- prov$fct_id(name = parent)
+  idv <- prov$fct_id(name = name)
+  prov$append_fct_edges(from = idp, to = idv, type = "nest")
+  plevels <- rep(names(input), lengths(input))
+  clevels <- unname(unlist(input))
+  pids <- prov$lvl_id(value = plevels, fid = idp)
+  ## unique(clevels) is the only part that's different to nest_lvls
+  prov$append_lvl_nodes(value = unique(clevels), fid = idv)
+  vids <- prov$lvl_id(value = clevels, fid = idv)
+  prov$append_lvl_edges(from = pids, to = vids)
+
+  if(!is_null(cross_parents)) {
+    cross_df <- do.call("rbind", cross_parents[names(input)])
+    cross_parent_names <- colnames(cross_df)
+    for(across in cross_parent_names) {
+      prov$append_fct_edges(from = prov$fct_id(name = across), to = idv, type = "cross")
+      cpids <- prov$lvl_id(value = cross_df[[across]])
+      prov$append_lvl_edges(from = cpids, to = vids)
+    }
+  }
+}
+

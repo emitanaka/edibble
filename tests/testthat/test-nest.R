@@ -82,5 +82,58 @@ test_that("conditioning-structure", {
     serve_table()
 
   count_by(cond2, trt1, trt2, trt3)
+
+  # FIXME
+  vitexp2 <- design("Vitamin experiment with control") %>%
+    set_trts(vitamin = c("control", "B", "C"),
+             dose = conditioned_on(vitamin,
+                                   "control" ~ "0",
+                                   c("B", "C") ~ c("0.5", "1", "2"))) %>%
+    trts_table()
+
+  vitexp3 <- design("Vitamin experiment with control") %>%
+    set_trts(vitamin = c("control", "B", "C"),
+             dose = conditioned_on(vitamin,
+                                   "control" ~ "0",
+                                   c("B", "C") ~ c("0.5", "1", "2")),
+             trt = conditioned_on(vitamin,
+                                  c("control", "B") ~ c("a", "b"),
+                                  "C" ~ "c"),
+             vac = conditioned_on(trt,
+                                  "a" ~ c("I", "II"),
+                                  c("b", "c") ~ "I")) %>%
+    trts_table()
+
+  vitexp4 <- design("Vitamin experiment with control") %>%
+    set_trts(vitamin = c("control", "B", "C"),
+             dose = conditioned_on(vitamin,
+                                   "control" ~ "0",
+                                   c("B", "C") ~ c("0.5", "1", "2")),
+             trt = conditioned_on(vitamin,
+                                  c("control", "B") ~ c("a", "b"),
+                                  "C" ~ "c"),
+             vac = conditioned_on(trt,
+                                  "a" ~ c("I", "II"),
+                                  c("b", "c") ~ "I"),
+             test = c("alpha", "beta")) %>%
+    trts_table()
+
+
+  vitexp5 <- design("Vitamin experiment with control") %>%
+    set_trts(vitamin = c("control", "B", "C"),
+             dose = conditioned_on(vitamin,
+                                   "control" ~ "0",
+                                   c("B", "C") ~ c("0.5", "1", "2")),
+             trt = conditioned_on(vitamin,
+                                  c("control", "B") ~ c("a", "b"),
+                                  "C" ~ "c"),
+             vac = conditioned_on(trt,
+                                  "a" ~ c("I", "II"),
+                                  c("b", "c") ~ "I"),
+             test = c("alpha", "beta"),
+             test2 = conditioned_on(test,
+                                    "alpha" ~ "AA",
+                                    "beta" ~ "BB")) %>%
+    trts_table()
 })
 
