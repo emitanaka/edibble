@@ -183,6 +183,7 @@ pivot_trts_widetable <- function(.data, trts = NULL, fcts = NULL) {
 #' @param values_fill A value or function to fill missing values.
 #' @param values_fn A function to aggregate values.
 #' @seealso [split_by()] and [count_by()]
+#' @keywords internal
 pivot_wider_by <- function(data,
                            id_cols = NULL,
                            id_expand = FALSE,

@@ -62,3 +62,4 @@ this to present to you information without unnecessary duplication.
 \seealso{
 \code{\link[=split_by]{split_by()}} and \code{\link[=count_by]{count_by()}}
 }
+\keyword{internal}

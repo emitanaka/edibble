@@ -84,8 +84,9 @@ reference:
   desc: >
     These functions manipulate or wrangle the edibble table into another form.
   contents:
-  - pivot_trts_widelist
-  - pivot_trts_widetable
+  - pivot_wider_by
+  - split_by
+  - trts_table
   - as.data.frame.edbl_table
   - as_tibble.edbl_table
 - title: "Utility functions"
@@ -95,7 +96,7 @@ reference:
   - Provenance
   - activate_provenance
   - nesting_structure
-  #- design-context
+  - set_context
   - design-helpers
   - starts_with("fct")
   - starts_with("lvl")

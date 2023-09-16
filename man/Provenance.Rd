@@ -1137,13 +1137,15 @@ Record step.
 \subsection{Method \code{lvl_mapping()}}{
 Get the level edges by factor
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$lvl_mapping(from, to)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$lvl_mapping(from, to, return = c("vector", "table"))}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{from, to}}{The factor id.}
+
+\item{\code{return}}{To return in "id" or "value" format.}
 }
 \if{html}{\out{</div>}}
 }
