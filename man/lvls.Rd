@@ -4,7 +4,7 @@
 \alias{lvls}
 \title{Setting the traits of the levels}
 \usage{
-lvls(value = NULL, data = NULL, ...)
+lvls(value = NULL, n = NA_integer_, data = NULL, ...)
 }
 \arguments{
 \item{value}{A vector of the level values.}

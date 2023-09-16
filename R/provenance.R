@@ -125,7 +125,11 @@ Provenance <- R6::R6Class("Provenance",
                            private$var_id_ancestor(id = id, role = role, node = "factor")
                          },
 
-
+                         #' @description
+                         #' Get the factor descendant ids
+                         fct_id_descendant = function(id = NULL, role = NULL) {
+                           private$var_id_descendant(id = id, role = role, node = "factor")
+                         },
 
                          #' @description
                          #' Get the leave factor ids.
@@ -134,6 +138,7 @@ Provenance <- R6::R6Class("Provenance",
                            has_child <- map_lgl(fids, function(id) length(self$fct_id_child(id = id)) > 0)
                            fids[!has_child]
                          },
+
 
                          #' @description
                          #' Get the id based on name of level node.
@@ -472,6 +477,7 @@ Provenance <- R6::R6Class("Provenance",
 
                          #' @description
                          #' Given node data, append the level nodes
+                         #' @param n The number of replications.
                          append_lvl_nodes = function(value, n = NA_integer_, attrs = NULL, fid = NULL) {
                            private$record_track_internal()
                            lnodes <- self$lvl_nodes
@@ -520,29 +526,7 @@ Provenance <- R6::R6Class("Provenance",
                            if(length(id) == 0) abort("There needs to be at least one unit supplied.")
                            id_ancestors <- self$fct_id_ancestor(id = id, role = "edbl_unit")
                            sub_graph <- self$graph_subset(id = id_ancestors, include = "self")
-                           top_graph <- private$graph_reverse_topological_order(sub_graph)
-                           sub_fnodes <- top_graph$factors$nodes
-                           sub_fedges <- top_graph$factors$edges
-                           sub_lnodes <- top_graph$levels$nodes
-                           sub_ledges <- top_graph$levels$edges
-
-                           out <- list()
-                           for(irow in seq(nrow(sub_fnodes))) {
-                             # check if children.
-                             iunit <- sub_fnodes$id[irow]
-                             if(sub_fnodes$child[irow] == 0) {
-                               # if no children, just render it
-                               out[[as.character(iunit)]] <- self$lvl_id(fid = iunit)
-                             } else {
-                               children_id <- sub_fedges$to[sub_fedges$from == iunit]
-                               # all children id should have levels in the `out`
-                               # any children should be the same -- take the first one
-                               cid <- out[[as.character(children_id[1])]]
-                               pid <- sub_lnodes[[iunit]]$id
-                               cid_to_pid <- map_int(cid, function(id) sub_ledges$from[sub_ledges$to == id & sub_ledges$from %in% pid])
-                               out[[as.character(iunit)]] <- cid_to_pid
-                             }
-                           }
+                           out <- private$build_subtable(sub_graph)
                            private$table$units <- out
                            switch(return,
                                   id = out,
@@ -604,6 +588,39 @@ Provenance <- R6::R6Class("Provenance",
                                     names(lvs) <- self$fct_names(id = id)
                                     lvs
                                   })
+                         },
+
+                         #' @description
+                         #' Make the treatments table
+                         #' @return A treatment table
+                         make_trts_table = function(id = NULL, return = c("id", "value")) {
+                           id <- id %||% self$trt_ids
+                           return <- match.arg(return)
+                           self$fct_exists(id = id, role = "edbl_trt")
+                           fnodes <- self$fct_graph_components(id = id)
+                           trts_list <- self$fct_levels(id = id, return = return)
+                           ncomp <- length(unique(fnodes$component))
+                           scomps <- split(fnodes$id, fnodes$component)
+                           if(ncomp == length(trts_list)) {
+                             trts_tbl <- expand.grid(trts_list, stringsAsFactors = FALSE)
+                           } else {
+                             for(i in seq(ncomp)) {
+                               if(i == 1L) {
+                                 sub_graph <- self$graph_subset(id = scomps[[i]], include = "self")
+                                 out <- private$build_subtable(sub_graph)
+                                 trts_tbl <- as.data.frame(out)
+                                 colnames(trts_tbl) <- names(out)
+                               } else {
+                                 sub_graph <- self$graph_subset(id = scomps[[i]], include = "self")
+                                 out <- private$build_subtable(sub_graph)
+                                 new_trts_tbl <- as.data.frame(out)
+                                 colnames(new_trts_tbl) <- names(out)
+                                 xtabs <- expand.grid(old = seq(nrow(trts_tbl)), new = seq(nrow(new_trts_tbl)))
+                                 trts_tbl <- cbind(trts_tbl[xtabs[[1]], , drop = FALSE], new_trts_tbl[xtabs[[2]], , drop = FALSE])
+                               }
+                             }
+                           }
+                           trts_tbl
                          },
 
                          #' @description
@@ -724,6 +741,19 @@ Provenance <- R6::R6Class("Provenance",
                          },
 
                          #' @description
+                         #' Get the level edges by factor
+                         #' @param from,to The factor id.
+                         lvl_mapping = function(from, to) {
+                           lnodes <- self$lvl_nodes
+                           nodes_from <- lnodes[[as.character(from)]]$id
+                           nodes_to <- lnodes[[as.character(to)]]$id
+                           ledges <- self$lvl_edges
+                           map <- subset(ledges, from %in% nodes_from & to %in% nodes_to)
+                           setNames(map$to, map$from)
+                         },
+
+
+                         #' @description
                          #' Record track external.
                          #' @param code The code to record.
                          record_track_external = function(code) {
@@ -732,6 +762,72 @@ Provenance <- R6::R6Class("Provenance",
                            attr(private$trail[[ncmds]], "execution_time") <- Sys.time()
                            attr(private$trail[[ncmds]], "time_zone") <- Sys.timezone()
                            private$trail[[ncmds + 1]] <- new_trackable()
+                         },
+
+                         #' @description
+                         #' Find all id that is linked.
+                         #' @param link Whether the link should be direct or indirect
+                         #' @return id of linked factors, excluding itself.
+                         fct_id_links = function(id = NULL, role = NULL, link = c("direct", "indirect")) {
+                           link <- match.arg(link)
+                           if(link == "direct") {
+                              cid <- self$fct_id_child(id = id, role = role)
+                              pid <- self$fct_id_parent(id = id, role = role)
+
+                           }
+                           if(link == "indirect") {
+                             cid <- self$fct_id_ancestor(id = id, role = role)
+                             pid <- self$fct_id_descendant(id = id, role = role)
+                           }
+                           return(c(cid, pid))
+                         },
+
+                         #' @description
+                         #' Get the nodes with components (subgraph number)
+                         fct_graph_components = function(id = NULL) {
+                           fnodes <- self$fct_nodes
+                           fnodes <- fnodes[fnodes$id %in% id, ]
+                           fedges <- self$fct_edges
+                           fedges <- fedges[fedges$to %in% fnodes$id & fedges$from %in% fnodes$id, ]
+                           fnodes$component <- NA_integer_
+
+                           label_component <- function(fnodes, comp) {
+                             id <- fnodes$id[is.na(fnodes$component)][1]
+                             pids <- self$fct_id_ancestor(id = id)
+                             cids <- self$fct_id_descendant(id = id)
+                             fnodes$component[match(c(pids, cids), fnodes$id)] <- comp
+                             fnodes
+                           }
+                           comp <- 0L
+
+                           while(any(is.na(fnodes$component))) {
+                             comp <- comp + 1L
+                             fnodes <- label_component(fnodes, comp)
+                           }
+                           fnodes
+                         },
+
+                         #' @description
+                         #' Get the nodes with components (subgraph number)
+                         lvl_graph_components = function() {
+                           lnodes <- self$lvl_nodes
+                           ledges <- self$lvl_edges
+                           lnodes$component <- NA_integer_
+
+                           label_component <- function(comp) {
+                             id <- lnodes$id[is.na(lnodes$component)][1]
+                             pids <- self$lvl_id_ancestor(id = id)
+                             cids <- self$lvl_id_descendant(id = id)
+                             lnodes$component[match(c(pids, cids), lnodes$id)] <- comp
+                             lnodes
+                           }
+                           comp <- 0L
+
+                           while(any(is.na(lnodes$component))) {
+                             comp <- comp + 1L
+                             lnodes <- label_component(comp)
+                           }
+                           lnodes
                          }
 
                        ),
@@ -778,6 +874,7 @@ Provenance <- R6::R6Class("Provenance",
                            }
                          },
 
+
                          #' @field fct_n
                          #' Get the number of nodes in factor graph
                          fct_n = function(value) {
@@ -823,6 +920,7 @@ Provenance <- R6::R6Class("Provenance",
                          #' @field is_connected
                          #' Check if nodes are connected.
                          is_connected = function() {
+                           # FIXME: use lvl_graph_components instead
                            nvar <- self$fct_n - length(self$rcrd_ids)
                            if(nvar==0) return(FALSE)
                            if(nvar==1) return(TRUE)
@@ -891,6 +989,15 @@ Provenance <- R6::R6Class("Provenance",
                           out
                         },
 
+                        var_id_descendant = function(id = NULL, role = NULL, node = c("factor", "level")) {
+                          out <- unique(id)
+                          child_ids <- private$node_id_parent_child(id = id, role = role, node = node, return = "child")
+                          if(!is_empty(child_ids)) {
+                            out <- unique(c(out, private$var_id_descendant(id = child_ids, role = role, node = node)))
+                          }
+                          out
+                        },
+
                         record_track_internal = function() {
                           do.call("on.exit",
                                   list(quote(private$add_trail_internal(paste(gsub("(^ +| +$)", "", deparse(match.call())), collapse = ""))),
@@ -932,6 +1039,33 @@ Provenance <- R6::R6Class("Provenance",
                           fnodes$nlevels <- map_int(fnodes$id, function(id) nrow(lnodes[[id]]))
                           fnodes <- fnodes[order(fnodes$child, -fnodes$nlevels), ]
                           new_edibble_graph(fnodes = fnodes, lnodes = lnodes, fedges = fedges, ledges = ledges)
+                        },
+
+                        build_subtable = function(subgraph) {
+                          top_graph <- private$graph_reverse_topological_order(subgraph)
+                          sub_fnodes <- top_graph$factors$nodes
+                          sub_fedges <- top_graph$factors$edges
+                          sub_lnodes <- top_graph$levels$nodes
+                          sub_ledges <- top_graph$levels$edges
+
+                          out <- list()
+                          for(irow in seq(nrow(sub_fnodes))) {
+                            # check if children.
+                            iunit <- sub_fnodes$id[irow]
+                            if(sub_fnodes$child[irow] == 0) {
+                              # if no children, just render it
+                              out[[as.character(iunit)]] <- self$lvl_id(fid = iunit)
+                            } else {
+                              children_id <- sub_fedges$to[sub_fedges$from == iunit]
+                              # all children id should have levels in the `out`
+                              # any children should be the same -- take the first one
+                              cid <- out[[as.character(children_id[1])]]
+                              pid <- sub_lnodes[[iunit]]$id
+                              cid_to_pid <- map_int(cid, function(id) sub_ledges$from[sub_ledges$to == id & sub_ledges$from %in% pid])
+                              out[[as.character(iunit)]] <- cid_to_pid
+                            }
+                          }
+                          out
                         }
                        ))
 

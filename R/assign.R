@@ -57,9 +57,14 @@ assign_trts <- function(.edibble, order = "random", seed = NULL, constrain = nes
     unit_level_ids <- lnodes[[unit_id]]$id
     nunits <- length(unit_level_ids)
 
-    trts_list <- prov$fct_levels(id = trts_id, return = "id")
-    # only allows for factorial treatment structure for now
-    trts_df <- expand.grid(trts_list, stringsAsFactors = FALSE)
+    # TODO
+    # if conditional treatment is applied, then the allocation of
+    # treatment in the conditioned treatment needs to be extracted
+    linked_trts <- prov$fct_id_links(id = trts_id, role = "edbl_trt")
+    if(length(setdiff(linked_trts, trts_id))) {
+      abort("Conditional treatment where one factor is alloted in another group is not currently supported.")
+    }
+    trts_df <- prov$make_trts_table(id = trts_id, return = "id")
     ntrts <- nrow(trts_df)
     permutation <- switch(order[igroup],
                           "systematic" = rep(1:ntrts, length.out = nunits),

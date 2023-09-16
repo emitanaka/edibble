@@ -55,3 +55,32 @@ test_that("nesting-structure", {
 
 })
 
+
+test_that("conditioning-structure", {
+  cond1 <- design("Completely Randomised Design") %>%
+    set_units(unit = 26) %>%
+    set_trts(trt1 = 2,
+             trt2 = conditioned_on(trt1,
+                                   1 ~ "1",
+                                   2 ~ c("2", "3"))) %>%
+    allot_trts(trt1:trt2 ~ unit) %>%
+    assign_trts("random", seed = 554) %>%
+    serve_table()
+
+  count_by(cond1, trt1, trt2)
+
+
+  cond2 <- design("Completely Randomised Design") %>%
+    set_units(unit = 26) %>%
+    set_trts(trt1 = 2,
+             trt2 = conditioned_on(trt1,
+                                   1 ~ "1",
+                                   2 ~ c("2", "3")),
+             trt3 = 3) %>%
+    allot_trts(trt1:trt2:trt3 ~ unit) %>%
+    assign_trts("random", seed = 554) %>%
+    serve_table()
+
+  count_by(cond2, trt1, trt2, trt3)
+})
+

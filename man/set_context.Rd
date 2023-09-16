@@ -28,7 +28,8 @@ crd <- design("Completely Randomised Design") \%>\%
               contact = "emi.tanaka (at) anu.edu",
               "Funded by Better Experiments Institute.") \%>\%
   allot_trts(vaccine ~ subject) \%>\%
-  assign_trts("random", seed = 222) \%>\%
-  serve_table()
+  assign_trts("random", seed = 222)
+
+crd$context
 
 }
