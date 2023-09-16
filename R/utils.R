@@ -185,6 +185,11 @@ remove_nulls <- function(.x) {
   .x[!vapply(.x, is.null, logical(1))]
 }
 
+remove_empty_df <- function(.x) {
+  .x[vapply(.x, function(x) nrow(x) > 0, logical(1))]
+}
+
+
 
 compact <- function(.x) {
   .x[!vapply(.x, is_empty, logical(1))]

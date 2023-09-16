@@ -18,6 +18,7 @@
 #'   factor or a factor that uniquely indexes the smallest unit in the
 #'   design. You cannot also combine treatment and unit factors together.
 #' @param .sep The separator to use if more than one factor to split by.
+#' @param .remove_empty Remove empty combinations. Default is TRUE.
 #' @examples
 #' spd <- takeout(menu_split())
 #' spd %>% split(trt1)
@@ -32,7 +33,7 @@
 #' @return A named list.
 #' @seealso [pivot_wider_by()]
 #' @export
-split_by <- function(.data, ..., .sep = ":") {
+split_by <- function(.data, ..., .sep = ":", .remove_empty = TRUE) {
   not_edibble(.data)
 
   loc <- eval_select(expr(c(...)), .data)
@@ -64,11 +65,13 @@ split_by <- function(.data, ..., .sep = ":") {
   }
 
   out <- split(data, fsplit, sep = .sep)
+  if(.remove_empty) out <- remove_empty_df(out)
   attr(out, "by") <- fnames
   class(out) <- c("split_by", class(out))
   out
 }
 
+#' @export
 print.split_by <- function(x, ...) {
   attr(x, "by") <- NULL
   class(x) <- setdiff(class(x), "split_by")
@@ -77,10 +80,10 @@ print.split_by <- function(x, ...) {
 
 #' @rdname split_by
 #' @export
-count_by <- function(.data, ...) {
+count_by <- function(.data, ..., .remove_empty = TRUE) {
   # pick a dummy sep that is unlikely used
   dummy_sep <- "#####SEP#####"
-  out <- split_by(.data, ..., .sep = dummy_sep)
+  out <- split_by(.data, ..., .sep = dummy_sep, .remove_empty = .remove_empty)
   by <- attr(out, "by")
   n <- function(.x) length(unique(.x))
   out2 <- as.data.frame(do.call(rbind, lapply(out, function(df) lapply(df, n))))

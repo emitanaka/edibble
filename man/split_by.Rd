@@ -5,9 +5,9 @@
 \alias{count_by}
 \title{Split or count the data according to certain factors}
 \usage{
-split_by(.data, ..., .sep = ":")
+split_by(.data, ..., .sep = ":", .remove_empty = TRUE)
 
-count_by(.data, ...)
+count_by(.data, ..., .remove_empty = TRUE)
 }
 \arguments{
 \item{.data}{An edibble table.}
@@ -17,6 +17,8 @@ factor or a factor that uniquely indexes the smallest unit in the
 design. You cannot also combine treatment and unit factors together.}
 
 \item{.sep}{The separator to use if more than one factor to split by.}
+
+\item{.remove_empty}{Remove empty combinations. Default is TRUE.}
 }
 \value{
 A named list.
