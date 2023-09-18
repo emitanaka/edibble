@@ -26,6 +26,7 @@ design <- function(title = NULL, name = "edibble", .record = TRUE, seed = NULL, 
                  provenance = provenance,
                  anatomy = NULL,
                  recipe = NULL,
+                 simulate = NULL,
                  context = NULL),
             class = c("edbl_design", "edbl"))
 }

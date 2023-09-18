@@ -68,12 +68,22 @@ Provenance <- R6::R6Class("Provenance",
                            private$validation[[type]] <- validation
                          },
 
+
+                         #' @description
+                         #' Set the simulation process
+                         #' @param name The name of the process
+                         #' @param process A function to simulate the record
+                         set_simulate = function(name, process) {
+                           private$record_track_internal()
+                           private$simulate[[name]] <- process
+                         },
+
                          #' @description
                          #' Reactivate the graph in the provenance object.
                          #' @param design An edibble design
                          #' @param overwrite A vector of character to overwrite from the
                          #' supplied design object.
-                         reactivate = function(design, overwrite = c("graph", "anatomy", "recipe", "validation")) {
+                         reactivate = function(design, overwrite = c("graph", "anatomy", "recipe", "validation", "simulate")) {
                            #private$record_track_internal()
                            for(obj in overwrite) {
                              private[[obj]] <- design[[obj]]
@@ -709,6 +719,12 @@ Provenance <- R6::R6Class("Provenance",
                          },
 
                          #' @description
+                         #' Get the simulation information
+                         get_simulate = function() {
+                           private$simulate
+                         },
+
+                         #' @description
                          #' Mapping of a role to role
                          #' @param role_from The role from.
                          #' @param role_to The role to.
@@ -944,6 +960,7 @@ Provenance <- R6::R6Class("Provenance",
                          anatomy = NULL,
                          recipe = NULL,
                          graph = NULL,
+                         simulate = NULL,
                          validation = list(rcrds = NULL),
                          # table should only contain the id of levels and factors
                          table = list(units = NULL, trts = NULL, rcrds = NULL),

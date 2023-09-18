@@ -48,6 +48,7 @@ Remember that there could be more than one order.}
 \item \href{#method-Provenance-set_title}{\code{Provenance$set_title()}}
 \item \href{#method-Provenance-set_name}{\code{Provenance$set_name()}}
 \item \href{#method-Provenance-set_validation}{\code{Provenance$set_validation()}}
+\item \href{#method-Provenance-set_simulate}{\code{Provenance$set_simulate()}}
 \item \href{#method-Provenance-reactivate}{\code{Provenance$reactivate()}}
 \item \href{#method-Provenance-deactivate}{\code{Provenance$deactivate()}}
 \item \href{#method-Provenance-fct_id}{\code{Provenance$fct_id()}}
@@ -97,6 +98,7 @@ Remember that there could be more than one order.}
 \item \href{#method-Provenance-get_seed}{\code{Provenance$get_seed()}}
 \item \href{#method-Provenance-get_session_info}{\code{Provenance$get_session_info()}}
 \item \href{#method-Provenance-get_edibble_version}{\code{Provenance$get_edibble_version()}}
+\item \href{#method-Provenance-get_simulate}{\code{Provenance$get_simulate()}}
 \item \href{#method-Provenance-mapping}{\code{Provenance$mapping()}}
 \item \href{#method-Provenance-mapping_to_unit}{\code{Provenance$mapping_to_unit()}}
 \item \href{#method-Provenance-record_step}{\code{Provenance$record_step()}}
@@ -179,6 +181,25 @@ Set the validation.
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-set_simulate"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-set_simulate}{}}}
+\subsection{Method \code{set_simulate()}}{
+Set the simulation process
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$set_simulate(name, process)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{name}}{The name of the process}
+
+\item{\code{process}}{A function to simulate the record}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Provenance-reactivate"></a>}}
 \if{latex}{\out{\hypertarget{method-Provenance-reactivate}{}}}
 \subsection{Method \code{reactivate()}}{
@@ -186,7 +207,7 @@ Reactivate the graph in the provenance object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$reactivate(
   design,
-  overwrite = c("graph", "anatomy", "recipe", "validation")
+  overwrite = c("graph", "anatomy", "recipe", "validation", "simulate")
 )}\if{html}{\out{</div>}}
 }
 
@@ -1082,6 +1103,16 @@ Get the session information
 Get the edibble version.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$get_edibble_version()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-get_simulate"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-get_simulate}{}}}
+\subsection{Method \code{get_simulate()}}{
+Get the simulation information
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$get_simulate()}\if{html}{\out{</div>}}
 }
 
 }
