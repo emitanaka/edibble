@@ -41,8 +41,11 @@ NULL
 fct_nodes <- function(x) {
   prov <- activate_provenance(x)
   fnodes <- prov$fct_nodes
-  if(ncol(fnodes$attrs) == 0) return(fnodes[, c("name", "role")])
-  fnodes[, c("name", "role", "attrs")]
+  nlvls <- map_int(unclass(prov$lvl_nodes), nrow)
+  fnodes$n <- NA_integer_
+  fnodes$n[match(as.numeric(names(nlvls)), fnodes$id)] <- nlvls
+  if(ncol(fnodes$attrs) == 0) return(fnodes[, c("name", "role", "n")])
+  fnodes[, c("name", "role", "n", "attrs")]
 }
 
 #' @rdname design_data
