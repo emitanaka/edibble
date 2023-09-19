@@ -186,7 +186,7 @@ Set the validation.
 \subsection{Method \code{set_simulate()}}{
 Set the simulation process
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$set_simulate(name, process)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$set_simulate(name, process, rcrds)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -195,6 +195,8 @@ Set the simulation process
 \item{\code{name}}{The name of the process}
 
 \item{\code{process}}{A function to simulate the record}
+
+\item{\code{rcrds}}{The record factor name simulating for.}
 }
 \if{html}{\out{</div>}}
 }
@@ -1018,13 +1020,15 @@ subsetted graph
 \subsection{Method \code{save_seed()}}{
 Save the seed
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$save_seed(seed)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$save_seed(seed, type)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{seed}}{A seed.}
+
+\item{\code{type}}{Type.}
 }
 \if{html}{\out{</div>}}
 }
@@ -1112,9 +1116,16 @@ Get the edibble version.
 \subsection{Method \code{get_simulate()}}{
 Get the simulation information
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$get_simulate()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$get_simulate(name)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{name}}{The process name.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Provenance-mapping"></a>}}

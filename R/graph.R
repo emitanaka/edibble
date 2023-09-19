@@ -18,7 +18,7 @@
 #' activate_provenance(takeout())
 #' @export
 activate_provenance <- function(.edibble,
-                                overwrite = c("graph", "anatomy", "recipe", "validation")) {
+                                overwrite = c("graph", "anatomy", "recipe", "validation", "simulate")) {
   des <- edbl_design(.edibble)
   prov <- des$provenance
   if(!is_environment(prov)) {

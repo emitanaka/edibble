@@ -41,7 +41,7 @@ assign_trts <- function(.edibble, order = "random", seed = NULL, constrain = nes
 
   prov <- activate_provenance(.edibble)
   if(.record) prov$record_step()
-  prov$save_seed(seed)
+  prov$save_seed(seed, type = "assign_trts")
 
   fedges <- prov$fct_edges
   allotments <- fedges[fedges$type == "allot", ]
@@ -112,7 +112,7 @@ assign_units <- function(.edibble, order = "random", seed = NULL, constrain = ne
   not_edibble(.edibble)
   prov <- activate_provenance(.edibble)
   if(.record) prov$record_step()
-  prov$save_seed(seed)
+  prov$save_seed(seed, "assign_units")
   # FIXME: check
 
   for(ialloc in seq_along(.edibble$allotment$units)) {

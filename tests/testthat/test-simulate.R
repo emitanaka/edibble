@@ -3,7 +3,7 @@ test_that("simulation works", {
   spd <- design("Split-Plot Design | Split-Unit Design") %>%
     set_units(mainplot = 30,
               subplot = nested_in(mainplot, 4)) %>%
-    set_trts(trt1 = 3,
+    set_trts(trt1 = LETTERS[1:3],
              trt2 = 4) %>%
     allot_trts(trt1 ~ mainplot,
                trt2 ~ subplot) %>%
@@ -14,30 +14,21 @@ test_that("simulation works", {
               type = subplot) %>%
     expect_rcrds(mass > 0,
                  yield > 0,
+                 yield < 100,
                  factor(type, levels = c("A", "B")))
 
-  # autofill all rspds
-  spd %>%
-    autofill_rspds()
 
-  # select dependent factors
-  spd %>%
-    autofill_rspds(mass = c(mainplot, subplot, trt1))
-
-  # maybe not...
-  # spd %>%
-  #  simulate_model(lm(mass ~ trt1),
-  #                 lmer(yield ~ trt2))
-
-  spd %>%
-    simulate_process(mass = function(effects = c("trt11" = 3, "trt12" = 3, "trt13" = -10, "trt14" = -3)) {
+  spd2 <- spd %>%
+    simulate_process(mass = function(A = 3, B = -3, C = 0) {
+        effects <- c(A = A, B = B, C = C)
         effects[trt1] + rnorm(n())
       })
 
-  spd %>%
-    simulate_rcrds(mass = list(effects = c("trt11" = 0, "trt12" = 3, "trt13" = -3, "trt14" = 0)))
+  spd2 %>%
+    simulate_rcrds(mass = with_params(A = 0, B = -2, C = 10,
+                                      .aggregate = mean))
 
-  spd %>%
+  spd3 <- spd %>%
     simulate_process(
     .joint = function(C = matrix(c(1, -0.5, -0.5, 3), 2, 2)) {
       res <- mvtnorm::rmvnorm(n(), sigma = C)
@@ -46,9 +37,23 @@ test_that("simulation works", {
       res
     })
 
-  spd %>%
-    simulate_rcrds(.joint = list())
+  spd3 %>%
+    simulate_rcrds(.joint = with_params(.censor = list(mass = c(NA, 10),
+                                                       yield = c(0, ~max(.x[.x < .upper])))))
 
+
+  # autofill all rspds
+  spd %>%
+    autofill_rcrds()
+
+  # select dependent factors
+  spd %>%
+    autofill_rcrds(mass = c(mainplot, subplot, trt1))
+
+  # maybe not...
+  # spd %>%
+  #  simulate_model(lm(mass ~ trt1),
+  #                 lmer(yield ~ trt2))
 
 
 })

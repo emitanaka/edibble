@@ -21,12 +21,12 @@ design <- function(title = NULL, name = "edibble", .record = TRUE, seed = NULL, 
   if(.record) provenance$record_step()
   if(!is.null(title)) provenance$set_title(title)
   provenance$set_name(name)
-  provenance$save_seed(seed)
+  provenance$save_seed(seed, type = "design")
   structure(list(graph = provenance$get_graph(),
                  provenance = provenance,
                  anatomy = NULL,
                  recipe = NULL,
-                 simulate = NULL,
+                 simulate = list(),
                  context = NULL),
             class = c("edbl_design", "edbl"))
 }

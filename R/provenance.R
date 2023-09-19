@@ -73,9 +73,11 @@ Provenance <- R6::R6Class("Provenance",
                          #' Set the simulation process
                          #' @param name The name of the process
                          #' @param process A function to simulate the record
-                         set_simulate = function(name, process) {
+                         #' @param rcrds The record factor name simulating for.
+                         set_simulate = function(name, process, rcrds) {
                            private$record_track_internal()
-                           private$simulate[[name]] <- process
+                           private$simulate[[name]] <- list(process = process,
+                                                            rcrds = rcrds)
                          },
 
                          #' @description
@@ -661,7 +663,8 @@ Provenance <- R6::R6Class("Provenance",
                          #' @description
                          #' Save the seed
                          #' @param seed A seed.
-                         save_seed = function(seed) {
+                         #' @param type Type.
+                         save_seed = function(seed, type) {
                            private$record_track_internal()
                            if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE))
                              stats::runif(1)
@@ -671,7 +674,7 @@ Provenance <- R6::R6Class("Provenance",
                              set.seed(seed)
                              RNGstate <- structure(seed, kind = as.list(RNGkind()))
                            }
-                           private$seed <- RNGstate
+                           private$seed[[type]] <- RNGstate
                          },
 
                          #' @description
@@ -720,8 +723,10 @@ Provenance <- R6::R6Class("Provenance",
 
                          #' @description
                          #' Get the simulation information
-                         get_simulate = function() {
-                           private$simulate
+                         #' @param name The process name.
+                         get_simulate = function(name) {
+                           if(missing(name)) return(private$simulate)
+                           private$simulate[[name]]
                          },
 
                          #' @description
@@ -952,7 +957,7 @@ Provenance <- R6::R6Class("Provenance",
 
                          title = NULL,
                          name = NULL,
-                         seed = NULL,
+                         seed = list(),
                          edbl_version = NULL,
                          session_info = NULL,
                          trail = NULL,
@@ -960,7 +965,7 @@ Provenance <- R6::R6Class("Provenance",
                          anatomy = NULL,
                          recipe = NULL,
                          graph = NULL,
-                         simulate = NULL,
+                         simulate = list(),
                          validation = list(rcrds = NULL),
                          # table should only contain the id of levels and factors
                          table = list(units = NULL, trts = NULL, rcrds = NULL),
