@@ -254,7 +254,7 @@ Remember that there could be more than one order.</p></dd>
 <h3 id="method-set-simulate-">Method <code>set_simulate()</code><a class="anchor" aria-label="anchor" href="#method-set-simulate-"></a></h3>
 <p>Set the simulation process</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">set_simulate</span><span class="op">(</span><span class="va">name</span>, <span class="va">process</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">set_simulate</span><span class="op">(</span><span class="va">name</span>, <span class="va">process</span>, <span class="va">rcrds</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -265,6 +265,10 @@ Remember that there could be more than one order.</p></dd>
 
 <dt><code>process</code></dt>
 <dd><p>A function to simulate the record</p></dd>
+
+
+<dt><code>rcrds</code></dt>
+<dd><p>The record factor name simulating for.</p></dd>
 
 
 </dl><p></p></div>
@@ -1142,13 +1146,17 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 <h3 id="method-save-seed-">Method <code>save_seed()</code><a class="anchor" aria-label="anchor" href="#method-save-seed-"></a></h3>
 <p>Save the seed</p><div class="section">
 <h4 id="usage-46">Usage<a class="anchor" aria-label="anchor" href="#usage-46"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">save_seed</span><span class="op">(</span><span class="va">seed</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">save_seed</span><span class="op">(</span><span class="va">seed</span>, <span class="va">type</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="arguments-46">Arguments<a class="anchor" aria-label="anchor" href="#arguments-46"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>seed</code></dt>
 <dd><p>A seed.</p></dd>
+
+
+<dt><code>type</code></dt>
+<dd><p>Type.</p></dd>
 
 
 </dl><p></p></div>
@@ -1222,9 +1230,17 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 <h3 id="method-get-simulate-">Method <code>get_simulate()</code><a class="anchor" aria-label="anchor" href="#method-get-simulate-"></a></h3>
 <p>Get the simulation information</p><div class="section">
 <h4 id="usage-54">Usage<a class="anchor" aria-label="anchor" href="#usage-54"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">get_simulate</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">get_simulate</span><span class="op">(</span><span class="va">name</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
+<div class="section">
+<h4 id="arguments-48">Arguments<a class="anchor" aria-label="anchor" href="#arguments-48"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>name</code></dt>
+<dd><p>The process name.</p></dd>
+
+
+</dl><p></p></div>
+</div>
 
 </div><p></p><hr><a id="method-Provenance-mapping"></a><div class="section">
 <h3 id="method-mapping-">Method <code>mapping()</code><a class="anchor" aria-label="anchor" href="#method-mapping-"></a></h3>
@@ -1234,7 +1250,7 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </div>
 
 <div class="section">
-<h4 id="arguments-48">Arguments<a class="anchor" aria-label="anchor" href="#arguments-48"></a></h4>
+<h4 id="arguments-49">Arguments<a class="anchor" aria-label="anchor" href="#arguments-49"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>role_from</code></dt>
 <dd><p>The role from.</p></dd>
 
@@ -1254,7 +1270,7 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </div>
 
 <div class="section">
-<h4 id="arguments-49">Arguments<a class="anchor" aria-label="anchor" href="#arguments-49"></a></h4>
+<h4 id="arguments-50">Arguments<a class="anchor" aria-label="anchor" href="#arguments-50"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>id</code></dt>
 <dd><p>The id of the corresponding node.</p></dd>
 
@@ -1278,7 +1294,7 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </div>
 
 <div class="section">
-<h4 id="arguments-50">Arguments<a class="anchor" aria-label="anchor" href="#arguments-50"></a></h4>
+<h4 id="arguments-51">Arguments<a class="anchor" aria-label="anchor" href="#arguments-51"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>from, to</code></dt>
 <dd><p>The factor id.</p></dd>
 
@@ -1298,7 +1314,7 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </div>
 
 <div class="section">
-<h4 id="arguments-51">Arguments<a class="anchor" aria-label="anchor" href="#arguments-51"></a></h4>
+<h4 id="arguments-52">Arguments<a class="anchor" aria-label="anchor" href="#arguments-52"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>code</code></dt>
 <dd><p>The code to record.</p></dd>
 
@@ -1314,7 +1330,7 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </div>
 
 <div class="section">
-<h4 id="arguments-52">Arguments<a class="anchor" aria-label="anchor" href="#arguments-52"></a></h4>
+<h4 id="arguments-53">Arguments<a class="anchor" aria-label="anchor" href="#arguments-53"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>id</code></dt>
 <dd><p>The id of the corresponding node.</p></dd>
 
@@ -1342,7 +1358,7 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </div>
 
 <div class="section">
-<h4 id="arguments-53">Arguments<a class="anchor" aria-label="anchor" href="#arguments-53"></a></h4>
+<h4 id="arguments-54">Arguments<a class="anchor" aria-label="anchor" href="#arguments-54"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>id</code></dt>
 <dd><p>The id of the corresponding node.</p></dd>
 
@@ -1366,7 +1382,7 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </div>
 
 <div class="section">
-<h4 id="arguments-54">Arguments<a class="anchor" aria-label="anchor" href="#arguments-54"></a></h4>
+<h4 id="arguments-55">Arguments<a class="anchor" aria-label="anchor" href="#arguments-55"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
 
