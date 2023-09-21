@@ -12,9 +12,8 @@
 #'
 #' @details
 #' When creating a function, internally you can refer to any of the factors without referring
-#' to the actual data. The data referred to is expected to be from the full data. If the data
-#' related to unit of the record, then you can use the special syntax `.datarcrd` to refer to it
-#' internally. Like in tidyverse, syntax `.data` is reserved for the full data and `.env` can be
+#' to the actual data. The data referred to is expected to be from the full data.
+#' Like in tidyverse, syntax `.data` is reserved for the full data and `.env` can be
 #' used to refer to environment variables.
 #'
 #' You can use the syntax `n()` to refer to `nrow(.data)` or `n(fct)` where `fct` corresponds to
@@ -37,8 +36,8 @@ simulate_process <- function(.data, ...) {
   if(length(nms) == 0) return(.data)
 
   # anything starting with a "." is assumed to be a placeholder name
-  ph_nms <- nms[grepl("^[.]", nms)]
-  rcrd_nms <- setdiff(nms, ph_nms)
+  process_nms <- nms[grepl("^[.]", nms)]
+  rcrd_nms <- setdiff(nms, process_nms)
 
   # this works but it doesn't work when moved outside...
   simulate_env <- env(n = function(...) {
@@ -61,8 +60,8 @@ simulate_process <- function(.data, ...) {
     }
   }
 
-  if(length(ph_nms)) {
-    for(anm in ph_nms) {
+  if(length(process_nms)) {
+    for(anm in process_nms) {
       # e$.datarcrd <- FILL
       f <- eval_tidy(dots[[anm]], data = .data, env = simulate_env)
       Y <- eval_tidy(f(), data = .data, env = simulate_env)
@@ -87,13 +86,20 @@ simulate_process <- function(.data, ...) {
 #' @param .censor The value to censor if it outside the valid values. If the
 #'  value has a lower and upper bound then it should be a vector of size 2. Use
 #'  -Inf or Inf if you don't want to censor either value. You can use a list if
-#'  you want a different censoring for different records.
+#'  you want a different censoring for different records where the name corresponds to
+#'  the name of the record. If you want to apply a default value/function for censoring
+#'  then use the name ".default". You can use a function instead of a value. The function
+#'  may be specified by as a lambda function. The object `.lower` and `.upper` are
+#'  special reserved values, corresponding to the limits given from valid values,
+#'  that can be used within this function.
 #' @param .aggregate The function for aggregation if the response values differ
 #'  within the same unit level for the record. Use `NA` if you don't want to aggregate.
 #'  By default, it will get the mean or mode depending on the encoding
 #'  (numeric is mean, mode for character or factor), or if absent,
 #'  based on returned encoding. It can be a named list where the names correspond to
 #'  the record name and the values corresponding to a function.
+#'
+#'
 #' @export
 with_params <- function(..., .censor = NA, .aggregate = NULL) {
   params <- list2(...)
@@ -113,9 +119,12 @@ simulate_rcrds <- function(.data, ..., .seed = NULL) {
   prov <- activate_provenance(.data)
   prov$save_seed(.seed, type = "simulate_rcrds")
   prnames <- names(dots)
-  #srcrds_list <- map(prnames, function(x) prov$get_simulate(x)$rcrds)
-  #srcrds <- unlist(srcrds_list)
-  #if(any(duplicated(srcrds))) abort(paste0("You are trying to simulate ", .combine_words(srcrds[duplicated(srcrds)]), " in multiple processes."))
+
+  srcrds_list <- map(prnames, function(x) prov$get_simulate(x)$rcrds)
+  srcrds <- unlist(srcrds_list)
+  if(any(duplicated(srcrds))) warn(paste0("You are trying to simulate ",
+                                          .combine_words(srcrds[duplicated(srcrds)], fun = cli::col_blue),
+                                          " in multiple processes. The values will be overwritten."))
 
   # this works but it doesn't work when moved outside...
   simulate_env <- env(n = function(...) {
@@ -127,10 +136,12 @@ simulate_rcrds <- function(.data, ..., .seed = NULL) {
 
   for(aprocess in prnames) {
     process <- prov$get_simulate(aprocess)$process
+    if(is_null(process)) abort(paste0("The supplied process, ", cli::col_blue(aprocess), ", doesn't exist"))
     srcrds <- prov$get_simulate(aprocess)$rcrds
     y <- eval_tidy(do.call(process, dots[[aprocess]]$params),
                    data = .data, env = simulate_env)
 
+    # now assign the values to the data, but apply aggregation then censorship
     if(grepl("^[.]", aprocess)) {
       for(acol in colnames(y)) {
         .data[[acol]] <- get_rcrd_values(acol, prov, dots[[aprocess]]$aggregate,
@@ -158,6 +169,8 @@ get_rcrd_values <- function(rname, prov, aggfn, .data, y, censor) {
   if(rname %in% names(vrcrds)) {
     if(is.list(censor) && rname %in% names(censor)) {
       get_censored_value(vals, vrcrds[[rname]], censor[[rname]])
+    } else if(is.list(censor) && ".default" %in% names(censor)) {
+      get_censored_value(vals, vrcrds[[rname]], censor[[".default"]])
     } else {
       get_censored_value(vals, vrcrds[[rname]], censor)
     }
@@ -167,16 +180,34 @@ get_rcrd_values <- function(rname, prov, aggfn, .data, y, censor) {
 }
 
 get_censored_value <- function(y, valid, censor) {
+  if(is_null(valid)) return(y)
   type <- valid$record
   if(type=="numeric") {
     value <- valid$value
+    valid_env <- rlang::current_env()
+    if(length(value) == 1) {
+      valid_env$.upper <- valid_env$.lower <- value
+    } else if(length(value) == 2) {
+      valid_env$.lower <- value[1]
+      valid_env$.upper <- value[2]
+    }
+    if(valid$operator!="between" & length(censor)!=1) {
+      warn("There should be only one censor value. Only the first value used.")
+      censor <- censor[1]
+    }
+    if(valid$operator=="between" & length(censor)!=2) {
+      warn("There should be only two censor values.")
+      if(length(censor) > 2) censor <- censor[1:2]
+      if(length(censor) == 1) censor <- c(censor, NA)
+      if(length(censor) == 0) censor <- c(NA, NA)
+    }
     switch(valid$operator,
-           "greaterThan" = return_censor_value(y, y > value, censor),
-           "greaterThanOrEqual" = return_censor_value(y, y >= value, censor),
-           "equal" = return_censor_value(y, y == value, .censor),
-           "between" = return_censor_value(y, y > value[1] & y < value[2], censor, value),
-           "lessThanOrEqual" = return_censor_value(y, y <= value, censor),
-           "lessThan" = return_censor_value(y, y < value, censor))
+           "greaterThan" = return_censor_value(y, y > value, censor, valid_env = valid_env),
+           "greaterThanOrEqual" = return_censor_value(y, y >= value, censor, valid_env = valid_env),
+           "equal" = return_censor_value(y, y == value, .censor, valid_env = valid_env),
+           "between" = return_censor_value(y, y > value[1] & y < value[2], censor, value, valid_env = valid_env),
+           "lessThanOrEqual" = return_censor_value(y, y <= value, censor, valid_env = valid_env),
+           "lessThan" = return_censor_value(y, y < value, censor, valid_env = valid_env))
   } else if(type=="factor") {
     ind <- y %in% valid$values
     if(is_function(censor)) {
@@ -188,20 +219,22 @@ get_censored_value <- function(y, valid, censor) {
   }
 }
 
-return_censor_value <- function(y, ind, censor, values = NULL, ind_censor = ind) {
+return_censor_value <- function(y, ind, censor, values = NULL, ind_censor = ind, valid_env = NULL) {
   if(is_null(values)) {
+    if(is_formula(censor)) censor <- as_function(censor)
     if(is_function(censor)) {
+      environment(censor) <- valid_env
       y[!is.na(ind) & !ind] <- censor(y[!is.na(ind_censor) & ind_censor])
     } else if(!is.infinite(censor)) {
       y[!is.na(ind) & !ind] <- censor
     }
   } else {
     if(length(censor) == 2) {
-      y <- return_censor_value(y, y > values[1], censor[[1]], ind_censor = ind)
-      y <- return_censor_value(y, y < values[2], censor[[2]], ind_censor = ind)
+      y <- return_censor_value(y, y > values[1], censor[[1]], ind_censor = ind, valid_env = valid_env)
+      y <- return_censor_value(y, y < values[2], censor[[2]], ind_censor = ind, valid_env = valid_env)
     } else {
-      y <- return_censor_value(y, y > values[1], censor, ind_censor = ind)
-      y <- return_censor_value(y, y < values[2], censor, ind_censor = ind)
+      y <- return_censor_value(y, y > values[1], censor, ind_censor = ind, valid_env = valid_env)
+      y <- return_censor_value(y, y < values[2], censor, ind_censor = ind, valid_env = valid_env)
     }
   }
   y
