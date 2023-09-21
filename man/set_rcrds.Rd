@@ -34,7 +34,8 @@ An edibble design.
 \description{
 This function creates new nodes to edibble graph with the name
 corresponding to either the intended response that will be measured or
-a variable to be recorded.
+a variable to be recorded. Avoid record names staring with a "." as these
+are reserved for other purposes downstream.
 }
 \examples{
 takeout(menu_crd(t = 4, n = 10)) \%>\%

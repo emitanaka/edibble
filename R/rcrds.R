@@ -4,7 +4,8 @@
 #' @description
 #' This function creates new nodes to edibble graph with the name
 #' corresponding to either the intended response that will be measured or
-#' a variable to be recorded.
+#' a variable to be recorded. Avoid record names staring with a "." as these
+#' are reserved for other purposes downstream.
 #'
 #' @inheritParams set_units
 #' @param ... Name-value pair. The value should correspond to a single name of the
