@@ -307,16 +307,6 @@ with_variables <- function(...,
 }
 
 
-str_dist_normal <- function(fct) sprintf("rnorm(n(%s), %.1f, %.1f)", fct, runif(1, -10, 10), runif(1, 0.5, 10))
-str_dist_uniform <- function(fct) {
-  vals <- sort(runif(2, -10, 10))
-  sprintf("runif(n(%s), %.1f, %.1f)", fct, vals[1], vals[2])
-}
-str_dist_t <- function(fct) sprintf("rt(n(%s), %.0f)", fct, runif(1, 1, 30))
-str_dist_exponential <- function(fct) sprintf("rexp(n(%s), %.1f)", fct, runif(1, 0, 30))
-str_dist_gamma <- function(fct) sprintf("rgamma(n(%s), %.0f, %.0f)", fct, runif(1, 0, 30), runif(1, 0, 30))
-str_dist_beta <- function(fct) sprintf("rbeta(n(%s), %.0f, %.0f)", fct, runif(1, 0, 30), runif(1, 0, 30))
-str_dist_cauchy <- function(fct) sprintf("rcauchy(n(%s), %.1f, %.1f)", fct, runif(1, -10, 10), runif(1, 0, 10))
 
 #' Autofill the records
 #'
