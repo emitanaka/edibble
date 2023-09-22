@@ -44,7 +44,11 @@ reference:
   #- plot_fct_graph
   #- plot_lvl_graph
   - examine_recipe
-  #- simulate_rcrds
+  - simulate_process
+  - simulate_rcrds
+  - with_params
+  - autofill_rcrds
+  - with_variables
   - anatomy
 - title: "Named experimental designs"
   desc: >
@@ -108,3 +112,4 @@ reference:
   - column
   - is_provenance
   - label_seq
+  - rescale_rcrd
