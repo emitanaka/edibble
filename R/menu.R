@@ -8,13 +8,13 @@ new_recipe_design <- function(name, name_full = name, code = NULL) {
             class = "recipe_design")
 }
 
-recipe_design_add_code <- function(.named, ...) {
+object_add_code <- function(.object, ...) {
   dots <- list2(...)
   for(x in dots) {
-    .named$code <- sprintf('%s %%>%%
-  %s', .named$code, x)
+    .object$code <- sprintf('%s %%>%%
+  %s', .object$code, x)
   }
-  .named
+  .object
 }
 
 #' @export
@@ -28,6 +28,7 @@ print.recipe_design <- function(x, ...) {
 random_integer_small <- function(min = 1, max = 10) min + sample(max - min, 1)
 random_integer_medium <- function(min = 1) min + sample(10:25, 1)
 random_seed_number <- function() sample(1000, 1)
+random_true_false <- function() sample(c(TRUE, FALSE), 1)
 
 #' Prepare a randomised complete block design
 #'
@@ -48,7 +49,7 @@ menu_rcbd <- function(t = random_integer_small(),
   block <- edibble_decorate("units")("block")
   unit <- edibble_decorate("units")("unit")
   trt <- edibble_decorate("trts")("trt")
-  des <- recipe_design_add_code(des,
+  des <- object_add_code(des,
         sprintf('set_units(%s = %d,
             %s = nested_in(%s, %d))', block, r, unit, block, t),
         sprintf('set_trts(%s = %d)', trt, t),
@@ -79,7 +80,7 @@ menu_graeco <- function(t = random_integer_small(),
   trt1 <- edibble_decorate("trts")("trt1")
   trt2 <- edibble_decorate("trts")("trt2")
 
-  des <- recipe_design_add_code(des,
+  des <- object_add_code(des,
                               sprintf('set_units(%s = %d,
             %s = %d,
             %s = crossed_by(%s, %s))', row, t, col, t, unit, row, col),
@@ -126,7 +127,7 @@ menu_crd <- function(t = random_integer_small(),
   unit <- edibble_decorate("units")("unit")
   trt <- edibble_decorate("trts")("trt")
 
-  des <- recipe_design_add_code(des,
+  des <- object_add_code(des,
                                sprintf('set_units(%s = %d)', unit, n),
                                sprintf('set_trts(%s = %d)', trt, t),
                                sprintf('allot_trts(%s ~ %s)', trt, unit),
@@ -175,7 +176,7 @@ menu_factorial <- function(trt = c(random_integer_small(),
            " = ", trt[i])),
     collapse = ",\n           ")
 
-  des <- recipe_design_add_code(des,
+  des <- object_add_code(des,
                                 sprintf('set_units(%s)', unit_str),
                                 sprintf('set_trts(%s)', trt_str),
                                 sprintf('allot_trts(~%s)', unit),
@@ -216,7 +217,7 @@ menu_split <- function(t1 = random_integer_small(),
   trt1 <- edibble_decorate("trts")("trt1")
   trt2 <- edibble_decorate("trts")("trt2")
 
-  des <- recipe_design_add_code(des,
+  des <- object_add_code(des,
                                sprintf('set_units(%s = %d,
              %s = nested_in(%s, %d))', mainplot, t1 * r, subplot, mainplot, t2),
               sprintf('set_trts(%s = %d,
@@ -264,7 +265,7 @@ menu_bibd <- function(t = random_integer_small(min = 3),
   block <- edibble_decorate("units")("block")
   unit <- edibble_decorate("units")("unit")
   trt <- edibble_decorate("trts")("trt")
-  des <- recipe_design_add_code(des,
+  des <- object_add_code(des,
                                 sprintf('set_units(%s = %d,
             %s = nested_in(%s, %d))', block, b, unit, block, k),
             sprintf('set_trts(%s = %d)', trt, t),
@@ -298,7 +299,7 @@ menu_strip <- function(t1 = random_integer_small(),
   trt1 <- edibble_decorate("trts")("trt1")
   trt2 <- edibble_decorate("trts")("trt2")
 
-  des <- recipe_design_add_code(des,
+  des <- object_add_code(des,
                                 sprintf('set_units(%s = %d,
             %s = nested_in(%s, %d),
             %s = nested_in(%s, %d),
@@ -337,7 +338,7 @@ menu_youden <- function(nc = random_integer_small(),
   unit <- edibble_decorate("units")("unit")
   trt <- edibble_decorate("trts")("trt")
 
-  des <- recipe_design_add_code(des,
+  des <- object_add_code(des,
                                sprintf('set_units(%s = %d,
             %s = %d,
             %s = crossed_by(%s, %s))', row, t, col, nc, unit, row, col),
@@ -373,7 +374,7 @@ menu_lsd <- function(t = random_integer_small(),
   unit <- edibble_decorate("units")("unit")
   trt <- edibble_decorate("trts")("trt")
 
-  des <- recipe_design_add_code(des,
+  des <- object_add_code(des,
                                sprintf('set_units(%s = %d,
             %s = %d,
             %s = crossed_by(%s, %s))', row, t, col, t, unit, row, col),
@@ -406,7 +407,7 @@ menu_hyper_graeco <- function(t = random_integer_small(),
   unit <- edibble_decorate("units")("unit")
   trt <- edibble_decorate("trts")("trt")
 
-  des <- recipe_design_add_code(des,
+  des <- object_add_code(des,
                                 sprintf('set_units(%s = %d,
             %s = %d,
             %s = %d,
@@ -564,7 +565,7 @@ examine_recipe.edbl_design <- function(x, ...) {
     # change this so "," starts a new line
     deparse(as.call(lline))
   })
-  recipe_design_add_code(recipe, !!!as.list(code))
+  object_add_code(recipe, !!!as.list(code))
 }
 
 #' @export

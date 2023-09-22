@@ -41,9 +41,9 @@ simulate_process <- function(.data, ...) {
 
   # this works but it doesn't work when moved outside...
   simulate_env <- env(n = function(...) {
-    loc <- eval_select(c(...), data = .data)
-    if(length(loc) == 0) return(nrow(.data))
-    v <- map_chr(1:nrow(.data), paste(.data[loc][i, ], collapse = "_"))
+    dots <- list2(...)
+    if(length(dots) == 0) return(nrow(.data))
+    v <- do.call(paste, dots)
     length(unique(v))
   })
 
@@ -98,7 +98,7 @@ simulate_process <- function(.data, ...) {
 #'  (numeric is mean, mode for character or factor), or if absent,
 #'  based on returned encoding. It can be a named list where the names correspond to
 #'  the record name and the values corresponding to a function.
-#'
+#' @seealso [simulate_rcrds()]
 #'
 #' @export
 with_params <- function(..., .censor = NA, .aggregate = NULL) {
@@ -270,4 +270,255 @@ aggregate_values <- function(y, group, fn) {
    y
  }
 }
+
+
+
+#' A helper function to set variables that the record is dependent on.
+#'
+#' The other options give are characteristics of the record (not the independent variables).
+#'
+#' @param ... A series of factors in which the record is explicitly dependent upon (tidyselect campatible).
+#' @param .missing A logical value indicating whether there should be some
+#'   missing values. Default is FALSE. The missing values are introduced at random.
+#'   It can also be numeric of between 0 and 1 giving the proportion of missing values.
+#' @param .interaction Whether there should be treatment interaction effects.
+#' @param .discrete Whether to make the response value discrete or not.
+#' @param .linear Whether to include non-linear term or not. The value is always additive.
+#' @param .dist The random distribution to use for numerical values
+#'  (either "normal", "uniform", "exponential", "gamma", "beta", "cauchy", "chisq", "f", "t", "poisson", "weibull").
+#'  The default choice is random out of these with higher chances of "normal".
+#' @seealso [autofill_rcrds()]
+#' @export
+with_variables <- function(...,
+                           .missing = FALSE,
+                           .interaction = random_true_false(),
+                           .discrete = FALSE,
+                           .linear = random_true_false(),
+                           .error_dist = NULL) {
+  fcts <- enquos(...)
+  list(vars = fcts,
+       missing = .missing,
+       interaction = .interaction,
+       linear = .linear,
+       discrete = .discrete,
+       error_dist = .error_dist %||% sample(c("normal", "uniform", "t", "exponential", "gamma",
+                                  "beta", "cauchy", "chisq", "f",
+                                  "poisson", "weibull"), 1, prob = c(0.4, 0.2, 0.2, rep(0.025, 8))))
+}
+
+
+str_dist_normal <- function(fct) sprintf("rnorm(n(%s), %.1f, %.1f)", fct, runif(1, -10, 10), runif(1, 0.5, 10))
+str_dist_uniform <- function(fct) {
+  vals <- sort(runif(2, -10, 10))
+  sprintf("runif(n(%s), %.1f, %.1f)", fct, vals[1], vals[2])
+}
+str_dist_t <- function(fct) sprintf("rt(n(%s), %.0f)", fct, runif(1, 1, 30))
+str_dist_exponential <- function(fct) sprintf("rexp(n(%s), %.1f)", fct, runif(1, 0, 30))
+str_dist_gamma <- function(fct) sprintf("rgamma(n(%s), %.0f, %.0f)", fct, runif(1, 0, 30), runif(1, 0, 30))
+str_dist_beta <- function(fct) sprintf("rbeta(n(%s), %.0f, %.0f)", fct, runif(1, 0, 30), runif(1, 0, 30))
+str_dist_cauchy <- function(fct) sprintf("rcauchy(n(%s), %.1f, %.1f)", fct, runif(1, -10, 10), runif(1, 0, 10))
+
+#' Autofill the records
+#'
+#' This function fills the values of the record factors by automatically
+#' choosing a simulation process. It tries to be smart by ensuring to use
+#' values that is within expectation.
+#'
+#' @param .data An edibble data.
+#' @param ... If supplied, it is a name-value pair where the name should
+#'   correspond to the record factor name and value is the f
+#' @param .seed The seed number.
+#' @export
+autofill_rcrds <- function(.data, ..., .seed = NULL) {
+  prov <- activate_provenance(.data)
+  prov$save_seed(.seed, type = "autofill_rcrds")
+  dots <- enquos(..., .named = TRUE)
+  tnames <- prov$trt_names()
+  rnames <- prov$rcrd_names()
+  unames <- prov$unit_names()
+  r_to_u <- map_chr(rnames, function(name) {
+    uids <- prov$mapping_to_unit(id = prov$fct_id(name = name))
+    prov$fct_names(id = uids)
+  })
+  vrcrds <- prov$get_validation(type = "rcrds")
+  deps <- map(seq_along(r_to_u), function(i) {
+    uname <- r_to_u[i]
+    rname <- rnames[i]
+    default_opts <- with_variables()
+    list(type = ifelse(rname %in% names(vrcrds), vrcrds[[rname]]$record, NA),
+         rcrd_levels = if(rname %in% names(vrcrds)) vrcrds[[rname]]$values,
+         unit = uname,
+         trts = sample(tnames, size = sample(0:length(tnames), 1)),
+         rcrds = character(),
+         missing = default_opts$missing,
+         interaction = default_opts$interaction,
+         linear = default_opts$linear,
+         discrete = default_opts$discrete,
+         error_dist = default_opts$error_dist)
+  })
+
+  names(deps) <- rnames
+  if(length(dots)) {
+    for(rname in names(dots)) {
+      depends <- dots[[rname]]
+      fnames <- names(.data)[tidyselect::eval_select(depends$vars, .data)]
+      deps[[rname]] <- list(type = deps[[rname]]$type,
+                            rcrd_levels = deps[[rname]]$rcrd_levels,
+                            unit = intersect(fnames, unames),
+                            trts = intersect(fnames, tnames),
+                            rcrds = setdiff(fnames, c(unames, tnames)),
+                            missing = depends$missing,
+                            interaction = depends$interaction,
+                            linear = depends$linear,
+                            discrete = depends$discrete,
+                            error_dist = depends$error_dist)
+    }
+  }
+
+
+  process_functions = character()
+  processes = character()
+  for(rname in names(deps)) {
+    code_list <- list(process_code = character(),
+                      model_code = list())
+
+    dep_fcts <- c(deps[[rname]]$unit, deps[[rname]]$trts, deps[[rname]]$rcrds)
+    if(is.na(deps[[rname]]$type)) {
+      code_list <- effects_code(dep_fcts, .data, code_list)
+      code_adjust_y <- ""
+    } else if(deps[[rname]]$type=="numeric") {
+      if(vrcrds[[rname]]$operator == "equal" | (vrcrds[[rname]]$operator == "between" && vrcrds[[rname]]$value[1] == vrcrds[[rname]]$value[2])) {
+        code_list <- list(process_code = "",
+                          model_code = "")
+        code_adjust_y <- sprintf("rep(%f, n())", deps[[rname]]$value)
+      } else {
+        valid_lower <- switch(vrcrds[[rname]]$operator,
+                              "greaterThan" = vrcrds[[rname]]$value,
+                              "greaterThanOrEqual" = vrcrds[[rname]]$value,
+                              "equal" = vrcrds[[rname]]$value,
+                              "between" = vrcrds[[rname]]$value[1],
+                              "lessThanOrEqual" = NA,
+                              "lessThan" = NA)
+        valid_upper <- switch(vrcrds[[rname]]$operator,
+                              "greaterThan" = NA,
+                              "greaterThanOrEqual" = NA,
+                              "equal" = vrcrds[[rname]]$value,
+                              "between" = vrcrds[[rname]]$value[2],
+                              "lessThanOrEqual" = vrcrds[[rname]]$value,
+                              "lessThan" = vrcrds[[rname]]$value)
+        code_list <- effects_code(dep_fcts, .data, code_list)
+        code_adjust_y <- sprintf("edibble::rescale_rcrd(y, lower = %f, upper = %f)", valid_lower, valid_upper)
+      }
+    } else if(deps[[rname]]$type=="factor") {
+      nlvls <- length(deps[[rname]]$rcrd_levels)
+      if(nlvls==1) {
+        code_list <- list(process_code = "",
+                          model_code = "")
+        code_adjust_y <- sprintf("rep(%s, n())", deps[[rname]]$rcrd_levels[1])
+      } else {
+        code_list <- effects_code(dep_fcts, .data, code_list, nlvls)
+        code_adjust_y <- switch(as.character(nlvls),
+                                "2" = sprintf("ifelse(1 / (1 + exp(-y)) > 0.5, '%s', '%s')", deps[[rname]]$rcrd_levels[1], deps[[rname]]$rcrd_levels[2]),
+                                {
+                                  c(sprintf("res <- as.data.frame(lapply(1:%d, function(i) 1 / (1 + exp(-y[[i]]))))", nlvls),
+                                    sprintf("        c(%s)[apply(res, 1, which.max)]", paste0(paste0("'", deps[[rname]]$rcrd_levels, "'"), collapse = ", ")))
+                                })
+      }
+    } else {
+      # if response is other than numeric or factor, don't simulate for now
+      # and go to the next record factor
+      next
+    }
+
+    process_functions <- c(process_functions, sprintf('
+      %s = function() {
+        set.seed(%d)\n%s
+        %s
+        %s
+      }', rname,
+        random_seed_number(),
+        paste0(code_list$process_code, collapse = "\n"),
+        paste0(unlist(code_list$model_code), collapse = "\n        "),
+        paste0(code_adjust_y, collapse = "\n")))
+
+    processes <- c(processes, sprintf('%s = with_params()', rname))
+  }
+
+
+  simulate_processes <- sprintf("simulate_process(%s)", paste(process_functions, collapse = ",\n"))
+  simulate_rcrds <- paste0('simulate_rcrds(', paste0(processes, collapse = ',\n                  '), ')')
+  final_code <- parse(text = paste(".data %>%\n  ", simulate_processes, "%>%\n  ", simulate_rcrds))
+  eval(final_code)
+}
+
+
+
+effects_code <- function(dep_fcts, .data, code_list, nlevels = 1) {
+  # initialise
+  if(nlevels <= 2) {
+    code_list$model_code[[1]] <- character()
+    for(fct in dep_fcts) {
+      fct_class <- class(.data[[fct]])
+      nfct <- length(unique(.data[[fct]]))
+      if("numeric" %in% fct_class) {
+        code_list$process_code <- c(code_list$process_code,
+                                    sprintf('%s_degree <- sample(1:%d, 1)', fct, ifelse(nfct > 5, 5, nfct)),
+                                    sprintf('%s_effects <- as.vector(poly(%s, %s_degree) %*% rnorm(%s_degree, 0, 10))',
+                                            fct, fct, fct, fct))
+        code_list$model_code[[1]] <- c(code_list$model_code[[1]], sprintf("%s_effects", fct))
+
+        # logical not accounted for
+      } else if(any(c("factor", "character") %in% fct_class)) {
+        code_list$process_code <- c(code_list$process_code,
+                                        sprintf('        %s_effects <- setNames(rnorm(%d, 0, 10), unique(%s))',
+                                                fct, nfct, fct))
+        code_list$model_code[[1]] <- c(code_list$model_code[[1]], sprintf("%s_effects[%s]", fct, fct))
+      }
+    }
+    # combine
+    code_list$model_code[[1]] <- paste0("y <- ", paste0(code_list$model_code[[1]], collapse = " + "))
+  } else {
+    for(i in seq(nlevels)) code_list$model_code[[i]] <- character()
+    for(fct in dep_fcts) {
+      fct_class <- class(.data[[fct]])
+      nfct <- length(unique(.data[[fct]]))
+      if("numeric" %in% fct_class) {
+        for(ilevel in seq(nlevels)) {
+          if(ilevel == 1) {
+            code_list$process_code <- c(code_list$process_code,
+                                        '        y <- list()',
+                                        sprintf('        %s_degree <- list()', fct),
+                                        sprintf('        %s_effects <- list()', fct))
+          }
+          code_list$process_code <- c(code_list$process_code,
+                                      sprintf('        %s_degree[[%d]] <- sample(1:%d, 1)', fct, ilevel, nfct),
+                                      sprintf('        %s_effects[[%d]] <- as.vector(poly(%s, %s_degree[[%d]]) %*% rnorm(%s_degree[[%d]], 0, 10))',
+                                              fct, ilevel, fct, fct, ilevel, fct, ilevel))
+          code_list$model_code[[ilevel]] <- c(code_list$model_code[[ilevel]], sprintf("%s_effects[[%d]]", fct, ilevel))
+        }
+      } else if(any(c("factor", "character") %in% fct_class)) {
+        for(ilevel in seq(nlevels)) {
+          if(ilevel == 1) {
+            code_list$process_code <- c(code_list$process_code,
+                                        '        y <- list()',
+                                        sprintf('        %s_effects <- list()', fct))
+          }
+          code_list$process_code <- c(code_list$process_code,
+                                      sprintf('        %s_effects[[%d]] <- setNames(rnorm(%d, 0, 10), unique(%s))',
+                                              fct, ilevel, nfct, fct))
+          code_list$model_code[[ilevel]] <- c(code_list$model_code[[ilevel]], sprintf("%s_effects[[%d]][%s]", fct, ilevel, fct))
+        }
+      }
+    }
+    # combine
+    for(ilevel in seq(nlevels)) {
+      code_list$model_code[[ilevel]] <- paste0(sprintf("y[[%d]] <- ", ilevel),
+                                               paste0(code_list$model_code[[ilevel]], collapse = " + "))
+    }
+  }
+  code_list
+}
+
+
+
 

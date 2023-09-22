@@ -6,6 +6,8 @@
   instead of `lvls()`. 
 * Added new functions `count_by()` and `split_by()`.
 * Added ability to specify conditional treatment.
+* The `simuluate_rcrds()` has now a facelift with delineation of the process specification to `simulate_process()`. 
+* `autofill_rcrds()` implemented.
 
 # edibble 1.0.0
 

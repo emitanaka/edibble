@@ -303,3 +303,31 @@ add_edibble_code <- function(.edibble, code) {
     }
   }
 }
+
+
+#' Rescale a numerical vector
+#'
+#' Similar to [scales::rescale()] but it has a different
+#' behaviour when only upper or lower bound is given.
+#'
+#' @param x A numerical vector.
+#' @param lower The lower bound.
+#' @param upper The upper bound.
+#' @export
+rescale_rcrd <- function(x, lower = NA, upper = NA) {
+  minx <- min(x, na.rm = TRUE)
+  maxx <- max(x, na.rm = TRUE)
+  if(is.na(lower) & is.na(upper)) return(x)
+  if(is.na(lower) & !is.na(upper)) {
+    shift <- maxx - upper + .Machine$double.xmin
+    if(shift < 0) return(x)
+    return(x - shift)
+  }
+  if(!is.na(lower) & is.na(upper)) {
+    shift <- minx - lower - .Machine$double.xmin
+    if(shift >= 0) return(x)
+    return(x - shift)
+  }
+  (x - minx) / (maxx - minx) * (upper - .Machine$double.xmin - lower) + lower + .Machine$double.xmin
+}
+

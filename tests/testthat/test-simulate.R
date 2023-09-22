@@ -15,7 +15,7 @@ test_that("simulation works", {
     expect_rcrds(mass > 0,
                  yield > 0,
                  yield < 100,
-                 factor(type, levels = c("A", "B")))
+                 factor(type, levels = c("a", "b", "c")))
 
 
   spd2 <- spd %>%
@@ -75,12 +75,12 @@ test_that("simulation works", {
 
 
   # autofill all rspds
-  #spd %>%
-  #  autofill_rcrds()
+  spd %>%
+    autofill_rcrds()
 
   # select dependent factors
-  #spd %>%
-  #  autofill_rcrds(mass = c(mainplot, subplot, trt1))
+  spd %>%
+    autofill_rcrds(mass = with_variables(mainplot, subplot, trt1))
 
   # maybe not...
   # spd %>%
