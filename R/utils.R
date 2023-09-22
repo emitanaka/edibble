@@ -319,14 +319,14 @@ rescale_rcrd <- function(x, lower = NA, upper = NA) {
   maxx <- max(x, na.rm = TRUE)
   if(is.na(lower) & is.na(upper)) return(x)
   if(is.na(lower) & !is.na(upper)) {
-    shift <- maxx - upper + .Machine$double.xmin
+    shift <- maxx - upper
     if(shift < 0) return(x)
-    return(x - shift)
+    return(x - shift + .Machine$double.xmin)
   }
   if(!is.na(lower) & is.na(upper)) {
-    shift <- minx - lower - .Machine$double.xmin
+    shift <- minx - lower
     if(shift >= 0) return(x)
-    return(x - shift)
+    return(x - shift + .Machine$double.xmin)
   }
   (x - minx) / (maxx - minx) * (upper - .Machine$double.xmin - lower) + lower + .Machine$double.xmin
 }

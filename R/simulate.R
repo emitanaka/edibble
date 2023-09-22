@@ -196,7 +196,7 @@ get_censored_value <- function(y, valid, censor) {
       censor <- censor[1]
     }
     if(valid$operator=="between" & length(censor)!=2) {
-      warn("There should be only two censor values.")
+      if(!is.na(censor)) warn("There should be only two censor values.")
       if(length(censor) > 2) censor <- censor[1:2]
       if(length(censor) == 1) censor <- c(censor, NA)
       if(length(censor) == 0) censor <- c(NA, NA)
