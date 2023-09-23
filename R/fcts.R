@@ -58,7 +58,10 @@ set_fcts <- function(.edibble, ..., .class = NULL,
 #' @noRd
 new_edibble_fct <- function(labels = character(), levels = unique(labels),
                             name = character(), rep = NULL, ..., class = NULL) {
-  x <- new_vctr(labels, levels = levels, name = name,
+  # don't make the attribute name
+  # as this triggers the warning message in ggplot2:
+  # In attr(x, "n") : partial match of 'n' to 'name'
+  x <- new_vctr(labels, levels = levels, fname = name,
                 ..., class = c("edbl_fct", class(labels)))
   class(x) <- c(class, class(x))
   x
