@@ -12,7 +12,7 @@
 #' anatomy(split)
 #' @return An object of class "des_anatomy".
 #' @export
-anatomy <- function(.edibble, ...) {
+design_anatomy <- function(.edibble, ...) {
   des <- edbl_design(.edibble)
   tab <- edbl_table(.edibble)
   prov <- activate_provenance(des)
