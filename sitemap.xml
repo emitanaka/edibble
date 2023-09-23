@@ -34,9 +34,6 @@
     <loc>https://edibble.emitanaka.org/reference/allot_units.html</loc>
   </url>
   <url>
-    <loc>https://edibble.emitanaka.org/reference/anatomy.html</loc>
-  </url>
-  <url>
     <loc>https://edibble.emitanaka.org/reference/as.data.frame.edbl_table.html</loc>
   </url>
   <url>
@@ -59,6 +56,9 @@
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/design.html</loc>
+  </url>
+  <url>
+    <loc>https://edibble.emitanaka.org/reference/design_anatomy.html</loc>
   </url>
   <url>
     <loc>https://edibble.emitanaka.org/reference/design_data.html</loc>
