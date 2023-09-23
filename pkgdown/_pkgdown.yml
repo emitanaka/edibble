@@ -45,6 +45,7 @@ reference:
   #- plot_lvl_graph
   - examine_recipe
   - simulate_process
+  - examine_process
   - simulate_rcrds
   - with_params
   - autofill_rcrds

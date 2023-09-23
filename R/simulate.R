@@ -511,5 +511,19 @@ effects_code <- function(dep_fcts, .data, code_list, nlevels = 1) {
 }
 
 
-
-
+#' Examine the simulation process
+#'
+#' @param data An edibble data frame.
+#' @param process The process name. Typically the name of the process. If unknown,
+#'  leave this empty.
+#' @export
+examine_process <- function(data, process = NULL) {
+  prov <- activate_provenance(data)
+  res <- prov$get_simulate(process)
+  if(is_null(res)) {
+    warning("There is no simulation process stored.")
+    NULL
+  } else {
+    res
+  }
+}

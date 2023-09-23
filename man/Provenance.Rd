@@ -1116,7 +1116,7 @@ Get the edibble version.
 \subsection{Method \code{get_simulate()}}{
 Get the simulation information
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$get_simulate(name)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$get_simulate(name = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

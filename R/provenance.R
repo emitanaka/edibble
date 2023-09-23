@@ -724,8 +724,8 @@ Provenance <- R6::R6Class("Provenance",
                          #' @description
                          #' Get the simulation information
                          #' @param name The process name.
-                         get_simulate = function(name) {
-                           if(missing(name)) return(private$simulate)
+                         get_simulate = function(name = NULL) {
+                           if(is_null(name)) return(private$simulate)
                            private$simulate[[name]]
                          },
 
