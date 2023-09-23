@@ -1,14 +1,16 @@
 
-#' Simulation form
+#' Simulation process
+#'
+#' This function to create and store functions to simulate the records.
+#'
 #'
 #' @param .data An edibble table.
 #' @param ... A name-value pair where the name should correspond to either the record name
 #'   that you are simulating or a process name if the return object is a data frame with
 #'   columns corresponding to the name of the records. The value must be a function with
 #'   set default arguments. The return object of this function should be either a
-#'   vector or a data frame
-#'   with the column names corresponding to the record names. The size should correspond to
-#'   the number of columns.
+#'   vector or a data frame with the column names corresponding to the record names.
+#'   The size should correspond to the number of columns.
 #'
 #' @details
 #' When creating a function, internally you can refer to any of the factors without referring
@@ -23,7 +25,6 @@
 #'
 #' Note that you can actually put as many process as you like if you use a process name (starting with a dot),
 #' even if this is for the same record factor.
-#'
 #'
 #'
 #' @export
@@ -108,7 +109,7 @@ with_params <- function(..., .censor = NA, .aggregate = NULL) {
 
 #' Simulate records
 #'
-#' @param .data
+#' @param .data An edibble data
 #' @param ... A name-value pair where the name should correspond to the names
 #' used in the [simulate_process()]. The value should be returned from calling
 #' [with_params()].
