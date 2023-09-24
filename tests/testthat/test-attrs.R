@@ -45,6 +45,7 @@ test_that("check fct_attrs works", {
                                         label = "Exercise"))
   expect_equal(fct_nodes(des0), tibble::tibble(name = c("diet", "exercise"),
                                                role = "edbl_trt",
+                                               n = c(3, 2),
                                                attrs = data.frame(desc = c("human diet", NA),
                                                                   label = c(NA, "Exercise"))))
 

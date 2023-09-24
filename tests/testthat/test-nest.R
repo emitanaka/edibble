@@ -9,7 +9,8 @@ test_that("nested-units", {
 
   expect_equal(fct_nodes(des1),
                tibble::tibble(name = c("block", "plot"),
-                              role = "edbl_unit"))
+                              role = "edbl_unit",
+                              n = c(3, 6)))
   # FIXME there is no attrs for the second factor
   expect_equal(lvl_nodes(des1),
                list(block = tibble::tibble(value = c("block1", "block2", "block3"),
@@ -23,7 +24,8 @@ test_that("nested-units", {
                                  . ~ 3))
   expect_equal(fct_nodes(des2),
                tibble::tibble(name = c("block", "plot", "sample"),
-                              role = "edbl_unit"))
+                              role = "edbl_unit",
+                              n = c(3, 6, 35)))
   expect_equal(lvl_nodes(des2),
                list(block = tibble::tibble(value = c("block1", "block2", "block3"),
                                            n = NA_integer_),
