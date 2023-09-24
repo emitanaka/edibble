@@ -577,7 +577,6 @@ Provenance <- R6::R6Class("Provenance",
                          #' @description
                          #' Serve records
                          serve_rcrds = function(id = NULL, return = c("id", "value")) {
-
                            id <- id %||% self$rcrd_ids
                            return <- match.arg(return)
                            out <- lapply(id, function(rid) {

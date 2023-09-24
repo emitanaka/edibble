@@ -36,8 +36,12 @@ set_rcrds <- function(.edibble, ...,
     })
 
   rcrds <- names(units)
-
   prov$fct_exists(name = unlist(units), role = "edbl_unit")
+
+  # fix names
+  fnames_old <- prov$fct_nodes$name
+  fnames <- vec_as_names(c(fnames_old, rcrds), repair = .name_repair)
+  rcrds <- fnames[(length(fnames_old) + 1):length(fnames)]
 
   for(i in seq_along(units)) {
     prov$append_fct_nodes(name = rcrds[i], role = "edbl_rcrd")

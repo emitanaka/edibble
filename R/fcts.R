@@ -22,7 +22,7 @@ set_fcts <- function(.edibble, ..., .class = NULL,
 
     dots <- enquos(..., .named = TRUE, .homonyms = "error", .check_assign = TRUE)
     fnames_new <- names(dots)
-    fnames_old <- names(prov$graph)
+    fnames_old <- prov$fct_nodes$name
     fnames <- vec_as_names(c(fnames_old, fnames_new), repair = .name_repair)
 
     for(i in seq_along(dots)) {
