@@ -523,6 +523,9 @@ examine_process <- function(data, process = NULL) {
     warning("There is no simulation process stored.")
     NULL
   } else {
+    if(!is_null(process)) {
+      res <- setNames(list(res), process)
+    }
     structure(res, class = c("sim_process", class(res)))
   }
 }

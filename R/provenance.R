@@ -722,7 +722,7 @@ Provenance <- R6::R6Class("Provenance",
 
                          #' @description
                          #' Get the simulation information
-                         #' @param name The process name.
+                         #' @param name The process name. Only one name allowed.
                          get_simulate = function(name = NULL) {
                            if(is_null(name)) return(private$simulate)
                            private$simulate[[name]]

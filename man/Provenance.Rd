@@ -1122,7 +1122,7 @@ Get the simulation information
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{name}}{The process name.}
+\item{\code{name}}{The process name. Only one name allowed.}
 }
 \if{html}{\out{</div>}}
 }
