@@ -68,6 +68,7 @@ Remember that there could be more than one order.}
 \item \href{#method-Provenance-unit_names}{\code{Provenance$unit_names()}}
 \item \href{#method-Provenance-trt_names}{\code{Provenance$trt_names()}}
 \item \href{#method-Provenance-rcrd_names}{\code{Provenance$rcrd_names()}}
+\item \href{#method-Provenance-rcrd_class}{\code{Provenance$rcrd_class()}}
 \item \href{#method-Provenance-lvl_values}{\code{Provenance$lvl_values()}}
 \item \href{#method-Provenance-unit_values}{\code{Provenance$unit_values()}}
 \item \href{#method-Provenance-trt_values}{\code{Provenance$trt_values()}}
@@ -556,6 +557,23 @@ Get the record names.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{id}}{The id of the corresponding node.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-rcrd_class"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-rcrd_class}{}}}
+\subsection{Method \code{rcrd_class()}}{
+Get the class for record with validation.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$rcrd_class(name = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{name}}{The name of the node.}
 }
 \if{html}{\out{</div>}}
 }

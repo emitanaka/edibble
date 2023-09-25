@@ -262,6 +262,17 @@ Provenance <- R6::R6Class("Provenance",
                          },
 
                          #' @description
+                         #' Get the class for record with validation.
+                         rcrd_class = function(name = NULL) {
+                           map_chr(name,
+                                   function(x) {
+                                     vrcrds <- private$validation[["rcrds"]]
+                                     if(x %in% names(vrcrds)) return(vrcrds[[x]]$record)
+                                     NA_character_
+                                   })
+                         },
+
+                         #' @description
                          #' Get the level values based on id or role
                          #' cannot have just role only defined.
                          #' id must be from the same fid

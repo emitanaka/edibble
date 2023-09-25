@@ -147,3 +147,38 @@ new_edibble_graph <- function(fnodes = NULL, lnodes = NULL, fedges = NULL, ledge
 }
 
 
+#' A baseline model for given experimental design
+#'
+#' This
+#'
+#' @param data An edibble data.
+#' @param type The type of model expression to return.
+#' @export
+design_model <- function(data, type = c("anova", "lmer")) {
+  warn("An appropriate model for analysis requires context and diagnosis.\nDon't take this suggested baseline model without appropriate thinking.")
+  prov <- activate_provenance(data)
+  des <- edbl_design(data)
+  type <- match.arg(type)
+  unit_str <- des$anatomy
+  units <- attr(terms(unit_str), "term.labels")
+  trt_str <- paste0(prov$trt_names(), collapse = "*")
+  rnames <- prov$rcrd_names()
+  map_to_units <- prov$mapping_to_unit(id = prov$fct_id(name = rnames))
+  smallest_unit <- prov$fct_id_leaves(role = "edbl_unit")[1]
+  rclass <- prov$rcrd_class(rnames)
+  rname <- "y"
+  if(length(rnames)) rname <- rnames[which(map_to_units == smallest_unit)][1]
+  if("numeric" %in% rclass) rname <- rnames[!is.na(rclass) & rclass=="numeric" & map_to_units == smallest_unit][1]
+  res <- switch(type,
+         anova = {
+           sprintf("aov(%s ~ %s + Error(%s), data = .)\n",
+                            rname, trt_str, paste0(units[-length(units)], collapse = " + "))
+         },
+         lmer = {
+           rstr <- paste0(paste0("(1|", units[-length(units)], ")"), collapse = " + ")
+           sprintf("lme4::lmer(%s ~ %s + %s, data = .)\n",
+                   rname, trt_str, rstr)
+         })
+  cat(res)
+  invisible(parse(text = res))
+}
