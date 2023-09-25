@@ -173,6 +173,7 @@ Remember that there could be more than one order.</p></dd>
 <li><p><a href="#method-Provenance-get_session_info"><code>Provenance$get_session_info()</code></a></p></li>
 <li><p><a href="#method-Provenance-get_edibble_version"><code>Provenance$get_edibble_version()</code></a></p></li>
 <li><p><a href="#method-Provenance-get_simulate"><code>Provenance$get_simulate()</code></a></p></li>
+<li><p><a href="#method-Provenance-get_simulate_result_env"><code>Provenance$get_simulate_result_env()</code></a></p></li>
 <li><p><a href="#method-Provenance-mapping"><code>Provenance$mapping()</code></a></p></li>
 <li><p><a href="#method-Provenance-mapping_to_unit"><code>Provenance$mapping_to_unit()</code></a></p></li>
 <li><p><a href="#method-Provenance-record_step"><code>Provenance$record_step()</code></a></p></li>
@@ -1242,15 +1243,31 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-Provenance-mapping"></a><div class="section">
-<h3 id="method-mapping-">Method <code>mapping()</code><a class="anchor" aria-label="anchor" href="#method-mapping-"></a></h3>
-<p>Mapping of a role to role</p><div class="section">
+</div><p></p><hr><a id="method-Provenance-get_simulate_result_env"></a><div class="section">
+<h3 id="method-get-simulate-result-env-">Method <code>get_simulate_result_env()</code><a class="anchor" aria-label="anchor" href="#method-get-simulate-result-env-"></a></h3>
+<p>Get the simulation results</p><div class="section">
 <h4 id="usage-55">Usage<a class="anchor" aria-label="anchor" href="#usage-55"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">mapping</span><span class="op">(</span><span class="va">role_from</span>, <span class="va">role_to</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">get_simulate_result_env</span><span class="op">(</span>name <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="arguments-49">Arguments<a class="anchor" aria-label="anchor" href="#arguments-49"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>name</code></dt>
+<dd><p>The process name. Only one name allowed.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
+</div><p></p><hr><a id="method-Provenance-mapping"></a><div class="section">
+<h3 id="method-mapping-">Method <code>mapping()</code><a class="anchor" aria-label="anchor" href="#method-mapping-"></a></h3>
+<p>Mapping of a role to role</p><div class="section">
+<h4 id="usage-56">Usage<a class="anchor" aria-label="anchor" href="#usage-56"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">mapping</span><span class="op">(</span><span class="va">role_from</span>, <span class="va">role_to</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-50">Arguments<a class="anchor" aria-label="anchor" href="#arguments-50"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>role_from</code></dt>
 <dd><p>The role from.</p></dd>
 
@@ -1265,12 +1282,12 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </div><p></p><hr><a id="method-Provenance-mapping_to_unit"></a><div class="section">
 <h3 id="method-mapping-to-unit-">Method <code>mapping_to_unit()</code><a class="anchor" aria-label="anchor" href="#method-mapping-to-unit-"></a></h3>
 <p>Mapping of an id to a unit</p><div class="section">
-<h4 id="usage-56">Usage<a class="anchor" aria-label="anchor" href="#usage-56"></a></h4>
+<h4 id="usage-57">Usage<a class="anchor" aria-label="anchor" href="#usage-57"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">mapping_to_unit</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-50">Arguments<a class="anchor" aria-label="anchor" href="#arguments-50"></a></h4>
+<h4 id="arguments-51">Arguments<a class="anchor" aria-label="anchor" href="#arguments-51"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>id</code></dt>
 <dd><p>The id of the corresponding node.</p></dd>
 
@@ -1281,7 +1298,7 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </div><p></p><hr><a id="method-Provenance-record_step"></a><div class="section">
 <h3 id="method-record-step-">Method <code>record_step()</code><a class="anchor" aria-label="anchor" href="#method-record-step-"></a></h3>
 <p>Record step.</p><div class="section">
-<h4 id="usage-57">Usage<a class="anchor" aria-label="anchor" href="#usage-57"></a></h4>
+<h4 id="usage-58">Usage<a class="anchor" aria-label="anchor" href="#usage-58"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">record_step</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -1289,12 +1306,12 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </div><p></p><hr><a id="method-Provenance-lvl_mapping"></a><div class="section">
 <h3 id="method-lvl-mapping-">Method <code>lvl_mapping()</code><a class="anchor" aria-label="anchor" href="#method-lvl-mapping-"></a></h3>
 <p>Get the level edges by factor</p><div class="section">
-<h4 id="usage-58">Usage<a class="anchor" aria-label="anchor" href="#usage-58"></a></h4>
+<h4 id="usage-59">Usage<a class="anchor" aria-label="anchor" href="#usage-59"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">lvl_mapping</span><span class="op">(</span><span class="va">from</span>, <span class="va">to</span>, return <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"vector"</span>, <span class="st">"table"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-51">Arguments<a class="anchor" aria-label="anchor" href="#arguments-51"></a></h4>
+<h4 id="arguments-52">Arguments<a class="anchor" aria-label="anchor" href="#arguments-52"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>from, to</code></dt>
 <dd><p>The factor id.</p></dd>
 
@@ -1309,12 +1326,12 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </div><p></p><hr><a id="method-Provenance-record_track_external"></a><div class="section">
 <h3 id="method-record-track-external-">Method <code>record_track_external()</code><a class="anchor" aria-label="anchor" href="#method-record-track-external-"></a></h3>
 <p>Record track external.</p><div class="section">
-<h4 id="usage-59">Usage<a class="anchor" aria-label="anchor" href="#usage-59"></a></h4>
+<h4 id="usage-60">Usage<a class="anchor" aria-label="anchor" href="#usage-60"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">record_track_external</span><span class="op">(</span><span class="va">code</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-52">Arguments<a class="anchor" aria-label="anchor" href="#arguments-52"></a></h4>
+<h4 id="arguments-53">Arguments<a class="anchor" aria-label="anchor" href="#arguments-53"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>code</code></dt>
 <dd><p>The code to record.</p></dd>
 
@@ -1325,12 +1342,12 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </div><p></p><hr><a id="method-Provenance-fct_id_links"></a><div class="section">
 <h3 id="method-fct-id-links-">Method <code>fct_id_links()</code><a class="anchor" aria-label="anchor" href="#method-fct-id-links-"></a></h3>
 <p>Find all id that is linked.</p><div class="section">
-<h4 id="usage-60">Usage<a class="anchor" aria-label="anchor" href="#usage-60"></a></h4>
+<h4 id="usage-61">Usage<a class="anchor" aria-label="anchor" href="#usage-61"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">fct_id_links</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span>, role <span class="op">=</span> <span class="cn">NULL</span>, link <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"direct"</span>, <span class="st">"indirect"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-53">Arguments<a class="anchor" aria-label="anchor" href="#arguments-53"></a></h4>
+<h4 id="arguments-54">Arguments<a class="anchor" aria-label="anchor" href="#arguments-54"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>id</code></dt>
 <dd><p>The id of the corresponding node.</p></dd>
 
@@ -1353,12 +1370,12 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </div><p></p><hr><a id="method-Provenance-fct_graph_components"></a><div class="section">
 <h3 id="method-fct-graph-components-">Method <code>fct_graph_components()</code><a class="anchor" aria-label="anchor" href="#method-fct-graph-components-"></a></h3>
 <p>Get the nodes with components (subgraph number)</p><div class="section">
-<h4 id="usage-61">Usage<a class="anchor" aria-label="anchor" href="#usage-61"></a></h4>
+<h4 id="usage-62">Usage<a class="anchor" aria-label="anchor" href="#usage-62"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">fct_graph_components</span><span class="op">(</span>id <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-54">Arguments<a class="anchor" aria-label="anchor" href="#arguments-54"></a></h4>
+<h4 id="arguments-55">Arguments<a class="anchor" aria-label="anchor" href="#arguments-55"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>id</code></dt>
 <dd><p>The id of the corresponding node.</p></dd>
 
@@ -1369,7 +1386,7 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </div><p></p><hr><a id="method-Provenance-lvl_graph_components"></a><div class="section">
 <h3 id="method-lvl-graph-components-">Method <code>lvl_graph_components()</code><a class="anchor" aria-label="anchor" href="#method-lvl-graph-components-"></a></h3>
 <p>Get the nodes with components (subgraph number)</p><div class="section">
-<h4 id="usage-62">Usage<a class="anchor" aria-label="anchor" href="#usage-62"></a></h4>
+<h4 id="usage-63">Usage<a class="anchor" aria-label="anchor" href="#usage-63"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">lvl_graph_components</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -1377,12 +1394,12 @@ nodes immediately related, and "ancestors" for all ancestors</p></dd>
 </div><p></p><hr><a id="method-Provenance-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
-<h4 id="usage-63">Usage<a class="anchor" aria-label="anchor" href="#usage-63"></a></h4>
+<h4 id="usage-64">Usage<a class="anchor" aria-label="anchor" href="#usage-64"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-55">Arguments<a class="anchor" aria-label="anchor" href="#arguments-55"></a></h4>
+<h4 id="arguments-56">Arguments<a class="anchor" aria-label="anchor" href="#arguments-56"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
 
