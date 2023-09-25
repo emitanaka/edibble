@@ -323,7 +323,7 @@ with_variables <- function(...,
 autofill_rcrds <- function(.data, ..., .seed = NULL) {
   prov <- activate_provenance(.data)
   prov$save_seed(.seed, type = "autofill_rcrds")
-  dots <- enquos(..., .named = TRUE)
+  dots <- list2(...)
   tnames <- prov$trt_names()
   rnames <- prov$rcrd_names()
   unames <- prov$unit_names()
@@ -352,7 +352,7 @@ autofill_rcrds <- function(.data, ..., .seed = NULL) {
   if(length(dots)) {
     for(rname in names(dots)) {
       depends <- dots[[rname]]
-      fnames <- names(.data)[tidyselect::eval_select(depends$vars, .data)]
+      fnames <- names(tidyselect::eval_select(expr(c(!!!depends$vars)), .data))
       deps[[rname]] <- list(type = deps[[rname]]$type,
                             rcrd_levels = deps[[rname]]$rcrd_levels,
                             unit = intersect(fnames, unames),
@@ -365,7 +365,6 @@ autofill_rcrds <- function(.data, ..., .seed = NULL) {
                             error_dist = depends$error_dist)
     }
   }
-
 
   process_functions = character()
   processes = character()
