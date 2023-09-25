@@ -81,16 +81,14 @@
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">examine_recipe</span><span class="op">(</span><span class="fu"><a href="takeout.html">takeout</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → No name was supplied so selecting a random named experimental design...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Selected Graeco-Latin Square Design</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> design(<span style="color: #00BBBB; font-style: italic;">"Graeco-Latin Square Design"</span>) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   set_units(<span style="color: #BBBB00; background-color: #000000;">row</span> = 7,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             <span style="color: #BBBB00; background-color: #000000;">col</span> = 7,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Selected Youden Square Design</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> design(<span style="color: #00BBBB; font-style: italic;">"Youden Square Design"</span>) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_units(<span style="color: #BBBB00; background-color: #000000;">row</span> = 10,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             <span style="color: #BBBB00; background-color: #000000;">col</span> = 10,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             <span style="color: #BBBB00; background-color: #000000;">unit</span> = crossed_by(<span style="color: #BBBB00; background-color: #000000;">row</span>, <span style="color: #BBBB00; background-color: #000000;">col</span>)) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   set_trts(<span style="color: #0000BB;">trt1</span> = 7,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            <span style="color: #0000BB;">trt2</span> = 7) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   allot_trts(<span style="color: #0000BB;">trt1</span> ~ <span style="color: #BBBB00; background-color: #000000;">unit</span>,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              <span style="color: #0000BB;">trt2</span> ~ <span style="color: #BBBB00; background-color: #000000;">unit</span>) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   assign_trts("random", seed = 806) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_trts(<span style="color: #0000BB;">trt</span> = 10) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   allot_trts(<span style="color: #0000BB;">trt</span> ~ <span style="color: #BBBB00; background-color: #000000;">unit</span>) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   assign_trts("random", seed = 434) %&gt;%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   serve_table()</span>
 </code></pre></div>
     </div>
