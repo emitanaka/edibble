@@ -16,7 +16,7 @@
 #' @param ... Arguments parsed into `order_trts` functions.
 #' @param .record Whether to record the step.
 #'
-#' @name assign
+#' @name assign_fcts
 #' @examples
 #' # 10 subject, 2 vaccine treatments
 #' design() %>%
@@ -106,7 +106,7 @@ assign_trts <- function(.edibble, order = "random", seed = NULL, constrain = nes
 }
 
 
-#' @rdname assign
+#' @rdname assign_fcts
 #' @export
 assign_units <- function(.edibble, order = "random", seed = NULL, constrain = nesting_structure(.edibble), ..., .record = TRUE) {
   not_edibble(.edibble)

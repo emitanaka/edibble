@@ -314,7 +314,7 @@ add_edibble_code <- function(.edibble, code) {
 #' @param lower The lower bound.
 #' @param upper The upper bound.
 #' @export
-rescale_rcrd <- function(x, lower = NA, upper = NA) {
+rescale_values <- function(x, lower = NA, upper = NA) {
   minx <- min(x, na.rm = TRUE)
   maxx <- max(x, na.rm = TRUE)
   if(is.na(lower) & is.na(upper)) return(x)

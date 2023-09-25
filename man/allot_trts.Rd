@@ -33,7 +33,7 @@ design() \%>\%
 
 }
 \seealso{
-assign
+assign_fcts
 
 Other user-facing functions: 
 \code{\link{allot_units}()},

@@ -46,7 +46,7 @@ simulate_process <- function(.data, ...) {
     if(length(dots) == 0) return(nrow(.data))
     v <- do.call(paste, dots)
     length(unique(v))
-  })
+  }, result_env = prov$get_simulate_result_env())
 
   if(length(rcrd_nms)) {
     prov$rcrd_exists(name = rcrd_nms)
@@ -127,20 +127,14 @@ simulate_rcrds <- function(.data, ..., .seed = NULL) {
                                           .combine_words(srcrds[duplicated(srcrds)], fun = cli::col_blue),
                                           " in multiple processes. The values will be overwritten."))
 
-  # this works but it doesn't work when moved outside...
-  simulate_env <- env(n = function(...) {
-    loc <- eval_select(c(...), data = .data)
-    if(length(loc) == 0) return(nrow(.data))
-    v <- map_chr(1:nrow(.data), paste(.data[loc][i, ], collapse = "_"))
-    length(unique(v))
-  })
-
   for(aprocess in prnames) {
     process <- prov$get_simulate(aprocess)$process
     if(is_null(process)) abort(paste0("The supplied process, ", cli::col_blue(aprocess), ", doesn't exist"))
     srcrds <- prov$get_simulate(aprocess)$rcrds
-    y <- eval_tidy(do.call(process, dots[[aprocess]]$params),
-                   data = .data, env = simulate_env)
+    body(process) <- patch_function(process, patch = sprintf("    list2env(setNames(list(mget(ls())), '%s'), envir = result_env)", aprocess),
+                              position = length(as.list(body(process))) - 1)
+
+    y <- eval_tidy(do.call(process, dots[[aprocess]]$params), data = .data)
 
     # now assign the values to the data, but apply aggregation then censorship
     if(grepl("^[.]", aprocess)) {
@@ -397,7 +391,7 @@ autofill_rcrds <- function(.data, ..., .seed = NULL) {
                               "lessThanOrEqual" = vrcrds[[rname]]$value,
                               "lessThan" = vrcrds[[rname]]$value)
         code_list <- effects_code(dep_fcts, .data, code_list)
-        code_adjust_y <- sprintf("edibble::rescale_rcrd(y, lower = %f, upper = %f)", valid_lower, valid_upper)
+        code_adjust_y <- sprintf("edibble::rescale_values(y, lower = %f, upper = %f)", valid_lower, valid_upper)
       }
     } else if(deps[[rname]]$type=="factor") {
       nlvls <- length(deps[[rname]]$rcrd_levels)
@@ -530,6 +524,21 @@ examine_process <- function(data, process = NULL) {
   }
 }
 
+#' @rdname examine_process
+examine_process_values <- function(data, process = NULL) {
+  prov <- activate_provenance(data)
+  res <- prov$get_simulate_result_env(process)
+  if(is_null(res)) {
+    warning("There is no simulation process stored.")
+    NULL
+  } else if(is.environment(res)) {
+    abort(paste0("You need to specify a process name. The available process names are: ",
+                .combine_words(ls(envir = res), fun = cli::col_blue), "."))
+  } else {
+    res
+  }
+}
+
 #' @export
 print.sim_process <- function(x, ...) {
   cat("simulate_process(\n")
@@ -541,4 +550,20 @@ print.sim_process <- function(x, ...) {
     cat(paste("  ", cli::col_blue(aname), "=", paste0(fn_text, collapse = "\n"), sep_fns))
   }
   cat(")\n")
+}
+
+
+# thanks to https://stackoverflow.com/questions/38732663/how-to-insert-expression-into-the-body-of-a-function-in-r
+patch_function <- function(fun, patch, position = 1) {
+  # Deparse the body.
+  fun_body <- deparse(body(fun))
+
+  # Append the patch to function body where intended.
+  patched_fun_body <- paste0(
+    c(fun_body[1:position], patch, fun_body[(position + 1):length(fun_body)]),
+    collapse = "\n"
+  )
+
+  # Parse and treat as an expression.
+  as.expression(parse(text = patched_fun_body))
 }

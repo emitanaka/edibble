@@ -7,7 +7,7 @@
 #'
 #' @param ... One-sided or two-sided formula. If the input is a one-sided formula
 #' then the whole treatment is applied to the specified unit.
-#' @inheritParams assign
+#' @inheritParams assign_fcts
 #' @inheritParams set_units
 #' @family user-facing functions
 #' @examples
@@ -20,7 +20,7 @@
 #'               pest ~ block)
 #'
 #' @return Return an edibble design.
-#' @seealso assign
+#' @seealso assign_fcts
 #' @export
 allot_trts <- function(.edibble, ..., .record = TRUE) {
   not_edibble(.edibble)
@@ -65,7 +65,7 @@ allot_trts <- function(.edibble, ..., .record = TRUE) {
 #' This function does not actually assign edges between level nodes.
 #'
 #' @param ... A two-sided formula.
-#' @inheritParams assign
+#' @inheritParams assign_fcts
 #' @inheritParams set_units
 #' @family user-facing functions
 #' @examples
@@ -75,7 +75,7 @@ allot_trts <- function(.edibble, ..., .record = TRUE) {
 #'   allot_units(block ~ plot)
 #'
 #' @return Return an edibble design.
-#' @seealso assign
+#' @seealso assign_fcts
 #' @export
 allot_units <- function(.edibble, ..., .record = TRUE) {
   not_edibble(.edibble)
@@ -147,7 +147,7 @@ allot_units <- function(.edibble, ..., .record = TRUE) {
 #'
 #' @inheritParams allot_trts
 #' @inheritParams serve_table
-#' @inheritParams assign
+#' @inheritParams assign_fcts
 #'
 #' @export
 allot_table <- function(.edibble, ..., order = "random", seed = NULL, constrain = nesting_structure(.edibble), .record = TRUE) {

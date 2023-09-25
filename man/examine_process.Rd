@@ -2,9 +2,12 @@
 % Please edit documentation in R/simulate.R
 \name{examine_process}
 \alias{examine_process}
+\alias{examine_process_values}
 \title{Examine the simulation process}
 \usage{
 examine_process(data, process = NULL)
+
+examine_process_values(data, process = NULL)
 }
 \arguments{
 \item{data}{An edibble data frame.}

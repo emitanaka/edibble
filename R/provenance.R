@@ -80,6 +80,7 @@ Provenance <- R6::R6Class("Provenance",
                                                             rcrds = rcrds)
                          },
 
+
                          #' @description
                          #' Reactivate the graph in the provenance object.
                          #' @param design An edibble design
@@ -729,6 +730,14 @@ Provenance <- R6::R6Class("Provenance",
                          },
 
                          #' @description
+                         #' Get the simulation results
+                         #' @param name The process name. Only one name allowed.
+                         get_simulate_result_env = function(name = NULL) {
+                           if(is_null(name)) return(private$simulate_result_env)
+                           private$simulate_result_env[[name]]
+                         },
+
+                         #' @description
                          #' Mapping of a role to role
                          #' @param role_from The role from.
                          #' @param role_to The role to.
@@ -965,6 +974,7 @@ Provenance <- R6::R6Class("Provenance",
                          recipe = NULL,
                          graph = NULL,
                          simulate = list(),
+                         simulate_result_env = new_environment(),
                          validation = list(rcrds = NULL),
                          # table should only contain the id of levels and factors
                          table = list(units = NULL, trts = NULL, rcrds = NULL),

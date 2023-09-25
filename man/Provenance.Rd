@@ -99,6 +99,7 @@ Remember that there could be more than one order.}
 \item \href{#method-Provenance-get_session_info}{\code{Provenance$get_session_info()}}
 \item \href{#method-Provenance-get_edibble_version}{\code{Provenance$get_edibble_version()}}
 \item \href{#method-Provenance-get_simulate}{\code{Provenance$get_simulate()}}
+\item \href{#method-Provenance-get_simulate_result_env}{\code{Provenance$get_simulate_result_env()}}
 \item \href{#method-Provenance-mapping}{\code{Provenance$mapping()}}
 \item \href{#method-Provenance-mapping_to_unit}{\code{Provenance$mapping_to_unit()}}
 \item \href{#method-Provenance-record_step}{\code{Provenance$record_step()}}
@@ -1117,6 +1118,23 @@ Get the edibble version.
 Get the simulation information
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$get_simulate(name = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{name}}{The process name. Only one name allowed.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Provenance-get_simulate_result_env"></a>}}
+\if{latex}{\out{\hypertarget{method-Provenance-get_simulate_result_env}{}}}
+\subsection{Method \code{get_simulate_result_env()}}{
+Get the simulation results
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$get_simulate_result_env(name = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
