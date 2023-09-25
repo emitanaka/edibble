@@ -523,6 +523,19 @@ examine_process <- function(data, process = NULL) {
     warning("There is no simulation process stored.")
     NULL
   } else {
-    res
+    structure(res, class = c("sim_process", class(res)))
   }
+}
+
+#' @export
+print.sim_process <- function(x, ...) {
+  cat("simulate_process(\n")
+  sep_fns <- ",\n\n"
+  for(aname in names(x)) {
+    if(aname == names(x)[length(x)]) sep_fns <- ""
+    fn_text <- deparse(x[[aname]]$process)
+    fn_text <- c(fn_text[1], paste0("   ", fn_text[2:length(fn_text)]))
+    cat(paste("  ", cli::col_blue(aname), "=", paste0(fn_text, collapse = "\n"), sep_fns))
+  }
+  cat(")\n")
 }
