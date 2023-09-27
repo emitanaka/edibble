@@ -127,6 +127,7 @@ simulate_rcrds <- function(.data, ..., .seed = NULL) {
                                           .combine_words(srcrds[duplicated(srcrds)], fun = cli::col_blue),
                                           " in multiple processes. The values will be overwritten."))
 
+
   for(aprocess in prnames) {
     process <- prov$get_simulate(aprocess)$process
     if(is_null(process)) abort(paste0("The supplied process, ", cli::col_blue(aprocess), ", doesn't exist"))
@@ -177,6 +178,7 @@ get_rcrd_values <- function(rname, prov, aggfn, .data, y, censor) {
 get_censored_value <- function(y, valid, censor) {
   if(is_null(valid)) return(y)
   type <- valid$record
+  # add type == "whole" for integer.
   if(type=="numeric") {
     value <- valid$value
     valid_env <- rlang::current_env()
@@ -237,7 +239,7 @@ return_censor_value <- function(y, ind, censor, values = NULL, ind_censor = ind,
 
 
 get_record_type <- function(vrcrds, arcrd) {
-  ifelse(arcrd %in% names(vrcrds), vrcrds[[arcrd]]$record, NULL)
+  ifelse(arcrd %in% names(vrcrds), vrcrds[[arcrd]]$record, NA)
 }
 
 # note: removes NA
@@ -252,7 +254,7 @@ get_aggregate_function <- function(agg, rcrd_name = NULL, rcrd_type = NULL, retu
   if(is.list(agg)) agg <- agg[[rcrd_name]]
   if(!is_function(agg) && !is.null(agg) && is.na(agg)) return(NA)
   if(!is_null(agg)) return(agg)
-  if(!is.null(rcrd_type) && rcrd_type == "factor") return(get_mode)
+  if(!is.na(rcrd_type) && is.null(rcrd_type) && rcrd_type == "factor") return(get_mode)
   if(any(return_type %in% c("factor", "character"))) return(get_mode)
   return(function(x) mean(x, na.rm = TRUE))
 }
@@ -261,7 +263,7 @@ aggregate_values <- function(y, group, fn) {
  if(is_function(fn)) {
    agg <- tapply(y, group, fn)
    as.vector(unname(agg[as.character(group)]))
- } else if(is.na(fn)) {
+ } else if(is.na(fn) | is.null(fn)) {
    y
  }
 }
