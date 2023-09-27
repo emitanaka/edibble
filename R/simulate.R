@@ -539,13 +539,29 @@ print.sim_process <- function(x, ...) {
 # thanks to https://stackoverflow.com/questions/38732663/how-to-insert-expression-into-the-body-of-a-function-in-r
 patch_function <- function(fun, patch, position = 1) {
   # Deparse the body.
-  fun_body <- deparse(body(fun))
-
-  # Append the patch to function body where intended.
-  patched_fun_body <- paste0(
-    c(fun_body[1:position], patch, fun_body[(position + 1):length(fun_body)]),
-    collapse = "\n"
-  )
+  # TODO: width.cutoff = 500 is a big upper limit
+  # but this could be an issue if ever line is >500
+  fun_body <- deparse(body(fun), width.cutoff = 500)
+  if(length(fun_body) == 1) {
+    # TODO: what about when length == 0?
+    if(position > 1) {
+      patched_fun_body <- paste0(
+        c(fun_body, patch),
+        collapse = "\n"
+      )
+    } else {
+      patched_fun_body <- paste0(
+        c(patch, fun_body),
+        collapse = "\n"
+      )
+    }
+  } else {
+    # Append the patch to function body where intended.
+    patched_fun_body <- paste0(
+      c(fun_body[1:position], patch, fun_body[(position + 1):length(fun_body)]),
+      collapse = "\n"
+    )
+  }
 
   # Parse and treat as an expression.
   as.expression(parse(text = patched_fun_body))
