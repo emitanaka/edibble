@@ -371,17 +371,13 @@ autofill_rcrds <- function(.data, ..., .seed = NULL) {
   process_functions = character()
   processes = character()
   for(rname in names(deps)) {
-    code_list <- list(process_code = character(),
-                      model_code = list())
-
     dep_fcts <- c(deps[[rname]]$unit, deps[[rname]]$trts, deps[[rname]]$rcrds)
     if(is.na(deps[[rname]]$type)) {
-      code_list <- effects_code(dep_fcts, .data, code_list)
-      code_adjust_y <- ""
+      code_list <- effects_code(dep_fcts, .data)
+      code_adjust_y <- "y"
     } else if(deps[[rname]]$type %in% c("numeric", "integer")) {
       if(vrcrds[[rname]]$operator == "equal" | (vrcrds[[rname]]$operator == "between" && vrcrds[[rname]]$value[1] == vrcrds[[rname]]$value[2])) {
-        code_list <- list(process_code = "",
-                          model_code = "")
+        code_list <- list(process_code = "", model_code = "")
         code_adjust_y <- sprintf("rep(%f, n())", deps[[rname]]$value)
       } else {
         valid_lower <- switch(vrcrds[[rname]]$operator,
@@ -398,17 +394,16 @@ autofill_rcrds <- function(.data, ..., .seed = NULL) {
                               "between" = vrcrds[[rname]]$value[2],
                               "lessThanOrEqual" = vrcrds[[rname]]$value,
                               "lessThan" = vrcrds[[rname]]$value)
-        code_list <- effects_code(dep_fcts, .data, code_list)
+        code_list <- effects_code(dep_fcts, .data)
         code_adjust_y <- sprintf("edibble::rescale_values(y, lower = %f, upper = %f)", valid_lower, valid_upper)
       }
     } else if(deps[[rname]]$type=="factor") {
       nlvls <- length(deps[[rname]]$rcrd_levels)
       if(nlvls==1) {
-        code_list <- list(process_code = "",
-                          model_code = "")
+        code_list <- list(process_code = "", model_code = "")
         code_adjust_y <- sprintf("rep(%s, n())", deps[[rname]]$rcrd_levels[1])
       } else {
-        code_list <- effects_code(dep_fcts, .data, code_list, nlvls)
+        code_list <- effects_code(dep_fcts, .data, nlvls)
         code_adjust_y <- switch(as.character(nlvls),
                                 "2" = sprintf("ifelse(1 / (1 + exp(-y)) > 0.5, '%s', '%s')", deps[[rname]]$rcrd_levels[1], deps[[rname]]$rcrd_levels[2]),
                                 {
@@ -445,10 +440,9 @@ autofill_rcrds <- function(.data, ..., .seed = NULL) {
 
 
 
-effects_code <- function(dep_fcts, .data, code_list, nlevels = 1) {
-  # initialise
+effects_code <- function(dep_fcts, .data, nlevels = 1) {
+  code_list <- list(process_code = character(), model_code = character())
   if(nlevels <= 2) {
-    code_list$model_code[[1]] <- character()
     for(fct in dep_fcts) {
       fct_class <- class(.data[[fct]])
       nfct <- length(unique(.data[[fct]]))
@@ -457,56 +451,37 @@ effects_code <- function(dep_fcts, .data, code_list, nlevels = 1) {
                                     sprintf('%s_degree <- sample(1:%d, 1)', fct, ifelse(nfct > 5, 5, nfct)),
                                     sprintf('%s_effects <- as.vector(poly(%s, %s_degree) %*% rnorm(%s_degree, 0, 10))',
                                             fct, fct, fct, fct))
-        code_list$model_code[[1]] <- c(code_list$model_code[[1]], sprintf("%s_effects", fct))
+        code_list$model_code <- c(code_list$model_code, sprintf("%s_effects", fct))
 
         # logical not accounted for
       } else if(any(c("factor", "character") %in% fct_class)) {
         code_list$process_code <- c(code_list$process_code,
                                         sprintf('        %s_effects <- setNames(rnorm(%d, 0, 10), unique(%s))',
                                                 fct, nfct, fct))
-        code_list$model_code[[1]] <- c(code_list$model_code[[1]], sprintf("%s_effects[%s]", fct, fct))
+        code_list$model_code <- c(code_list$model_code, sprintf("%s_effects[%s]", fct, fct))
       }
     }
     # combine
-    code_list$model_code[[1]] <- paste0("y <- ", paste0(code_list$model_code[[1]], collapse = " + "))
+    code_list$model_code <- paste0("y <- ", paste0(code_list$model_code, collapse = " + "))
   } else {
-    for(i in seq(nlevels)) code_list$model_code[[i]] <- character()
     for(fct in dep_fcts) {
       fct_class <- class(.data[[fct]])
       nfct <- length(unique(.data[[fct]]))
       if("numeric" %in% fct_class) {
-        for(ilevel in seq(nlevels)) {
-          if(ilevel == 1) {
-            code_list$process_code <- c(code_list$process_code,
-                                        '        y <- list()',
-                                        sprintf('        %s_degree <- list()', fct),
-                                        sprintf('        %s_effects <- list()', fct))
-          }
-          code_list$process_code <- c(code_list$process_code,
-                                      sprintf('        %s_degree[[%d]] <- sample(1:%d, 1)', fct, ilevel, nfct),
-                                      sprintf('        %s_effects[[%d]] <- as.vector(poly(%s, %s_degree[[%d]]) %*% rnorm(%s_degree[[%d]], 0, 10))',
-                                              fct, ilevel, fct, fct, ilevel, fct, ilevel))
-          code_list$model_code[[ilevel]] <- c(code_list$model_code[[ilevel]], sprintf("%s_effects[[%d]]", fct, ilevel))
-        }
+        code_list$process_code <- c(code_list$process_code,
+                                    sprintf('        %s_degree <- lapply(1:%d, function(i) sample(1:%d, 1))', fct, nlevels, nfct),
+                                    sprintf('        %s_effects <- lapply(1:%d, function(i) as.vector(poly(%s, %s_degree[[i]]) %*% rnorm(%s_degree[[i]], 0, 10)))', fct, nlevels, fct, fct, fct))
+
+        code_list$model_code <- c(code_list$model_code, sprintf("%s_effects[[i]]", fct))
       } else if(any(c("factor", "character") %in% fct_class)) {
-        for(ilevel in seq(nlevels)) {
-          if(ilevel == 1) {
-            code_list$process_code <- c(code_list$process_code,
-                                        '        y <- list()',
-                                        sprintf('        %s_effects <- list()', fct))
-          }
-          code_list$process_code <- c(code_list$process_code,
-                                      sprintf('        %s_effects[[%d]] <- setNames(rnorm(%d, 0, 10), unique(%s))',
-                                              fct, ilevel, nfct, fct))
-          code_list$model_code[[ilevel]] <- c(code_list$model_code[[ilevel]], sprintf("%s_effects[[%d]][%s]", fct, ilevel, fct))
-        }
+        code_list$process_code <- c(code_list$process_code,
+                                    sprintf('        %s_effects <- lapply(1:%d, function(i) setNames(rnorm(%d, 0, 10), unique(%s)))',
+                                            fct, nlevels, nfct, fct))
+        code_list$model_code <- c(code_list$model_code, sprintf("%s_effects[[i]][%s]", fct, fct))
       }
     }
     # combine
-    for(ilevel in seq(nlevels)) {
-      code_list$model_code[[ilevel]] <- paste0(sprintf("y[[%d]] <- ", ilevel),
-                                               paste0(code_list$model_code[[ilevel]], collapse = " + "))
-    }
+    code_list$model_code <- paste0(sprintf("y <- lapply(1:%d, function(i) ", nlevels), paste0(code_list$model_code, collapse = " + "), ")")
   }
   code_list
 }
