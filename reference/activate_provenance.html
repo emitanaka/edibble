@@ -87,7 +87,7 @@ the existing design.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">activate_provenance</span><span class="op">(</span><span class="fu"><a href="takeout.html">takeout</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → No name was supplied so selecting a random named experimental design...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Selected Youden Square Design</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Selected Graeco-Latin Square Design</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;Provenance&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Public:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     append_fct_edges: function (from, to, type = NULL, group = NULL, attrs = NULL) </span>
@@ -142,6 +142,7 @@ the existing design.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     make_trts_table: function (id = NULL, return = c("id", "value")) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     mapping: function (role_from, role_to) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     mapping_to_unit: function (id = NULL) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     rcrd_class: function (name = NULL) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     rcrd_exists: function (id = NULL, name = NULL, abort = TRUE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     rcrd_ids: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     rcrd_names: function (id = NULL) </span>
@@ -171,27 +172,27 @@ the existing design.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     build_condtable: function (subgraph, return) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     build_subtable: function (subgraph, return) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     edbl_version: package_version, numeric_version</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     fct_id_last: 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     fct_id_last: 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     fct_new_id: function (n = 1) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     graph: edbl_graph</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     graph_topological_order: function (graph, reverse = TRUE) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     lvl_id_last: 119</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     lvl_id_last: 21</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     lvl_new_id: function (n = 1) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     name: edibble</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     node_id_parent_child: function (id = NULL, role = NULL, node = c("factor", "level"), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     recipe: design(title = "Youden Square Design") set_units(.edibbl ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     recipe: design(title = "Graeco-Latin Square Design") set_units(. ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     record_track_internal: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     seed: list</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     session_info: sessionInfo</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     simulate: list</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     simulate_result_env: environment</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     table: list</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     title: Youden Square Design</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     title: Graeco-Latin Square Design</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     trail: list</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_id: function (id, n = NULL, role = NULL) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_name: function (name) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_role: function (role) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     validation: NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     validation: list</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     var_id_ancestor: function (id = NULL, role = NULL, node = c("factor", "level")) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     var_id_descendant: function (id = NULL, role = NULL, node = c("factor", "level")) </span>
 </code></pre></div>
