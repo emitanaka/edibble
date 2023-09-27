@@ -178,7 +178,6 @@ get_rcrd_values <- function(rname, prov, aggfn, .data, y, censor) {
 get_censored_value <- function(y, valid, censor) {
   if(is_null(valid)) return(y)
   type <- valid$record
-  # add type == "whole" for integer.
   if(type=="numeric") {
     value <- valid$value
     valid_env <- rlang::current_env()
@@ -212,6 +211,12 @@ get_censored_value <- function(y, valid, censor) {
     } else {
       y[!ind] <- censor
     }
+    y
+  } else if(type=="integer") {
+    valid$record <- "numeric"
+    res <- get_censored_value(y, valid, censor)
+    round(res)
+  } else {
     y
   }
 }
@@ -372,7 +377,7 @@ autofill_rcrds <- function(.data, ..., .seed = NULL) {
     if(is.na(deps[[rname]]$type)) {
       code_list <- effects_code(dep_fcts, .data, code_list)
       code_adjust_y <- ""
-    } else if(deps[[rname]]$type=="numeric") {
+    } else if(deps[[rname]]$type %in% c("numeric", "integer")) {
       if(vrcrds[[rname]]$operator == "equal" | (vrcrds[[rname]]$operator == "between" && vrcrds[[rname]]$value[1] == vrcrds[[rname]]$value[2])) {
         code_list <- list(process_code = "",
                           model_code = "")

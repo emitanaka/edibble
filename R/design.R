@@ -23,6 +23,7 @@ design <- function(title = NULL, name = "edibble", .record = TRUE, seed = NULL, 
   provenance$set_name(name)
   provenance$save_seed(seed, type = "design")
   structure(list(graph = provenance$get_graph(),
+                 validation = list(rcrds = NULL),
                  provenance = provenance,
                  anatomy = NULL,
                  recipe = NULL,
