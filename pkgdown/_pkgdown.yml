@@ -52,6 +52,7 @@ reference:
   - autofill_rcrds
   - with_variables
   - design_anatomy
+  - design_model
 - title: "Named experimental designs"
   desc: >
     The recipe of a named experimental design is displayed using the `menu_*` functions.
