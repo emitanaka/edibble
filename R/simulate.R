@@ -278,6 +278,7 @@ aggregate_values <- function(y, group, fn) {
 #' A helper function to set variables that the record is dependent on.
 #'
 #' The other options give are characteristics of the record (not the independent variables).
+#' Warning: none of the other options work at the moment!
 #'
 #' @param ... A series of factors in which the record is explicitly dependent upon (tidyselect campatible).
 #' @param .missing A logical value indicating whether there should be some

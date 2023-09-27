@@ -32,6 +32,7 @@ The default choice is random out of these with higher chances of "normal".}
 }
 \description{
 The other options give are characteristics of the record (not the independent variables).
+Warning: none of the other options work at the moment!
 }
 \seealso{
 \code{\link[=autofill_rcrds]{autofill_rcrds()}}
