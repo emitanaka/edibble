@@ -54,7 +54,7 @@ assign_trts <- function(.edibble, order = "random", seed = NULL, constrain = nes
     unit_id <- unique(allotments[allotments$group == igroup, ]$to)
     unit_nm <- prov$fct_names(id = unit_id)
     lnodes <- prov$lvl_nodes
-    unit_level_ids <- lnodes[[unit_id]]$id
+    unit_level_ids <- lnodes[[as.character(unit_id)]]$id
     nunits <- length(unit_level_ids)
 
     # TODO
@@ -123,7 +123,7 @@ assign_units <- function(.edibble, order = "random", seed = NULL, constrain = ne
 
     lid <- prov$fct_id(name = lhs)
     rid <- prov$fct_id(name = rhs)
-    lhs_id <- lnodes[[lid]]$id
+    lhs_id <- lnodes[[as.character(lid)]]$id
     udf <- as.data.frame(prov$serve_units(id = lid, return = "id"))
     udf <- udf[rid]
     small_df <- data.frame(lhs = lhs_id)

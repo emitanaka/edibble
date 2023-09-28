@@ -46,7 +46,7 @@ empty_edibble_graph <- function() {
                            role = character(),
                            name = character(),
                            attrs = data.frame())
-  lnodes <- structure(list(), class = c("edbl_lnodes", "list"))
+  lnodes <- list()
   fedges <- tibble::tibble(from = integer(), to = integer(),
                             type = character(), group = integer(),
                             attrs = data.frame())
@@ -56,90 +56,8 @@ empty_edibble_graph <- function() {
 }
 
 
-as.list.edbl_lnodes <- function(x, ...) {
-  class(x) <- unique(c(setdiff(class(x), "edbl_lnodes"), "list"))
-  x
-}
-
-# I don't know if this is a good idea but the level nodes are stored
-# as a list of nodes
-# below replaces some common `extract` options to make it feel like
-# a data.frame instead
-
-#' Extract or replace parts of the level nodes
-#'
-#' The level nodes are stored as a named list of nodes where the name
-#' corresponds to the id of the corresponding factor. This makes the
-#' access of level nodes slightly awkward. For example, to extract the
-#' id of the level nodes, you have to iterate over every list.
-#'
-#' @examples
-#' crd <- takeout(menu_crd())
-#'
-#' @name extract-lvl-nodes
-NULL
-
-#' @rdname extract-lvl-nodes
-#' @param x An edibble level nodes.
-#' @param name The name to extract.
-#' @export
-"$.edbl_lnodes" <- function(x, name) {
-  unname(unlist(lapply(unclass(x), function(.x) .x[[name]])))
-}
-
-#' @param i The index.
-#' @param ... Unused
-#' @rdname extract-lvl-nodes
-#' @export
-"[.edbl_lnodes" <- function(x, i, ...) {
-  lx <- as.list(x)
-  if(is.numeric(i)) {
-    structure(lx[as.character(i)], class = class(x))
-  } else {
-    structure(lx[i], class = class(x))
-  }
-}
-
-#' @param value The value to replace with.
-#' @rdname extract-lvl-nodes
-#' @export
-"[<-.edbl_lnodes" <- function(x, i, ..., value) {
-  lx <- as.list(x)
-  browser()
-  if(is.numeric(i)) {
-    lx[as.character(i)] <- value
-  } else {
-    lx[i] <- value
-  }
-  invisible(structure(lx, class = class(x)))
-}
-
-#' @rdname extract-lvl-nodes
-#' @keywords internal
-#' @export
-"[[.edbl_lnodes" <- function(x, i, ...) {
-  lx <- as.list(x)
-  if(is.numeric(i)) {
-    lx[[as.character(i)]]
-  } else {
-    lx[[i]]
-  }
-}
-
-#' @rdname extract-lvl-nodes
-#' @export
-"[[<-.edbl_lnodes" <- function(x, i, ..., value) {
-  lx <- as.list(x)
-  if(is.numeric(i)) {
-    lx[[as.character(i)]] <- value
-  } else {
-    lx[[i]] <- value
-  }
-  invisible(structure(lx, class = class(x)))
-}
 
 new_edibble_graph <- function(fnodes = NULL, lnodes = NULL, fedges = NULL, ledges = NULL) {
-  if(!is_null(lnodes) && !inherits(lnodes, "edbl_lnodes")) class(lnodes) <- c("edbl_lnodes", class(lnodes))
   structure(list(factors = list(nodes = fnodes,
                                 edges = fedges),
                  levels = list(nodes = lnodes,

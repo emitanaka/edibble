@@ -24,7 +24,6 @@ serve_table <- function(.edibble, use_labels = FALSE, fail = c("error", "warn", 
   prov <- activate_provenance(.edibble)
   fail <- match.arg(fail)
   if(.record) prov$record_step()
-
   if(!prov$is_connected) {
     if(fail == "error") abort("The graph cannot be converted to a table format.")
     if(fail == "warn") warn("The graph cannot be converted to a table format.")
@@ -48,6 +47,7 @@ serve_table <- function(.edibble, use_labels = FALSE, fail = c("error", "warn", 
 
   namesv <- prov$fct_names()
   if(use_labels) {
+    # FIXME: lvl_nodes$label shouldn't work anymore
     translate <- stats::setNames(prov$lvl_nodes$label, prov$lvl_nodes$name)
     # FIXME: it loses the classes when this is done
     lout <- lapply(lout, function(.x) translate[.x])

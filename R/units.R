@@ -88,19 +88,21 @@ tbl_format_body.edbl_table <- function(x, setup, ...) {
   # this is a bit of a hack to get the type
   # it probably should get the alignement from pillar
   edbl_types <- cli::ansi_strip(setup$body[2])
-  # pos is shorter than types, since it is limited to print width
-  # note if class abbreviation contains ">", it will be an issue below
-  pos <- gregexpr(">", edbl_types)[[1]]
-  types <- map_chr(x, vec_ptype_abbr2)
-  string <- paste0(rep(" ", length.out = setup$width), collapse = "")
-  for(i in 1:length(pos)) {
-    start <- pos[i] - length(types[i]) - 3
-    end <- pos[i]
-    new <- paste0("<", types[i], ">")
-    if(substr(edbl_types, start, end) != new) substr(string, start, end) <- new
+  if(!any(is.na(edbl_types))) {
+    # pos is shorter than types, since it is limited to print width
+    # note if class abbreviation contains ">", it will be an issue below
+    pos <- gregexpr(">", edbl_types)[[1]]
+    types <- map_chr(x, vec_ptype_abbr2)
+    string <- paste0(rep(" ", length.out = setup$width), collapse = "")
+    for(i in 1:length(pos)) {
+      start <- pos[i] - length(types[i]) - 3
+      end <- pos[i]
+      new <- paste0("<", types[i], ">")
+      if(substr(edbl_types, start, end) != new) substr(string, start, end) <- new
+    }
+    setup$body <- c(setup$body[1:2], cli::style_italic(cli::col_silver(string)),
+                    setup$body[3:length(setup$body)])
   }
-  setup$body <- c(setup$body[1:2], cli::style_italic(cli::col_silver(string)),
-                  setup$body[3:length(setup$body)])
   NextMethod()
 }
 

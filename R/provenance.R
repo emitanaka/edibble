@@ -161,12 +161,12 @@ Provenance <- R6::R6Class("Provenance",
                            if(!is_null(role)) {
                              private$validate_role(role)
                              private$validate_id(fid, 1)
-                             lnodes_list <- lnodes_list[self$fct_id(role = role)]
+                             lnodes_list <- lnodes_list[as.character(self$fct_id(role = role))]
                            }
                            if(is_null(fid)) {
                              if(is_null(value)) {
                                # return all lvl ids
-                               return(lnodes_list$id)
+                               return(unlist(map(lnodes_list, function(x) x$id)))
                              } else {
                                fid_search <- as.integer(names(lnodes_list))
                                fid <- self$fct_id_from_lvl_values(value = value, fid_search = fid_search)
@@ -174,7 +174,7 @@ Provenance <- R6::R6Class("Provenance",
                              }
                            } else {
                              private$validate_id(fid, 1)
-                             lnodes <- lnodes_list[[fid]]
+                             lnodes <- lnodes_list[[as.character(fid)]]
                              if(!is_null(value)) {
                                lnodes[match(value, lnodes$value), ]$id
                              } else {
@@ -207,7 +207,7 @@ Provenance <- R6::R6Class("Provenance",
                          #' @param fid_search A vector of fids to search from.
                          fct_id_from_lvl_id = function(id = NULL, fid_search = NULL) {
                            lnodes_list <- self$lvl_nodes
-                           if(!is_null(fid_search)) lnodes_list <- lnodes_list[fid_search]
+                           if(!is_null(fid_search)) lnodes_list <- lnodes_list[as.character(fid_search)]
                            for(fname in names(lnodes_list)) {
                              if(all(id %in% lnodes_list[[fname]]$id)) return(as.integer(fname))
                            }
@@ -228,7 +228,7 @@ Provenance <- R6::R6Class("Provenance",
                          #' Find the level id from the given fid
                          lvl_id_from_fct_id = function(fid = NULL) {
                            lnodes_list <- self$lvl_nodes
-                           lnodes_list[[fid]]$id
+                           lnodes_list[[as.character(fid)]]$id
                          },
 
                          #' @description
@@ -280,7 +280,7 @@ Provenance <- R6::R6Class("Provenance",
                            lnodes_list <- self$lvl_nodes
                            if(!is_null(fid)) {
                              private$validate_id(fid, 1, role = role)
-                             lnodes <- lnodes_list[[fid]]
+                             lnodes <- lnodes_list[[as.character(fid)]]
                              id <- id %||% lnodes$id
                              return(lnodes[match(id, lnodes$id), ]$value)
                            }
@@ -312,7 +312,7 @@ Provenance <- R6::R6Class("Provenance",
                            if(is_null(fid)) abort("The rcrd id must be supplied.")
                            private$validate_id(fid, 1, role = "edbl_rcrd")
                            uid_fct <- self$fct_id_child(id = fid, role = "edbl_unit")
-                           lnodes <- lnodes_list[[uid_fct]]
+                           lnodes <- lnodes_list[[as.character(uid_fct)]]
                            id <- uid %||% lnodes$id
                            return(lnodes[["attr"]][lnodes$id %in% id, self$fct_names(id = fid)])
                          },
@@ -334,9 +334,9 @@ Provenance <- R6::R6Class("Provenance",
                            qid <- id %||% self$fct_id(name = name)
                            lnodes <- self$lvl_nodes
                            switch(return,
-                                  id = lapply(unclass(lnodes[qid]), function(x) x$id),
+                                  id = lapply(unclass(lnodes[as.character(qid)]), function(x) x$id),
                                   value = {
-                                    out <- lapply(unclass(lnodes[qid]), function(x) x$value)
+                                    out <- lapply(unclass(lnodes[as.character(qid)]), function(x) x$value)
                                     names(out) <- self$fct_names(id = qid)
                                     out
                                   })
@@ -507,10 +507,10 @@ Provenance <- R6::R6Class("Provenance",
                            lnodes <- self$lvl_nodes
                            id <- private$lvl_new_id(n = length(value))
                            data <- tibble::tibble(id = id, value = value, n = n, attrs = attrs)
-                           if(is.null(lnodes[[fid]])) {
-                             lnodes[[fid]] <- data
+                           if(is.null(lnodes[[as.character(fid)]])) {
+                             lnodes[[as.character(fid)]] <- data
                            } else {
-                             lnodes[[fid]] <- rbind_(lnodes[[fid]], data)
+                             lnodes[[as.character(fid)]] <- rbind_(lnodes[[as.character(fid)]], data)
                            }
                            self$lvl_nodes <- lnodes
                          },
@@ -549,6 +549,7 @@ Provenance <- R6::R6Class("Provenance",
                            id <- id %||% self$fct_id(role = "edbl_unit")
                            if(length(id) == 0) abort("There needs to be at least one unit supplied.")
                            id_ancestors <- self$fct_id_ancestor(id = id, role = "edbl_unit")
+
                            sub_graph <- self$graph_subset(id = id_ancestors, include = "self")
                            out <- private$build_subtable(sub_graph, return = "id")
                            private$table$units <- out
@@ -665,8 +666,10 @@ Provenance <- R6::R6Class("Provenance",
                            # subset
                            fnodes <- fnodes[fnodes$id %in% idx, ]
                            fedges <- fedges[fedges$from %in% idx & fedges$to %in% idx, ]
-                           lnodes <- lnodes[fnodes$id]
-                           ledges <- ledges[ledges$from %in% lnodes$id & ledges$to %in% lnodes$id, ]
+
+                           lnodes <- lnodes[as.character(fnodes$id)]
+                           lnodes_id <- unlist(lapply(lnodes, function(x) x$id))
+                           ledges <- ledges[ledges$from %in% lnodes_id & ledges$to %in% lnodes_id, ]
 
                            new_edibble_graph(fnodes, lnodes, fedges, ledges)
                          },
@@ -1080,7 +1083,7 @@ Provenance <- R6::R6Class("Provenance",
                           ledges <- graph$levels$edges
                           fnodes$parent <- map_int(fnodes$id, function(id) sum(fedges$to %in% id))
                           fnodes$child <- map_int(fnodes$id, function(id) sum(fedges$from %in% id))
-                          fnodes$nlevels <- map_int(fnodes$id, function(id) nrow(lnodes[[id]]))
+                          fnodes$nlevels <- map_int(fnodes$id, function(id) nrow(lnodes[[as.character(id)]]))
                           if(reverse) {
                             fnodes <- fnodes[order(fnodes$child, -fnodes$nlevels), ]
                           } else {
@@ -1132,6 +1135,7 @@ Provenance <- R6::R6Class("Provenance",
                           sub_lnodes <- top_graph$levels$nodes
                           sub_ledges <- top_graph$levels$edges
 
+
                           out <- list()
                           for(irow in seq(nrow(sub_fnodes))) {
                             # check if children.
@@ -1143,8 +1147,9 @@ Provenance <- R6::R6Class("Provenance",
                               children_id <- sub_fedges$to[sub_fedges$from == iunit]
                               # all children id should have levels in the `out`
                               # any children should be the same -- take the first one
+
                               cid <- out[[as.character(children_id[1])]]
-                              pid <- sub_lnodes[[iunit]]$id
+                              pid <- sub_lnodes[[as.character(iunit)]]$id
                               cid_to_pid <- map_int(cid, function(id) sub_ledges$from[sub_ledges$to == id & sub_ledges$from %in% pid])
                               out[[as.character(iunit)]] <- cid_to_pid
                             }

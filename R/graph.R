@@ -41,7 +41,7 @@ NULL
 fct_nodes <- function(x) {
   prov <- activate_provenance(x)
   fnodes <- prov$fct_nodes
-  nlvls <- map_int(unclass(prov$lvl_nodes), nrow)
+  nlvls <- map_int(prov$lvl_nodes, nrow)
   fnodes$n <- NA_integer_
   fnodes$n[match(as.numeric(names(nlvls)), fnodes$id)] <- nlvls
   if(ncol(fnodes$attrs) == 0) return(fnodes[, c("name", "role", "n")])
@@ -56,6 +56,7 @@ fct_edges <- function(x) {
   fedges[, c("var_from", "var_to", "type", "group", "attrs")]
 }
 
+# mabe make lvl_nodes.Provenance
 
 #' @rdname design_data
 #' @export

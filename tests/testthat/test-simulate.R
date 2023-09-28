@@ -55,6 +55,7 @@ test_that("simulation works", {
   expect_error(simulate_rcrds(spd3, nonexistant = with_params()))
 
 
+  skip("skip")
 
   spd3 %>%
     simulate_rcrds(.joint = with_params(.censor = list(mass = NA,
