@@ -75,22 +75,24 @@ assign_trts <- function(.edibble, order = "random", seed = NULL, constrain = nes
                                                          sample(ntrts)))
                               sample(out[1:nunits])
                             } else {
-
-                              # FIXME the ancestor should be found
-                              # based on `constrain`
-
                               # find the grandest ancestor
                               vanc <- prov$fct_id_ancestor(id = unit_id, role = "edbl_unit")
                               units_df <- tibble::as_tibble(prov$serve_units(id = vanc))
-                              vparents <- prov$fct_id_parent(id = unit_id, role = "edbl_unit")
+                              vparents <- prov$fct_id(name = constrain[[unit_nm]])
                               if(length(vparents)==1L) {
-                                permute_parent_one_alg(prov, vparents, units_df, ntrts)
+                                  permute_parent_one_alg(prov, vparents, units_df, ntrts)
                               } else {
-                                permute_parent_more_than_one(prov, vparents, units_df, ntrts)
+                                  vnparents <- prov$fct_id_parent(id = unit_id, role = "edbl_unit", type = "nest")
+                                  permute_parent_more_than_one(setdiff(vparents, vnparents), units_df, ntrts, nparents = vnparents)
                               }
                             }
                           },
-                          order_trts(structure(order, class = order), prov, constrain, trts_df, ...))
+                          {
+                            vanc <- prov$fct_id_ancestor(id = unit_id, role = "edbl_unit")
+                            units_df <- tibble::as_tibble(prov$serve_units(id = vanc))
+                            vparents <- prov$fct_id(name = constrain[[unit_nm]])
+                            order_trts(structure(order, class = order), trts_df, units_df, setNames(unit_id, unit_nm), vparents, prov, ...)
+                          })
 
     trts_full_df <- trts_df[permutation, , drop = FALSE]
 
@@ -143,7 +145,7 @@ assign_units <- function(.edibble, order = "random", seed = NULL, constrain = ne
                               } else if(length(rhs)==2L) {
                                 permute_parent_one_alg(prov, vparents, udf, nrow(small_df))
                               } else {
-                                permute_parent_more_than_one(prov, vparents, udf, nrow(small_df))
+                                permute_parent_more_than_one(vparents, udf, nrow(small_df))
                               }
                           }, abort("not implemented yet"))
 

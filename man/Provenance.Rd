@@ -269,7 +269,7 @@ If none supplied then it will give all.
 \subsection{Method \code{fct_id_parent()}}{
 Get the factor parent ids
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_id_parent(id = NULL, role = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$fct_id_parent(id = NULL, role = NULL, type = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -278,6 +278,8 @@ Get the factor parent ids
 \item{\code{id}}{The id of the corresponding node.}
 
 \item{\code{role}}{The role for the node.}
+
+\item{\code{type}}{The type of edge link.}
 }
 \if{html}{\out{</div>}}
 }

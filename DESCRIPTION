@@ -37,6 +37,7 @@ Suggests:
     testthat (>= 3.0.0),
     rmarkdown,
     openxlsx2 (>= 1.0.0),
-    visNetwork
+    visNetwork,
+    blocksdesign
 Depends: 
     R (>= 2.10)

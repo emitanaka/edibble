@@ -120,8 +120,9 @@ Provenance <- R6::R6Class("Provenance",
 
                          #' @description
                          #' Get the factor parent ids
-                         fct_id_parent = function(id = NULL, role = NULL) {
-                           private$node_id_parent_child(id = id, role = role, node = "factor", return = "parent")
+                         #' @param type The type of edge link.
+                         fct_id_parent = function(id = NULL, role = NULL, type = NULL) {
+                           private$node_id_parent_child(id = id, role = role, type = type, node = "factor", return = "parent")
                          },
 
                          #' @description
@@ -1010,7 +1011,7 @@ Provenance <- R6::R6Class("Provenance",
                            vctrs::vec_assert(name, character())
                          },
 
-                         node_id_parent_child = function(id = NULL, role = NULL, node = c("factor", "level"), return = c("child", "parent")) {
+                         node_id_parent_child = function(id = NULL, role = NULL, type = NULL, node = c("factor", "level"), return = c("child", "parent")) {
                            return <- match.arg(return)
                            node <- match.arg(node)
                            if(node == "factor") {
@@ -1022,8 +1023,13 @@ Provenance <- R6::R6Class("Provenance",
                            child_ids <- edges$to
                            parent_ids <- edges$from
                            role_ids <- self$fct_id(role = role)
-                           if(return == "parent") return(parent_ids[child_ids %in% id & parent_ids %in% role_ids])
-                           if(return == "child") return(child_ids[parent_ids %in% id & child_ids %in% role_ids])
+                           if(is_null(type)) {
+                             if(return == "parent") return(parent_ids[child_ids %in% id & parent_ids %in% role_ids])
+                             if(return == "child") return(child_ids[parent_ids %in% id & child_ids %in% role_ids])
+                           } else {
+                             if(return == "parent") return(parent_ids[child_ids %in% id & parent_ids %in% role_ids & edges$type %in% type])
+                             if(return == "child") return(child_ids[parent_ids %in% id & child_ids %in% role_ids & edges$type %in% type])
+                           }
                         },
 
                         var_id_ancestor = function(id = NULL, role = NULL, node = c("factor", "level")) {

@@ -41,17 +41,17 @@
               site       row       col       plot      trt
          <unit(2)> <unit(5)> <unit(5)> <unit(13)> <trt(2)>
              <chr>     <chr>     <chr>      <chr>    <chr>                            
-       1     site1      row1      col1     plot01        A
+       1     site1      row1      col1     plot01        B
        2     site1      row2      col1     plot02        B
        3     site1      row3      col1     plot03        A
        4     site1      row1      col2     plot04        B
-       5     site1      row2      col2     plot05        A
-       6     site1      row3      col2     plot06        B
+       5     site1      row2      col2     plot05        B
+       6     site1      row3      col2     plot06        A
        7     site1      row1      col3     plot07        A
-       8     site1      row2      col3     plot08        B
-       9     site1      row3      col3     plot09        A
-      10     site2      row4      col4     plot10        A
-      11     site2      row5      col4     plot11        B
-      12     site2      row4      col5     plot12        B
-      13     site2      row5      col5     plot13        A
+       8     site1      row2      col3     plot08        A
+       9     site1      row3      col3     plot09        B
+      10     site2      row4      col4     plot10        B
+      11     site2      row5      col4     plot11        A
+      12     site2      row4      col5     plot12        A
+      13     site2      row5      col5     plot13        B
 
