@@ -1,16 +1,16 @@
 
-order_trts.blockdesign <- function(x, trts_df, units_df, unit, vparents, prov, ...) {
+order_trts.blocksdesign <- function(x, trts_df, units_df, unit, vparents, prov, model = NULL, ...) {
   if(!requireNamespace("blocksdesign")) abort("You need to install `blocksdesign` package.")
   udf <- units_df[, setdiff(names(units_df), as.character(unit)), drop = FALSE]
   names(trts_df) <- paste0("T", 1:ncol(trts_df))
   tlist <- lapply(trts_df, as.factor)
   udf <- data.frame(lapply(udf, as.factor))
   res <- blocksdesign::design(treatments = tlist, blocks = udf, treatments_model = model,
-                              weighting = 0)
-  tdf$..trtid.. <- 1:nrow(tdf)
+                              weighting = 0.5)
+  trts_df$..trtid.. <- 1:nrow(trts_df)
   out <- res$Design
   out$..id.. <- 1:nrow(out)
-  out <- merge(out, tdf)
+  out <- merge(out, trts_df)
   out[order(out$..id..), "..trtid..", drop = TRUE]
 }
 
