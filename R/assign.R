@@ -42,7 +42,6 @@ assign_trts <- function(.edibble, order = "random", seed = NULL, constrain = nes
   prov <- activate_provenance(.edibble)
   if(.record) prov$record_step()
   prov$save_seed(seed, type = "assign_trts")
-
   fedges <- prov$fct_edges
   allotments <- fedges[fedges$type == "allot", ]
   alloc_groups <- unique(allotments$group)
@@ -57,9 +56,6 @@ assign_trts <- function(.edibble, order = "random", seed = NULL, constrain = nes
     unit_level_ids <- lnodes[[as.character(unit_id)]]$id
     nunits <- length(unit_level_ids)
 
-    # TODO
-    # if conditional treatment is applied, then the allocation of
-    # treatment in the conditioned treatment needs to be extracted
     parent_trts <- prov$fct_id_parent(id = trts_id, role = "edbl_trt")
     parent_trts_not_in_this_allotment <- setdiff(parent_trts, trts_id)
     trts_df <- prov$make_trts_table(id = c(parent_trts, trts_id), return = "id")
