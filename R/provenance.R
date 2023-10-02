@@ -551,6 +551,7 @@ Provenance <- R6::R6Class("Provenance",
                            if(length(id) == 0) abort("There needs to be at least one unit supplied.")
                            id_ancestors <- self$fct_id_ancestor(id = id, role = "edbl_unit")
                            sub_graph <- self$graph_subset(id = id_ancestors, include = "self")
+
                            out <- private$build_subtable(sub_graph, return = "id")
                            private$table$units <- out
                            switch(return,
@@ -1090,9 +1091,9 @@ Provenance <- R6::R6Class("Provenance",
                           fnodes$child <- map_int(fnodes$id, function(id) sum(fedges$from %in% id))
                           fnodes$nlevels <- map_int(fnodes$id, function(id) nrow(lnodes[[as.character(id)]]))
                           if(reverse) {
-                            fnodes <- fnodes[order(-fnodes$parent, fnodes$child, -fnodes$nlevels), ]
+                            fnodes <- fnodes[order(fnodes$child, -fnodes$parent, -fnodes$nlevels), ]
                           } else {
-                            fnodes <- fnodes[order(fnodes$parent, -fnodes$child, -fnodes$nlevels), ]
+                            fnodes <- fnodes[order(-fnodes$child, fnodes$parent, -fnodes$nlevels), ]
                           }
                           new_edibble_graph(fnodes = fnodes, lnodes = lnodes, fedges = fedges, ledges = ledges)
                         },
