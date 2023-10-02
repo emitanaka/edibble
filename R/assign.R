@@ -60,40 +60,80 @@ assign_trts <- function(.edibble, order = "random", seed = NULL, constrain = nes
     # TODO
     # if conditional treatment is applied, then the allocation of
     # treatment in the conditioned treatment needs to be extracted
-    linked_trts <- prov$fct_id_links(id = trts_id, role = "edbl_trt")
-    if(length(setdiff(linked_trts, trts_id))) {
-      abort("Conditional treatment where one factor is alloted in another group is not currently supported.")
-    }
-    trts_df <- prov$make_trts_table(id = trts_id, return = "id")
-    ntrts <- nrow(trts_df)
-    permutation <- switch(order[igroup],
-                          "systematic" = rep(1:ntrts, length.out = nunits),
-                          "systematic-random" = rep(sample(ntrts), length.out = nunits),
-                          "random" = {
-                            if(is_empty(constrain[[unit_nm]])) {
-                              out <- as.vector(replicate(ceiling(nunits / ntrts),
-                                                         sample(ntrts)))
-                              sample(out[1:nunits])
-                            } else {
-                              # find the grandest ancestor
+    parent_trts <- prov$fct_id_parent(id = trts_id, role = "edbl_trt")
+    parent_trts_not_in_this_allotment <- setdiff(parent_trts, trts_id)
+    trts_df <- prov$make_trts_table(id = c(parent_trts, trts_id), return = "id")
+    if(length(parent_trts_not_in_this_allotment)) {
+      trts_df_with_id <- trts_df
+      trts_df_with_id$..id.. <- 1:nrow(trts_df)
+      vanc <- prov$fct_id_ancestor(id = unit_id, role = "edbl_unit")
+      units_df_with_id <- units_df <- tibble::as_tibble(prov$serve_units(id = vanc))
+      units_df_with_id$..id.. <- 1:nrow(units_df_with_id)
+      ptrts_df <- na.omit(tibble::as_tibble(prov$serve_trts(id = parent_trts)))
+
+      if(nrow(ptrts_df) == 0L) abort(paste0("The treatment factor, ",
+                                            .combine_words(prov$fct_names(id = trts_id), fun = cli::col_blue),
+                                            " is not assigned yet."))
+      ptrts_df$..group_id.. <- as.numeric(factor(do.call(paste0, ptrts_df)))
+      permutation <- integer(length = nrow(units_df_with_id))
+      for(aptrt in unique(ptrts_df$..group_id..)) {
+        locs <- which(ptrts_df$..group_id.. == aptrt)
+        sub_units_df <- units_df[locs, ]
+        sub_trts_df_with_id <- tibble::as_tibble(merge(trts_df_with_id, ptrts_df[locs, ][1,]))
+        sub_trts_df <- sub_trts_df_with_id[, setdiff(names(sub_trts_df_with_id), c("..id..", "..group_id.."))]
+        sub_ntrts <- nrow(sub_trts_df)
+        sub_nunits <- nrow(sub_units_df)
+        permute <- switch(order[igroup],
+                                   "systematic" = rep(1:sub_ntrts, length.out = sub_nunits),
+                                   "systematic-random" = rep(sample(sub_ntrts), length.out = sub_nunits),
+                                   "random" = {
+                                     if(is_empty(constrain[[unit_nm]])) {
+                                       sample(rep(sample(sub_ntrts), length.out = sub_nunits))
+                                     } else {
+                                       vparents <- prov$fct_id(name = constrain[[unit_nm]])
+                                       if(length(vparents)==1L) {
+                                         permute_parent_one_alg(prov, vparents, sub_units_df, sub_ntrts)
+                                       } else {
+                                         vnparents <- prov$fct_id_parent(id = unit_id, role = "edbl_unit", type = "nest")
+                                         permute_parent_more_than_one(setdiff(vparents, vnparents), sub_units_df, sub_ntrts, nparents = vnparents)
+                                       }
+                                     }
+                                   },
+                                   {
+                                     vparents <- prov$fct_id(name = constrain[[unit_nm]])
+                                     order_trts(structure(order[igroup], class = order[igroup]), sub_trts_df, sub_units_df, setNames(unit_id, unit_nm), vparents, prov, ...)
+                                   })
+        permutation[units_df_with_id$..id..[locs]] <- sub_trts_df_with_id[permute, "..id..", drop = TRUE]
+      }
+    } else {
+      ntrts <- nrow(trts_df)
+      permutation <- switch(order[igroup],
+                            "systematic" = rep(1:ntrts, length.out = nunits),
+                            "systematic-random" = rep(sample(ntrts), length.out = nunits),
+                            "random" = {
+                              if(is_empty(constrain[[unit_nm]])) {
+                                sample(rep(sample(ntrts), length.out = nunits))
+                              } else {
+                                # find the grandest ancestor
+                                vanc <- prov$fct_id_ancestor(id = unit_id, role = "edbl_unit")
+                                units_df <- tibble::as_tibble(prov$serve_units(id = vanc))
+                                vparents <- prov$fct_id(name = constrain[[unit_nm]])
+                                if(length(vparents)==1L) {
+                                  permute_parent_one_alg(prov, vparents, units_df, ntrts)
+                                } else {
+                                  vnparents <- prov$fct_id_parent(id = unit_id, role = "edbl_unit", type = "nest")
+                                  permute_parent_more_than_one(setdiff(vparents, vnparents), units_df, ntrts, nparents = vnparents)
+                                }
+                              }
+                            },
+                            {
                               vanc <- prov$fct_id_ancestor(id = unit_id, role = "edbl_unit")
                               units_df <- tibble::as_tibble(prov$serve_units(id = vanc))
                               vparents <- prov$fct_id(name = constrain[[unit_nm]])
-                              if(length(vparents)==1L) {
-                                  permute_parent_one_alg(prov, vparents, units_df, ntrts)
-                              } else {
-                                  vnparents <- prov$fct_id_parent(id = unit_id, role = "edbl_unit", type = "nest")
-                                  permute_parent_more_than_one(setdiff(vparents, vnparents), units_df, ntrts, nparents = vnparents)
-                              }
-                            }
-                          },
-                          {
-                            vanc <- prov$fct_id_ancestor(id = unit_id, role = "edbl_unit")
-                            units_df <- tibble::as_tibble(prov$serve_units(id = vanc))
-                            vparents <- prov$fct_id(name = constrain[[unit_nm]])
-                            order_trts(structure(order, class = order), trts_df, units_df, setNames(unit_id, unit_nm), vparents, prov, ...)
-                          })
+                              order_trts(structure(order[igroup], class = order[igroup]), trts_df, units_df, setNames(unit_id, unit_nm), vparents, prov, ...)
+                            })
 
+    }
     trts_full_df <- trts_df[permutation, , drop = FALSE]
 
     for(itvar in seq_along(trts_full_df)) {
