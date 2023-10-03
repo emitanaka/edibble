@@ -156,6 +156,12 @@ vec_math.edbl_fct <- function(.fn, .x, ...) {
   vctrs::vec_restore(out, .x)
 }
 
+#' @importFrom vctrs vec_restore
+#' @export
+vec_restore.edbl_fct <- function(x, to) {
+  x
+}
+
 
 #' @importFrom vctrs vec_ptype2
 #' @export
