@@ -448,9 +448,10 @@ effects_code <- function(dep_fcts, .data, nlevels = 1) {
       nfct <- length(unique(.data[[fct]]))
       if("numeric" %in% fct_class) {
         code_list$process_code <- c(code_list$process_code,
-                                    sprintf('%s_degree <- sample(1:%d, 1)', fct, ifelse(nfct > 5, 5, nfct)),
-                                    sprintf('%s_effects <- as.vector(poly(%s, %s_degree) %*% rnorm(%s_degree, 0, 10))',
-                                            fct, fct, fct, fct))
+                                    sprintf('%s_degree <- sample(1:%d, 1)', fct, ifelse(nfct > 5, 5, nfct - 1)),
+                                    paste(sprintf('%s_effects <- as.vector(poly(%s, %s_degree)', fct, fct, fct),
+                                          "%*%",
+                                          sprintf('rnorm(%s_degree, 0, 10))', fct)))
         code_list$model_code <- c(code_list$model_code, sprintf("%s_effects", fct))
 
         # logical not accounted for
