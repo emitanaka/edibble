@@ -143,10 +143,10 @@ is_rcrd <- function(x) {
 }
 
 
-#' @importFrom vctrs vec_math
-#' @export
-vctrs::vec_math
 
+
+
+#' @importFrom vctrs vec_math
 #' @method vec_math edbl_fct
 #' @export
 vec_math.edbl_fct <- function(.fn, .x, ...) {
@@ -158,33 +158,57 @@ vec_math.edbl_fct <- function(.fn, .x, ...) {
 
 #' @importFrom vctrs vec_ptype2
 #' @export
-vec_ptype2.edbl_fct.character <- function(x, y, ...) character()
+vec_ptype2.edbl_unit.character <- function(x, y, ...) y
 #' @export
-vec_ptype2.character.edbl_fct <- function(x, y, ...) character()
+vec_ptype2.character.edbl_unit <- function(x, y, ...) x
 #' @export
-vec_ptype2.edbl_unit.character <- function(x, y, ...) character()
+vec_ptype2.edbl_unit.double <- function(x, y, ...) y
 #' @export
-vec_ptype2.character.edbl_unit <- function(x, y, ...) character()
+vec_ptype2.double.edbl_unit <- function(x, y, ...) x
 #' @export
-vec_ptype2.edbl_trt.character <- function(x, y, ...) character()
+vec_ptype2.edbl_unit.integer <- function(x, y, ...) y
 #' @export
-vec_ptype2.character.edbl_trt <- function(x, y, ...) character()
+vec_ptype2.integer.edbl_unit <- function(x, y, ...) x
+
 #' @export
+vec_ptype2.edbl_trt.character <- function(x, y, ...) y
+#' @export
+vec_ptype2.character.edbl_trt <- function(x, y, ...) x
+#' @export
+vec_ptype2.edbl_trt.double <- function(x, y, ...) y
+#' @export
+vec_ptype2.double.edbl_trt <- function(x, y, ...) x
+#' @export
+vec_ptype2.edbl_trt.integer <- function(x, y, ...) y
+#' @export
+vec_ptype2.integer.edbl_trt <- function(x, y, ...) x
 
 #' @importFrom vctrs vec_cast
 #' @export
-vec_cast.edbl_fct.character <- function(x, to, ...) as.character(x)
+vec_cast.edbl_trt.double <- function(x, to, ...) to
 #' @export
-vec_cast.character.edbl_fct <- function(x, to, ...) x
+vec_cast.double.edbl_trt <- function(x, to, ...) x
 #' @export
-vec_cast.edbl_unit.character <- function(x, to, ...) as.character(x)
+vec_cast.edbl_trt.integer <- function(x, to, ...) to
 #' @export
-vec_cast.character.edbl_unit <- function(x, to, ...) x
+vec_cast.integer.edbl_trt <- function(x, to, ...) x
 #' @export
-vec_cast.edbl_trt.character <- function(x, to, ...) as.character(x)
+vec_cast.edbl_trt.character <- function(x, to, ...) to
 #' @export
 vec_cast.character.edbl_trt <- function(x, to, ...) x
 
+#' @export
+vec_cast.edbl_unit.double <- function(x, to, ...) to
+#' @export
+vec_cast.double.edbl_unit <- function(x, to, ...) x
+#' @export
+vec_cast.edbl_unit.integer <- function(x, to, ...) to
+#' @export
+vec_cast.integer.edbl_unit <- function(x, to, ...) x
+#' @export
+vec_cast.edbl_unit.character <- function(x, to, ...) to
+#' @export
+vec_cast.character.edbl_unit <- function(x, to, ...) x
 
 # ADDME add_units(exist = TRUE), reset_units(exist = FALSE)
 
