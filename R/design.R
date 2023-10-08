@@ -80,7 +80,11 @@ design_model <- function(data, type = c("anova", "lmer")) {
   type <- match.arg(type)
   unit_str <- des$anatomy
   units <- attr(terms(unit_str), "term.labels")
-  trt_str <- paste0(prov$trt_names(), collapse = "*")
+  trts <- map_lgl(prov$fct_levels(name = prov$trt_names(), return = "value"),
+                  function(x) inherits(x, "numeric") |  inherits(x, "integer"))
+  tnames <- names(trts)
+  if(any(trts)) tnames[trts] <- paste0("factor(", tnames[trts],")")
+  trt_str <- paste0(tnames, collapse = "*")
   rnames <- prov$rcrd_names()
   map_to_units <- prov$mapping_to_unit(id = prov$fct_id(name = rnames))
   smallest_unit <- prov$fct_id_leaves(role = "edbl_unit")[1]
@@ -88,15 +92,27 @@ design_model <- function(data, type = c("anova", "lmer")) {
   rname <- "y"
   if(length(rnames)) rname <- rnames[which(map_to_units == smallest_unit)][1]
   if("numeric" %in% rclass) rname <- rnames[!is.na(rclass) & rclass=="numeric" & map_to_units == smallest_unit][1]
+  if(is.na(rname)) rname <- "y"
   res <- switch(type,
          anova = {
-           sprintf("aov(%s ~ %s + Error(%s), data = .)\n",
-                            rname, trt_str, paste0(units[-length(units)], collapse = " + "))
+           if(length(units)==1) {
+             sprintf("aov(%s ~ %s, data = .)\n",
+                     rname, trt_str)
+           } else {
+             sprintf("aov(%s ~ %s + Error(%s), data = .)\n",
+                     rname, trt_str, paste0(units[-length(units)], collapse = " + "))
+           }
          },
          lmer = {
-           rstr <- paste0(paste0("(1|", units[-length(units)], ")"), collapse = " + ")
-           sprintf("lme4::lmer(%s ~ %s + %s, data = .)\n",
-                   rname, trt_str, rstr)
+           if(length(units)==1) {
+             warn("No random effects in the baseline model.")
+             sprintf("lm(%s ~ %s, data = .)\n",
+                     rname, trt_str)
+           } else {
+             rstr <- paste0(paste0("(1|", units[-length(units)], ")"), collapse = " + ")
+             sprintf("lme4::lmer(%s ~ %s + %s, data = .)\n",
+                     rname, trt_str, rstr)
+           }
          })
   cat(res)
   invisible(parse(text = res))
