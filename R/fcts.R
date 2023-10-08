@@ -86,7 +86,7 @@ as.character.edbl_fct <- function(x, ...) {
   #unname(levels(x)[x])
   out <- unclass(x)
   attributes(out) <- NULL
-  out
+  as.character(out)
 }
 
 #' @export
@@ -152,8 +152,7 @@ is_rcrd <- function(x) {
 vec_math.edbl_fct <- function(.fn, .x, ...) {
   if(.fn %in% c("is.nan", "is.infinite")) return(rep_len(FALSE, length(.x)))
   if(.fn == "is.finite") return(rep_len(TRUE, length(.x)))
-  out <- lapply(as.character(.x), get(.fn), ...)
-  out
+  get(.fn)(unclass(.x))
 }
 
 #' @importFrom vctrs vec_ptype2
@@ -209,6 +208,8 @@ vec_cast.integer.edbl_unit <- function(x, to, ...) x
 vec_cast.edbl_unit.character <- function(x, to, ...) to
 #' @export
 vec_cast.character.edbl_unit <- function(x, to, ...) x
+
+
 
 # ADDME add_units(exist = TRUE), reset_units(exist = FALSE)
 
