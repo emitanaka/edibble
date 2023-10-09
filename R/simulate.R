@@ -509,6 +509,7 @@ examine_process <- function(data, process = NULL) {
 }
 
 #' @rdname examine_process
+#' @export
 examine_process_values <- function(data, process = NULL) {
   prov <- activate_provenance(data)
   res <- prov$get_simulate_result_env(process)
