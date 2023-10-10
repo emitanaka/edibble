@@ -7,8 +7,8 @@
 #' zero rows.
 #'
 #' @inheritParams set_units
-#' @param ... The columns to show nested labels (if available). Tidyselect compatible.
-#' @param .fail What to do when failing to convert graph to table.
+#' @param label_nested The columns to show nested labels (if available). Tidyselect compatible.
+#' @param fail What to do when failing to convert graph to table.
 #' @return An `edbl` data frame with columns defined by vertices and
 #' rows displayed only if the vertices are connected and reconcile for output.
 #' @family user-facing functions
@@ -21,9 +21,9 @@
 #'   serve_table()
 #' @import tidyselect
 #' @export
-serve_table <- function(.edibble, ..., .fail = c("error", "warn", "ignore"),  .record = TRUE) {
+serve_table <- function(.edibble, label_nested, fail = c("error", "warn", "ignore"),  .record = TRUE) {
   prov <- activate_provenance(.edibble)
-  fail <- match.arg(.fail)
+  fail <- match.arg(fail)
   if(.record) prov$record_step()
   if(!prov$is_connected) {
     if(fail == "error") abort("The graph cannot be converted to a table format.")
@@ -46,7 +46,7 @@ serve_table <- function(.edibble, ..., .fail = c("error", "warn", "ignore"),  .r
     }
   }
 
-  dots <- eval_select(expr(c(...)), lout)
+  dots <- eval_select(enexpr(label_nested), lout)
   if(length(dots)) {
     lnodes <- lvl_nodes(.edibble)
     for(aname in names(dots)) {
