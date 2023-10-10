@@ -6,8 +6,8 @@
 \usage{
 serve_table(
   .edibble,
-  use_labels = FALSE,
-  fail = c("error", "warn", "ignore"),
+  ...,
+  .fail = c("error", "warn", "ignore"),
   .record = TRUE
 )
 }
@@ -16,9 +16,9 @@ serve_table(
 object that contains the edibble data frame in the attribute
 \code{design}.}
 
-\item{use_labels}{To show the labels instead of names.}
+\item{...}{The columns to show nested labels (if available). Tidyselect compatible.}
 
-\item{fail}{What to do when failing to convert graph to table.}
+\item{.fail}{What to do when failing to convert graph to table.}
 
 \item{.record}{A logical value. This indicates whether to record this
 code step. The default is TRUE. It should remain TRUE unless this

@@ -866,7 +866,13 @@ Given node data, append the factor nodes
 \subsection{Method \code{append_lvl_nodes()}}{
 Given node data, append the level nodes
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$append_lvl_nodes(value, n = NA_integer_, attrs = NULL, fid = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$append_lvl_nodes(
+  value,
+  n = NULL,
+  label = NULL,
+  attrs = NULL,
+  fid = NULL
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -875,6 +881,8 @@ Given node data, append the level nodes
 \item{\code{value}}{The value of the node.}
 
 \item{\code{n}}{The number of replications.}
+
+\item{\code{label}}{The labels for the levels.}
 
 \item{\code{attrs}}{The attributes.}
 

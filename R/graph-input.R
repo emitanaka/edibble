@@ -78,7 +78,7 @@ graph_input.nest_lvls <- function(input, prov, name, class, ...) {
   plevels <- rep(names(input), lengths(input))
   clevels <- unname(unlist(input))
   pids <- prov$lvl_id(value = plevels, fid = idp)
-  prov$append_lvl_nodes(value = clevels, fid = idv)
+  prov$append_lvl_nodes(value = clevels, fid = idv, label = unname(unlist(clabels)))
   vids <- prov$lvl_id(value = clevels, fid = idv)
   prov$append_lvl_edges(from = pids, to = vids)
 
