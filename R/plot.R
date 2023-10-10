@@ -37,7 +37,7 @@ plot.edbl_design <- function(x, which = c("factors", "levels"),
       out$attrs <- NULL
       out$fct_var <- prov$fct_names(id = as.integer(avar))
       out$role <- prov$fct_role(id = as.integer(avar))
-      out
+      out[, c("id", "value", "name", "fct_var", "role")]
     })
     nodes <- do.call(rbind, nodes)
   }
