@@ -6,8 +6,8 @@
 \usage{
 serve_table(
   .edibble,
-  ...,
-  .fail = c("error", "warn", "ignore"),
+  label_nested,
+  fail = c("error", "warn", "ignore"),
   .record = TRUE
 )
 }
@@ -16,9 +16,9 @@ serve_table(
 object that contains the edibble data frame in the attribute
 \code{design}.}
 
-\item{...}{The columns to show nested labels (if available). Tidyselect compatible.}
+\item{label_nested}{The columns to show nested labels (if available). Tidyselect compatible.}
 
-\item{.fail}{What to do when failing to convert graph to table.}
+\item{fail}{What to do when failing to convert graph to table.}
 
 \item{.record}{A logical value. This indicates whether to record this
 code step. The default is TRUE. It should remain TRUE unless this
