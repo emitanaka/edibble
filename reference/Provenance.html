@@ -971,7 +971,13 @@ the intersection of it will be checked.</p><div class="section">
 <h3 id="method-append-lvl-nodes-">Method <code>append_lvl_nodes()</code><a class="anchor" aria-label="anchor" href="#method-append-lvl-nodes-"></a></h3>
 <p>Given node data, append the level nodes</p><div class="section">
 <h4 id="usage-39">Usage<a class="anchor" aria-label="anchor" href="#usage-39"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">append_lvl_nodes</span><span class="op">(</span><span class="va">value</span>, n <span class="op">=</span> <span class="cn">NA_integer_</span>, attrs <span class="op">=</span> <span class="cn">NULL</span>, fid <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Provenance</span><span class="op">$</span><span class="fu">append_lvl_nodes</span><span class="op">(</span></span>
+<span>  <span class="va">value</span>,</span>
+<span>  n <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  label <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  attrs <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  fid <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -982,6 +988,10 @@ the intersection of it will be checked.</p><div class="section">
 
 <dt><code>n</code></dt>
 <dd><p>The number of replications.</p></dd>
+
+
+<dt><code>label</code></dt>
+<dd><p>The labels for the levels.</p></dd>
 
 
 <dt><code>attrs</code></dt>
