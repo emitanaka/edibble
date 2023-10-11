@@ -177,7 +177,7 @@ Provenance <- R6::R6Class("Provenance",
                              private$validate_id(fid, 1)
                              lnodes <- lnodes_list[[as.character(fid)]]
                              if(!is_null(value)) {
-                               lnodes[match(value, lnodes$value), ]$id
+                               lnodes[match(as.character(value), as.character(lnodes$value)), ]$id
                              } else {
                                lnodes$id
                              }
