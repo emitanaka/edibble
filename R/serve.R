@@ -21,7 +21,7 @@
 #'   serve_table()
 #' @import tidyselect
 #' @export
-serve_table <- function(.edibble, label_nested, fail = c("error", "warn", "ignore"),  .record = TRUE) {
+serve_table <- function(.edibble, label_nested = NULL, fail = c("error", "warn", "ignore"),  .record = TRUE) {
   prov <- activate_provenance(.edibble)
   fail <- match.arg(fail)
   if(.record) prov$record_step()
@@ -61,7 +61,7 @@ serve_table <- function(.edibble, label_nested, fail = c("error", "warn", "ignor
   }
 
   namesv <- prov$fct_names()
-  new_edibble(lout[namesv], design = .edibble)
+  new_edibble(lout[namesv], .design = .edibble)
 }
 
 

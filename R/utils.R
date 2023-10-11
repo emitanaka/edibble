@@ -303,16 +303,16 @@ append_recipe_code <- function(.design, new) {
 }
 
 add_edibble_code <- function(.edibble, code) {
-  if(!isFALSE(.edibble)) {
-    if(is_edibble_design(.edibble)) {
-      append_recipe_code(.edibble, code)
-    } else {
-      des <- edbl_design(.edibble) %>%
-        append_recipe_code(code)
-      attr(.edibble, "design") <- des
-      .edibble
+    if(!isFALSE(.edibble)) {
+      if(is_edibble_design(.edibble)) {
+        append_recipe_code(.edibble, code)
+      } else {
+        des <- edbl_design(.edibble) %>%
+          append_recipe_code(code)
+        attr(.edibble, "design") <- des
+        .edibble
+      }
     }
-  }
 }
 
 

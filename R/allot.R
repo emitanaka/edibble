@@ -153,7 +153,6 @@ allot_units <- function(.edibble, ..., .record = TRUE) {
 allot_table <- function(.edibble, ..., order = "random", seed = NULL, constrain = nesting_structure(.edibble), .record = TRUE) {
   prov <- activate_provenance(.edibble)
   if(.record) prov$record_step()
-
   .edibble %>%
     allot_trts(..., .record = FALSE) %>%
     assign_trts(order = order, seed = seed, constrain = constrain, .record = FALSE) %>%

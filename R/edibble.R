@@ -199,7 +199,7 @@ as_edibble.data.frame <- function(.data, title = NULL, name = "edibble", .record
 edibble <- function(.data, title = NULL, name = "edibble", .record = TRUE, seed = NULL, provenance = Provenance$new(), ...) {
   if(.record) provenance$record_step()
   des <- design(title = title, name = name, .record = FALSE, seed = seed, provenance = provenance)
-  new_edibble(.data, ..., design = des)
+  new_edibble(.data, ..., .design = des)
 }
 
 
