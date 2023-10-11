@@ -51,15 +51,15 @@ set_rcrds <- function(.edibble, ...,
   }
 
   if(is_edibble_table(.edibble)) {
-    rcrds <- prov$serve_rcrds(return = "value")
-    for(arcrd in names(rcrds)) {
-      if(arcrd %in% names(.edibble)) {
+    #rcrds <- prov$serve_rcrds(return = "value")
+    for(arcrd in rcrds) {
+      if(!arcrd %in% names(.edibble)) {
         uid <- prov$mapping_to_unit(id = prov$fct_id(name = arcrd))
         uname <- prov$fct_names(id = uid)
-        uids <- prov$fct_id(name = .edibble[[uname]])
+        uids <- prov$lvl_id(value = .edibble[[uname]], fid = uid)
         .edibble[[arcrd]] <- new_edibble_rcrd(rep(NA_real_, nrow(.edibble)), uids)
       } else {
-        .edibble[[arcrd]] <- rcrds[[arcrd]]
+        .edibble[[arcrd]] <- new_edibble_rcrd(.edibble[[arcrd]])
       }
     }
   }
