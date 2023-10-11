@@ -3,44 +3,24 @@
 \name{new_edibble}
 \alias{new_edibble}
 \alias{as_edibble}
-\alias{edibble}
 \title{An edibble table constructor}
 \usage{
-new_edibble(.data, ..., design = NULL, class = NULL)
+new_edibble(.data, ..., .design = NULL, .class = NULL)
 
 as_edibble(.data, ...)
-
-edibble(
-  .data,
-  title = NULL,
-  name = "edibble",
-  .record = TRUE,
-  seed = NULL,
-  provenance = Provenance$new(),
-  ...
-)
 }
 \arguments{
 \item{.data}{data frame or list of the same size.}
 
 \item{...}{Passed to \code{new_tibble}.}
 
-\item{design}{An edibble graph object.}
+\item{.design}{An edibble graph object.}
 
-\item{class}{Subclasses for edibble table. The default is NULL.}
+\item{.class}{Subclasses for edibble table. The default is NULL.}
 
-\item{title}{Optional title of the experiment.}
+\item{units}{The data columns that are units.}
 
-\item{name}{Optional name of the experiment.}
-
-\item{.record}{A logical value. This indicates whether to record this
-code step. The default is TRUE. It should remain TRUE unless this
-function is used as a wrapper in other code.}
-
-\item{seed}{A seed number for reproducibility.}
-
-\item{provenance}{An environment setup in a manner to store methods and
-information to trace the origin of the design}
+\item{trts}{The data columns that are treatments.}
 }
 \value{
 An edibble table.

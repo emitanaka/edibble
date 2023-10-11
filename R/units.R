@@ -82,29 +82,25 @@ vec_cast.edbl_unit.edbl_unit <- function(x, to, ...) {
   x
 }
 
-#' @importFrom pillar tbl_format_body
+#' @importFrom pillar ctl_new_pillar
 #' @export
-tbl_format_body.edbl_table <- function(x, setup, ...) {
-  # this is a bit of a hack to get the type
-  # it probably should get the alignement from pillar
-  edbl_types <- cli::ansi_strip(setup$body[2])
-  if(!any(is.na(edbl_types))) {
-    # pos is shorter than types, since it is limited to print width
-    # note if class abbreviation contains ">", it will be an issue below
-    pos <- gregexpr(">", edbl_types)[[1]]
-    types <- map_chr(x, vec_ptype_abbr2)
-    string <- paste0(rep(" ", length.out = setup$width), collapse = "")
-    for(i in 1:length(pos)) {
-      start <- pos[i] - length(types[i]) - 3
-      end <- pos[i]
-      new <- paste0("<", types[i], ">")
-      if(substr(edbl_types, start, end) != new) substr(string, start, end) <- new
-    }
-    setup$body <- c(setup$body[1:2], cli::style_italic(cli::col_silver(string)),
-                    setup$body[3:length(setup$body)])
+ctl_new_pillar.edbl_table <- function(controller, x, width, ..., title = NULL) {
+  out <- NextMethod()
+  type2 <- out$type
+  type2[[1]][1] <- vec_ptype_abbr2(x)
+  if(!inherits(x, "edbl_fct")) {
+    out$type[[1]][1] <- ""
+    class(out$type[[1]]) <- NULL
   }
-  NextMethod()
+  pillar::new_pillar(list(
+    title = out$title,
+    type = out$type,
+    type2 = type2,
+    data = out$data
+  ))
 }
+
+
 
 vec_ptype_abbr2 <- function(x, ...) {
   cls <- class(x)
@@ -112,8 +108,16 @@ vec_ptype_abbr2 <- function(x, ...) {
   vctrs::vec_ptype_abbr(x, ...)
 }
 
-
-
+#' @importFrom pillar type_sum
+#' @export
+type_sum.edbl_fct <- function(x) {
+  pillar_attr <- attr(x, "pillar", exact = TRUE)
+  label <- pillar_attr$label
+  if (!is.null(label)) {
+    return(I(label))
+  }
+  vec_ptype_abbr(x)
+}
 
 
 ### below may not be working as intended

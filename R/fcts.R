@@ -56,7 +56,7 @@ set_fcts <- function(.edibble, ..., .class = NULL,
 #' Constructor for an edibble variable
 #' @importFrom vctrs new_vctr
 #' @noRd
-new_edibble_fct <- function(labels = character(), levels = unique(labels),
+new_edibble_fct <- function(labels = character(), levels = as.character(unique(labels)),
                             name = character(), rep = NULL, ..., class = NULL) {
   # don't make the attribute name
   # as this triggers the warning message in ggplot2:

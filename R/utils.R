@@ -342,3 +342,10 @@ rescale_values <- function(x, lower = NA, upper = NA) {
   (x - minx) / (maxx - minx) * (upper - .Machine$double.xmin - lower) + lower + .Machine$double.xmin
 }
 
+#' @export
+print.edbl_fct <- function(x, ...) {
+  xold <- x
+  attributes(x) <- NULL
+  print(x)
+  invisible(xold)
+}
