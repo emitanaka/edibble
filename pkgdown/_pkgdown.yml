@@ -79,7 +79,6 @@ reference:
   desc: >
     These are functions relevant when making an experiment from existing data
 - contents:
-  - edibble
   - as_edibble
 - title: "Experiments"
   desc: >
