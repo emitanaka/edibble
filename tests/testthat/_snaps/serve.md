@@ -7,7 +7,7 @@
       # An edibble: 3 x 1
             block
         <unit(3)>
-            <chr>                                                                     
+            <chr>
       1    block1
       2    block2
       3    block3
@@ -22,7 +22,7 @@
       # An edibble: 6 x 2
             block      plot
         <unit(3)> <unit(6)>
-            <chr>     <chr>                                                           
+            <chr>     <chr>
       1    block1     plot1
       2    block1     plot2
       3    block2     plot3
@@ -40,7 +40,7 @@
       # An edibble: 13 x 5
               site       row       col       plot      trt
          <unit(2)> <unit(5)> <unit(5)> <unit(13)> <trt(2)>
-             <chr>     <chr>     <chr>      <chr>    <chr>                            
+             <chr>     <chr>     <chr>      <chr>    <chr>
        1     site1      row1      col1     plot01        B
        2     site1      row2      col1     plot02        B
        3     site1      row3      col1     plot03        A

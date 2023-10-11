@@ -16,7 +16,7 @@ test_that("nested-units", {
                list(block = tibble::tibble(value = c("block1", "block2", "block3"),
                                            n = NA_integer_),
                     plot = tibble::tibble(value = c("plot1", "plot2", "plot3", "plot4", "plot5", "plot6"),
-                                          n = NA_integer_))                         )
+                                          label = rep(c("plot1", "plot2"), 3)))                         )
 
   des2 <- des1 %>%
     set_units(sample = nested_in(plot,
@@ -30,7 +30,7 @@ test_that("nested-units", {
                list(block = tibble::tibble(value = c("block1", "block2", "block3"),
                                            n = NA_integer_),
                               plot = tibble::tibble(value = c("plot1", "plot2", "plot3", "plot4", "plot5", "plot6"),
-                                                    n = NA_integer_),
+                                                    label = rep(c("plot1", "plot2"), 3)),
                               sample = tibble::tibble(value = c("sample01", "sample02", "sample03",
                                                              "sample04", "sample05", "sample06", "sample07", "sample08",
                                                              "sample09", "sample10", "sample11", "sample12", "sample13",
@@ -39,7 +39,7 @@ test_that("nested-units", {
                                                              "sample24", "sample25", "sample26", "sample27", "sample28",
                                                              "sample29", "sample30", "sample31", "sample32", "sample33",
                                                              "sample34", "sample35"),
-                                                      n = NA_integer_)))
+                                                      label = c(sprintf("sample%.2d", 1:20), rep(c("sample01", "sample02", "sample03"), 5)))))
 
 
 
@@ -63,8 +63,8 @@ test_that("conditioning-structure", {
     set_units(unit = 26) %>%
     set_trts(trt1 = 2,
              trt2 = conditioned_on(trt1,
-                                   1 ~ "1",
-                                   2 ~ c("2", "3"))) %>%
+                                   "trt11" ~ "1",
+                                   "trt12" ~ c("2", "3"))) %>%
     allot_trts(trt1:trt2 ~ unit) %>%
     assign_trts("random", seed = 554) %>%
     serve_table()
@@ -76,8 +76,8 @@ test_that("conditioning-structure", {
     set_units(unit = 26) %>%
     set_trts(trt1 = 2,
              trt2 = conditioned_on(trt1,
-                                   1 ~ "1",
-                                   2 ~ c("2", "3")),
+                                   "trt11" ~ "1",
+                                   "trt12" ~ c("2", "3")),
              trt3 = 3) %>%
     allot_trts(trt1:trt2:trt3 ~ unit) %>%
     assign_trts("random", seed = 554) %>%

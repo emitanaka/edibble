@@ -41,8 +41,8 @@ test_that("export with record", {
                     mainplot = c("mainplot1", "mainplot1", "mainplot1", "mainplot2", "mainplot2",
                                  "mainplot2", "mainplot3", "mainplot3", "mainplot3", "mainplot4",
                                  "mainplot4", "mainplot4"),
-                    trt2 = c("trt21", "trt22", "trt23", "trt22", "trt21", "trt23", "trt22",
-                             "trt21", "trt23", "trt23", "trt22", "trt21"),
+                    trt2 = c("trt22", "trt21", "trt23", "trt22", "trt21", "trt23", "trt22",
+                             "trt21", "trt23", "trt22", "trt21", "trt23"),
                     height = NA_real_,
                     genotype = NA_real_)
   expect_equal(out2, dat, ignore_attr = TRUE)

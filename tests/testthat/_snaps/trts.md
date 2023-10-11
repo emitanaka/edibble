@@ -44,16 +44,16 @@
       # An edibble: 30 x 3
           vaccine      sex     person
          <trt(3)> <trt(2)> <unit(30)>
-            <chr>    <chr>      <chr>                                                 
-       1 vaccine1     sex1   person1 
-       2 vaccine2     sex1   person2 
-       3 vaccine3     sex1   person3 
-       4 vaccine1     sex2   person4 
-       5 vaccine2     sex2   person5 
-       6 vaccine3     sex2   person6 
-       7 vaccine1     sex1   person7 
-       8 vaccine2     sex1   person8 
-       9 vaccine3     sex1   person9 
+            <chr>    <chr>      <chr>
+       1 vaccine1     sex1   person01
+       2 vaccine2     sex1   person02
+       3 vaccine3     sex1   person03
+       4 vaccine1     sex2   person04
+       5 vaccine2     sex2   person05
+       6 vaccine3     sex2   person06
+       7 vaccine1     sex1   person07
+       8 vaccine2     sex1   person08
+       9 vaccine3     sex1   person09
       10 vaccine1     sex2   person10
       # i 20 more rows
 
@@ -67,16 +67,16 @@
       # An edibble: 30 x 3
           vaccine      sex     person
          <trt(3)> <trt(2)> <unit(30)>
-            <chr>    <chr>      <chr>                                                 
-       1 vaccine1        F   person1 
-       2 vaccine2        F   person2 
-       3 vaccine3        F   person3 
-       4 vaccine1        M   person4 
-       5 vaccine2        M   person5 
-       6 vaccine3        M   person6 
-       7 vaccine1        F   person7 
-       8 vaccine2        F   person8 
-       9 vaccine3        F   person9 
+            <chr>    <chr>      <chr>
+       1 vaccine1        F   person01
+       2 vaccine2        F   person02
+       3 vaccine3        F   person03
+       4 vaccine1        M   person04
+       5 vaccine2        M   person05
+       6 vaccine3        M   person06
+       7 vaccine1        F   person07
+       8 vaccine2        F   person08
+       9 vaccine3        F   person09
       10 vaccine1        M   person10
       # i 20 more rows
 
@@ -90,16 +90,16 @@
       # An edibble: 30 x 3
           vaccine      sex     person
          <trt(3)> <trt(2)> <unit(30)>
-            <chr>    <chr>      <chr>                                                 
-       1 vaccine1        F   person1 
-       2 vaccine2        M   person2 
-       3 vaccine3        F   person3 
-       4 vaccine1        M   person4 
-       5 vaccine2        F   person5 
-       6 vaccine3        M   person6 
-       7 vaccine1        F   person7 
-       8 vaccine2        M   person8 
-       9 vaccine3        F   person9 
+            <chr>    <chr>      <chr>
+       1 vaccine1        F   person01
+       2 vaccine2        M   person02
+       3 vaccine3        F   person03
+       4 vaccine1        M   person04
+       5 vaccine2        F   person05
+       6 vaccine3        M   person06
+       7 vaccine1        F   person07
+       8 vaccine2        M   person08
+       9 vaccine3        F   person09
       10 vaccine1        M   person10
       # i 20 more rows
 
@@ -112,16 +112,16 @@
       # An edibble: 30 x 2
           vaccine     person
          <trt(3)> <unit(30)>
-            <chr>      <chr>                                                          
-       1 vaccine1   person1 
-       2 vaccine2   person2 
-       3 vaccine3   person3 
-       4 vaccine1   person4 
-       5 vaccine2   person5 
-       6 vaccine3   person6 
-       7 vaccine1   person7 
-       8 vaccine2   person8 
-       9 vaccine3   person9 
+            <chr>      <chr>
+       1 vaccine1   person01
+       2 vaccine2   person02
+       3 vaccine3   person03
+       4 vaccine1   person04
+       5 vaccine2   person05
+       6 vaccine3   person06
+       7 vaccine1   person07
+       8 vaccine2   person08
+       9 vaccine3   person09
       10 vaccine1   person10
       # i 20 more rows
 
@@ -135,7 +135,7 @@
       # An edibble: 5 x 2
          vaccine    person
         <trt(3)> <unit(5)>
-           <chr>     <chr>                                                            
+           <chr>     <chr>
       1 vaccine1   person1
       2 vaccine3   person2
       3 vaccine2   person3
@@ -151,12 +151,12 @@
       # An edibble: 5 x 2
          vaccine    person
         <trt(3)> <unit(5)>
-           <chr>     <chr>                                                            
-      1 vaccine3   person1
+           <chr>     <chr>
+      1 vaccine1   person1
       2 vaccine2   person2
-      3 vaccine2   person3
+      3 vaccine3   person3
       4 vaccine1   person4
-      5 vaccine3   person5
+      5 vaccine2   person5
 
 ---
 
@@ -167,20 +167,20 @@
       table(tab$vaccine, tab$person)
     Output
                 
-                 person1 person10 person11 person12 person13 person14 person15
-        vaccine1       0        3        0        0        3        0        0
-        vaccine2       0        0        0        3        0        3        0
-        vaccine3       3        0        3        0        0        0        3
+                 person01 person02 person03 person04 person05 person06 person07
+        vaccine1        0        0        0        0        0        3        0
+        vaccine2        3        0        0        3        3        0        3
+        vaccine3        0        3        3        0        0        0        0
                 
-                 person16 person17 person18 person19 person2 person20 person3 person4
-        vaccine1        3        0        0        0       3        3       3       0
-        vaccine2        0        0        3        3       0        0       0       3
-        vaccine3        0        3        0        0       0        0       0       0
+                 person08 person09 person10 person11 person12 person13 person14
+        vaccine1        0        0        3        0        0        3        0
+        vaccine2        0        0        0        3        0        0        3
+        vaccine3        3        3        0        0        3        0        0
                 
-                 person5 person6 person7 person8 person9
-        vaccine1       0       0       0       3       0
-        vaccine2       3       3       0       0       0
-        vaccine3       0       0       3       0       3
+                 person15 person16 person17 person18 person19 person20
+        vaccine1        3        3        3        0        3        0
+        vaccine2        0        0        0        0        0        0
+        vaccine3        0        0        0        3        0        3
 
 ---
 
@@ -191,20 +191,20 @@
       table(tab$vaccine, tab$person)
     Output
                 
-                 person1 person10 person11 person12 person13 person14 person15
-        vaccine1       1        2        0        1        2        2        0
-        vaccine2       0        1        2        2        0        0        2
-        vaccine3       2        0        1        0        1        1        1
+                 person01 person02 person03 person04 person05 person06 person07
+        vaccine1        0        0        0        1        2        0        1
+        vaccine2        1        1        1        1        0        2        1
+        vaccine3        2        2        2        1        1        1        1
                 
-                 person16 person17 person18 person19 person2 person20 person3 person4
-        vaccine1        0        2        3        0       1        1       1       1
-        vaccine2        1        1        0        1       1        2       1       2
-        vaccine3        2        0        0        2       1        0       1       0
+                 person08 person09 person10 person11 person12 person13 person14
+        vaccine1        0        2        1        1        2        1        2
+        vaccine2        3        1        1        1        0        0        1
+        vaccine3        0        0        1        1        1        2        0
                 
-                 person5 person6 person7 person8 person9
-        vaccine1       1       2       0       0       0
-        vaccine2       1       1       1       1       0
-        vaccine3       1       0       2       2       3
+                 person15 person16 person17 person18 person19 person20
+        vaccine1        2        0        1        2        1        1
+        vaccine2        0        1        2        0        2        1
+        vaccine3        1        2        0        1        0        1
 
 ---
 
@@ -215,20 +215,20 @@
       table(tab$vaccine, tab$person)
     Output
                 
-                 person1 person10 person11 person12 person13 person14 person15
-        vaccine1       1        1        1        1        1        1        1
-        vaccine2       1        1        1        1        1        1        1
-        vaccine3       1        1        1        1        1        1        1
+                 person01 person02 person03 person04 person05 person06 person07
+        vaccine1        1        1        1        1        1        1        1
+        vaccine2        1        1        1        1        1        1        1
+        vaccine3        1        1        1        1        1        1        1
                 
-                 person16 person17 person18 person19 person2 person20 person3 person4
-        vaccine1        1        1        1        1       1        1       1       1
-        vaccine2        1        1        1        1       1        1       1       1
-        vaccine3        1        1        1        1       1        1       1       1
+                 person08 person09 person10 person11 person12 person13 person14
+        vaccine1        1        1        1        1        1        1        1
+        vaccine2        1        1        1        1        1        1        1
+        vaccine3        1        1        1        1        1        1        1
                 
-                 person5 person6 person7 person8 person9
-        vaccine1       1       1       1       1       1
-        vaccine2       1       1       1       1       1
-        vaccine3       1       1       1       1       1
+                 person15 person16 person17 person18 person19 person20
+        vaccine1        1        1        1        1        1        1
+        vaccine2        1        1        1        1        1        1
+        vaccine3        1        1        1        1        1        1
 
 ---
 
@@ -239,20 +239,20 @@
       table(tab$vaccine, tab$person)
     Output
                 
-                 person1 person10 person11 person12 person13 person14 person15
-        vaccine1       1        0        1        1        1        0        1
-        vaccine2       1        1        0        1        1        1        0
-        vaccine3       0        1        1        0        0        1        1
+                 person01 person02 person03 person04 person05 person06 person07
+        vaccine1        1        1        0        0        1        1        0
+        vaccine2        1        0        1        1        0        1        1
+        vaccine3        0        1        1        1        1        0        1
                 
-                 person16 person17 person18 person19 person2 person20 person3 person4
-        vaccine1        0        1        1        1       1        0       0       0
-        vaccine2        1        1        0        0       0        1       1       1
-        vaccine3        1        0        1        1       1        1       1       1
+                 person08 person09 person10 person11 person12 person13 person14
+        vaccine1        1        1        0        1        1        1        0
+        vaccine2        1        0        1        0        1        1        1
+        vaccine3        0        1        1        1        0        0        1
                 
-                 person5 person6 person7 person8 person9
-        vaccine1       1       1       0       1       1
-        vaccine2       0       1       1       1       0
-        vaccine3       1       0       1       0       1
+                 person15 person16 person17 person18 person19 person20
+        vaccine1        1        0        1        1        1        0
+        vaccine2        0        1        1        0        0        1
+        vaccine3        1        1        0        1        1        1
 
 ---
 
@@ -263,20 +263,20 @@
       table(tab$vaccine, tab$person)
     Output
                 
-                 person1 person10 person11 person12 person13 person14 person15
-        vaccine1       3        2        3        3        3        2        3
-        vaccine2       3        3        2        3        3        3        2
-        vaccine3       2        3        3        2        2        3        3
+                 person01 person02 person03 person04 person05 person06 person07
+        vaccine1        3        3        2        2        3        3        2
+        vaccine2        3        2        3        3        2        3        3
+        vaccine3        2        3        3        3        3        2        3
                 
-                 person16 person17 person18 person19 person2 person20 person3 person4
-        vaccine1        2        3        3        3       3        2       2       2
-        vaccine2        3        3        2        2       2        3       3       3
-        vaccine3        3        2        3        3       3        3       3       3
+                 person08 person09 person10 person11 person12 person13 person14
+        vaccine1        3        3        2        3        3        3        2
+        vaccine2        3        2        3        2        3        3        3
+        vaccine3        2        3        3        3        2        2        3
                 
-                 person5 person6 person7 person8 person9
-        vaccine1       3       3       2       3       3
-        vaccine2       2       3       3       3       2
-        vaccine3       3       2       3       2       3
+                 person15 person16 person17 person18 person19 person20
+        vaccine1        3        2        3        3        3        2
+        vaccine2        2        3        3        2        2        3
+        vaccine3        3        3        2        3        3        3
 
 ---
 
@@ -287,20 +287,20 @@
       table(tab$vaccine, tab$person)
     Output
                 
-                 person1 person10 person11 person12 person13 person14 person15
-        vaccine1       3        2        1        1        2        1        1
-        vaccine2       3        1        2        1        1        2        1
-        vaccine3       2        1        1        2        1        1        2
+                 person01 person02 person03 person04 person05 person06 person07
+        vaccine1        3        1        1        2        1        1        2
+        vaccine2        3        1        1        1        2        1        1
+        vaccine3        2        1        2        1        1        2        1
                 
-                 person16 person17 person18 person19 person2 person20 person3 person4
-        vaccine1        2        1        1        2       1        1       1       2
-        vaccine2        1        2        1        1       1        2       1       1
-        vaccine3        1        1        2        1       1        1       2       1
+                 person08 person09 person10 person11 person12 person13 person14
+        vaccine1        1        1        2        1        1        2        1
+        vaccine2        2        1        1        2        1        1        2
+        vaccine3        1        2        1        1        2        1        1
                 
-                 person5 person6 person7 person8 person9
-        vaccine1       1       1       2       1       1
-        vaccine2       2       1       1       2       1
-        vaccine3       1       2       1       1       2
+                 person15 person16 person17 person18 person19 person20
+        vaccine1        1        2        1        1        2        1
+        vaccine2        1        1        2        1        1        2
+        vaccine3        2        1        1        2        1        1
 
 ---
 

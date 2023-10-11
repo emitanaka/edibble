@@ -5,8 +5,8 @@
     Output
       # An edibble: 578 x 4
          weight  Time Chick Diet 
+                                 
           <dbl> <dbl> <ord> <fct>
-                                                                                      
        1     42     0 1     1    
        2     51     2 1     1    
        3     59     4 1     1    

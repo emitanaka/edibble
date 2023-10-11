@@ -15,16 +15,16 @@
       # An edibble: 24 x 2
                unit      trt
        * <unit(24)> <trt(4)>
-              <chr>    <chr>                                                          
-       1     unit1      trt4
-       2     unit2      trt1
-       3     unit3      trt4
-       4     unit4      trt3
-       5     unit5      trt3
-       6     unit6      trt4
-       7     unit7      trt2
-       8     unit8      trt1
-       9     unit9      trt2
+              <chr>    <chr>
+       1     unit01     trt4
+       2     unit02     trt4
+       3     unit03     trt3
+       4     unit04     trt3
+       5     unit05     trt4
+       6     unit06     trt1
+       7     unit07     trt3
+       8     unit08     trt3
+       9     unit09     trt1
       10     unit10     trt4
       # i 14 more rows
 
@@ -46,7 +46,7 @@
       # An edibble: 15 x 3
              block       unit      trt
        * <unit(3)> <unit(15)> <trt(5)>
-             <chr>      <chr>    <chr>                                                
+             <chr>      <chr>    <chr>
        1    block1     unit01     trt3
        2    block1     unit02     trt2
        3    block1     unit03     trt4
@@ -83,15 +83,15 @@
       # An edibble: 12 x 4
           mainplot    subplot     trt1     trt2
        * <unit(6)> <unit(12)> <trt(3)> <trt(2)>
-             <chr>      <chr>    <chr>    <chr>                                       
-       1 mainplot1  subplot01    trt13    trt22
-       2 mainplot1  subplot02    trt13    trt21
+             <chr>      <chr>    <chr>    <chr>
+       1 mainplot1  subplot01    trt11    trt22
+       2 mainplot1  subplot02    trt11    trt21
        3 mainplot2  subplot03    trt12    trt22
        4 mainplot2  subplot04    trt12    trt21
-       5 mainplot3  subplot05    trt13    trt21
-       6 mainplot3  subplot06    trt13    trt22
-       7 mainplot4  subplot07    trt11    trt22
-       8 mainplot4  subplot08    trt11    trt21
+       5 mainplot3  subplot05    trt13    trt22
+       6 mainplot3  subplot06    trt13    trt21
+       7 mainplot4  subplot07    trt13    trt22
+       8 mainplot4  subplot08    trt13    trt21
        9 mainplot5  subplot09    trt11    trt22
       10 mainplot5  subplot10    trt11    trt21
       11 mainplot6  subplot11    trt12    trt21
@@ -119,7 +119,7 @@
       # An edibble: 24 x 6
              block        row       col       unit     trt1     trt2
        * <unit(4)> <unit(12)> <unit(8)> <unit(24)> <trt(3)> <trt(2)>
-             <chr>      <chr>     <chr>      <chr>    <chr>    <chr>                  
+             <chr>      <chr>     <chr>      <chr>    <chr>    <chr>
        1    block1      row01      col1     unit01    trt12    trt21
        2    block1      row02      col1     unit02    trt13    trt21
        3    block1      row03      col1     unit03    trt11    trt21
@@ -152,17 +152,17 @@
       # An edibble: 48 x 4
                unit     trt1     trt2     trt3
        * <unit(48)> <trt(2)> <trt(3)> <trt(4)>
-              <chr>    <chr>    <chr>    <chr>                                        
-       1     unit1     trt12    trt22    trt34
-       2     unit2     trt12    trt21    trt33
-       3     unit3     trt12    trt23    trt34
-       4     unit4     trt12    trt23    trt33
-       5     unit5     trt11    trt23    trt34
-       6     unit6     trt11    trt21    trt32
-       7     unit7     trt11    trt23    trt33
-       8     unit8     trt11    trt22    trt34
-       9     unit9     trt11    trt23    trt32
-      10     unit10    trt11    trt23    trt33
+              <chr>    <chr>    <chr>    <chr>
+       1     unit01    trt12    trt22    trt31
+       2     unit02    trt12    trt21    trt32
+       3     unit03    trt11    trt22    trt32
+       4     unit04    trt11    trt23    trt31
+       5     unit05    trt12    trt21    trt32
+       6     unit06    trt12    trt22    trt32
+       7     unit07    trt12    trt21    trt33
+       8     unit08    trt12    trt22    trt33
+       9     unit09    trt11    trt23    trt34
+      10     unit10    trt11    trt22    trt31
       # i 38 more rows
     Code
       fac_rcbd <- takeout(menu_factorial(trt = c(2, 3, 4), design = "rcbd", r = 2,
@@ -183,7 +183,7 @@
       # An edibble: 48 x 5
              block       unit     trt1     trt2     trt3
        * <unit(2)> <unit(48)> <trt(2)> <trt(3)> <trt(4)>
-             <chr>      <chr>    <chr>    <chr>    <chr>                              
+             <chr>      <chr>    <chr>    <chr>    <chr>
        1    block1     unit01    trt11    trt23    trt31
        2    block1     unit02    trt11    trt21    trt32
        3    block1     unit03    trt12    trt23    trt34
@@ -215,17 +215,17 @@
       # An edibble: 100 x 4
                 row        col        unit       trt
        * <unit(10)> <unit(10)> <unit(100)> <trt(10)>
-              <chr>      <chr>       <chr>     <chr>                                  
-       1      row1        col1      unit1      trt3 
-       2      row2        col1      unit2      trt9 
-       3      row3        col1      unit3      trt7 
-       4      row4        col1      unit4      trt10
-       5      row5        col1      unit5      trt4 
-       6      row6        col1      unit6      trt6 
-       7      row7        col1      unit7      trt1 
-       8      row8        col1      unit8      trt5 
-       9      row9        col1      unit9      trt2 
-      10      row10       col1      unit10     trt8 
+              <chr>      <chr>       <chr>     <chr>
+       1      row01      col01     unit001     trt03
+       2      row02      col01     unit002     trt09
+       3      row03      col01     unit003     trt07
+       4      row04      col01     unit004     trt10
+       5      row05      col01     unit005     trt04
+       6      row06      col01     unit006     trt06
+       7      row07      col01     unit007     trt01
+       8      row08      col01     unit008     trt05
+       9      row09      col01     unit009     trt02
+      10      row10      col01     unit010     trt08
       # i 90 more rows
 
 # youden
@@ -247,16 +247,16 @@
       # An edibble: 70 x 4
                 row       col       unit       trt
        * <unit(10)> <unit(7)> <unit(70)> <trt(10)>
-              <chr>     <chr>      <chr>     <chr>                                    
-       1      row1       col1     unit1      trt3 
-       2      row2       col1     unit2      trt9 
-       3      row3       col1     unit3      trt7 
-       4      row4       col1     unit4      trt10
-       5      row5       col1     unit5      trt4 
-       6      row6       col1     unit6      trt6 
-       7      row7       col1     unit7      trt1 
-       8      row8       col1     unit8      trt5 
-       9      row9       col1     unit9      trt2 
-      10      row10      col1     unit10     trt8 
+              <chr>     <chr>      <chr>     <chr>
+       1      row01      col1     unit01     trt03
+       2      row02      col1     unit02     trt09
+       3      row03      col1     unit03     trt07
+       4      row04      col1     unit04     trt10
+       5      row05      col1     unit05     trt04
+       6      row06      col1     unit06     trt06
+       7      row07      col1     unit07     trt01
+       8      row08      col1     unit08     trt05
+       9      row09      col1     unit09     trt02
+      10      row10      col1     unit10     trt08
       # i 60 more rows
 
