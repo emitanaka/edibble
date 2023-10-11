@@ -110,6 +110,8 @@ conditioned_on <- function(x, ...) {
     if(is_symbol(epair$lhs, name = ".")) {
       vals[as.character(parent_vlevels[!done])] <- list(epair$rhs)
     } else {
+      igroup <- match(epair$lhs, parent_vlevels)
+      done[igroup] <- TRUE
       vals[as.character(epair$lhs)] <- list(epair$rhs)
     }
   }
