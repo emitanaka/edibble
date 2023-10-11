@@ -67,19 +67,20 @@ export_design <- function(.data,
   context <- des$context
   write_title_sheet(wb, sheet_names[1], title, author, date, context)
 
+  protect_properties <- c("formatCells",
+                          "formatColumns",
+                          "formatRows",
+                          "insertRows",
+                          "deleteColumns",
+                          "deleteRows",
+                          "sort",
+                          "autoFilter",
+                          "pivotTables",
+                          "objects",
+                          "scenarios")
   wb$protect_worksheet(sheet = sheet_names[1],
                        protect = TRUE,
-                       properties = c("formatCells",
-                                      "formatColumns",
-                                      "formatRows",
-                                      "insertRows",
-                                      "deleteColumns",
-                                      "deleteRows",
-                                      "sort",
-                                      "autoFilter",
-                                      "pivotTables",
-                                      "objects",
-                                      "scenarios"))
+                       properties = protect_properties)
 
   write_data_sheet(wb, sheet_names[-c(1, 2, length(sheet_names))], prov,
                    as_tibble(.data), table_style, hide_treatments)
@@ -90,17 +91,7 @@ export_design <- function(.data,
 
   wb$protect_worksheet(sheet = sheet_names[2],
                        protect = TRUE,
-                       properties = c("formatCells",
-                                      "formatColumns",
-                                      "formatRows",
-                                      "insertRows",
-                                      "deleteColumns",
-                                      "deleteRows",
-                                      "sort",
-                                      "autoFilter",
-                                      "pivotTables",
-                                      "objects",
-                                      "scenarios"))
+                       properties = protect_properties)
 
   write_variables_sheet(wb, sheet_names[length(sheet_names)], prov, .data)
 
@@ -206,7 +197,6 @@ add_creator <- function(wb, authors) {
 
 write_data_sheet <- function(wb, sheet_names, prov, data, table_style, hide_treatments) {
   for(iunit in seq_along(sheet_names)) {
-
     if(prov$rcrd_exists(abort = FALSE)) {
       uid <- prov$fct_id(name = names(sheet_names)[iunit])
       data <- as_tibble.edbl_table(prov$serve_units(id = uid, return = "value"))
@@ -220,9 +210,7 @@ write_data_sheet <- function(wb, sheet_names, prov, data, table_style, hide_trea
         data[[prov$fct_names(id = rid)]] <- NA
       }
     }
-
     write_data_table(wb, sheet_names[iunit], data, table_style)
-
   }
 }
 
