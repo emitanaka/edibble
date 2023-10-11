@@ -13,7 +13,18 @@ return_edibble_with_graph <- function(edibble, prov) {
 }
 
 
-
+eval_formula <- function(f, env) {
+  lhs <- f_lhs(f)
+  if(!is_formula(f) || is_null(lhs)) {
+    abort("Input must be two-sided formula.")
+  }
+  env <- f_env(f) %||% env
+  if(!is_symbol(lhs, name = ".")) {
+    lhs <- eval_tidy(lhs, env = env)
+  }
+  list(lhs = lhs,
+       rhs = eval_tidy(f_rhs(f), env = env))
+}
 
 
 

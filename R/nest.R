@@ -96,52 +96,24 @@ nesting_structure <- function(design) {
 conditioned_on <- function(x, ...) {
   top <- caller_env()$.top_env
   if(is.null(top$.fname)) abort("The `conditioned_on` function must be used within `set_trts` function.")
-
   prov <- top$prov
   vlevs <- prov$fct_levels(return = "value")
   parent_name <- as_string(enexpr(x))
   parent_vlevels <- vlevs[[parent_name]]
   dots <- list2(...)
-  for(.x in dots) {
-
-  }
-
-  args <- list()
-
-  for(.x in dots) {
-    if(is_cross_levels(.x) | is_formula(.x, lhs = FALSE)) {
-      vars <- if(is_formula(.x, lhs = FALSE)) rownames(attr(stats::terms(.x), "factors")) else .x
-      child_lvls_by_parent <- map(vars, function(.var) {
-        out <- prov$serve_units(id = prov$fct_id(name = c(.var, parent_name)), return = "value")
-        split(out[[.var]], out[[parent_name]])
-      })
-      names(child_lvls_by_parent) <- vars
-      cross_lvls_by_parent <- map(parent_vlevels, function(.lvl) {
-        out <- stats::setNames(map(vars, function(.var) child_lvls_by_parent[[.var]][[.lvl]]),
-                               vars)
-        do.call("expand.grid", out)
-      })
-      names(cross_lvls_by_parent) <- parent_vlevels
-      args <- c(args, map(names(cross_lvls_by_parent), function(.parent)
-        stats::as.formula(paste0('"', .parent, '"', " ~ ", nrow(cross_lvls_by_parent[[.parent]])))))
-      attr(args, "parents") <- cross_lvls_by_parent
+  m <-  length(parent_vlevels)
+  vals <- vector(mode = "list", length = m)
+  names(vals) <- parent_vlevels
+  done <- rep(FALSE, m)
+  for(pair in dots) {
+    epair <- eval_formula(pair, caller_env())
+    if(is_symbol(epair$lhs, name = ".")) {
+      vals[as.character(parent_vlevels[!done])] <- list(epair$rhs)
     } else {
-      args <- c(args, list(.x))
+      vals[as.character(epair$lhs)] <- list(epair$rhs)
     }
   }
-
-  child_levels <- nestr::nest_in(parent_vlevels,
-                                 !!!args,
-                                 distinct = FALSE,
-                                 compact = FALSE,
-                                 keyname = parent_name)
-
-
-  attributes(child_levels) <- c(attributes(child_levels),
-                                list(parents = attr(args, "parents"),
-                                     labels = child_levels))
-  class(child_levels) <- c("cond_lvls", class(child_levels))
-  return(child_levels)
-
-
+  attr(vals, "keyname") <- parent_name
+  class(vals) <- c("cond_lvls", "list")
+  return(vals)
 }
