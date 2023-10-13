@@ -349,3 +349,62 @@ print.edbl_fct <- function(x, ...) {
   print(x)
   invisible(xold)
 }
+
+#' @export
+`+.edbl` <- function(e1, e2) {
+
+  if(missing(e2)) {
+    cli::cli_abort(c("Cannot use {.code +} with a single argument",
+                     i = "Did you accidentally put {.code +} on a new line?"))
+  }
+  prov1 <- activate_provenance(e1)
+  prov2 <- activate_provenance(e2)
+
+  # add factor nodes and edges from e2
+  fnodes2 <- prov2$fct_nodes
+  if(nrow(fnodes2)) {
+    prov1$append_fct_nodes(name = fnodes2$name,
+                           role = fnodes2$role,
+                           attrs = fnodes2$attrs)
+  }
+  fedges2 <- prov2$fct_edges
+  if(nrow(fedges2)) {
+    from1 <- prov1$fct_id(name = prov2$fct_names(id = fedges2$from))
+    to1 <- prov1$fct_id(name = prov2$fct_names(id = fedges2$to))
+    prov1$append_fct_edges(from = from1,
+                           to = to1,
+                           type = fedges2$type,
+                           group = fedges2$group,
+                           attrs = fedges2$attrs)
+  }
+  # add level nodes and edges from e2
+  lnodes2 <- prov2$lvl_nodes
+  if(length(lnodes2)) {
+    for(cfid in names(lnodes2)) {
+      fname <- prov2$fct_names(id = as.numeric(cfid))
+      fid <- prov1$fct_id(name = fname)
+      lnode <- lnodes2[[cfid]]
+      if("label" %in% colnames(lnode)) {
+        label <- lnode$label
+      } else {
+        label <- NULL
+      }
+      prov1$append_lvl_nodes(value = lnode$value,
+                             n = lnode$n,
+                             attrs = lnode$attrs,
+                             label = label,
+                             fid = fid)
+    }
+  }
+  ledges2 <- lvl_edges(e2)
+  if(!is.null(ledges2)) {
+    for(lnode in seq_along(ledges2)) {
+      from <- prov1$lvl_id(value = lnode$val_from, fid = prov1$fct_id(name = lnode$var_from[1]))
+      to <- prov1$lvl_id(value = lnode$val_to, fid = prov1$fct_id(name = lnode$var_to[1]))
+      prov1$append_lvl_edges(from = from,
+                             to = to,
+                             attrs = lnode$attrs)
+    }
+  }
+  return_edibble_with_graph(e1, prov1)
+}
