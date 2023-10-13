@@ -77,16 +77,20 @@ lvl_nodes <- function(x) {
 lvl_edges <- function(x) {
   prov <- activate_provenance(x)
   ledges <- prov$lvl_edges
-  lnodes <- prov$lvl_nodes
-  lnodes_df <- do.call("rbind", lapply(names(lnodes), function(x) data.frame(fid = as.numeric(x), id = lnodes[[x]]$id)))
-  ledges$var_from <- prov$fct_names(id = lnodes_df[match(ledges$from, lnodes_df$id), "fid"])
-  ledges$var_to <- prov$fct_names(id = lnodes_df[match(ledges$to, lnodes_df$id), "fid"])
-  ledges <- split(ledges, paste(ledges$var_from, "->", ledges$var_to))
-  lapply(ledges, function(df) {
-    df$val_from <- prov$lvl_values(id = df$from, fid = prov$fct_id(name = df$var_from[1])) %||% character(0)
-    df$val_to <- prov$lvl_values(id = df$to, fid = prov$fct_id(name = df$var_to[1])) %||% character(0)
-    df[, c("var_from", "var_to", "val_from", "val_to", "attrs")]
-  })
+  if(nrow(ledges)) {
+    lnodes <- prov$lvl_nodes
+    lnodes_df <- do.call("rbind", lapply(names(lnodes), function(x) data.frame(fid = as.numeric(x), id = lnodes[[x]]$id)))
+    ledges$var_from <- prov$fct_names(id = lnodes_df[match(ledges$from, lnodes_df$id), "fid"])
+    ledges$var_to <- prov$fct_names(id = lnodes_df[match(ledges$to, lnodes_df$id), "fid"])
+    ledges <- split(ledges, paste(ledges$var_from, "->", ledges$var_to))
+    lapply(ledges, function(df) {
+      df$val_from <- prov$lvl_values(id = df$from, fid = prov$fct_id(name = df$var_from[1])) %||% character(0)
+      df$val_to <- prov$lvl_values(id = df$to, fid = prov$fct_id(name = df$var_to[1])) %||% character(0)
+      df[, c("var_from", "var_to", "val_from", "val_to", "attrs")]
+    })
+  } else {
+    NULL
+  }
 }
 
 #' Factor graph
