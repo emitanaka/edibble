@@ -6,7 +6,7 @@
 \usage{
 serve_table(
   .edibble,
-  label_nested,
+  label_nested = NULL,
   fail = c("error", "warn", "ignore"),
   .record = TRUE
 )
