@@ -16,12 +16,14 @@ NULL
 latin_square <- function(n, randomise = TRUE) {
   out <- matrix(nrow = n, ncol = n)
   out[1,] <- if(randomise) sample(1:n) else 1:n
-  for(i in 2:n) {
-    out[i,] <- lag_vector(out[i - 1, ])
-  }
-  if(randomise) {
-    out <- out[, sample(1:n)]
-    out <- out[sample(1:n), ]
+  if(n > 1) {
+    for(i in 2:n) {
+      out[i,] <- lag_vector(out[i - 1, ])
+    }
+    if(randomise) {
+      out <- out[, sample(1:n), drop = FALSE]
+      out <- out[sample(1:n), , drop = FALSE]
+    }
   }
   out
 }
@@ -39,14 +41,18 @@ latin_rectangle <- function(nr, nc, nt, randomise = TRUE) {
     ))
   }))
 
-  out <- out[1:nr, 1:nc]
+  out <- out[1:nr, 1:nc, drop = FALSE]
 
-  res1 <- apply(out, 1, function(x) table(factor(x, 1:nt)))
-  res2 <- apply(out, 2, function(x) table(factor(x, 1:nt)))
-  diff1 <- apply(res1, 2, function(x) max(x) - min(x))
-  diff2 <- apply(res2, 2, function(x) max(x) - min(x))
+  # the above method doesn't guarantee near-equal replication of treatments
+  # if the number of rows and columns are not equal to nt...
+  if(nt > 1) {
+    res1 <- apply(out, 1, function(x) table(factor(x, 1:nt)))
+    res2 <- apply(out, 2, function(x) table(factor(x, 1:nt)))
+    diff1 <- apply(res1, 2, function(x) max(x) - min(x))
+    diff2 <- apply(res2, 2, function(x) max(x) - min(x))
 
-  if(randomise && (any(diff1 > 1) | any(diff2 > 1))) return(latin_rectangle(nr, nc, nt, randomise))
+    if(randomise && (any(diff1 > 1) | any(diff2 > 1))) return(latin_rectangle(nr, nc, nt, randomise))
+  }
 
   out
 }
