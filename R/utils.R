@@ -359,7 +359,6 @@ print.edbl_fct <- function(x, ...) {
   }
   prov1 <- activate_provenance(e1)
   prov2 <- activate_provenance(e2)
-
   # add factor nodes and edges from e2
   fnodes2 <- prov2$fct_nodes
   if(nrow(fnodes2)) {
@@ -378,27 +377,31 @@ print.edbl_fct <- function(x, ...) {
                            attrs = fedges2$attrs)
   }
   # add level nodes and edges from e2
+  missing_cols <- function(col, df) {
+    if(col %in% colnames(df)) {
+      ret <- lnode[[col]]
+    } else {
+      ret <- NULL
+    }
+    ret
+  }
+
   lnodes2 <- prov2$lvl_nodes
   if(length(lnodes2)) {
     for(cfid in names(lnodes2)) {
       fname <- prov2$fct_names(id = as.numeric(cfid))
       fid <- prov1$fct_id(name = fname)
       lnode <- lnodes2[[cfid]]
-      if("label" %in% colnames(lnode)) {
-        label <- lnode$label
-      } else {
-        label <- NULL
-      }
       prov1$append_lvl_nodes(value = lnode$value,
-                             n = lnode$n,
-                             attrs = lnode$attrs,
-                             label = label,
+                             n = missing_cols("n", lnode),
+                             attrs = missing_cols("attrs", lnode),
+                             label = missing_cols("label", lnode),
                              fid = fid)
     }
   }
   ledges2 <- lvl_edges(e2)
   if(!is.null(ledges2)) {
-    for(lnode in seq_along(ledges2)) {
+    for(lnode in ledges2) {
       from <- prov1$lvl_id(value = lnode$val_from, fid = prov1$fct_id(name = lnode$var_from[1]))
       to <- prov1$lvl_id(value = lnode$val_to, fid = prov1$fct_id(name = lnode$var_to[1]))
       prov1$append_lvl_edges(from = from,
