@@ -80,16 +80,20 @@ Provenance <- R6::R6Class("Provenance",
                                                             rcrds = rcrds)
                          },
 
-
                          #' @description
                          #' Reactivate the graph in the provenance object.
                          #' @param design An edibble design
                          #' @param overwrite A vector of character to overwrite from the
                          #' supplied design object.
-                         reactivate = function(design, overwrite = c("graph", "anatomy", "recipe", "validation", "simulate")) {
+                         reactivate = function(design, overwrite = c("graph", "anatomy", "recipe", "validation", "simulate", "simualte_result")) {
                            #private$record_track_internal()
                            for(obj in overwrite) {
-                             private[[obj]] <- design[[obj]]
+                             if(obj=="simulate_result") {
+                               private$simulate_result_env <- new_environment()
+                               list2env(design[[obj]], envir = private$simulate_result_env)
+                             } else {
+                               private[[obj]] <- design[[obj]]
+                             }
                            }
                          },
 

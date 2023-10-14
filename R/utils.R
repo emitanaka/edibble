@@ -4,6 +4,10 @@ return_edibble_with_graph <- function(edibble, prov) {
   des$graph <- prov$get_graph()
   des$validation <- prov$get_validation()
   des$simulate <- prov$get_simulate()
+  sim_res <- ls(envir = prov$get_simulate_result_env())
+  if(length(sim_res)) {
+    des$simulate_result <- mget(sim_res, prov$get_simulate_result_env())
+  }
   if(is_edibble_table(edibble)) {
     attr(edibble, "design") <- des
     edibble
@@ -415,7 +419,8 @@ print.edbl_fct <- function(x, ...) {
   # anatomy,
   # simulate,
   # context
+  e1 <- return_edibble_with_graph(e1, prov1)
   des2 <- edbl_design(e2)
-  for(code in des2$recipe) e1 <- add_edibble_code(e1, code)
-  return_edibble_with_graph(e1, prov1)
+  for(code in des2$recipe[-1]) e1 <- add_edibble_code(e1, code)
+  e1
 }
