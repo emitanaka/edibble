@@ -563,7 +563,7 @@ examine_recipe.edbl_design <- function(x, ...) {
       lline[2] <- NULL # deletes first argument
     }
     # change this so "," starts a new line
-    deparse(as.call(lline))
+    paste0(deparse(as.call(lline)), collapse = "\n")
   })
   object_add_code(recipe, !!!as.list(code))
 }
