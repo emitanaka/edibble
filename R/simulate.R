@@ -522,7 +522,7 @@ examine_process_values <- function(data, process = NULL) {
     NULL
   } else if(is.environment(res)) {
     abort(paste0("You need to specify a process name. The available process names are: ",
-                .combine_words(ls(envir = res), fun = cli::col_blue), "."))
+                .combine_words(ls(envir = res, all.names = TRUE), fun = cli::col_blue), "."))
   } else {
     res
   }
