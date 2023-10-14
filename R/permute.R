@@ -16,7 +16,7 @@ order_trts.blocksdesign <- function(x, trts_df, units_df, unit, vparents, prov, 
 
 
 
-permute_parent_one <- function(prov, vid, udf, ntrts) {
+permute_parent_one <- function(vid, udf, ntrts) {
   blocksizes <- as.data.frame(table(table(udf[[as.character(vid)]])))
   blocksizes$size <- as.numeric(as.character(blocksizes$Var1))
 
@@ -47,7 +47,23 @@ permute_parent_one <- function(prov, vid, udf, ntrts) {
 
 
 permute_parent_more_than_one <- function(xparents, udf, ntrts, nparents = NULL) {
-  if(is_null(nparents) | length(nparents) == 0) {
+  if(length(xparents)==1) {
+    if(is_null(nparents) | length(nparents) == 0) {
+      permute_parent_one_alg(xparents, udf, ntrts)
+    } else {
+      split_by_nested <- split(udf[as.character(c(xparents, nparents))], udf[as.character(nparents)])
+      results_by_nested <- list()
+      for(isplit in seq_along(split_by_nested)) {
+        audf <- split_by_nested[[isplit]]
+        audf$alloc <- permute_parent_more_than_one(xparents, audf[as.character(xparents)], ntrts)
+        results_by_nested[[isplit]] <- audf
+      }
+      alloc_table <- do.call(rbind, results_by_nested)
+      udf[["...order..."]] <- 1:nrow(udf)
+      merged_alloc <- tibble::as_tibble(merge(udf, alloc_table))
+      merged_alloc[merged_alloc[["...order..."]], ]$alloc
+    }
+  } else if(is_null(nparents) | length(nparents) == 0) {
     # no nested parents
     vlevs <- lapply(udf[as.character(xparents)], unique)
     lvls <- lengths(vlevs[as.character(xparents)])
@@ -71,7 +87,7 @@ permute_parent_more_than_one <- function(xparents, udf, ntrts, nparents = NULL) 
 
 
 
-permute_parent_one_alg <- function(prov, vid, udf, ntrts) {
+permute_parent_one_alg <- function(vid, udf, ntrts) {
   udf$.id <- 1:nrow(udf)
   udf <- udf[order(udf[[as.character(vid)]]),]
   blocksizes <- table(udf[[as.character(vid)]])
@@ -90,7 +106,7 @@ permute_parent_one_alg <- function(prov, vid, udf, ntrts) {
                           withinData = data.frame(tindex = factor(1:ntrts)),
                           blocksizes = blocksizes_adj)
     }, error = function(x) {
-      return(permute_parent_one(prov, vid, udf, ntrts))
+      return(permute_parent_one(vid, udf, ntrts))
     })
   })
   if(is.integer(res)) return(res)

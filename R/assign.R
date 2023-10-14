@@ -88,7 +88,7 @@ assign_trts <- function(.edibble, order = "random", seed = NULL, constrain = nes
                                      } else {
                                        vparents <- prov$fct_id(name = constrain[[unit_nm]])
                                        if(length(vparents)==1L) {
-                                         permute_parent_one_alg(prov, vparents, sub_units_df, sub_ntrts)
+                                         permute_parent_one_alg(vparents, sub_units_df, sub_ntrts)
                                        } else {
                                          vnparents <- prov$fct_id_parent(id = unit_id, role = "edbl_unit", type = "nest")
                                          permute_parent_more_than_one(setdiff(vparents, vnparents), sub_units_df, sub_ntrts, nparents = vnparents)
@@ -115,7 +115,7 @@ assign_trts <- function(.edibble, order = "random", seed = NULL, constrain = nes
                                 units_df <- tibble::as_tibble(prov$serve_units(id = vanc))
                                 vparents <- prov$fct_id(name = constrain[[unit_nm]])
                                 if(length(vparents)==1L) {
-                                  permute_parent_one_alg(prov, vparents, units_df, ntrts)
+                                  permute_parent_one_alg(vparents, units_df, ntrts)
                                 } else {
                                   vnparents <- prov$fct_id_parent(id = unit_id, role = "edbl_unit", type = "nest")
                                   permute_parent_more_than_one(setdiff(vparents, vnparents), units_df, ntrts, nparents = vnparents)
@@ -179,7 +179,7 @@ assign_units <- function(.edibble, order = "random", seed = NULL, constrain = ne
                                                         sample(nrow(small_df))))
                                 out[1:nrow(udf)]
                               } else if(length(rhs)==2L) {
-                                permute_parent_one_alg(prov, vparents, udf, nrow(small_df))
+                                permute_parent_one_alg(vparents, udf, nrow(small_df))
                               } else {
                                 permute_parent_more_than_one(vparents, udf, nrow(small_df))
                               }
