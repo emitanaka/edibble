@@ -161,6 +161,7 @@ get_rcrd_values <- function(rname, prov, aggfn, .data, y, censor) {
                                    rname,
                                    get_record_type(vrcrds, rname),
                                    class(y))
+  # TODO: this is a problem when we have nested_labels
   vals <- aggregate_values(y, .data[[uname]], agg_fn)
   if(rname %in% names(vrcrds)) {
     if(is.list(censor) && rname %in% names(censor)) {

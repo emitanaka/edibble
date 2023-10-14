@@ -409,5 +409,13 @@ print.edbl_fct <- function(x, ...) {
                              attrs = lnode$attrs)
     }
   }
+
+  # TODO: add these components when adding design
+  # validation,
+  # anatomy,
+  # simulate,
+  # context
+  des2 <- edbl_design(e2)
+  for(code in des2$recipe) e1 <- add_edibble_code(e1, code)
   return_edibble_with_graph(e1, prov1)
 }
