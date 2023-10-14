@@ -61,7 +61,7 @@ permute_parent_more_than_one <- function(xparents, udf, ntrts, nparents = NULL) 
       alloc_table <- do.call(rbind, results_by_nested)
       udf[["...order..."]] <- 1:nrow(udf)
       merged_alloc <- tibble::as_tibble(merge(udf, alloc_table))
-      merged_alloc[merged_alloc[["...order..."]], ]$alloc
+      merged_alloc[order(merged_alloc[["...order..."]]), ]$alloc
     }
   } else if(is_null(nparents) | length(nparents) == 0) {
     # no nested parents
@@ -81,7 +81,7 @@ permute_parent_more_than_one <- function(xparents, udf, ntrts, nparents = NULL) 
     alloc_table <- do.call(rbind, results_by_nested)
     udf[["...order..."]] <- 1:nrow(udf)
     merged_alloc <- tibble::as_tibble(merge(udf, alloc_table))
-    merged_alloc[merged_alloc[["...order..."]], ]$alloc
+    merged_alloc[order(merged_alloc[["...order..."]]), ]$alloc
   }
 }
 
@@ -132,7 +132,7 @@ order_trts.default <- function(x, prov, constrain, ...) {
 order_trts.dae <- function(x, prov, constrain, trts, ...) {
   # FIXME
   dat <- assign_trts(prov$design, order = "systematic", constrain = constrain, .record = FALSE) %>%
-    serve_table(use_labels = TRUE) %>%
+    serve_table(label_nested = everything()) %>%
     lapply(as.factor) %>%
     as.data.frame()
   out <- dae::designRandomize(allocated = dat[prov$trt_names],
