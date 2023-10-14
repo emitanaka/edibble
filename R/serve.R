@@ -46,16 +46,19 @@ serve_table <- function(.edibble, label_nested = NULL, fail = c("error", "warn",
     }
   }
 
-  dots <- eval_select(enexpr(label_nested), lout)
-  if(length(dots)) {
-    lnodes <- lvl_nodes(.edibble)
-    for(aname in names(dots)) {
-      ln <- lnodes[[aname]]
-      if("label" %in% colnames(ln)) {
-        res <- ln$label[match(lout[[aname]], ln$value)]
+  labeln <- names(eval_select(enexpr(label_nested), lout))
+  lnodes <- lvl_nodes(.edibble)
+  for(aname in names(lunit)) {
+    ln <- lnodes[[aname]]
+    if("label" %in% colnames(ln)) {
+      res <- ln$label[match(lout[[aname]], ln$value)]
+      if(aname %in% labeln) {
         class(res) <- class(lout[[aname]])
         attributes(res) <- attributes(lout[[aname]])
+        attr(res, "non-nested") <- lout[[aname]]
         lout[[aname]] <- res
+      } else {
+        attr(lout[[aname]], "nested") <- res
       }
     }
   }
