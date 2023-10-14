@@ -4,7 +4,7 @@ return_edibble_with_graph <- function(edibble, prov) {
   des$graph <- prov$get_graph()
   des$validation <- prov$get_validation()
   des$simulate <- prov$get_simulate()
-  sim_res <- ls(envir = prov$get_simulate_result_env())
+  sim_res <- ls(envir = prov$get_simulate_result_env(), all.names = TRUE)
   if(length(sim_res)) {
     des$simulate_result <- mget(sim_res, prov$get_simulate_result_env())
   }

@@ -89,8 +89,9 @@ Provenance <- R6::R6Class("Provenance",
                            #private$record_track_internal()
                            for(obj in overwrite) {
                              if(obj=="simulate_result") {
-                               private$simulate_result_env <- new_environment()
-                               list2env(design[[obj]], envir = private$simulate_result_env)
+                               e <- private$simulate_result_env
+                               rm(list = ls(envir = e, all.names = TRUE), envir = e)
+                               list2env(design[[obj]], envir = e)
                              } else {
                                private[[obj]] <- design[[obj]]
                              }

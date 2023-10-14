@@ -150,7 +150,7 @@ simulate_rcrds <- function(.data, ..., .seed = NULL) {
                                         .data, unname(y), dots[[aprocess]]$censor)
     }
   }
-  .data
+  return_edibble_with_graph(.data, prov)
 }
 
 get_rcrd_values <- function(rname, prov, aggfn, .data, y, censor) {
