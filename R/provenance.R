@@ -693,9 +693,10 @@ Provenance <- R6::R6Class("Provenance",
                            private$record_track_internal()
                            if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE))
                              stats::runif(1)
-                           if (is.null(seed))
+                           if (is.null(seed)) {
+                             set.seed(Sys.time())
                              RNGstate <- get(".Random.seed", envir = .GlobalEnv)
-                           else {
+                           } else {
                              set.seed(seed)
                              RNGstate <- structure(seed, kind = as.list(RNGkind()))
                            }
