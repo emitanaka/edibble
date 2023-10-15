@@ -697,9 +697,8 @@ Provenance <- R6::R6Class("Provenance",
                          save_seed = function(seed, type) {
                            private$record_track_internal()
                            ranexists <- exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE)
-                           if (ranexists) rm(.Random.seed, envir = .GlobalEnv)
-                           stats::runif(1)
-                           if (is.null(seed)) {
+                           if(!ranexists) stats::runif(1)
+                           if(is.null(seed)) {
                              RNGstate <- get(".Random.seed", envir = .GlobalEnv)
                            } else {
                              set.seed(seed)
