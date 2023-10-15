@@ -66,6 +66,8 @@ and <code><a href="serve_table.html">serve_table()</a></code>.</p>
 <span>  order <span class="op">=</span> <span class="st">"random"</span>,</span>
 <span>  seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  constrain <span class="op">=</span> <span class="fu"><a href="nesting_structure.html">nesting_structure</a></span><span class="op">(</span><span class="va">.edibble</span><span class="op">)</span>,</span>
+<span>  label_nested <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  fail <span class="op">=</span> <span class="st">"error"</span>,</span>
 <span>  .record <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -98,6 +100,14 @@ by the number of levels of the treatment factor), then the extras are chosen ran
 
 <dt>constrain</dt>
 <dd><p>The nesting structure for units.</p></dd>
+
+
+<dt>label_nested</dt>
+<dd><p>The columns to show nested labels (if available). Tidyselect compatible.</p></dd>
+
+
+<dt>fail</dt>
+<dd><p>What to do when failing to convert graph to table.</p></dd>
 
 
 <dt>.record</dt>
