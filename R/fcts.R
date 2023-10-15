@@ -182,6 +182,19 @@ vec_ptype2.edbl_trt.integer <- function(x, y, ...) y
 #' @export
 vec_ptype2.integer.edbl_trt <- function(x, y, ...) x
 
+#' @export
+vec_ptype2.edbl_rcrd.character <- function(x, y, ...) y
+#' @export
+vec_ptype2.character.edbl_rcrd <- function(x, y, ...) x
+#' @export
+vec_ptype2.edbl_rcrd.double <- function(x, y, ...) y
+#' @export
+vec_ptype2.double.edbl_rcrd <- function(x, y, ...) x
+#' @export
+vec_ptype2.edbl_rcrd.integer <- function(x, y, ...) y
+#' @export
+vec_ptype2.integer.edbl_rcrd <- function(x, y, ...) x
+
 #' @importFrom vctrs vec_cast
 #' @export
 vec_cast.edbl_trt.double <- function(x, to, ...) to
