@@ -211,7 +211,8 @@ Reactivate the graph in the provenance object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Provenance$reactivate(
   design,
-  overwrite = c("graph", "anatomy", "recipe", "validation", "simulate")
+  overwrite = c("graph", "anatomy", "recipe", "validation", "simulate",
+    "simualte_result")
 )}\if{html}{\out{</div>}}
 }
 

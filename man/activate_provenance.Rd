@@ -6,7 +6,8 @@
 \usage{
 activate_provenance(
   .edibble,
-  overwrite = c("graph", "anatomy", "recipe", "validation", "simulate")
+  overwrite = c("graph", "anatomy", "recipe", "validation", "simulate",
+    "simulate_result")
 )
 }
 \arguments{

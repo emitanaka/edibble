@@ -10,6 +10,8 @@ allot_table(
   order = "random",
   seed = NULL,
   constrain = nesting_structure(.edibble),
+  label_nested = NULL,
+  fail = "error",
   .record = TRUE
 )
 }
@@ -31,6 +33,10 @@ by the number of levels of the treatment factor), then the extras are chosen ran
 \item{seed}{A scalar value used to set the seed so that the result is reproducible.}
 
 \item{constrain}{The nesting structure for units.}
+
+\item{label_nested}{The columns to show nested labels (if available). Tidyselect compatible.}
+
+\item{fail}{What to do when failing to convert graph to table.}
 
 \item{.record}{Whether to record the step.}
 }
