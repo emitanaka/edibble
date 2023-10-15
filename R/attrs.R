@@ -11,9 +11,9 @@
 #'
 #' @seealso lvls
 #' @examples
-#' fct_attrs(c("A", "B"))
+#' fct(c("A", "B"))
 #' @export
-fct_attrs <- function(.levels, ...) {
+fct <- function(.levels, ...) {
   dots <- dots_list(..., .named = TRUE, .homonyms = "keep", .ignore_empty = "all")
 
   if(length(dots)) {
@@ -30,6 +30,9 @@ fct_attrs <- function(.levels, ...) {
   .levels
 }
 
+#' @rdname fct
+#' @export
+fct_attrs <- fct
 
 #' Setting the traits of the levels
 #'
