@@ -348,10 +348,8 @@ rescale_values <- function(x, lower = NA, upper = NA) {
 
 #' @export
 print.edbl_fct <- function(x, ...) {
-  xold <- x
-  attributes(x) <- NULL
-  print(x)
-  invisible(xold)
+  vctrs::obj_print(x)
+  invisible(x)
 }
 
 #' @export
