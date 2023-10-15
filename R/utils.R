@@ -254,7 +254,8 @@ number_si_prefix <- function(x) {
     index <- max(which(n/prefix >= 1))
     scale <- 1 / prefix[index]
     symbol <- names(prefix)[index]
-    paste0(floor(n * scale), symbol)
+    nn <- round(n * scale)
+    ifelse(nn == n * scale, paste0(nn, symbol), paste0("~", nn, symbol))
   })
 }
 
