@@ -322,7 +322,7 @@ pillar_shaft.edbl_rcrd <- function(x, ...) {
     out <- rep(dup_symbol(), n)
     loc <- match(unique(uvals), uvals)
     out[loc] <- fill_symbol()
-    new_pillar_shaft_simple(out, align = "right")
+    new_pillar_shaft_simple(out, align = "right", min_width = 8)
   } else {
     pillar::pillar_shaft(unclass(x))
   }
@@ -339,7 +339,7 @@ as.character.edbl_rcrd <- function(x, ...) {
 #' @importFrom vctrs vec_ptype_abbr
 #' @export
 vec_ptype_abbr.edbl_rcrd <- function(x, ...)  {
-  "rcrd"
+  paste0("R(", number_si_prefix(length(unique(attr(x, "unit_values")))), ")")
 }
 
 #' @importFrom vctrs vec_ptype_full

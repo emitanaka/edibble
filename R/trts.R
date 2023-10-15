@@ -37,13 +37,13 @@ set_trts <- function(.edibble = design(), ...,
 #' @export
 pillar_shaft.edbl_trt <- function(x, ...) {
   out <- format(x)
-  new_pillar_shaft_simple(out, align = "right", min_width = 10)
+  new_pillar_shaft_simple(out, align = "right", min_width = 8)
 }
 
 #' @importFrom vctrs vec_ptype_abbr
 #' @export
 vec_ptype_abbr.edbl_trt <- function(x, ...)  {
-  paste0("trt(", number_si_prefix(nlevels(x)), ")")
+  paste0("T(", number_si_prefix(nlevels(x)), ")")
 }
 
 #' @importFrom vctrs vec_ptype_full

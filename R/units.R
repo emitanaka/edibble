@@ -71,7 +71,7 @@ set_units <- function(.edibble = design(), ...,
 #' @importFrom vctrs vec_ptype_abbr
 #' @export
 vec_ptype_abbr.edbl_unit <- function(x, ...)  {
-  paste0("unit(", number_si_prefix(nlevels(x)), ")")
+  paste0("U(", number_si_prefix(nlevels(x)), ")")
 }
 #' @importFrom vctrs vec_ptype_full
 #' @export
@@ -145,6 +145,6 @@ vec_cast.edbl_fct.character <- function(x, to, ...) new_edibble_fct(x)
 #' @export
 pillar_shaft.edbl_unit <- function(x, ...) {
   out <- format(x)
-  new_pillar_shaft_simple(out, align = "right", min_width = 11)
+  new_pillar_shaft_simple(out, align = "right", min_width = 8)
 }
 
