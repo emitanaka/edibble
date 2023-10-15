@@ -186,12 +186,12 @@ as_edibble <- function(.data, ...) {
 }
 
 #' @export
-as_edibble.data.frame <- function(.data, title = NULL, name = "edibble", .record = TRUE, seed = NULL, provenance = Provenance$new(), units = NULL, trts = NULL, ...) {
-  if(.record) provenance$record_step()
-  des <- design(title = title, name = name, .record = FALSE, seed = seed, provenance = provenance)
-  new_edibble(.data, ..., .design = des) %>%
-    set_units({{units}}) %>%
-    set_trts({{trts}})
+as_edibble.data.frame <- function(.data, .title = NULL, ..., .name = "edibble", .record = TRUE, .seed = NULL, .provenance = Provenance$new(), .units = NULL, .trts = NULL) {
+  if(.record) .provenance$record_step()
+  des <- design(.title = .title, ..., .name = .name, .record = FALSE, .seed = .seed, .provenance = .provenance)
+  new_edibble(.data, .design = des) %>%
+    set_units({{.units}}) %>%
+    set_trts({{.trts}})
 }
 
 # idk what's the point of this function

@@ -6,39 +6,44 @@
 \title{Start the edibble design}
 \usage{
 design(
-  title = NULL,
-  name = "edibble",
+  .title = NULL,
+  ...,
+  .name = "edibble",
   .record = TRUE,
-  seed = NULL,
-  provenance = Provenance$new()
+  .seed = NULL,
+  .provenance = Provenance$new()
 )
 
 redesign(
   .data,
-  name = NULL,
+  .title,
+  ...,
+  .name = NULL,
   .record = TRUE,
-  seed = NULL,
-  provenance = provenance,
-  ...
+  .seed = NULL,
+  .provenance = Provenance$new()
 )
 }
 \arguments{
-\item{title}{Optional title of the experiment.}
+\item{.title}{Optional title of the experiment.}
 
-\item{name}{Optional name of the experiment.}
+\item{...}{A series of name-value pairs where the name corresponds to the
+name of the metadata nad the value corresponds to the actual metadata value.
+If the name is omitted, then no name to the metadata is assigned for the
+corresponding value.}
+
+\item{.name}{Optional name of the experiment.}
 
 \item{.record}{A logical value. This indicates whether to record this
 code step. The default is TRUE. It should remain TRUE unless this
 function is used as a wrapper in other code.}
 
-\item{seed}{A seed number for reproducibility.}
+\item{.seed}{A seed number for reproducibility.}
 
-\item{provenance}{An environment setup in a manner to store methods and
+\item{.provenance}{An environment setup in a manner to store methods and
 information to trace the origin of the design}
 
 \item{.data}{An edibble table.}
-
-\item{...}{Either a name-value pair or a series of the names.}
 }
 \value{
 An empty \code{edbl_design} object.

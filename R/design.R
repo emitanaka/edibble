@@ -3,12 +3,16 @@
 #' @description
 #' This function doesn't really do much besides create a new edibble design object.
 #'
-#' @param title Optional title of the experiment.
-#' @param name Optional name of the experiment.
+#' @param .title Optional title of the experiment.
+#' @param ... A series of name-value pairs where the name corresponds to the
+#'  name of the metadata nad the value corresponds to the actual metadata value.
+#'  If the name is omitted, then no name to the metadata is assigned for the
+#'  corresponding value.
+#' @param .name Optional name of the experiment.
 #' @inheritParams set_units
-#' @param seed A seed number for reproducibility.
+#' @param .seed A seed number for reproducibility.
 #' @param .data An edibble table.
-#' @param provenance An environment setup in a manner to store methods and
+#' @param .provenance An environment setup in a manner to store methods and
 #'   information to trace the origin of the design
 #' @return An empty `edbl_design` object.
 #' @examples
@@ -17,27 +21,28 @@
 #' [set_rcrds()].
 #' @family user-facing functions
 #' @export
-design <- function(title = NULL, name = "edibble", .record = TRUE, seed = NULL, provenance = Provenance$new()) {
-  if(.record) provenance$record_step()
-  if(!is.null(title)) provenance$set_title(title)
-  provenance$set_name(name)
-  provenance$save_seed(seed, type = "design")
-  structure(list(graph = provenance$get_graph(),
+design <- function(.title = NULL, ...,  .name = "edibble", .record = TRUE, .seed = NULL, .provenance = Provenance$new()) {
+  if(.record) .provenance$record_step()
+  if(!is.null(.title)) .provenance$set_title(.title)
+  .provenance$set_name(.name)
+  .provenance$save_seed(.seed, type = "design")
+  context <- dots_list(..., .ignore_empty = "trailing")
+  structure(list(graph = .provenance$get_graph(),
                  validation = list(rcrds = NULL),
-                 provenance = provenance,
+                 provenance = .provenance,
                  anatomy = NULL,
                  recipe = NULL,
                  simulate = list(),
                  simulate_result = list(),
-                 context = NULL),
+                 context = context),
             class = c("edbl_design", "edbl"))
 }
 
 #' @rdname design
 #' @export
-redesign <- function(.data, name = NULL, .record = TRUE, seed = NULL, provenance = provenance, ...) {
-  des <- design(name = name, .record = .record, seed = seed, provenance = provenance)
-  new_edibble(.data, ..., design = des)
+redesign <- function(.data, .title, ..., .name = NULL, .record = TRUE, .seed = NULL, .provenance = Provenance$new()) {
+  des <- design(.title = .title, ..., .name = .name, .record = .record, .seed = .seed, .provenance = .provenance)
+  new_edibble(.data, design = des)
 }
 
 # initialise graph structure -----------------------------------------------
