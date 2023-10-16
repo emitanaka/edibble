@@ -119,19 +119,19 @@
 <span></span>
 <span><span class="fu"><a href="reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="va">des</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # An edibble: 120 x 4</span></span>
-<span><span class="co">#&gt;        class     student       style        exam</span></span>
-<span><span class="co">#&gt;    &lt;unit(4)&gt; &lt;unit(120)&gt;    &lt;trt(2)&gt;    &lt;trt(3)&gt;</span></span>
-<span><span class="co">#&gt;        &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;                                </span></span>
-<span><span class="co">#&gt;  1    class1  student001 traditional closed-book</span></span>
-<span><span class="co">#&gt;  2    class1  student002 traditional open-book  </span></span>
-<span><span class="co">#&gt;  3    class1  student003 traditional take-home  </span></span>
-<span><span class="co">#&gt;  4    class1  student004 traditional closed-book</span></span>
-<span><span class="co">#&gt;  5    class1  student005 traditional take-home  </span></span>
-<span><span class="co">#&gt;  6    class1  student006 traditional take-home  </span></span>
-<span><span class="co">#&gt;  7    class1  student007 traditional open-book  </span></span>
-<span><span class="co">#&gt;  8    class1  student008 traditional open-book  </span></span>
-<span><span class="co">#&gt;  9    class1  student009 traditional closed-book</span></span>
-<span><span class="co">#&gt; 10    class1  student010 traditional closed-book</span></span>
+<span><span class="co">#&gt;     class    student       style        exam</span></span>
+<span><span class="co">#&gt;    &lt;U(4)&gt;   &lt;U(120)&gt;      &lt;T(2)&gt;      &lt;T(3)&gt;</span></span>
+<span><span class="co">#&gt;     &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;</span></span>
+<span><span class="co">#&gt;  1 class1 student001 traditional take-home  </span></span>
+<span><span class="co">#&gt;  2 class1 student002 traditional closed-book</span></span>
+<span><span class="co">#&gt;  3 class1 student003 traditional open-book  </span></span>
+<span><span class="co">#&gt;  4 class1 student004 traditional take-home  </span></span>
+<span><span class="co">#&gt;  5 class1 student005 traditional closed-book</span></span>
+<span><span class="co">#&gt;  6 class1 student006 traditional take-home  </span></span>
+<span><span class="co">#&gt;  7 class1 student007 traditional take-home  </span></span>
+<span><span class="co">#&gt;  8 class1 student008 traditional open-book  </span></span>
+<span><span class="co">#&gt;  9 class1 student009 traditional take-home  </span></span>
+<span><span class="co">#&gt; 10 class1 student010 traditional closed-book</span></span>
 <span><span class="co">#&gt; # ℹ 110 more rows</span></span></code></pre></div>
 <p>Before constructing the experiment, you might want to think about what you are recording for which level of unit and what values these variables can be recorded as.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -153,21 +153,21 @@
 <span></span>
 <span><span class="va">out</span></span>
 <span><span class="co">#&gt; # An edibble: 120 x 10</span></span>
-<span><span class="co">#&gt;        class     student       style        exam exam_mark quiz1_mark quiz2_mark</span></span>
-<span><span class="co">#&gt;    &lt;unit(4)&gt; &lt;unit(120)&gt;    &lt;trt(2)&gt;    &lt;trt(3)&gt;    &lt;rcrd&gt;     &lt;rcrd&gt;     &lt;rcrd&gt;</span></span>
-<span><span class="co">#&gt;        &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;     &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1    class1  student001 traditional closed-book         o          o          o</span></span>
-<span><span class="co">#&gt;  2    class1  student002 traditional open-book           o          o          o</span></span>
-<span><span class="co">#&gt;  3    class1  student003 traditional take-home           o          o          o</span></span>
-<span><span class="co">#&gt;  4    class1  student004 traditional closed-book         o          o          o</span></span>
-<span><span class="co">#&gt;  5    class1  student005 traditional take-home           o          o          o</span></span>
-<span><span class="co">#&gt;  6    class1  student006 traditional take-home           o          o          o</span></span>
-<span><span class="co">#&gt;  7    class1  student007 traditional open-book           o          o          o</span></span>
-<span><span class="co">#&gt;  8    class1  student008 traditional open-book           o          o          o</span></span>
-<span><span class="co">#&gt;  9    class1  student009 traditional closed-book         o          o          o</span></span>
-<span><span class="co">#&gt; 10    class1  student010 traditional closed-book         o          o          o</span></span>
+<span><span class="co">#&gt;     class    student     style     exam exam_mark quiz1_mark quiz2_mark   gender</span></span>
+<span><span class="co">#&gt;    &lt;U(4)&gt;   &lt;U(120)&gt;    &lt;T(2)&gt;   &lt;T(3)&gt;  &lt;R(120)&gt;   &lt;R(120)&gt;   &lt;R(120)&gt; &lt;R(120)&gt;</span></span>
+<span><span class="co">#&gt;     &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 class1 student001 traditio… take-ho…         o          o          o        o</span></span>
+<span><span class="co">#&gt;  2 class1 student002 traditio… closed-…         o          o          o        o</span></span>
+<span><span class="co">#&gt;  3 class1 student003 traditio… open-bo…         o          o          o        o</span></span>
+<span><span class="co">#&gt;  4 class1 student004 traditio… take-ho…         o          o          o        o</span></span>
+<span><span class="co">#&gt;  5 class1 student005 traditio… closed-…         o          o          o        o</span></span>
+<span><span class="co">#&gt;  6 class1 student006 traditio… take-ho…         o          o          o        o</span></span>
+<span><span class="co">#&gt;  7 class1 student007 traditio… take-ho…         o          o          o        o</span></span>
+<span><span class="co">#&gt;  8 class1 student008 traditio… open-bo…         o          o          o        o</span></span>
+<span><span class="co">#&gt;  9 class1 student009 traditio… take-ho…         o          o          o        o</span></span>
+<span><span class="co">#&gt; 10 class1 student010 traditio… closed-…         o          o          o        o</span></span>
 <span><span class="co">#&gt; # ℹ 110 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 3 more variables: gender &lt;rcrd&gt;, room &lt;rcrd&gt;, teacher &lt;rcrd&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; # ℹ 2 more variables: room &lt;R(4)&gt;, teacher &lt;R(4)&gt;</span></span></code></pre></div>
 <p>When you export the above edibble design using the <code>export_design</code> function, the variables you are recording are constraint to the values you expect, e.g. for factors, the cells have a drop-down menu to select from possible values.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/export_design.html">export_design</a></span><span class="op">(</span><span class="va">out</span>, file <span class="op">=</span> <span class="st">"/PATH/TO/FILE.xlsx"</span><span class="op">)</span></span></code></pre></div>
@@ -194,19 +194,19 @@
 <span>  <span class="fu"><a href="reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # nesting structure </span></span>
 <span><span class="co">#&gt; # An edibble: 190 x 3</span></span>
-<span><span class="co">#&gt;         site     block        plot</span></span>
-<span><span class="co">#&gt;    &lt;unit(3)&gt; &lt;unit(7)&gt; &lt;unit(190)&gt;</span></span>
-<span><span class="co">#&gt;        &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;                                              </span></span>
-<span><span class="co">#&gt;  1         A    block1     plot001</span></span>
-<span><span class="co">#&gt;  2         A    block1     plot002</span></span>
-<span><span class="co">#&gt;  3         A    block1     plot003</span></span>
-<span><span class="co">#&gt;  4         A    block1     plot004</span></span>
-<span><span class="co">#&gt;  5         A    block1     plot005</span></span>
-<span><span class="co">#&gt;  6         A    block1     plot006</span></span>
-<span><span class="co">#&gt;  7         A    block1     plot007</span></span>
-<span><span class="co">#&gt;  8         A    block1     plot008</span></span>
-<span><span class="co">#&gt;  9         A    block1     plot009</span></span>
-<span><span class="co">#&gt; 10         A    block1     plot010</span></span>
+<span><span class="co">#&gt;      site  block     plot</span></span>
+<span><span class="co">#&gt;    &lt;U(3)&gt; &lt;U(7)&gt; &lt;U(190)&gt;</span></span>
+<span><span class="co">#&gt;     &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;</span></span>
+<span><span class="co">#&gt;  1      A block1  plot001</span></span>
+<span><span class="co">#&gt;  2      A block1  plot002</span></span>
+<span><span class="co">#&gt;  3      A block1  plot003</span></span>
+<span><span class="co">#&gt;  4      A block1  plot004</span></span>
+<span><span class="co">#&gt;  5      A block1  plot005</span></span>
+<span><span class="co">#&gt;  6      A block1  plot006</span></span>
+<span><span class="co">#&gt;  7      A block1  plot007</span></span>
+<span><span class="co">#&gt;  8      A block1  plot008</span></span>
+<span><span class="co">#&gt;  9      A block1  plot009</span></span>
+<span><span class="co">#&gt; 10      A block1  plot010</span></span>
 <span><span class="co">#&gt; # ℹ 180 more rows</span></span></code></pre></div>
 </div>
 <div class="section level2">
