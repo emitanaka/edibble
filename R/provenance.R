@@ -536,13 +536,18 @@ Provenance <- R6::R6Class("Provenance",
                          #' @param from The node id from.
                          #' @param to The node id to.
                          #' @param type The type of edges.
-                         #' @param group The group id.
-                         append_fct_edges = function(from, to, type = NULL, group = NULL, attrs = NULL) {
+                         #' @param group A logical value to indicate whether to create new group id or not.
+                         append_fct_edges = function(from, to, type = NULL, group = FALSE, attrs = NULL) {
                            private$record_track_internal()
+                           if(group) {
+                             allot_id_last <- private$allot_id_last + length(from)
+                             group_id <- seq(private$allot_id_last + 1, allot_id_last)
+                             private$allot_id_last <- allot_id_last
+                            } else group_id <- NULL
                            self$fct_edges <- rbind_(self$fct_edges, tibble::tibble(from = from,
                                                                                    to = to,
                                                                                    type = type,
-                                                                                   group = group,
+                                                                                   group = group_id,
                                                                                    attrs = attrs))
                          },
 
@@ -992,6 +997,7 @@ Provenance <- R6::R6Class("Provenance",
                        private = list(
                          fct_id_last = 0L,
                          lvl_id_last = 0L,
+                         allot_id_last = 0L,
 
                          title = NULL,
                          name = NULL,

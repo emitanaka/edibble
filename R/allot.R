@@ -37,7 +37,6 @@ allot_trts <- function(.edibble, ..., .record = TRUE) {
     des$allotment <- list(trts = dots, units = NULL)
   }
 
-
   for(ialloc in seq_along(dots)) {
     trts <- all.vars(f_lhs(dots[[ialloc]]))
     # there should be only one unit
@@ -51,7 +50,7 @@ allot_trts <- function(.edibble, ..., .record = TRUE) {
       prov$trt_exists()
       tids <- prov$trt_ids
     }
-    prov$append_fct_edges(from = tids, to = uid, group = ialloc, type = "allot")
+    prov$append_fct_edges(from = tids, to = uid, group = TRUE, type = "allot")
   }
 
   return_edibble_with_graph(.edibble, prov)
@@ -105,7 +104,8 @@ allot_units <- function(.edibble, ..., .record = TRUE) {
     if(!op %in% c("crossed_by", "nested_in")) {
       prov$append_fct_edges(from = big_id,
                             to = small_id[length(small_id)],
-                            type = "nest")
+                            type = "nest",
+                            group = TRUE)
       if(length(small) > 1) {
         prov$append_fct_edges(from = big_id,
                               to = small_id[length(small_id) - 1],

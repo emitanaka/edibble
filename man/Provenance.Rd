@@ -898,7 +898,7 @@ Given node data, append the level nodes
 \subsection{Method \code{append_fct_edges()}}{
 Given edge data, append the factor edges
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Provenance$append_fct_edges(from, to, type = NULL, group = NULL, attrs = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Provenance$append_fct_edges(from, to, type = NULL, group = FALSE, attrs = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -910,7 +910,7 @@ Given edge data, append the factor edges
 
 \item{\code{type}}{The type of edges.}
 
-\item{\code{group}}{The group id.}
+\item{\code{group}}{A logical value to indicate whether to create new group id or not.}
 
 \item{\code{attrs}}{The attributes.}
 }
