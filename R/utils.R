@@ -376,7 +376,7 @@ print.edbl_fct <- function(x, ...) {
     prov1$append_fct_edges(from = from1,
                            to = to1,
                            type = fedges2$type,
-                           group = fedges2$group,
+                           group = ifelse(is.na(fedges2$group), FALSE, fedges2$group),
                            attrs = fedges2$attrs)
   }
   # add level nodes and edges from e2
