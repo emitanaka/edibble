@@ -540,9 +540,8 @@ Provenance <- R6::R6Class("Provenance",
                          append_fct_edges = function(from, to, type = NULL, group = FALSE, attrs = NULL) {
                            private$record_track_internal()
                            if(group) {
-                             allot_id_last <- private$allot_id_last + length(from)
-                             group_id <- seq(private$allot_id_last + 1, allot_id_last)
-                             private$allot_id_last <- allot_id_last
+                             group_id <- private$allot_id_last + 1L
+                             private$allot_id_last <- private$allot_id_last + 1L
                             } else group_id <- NULL
                            self$fct_edges <- rbind_(self$fct_edges, tibble::tibble(from = from,
                                                                                    to = to,

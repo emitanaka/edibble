@@ -47,10 +47,10 @@ assign_trts <- function(.edibble, order = "random", seed = NULL, constrain = nes
   alloc_groups <- unique(allotments$group)
   order <- rep(order, length.out = length(alloc_groups))
 
-  for(igroup in alloc_groups) {
-    trts_id <- allotments[allotments$group == igroup, ]$from
+  for(igroup in seq_along(alloc_groups)) {
+    trts_id <- allotments[allotments$group == alloc_groups[igroup], ]$from
     # there should be only one unit
-    unit_id <- unique(allotments[allotments$group == igroup, ]$to)
+    unit_id <- unique(allotments[allotments$group == alloc_groups[igroup], ]$to)
     unit_nm <- prov$fct_names(id = unit_id)
     lnodes <- prov$lvl_nodes
     unit_level_ids <- lnodes[[as.character(unit_id)]]$id
@@ -167,10 +167,10 @@ assign_units <- function(.edibble, order = "random", seed = NULL, constrain = ne
   alloc_groups <- unique(allotments$group)
   order <- rep(order, length.out = length(alloc_groups))
 
-  for(igroup in alloc_groups) {
-    parent_id <- allotments[allotments$group == igroup, ]$from
+  for(igroup in seq_along(alloc_groups)) {
+    parent_id <- allotments[allotments$group == alloc_groups[igroup], ]$from
     # there should be only one unit
-    unit_id <- unique(allotments[allotments$group == igroup, ]$to)
+    unit_id <- unique(allotments[allotments$group == alloc_groups[igroup], ]$to)
     unit_nm <- prov$fct_names(id = unit_id)
     lnodes <- prov$lvl_nodes
     unit_level_ids <- lnodes[[as.character(unit_id)]]$id
