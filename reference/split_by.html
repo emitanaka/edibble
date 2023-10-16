@@ -1283,13 +1283,14 @@ design. You cannot also combine treatment and unit factors together.</p></dd>
 <span class="r-in"><span><span class="va">fac</span> <span class="op">&lt;-</span> <span class="fu"><a href="takeout.html">takeout</a></span><span class="op">(</span><span class="fu"><a href="menu_factorial.html">menu_factorial</a></span><span class="op">(</span>trt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fac</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">count_by</span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="utility-edibble-var.html">is_trt</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    trt1  trt2  trt3 unit</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 trt11 trt21 trt31    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 trt12 trt21 trt31    3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 trt11 trt21 trt31    2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 trt12 trt21 trt31    2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 trt11 trt22 trt31    2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 trt12 trt22 trt31    2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 trt11 trt21 trt32    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 trt12 trt21 trt32    3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7 trt11 trt22 trt32    4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 trt11 trt21 trt32    2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 trt12 trt21 trt32    2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7 trt11 trt22 trt32    2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8 trt12 trt22 trt32    2</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
