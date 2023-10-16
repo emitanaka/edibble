@@ -80,8 +80,12 @@ assign_trts <- function(.edibble, order = "random", seed = NULL, constrain = nes
         sub_ntrts <- nrow(sub_trts_df)
         sub_nunits <- nrow(sub_units_df)
         permute <- switch(order[igroup],
-                                   "systematic" = rep(1:sub_ntrts, length.out = sub_nunits),
-                                   "systematic-random" = rep(sample(sub_ntrts), length.out = sub_nunits),
+                                   "systematic" = ,
+                                   "systematic-fastest" = rep(1:sub_ntrts, length.out = sub_nunits),
+                                   "systematic-slowest" = sort(rep(1:sub_ntrts, length.out = sub_nunits)),
+                                   "systematic-random" = ,
+                                   "systematic-random-fastest" = rep(sample(sub_ntrts), length.out = sub_nunits),
+                                   "systematic-random-slowest" = sort(rep(sample(sub_ntrts), length.out = sub_nunits)),
                                    "random" = {
                                      if(is_empty(constrain[[unit_nm]])) {
                                        sample(rep(sample(sub_ntrts), length.out = sub_nunits))
@@ -104,8 +108,12 @@ assign_trts <- function(.edibble, order = "random", seed = NULL, constrain = nes
     } else {
       ntrts <- nrow(trts_df)
       permutation <- switch(order[igroup],
-                            "systematic" = rep(1:ntrts, length.out = nunits),
-                            "systematic-random" = rep(sample(ntrts), length.out = nunits),
+                            "systematic" = ,
+                            "systematic-fastest" = rep(1:ntrts, length.out = nunits),
+                            "systematic-slowest" = sort(rep(1:ntrts, length.out = nunits)),
+                            "systematic-random" = ,
+                            "systematic-random-fastest" = rep(sample(ntrts), length.out = nunits),
+                            "systematic-random-slowest" = sort(rep(sample(ntrts), length.out = nunits)),
                             "random" = {
                               if(is_empty(constrain[[unit_nm]])) {
                                 sample(rep(sample(ntrts), length.out = nunits))
