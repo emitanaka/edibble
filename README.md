@@ -62,19 +62,19 @@ des <- design(name = "Effective teaching") %>%
 
 serve_table(des)
 #> # An edibble: 120 x 4
-#>        class     student       style        exam
-#>    <unit(4)> <unit(120)>    <trt(2)>    <trt(3)>
-#>        <chr>       <chr>       <chr>       <chr>                                
-#>  1    class1  student001 traditional closed-book
-#>  2    class1  student002 traditional open-book  
-#>  3    class1  student003 traditional take-home  
-#>  4    class1  student004 traditional closed-book
-#>  5    class1  student005 traditional take-home  
-#>  6    class1  student006 traditional take-home  
-#>  7    class1  student007 traditional open-book  
-#>  8    class1  student008 traditional open-book  
-#>  9    class1  student009 traditional closed-book
-#> 10    class1  student010 traditional closed-book
+#>     class    student       style        exam
+#>    <U(4)>   <U(120)>      <T(2)>      <T(3)>
+#>     <chr>      <chr>       <chr>       <chr>
+#>  1 class1 student001 traditional take-home  
+#>  2 class1 student002 traditional closed-book
+#>  3 class1 student003 traditional open-book  
+#>  4 class1 student004 traditional take-home  
+#>  5 class1 student005 traditional closed-book
+#>  6 class1 student006 traditional take-home  
+#>  7 class1 student007 traditional take-home  
+#>  8 class1 student008 traditional open-book  
+#>  9 class1 student009 traditional take-home  
+#> 10 class1 student010 traditional closed-book
 #> # ℹ 110 more rows
 ```
 
@@ -101,21 +101,21 @@ out <- des %>%
 
 out
 #> # An edibble: 120 x 10
-#>        class     student       style        exam exam_mark quiz1_mark quiz2_mark
-#>    <unit(4)> <unit(120)>    <trt(2)>    <trt(3)>    <rcrd>     <rcrd>     <rcrd>
-#>        <chr>       <chr>       <chr>       <chr>     <dbl>      <dbl>      <dbl>
-#>  1    class1  student001 traditional closed-book         o          o          o
-#>  2    class1  student002 traditional open-book           o          o          o
-#>  3    class1  student003 traditional take-home           o          o          o
-#>  4    class1  student004 traditional closed-book         o          o          o
-#>  5    class1  student005 traditional take-home           o          o          o
-#>  6    class1  student006 traditional take-home           o          o          o
-#>  7    class1  student007 traditional open-book           o          o          o
-#>  8    class1  student008 traditional open-book           o          o          o
-#>  9    class1  student009 traditional closed-book         o          o          o
-#> 10    class1  student010 traditional closed-book         o          o          o
+#>     class    student     style     exam exam_mark quiz1_mark quiz2_mark   gender
+#>    <U(4)>   <U(120)>    <T(2)>   <T(3)>  <R(120)>   <R(120)>   <R(120)> <R(120)>
+#>     <chr>      <chr>     <chr>    <chr>     <dbl>      <dbl>      <dbl>    <dbl>
+#>  1 class1 student001 traditio… take-ho…         o          o          o        o
+#>  2 class1 student002 traditio… closed-…         o          o          o        o
+#>  3 class1 student003 traditio… open-bo…         o          o          o        o
+#>  4 class1 student004 traditio… take-ho…         o          o          o        o
+#>  5 class1 student005 traditio… closed-…         o          o          o        o
+#>  6 class1 student006 traditio… take-ho…         o          o          o        o
+#>  7 class1 student007 traditio… take-ho…         o          o          o        o
+#>  8 class1 student008 traditio… open-bo…         o          o          o        o
+#>  9 class1 student009 traditio… take-ho…         o          o          o        o
+#> 10 class1 student010 traditio… closed-…         o          o          o        o
 #> # ℹ 110 more rows
-#> # ℹ 3 more variables: gender <rcrd>, room <rcrd>, teacher <rcrd>
+#> # ℹ 2 more variables: room <R(4)>, teacher <R(4)>
 ```
 
 When you export the above edibble design using the `export_design`
@@ -161,19 +161,19 @@ design("nesting structure") %>%
   serve_table()
 #> # nesting structure 
 #> # An edibble: 190 x 3
-#>         site     block        plot
-#>    <unit(3)> <unit(7)> <unit(190)>
-#>        <chr>     <chr>       <chr>                                              
-#>  1         A    block1     plot001
-#>  2         A    block1     plot002
-#>  3         A    block1     plot003
-#>  4         A    block1     plot004
-#>  5         A    block1     plot005
-#>  6         A    block1     plot006
-#>  7         A    block1     plot007
-#>  8         A    block1     plot008
-#>  9         A    block1     plot009
-#> 10         A    block1     plot010
+#>      site  block     plot
+#>    <U(3)> <U(7)> <U(190)>
+#>     <chr>  <chr>    <chr>
+#>  1      A block1  plot001
+#>  2      A block1  plot002
+#>  3      A block1  plot003
+#>  4      A block1  plot004
+#>  5      A block1  plot005
+#>  6      A block1  plot006
+#>  7      A block1  plot007
+#>  8      A block1  plot008
+#>  9      A block1  plot009
+#> 10      A block1  plot010
 #> # ℹ 180 more rows
 ```
 
