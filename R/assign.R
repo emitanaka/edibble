@@ -153,47 +153,50 @@ assign_units <- function(.edibble, order = "random", seed = NULL, constrain = ne
   prov$save_seed(seed, "assign_units")
   # FIXME: check
 
-  for(ialloc in seq_along(.edibble$allotment$units)) {
-    lhs <- all.vars(f_lhs(.edibble$allotment$units[[ialloc]]))
-    rhs <- all.vars(f_rhs(.edibble$allotment$units[[ialloc]]))
+  fedges <- prov$fct_edges
 
+  allotments <- fedges[fedges$from %in% prov$unit_ids & fedges$to %in% prov$unit_ids & !is.na(fedges$group), ]
+  alloc_groups <- unique(allotments$group)
+  order <- rep(order, length.out = length(alloc_groups))
+
+  for(igroup in alloc_groups) {
+    parent_id <- allotments[allotments$group == igroup, ]$from
+    # there should be only one unit
+    unit_id <- unique(allotments[allotments$group == igroup, ]$to)
+    unit_nm <- prov$fct_names(id = unit_id)
     lnodes <- prov$lvl_nodes
+    unit_level_ids <- lnodes[[as.character(unit_id)]]$id
+    nunits <- length(unit_level_ids)
 
-    lid <- prov$fct_id(name = lhs)
-    rid <- prov$fct_id(name = rhs)
-    lhs_id <- lnodes[[as.character(lid)]]$id
-    udf <- as.data.frame(prov$serve_units(id = lid, return = "id"))
-    udf <- udf[rid]
-    small_df <- data.frame(lhs = lhs_id)
+    parent_level_ids <- lnodes[[as.character(parent_id)]]$id
+    udf <- data.frame(unit = unit_level_ids)
+    small_df <- data.frame(lhs = parent_level_ids)
     permutation <- switch(order,
-                          "systematic" = rep(1:nrow(small_df), length.out = nrow(udf)),
-                          "systematic-random" = rep(sample(nrow(small_df)), length.out = nrow(udf)),
+                          "systematic" = ,
+                          "systematic-fastest" = rep(1:nrow(small_df), length.out = nrow(udf)),
+                          "systematic-slowest" = sort(rep(1:nrow(small_df), length.out = nrow(udf))),
+                          "systematic-random" = ,
+                          "systematic-random-fastest" = rep(sample(nrow(small_df)), length.out = nrow(udf)),
+                          "systematic-random-slowest" = sort(rep(sample(nrow(small_df)), length.out = nrow(udf))),
                           "random" = {
-
-                              # FIXME the ancestor should be found
-                              # based on `constrain`??
-                              vparents <- prov$fct_id_by_name(rhs[-length(rhs)])
-
-                              if(length(rhs)==1L) {
-                                out <- as.vector(replicate(ceiling(nrow(udf)/nrow(small_df)),
-                                                        sample(nrow(small_df))))
-                                out[1:nrow(udf)]
-                              } else if(length(rhs)==2L) {
-                                permute_parent_one_alg(vparents, udf, nrow(small_df))
-                              } else {
-                                permute_parent_more_than_one(vparents, udf, nrow(small_df))
-                              }
+                            vparents <- prov$fct_id(name = constrain[[unit_nm]])
+                            if(length(vparents)==1L) {
+                              out <- as.vector(replicate(ceiling(nrow(udf)/nrow(small_df)),
+                                                         sample(nrow(small_df))))
+                              out[1:nrow(udf)]
+                            } else if(length(vparents)==2L) {
+                              permute_parent_one_alg(vparents, udf, nrow(small_df))
+                            } else {
+                              permute_parent_more_than_one(vparents, udf, nrow(small_df))
+                            }
                           }, abort("not implemented yet"))
 
     tout <- small_df[permutation, , drop = FALSE]
 
     for(itvar in seq_along(tout)) {
       prov$append_lvl_edges(from = tout[[itvar]],
-                            to = udf[[rhs[length(rhs)]]],
-                            group = ialloc)
+                            to = udf$unit)
     }
-
   }
-
   return_edibble_with_graph(.edibble, prov)
 }
