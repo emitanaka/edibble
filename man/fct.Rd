@@ -5,9 +5,9 @@
 \alias{fct_attrs}
 \title{Setting the traits of factors}
 \usage{
-fct(.levels, ...)
+fct(.levels = character(), ...)
 
-fct_attrs(.levels, ...)
+fct_attrs(.levels = character(), ...)
 }
 \arguments{
 \item{.levels}{Either a short hand given as either as a single integer (number of levels),
