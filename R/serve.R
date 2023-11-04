@@ -55,10 +55,12 @@ serve_table <- function(.edibble, label_nested = NULL, fail = c("error", "warn",
       if(aname %in% labeln) {
         class(res) <- class(lout[[aname]])
         attributes(res) <- attributes(lout[[aname]])
-        attr(res, "non-nested") <- lout[[aname]]
+        # don't add attribute that starts with n as
+        # ggplot2 keeps on complaining about partial matching
+        attr(res, "label-non-nested") <- lout[[aname]]
         lout[[aname]] <- res
       } else {
-        attr(lout[[aname]], "nested") <- res
+        attr(lout[[aname]], "label-nested") <- res
       }
     }
   }
