@@ -104,7 +104,7 @@ as.integer.edbl_lvls <- function(x, ...) {
 #' @rdname utility-edibble-var
 #' @export
 as.integer.edbl_fct <- function(x, ...) {
-  out <- as.integer(as.factor(as.character(x)))
+  out <- as.integer(as.factor(as.character(unclass(x))))
   attributes(out) <- NULL
   out
 }
@@ -168,6 +168,8 @@ vec_ptype2.double.edbl_unit <- function(x, y, ...) x
 vec_ptype2.edbl_unit.integer <- function(x, y, ...) y
 #' @export
 vec_ptype2.integer.edbl_unit <- function(x, y, ...) x
+#' @export
+vec_ptype2.edbl_unit.edbl_unit <- function(x, y, ...) x
 
 #' @export
 vec_ptype2.edbl_trt.character <- function(x, y, ...) y
@@ -181,6 +183,8 @@ vec_ptype2.double.edbl_trt <- function(x, y, ...) x
 vec_ptype2.edbl_trt.integer <- function(x, y, ...) y
 #' @export
 vec_ptype2.integer.edbl_trt <- function(x, y, ...) x
+#' @export
+vec_ptype2.edbl_trt.edbl_trt <- function(x, y, ...) x
 
 #' @export
 vec_ptype2.edbl_rcrd.character <- function(x, y, ...) y
@@ -194,6 +198,8 @@ vec_ptype2.double.edbl_rcrd <- function(x, y, ...) x
 vec_ptype2.edbl_rcrd.integer <- function(x, y, ...) y
 #' @export
 vec_ptype2.integer.edbl_rcrd <- function(x, y, ...) x
+#' @export
+vec_ptype2.edbl_rcrd.edbl_rcrd <- function(x, y, ...) x
 
 #' @importFrom vctrs vec_cast vec_cast.double vec_cast.integer vec_cast.character
 #' @export
@@ -208,6 +214,8 @@ vec_cast.integer.edbl_trt <- function(x, to, ...) as.integer(unclass(x))
 vec_cast.edbl_trt.character <- function(x, to, ...) x
 #' @export
 vec_cast.character.edbl_trt <- function(x, to, ...) as.character(unclass(x))
+#' @export
+vec_cast.edbl_trt.edbl_trt <- function(x, to, ...) x
 
 #' @export
 vec_cast.edbl_unit.double <- function(x, to, ...) x
@@ -221,6 +229,8 @@ vec_cast.integer.edbl_unit <- function(x, to, ...) as.integer(unclass(x))
 vec_cast.edbl_unit.character <- function(x, to, ...) x
 #' @export
 vec_cast.character.edbl_unit <- function(x, to, ...) as.character(unclass(x))
+#' @export
+vec_cast.edbl_unit.edbl_unit <- function(x, to, ...) x
 
 #' @export
 vec_cast.edbl_rcrd.double <- function(x, to, ...) x
@@ -234,6 +244,8 @@ vec_cast.integer.edbl_rcrd <- function(x, to, ...) as.integer(unclass(x))
 vec_cast.edbl_rcrd.character <- function(x, to, ...) x
 #' @export
 vec_cast.character.edbl_rcrd <- function(x, to, ...) as.character(unclass(x))
+#' @export
+vec_cast.edbl_rcrd.edbl_rcrd <- function(x, to, ...) x
 
 # ADDME add_units(exist = TRUE), reset_units(exist = FALSE)
 
