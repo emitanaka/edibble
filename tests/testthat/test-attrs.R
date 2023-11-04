@@ -55,3 +55,15 @@ test_that("check fct_attrs works", {
 test_that("lvls works", {
   expect_error(lvls(value = sample(c("A", "A", "B", "B", "C"))))
 })
+
+
+test_that("context works", {
+  des <- design() %>%
+    set_units(unit = 20) %>%
+    set_trts(trt = 4)
+
+  set_attrs(des, design(author = "Emi Tanaka", email = "emi.tanaka@anu.edu.au"))
+  set_attrs(des, unit = fct(dim = 3))
+  set_attrs(des, trt = lvls(n = 3, cost = c(3, 4, 5, 8)))
+
+})

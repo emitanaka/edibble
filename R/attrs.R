@@ -13,7 +13,7 @@
 #' @examples
 #' fct(c("A", "B"))
 #' @export
-fct <- function(.levels, ...) {
+fct <- function(.levels = character(), ...) {
   dots <- dots_list(..., .named = TRUE, .homonyms = "keep", .ignore_empty = "all")
 
   if(length(dots)) {
@@ -27,6 +27,7 @@ fct <- function(.levels, ...) {
   }
 
   attr(.levels, "attrs") <- dots
+  class(.levels) <- c("edbl_fcts", class(.levels))
   .levels
 }
 
@@ -47,24 +48,28 @@ fct_attrs <- fct
 #' @return An edbl_lvls object.
 #' @export
 lvls <- function(value = NULL, n = NA_integer_, data = NULL, ...) {
-  if(!is_null(data) && isTRUE(attr(value, "column"))) {
-    pos <- eval_select(value[[1]], data)
-    value <- data[[pos]]
-    data <- data[-pos]
-  }
-  if(!is_null(data) && isTRUE(attr(n, "column"))) {
-    pos <- eval_select(n[[1]], data)
-    n <- data[[pos]]
-    data <- data[-pos]
-  }
-  if(length(unique(value)) != length(value)) {
-    dups <- value[duplicated(value)]
-    abort(paste0("The level values should be distinct.",
-                 " The values ", .combine_words(dups), " are duplicated."))
-  }
-  n <- vctrs::vec_recycle(n, length(value))
+  if(!is_null(value)) {
+    if(!is_null(data) && isTRUE(attr(value, "column"))) {
+      pos <- eval_select(value[[1]], data)
+      value <- data[[pos]]
+      data <- data[-pos]
+    }
+    if(!is_null(data) && isTRUE(attr(n, "column"))) {
+      pos <- eval_select(n[[1]], data)
+      n <- data[[pos]]
+      data <- data[-pos]
+    }
+    if(length(unique(value)) != length(value)) {
+      dups <- value[duplicated(value)]
+      abort(paste0("The level values should be distinct.",
+                   " The values ", .combine_words(dups), " are duplicated."))
+    }
+    n <- vctrs::vec_recycle(n, length(value))
 
-  new_rcrd(c(list2(..value.. = value, ..n.. = n, ...), data), class = "edbl_lvls")
+    new_rcrd(c(list2(..value.. = value, ..n.. = n, ...), data), class = "edbl_lvls")
+  } else {
+    structure(c(list2(..value.. = value, ..n.. = n, ...), data), class = "edbl_lvls")
+  }
 }
 
 #' Select a column.
@@ -90,3 +95,53 @@ levels.edbl_lvls <- function(x, ...) {
 }
 
 
+#' Set the experimental context as metadata
+#'
+#' These are structured information that can be encoded in into the design
+#' object. By encoding this information, you can make it interoperable.
+#' If you use [export_design()], the information is exported to the title sheet
+#' of the excel output.
+#'
+#' @param .edibble An edibble table or design.
+#' @param ... A series of name-value pairs where the name corresponds to the
+#'  name of the metadata nad the value corresponds to the actual metadata value.
+#'  If the name is omitted, then no name to the metadata is assigned for the
+#'  corresponding value.
+#' @examples
+#' des <- set_attrs(design(aim = "Testing for new flu vaccine.",
+#'                         contact = "emi.tanaka (at) anu.edu",
+#'                        "Funded by Better Experiments Institute.") )
+#'
+#' des$context
+#'
+#' @export
+set_attrs <- function(.edibble = design(), ...) {
+  not_edibble(.edibble)
+  dots <- dots_list(..., .ignore_empty = "trailing")
+  dotsnm <- names(dots)
+  des <- edbl_design(.edibble)
+  prov <- activate_provenance(des)
+  for(idot in seq_along(dots)) {
+    dot <- dots[[idot]]
+    dotnm <- dotsnm[idot]
+    if(is_edibble_design(dot)) {
+      des$context <- c(des$context, dot$context)
+    } else if(inherits(dot, "edbl_fcts")) {
+      context_fcts <- attr(dot, "attrs")
+      # TODO
+
+    } else if(inherits(dot, "edbl_lvls")) {
+      n <- dot[["..n.."]]
+      attrs <- dot[setdiff(names(dot), c("..value..", "..n.."))]
+      # TO DO
+    }
+  }
+
+
+  if(is_edibble_table(.edibble)) {
+    attr(.edibble, "design") <- des
+    .edibble
+  } else {
+    des
+  }
+}

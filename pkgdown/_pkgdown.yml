@@ -102,7 +102,7 @@ reference:
   - Provenance
   - activate_provenance
   - nesting_structure
-  - set_context
+  - set_attrs
   - design-helpers
   - starts_with("fct")
   - starts_with("lvl")
