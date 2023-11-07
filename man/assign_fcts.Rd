@@ -28,11 +28,13 @@ assign_units(
 \item{.edibble}{An edibble design which should have units, treatments and allotment defined.}
 
 \item{order}{A character vector signifying the apportion of treatments to units.
-The value should be either "random", "systematic", "systematic-random" or a class name corresponding to the algorithm for order_trts().
+The value should be either "random", "systematic-fastest", "systematic-slowest",
+"systematic-random-fastest", "systematic-random-slowest" or a class name corresponding to the algorithm for order_trts().
 "random" allocates the treatment randomly to units based on specified allotment with restrictions
 implied by unit structure.
-"systematic" allocates the treatment in a systematic order to units.
-"systematic-random" allocates the treatment in a systematic order to units but
+"systematic-slowest" allocates the treatment in a systematic order to units such that the treatment level is slow in varying.
+In contrast, "systematic-fastest" is fast in varying for treatment levels.
+"systematic-random-fastest" and "systematic-random-slowest" allocates the treatment in a systematic order to units but
 where it is not possible to divide treatments equally (as the number of units are not divisible
 by the number of levels of the treatment factor), then the extras are chosen randomly.}
 
