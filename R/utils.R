@@ -355,7 +355,6 @@ print.edbl_fct <- function(x, ...) {
 
 #' @export
 `+.edbl` <- function(e1, e2) {
-
   if(missing(e2)) {
     cli::cli_abort(c("Cannot use {.code +} with a single argument",
                      i = "Did you accidentally put {.code +} on a new line?"))
@@ -373,11 +372,22 @@ print.edbl_fct <- function(x, ...) {
   if(nrow(fedges2)) {
     from1 <- prov1$fct_id(name = prov2$fct_names(id = fedges2$from))
     to1 <- prov1$fct_id(name = prov2$fct_names(id = fedges2$to))
-    prov1$append_fct_edges(from = from1,
-                           to = to1,
-                           type = fedges2$type,
-                           group = ifelse(is.na(fedges2$group), FALSE, fedges2$group),
-                           attrs = fedges2$attrs)
+    needs_group_id <- !is.na(fedges2$group)
+    if(sum(needs_group_id)) {
+      prov1$append_fct_edges(from = from1[needs_group_id],
+                             to = to1[needs_group_id],
+                             type = fedges2$type[needs_group_id],
+                             group = TRUE,
+                             # FIXME: this needs to be modified if attrs is data.frame!
+                             attrs = fedges2$attrs[needs_group_id])
+    } else if(sum(!needs_group_id)) {
+      prov1$append_fct_edges(from = from1[!needs_group_id],
+                             to = to1[!needs_group_id],
+                             type = fedges2$type[!needs_group_id],
+                             group = FALSE,
+                             # FIXME: this needs to be modified if attrs is data.frame!
+                             attrs = fedges2$attrs[!needs_group_id])
+    }
   }
   # add level nodes and edges from e2
   missing_cols <- function(col, df) {
