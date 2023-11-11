@@ -120,13 +120,18 @@ permute_parent_one_alg <- function(vid, udf, ntrts) {
   udf[order(udf$.id), ".res", drop = TRUE]
 }
 
-
+#' A custom ordering algorithm
+#'
+#' @param x A string specifying the class
+#' @param ... Other arguments.
+#'
+#' @export
 order_trts <- function(x, ...) {
   UseMethod("order_trts")
 }
 
-order_trts.default <- function(x, prov, constrain, ...) {
-  abort(paste("The", order, "`order` is not implemented."))
+order_trts.default <- function(x, ...) {
+  abort(paste("The", cli::col_blue(x), "order is not implemented."))
 }
 
 order_trts.dae <- function(x, prov, constrain, trts, ...) {

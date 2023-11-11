@@ -103,7 +103,8 @@ assign_trts <- function(.edibble, order = "random", seed = NULL, constrain = nes
                                    },
                                    {
                                      vparents <- prov$fct_id(name = constrain[[unit_nm]])
-                                     order_trts(structure(order[igroup], class = order[igroup]), sub_trts_df, sub_units_df, setNames(unit_id, unit_nm), vparents, prov, ...)
+                                     order_name <- structure(order[igroup], class = order[igroup])
+                                     order_trts(order_name, trts_table = sub_trts_df, units_table = sub_units_df, unit = setNames(unit_id, unit_nm), constrain = vparents, Provenance = prov, ...)
                                    })
         permutation[units_df_with_id$..id..[locs]] <- sub_trts_df_with_id[permute, "..id..", drop = TRUE]
       }
@@ -142,7 +143,8 @@ assign_trts <- function(.edibble, order = "random", seed = NULL, constrain = nes
                               vanc <- prov$fct_id_ancestor(id = unit_id, role = "edbl_unit")
                               units_df <- tibble::as_tibble(prov$serve_units(id = vanc))
                               vparents <- prov$fct_id(name = constrain[[unit_nm]])
-                              order_trts(structure(order[igroup], class = order[igroup]), trts_df, units_df, setNames(unit_id, unit_nm), vparents, prov, ...)
+                              order_name <- structure(order[igroup], class = order[igroup])
+                              order_trts(order_name, trts_table = trts_df, units_table = units_df, unit = setNames(unit_id, unit_nm), constrain = vparents, Provenance = prov, ...)
                             })
 
     }
