@@ -128,7 +128,13 @@ assign_trts <- function(.edibble, order = "random", seed = NULL, constrain = nes
                                   permute_parent_one_alg(vparents, units_df, ntrts)
                                 } else {
                                   vnparents <- prov$fct_id_parent(id = unit_id, role = "edbl_unit", type = "nest")
-                                  permute_parent_more_than_one(setdiff(vparents, vnparents), units_df, ntrts, nparents = vnparents)
+                                  vcparents <- setdiff(vparents, vnparents)
+                                  if(length(vcparents)) {
+                                    permute_parent_more_than_one(setdiff(vparents, vnparents), units_df, ntrts, nparents = vnparents)
+                                  } else {
+                                    units_df$`0` <- do.call(paste, units_df[as.character(vnparents)])
+                                    permute_parent_one_alg(0, units_df, ntrts)
+                                  }
                                 }
                               }
                             },
