@@ -1,4 +1,4 @@
-
+#' @export
 order_trts.blocksdesign <- function(x, trts_df, units_df, unit, vparents, prov, model = NULL, ...) {
   if(!requireNamespace("blocksdesign")) abort("You need to install `blocksdesign` package.")
   udf <- units_df[, setdiff(names(units_df), as.character(unit)), drop = FALSE]
@@ -130,10 +130,12 @@ order_trts <- function(x, ...) {
   UseMethod("order_trts")
 }
 
+#' @export
 order_trts.default <- function(x, ...) {
   abort(paste("The", cli::col_blue(x), "order is not implemented."))
 }
 
+#' @export
 order_trts.dae <- function(x, prov, constrain, trts, ...) {
   # FIXME
   dat <- assign_trts(prov$design, order = "systematic", constrain = constrain, .record = FALSE) %>%
