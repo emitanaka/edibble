@@ -36,6 +36,7 @@ reference:
   - allot_table
   - nested_in
   - crossed_by
+  - order_trts
 - title: "Understanding your design"
   desc: >
     Function helpers to understand your design better.
