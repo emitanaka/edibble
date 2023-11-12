@@ -2,7 +2,6 @@
 
 # edibble 1.1.0
 
-
 Bug fixes
 
 * Bug fix for export_design when no record factor exists
