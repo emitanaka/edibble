@@ -1,5 +1,5 @@
 Package: edibble
-Title: Designing Comparative Experiments 
+Title: Encapsulating Elements of Experimental Design 
 Version: 1.1.0
 Authors@R: 
     person(given = "Emi",
@@ -11,6 +11,7 @@ Description: A system to facilitate designing comparative experiments using the
   grammar of experimental designs <https://emitanaka.org/edibble-book/>. 
   An experimental design is treated as an intermediate, mutable object that is 
   built progressively by fundamental experimental components like units, treatments, and their relation.
+  The system aids in experimental planning, management and workflow.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
