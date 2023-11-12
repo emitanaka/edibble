@@ -204,7 +204,7 @@ get_censored_value <- function(y, valid, censor) {
     switch(valid$operator,
            "greaterThan" = return_censor_value(y, y > value, censor, valid_env = valid_env),
            "greaterThanOrEqual" = return_censor_value(y, y >= value, censor, valid_env = valid_env),
-           "equal" = return_censor_value(y, y == value, .censor, valid_env = valid_env),
+           "equal" = return_censor_value(y, y == value, censor, valid_env = valid_env),
            "between" = return_censor_value(y, y > value[1] & y < value[2], censor, value, valid_env = valid_env),
            "lessThanOrEqual" = return_censor_value(y, y <= value, censor, valid_env = valid_env),
            "lessThan" = return_censor_value(y, y < value, censor, valid_env = valid_env))
@@ -291,7 +291,7 @@ aggregate_values <- function(y, group, fn) {
 #' @param .interaction Whether there should be treatment interaction effects.
 #' @param .discrete Whether to make the response value discrete or not.
 #' @param .linear Whether to include non-linear term or not. The value is always additive.
-#' @param .dist The random distribution to use for numerical values
+#' @param .error_dist The random distribution to use for numerical values
 #'  (either "normal", "uniform", "exponential", "gamma", "beta", "cauchy", "chisq", "f", "t", "poisson", "weibull").
 #'  The default choice is random out of these with higher chances of "normal".
 #' @seealso [autofill_rcrds()]
@@ -506,7 +506,7 @@ examine_process <- function(data, process = NULL) {
     NULL
   } else {
     if(!is_null(process)) {
-      res <- setNames(list(res), process)
+      res <- stats::setNames(list(res), process)
     }
     structure(res, class = c("sim_process", class(res)))
   }

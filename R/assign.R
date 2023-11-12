@@ -67,7 +67,7 @@ assign_trts <- function(.edibble, order = "random", seed = NULL, constrain = nes
       vanc <- prov$fct_id_ancestor(id = unit_id, role = "edbl_unit")
       units_df_with_id <- units_df <- tibble::as_tibble(prov$serve_units(id = vanc))
       units_df_with_id$..id.. <- 1:nrow(units_df_with_id)
-      ptrts_df <- na.omit(tibble::as_tibble(prov$serve_trts(id = parent_trts)))
+      ptrts_df <- stats::na.omit(tibble::as_tibble(prov$serve_trts(id = parent_trts)))
 
       if(nrow(ptrts_df) == 0L) abort(paste0("The treatment factor, ",
                                             .combine_words(prov$fct_names(id = trts_id), fun = cli::col_blue),
@@ -104,7 +104,7 @@ assign_trts <- function(.edibble, order = "random", seed = NULL, constrain = nes
                                    {
                                      vparents <- prov$fct_id(name = constrain[[unit_nm]])
                                      order_name <- structure(order[igroup], class = order[igroup])
-                                     order_trts(order_name, trts_table = sub_trts_df, units_table = sub_units_df, unit = setNames(unit_id, unit_nm), constrain = vparents, Provenance = prov, ...)
+                                     order_trts(order_name, trts_table = sub_trts_df, units_table = sub_units_df, unit = stats::setNames(unit_id, unit_nm), constrain = vparents, Provenance = prov, ...)
                                    })
         permutation[units_df_with_id$..id..[locs]] <- sub_trts_df_with_id[permute, "..id..", drop = TRUE]
       }
@@ -144,7 +144,7 @@ assign_trts <- function(.edibble, order = "random", seed = NULL, constrain = nes
                               units_df <- tibble::as_tibble(prov$serve_units(id = vanc))
                               vparents <- prov$fct_id(name = constrain[[unit_nm]])
                               order_name <- structure(order[igroup], class = order[igroup])
-                              order_trts(order_name, trts_table = trts_df, units_table = units_df, unit = setNames(unit_id, unit_nm), constrain = vparents, Provenance = prov, ...)
+                              order_trts(order_name, trts_table = trts_df, units_table = units_df, unit = stats::setNames(unit_id, unit_nm), constrain = vparents, Provenance = prov, ...)
                             })
 
     }

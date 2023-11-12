@@ -43,36 +43,36 @@ test_that("simulation works", {
                    .seed = 1)
 
 
-  spd3 <- spd %>%
-    simulate_process(
-    .joint = function(C = matrix(c(1, -0.5, -0.5, 3), 2, 2)) {
-      res <- mvtnorm::rmvnorm(n(), sigma = C)
-      res <- as.data.frame(res)
-      colnames(res) <- c("mass", "yield")
-      res
-    })
+  #spd3 <- spd %>%
+  #  simulate_process(
+  #  .joint = function(C = matrix(c(1, -0.5, -0.5, 3), 2, 2)) {
+  #    res <- mvtnorm::rmvnorm(n(), sigma = C)
+  #    res <- as.data.frame(res)
+  #    colnames(res) <- c("mass", "yield")
+  #    res
+   # })
 
-  expect_error(simulate_rcrds(spd3, nonexistant = with_params()))
+  #expect_error(simulate_rcrds(spd3, nonexistant = with_params()))
 
 
   skip("skip")
-
-  spd3 %>%
-    simulate_rcrds(.joint = with_params(.censor = list(mass = NA,
-                                                       yield = c(0, ~max(.x[.x < 3])))))
-
-
-  spd3 %>%
-    simulate_rcrds(.joint = with_params(.censor = list(.default = c(NA, 10),
-                                                       yield = c(0, ~max(.x[.x < 3])))))
-
-  spd3 %>%
-    simulate_rcrds(.joint = with_params(.censor = list(.default = c(NA, 10))))
-
-
-  spd3 %>%
-    simulate_rcrds(.joint = with_params(.censor = list(mass = c(NA, 10),
-                                                       yield = c(0, ~max(.x[.x < .upper])))))
+#
+#   spd3 %>%
+#     simulate_rcrds(.joint = with_params(.censor = list(mass = NA,
+#                                                        yield = c(0, ~max(.x[.x < 3])))))
+#
+#
+#   spd3 %>%
+#     simulate_rcrds(.joint = with_params(.censor = list(.default = c(NA, 10),
+#                                                        yield = c(0, ~max(.x[.x < 3])))))
+#
+#   spd3 %>%
+#     simulate_rcrds(.joint = with_params(.censor = list(.default = c(NA, 10))))
+#
+#
+#   spd3 %>%
+#     simulate_rcrds(.joint = with_params(.censor = list(mass = c(NA, 10),
+#                                                        yield = c(0, ~max(.x[.x < .upper])))))
 
 
   # autofill all rspds

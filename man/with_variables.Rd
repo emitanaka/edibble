@@ -26,7 +26,7 @@ It can also be numeric of between 0 and 1 giving the proportion of missing value
 
 \item{.linear}{Whether to include non-linear term or not. The value is always additive.}
 
-\item{.dist}{The random distribution to use for numerical values
+\item{.error_dist}{The random distribution to use for numerical values
 (either "normal", "uniform", "exponential", "gamma", "beta", "cauchy", "chisq", "f", "t", "poisson", "weibull").
 The default choice is random out of these with higher chances of "normal".}
 }

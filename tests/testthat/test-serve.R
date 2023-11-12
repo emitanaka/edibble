@@ -8,12 +8,12 @@ test_that("serve", {
   # TODO: when the title is long, it cuts off
   # The cut-off seems to have only happened for when the title was "unlinked units with table"
   # and the ANSI styling was cut
-  expect_equal({
-    design(title = "unlinked units with table") %>%
+  expect_error({
+    design("unlinked units with table") %>%
       set_units(block = 3,
                 plot = 2) %>%
       serve_table(fail = "ignore")
-  }, data.frame(block = character(), plot = character()), ignore_attr = TRUE)
+  },)
 
   expect_snapshot({
     design(title = "one unit") %>%

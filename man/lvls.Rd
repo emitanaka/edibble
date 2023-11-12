@@ -9,6 +9,8 @@ lvls(value = NULL, n = NA_integer_, data = NULL, ...)
 \arguments{
 \item{value}{A vector of the level values.}
 
+\item{n}{The number of replicate (if applicable).}
+
 \item{data}{A list or data frame of the same size as the \code{levels}.}
 
 \item{...}{Name-value pair denoting other level attributes. The value should be the same

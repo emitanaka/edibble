@@ -1,8 +1,29 @@
 ## Release summary
 
-This is a major internal change that the R6 class is completely changed to a Provenance class object that ensures a more consistent and cognitive access to internal structure. 
+This update makes a number of bug fixes, addition of new features and 
+quality of life improvements as shown below.
 
-Other changes include the change of dependency to use `openxlsx2` instead of `openxlsx` and the change in print for the object with class `ebdl_table`.
+Bug fixes
+
+* Bug fix for export_design when no record factor exists
+* Bug fix for order assignment
+
+Quality of life improvements
+
+* Format change for the title page in the export
+* Change behaviour of `fct_attrs()` when levels supplied as numeric or vector 
+  instead of `lvls()`. 
+* Change the print out of edibble table.
+* Improve the assignment algorithm.
+
+New features 
+
+* Added new functions `count_by()` and `split_by()`.
+* Added ability to specify conditional treatment.
+* The `simuluate_rcrds()` has now a facelift with delineation of the process specification to `simulate_process()`. 
+* `autofill_rcrds()` implemented.
+* Added ability to add two designs by `+`.
+* Ability to add metadata through design().
 
 ## R CMD check results
 

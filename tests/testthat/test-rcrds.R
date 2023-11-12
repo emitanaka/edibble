@@ -1,6 +1,6 @@
 test_that("measure response", {
 
-  des0 <- design(title = "Effective teaching") %>%
+  des0 <- design("Effective teaching") %>%
     set_units(class = 4,
               student = nested_in(class, 30)) %>%
     set_trts(style = c("flipped", "traditional"),

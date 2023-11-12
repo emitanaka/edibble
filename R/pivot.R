@@ -21,7 +21,7 @@
 #' @param .remove_empty Remove empty combinations. Default is TRUE.
 #' @examples
 #' spd <- takeout(menu_split())
-#' spd %>% split(trt1)
+#' split(spd, spd$trt1)
 #' spd %>% split_by(trt1)
 #' spd %>% split_by(trt2)
 #' spd %>% split_by(mainplot)

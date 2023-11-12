@@ -39,6 +39,7 @@ fct_attrs <- fct
 #'
 #'
 #' @param value A vector of the level values.
+#' @param n The number of replicate (if applicable).
 #' @param data A list or data frame of the same size as the `levels`.
 #' @param ... Name-value pair denoting other level attributes. The value should be the same
 #'  length as `levels` or a single value.

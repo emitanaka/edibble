@@ -17,10 +17,6 @@ as_edibble(.data, ...)
 \item{.design}{An edibble graph object.}
 
 \item{.class}{Subclasses for edibble table. The default is NULL.}
-
-\item{units}{The data columns that are units.}
-
-\item{trts}{The data columns that are treatments.}
 }
 \value{
 An edibble table.

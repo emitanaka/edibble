@@ -127,8 +127,6 @@ not_edibble <- function(x) {
 #' @param ... Passed to `new_tibble`.
 #' @param .design An edibble graph object.
 #' @param .class Subclasses for edibble table. The default is NULL.
-#' @param units The data columns that are units.
-#' @param trts The data columns that are treatments.
 #' @importFrom tibble new_tibble
 #' @importFrom vctrs vec_size_common
 #' @return An edibble table.

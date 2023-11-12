@@ -39,5 +39,5 @@ Latin square designs and its generalisations as an array
 \examples{
 latin_square(n = 3)
 latin_rectangle(3, 3, 3)
-latin_array(3, c(3, 3, 3))
+latin_array(c(3, 3, 3), 3)
 }

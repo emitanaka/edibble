@@ -42,19 +42,19 @@
         allot_trts(~person) %>% assign_trts("systematic") %>% serve_table()
     Output
       # An edibble: 30 x 3
-          vaccine      sex     person
-         <trt(3)> <trt(2)> <unit(30)>
-            <chr>    <chr>      <chr>
-       1 vaccine1     sex1   person01
-       2 vaccine2     sex1   person02
-       3 vaccine3     sex1   person03
-       4 vaccine1     sex2   person04
-       5 vaccine2     sex2   person05
-       6 vaccine3     sex2   person06
-       7 vaccine1     sex1   person07
-       8 vaccine2     sex1   person08
-       9 vaccine3     sex1   person09
-      10 vaccine1     sex2   person10
+          vaccine    sex   person
+           <T(3)> <T(2)>  <U(30)>
+            <chr>  <chr>    <chr>
+       1 vaccine1   sex1 person01
+       2 vaccine2   sex1 person02
+       3 vaccine3   sex1 person03
+       4 vaccine1   sex2 person04
+       5 vaccine2   sex2 person05
+       6 vaccine3   sex2 person06
+       7 vaccine1   sex1 person07
+       8 vaccine2   sex1 person08
+       9 vaccine3   sex1 person09
+      10 vaccine1   sex2 person10
       # i 20 more rows
 
 ---
@@ -65,19 +65,19 @@
         serve_table()
     Output
       # An edibble: 30 x 3
-          vaccine      sex     person
-         <trt(3)> <trt(2)> <unit(30)>
-            <chr>    <chr>      <chr>
-       1 vaccine1        F   person01
-       2 vaccine2        F   person02
-       3 vaccine3        F   person03
-       4 vaccine1        M   person04
-       5 vaccine2        M   person05
-       6 vaccine3        M   person06
-       7 vaccine1        F   person07
-       8 vaccine2        F   person08
-       9 vaccine3        F   person09
-      10 vaccine1        M   person10
+          vaccine    sex   person
+           <T(3)> <T(2)>  <U(30)>
+            <chr>  <chr>    <chr>
+       1 vaccine1      F person01
+       2 vaccine2      F person02
+       3 vaccine3      F person03
+       4 vaccine1      M person04
+       5 vaccine2      M person05
+       6 vaccine3      M person06
+       7 vaccine1      F person07
+       8 vaccine2      F person08
+       9 vaccine3      F person09
+      10 vaccine1      M person10
       # i 20 more rows
 
 ---
@@ -88,19 +88,19 @@
         serve_table()
     Output
       # An edibble: 30 x 3
-          vaccine      sex     person
-         <trt(3)> <trt(2)> <unit(30)>
-            <chr>    <chr>      <chr>
-       1 vaccine1        F   person01
-       2 vaccine2        M   person02
-       3 vaccine3        F   person03
-       4 vaccine1        M   person04
-       5 vaccine2        F   person05
-       6 vaccine3        M   person06
-       7 vaccine1        F   person07
-       8 vaccine2        M   person08
-       9 vaccine3        F   person09
-      10 vaccine1        M   person10
+          vaccine    sex   person
+           <T(3)> <T(2)>  <U(30)>
+            <chr>  <chr>    <chr>
+       1 vaccine1      F person01
+       2 vaccine2      M person02
+       3 vaccine3      F person03
+       4 vaccine1      M person04
+       5 vaccine2      F person05
+       6 vaccine3      M person06
+       7 vaccine1      F person07
+       8 vaccine2      M person08
+       9 vaccine3      F person09
+      10 vaccine1      M person10
       # i 20 more rows
 
 ---
@@ -110,19 +110,19 @@
         vaccine ~ person) %>% assign_trts("systematic") %>% serve_table()
     Output
       # An edibble: 30 x 2
-          vaccine     person
-         <trt(3)> <unit(30)>
-            <chr>      <chr>
-       1 vaccine1   person01
-       2 vaccine2   person02
-       3 vaccine3   person03
-       4 vaccine1   person04
-       5 vaccine2   person05
-       6 vaccine3   person06
-       7 vaccine1   person07
-       8 vaccine2   person08
-       9 vaccine3   person09
-      10 vaccine1   person10
+          vaccine   person
+           <T(3)>  <U(30)>
+            <chr>    <chr>
+       1 vaccine1 person01
+       2 vaccine2 person02
+       3 vaccine3 person03
+       4 vaccine1 person04
+       5 vaccine2 person05
+       6 vaccine3 person06
+       7 vaccine1 person07
+       8 vaccine2 person08
+       9 vaccine3 person09
+      10 vaccine1 person10
       # i 20 more rows
 
 ---
@@ -133,14 +133,14 @@
         serve_table()
     Output
       # An edibble: 5 x 2
-         vaccine    person
-        <trt(3)> <unit(5)>
-           <chr>     <chr>
-      1 vaccine1   person1
-      2 vaccine3   person2
-      3 vaccine2   person3
-      4 vaccine1   person4
-      5 vaccine3   person5
+         vaccine  person
+          <T(3)>  <U(5)>
+           <chr>   <chr>
+      1 vaccine1 person1
+      2 vaccine3 person2
+      3 vaccine2 person3
+      4 vaccine1 person4
+      5 vaccine3 person5
 
 ---
 
@@ -149,14 +149,14 @@
         vaccine ~ person) %>% assign_trts("random", seed = 3) %>% serve_table()
     Output
       # An edibble: 5 x 2
-         vaccine    person
-        <trt(3)> <unit(5)>
-           <chr>     <chr>
-      1 vaccine1   person1
-      2 vaccine2   person2
-      3 vaccine3   person3
-      4 vaccine1   person4
-      5 vaccine2   person5
+         vaccine  person
+          <T(3)>  <U(5)>
+           <chr>   <chr>
+      1 vaccine1 person1
+      2 vaccine2 person2
+      3 vaccine3 person3
+      4 vaccine1 person4
+      5 vaccine2 person5
 
 ---
 

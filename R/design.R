@@ -85,7 +85,7 @@ design_model <- function(data, type = c("anova", "lmer")) {
   des <- edbl_design(data)
   type <- match.arg(type)
   unit_str <- des$anatomy
-  units <- attr(terms(unit_str), "term.labels")
+  units <- attr(stats::terms(unit_str), "term.labels")
   trts <- map_lgl(prov$fct_levels(name = prov$trt_names(), return = "value"),
                   function(x) inherits(x, "numeric") |  inherits(x, "integer"))
   tnames <- names(trts)

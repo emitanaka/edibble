@@ -21,5 +21,5 @@ Note: the computation may be long if the design is quite complicated or there ar
 }
 \examples{
 split <- takeout(menu_split(t1 = 3, t2 = 2, r = 2))
-anatomy(split)
+design_anatomy(split)
 }
