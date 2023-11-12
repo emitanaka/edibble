@@ -32,7 +32,7 @@ treatment."><meta property="og:image" content="https://edibble.emitanaka.org/log
     
     <a class="navbar-brand me-2" href="../index.html">edibble</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -120,8 +120,259 @@ design. You cannot also combine treatment and unit factors together.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">spd</span> <span class="op">&lt;-</span> <span class="fu"><a href="takeout.html">takeout</a></span><span class="op">(</span><span class="fu"><a href="menu_split.html">menu_split</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">spd</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="va">trt1</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'trt1' not found</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="va">spd</span>, <span class="va">spd</span><span class="op">$</span><span class="va">trt1</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $trt11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> design(<span style="color: #00BBBB; font-style: italic;">"Split-Plot Design | Split-Unit Design"</span>) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_units(<span style="color: #BBBB00; background-color: #000000;">mainplot</span> = 90,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              <span style="color: #BBBB00; background-color: #000000;">subplot</span> = nested_in(<span style="color: #BBBB00; background-color: #000000;">mainplot</span>, 5)) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_trts(<span style="color: #0000BB;">trt1</span> = 9,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            <span style="color: #0000BB;">trt2</span> = 5) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   allot_trts(<span style="color: #0000BB;">trt1</span> ~ <span style="color: #BBBB00; background-color: #000000;">mainplot</span>,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              <span style="color: #0000BB;">trt2</span> ~ <span style="color: #BBBB00; background-color: #000000;">subplot</span>) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   assign_trts("random", seed = 546) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   serve_table() </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># </span><span style="color: #949494; font-weight: bold;">Split-Plot Design | Split-Unit Design</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An edibble: 50 x 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      mainplot    subplot   trt1   trt2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;U(90)&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;U(450)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;T(9)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;T(5)&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> mainplot10 subplot046  trt11  trt21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> mainplot10 subplot047  trt11  trt22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> mainplot10 subplot048  trt11  trt24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> mainplot10 subplot049  trt11  trt25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> mainplot10 subplot050  trt11  trt23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> mainplot13 subplot061  trt11  trt22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> mainplot13 subplot062  trt11  trt25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> mainplot13 subplot063  trt11  trt23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> mainplot13 subplot064  trt11  trt21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> mainplot13 subplot065  trt11  trt24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 40 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $trt12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> design(<span style="color: #00BBBB; font-style: italic;">"Split-Plot Design | Split-Unit Design"</span>) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_units(<span style="color: #BBBB00; background-color: #000000;">mainplot</span> = 90,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              <span style="color: #BBBB00; background-color: #000000;">subplot</span> = nested_in(<span style="color: #BBBB00; background-color: #000000;">mainplot</span>, 5)) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_trts(<span style="color: #0000BB;">trt1</span> = 9,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            <span style="color: #0000BB;">trt2</span> = 5) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   allot_trts(<span style="color: #0000BB;">trt1</span> ~ <span style="color: #BBBB00; background-color: #000000;">mainplot</span>,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              <span style="color: #0000BB;">trt2</span> ~ <span style="color: #BBBB00; background-color: #000000;">subplot</span>) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   assign_trts("random", seed = 546) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   serve_table() </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># </span><span style="color: #949494; font-weight: bold;">Split-Plot Design | Split-Unit Design</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An edibble: 50 x 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      mainplot    subplot   trt1   trt2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;U(90)&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;U(450)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;T(9)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;T(5)&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> mainplot02 subplot006  trt12  trt22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> mainplot02 subplot007  trt12  trt24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> mainplot02 subplot008  trt12  trt21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> mainplot02 subplot009  trt12  trt23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> mainplot02 subplot010  trt12  trt25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> mainplot04 subplot016  trt12  trt22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> mainplot04 subplot017  trt12  trt23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> mainplot04 subplot018  trt12  trt24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> mainplot04 subplot019  trt12  trt25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> mainplot04 subplot020  trt12  trt21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 40 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $trt13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> design(<span style="color: #00BBBB; font-style: italic;">"Split-Plot Design | Split-Unit Design"</span>) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_units(<span style="color: #BBBB00; background-color: #000000;">mainplot</span> = 90,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              <span style="color: #BBBB00; background-color: #000000;">subplot</span> = nested_in(<span style="color: #BBBB00; background-color: #000000;">mainplot</span>, 5)) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_trts(<span style="color: #0000BB;">trt1</span> = 9,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            <span style="color: #0000BB;">trt2</span> = 5) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   allot_trts(<span style="color: #0000BB;">trt1</span> ~ <span style="color: #BBBB00; background-color: #000000;">mainplot</span>,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              <span style="color: #0000BB;">trt2</span> ~ <span style="color: #BBBB00; background-color: #000000;">subplot</span>) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   assign_trts("random", seed = 546) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   serve_table() </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># </span><span style="color: #949494; font-weight: bold;">Split-Plot Design | Split-Unit Design</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An edibble: 50 x 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      mainplot    subplot   trt1   trt2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;U(90)&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;U(450)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;T(9)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;T(5)&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> mainplot14 subplot066  trt13  trt24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> mainplot14 subplot067  trt13  trt22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> mainplot14 subplot068  trt13  trt23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> mainplot14 subplot069  trt13  trt21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> mainplot14 subplot070  trt13  trt25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> mainplot40 subplot196  trt13  trt22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> mainplot40 subplot197  trt13  trt23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> mainplot40 subplot198  trt13  trt25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> mainplot40 subplot199  trt13  trt21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> mainplot40 subplot200  trt13  trt24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 40 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $trt14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> design(<span style="color: #00BBBB; font-style: italic;">"Split-Plot Design | Split-Unit Design"</span>) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_units(<span style="color: #BBBB00; background-color: #000000;">mainplot</span> = 90,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              <span style="color: #BBBB00; background-color: #000000;">subplot</span> = nested_in(<span style="color: #BBBB00; background-color: #000000;">mainplot</span>, 5)) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_trts(<span style="color: #0000BB;">trt1</span> = 9,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            <span style="color: #0000BB;">trt2</span> = 5) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   allot_trts(<span style="color: #0000BB;">trt1</span> ~ <span style="color: #BBBB00; background-color: #000000;">mainplot</span>,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              <span style="color: #0000BB;">trt2</span> ~ <span style="color: #BBBB00; background-color: #000000;">subplot</span>) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   assign_trts("random", seed = 546) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   serve_table() </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># </span><span style="color: #949494; font-weight: bold;">Split-Plot Design | Split-Unit Design</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An edibble: 50 x 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      mainplot    subplot   trt1   trt2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;U(90)&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;U(450)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;T(9)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;T(5)&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> mainplot06 subplot026  trt14  trt22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> mainplot06 subplot027  trt14  trt25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> mainplot06 subplot028  trt14  trt24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> mainplot06 subplot029  trt14  trt21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> mainplot06 subplot030  trt14  trt23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> mainplot09 subplot041  trt14  trt25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> mainplot09 subplot042  trt14  trt23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> mainplot09 subplot043  trt14  trt21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> mainplot09 subplot044  trt14  trt22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> mainplot09 subplot045  trt14  trt24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 40 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $trt15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> design(<span style="color: #00BBBB; font-style: italic;">"Split-Plot Design | Split-Unit Design"</span>) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_units(<span style="color: #BBBB00; background-color: #000000;">mainplot</span> = 90,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              <span style="color: #BBBB00; background-color: #000000;">subplot</span> = nested_in(<span style="color: #BBBB00; background-color: #000000;">mainplot</span>, 5)) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_trts(<span style="color: #0000BB;">trt1</span> = 9,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            <span style="color: #0000BB;">trt2</span> = 5) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   allot_trts(<span style="color: #0000BB;">trt1</span> ~ <span style="color: #BBBB00; background-color: #000000;">mainplot</span>,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              <span style="color: #0000BB;">trt2</span> ~ <span style="color: #BBBB00; background-color: #000000;">subplot</span>) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   assign_trts("random", seed = 546) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   serve_table() </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># </span><span style="color: #949494; font-weight: bold;">Split-Plot Design | Split-Unit Design</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An edibble: 50 x 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      mainplot    subplot   trt1   trt2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;U(90)&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;U(450)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;T(9)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;T(5)&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> mainplot01 subplot001  trt15  trt24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> mainplot01 subplot002  trt15  trt22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> mainplot01 subplot003  trt15  trt25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> mainplot01 subplot004  trt15  trt21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> mainplot01 subplot005  trt15  trt23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> mainplot18 subplot086  trt15  trt24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> mainplot18 subplot087  trt15  trt21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> mainplot18 subplot088  trt15  trt22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> mainplot18 subplot089  trt15  trt25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> mainplot18 subplot090  trt15  trt23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 40 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $trt16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> design(<span style="color: #00BBBB; font-style: italic;">"Split-Plot Design | Split-Unit Design"</span>) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_units(<span style="color: #BBBB00; background-color: #000000;">mainplot</span> = 90,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              <span style="color: #BBBB00; background-color: #000000;">subplot</span> = nested_in(<span style="color: #BBBB00; background-color: #000000;">mainplot</span>, 5)) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_trts(<span style="color: #0000BB;">trt1</span> = 9,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            <span style="color: #0000BB;">trt2</span> = 5) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   allot_trts(<span style="color: #0000BB;">trt1</span> ~ <span style="color: #BBBB00; background-color: #000000;">mainplot</span>,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              <span style="color: #0000BB;">trt2</span> ~ <span style="color: #BBBB00; background-color: #000000;">subplot</span>) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   assign_trts("random", seed = 546) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   serve_table() </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># </span><span style="color: #949494; font-weight: bold;">Split-Plot Design | Split-Unit Design</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An edibble: 50 x 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      mainplot    subplot   trt1   trt2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;U(90)&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;U(450)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;T(9)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;T(5)&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> mainplot15 subplot071  trt16  trt25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> mainplot15 subplot072  trt16  trt21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> mainplot15 subplot073  trt16  trt24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> mainplot15 subplot074  trt16  trt23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> mainplot15 subplot075  trt16  trt22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> mainplot16 subplot076  trt16  trt25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> mainplot16 subplot077  trt16  trt22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> mainplot16 subplot078  trt16  trt21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> mainplot16 subplot079  trt16  trt23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> mainplot16 subplot080  trt16  trt24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 40 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $trt17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> design(<span style="color: #00BBBB; font-style: italic;">"Split-Plot Design | Split-Unit Design"</span>) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_units(<span style="color: #BBBB00; background-color: #000000;">mainplot</span> = 90,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              <span style="color: #BBBB00; background-color: #000000;">subplot</span> = nested_in(<span style="color: #BBBB00; background-color: #000000;">mainplot</span>, 5)) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_trts(<span style="color: #0000BB;">trt1</span> = 9,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            <span style="color: #0000BB;">trt2</span> = 5) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   allot_trts(<span style="color: #0000BB;">trt1</span> ~ <span style="color: #BBBB00; background-color: #000000;">mainplot</span>,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              <span style="color: #0000BB;">trt2</span> ~ <span style="color: #BBBB00; background-color: #000000;">subplot</span>) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   assign_trts("random", seed = 546) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   serve_table() </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># </span><span style="color: #949494; font-weight: bold;">Split-Plot Design | Split-Unit Design</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An edibble: 50 x 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      mainplot    subplot   trt1   trt2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;U(90)&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;U(450)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;T(9)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;T(5)&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> mainplot17 subplot081  trt17  trt25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> mainplot17 subplot082  trt17  trt22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> mainplot17 subplot083  trt17  trt23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> mainplot17 subplot084  trt17  trt24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> mainplot17 subplot085  trt17  trt21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> mainplot36 subplot176  trt17  trt25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> mainplot36 subplot177  trt17  trt22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> mainplot36 subplot178  trt17  trt24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> mainplot36 subplot179  trt17  trt21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> mainplot36 subplot180  trt17  trt23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 40 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $trt18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> design(<span style="color: #00BBBB; font-style: italic;">"Split-Plot Design | Split-Unit Design"</span>) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_units(<span style="color: #BBBB00; background-color: #000000;">mainplot</span> = 90,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              <span style="color: #BBBB00; background-color: #000000;">subplot</span> = nested_in(<span style="color: #BBBB00; background-color: #000000;">mainplot</span>, 5)) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_trts(<span style="color: #0000BB;">trt1</span> = 9,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            <span style="color: #0000BB;">trt2</span> = 5) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   allot_trts(<span style="color: #0000BB;">trt1</span> ~ <span style="color: #BBBB00; background-color: #000000;">mainplot</span>,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              <span style="color: #0000BB;">trt2</span> ~ <span style="color: #BBBB00; background-color: #000000;">subplot</span>) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   assign_trts("random", seed = 546) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   serve_table() </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># </span><span style="color: #949494; font-weight: bold;">Split-Plot Design | Split-Unit Design</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An edibble: 50 x 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      mainplot    subplot   trt1   trt2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;U(90)&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;U(450)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;T(9)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;T(5)&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> mainplot07 subplot031  trt18  trt21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> mainplot07 subplot032  trt18  trt23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> mainplot07 subplot033  trt18  trt22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> mainplot07 subplot034  trt18  trt24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> mainplot07 subplot035  trt18  trt25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> mainplot11 subplot051  trt18  trt22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> mainplot11 subplot052  trt18  trt25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> mainplot11 subplot053  trt18  trt21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> mainplot11 subplot054  trt18  trt23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> mainplot11 subplot055  trt18  trt24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 40 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $trt19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> design(<span style="color: #00BBBB; font-style: italic;">"Split-Plot Design | Split-Unit Design"</span>) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_units(<span style="color: #BBBB00; background-color: #000000;">mainplot</span> = 90,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              <span style="color: #BBBB00; background-color: #000000;">subplot</span> = nested_in(<span style="color: #BBBB00; background-color: #000000;">mainplot</span>, 5)) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_trts(<span style="color: #0000BB;">trt1</span> = 9,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            <span style="color: #0000BB;">trt2</span> = 5) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   allot_trts(<span style="color: #0000BB;">trt1</span> ~ <span style="color: #BBBB00; background-color: #000000;">mainplot</span>,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              <span style="color: #0000BB;">trt2</span> ~ <span style="color: #BBBB00; background-color: #000000;">subplot</span>) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   assign_trts("random", seed = 546) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   serve_table() </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># </span><span style="color: #949494; font-weight: bold;">Split-Plot Design | Split-Unit Design</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># An edibble: 50 x 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      mainplot    subplot   trt1   trt2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;U(90)&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;U(450)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;T(9)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;T(5)&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> mainplot03 subplot011  trt19  trt22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> mainplot03 subplot012  trt19  trt24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> mainplot03 subplot013  trt19  trt23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> mainplot03 subplot014  trt19  trt21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> mainplot03 subplot015  trt19  trt25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> mainplot08 subplot036  trt19  trt24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> mainplot08 subplot037  trt19  trt21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> mainplot08 subplot038  trt19  trt25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> mainplot08 subplot039  trt19  trt23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> mainplot08 subplot040  trt19  trt22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 40 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="va">spd</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">split_by</span><span class="op">(</span><span class="va">trt1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $trt11</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 1</span></span>

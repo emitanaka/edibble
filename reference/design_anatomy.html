@@ -20,7 +20,7 @@ Note: the computation may be long if the design is quite complicated or there ar
     
     <a class="navbar-brand me-2" href="../index.html">edibble</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,8 +86,17 @@ Note: the computation may be long if the design is quite complicated or there ar
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">split</span> <span class="op">&lt;-</span> <span class="fu"><a href="takeout.html">takeout</a></span><span class="op">(</span><span class="fu"><a href="menu_split.html">menu_split</a></span><span class="op">(</span>t1 <span class="op">=</span> <span class="fl">3</span>, t2 <span class="op">=</span> <span class="fl">2</span>, r <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">anatomy</span><span class="op">(</span><span class="va">split</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in anatomy(split):</span> could not find function "anatomy"</span>
+<span class="r-in"><span><span class="fu">design_anatomy</span><span class="op">(</span><span class="va">split</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Summary table of the decomposition for unit &amp; trt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Source.unit       df1 Source.trt df2 aefficiency eefficiency order</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  mainplot            5 trt1         2      1.0000      1.0000     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        Residual     3                              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  subplot[mainplot]   6 trt2         1      1.0000      1.0000     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        trt1#trt2    2      1.0000      1.0000     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        Residual     3                              </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
