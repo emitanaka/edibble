@@ -1,11 +1,11 @@
 bibentry(
   bibtype    = "Misc",
-  title    = "edibble: An R-package for experimental design",
+  title    = "edibble: An R package to encapsulate elements of experimental designs for better planning, management and workflow",
   author   = "Emi Tanaka",
   header = "To cite edibble in publications use:",
   year     = "2023",
-  publisher = "GitHub",
-  journal = "GitHub repository",
+  number = {arXiv:2311.09705},
+  publisher = "{{arXiv}}",
   url      = "https://github.com/emitanaka/edibble",
-  textVersion = "Tanaka, E. (2023) edibble: An R-package for experimental design. GitHub repository. https://github.com/emitanaka/edibble"
+  textVersion = "Tanaka, E. (2023) edibble: An R package to encapsulate elements of experimental designs for better planning, management and workflow. arXiv. https://arxiv.org/abs/2311.09705"
 )
