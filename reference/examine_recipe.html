@@ -27,6 +27,12 @@
       <ul class="navbar-nav me-auto"><li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/defining-structure.html">Defining structure</a>
+  </div>
+</li>
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
@@ -81,13 +87,14 @@
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">examine_recipe</span><span class="op">(</span><span class="fu"><a href="takeout.html">takeout</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → No name was supplied so selecting a random named experimental design...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Selected Balanced Incomplete Block Design</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> design(<span style="color: #00BBBB; font-style: italic;">"Balanced Incomplete Block Design"</span>) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   set_units(<span style="color: #BBBB00; background-color: #000000;">block</span> = 7,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             <span style="color: #BBBB00; background-color: #000000;">unit</span> = nested_in(<span style="color: #BBBB00; background-color: #000000;">block</span>, 8)) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   set_trts(<span style="color: #0000BB;">trt</span> = 10) %&gt;%</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Selected Latin Square Design</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> design(<span style="color: #00BBBB; font-style: italic;">"Latin Square Design"</span>) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_units(<span style="color: #BBBB00; background-color: #000000;">row</span> = 4,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             <span style="color: #BBBB00; background-color: #000000;">col</span> = 4,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             <span style="color: #BBBB00; background-color: #000000;">unit</span> = crossed_by(<span style="color: #BBBB00; background-color: #000000;">row</span>, <span style="color: #BBBB00; background-color: #000000;">col</span>)) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_trts(<span style="color: #0000BB;">trt</span> = 4) %&gt;%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   allot_trts(<span style="color: #0000BB;">trt</span> ~ <span style="color: #BBBB00; background-color: #000000;">unit</span>) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   assign_trts("random", seed = 441) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   assign_trts("random", seed = 692) %&gt;%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   serve_table()</span>
 </code></pre></div>
     </div>

@@ -1,8 +1,9 @@
 pandoc: 2.7.3
 pkgdown: 2.0.7
 pkgdown_sha: ~
-articles: {}
-last_built: 2023-11-12T10:03Z
+articles:
+  defining-structure: defining-structure.html
+last_built: 2023-11-19T20:40Z
 urls:
   reference: https://edibble.emitanaka.org/reference
   article: https://edibble.emitanaka.org/articles
