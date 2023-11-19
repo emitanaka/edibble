@@ -2,10 +2,21 @@ bibentry(
   bibtype    = "Misc",
   title    = "edibble: An R package to encapsulate elements of experimental designs for better planning, management and workflow",
   author   = "Emi Tanaka",
-  header = "To cite edibble in publications use:",
   year     = "2023",
-  number = {arXiv:2311.09705},
-  publisher = "{{arXiv}}",
-  url      = "https://github.com/emitanaka/edibble",
+  number = "arXiv:2311.09705",
+  publisher = "{arXiv}",
+  url      = "https://arxiv.org/abs/2311.09705",
   textVersion = "Tanaka, E. (2023) edibble: An R package to encapsulate elements of experimental designs for better planning, management and workflow. arXiv. https://arxiv.org/abs/2311.09705"
+)
+
+
+bibentry(
+  bibtype    = "Misc",
+  title    = "Towards a unified language in experimental designs propagated by a software framework",
+  author   = "Emi Tanaka",
+  year     = "2023",
+  number = "arXiv:2307.11593",
+  publisher = "{arXiv}",
+  url      = "https://arxiv.org/abs/2307.11593",
+  textVersion = "Tanaka, E. (2023) Towards a unified language in experimental designs propagated by a software framework. arXiv. https://arxiv.org/abs/2307.11593"
 )
