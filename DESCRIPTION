@@ -39,6 +39,8 @@ Suggests:
     rmarkdown,
     openxlsx2 (>= 1.0.0),
     visNetwork,
-    blocksdesign
+    blocksdesign,
+    knitr
 Depends: 
     R (>= 2.10)
+VignetteBuilder: knitr

@@ -1,0 +1,327 @@
+---
+title: "Defining structure"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{defining-structure}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+In this vignette, we assume that the experimental aim is to find the best wheat variety from a wheat field trial.
+
+
+```{r setup}
+library(edibble)
+```
+
+## Initialisation
+
+A new design constructed using edibble must start by initialising the _design object_. An optional title of the design may be provided as input. This information persists as metadata in the object and is displayed in various places (e.g., print output and exported files).
+
+When you have no data, you start by simply initialising the design object.
+
+```{r}
+#| results: "hide"
+design("Wheat field trial")
+```
+
+
+At this point, there is nothing particularly interesting. The design object requires the user to define the experimental factor(s) as described next.
+
+## Units
+
+At minimum, the design requires units to be defined via `set_units`. In the code below, we initialise a new design object and then set a unit called "site" with 4 levels. The left hand side (LHS) and the right hand side (RHS) of the function input correspond to the factor name and the corresponding value, respectively. Here, the value is a single integer that denotes the number of levels of the factor. Note that the _LHS can be any arbitrary (preferably syntactically valid) name_. Selecting a name that succinctly describes the factor is recommended. Acronyms should be avoided where reasonable. We assign this design object to the variable called `demo`.
+
+```{r}
+demo <- design("Demo for defining units") %>% 
+  set_units(site = 4)
+```
+
+At this point, the design is in a _graph form_. The print of this object shows a prettified tree that displays the title of the experiment, the factors, and their corresponding number of levels. Notice the root in this tree output corresponds to the title given in the object initialisation.
+
+```{r}
+demo
+```
+
+
+
+To obtain the _design table_, you must call on `serve_table` to signal that you wish the object to be transformed into the _tabular form_. The transformation for `demo` is shown below, where the output is a type of `tibble` with one column (the "site" factor), four rows (corresponding to the four levels in the site), and the entries corresponding to the actual levels of the factor (name derived as "site1", "site2", "site3", and "site4" here). The first line of the print output is decorated with the title of the design object, which acts as a persistent reminder of the initial input. The row just under the header shows the role of the factor denoted by the upper case letter (here, U = unit) with the number of levels in that factor displayed. If the number of levels exceed a thousand, then the number is shown with an SI prefix rounded to the closest digit corresponding to the SI prefix form (e.g., 1000 is shown as 1k and 1800 is shown as ~2k). The row that follows shows the class of the factor (e.g., character or numeric).
+
+```{r}
+serve_table(demo)
+```
+
+
+
+If particular names are desired for the levels, then the RHS value can be replaced with a vector like below where the levels are named "Narrabri", "Horsham", "Parkes" and "Roseworthy".
+
+```{r}
+design("Character vector input demo") %>% 
+  set_units(site = c("Narrabri", "Horsham", "Parkes", "Roseworthy")) %>% 
+  serve_table()
+```
+
+The RHS value in theory be any vector. Below the input is a numeric vector, and the corresponding output will be a `data.frame` with a numeric column. 
+
+```{r}
+design("Numeric vector input demo") %>% 
+  set_units(site = c(1, 2, 3, 4)) %>% 
+  serve_table()
+```
+
+In the instance that you do want to enter a single level with a numeric value, this can be specified using `lvls` on the RHS. 
+
+```{r}
+design("Single numeric level demo") %>% 
+  set_units(site = lvls(4)) %>% 
+  serve_table()
+```
+
+
+
+
+
+### Multiple units
+
+We can add more unit factors to this study. Suppose that we have 72 plots. We append another call to `set_units` to encode this information. 
+
+```{r}
+demo2 <- demo %>% 
+  set_units(plot = 72)
+```
+
+However, we did not defined the relationship between `site` and `plot`; so it fails to convert to the tabular form.
+
+```{r}
+#| error: true
+serve_table(demo2)
+```
+
+The relationship between unit factors can be defined concurrently when defining the unit factors using helper functions. One of these helper functions is demonstrated next.
+
+### Nested units {#sec-nested}
+
+Given that we have a wheat trial, we imagine that the site corresponds to the locations, and each location would have its own plots. The experimenter tells you that each site contains 18 plots. This nesting structure can be defined by using the helper function `nested_in`. With this relationship specified, the graph can be reconciled into a tabular format, as shown below.
+
+```{r}
+demo %>% 
+  set_units(plot = nested_in(site, 18)) %>% 
+  serve_table()
+```
+
+In the above situation, the relationship between unit factors have to be apriori known, but there are situations in which the relationship may become cognizant only after defining the unit factors. In these situations, users can define the relationships using the functions `allot_units` and `assign_units` to add the edges between the relevant unit nodes in the factor and level graphs, respectively. 
+
+
+
+```{r}
+demo2 %>% 
+  allot_units(site ~ plot) %>% 
+  assign_units(order = "systematic-fastest") %>% 
+  serve_table()
+```
+
+The code above specifies the nested relationship of `plot` to `site`, with the assignment of levels performed systematically. The systematic allocation of `site` levels to `plot` is done so that the `site` levels vary the fastest, which is not the same systematic ordering as before. If the same result as before is desirable, users can define `order = "systematic-slowest"`, which offers a systematic assignment where the same levels are close together. 
+
+
+### Crossed units {#sec-crossed}
+
+Crop field trials are often laid out in rectangular arrays. The experimenter confirms this by alerting to us that each site has plots laid out in a rectangular array with 6 rows and 3 columns. We can define crossing structures using `crossed_by`.
+
+```{r}
+design("Crossed experiment") %>% 
+  set_units(row = 6,
+            col = 3,
+            plot = crossed_by(row, col)) %>% 
+  serve_table()
+```
+
+The above table does not contain information on the site. For this, we need to combine the nesting and crossing structures, as shown next.
+
+### Complex unit structures
+
+Now, suppose that there are four sites (Narrabri, Horsham, Parkes, and Roseworthy), and the 18 plots at each site are laid out in a rectangular array of 3 rows and 6 columns. We begin by specifying the site (the highest hierarchy in this structure). The dimensions of the rows and columns are specified for each site (3 rows and 6 columns). The plot is a result of crossing the row and column within each site. 
+
+```{r}
+#| echo: false
+options(pillar.print_min = 20)
+```
+
+
+```{r}
+complex <- design("Complex structure") %>% 
+  set_units(site = c("Narrabri", "Horsham", "Parkes", "Roseworthy"),
+            col = nested_in(site, 6),
+            row = nested_in(site, 3),
+            plot = nested_in(site, crossed_by(row, col))) 
+
+serve_table(complex)
+```
+
+You may realise that the labels for the rows do not start with "row1" for Horsham. The default output displays distinct labels for the unit levels that are actually distinct. This safeguards for instances where the relationship between factors is lost, and the analyst will have to guess what units may be nested or crossed. However, nested labels may still be desirable. You can select the factors to show the nested labels by naming these factors as arguments for the `label_nested` in `serve_table` (below shows the nesting labels for `row` and `col` -- notice `plot` still shows the distinct labels).
+
+```{r}
+serve_table(complex, label_nested = c(row, col))
+```
+
+You later find that the dimensions of Narrabri and Roseworthy are larger. The experimenter tells you that there are in fact 9 columns available, and therefore 27 plots at Narrabri and Roseworthy. The number of columns can be modified according to each site, as below, where `col` is defined to have 9 levels at Narrabri and Roseworthy but 6 levels elsewhere.
+
+```{r}
+complexd <- design("Complex structure with different dimensions") %>% 
+  set_units(site = c("Narrabri", "Horsham", "Parkes", "Roseworthy"),
+             col = nested_in(site, 
+                      c("Narrabri", "Roseworthy") ~ 9,
+                                                . ~ 6),
+             row = nested_in(site, 3),
+            plot = nested_in(site, crossed_by(row, col))) 
+
+complextab <- serve_table(complexd, label_nested = everything())
+table(complextab$site)
+```
+
+You can see above that there are indeed nine additional plots at Narrabri and Roseworthy. The argument for `label_nested` supports `tidyselect` approach for selecting factors. 
+
+## Treatments {#sec-trt}
+
+Defining treatment factors is only necessary when designing a comparative experiment. The treatment factors can be set similar to the unit factors using `set_trts`. Below, we define an experiment with three treatment factors: variety (a or b), fertilizer (A or B), and amount of fertilizer (0.5, 1, or 2 t/ha).
+
+```{r}
+factrt <- design("Factorial treatment") %>% 
+  set_trts(variety = c("a", "b"),
+           fertilizer = c("A", "B"),
+           amount = c(0.5, 1, 2)) 
+```
+
+The links between treatment factors need not be explicitly defined. It is automatically assumed that treatment factors are crossed (i.e., the resulting treatment is the combination of all treatment factors) with the full set of treatments shown via `trts_table`. For the above experiment, there are a total of 12 treatments with the levels given below.
+
+```{r}
+trts_table(factrt)
+```
+
+The `factrt` cannot be served as an `edbl_table` object, since there are no units defined in this experiment and how these treatments are administered to the units.
+
+
+### Conditional treatments {#sec-conditioned}
+
+In some experiments, certain treatment factors are dependent on another treatment factor. A common example is when the dose or amount of a treatment factor is also a treatment factor. In the field trial example, we can have a case in which we administer no fertilizer to a plot. In this case, there is no point crossing with different `amount`s; in fact, the amount of no fertilizer should always be 0. We can specify this conditional treatment structure by describing this relationship using the helper function, `conditioned_on`, as below. The "." in the LHS is a shorthand to mean all levels, except for those specified previously. 
+
+```{r}
+factrtc <- design("Factorial treatment with control") %>% 
+  set_trts(variety = c("a", "b"),
+           fertilizer = c("none", "A", "B"),
+           amount = conditioned_on(fertilizer,
+                                    "none" ~ 0,
+                                         . ~ c(0.5, 1, 2)))
+```
+
+We can see below that the variety is crossed with other factors, as expected, but the amount is conditional on the fertilizer.
+
+```{r}
+trts_table(factrtc)
+```
+
+
+## Links
+
+In `edibble`, each experimental factor is encoded as a node in the factor graph along with its levels as nodes in the level graph. The edges (or links) can only be specified after the nodes are created. The links define the relationship between the experimental factors and the direction determining the hierarchy with the nodes. Often, these links are implicitly understood and not explicitly encoded, thus making it difficult to utilise the information downstream. By encoding the links, we can derive information and validate processes downstream. 
+
+Users specify these links using functions that are semantically aligned with thinking in the construction of an experimental design. There are three high-level approaches to defining these links as summarised in the table below:
+
+
+| Approach | Functions | Modifies | Purpose |
+| --- | --- | --- | ------ | 
+| Within role group | `nested_in`, `crossed_by`, `conditioned_on` | Both factor and level graphs  | Links between the nodes of the same role only. | 
+| Allotment | `allot_trts`, `allot_units`, `set_rcrds`, `set_rcrds_of` | Factor graph only | Capture high-level links that are typically apriori known by the user.  |  
+| Assignment | `assign_trts`, `assign_units` | Level graph only | Determine links between nodes, often algorithmically. | 
+
+
+
+### Within role group {#sec-within}
+
+The helper functions, `nested_in` and `crossed_by` construct nested and crossed units, respectively (shown above). The helper function, `conditioned_on` (demonstrated above) constructs a conditional treatment structure. These helper functions concurrently draw links between the relevant nodes in both factor and level graphs. These links would be apriori known to the user and these helper functions are just semantically designed to make it easier for the user to specify the links between nodes. These helper functions only construct links between nodes belonging to the same role (i.e., unit or treatment). 
+
+### Allotment {#sec-allot}
+
+Links specified using an allotment approach designate high-level links between factors. In other words, this approach only draws edges between nodes in the factor graph, and almost always, these edges are intentionally formed by the user. The purpose of this approach is to capture a user's high-level intention or knowledge.
+
+For demonstration, we leverage the previously defined unit (`complexd`) and treatment structures (`factrtc`). These structures can be combined to obtain the combined design object as below. 
+
+```{r}
+complexd + factrtc
+```
+
+The above design object does not describe the links between the treatments and units. The function `allot_trts` ascribes the links between treatments to units in the factor graph.
+
+```{r}
+alloted1 <- (complexd + factrtc) %>% 
+  allot_trts(    fertilizer ~ row,
+             amount:variety ~ plot)
+```
+
+
+
+
+### Assignment {#sec-assign}
+
+The `assign_trts` (often algorithmically) draw links between the treatment and unit nodes in the level graph (conditioned on the existing links in the factor graph). 
+
+There are five in-built assignment algorithms: "systematic-fastest" (synonym for "systematic"), "systematic-random-fastest" (synonym for "systematic-random"), "systematic-slowest", "systematic-random-slowest", and "random". The variation in systematic assignment results in repeated ordering with respect to the unit order, without regard to any unit structure. When the number of units is not divisible by the total number of treatments, the earlier treatment levels would have an extra replicate.
+The "systematic-random-fastest" and "systematic-random-slowest" are systematic variants that ensure equal chances for all treatment levels to obtain an extra replicate by randomising the order of treatment levels before the systematic allocation of treatment to units proceeds. The "fastest" and "slowest" variants determine if treatment levels are fast or slow in varying across order of the unit (slow varying meaning that the same treatment levels will be closer together in unit order, whereas fast varying means the same treatment levels are spread out in unit order). 
+
+
+Building on the previously defined structure and allotment, we define an algorithm to assign links between unit and treatment levels using the function `assign_trts`. Below, we use a systematic ordering for the first allotment (fertilizer to row) then a random ordering for the second allotment (interaction of amount and variety to plot). An optional seed number is provided to ensure the generated design could be reproduced. 
+
+```{r}
+design1 <- alloted1 %>% 
+  assign_trts(order = c("systematic", "random"),
+              seed = 2023) %>% 
+  serve_table(label_nested = c(row, col))
+```
+
+```{r design2}
+#| echo: false
+design2 <- (complexd + factrtc) %>% 
+  allot_table(fertilizer ~ row,
+                  amount ~ plot,
+                 variety ~ plot, 
+              order = c("systematic", "random", "random"),
+              label_nested = c(row, col),
+              seed = 2023)
+```
+
+```{r design3}
+#| echo: false
+design3 <- alloted1 %>% 
+  assign_trts(order = c("systematic", "random"),
+              seed = 2023, 
+              constrain = list(row = "site", plot = "row")) %>% 
+  serve_table(label_nested = c(row, col))
+```
+
+
+While allotment (high-level allocation) and assignment (actual allocation) are distinguished in the system to provide flexibility to the user for defining these processes separately, it is likely that many users would concurrently define these processes. The `allot_table` function offers a shorthand that combines the call to `allot_trts`, `assign_trts`, and `serve_table` into one call. 
+
+To illustrate the difference when treatment interaction is alloted to a unit (like the second allotment in `allotment1`), below, we have a different allotment where the amount of fertilizer and variety are allotted to plot in a separate allotment. A separate allotment can be assigned using different algorithms and is considered independent of other allotments (unless the treatment factor is conditional on another treatment factor). 
+
+```{r design2}
+```
+
+The assignment algorithms in the system use the default constraint, which takes the nesting structure defined in the unit structure (i.e. row is nested in site and plot is crossed by row and column and nested in site). This constraint is used to define the nature of "random" assignment. For example, in the code below, we relax this constraint such that the `plot` factor is constrained within a `row` (default was `row`, `col` and `site`), which in turn is contained within the `site`. This difference in constraints results in a different path in the algorithm (as shown in the overview in @fig-assign-alg).
+
+```{r design3}
+```
+
+The above three different designs (`design1`, `design2` and `design3`) share the same unit and treatment structure, but the allotment and/or assignment algorithm differed.  One result of this is that the treatment replications, differ across the generated designs with the most ideal distribution seen in `design3` (if all fertilizer and amount combinations are of equal interest and fertilizer allocation is restricted to the row; arguably, it is better to remove the latter constraint, if practically feasible, so the units with the control treatment can be assigned for other treatment levels to obtain a more even distribution).  The difference in `design1` and `design2` is that the amount and variety were allocated as an interaction in the former but independently in the latter. The latter process does not ensure near-equal replication of the treatment levels, so it is not surprising that `design2` has  the least uniform treatment distribution. 
+
+
+Finding or creating the most appropriate assignment algorithm is one of the challenging tasks in the whole workflow. The default algorithm is unlikely to be optimal for the given structure, and the user is encouraged to modify this step to suit their own design.
+
+
+
