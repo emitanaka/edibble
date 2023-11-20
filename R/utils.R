@@ -360,76 +360,81 @@ print.edbl_fct <- function(x, ...) {
                      i = "Did you accidentally put {.code +} on a new line?"))
   }
   prov1 <- activate_provenance(e1)
-  prov2 <- activate_provenance(e2)
-  # add factor nodes and edges from e2
-  fnodes2 <- prov2$fct_nodes
-  if(nrow(fnodes2)) {
-    prov1$append_fct_nodes(name = fnodes2$name,
-                           role = fnodes2$role,
-                           attrs = fnodes2$attrs)
-  }
-  fedges2 <- prov2$fct_edges
-  if(nrow(fedges2)) {
-    from1 <- prov1$fct_id(name = prov2$fct_names(id = fedges2$from))
-    to1 <- prov1$fct_id(name = prov2$fct_names(id = fedges2$to))
-    needs_group_id <- !is.na(fedges2$group)
-    if(sum(needs_group_id)) {
-      prov1$append_fct_edges(from = from1[needs_group_id],
-                             to = to1[needs_group_id],
-                             type = fedges2$type[needs_group_id],
-                             group = TRUE,
-                             # FIXME: this needs to be modified if attrs is data.frame!
-                             attrs = fedges2$attrs[needs_group_id])
-    } else if(sum(!needs_group_id)) {
-      prov1$append_fct_edges(from = from1[!needs_group_id],
-                             to = to1[!needs_group_id],
-                             type = fedges2$type[!needs_group_id],
-                             group = FALSE,
-                             # FIXME: this needs to be modified if attrs is data.frame!
-                             attrs = fedges2$attrs[!needs_group_id])
+  if(is_edibble_design(e2)) {
+    prov2 <- activate_provenance(e2)
+    # add factor nodes and edges from e2
+    fnodes2 <- prov2$fct_nodes
+    if(nrow(fnodes2)) {
+      prov1$append_fct_nodes(name = fnodes2$name,
+                             role = fnodes2$role,
+                             attrs = fnodes2$attrs)
     }
-  }
-  # add level nodes and edges from e2
-  missing_cols <- function(col, df) {
-    if(col %in% colnames(df)) {
-      ret <- lnode[[col]]
-    } else {
-      ret <- NULL
+    fedges2 <- prov2$fct_edges
+    if(nrow(fedges2)) {
+      from1 <- prov1$fct_id(name = prov2$fct_names(id = fedges2$from))
+      to1 <- prov1$fct_id(name = prov2$fct_names(id = fedges2$to))
+      needs_group_id <- !is.na(fedges2$group)
+      if(sum(needs_group_id)) {
+        prov1$append_fct_edges(from = from1[needs_group_id],
+                               to = to1[needs_group_id],
+                               type = fedges2$type[needs_group_id],
+                               group = TRUE,
+                               # FIXME: this needs to be modified if attrs is data.frame!
+                               attrs = fedges2$attrs[needs_group_id])
+      } else if(sum(!needs_group_id)) {
+        prov1$append_fct_edges(from = from1[!needs_group_id],
+                               to = to1[!needs_group_id],
+                               type = fedges2$type[!needs_group_id],
+                               group = FALSE,
+                               # FIXME: this needs to be modified if attrs is data.frame!
+                               attrs = fedges2$attrs[!needs_group_id])
+      }
     }
-    ret
-  }
+    # add level nodes and edges from e2
+    missing_cols <- function(col, df) {
+      if(col %in% colnames(df)) {
+        ret <- lnode[[col]]
+      } else {
+        ret <- NULL
+      }
+      ret
+    }
 
-  lnodes2 <- prov2$lvl_nodes
-  if(length(lnodes2)) {
-    for(cfid in names(lnodes2)) {
-      fname <- prov2$fct_names(id = as.numeric(cfid))
-      fid <- prov1$fct_id(name = fname)
-      lnode <- lnodes2[[cfid]]
-      prov1$append_lvl_nodes(value = lnode$value,
-                             n = missing_cols("n", lnode),
-                             attrs = missing_cols("attrs", lnode),
-                             label = missing_cols("label", lnode),
-                             fid = fid)
+    lnodes2 <- prov2$lvl_nodes
+    if(length(lnodes2)) {
+      for(cfid in names(lnodes2)) {
+        fname <- prov2$fct_names(id = as.numeric(cfid))
+        fid <- prov1$fct_id(name = fname)
+        lnode <- lnodes2[[cfid]]
+        prov1$append_lvl_nodes(value = lnode$value,
+                               n = missing_cols("n", lnode),
+                               attrs = missing_cols("attrs", lnode),
+                               label = missing_cols("label", lnode),
+                               fid = fid)
+      }
     }
-  }
-  ledges2 <- lvl_edges(e2)
-  if(!is.null(ledges2)) {
-    for(lnode in ledges2) {
-      from <- prov1$lvl_id(value = lnode$val_from, fid = prov1$fct_id(name = lnode$var_from[1]))
-      to <- prov1$lvl_id(value = lnode$val_to, fid = prov1$fct_id(name = lnode$var_to[1]))
-      prov1$append_lvl_edges(from = from,
-                             to = to,
-                             attrs = lnode$attrs)
+    ledges2 <- lvl_edges(e2)
+    if(!is.null(ledges2)) {
+      for(lnode in ledges2) {
+        from <- prov1$lvl_id(value = lnode$val_from, fid = prov1$fct_id(name = lnode$var_from[1]))
+        to <- prov1$lvl_id(value = lnode$val_to, fid = prov1$fct_id(name = lnode$var_to[1]))
+        prov1$append_lvl_edges(from = from,
+                               to = to,
+                               attrs = lnode$attrs)
+      }
     }
-  }
 
-  # TODO: add these components when adding design
-  # validation,
-  # anatomy,
-  # simulate,
-  # context
-  e1 <- return_edibble_with_graph(e1, prov1)
-  des2 <- edbl_design(e2)
-  for(code in des2$recipe[-1]) e1 <- add_edibble_code(e1, code)
-  e1
+    # TODO: add these components when adding design
+    # validation,
+    # anatomy,
+    # simulate,
+    # context
+    e1 <- return_edibble_with_graph(e1, prov1)
+    des2 <- edbl_design(e2)
+    for(code in des2$recipe[-1]) e1 <- add_edibble_code(e1, code)
+    e1
+  } else if(inherits(e2, "edbl_fn")) {
+    e2$.edibble <- e1
+    eval(e2)
+  }
 }

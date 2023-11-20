@@ -38,6 +38,7 @@
 #' @return An edibble design.
 #' @export
 assign_trts <- function(.edibble, order = "random", seed = NULL, constrain = nesting_structure(.edibble), ..., .record = TRUE) {
+  if(is.null(.edibble)) return(structure(match.call(), class = "edbl_fn"))
   not_edibble(.edibble)
   force(constrain) # evaluate this now rather than later
 

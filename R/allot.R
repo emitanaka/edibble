@@ -23,8 +23,8 @@
 #' @seealso assign_fcts
 #' @export
 allot_trts <- function(.edibble, ..., .record = TRUE) {
+  if(is.null(.edibble)) return(structure(match.call(), class = "edbl_fn"))
   dots <- list2(...)
-  if(is.null(.edibble)) return(structure(dots, class = c("edbl_fn", "allot_trts")))
   not_edibble(.edibble)
   des <- edbl_design(.edibble)
   prov <- activate_provenance(des)
@@ -153,6 +153,7 @@ allot_units <- function(.edibble, ..., .record = TRUE) {
 #'
 #' @export
 allot_table <- function(.edibble, ..., order = "random", seed = NULL, constrain = nesting_structure(.edibble), label_nested = NULL, fail = "error", .record = TRUE) {
+  if(is.null(.edibble)) return(structure(match.call(), class = "edbl_fn"))
   prov <- activate_provenance(.edibble)
   if(.record) prov$record_step()
   .edibble %>%

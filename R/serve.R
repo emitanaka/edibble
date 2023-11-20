@@ -22,6 +22,7 @@
 #' @import tidyselect
 #' @export
 serve_table <- function(.edibble, label_nested = NULL, fail = c("error", "warn", "ignore"),  .record = TRUE) {
+  if(is.null(.edibble)) return(structure(match.call(), class = "edbl_fn"))
   prov <- activate_provenance(.edibble)
   fail <- match.arg(fail)
   if(.record) prov$record_step()
