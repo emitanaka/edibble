@@ -102,6 +102,13 @@ permute_parent_one_alg <- function(vid, udf, ntrts) {
   # in this case subtract total trts
   blocksizes_adj <- blocksizes
   blocksizes_adj[blocksizes > ntrts] <- blocksizes_adj[blocksizes > ntrts] %% ntrts
+  nB <- length(blocksizes_adj)
+  nBlock <- sum(blocksizes_adj)
+  # ALgDesign doesn't like it when the number of units is about the same as the number
+  # of blocks
+  if(nBlock < (ntrts - 1 + nB)) {
+    return(sample(rep(sample(1:ntrts), length.out = nrow(udf))))
+  }
   utils::capture.output({
     # prevent "No improvement over initial random design" print out from AlgDesign
     # where the design is balanced
