@@ -4,7 +4,7 @@
 \alias{simulate_rcrds}
 \title{Simulate records}
 \usage{
-simulate_rcrds(.data, ..., .seed = NULL)
+simulate_rcrds(.data, ..., .seed = NULL, .nsim = 1L)
 }
 \arguments{
 \item{.data}{An edibble data}
@@ -14,7 +14,23 @@ used in the \code{\link[=simulate_process]{simulate_process()}}. The value shoul
 \code{\link[=with_params]{with_params()}}.}
 
 \item{.seed}{An optional seed value.}
+
+\item{.nsim}{The number of times to simulate data.}
 }
 \description{
 Simulate records
+}
+\examples{
+design() \%>\%
+ set_units(unit = 4) \%>\%
+ set_trts(trt = 2) \%>\%
+ allot_table(trt ~ unit) \%>\%
+ set_rcrds(y = unit) \%>\%
+ simulate_process(y = function() {
+            res <- rnorm(n())
+            res
+.  }) \%>\%
+ simulate_rcrds(y = with_params(), .nsim = 3)
+
+
 }

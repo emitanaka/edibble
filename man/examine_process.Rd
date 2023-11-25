@@ -7,13 +7,15 @@
 \usage{
 examine_process(data, process = NULL)
 
-examine_process_values(data, process = NULL)
+examine_process_values(data, process = NULL, sim = 1L)
 }
 \arguments{
 \item{data}{An edibble data frame.}
 
 \item{process}{The process name. Typically the name of the process. If unknown,
 leave this empty.}
+
+\item{sim}{The simulation number. Default is 1.}
 }
 \description{
 Examine the simulation process

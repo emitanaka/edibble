@@ -114,8 +114,22 @@ with_params <- function(..., .censor = NA, .aggregate = NULL) {
 #' used in the [simulate_process()]. The value should be returned from calling
 #' [with_params()].
 #' @param .seed An optional seed value.
+#' @param .nsim The number of times to simulate data.
+#' @examples
+#' design() %>%
+#'  set_units(unit = 4) %>%
+#'  set_trts(trt = 2) %>%
+#'  allot_table(trt ~ unit) %>%
+#'  set_rcrds(y = unit) %>%
+#'  simulate_process(y = function() {
+#'             res <- rnorm(n())
+#'             res
+#'.  }) %>%
+#'  simulate_rcrds(y = with_params(), .nsim = 3)
+#'
+#'
 #' @export
-simulate_rcrds <- function(.data, ..., .seed = NULL) {
+simulate_rcrds <- function(.data, ..., .seed = NULL, .nsim = 1L) {
   dots <- list2(...)
   prov <- activate_provenance(.data)
   prov$save_seed(.seed, type = "simulate_rcrds")
@@ -127,30 +141,35 @@ simulate_rcrds <- function(.data, ..., .seed = NULL) {
                                           .combine_words(srcrds[duplicated(srcrds)], fun = cli::col_blue),
                                           " in multiple processes. The values will be overwritten."))
 
+  data_ret <- .data[0, ]
+  for(isim in seq(.nsim)) {
+    data <- .data
+    for(aprocess in prnames) {
+      process <- prov$get_simulate(aprocess)$process
+      if(is_null(process)) abort(paste0("The supplied process, ", cli::col_blue(aprocess), ", doesn't exist"))
+      srcrds <- prov$get_simulate(aprocess)$rcrds
+      body(process) <- patch_function(process, patch = sprintf("    list2env(setNames(list(mget(ls())), '%s_%d'), envir = result_env)", aprocess, isim),
+                                      position = length(as.list(body(process))) - 1)
 
-  for(aprocess in prnames) {
-    process <- prov$get_simulate(aprocess)$process
-    if(is_null(process)) abort(paste0("The supplied process, ", cli::col_blue(aprocess), ", doesn't exist"))
-    srcrds <- prov$get_simulate(aprocess)$rcrds
-    body(process) <- patch_function(process, patch = sprintf("    list2env(setNames(list(mget(ls())), '%s'), envir = result_env)", aprocess),
-                              position = length(as.list(body(process))) - 1)
+      y <- eval_tidy(do.call(process, dots[[aprocess]]$params), data = data)
 
-    y <- eval_tidy(do.call(process, dots[[aprocess]]$params), data = .data)
-
-    # now assign the values to the data, but apply aggregation then censorship
-    if(grepl("^[.]", aprocess)) {
-      for(acol in colnames(y)) {
-        .data[[acol]] <- get_rcrd_values(acol, prov, dots[[aprocess]]$aggregate,
-                                         .data, y[[acol]], dots[[aprocess]]$censor)
+      # now assign the values to the data, but apply aggregation then censorship
+      if(grepl("^[.]", aprocess)) {
+        for(acol in colnames(y)) {
+          data[[acol]] <- get_rcrd_values(acol, prov, dots[[aprocess]]$aggregate,
+                                          data, y[[acol]], dots[[aprocess]]$censor)
+        }
+      } else {
+        # there should be only one record if it is not a process name
+        arcrd <- srcrds[1]
+        data[[arcrd]] <- get_rcrd_values(arcrd, prov, dots[[aprocess]]$aggregate,
+                                          data, unname(y), dots[[aprocess]]$censor)
       }
-    } else {
-      # there should be only one record if it is not a process name
-      arcrd <- srcrds[1]
-      .data[[arcrd]] <- get_rcrd_values(arcrd, prov, dots[[aprocess]]$aggregate,
-                                        .data, unname(y), dots[[aprocess]]$censor)
     }
+    data$.sim <- isim
+    data_ret <- rbind(data_ret, data)
   }
-  return_edibble_with_graph(.data, prov)
+  return_edibble_with_graph(data_ret, prov)
 }
 
 get_rcrd_values <- function(rname, prov, aggfn, .data, y, censor) {
@@ -497,6 +516,7 @@ effects_code <- function(dep_fcts, .data, nlevels = 1) {
 #' @param data An edibble data frame.
 #' @param process The process name. Typically the name of the process. If unknown,
 #'  leave this empty.
+#' @param sim The simulation number. Default is 1.
 #' @export
 examine_process <- function(data, process = NULL) {
   prov <- activate_provenance(data)
@@ -514,15 +534,18 @@ examine_process <- function(data, process = NULL) {
 
 #' @rdname examine_process
 #' @export
-examine_process_values <- function(data, process = NULL) {
+examine_process_values <- function(data, process = NULL, sim = 1L) {
   prov <- activate_provenance(data)
-  res <- prov$get_simulate_result_env(process)
+  if(is.null(process)) pname <- NULL else pname <- paste0(process, "_", sim)
+  res <- prov$get_simulate_result_env(pname)
   if(is_null(res)) {
     warning("There is no simulation process stored.")
     NULL
   } else if(is.environment(res)) {
+    pnames <- ls(envir = res, all.names = TRUE)
+    pnames <- unique(gsub("_[0-9]+$", "", pnames))
     abort(paste0("You need to specify a process name. The available process names are: ",
-                .combine_words(ls(envir = res, all.names = TRUE), fun = cli::col_blue), "."))
+                .combine_words(pnames, fun = cli::col_blue), "."))
   } else {
     res
   }
