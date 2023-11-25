@@ -29,7 +29,7 @@ allot_trts <- function(.edibble = NULL, ..., .record = TRUE) {
     ncl <- length(cl)
     cl[3:(ncl + 1)] <- cl[2:ncl]
     cl$.edibble <- NULL
-    return(structure(cl, class = "edbl_fn"))
+    return(structure(cl, class = c("edbl_fn", "edbl")))
   }
   dots <- list2(...)
   not_edibble(.edibble)
@@ -159,8 +159,15 @@ allot_units <- function(.edibble, ..., .record = TRUE) {
 #' @inheritParams assign_fcts
 #'
 #' @export
-allot_table <- function(.edibble, ..., order = "random", seed = NULL, constrain = nesting_structure(.edibble), label_nested = NULL, fail = "error", .record = TRUE) {
+allot_table <- function(.edibble = NULL, ..., order = "random", seed = NULL, constrain = nesting_structure(.edibble), label_nested = NULL, fail = "error", .record = TRUE) {
   if(is.null(.edibble)) return(structure(match.call(), class = c("edbl_fn", "edbl")))
+  if(is_formula(.edibble)) {
+    cl <- match.call()
+    ncl <- length(cl)
+    cl[3:(ncl + 1)] <- cl[2:ncl]
+    cl$.edibble <- NULL
+    return(structure(cl, class = c("edbl_fn", "edbl")))
+  }
   prov <- activate_provenance(.edibble)
   if(.record) prov$record_step()
   .edibble %>%
