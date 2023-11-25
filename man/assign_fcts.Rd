@@ -7,7 +7,7 @@
 \title{Assign treatments or units to units}
 \usage{
 assign_trts(
-  .edibble,
+  .edibble = NULL,
   order = "random",
   seed = NULL,
   constrain = nesting_structure(.edibble),
@@ -16,7 +16,7 @@ assign_trts(
 )
 
 assign_units(
-  .edibble,
+  .edibble = NULL,
   order = "random",
   seed = NULL,
   constrain = nesting_structure(.edibble),

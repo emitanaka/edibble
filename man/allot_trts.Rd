@@ -4,7 +4,7 @@
 \alias{allot_trts}
 \title{Define allotment of treatments to units}
 \usage{
-allot_trts(.edibble, ..., .record = TRUE)
+allot_trts(.edibble = NULL, ..., .record = TRUE)
 }
 \arguments{
 \item{.edibble}{An edibble design which should have units, treatments and allotment defined.}

@@ -22,8 +22,15 @@
 #' @return Return an edibble design.
 #' @seealso assign_fcts
 #' @export
-allot_trts <- function(.edibble, ..., .record = TRUE) {
-  if(is.null(.edibble)) return(structure(match.call(), class = "edbl_fn"))
+allot_trts <- function(.edibble = NULL, ..., .record = TRUE) {
+  if(is.null(.edibble)) return(structure(match.call(), class = c("edbl_fn", "edbl")))
+  if(is_formula(.edibble)) {
+    cl <- match.call()
+    ncl <- length(cl)
+    cl[3:(ncl + 1)] <- cl[2:ncl]
+    cl$.edibble <- NULL
+    return(structure(cl, class = "edbl_fn"))
+  }
   dots <- list2(...)
   not_edibble(.edibble)
   des <- edbl_design(.edibble)
@@ -153,7 +160,7 @@ allot_units <- function(.edibble, ..., .record = TRUE) {
 #'
 #' @export
 allot_table <- function(.edibble, ..., order = "random", seed = NULL, constrain = nesting_structure(.edibble), label_nested = NULL, fail = "error", .record = TRUE) {
-  if(is.null(.edibble)) return(structure(match.call(), class = "edbl_fn"))
+  if(is.null(.edibble)) return(structure(match.call(), class = c("edbl_fn", "edbl")))
   prov <- activate_provenance(.edibble)
   if(.record) prov$record_step()
   .edibble %>%

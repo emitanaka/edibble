@@ -5,7 +5,7 @@
 \title{Serve edibble table}
 \usage{
 serve_table(
-  .edibble,
+  .edibble = NULL,
   label_nested = NULL,
   fail = c("error", "warn", "ignore"),
   .record = TRUE
