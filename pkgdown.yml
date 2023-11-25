@@ -3,7 +3,7 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   defining-structure: defining-structure.html
-last_built: 2023-11-25T00:06Z
+last_built: 2023-11-25T01:20Z
 urls:
   reference: https://edibble.emitanaka.org/reference
   article: https://edibble.emitanaka.org/articles
