@@ -344,7 +344,10 @@ rescale_values <- function(x, lower = NA, upper = NA) {
     if(shift >= 0) return(x)
     return(x - shift + .Machine$double.xmin)
   }
-  (x - minx) / (maxx - minx) * (upper - .Machine$double.xmin - lower) + lower + .Machine$double.xmin
+  ret <- (x - minx) / (maxx - minx) * (upper - lower)
+  ret[ret == min(ret)] <- ret[ret == min(ret)] + (upper - lower) * .Machine$double.eps
+  ret[ret == max(ret)] <- ret[ret == max(ret)] - (upper - lower) * .Machine$double.eps
+  ret
 }
 
 #' @export
@@ -436,7 +439,7 @@ print.edbl_fct <- function(x, ...) {
       e1
     } else if(inherits(e2, "edbl_fn")) {
       e2$.edibble <- e1
-      eval(e2)
+      eval(e2, envir = attr(e2, "env"))
     } else if(inherits(e2, "edbl_fns")) {
       ret <- e1 + e2[[1]]
       if(length(e2) == 1L) return(ret)

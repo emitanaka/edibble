@@ -22,7 +22,7 @@
 set_rcrds <- function(.edibble = NULL, ...,
                       .name_repair = c("check_unique", "unique", "universal", "minimal"),
                       .record = TRUE) {
-  if(is.null(.edibble)) return(structure(match.call(), class = c("edbl_fn", "edbl")))
+  if(is.null(.edibble)) return(structure(match.call(), env = rlang::caller_env(), class = c("edbl_fn", "edbl")))
   not_edibble(.edibble)
   des <- edbl_design(.edibble)
   prov <- activate_provenance(des)
@@ -100,13 +100,13 @@ expect_rcrds <- function(.edibble = NULL, ..., .record = TRUE) {
   arg1 <- enquo(.edibble)
   arg1 <- tryCatch(rlang::eval_tidy(arg1),
            error = function(e) arg1)
-  if(is.null(arg1)) return(structure(match.call(), class = c("edbl_fn", "edbl")))
+  if(is.null(arg1)) return(structure(match.call(), env = rlang::caller_env(), class = c("edbl_fn", "edbl")))
   if(!is_edibble(arg1)) {
     cl <- match.call()
     ncl <- length(cl)
     cl[3:(ncl + 1)] <- cl[2:ncl]
     cl$.edibble <- NULL
-    return(structure(cl, class = c("edbl_fn", "edbl")))
+    return(structure(cl, env = rlang::caller_env(), class = c("edbl_fn", "edbl")))
   }
   prov <- activate_provenance(.edibble)
   if(.record) prov$record_step()

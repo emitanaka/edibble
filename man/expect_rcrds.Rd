@@ -4,7 +4,7 @@
 \alias{expect_rcrds}
 \title{Set the expected values for recording variables}
 \usage{
-expect_rcrds(.edibble, ..., .record = TRUE)
+expect_rcrds(.edibble = NULL, ..., .record = TRUE)
 }
 \arguments{
 \item{.edibble}{An edibble design (\code{edbl_design}), an edibble data frame (\code{edbl_table}) or an

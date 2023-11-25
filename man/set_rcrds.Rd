@@ -6,13 +6,13 @@
 \title{Set records for given unit}
 \usage{
 set_rcrds(
-  .edibble,
+  .edibble = NULL,
   ...,
   .name_repair = c("check_unique", "unique", "universal", "minimal"),
   .record = TRUE
 )
 
-set_rcrds_of(.edibble, ...)
+set_rcrds_of(.edibble = NULL, ...)
 }
 \arguments{
 \item{.edibble}{An edibble design (\code{edbl_design}), an edibble data frame (\code{edbl_table}) or an

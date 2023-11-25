@@ -23,13 +23,13 @@
 #' @seealso assign_fcts
 #' @export
 allot_trts <- function(.edibble = NULL, ..., .record = TRUE) {
-  if(is.null(.edibble)) return(structure(match.call(), class = c("edbl_fn", "edbl")))
+  if(is.null(.edibble)) return(structure(match.call(), env = rlang::caller_env(), class = c("edbl_fn", "edbl")))
   if(is_formula(.edibble)) {
     cl <- match.call()
     ncl <- length(cl)
     cl[3:(ncl + 1)] <- cl[2:ncl]
     cl$.edibble <- NULL
-    return(structure(cl, class = c("edbl_fn", "edbl")))
+    return(structure(cl, env = rlang::caller_env(), class = c("edbl_fn", "edbl")))
   }
   dots <- list2(...)
   not_edibble(.edibble)
@@ -86,6 +86,14 @@ allot_trts <- function(.edibble = NULL, ..., .record = TRUE) {
 #' @seealso assign_fcts
 #' @export
 allot_units <- function(.edibble, ..., .record = TRUE) {
+  if(is.null(.edibble)) return(structure(match.call(), env = rlang::caller_env(), class = c("edbl_fn", "edbl")))
+  if(is_formula(.edibble)) {
+    cl <- match.call()
+    ncl <- length(cl)
+    cl[3:(ncl + 1)] <- cl[2:ncl]
+    cl$.edibble <- NULL
+    return(structure(cl, env = rlang::caller_env(), class = c("edbl_fn", "edbl")))
+  }
   dots <- list2(...)
   not_edibble(.edibble)
   prov <- activate_provenance(.edibble)
@@ -160,7 +168,7 @@ allot_units <- function(.edibble, ..., .record = TRUE) {
 #'
 #' @export
 allot_table <- function(.edibble = NULL, ..., order = "random", seed = NULL, constrain = nesting_structure(.edibble), label_nested = NULL, fail = "error", .record = TRUE) {
-  if(is.null(.edibble)) return(structure(match.call(), class = c("edbl_fn", "edbl")))
+  if(is.null(.edibble)) return(structure(match.call(), env = rlang::caller_env(), class = c("edbl_fn", "edbl")))
   if(is_formula(.edibble)) {
     cl <- match.call()
     ncl <- length(cl)

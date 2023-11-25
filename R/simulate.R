@@ -449,7 +449,7 @@ effects_code <- function(dep_fcts, .data, nlevels = 1) {
   if(nlevels <= 2) {
     for(fct in dep_fcts) {
       fct_class <- class(.data[[fct]])
-      nfct <- length(unique(.data[[fct]]))
+      nfct <- nlevels(.data[[fct]])
       if("numeric" %in% fct_class) {
         code_list$process_code <- c(code_list$process_code,
                                     sprintf('%s_degree <- sample(1:%d, 1)', fct, ifelse(nfct > 5, 5, nfct - 1)),
@@ -461,9 +461,9 @@ effects_code <- function(dep_fcts, .data, nlevels = 1) {
         # logical not accounted for
       } else if(any(c("factor", "character") %in% fct_class)) {
         code_list$process_code <- c(code_list$process_code,
-                                        sprintf('        %s_effects <- setNames(rnorm(%d, 0, 10), unique(%s))',
-                                                fct, nfct, fct))
-        code_list$model_code <- c(code_list$model_code, sprintf("%s_effects[%s]", fct, fct))
+                                        sprintf('        %s_effects <- rnorm(%d, 0, 10)',
+                                                fct, nfct))
+        code_list$model_code <- c(code_list$model_code, sprintf("%s_effects[index_levels(%s)]", fct, fct))
       }
     }
     # combine
@@ -480,9 +480,9 @@ effects_code <- function(dep_fcts, .data, nlevels = 1) {
         code_list$model_code <- c(code_list$model_code, sprintf("%s_effects[[i]]", fct))
       } else if(any(c("factor", "character") %in% fct_class)) {
         code_list$process_code <- c(code_list$process_code,
-                                    sprintf('        %s_effects <- lapply(1:%d, function(i) setNames(rnorm(%d, 0, 10), unique(%s)))',
-                                            fct, nlevels, nfct, fct))
-        code_list$model_code <- c(code_list$model_code, sprintf("%s_effects[[i]][%s]", fct, fct))
+                                    sprintf('        %s_effects <- lapply(1:%d, function(i) rnorm(%d, 0, 10))',
+                                            fct, nlevels, nfct))
+        code_list$model_code <- c(code_list$model_code, sprintf("%s_effects[[i]][index_levels(%s)]", fct, fct))
       }
     }
     # combine

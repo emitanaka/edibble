@@ -5,7 +5,7 @@
 \title{Allot treatments to units and serve table}
 \usage{
 allot_table(
-  .edibble,
+  .edibble = NULL,
   ...,
   order = "random",
   seed = NULL,

@@ -75,6 +75,25 @@ label_seq_length <- function(length = 1L,
              sep_prefix, sep_suffix)
 }
 
+#' Label with nested or distinct labels
+#'
+#' @param x A unit vector.
+#' @export
+label_nested <- function(x) {
+  attr(x, "label-nested") %||% x
+}
+
+#' @rdname label_nested
+#' @export
+label_distinct <- function(x) {
+  attr(x, "label-non-nested") %||% x
+}
+
+#' @rdname label_nested
+#' @export
+index_levels <- function(x) {
+  as.integer(label_distinct(x))
+}
 
 
 label_form <- function(levels, leading_zero,

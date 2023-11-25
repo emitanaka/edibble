@@ -38,7 +38,7 @@
 #' @return An edibble design.
 #' @export
 assign_trts <- function(.edibble = NULL, order = "random", seed = NULL, constrain = nesting_structure(.edibble), ..., .record = TRUE) {
-  if(is.null(.edibble)) return(structure(match.call(), class = c("edbl_fn", "edbl")))
+  if(is.null(.edibble)) return(structure(match.call(), env = rlang::caller_env(), class = c("edbl_fn", "edbl")))
   not_edibble(.edibble)
   force(constrain) # evaluate this now rather than later
 
@@ -166,7 +166,7 @@ assign_trts <- function(.edibble = NULL, order = "random", seed = NULL, constrai
 #' @rdname assign_fcts
 #' @export
 assign_units <- function(.edibble = NULL, order = "random", seed = NULL, constrain = nesting_structure(.edibble), ..., .record = TRUE) {
-  if(is.null(.edibble)) return(structure(match.call(), class = c("edbl_fn", "edbl")))
+  if(is.null(.edibble)) return(structure(match.call(), env = rlang::caller_env(), class = c("edbl_fn", "edbl")))
   not_edibble(.edibble)
   prov <- activate_provenance(.edibble)
   if(.record) prov$record_step()
