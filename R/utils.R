@@ -359,7 +359,7 @@ print.edbl_fct <- function(x, ...) {
     cli::cli_abort(c("Cannot use {.code +} with a single argument",
                      i = "Did you accidentally put {.code +} on a new line?"))
   }
-  if(inherits(e1, "edbl_design")) {
+  if(is_edibble_design(e1) | is_edibble_table(e1)) {
     prov1 <- activate_provenance(e1)
     if(is_edibble_design(e2)) {
       prov2 <- activate_provenance(e2)
