@@ -33,7 +33,8 @@ Imports:
     AlgDesign,
     dae,
     R6,
-    lifecycle
+    lifecycle,
+    dplyr
 Suggests: 
     testthat (>= 3.0.0),
     rmarkdown,
