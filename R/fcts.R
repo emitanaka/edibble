@@ -187,6 +187,10 @@ vec_ptype2.integer.edbl_trt <- function(x, y, ...) x
 vec_ptype2.edbl_trt.edbl_trt <- function(x, y, ...) x
 
 #' @export
+vec_ptype2.edbl_rcrd.factor <- function(x, y, ...) y
+#' @export
+vec_ptype2.factor.edbl_rcrd <- function(x, y, ...) x
+#' @export
 vec_ptype2.edbl_rcrd.character <- function(x, y, ...) y
 #' @export
 vec_ptype2.character.edbl_rcrd <- function(x, y, ...) x
@@ -211,6 +215,10 @@ vec_cast.edbl_trt.integer <- function(x, to, ...) x
 #' @export
 vec_cast.integer.edbl_trt <- function(x, to, ...) as.integer(unclass(x))
 #' @export
+vec_cast.edbl_trt.factor <- function(x, to, ...) x
+#' @export
+vec_cast.factor.edbl_trt <- function(x, to, ...) as.factor(unclass(x))
+#' @export
 vec_cast.edbl_trt.character <- function(x, to, ...) x
 #' @export
 vec_cast.character.edbl_trt <- function(x, to, ...) as.character(unclass(x))
@@ -226,6 +234,10 @@ vec_cast.edbl_unit.integer <- function(x, to, ...) x
 #' @export
 vec_cast.integer.edbl_unit <- function(x, to, ...) as.integer(unclass(x))
 #' @export
+vec_cast.edbl_unit.factor <- function(x, to, ...) x
+#' @export
+vec_cast.factor.edbl_unit <- function(x, to, ...) as.factor(unclass(x))
+#' @export
 vec_cast.edbl_unit.character <- function(x, to, ...) x
 #' @export
 vec_cast.character.edbl_unit <- function(x, to, ...) as.character(unclass(x))
@@ -240,6 +252,10 @@ vec_cast.double.edbl_rcrd <- function(x, to, ...) as.numeric(unclass(x))
 vec_cast.edbl_rcrd.integer <- function(x, to, ...) x
 #' @export
 vec_cast.integer.edbl_rcrd <- function(x, to, ...) as.integer(unclass(x))
+#' @export
+vec_cast.edbl_rcrd.factor <- function(x, to, ...) x
+#' @export
+vec_cast.factor.edbl_rcrd <- function(x, to, ...) as.factor(unclass(x))
 #' @export
 vec_cast.edbl_rcrd.character <- function(x, to, ...) x
 #' @export

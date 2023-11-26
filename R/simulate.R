@@ -234,7 +234,7 @@ get_censored_value <- function(y, valid, censor) {
     } else {
       y[!ind] <- censor
     }
-    y
+    factor(y, levels = valid$values)
   } else if(type=="integer") {
     valid$record <- "numeric"
     res <- get_censored_value(y, valid, censor)
