@@ -29,7 +29,7 @@ design() \%>\%
  simulate_process(y = function() {
             res <- rnorm(n())
             res
-.  }) \%>\%
+ }) \%>\%
  simulate_rcrds(y = with_params(), .nsim = 3)
 
 

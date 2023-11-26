@@ -124,7 +124,7 @@ with_params <- function(..., .censor = NA, .aggregate = NULL) {
 #'  simulate_process(y = function() {
 #'             res <- rnorm(n())
 #'             res
-#'.  }) %>%
+#'  }) %>%
 #'  simulate_rcrds(y = with_params(), .nsim = 3)
 #'
 #'
@@ -238,7 +238,7 @@ get_censored_value <- function(y, valid, censor) {
   } else if(type=="integer") {
     valid$record <- "numeric"
     res <- get_censored_value(y, valid, censor)
-    round(res)
+    as.integer(round(res))
   } else {
     y
   }
@@ -344,8 +344,9 @@ with_variables <- function(...,
 #' @param ... If supplied, it is a name-value pair where the name should
 #'   correspond to the record factor name and value is the f
 #' @param .seed The seed number.
+#' @param .nsim The number of simulations to run.
 #' @export
-autofill_rcrds <- function(.data, ..., .seed = NULL) {
+autofill_rcrds <- function(.data, ..., .seed = NULL, .nsim = 1L) {
   prov <- activate_provenance(.data)
   prov$save_seed(.seed, type = "autofill_rcrds")
   dots <- list2(...)
@@ -456,7 +457,8 @@ autofill_rcrds <- function(.data, ..., .seed = NULL) {
 
 
   simulate_processes <- sprintf("simulate_process(%s)", paste(process_functions, collapse = ",\n"))
-  simulate_rcrds <- paste0('simulate_rcrds(', paste0(processes, collapse = ',\n                  '), ')')
+  simulate_rcrds <- paste0('simulate_rcrds(', paste0(processes, collapse = ',\n                  '),
+                           ', .nsim = ', .nsim, ')')
   final_code <- parse(text = paste(".data %>%\n  ", simulate_processes, "%>%\n  ", simulate_rcrds))
   eval(final_code)
 }

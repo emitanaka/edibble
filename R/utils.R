@@ -473,4 +473,7 @@ print.edbl_fct <- function(x, ...) {
   }
 }
 
-
+#' @export
+rbind.edbl_table <- function(...) {
+  dplyr::bind_rows(...)
+}

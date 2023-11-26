@@ -4,7 +4,7 @@
 \alias{autofill_rcrds}
 \title{Autofill the records}
 \usage{
-autofill_rcrds(.data, ..., .seed = NULL)
+autofill_rcrds(.data, ..., .seed = NULL, .nsim = 1L)
 }
 \arguments{
 \item{.data}{An edibble data.}
@@ -13,6 +13,8 @@ autofill_rcrds(.data, ..., .seed = NULL)
 correspond to the record factor name and value is the f}
 
 \item{.seed}{The seed number.}
+
+\item{.nsim}{The number of simulations to run.}
 }
 \description{
 This function fills the values of the record factors by automatically
