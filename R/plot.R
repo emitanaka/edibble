@@ -93,8 +93,8 @@ plot.edbl_design <- function(x, which = c("factors", "levels"),
                                background = background,
                                ) %>%
     visNetwork::visLayout(randomSeed = seed) %>%
-    visNetwork::visNodes(id = "id") %>%
-    visNetwork::visEdges(id = "id")
+    visNetwork::visNodes(id = "id")
+    #visNetwork::visEdges(id = "id")
     #visNetwork::visHierarchicalLayout()
     #visNetwork::visLegend() %>%
   switch(view,
