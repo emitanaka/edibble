@@ -281,6 +281,7 @@ number_si_prefix <- function(x) {
 #' @param ignore_numeric Whether to coerce numeric factors or not. Default is TRUE,
 #' @param ... Unused.
 #'  i.e. don't coerce numeric factors.
+#' @export
 as.data.frame.edbl_table <- function(x,
                                      ...,
                                      levels_as = "factor",
