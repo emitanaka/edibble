@@ -114,5 +114,6 @@ reference:
   - is_takeout
   - column
   - is_provenance
-  - label_seq
+  - starts_with("label")
   - rescale_values
+  - index_levels
