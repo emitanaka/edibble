@@ -124,13 +124,13 @@
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="va">demo</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># </span><span style="color: #949494; font-weight: bold;">Demo for defining units</span> </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># An edibble: 4 x 1</span></span></span>
-<span><span class="co">#&gt;     site</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;U(4)&gt;</span></span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>  site1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>  site2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>  site3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>  site4</span></span></code></pre></div>
+<span><span class="co">#&gt;   site </span></span>
+<span><span class="co">#&gt;        </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> site1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> site2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> site3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> site4</span></span></code></pre></div>
 <p>If particular names are desired for the levels, then the RHS value can be replaced with a vector like below where the levels are named “Narrabri”, “Horsham”, “Parkes” and “Roseworthy”.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/design.html">design</a></span><span class="op">(</span><span class="st">"Character vector input demo"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
@@ -138,9 +138,9 @@
 <span>  <span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># </span><span style="color: #949494; font-weight: bold;">Character vector input demo</span> </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># An edibble: 4 x 1</span></span></span>
-<span><span class="co">#&gt;         site</span></span>
-<span><span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;U(4)&gt;</span></span></span>
-<span><span class="co">#&gt;        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
+<span><span class="co">#&gt;   site      </span></span>
+<span><span class="co">#&gt;             </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Narrabri  </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Horsham   </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Parkes    </span></span>
@@ -152,13 +152,13 @@
 <span>  <span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># </span><span style="color: #949494; font-weight: bold;">Numeric vector input demo</span> </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># An edibble: 4 x 1</span></span></span>
-<span><span class="co">#&gt;     site</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;U(4)&gt;</span></span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>      1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>      2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>      3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>      4</span></span></code></pre></div>
+<span><span class="co">#&gt;    site</span></span>
+<span><span class="co">#&gt;        </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     4</span></span></code></pre></div>
 <p>In the instance that you do want to enter a single level with a numeric value, this can be specified using <code>lvls</code> on the RHS.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/design.html">design</a></span><span class="op">(</span><span class="st">"Single numeric level demo"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
@@ -166,10 +166,10 @@
 <span>  <span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># </span><span style="color: #949494; font-weight: bold;">Single numeric level demo</span> </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># An edibble: 1 x 1</span></span></span>
-<span><span class="co">#&gt;     site</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;U(1)&gt;</span></span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>      4</span></span></code></pre></div>
+<span><span class="co">#&gt;    site</span></span>
+<span><span class="co">#&gt;        </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     4</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="multiple-units">Multiple units<a class="anchor" aria-label="anchor" href="#multiple-units"></a>
 </h3>
@@ -194,19 +194,19 @@
 <span>  <span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># </span><span style="color: #949494; font-weight: bold;">Demo for defining units</span> </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># An edibble: 72 x 2</span></span></span>
-<span><span class="co">#&gt;      site    plot</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;U(4)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;U(72)&gt;</span></span></span>
-<span><span class="co">#&gt;     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>  site1  plot01</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>  site1  plot02</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>  site1  plot03</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>  site1  plot04</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>  site1  plot05</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>  site1  plot06</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>  site1  plot07</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>  site1  plot08</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>  site1  plot09</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>  site1  plot10</span></span>
+<span><span class="co">#&gt;    site  plot  </span></span>
+<span><span class="co">#&gt;                </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> site1 plot01</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> site1 plot02</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> site1 plot03</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> site1 plot04</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> site1 plot05</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> site1 plot06</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> site1 plot07</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> site1 plot08</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> site1 plot09</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> site1 plot10</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 62 more rows</span></span></span></code></pre></div>
 <p>In the above situation, the relationship between unit factors have to be apriori known, but there are situations in which the relationship may become cognizant only after defining the unit factors. In these situations, users can define the relationships using the functions <code>allot_units</code> and <code>assign_units</code> to add the edges between the relevant unit nodes in the factor and level graphs, respectively.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -216,19 +216,19 @@
 <span>  <span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># </span><span style="color: #949494; font-weight: bold;">Demo for defining units</span> </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># An edibble: 72 x 2</span></span></span>
-<span><span class="co">#&gt;      site    plot</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;U(4)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;U(72)&gt;</span></span></span>
-<span><span class="co">#&gt;     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>  site1  plot01</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>  site2  plot02</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>  site3  plot03</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>  site4  plot04</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>  site1  plot05</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>  site2  plot06</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>  site3  plot07</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>  site4  plot08</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>  site1  plot09</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>  site2  plot10</span></span>
+<span><span class="co">#&gt;    site  plot  </span></span>
+<span><span class="co">#&gt;                </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> site1 plot01</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> site2 plot02</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> site3 plot03</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> site4 plot04</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> site1 plot05</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> site2 plot06</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> site3 plot07</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> site4 plot08</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> site1 plot09</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> site2 plot10</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 62 more rows</span></span></span></code></pre></div>
 <p>The code above specifies the nested relationship of <code>plot</code> to <code>site</code>, with the assignment of levels performed systematically. The systematic allocation of <code>site</code> levels to <code>plot</code> is done so that the <code>site</code> levels vary the fastest, which is not the same systematic ordering as before. If the same result as before is desirable, users can define <code>order = "systematic-slowest"</code>, which offers a systematic assignment where the same levels are close together.</p>
 </div>
@@ -244,27 +244,27 @@
 <span>  <span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># </span><span style="color: #949494; font-weight: bold;">Crossed experiment</span> </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># An edibble: 18 x 3</span></span></span>
-<span><span class="co">#&gt;       row    col    plot</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;U(6)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;U(3)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;U(18)&gt;</span></span></span>
-<span><span class="co">#&gt;     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>   row1   col1  plot01</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>   row2   col1  plot02</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>   row3   col1  plot03</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>   row4   col1  plot04</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>   row5   col1  plot05</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>   row6   col1  plot06</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>   row1   col2  plot07</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>   row2   col2  plot08</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>   row3   col2  plot09</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>   row4   col2  plot10</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>   row5   col2  plot11</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span>   row6   col2  plot12</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span>   row1   col3  plot13</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span>   row2   col3  plot14</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span>   row3   col3  plot15</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span>   row4   col3  plot16</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span>   row5   col3  plot17</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span>   row6   col3  plot18</span></span></code></pre></div>
+<span><span class="co">#&gt;    row   col   plot  </span></span>
+<span><span class="co">#&gt;                      </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> row1  col1  plot01</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> row2  col1  plot02</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> row3  col1  plot03</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> row4  col1  plot04</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> row5  col1  plot05</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> row6  col1  plot06</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> row1  col2  plot07</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> row2  col2  plot08</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> row3  col2  plot09</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> row4  col2  plot10</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> row5  col2  plot11</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> row6  col2  plot12</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> row1  col3  plot13</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> row2  col3  plot14</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> row3  col3  plot15</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> row4  col3  plot16</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> row5  col3  plot17</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> row6  col3  plot18</span></span></code></pre></div>
 <p>The above table does not contain information on the site. For this, we need to combine the nesting and crossing structures, as shown next.</p>
 </div>
 <div class="section level3">
@@ -281,58 +281,58 @@
 <span><span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="va">complex</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># </span><span style="color: #949494; font-weight: bold;">Complex structure</span> </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># An edibble: 72 x 4</span></span></span>
-<span><span class="co">#&gt;        site     col     row    plot</span></span>
-<span><span class="co">#&gt;      <span style="color: #949494; font-style: italic;">&lt;U(4)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;U(24)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;U(12)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;U(72)&gt;</span></span></span>
-<span><span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Narrabri   col01   row01  plot01</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Narrabri   col01   row02  plot02</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Narrabri   col01   row03  plot03</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Narrabri   col02   row01  plot04</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Narrabri   col02   row02  plot05</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Narrabri   col02   row03  plot06</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Narrabri   col03   row01  plot07</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Narrabri   col03   row02  plot08</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Narrabri   col03   row03  plot09</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Narrabri   col04   row01  plot10</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> Narrabri   col04   row02  plot11</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> Narrabri   col04   row03  plot12</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> Narrabri   col05   row01  plot13</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> Narrabri   col05   row02  plot14</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> Narrabri   col05   row03  plot15</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> Narrabri   col06   row01  plot16</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> Narrabri   col06   row02  plot17</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> Narrabri   col06   row03  plot18</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> Horsham    col07   row04  plot19</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> Horsham    col07   row05  plot20</span></span>
+<span><span class="co">#&gt;    site     col   row   plot  </span></span>
+<span><span class="co">#&gt;                               </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Narrabri col01 row01 plot01</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Narrabri col01 row02 plot02</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Narrabri col01 row03 plot03</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Narrabri col02 row01 plot04</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Narrabri col02 row02 plot05</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Narrabri col02 row03 plot06</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Narrabri col03 row01 plot07</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Narrabri col03 row02 plot08</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Narrabri col03 row03 plot09</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Narrabri col04 row01 plot10</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> Narrabri col04 row02 plot11</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> Narrabri col04 row03 plot12</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> Narrabri col05 row01 plot13</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> Narrabri col05 row02 plot14</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> Narrabri col05 row03 plot15</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> Narrabri col06 row01 plot16</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> Narrabri col06 row02 plot17</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> Narrabri col06 row03 plot18</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> Horsham  col07 row04 plot19</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> Horsham  col07 row05 plot20</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 52 more rows</span></span></span></code></pre></div>
 <p>You may realise that the labels for the rows do not start with “row1” for Horsham. The default output displays distinct labels for the unit levels that are actually distinct. This safeguards for instances where the relationship between factors is lost, and the analyst will have to guess what units may be nested or crossed. However, nested labels may still be desirable. You can select the factors to show the nested labels by naming these factors as arguments for the <code>label_nested</code> in <code>serve_table</code> (below shows the nesting labels for <code>row</code> and <code>col</code> – notice <code>plot</code> still shows the distinct labels).</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/serve_table.html">serve_table</a></span><span class="op">(</span><span class="va">complex</span>, label_nested <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">row</span>, <span class="va">col</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># </span><span style="color: #949494; font-weight: bold;">Complex structure</span> </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># An edibble: 72 x 4</span></span></span>
-<span><span class="co">#&gt;        site     col     row    plot</span></span>
-<span><span class="co">#&gt;      <span style="color: #949494; font-style: italic;">&lt;U(4)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;U(24)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;U(12)&gt;</span> <span style="color: #949494; font-style: italic;">&lt;U(72)&gt;</span></span></span>
-<span><span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Narrabri    col1    row1  plot01</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Narrabri    col1    row2  plot02</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Narrabri    col1    row3  plot03</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Narrabri    col2    row1  plot04</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Narrabri    col2    row2  plot05</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Narrabri    col2    row3  plot06</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Narrabri    col3    row1  plot07</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Narrabri    col3    row2  plot08</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Narrabri    col3    row3  plot09</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Narrabri    col4    row1  plot10</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> Narrabri    col4    row2  plot11</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> Narrabri    col4    row3  plot12</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> Narrabri    col5    row1  plot13</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> Narrabri    col5    row2  plot14</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> Narrabri    col5    row3  plot15</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> Narrabri    col6    row1  plot16</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> Narrabri    col6    row2  plot17</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> Narrabri    col6    row3  plot18</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> Horsham     col1    row1  plot19</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> Horsham     col1    row2  plot20</span></span>
+<span><span class="co">#&gt;    site     col   row   plot  </span></span>
+<span><span class="co">#&gt;                               </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Narrabri <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    plot01</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Narrabri <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    plot02</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Narrabri <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    plot03</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Narrabri <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    plot04</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Narrabri <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    plot05</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Narrabri <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    plot06</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Narrabri <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    plot07</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Narrabri <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    plot08</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Narrabri <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    plot09</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Narrabri <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    plot10</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> Narrabri <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    plot11</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> Narrabri <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    plot12</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> Narrabri <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    plot13</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> Narrabri <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    plot14</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> Narrabri <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    plot15</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> Narrabri <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    plot16</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> Narrabri <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    plot17</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> Narrabri <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    plot18</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> Horsham  <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    plot19</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> Horsham  <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    plot20</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 52 more rows</span></span></span></code></pre></div>
 <p>You later find that the dimensions of Narrabri and Roseworthy are larger. The experimenter tells you that there are in fact 9 columns available, and therefore 27 plots at Narrabri and Roseworthy. The number of columns can be modified according to each site, as below, where <code>col</code> is defined to have 9 levels at Narrabri and Roseworthy but 6 levels elsewhere.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
