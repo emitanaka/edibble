@@ -200,6 +200,23 @@ edibble <- function(.data, title = NULL, name = "edibble", .record = TRUE, seed 
   new_edibble(.data, ..., .design = des)
 }
 
+#' @importFrom pillar ctl_new_pillar
+#' @export
+ctl_new_pillar.edbl_table <- function(controller, x, width, ..., title = NULL) {
+  out <- NextMethod()
+  type2 <- out$type
+  type2[[1]][1] <- vec_ptype_abbr2(x)
+  if(!inherits(x, "edbl_fct")) {
+    out$type[[1]][1] <- ""
+    class(out$type[[1]]) <- NULL
+  }
+  pillar::new_pillar(list(
+    title = out$title,
+    type = out$type,
+    type2 = type2,
+    data = out$data
+  ))
+}
 
 
 #' Restart the edibble design
