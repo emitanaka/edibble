@@ -87,17 +87,13 @@
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">examine_recipe</span><span class="op">(</span><span class="fu"><a href="takeout.html">takeout</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → No name was supplied so selecting a random named experimental design...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Selected Strip-Plot DesignSelected Strip-Unit Design</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> design(<span style="color: #00BBBB; font-style: italic;">"Strip-Plot Design | Strip-Unit Design"</span>) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   set_units(<span style="color: #BBBB00; background-color: #000000;">block</span> = 6,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             <span style="color: #BBBB00; background-color: #000000;">row</span> = nested_in(<span style="color: #BBBB00; background-color: #000000;">block</span>, 6),</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             <span style="color: #BBBB00; background-color: #000000;">col</span> = nested_in(<span style="color: #BBBB00; background-color: #000000;">block</span>, 4),</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             <span style="color: #BBBB00; background-color: #000000;">unit</span> = nested_in(<span style="color: #BBBB00; background-color: #000000;">block</span>, crossed_by(<span style="color: #BBBB00; background-color: #000000;">row</span>, <span style="color: #BBBB00; background-color: #000000;">col</span>))) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   set_trts(<span style="color: #0000BB;">trt1</span> = 6,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            <span style="color: #0000BB;">trt2</span> = 4) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   allot_trts(<span style="color: #0000BB;">trt1</span> ~ <span style="color: #BBBB00; background-color: #000000;">row</span>,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              <span style="color: #0000BB;">trt2</span> ~ <span style="color: #BBBB00; background-color: #000000;">col</span>) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   assign_trts("random", seed = 193) %&gt;%</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Selected Balanced Incomplete Block Design</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> design(<span style="color: #00BBBB; font-style: italic;">"Balanced Incomplete Block Design"</span>) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_units(<span style="color: #BBBB00; background-color: #000000;">block</span> = 2,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             <span style="color: #BBBB00; background-color: #000000;">unit</span> = nested_in(<span style="color: #BBBB00; background-color: #000000;">block</span>, 8)) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   set_trts(<span style="color: #0000BB;">trt</span> = 10) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   allot_trts(<span style="color: #0000BB;">trt</span> ~ <span style="color: #BBBB00; background-color: #000000;">unit</span>) %&gt;%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   assign_trts("random", seed = 536) %&gt;%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   serve_table()</span>
 </code></pre></div>
     </div>
