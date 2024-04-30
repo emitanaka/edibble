@@ -188,10 +188,12 @@ print.edbl_graph <- function(x, show = c("factors", "levels", "both"), ...) {
   }
 }
 
+#' @export
 names.edbl_graph <- function(x) {
   x$factors$nodes$name
 }
 
+#' @export
 names.edbl_design <- function(x) {
   names(x$graph)
 }
