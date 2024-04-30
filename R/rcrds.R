@@ -53,14 +53,14 @@ set_rcrds <- function(.edibble = NULL, ...,
   if(is_edibble_table(.edibble)) {
     #rcrds <- prov$serve_rcrds(return = "value")
     for(arcrd in rcrds) {
+      uid <- prov$mapping_to_unit(id = prov$fct_id(name = arcrd))
+      uname <- prov$fct_names(id = uid)
+      uids <- prov$lvl_id(value = attr(.edibble[[uname]], "label-non-nested") %||% .edibble[[uname]],
+                          fid = uid)
       if(!arcrd %in% names(.edibble)) {
-        uid <- prov$mapping_to_unit(id = prov$fct_id(name = arcrd))
-        uname <- prov$fct_names(id = uid)
-        uids <- prov$lvl_id(value = attr(.edibble[[uname]], "label-non-nested") %||% .edibble[[uname]],
-                            fid = uid)
         .edibble[[arcrd]] <- new_edibble_rcrd(rep(NA_real_, nrow(.edibble)), uids)
       } else {
-        .edibble[[arcrd]] <- new_edibble_rcrd(.edibble[[arcrd]])
+        .edibble[[arcrd]] <- new_edibble_rcrd(.edibble[[arcrd]], uids)
       }
     }
   }
@@ -350,7 +350,9 @@ as.character.edbl_rcrd <- function(x, ...) {
 #' @importFrom vctrs vec_ptype_abbr
 #' @export
 vec_ptype_abbr.edbl_rcrd <- function(x, ...)  {
-  paste0("R(", number_si_prefix(length(unique(attr(x, "unit_values")))), ")")
+  unit_values <- attr(x, "unit_values")
+  if(is.null(unit_values)) return("R")
+  paste0("R(", number_si_prefix(length(unique(unit_values))), ")")
 }
 
 #' @importFrom vctrs vec_ptype_full
