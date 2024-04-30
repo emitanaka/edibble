@@ -86,6 +86,14 @@ column <- function(x) {
 
 
 #' @export
+format.edbl_fct <- function(x, ...) {
+  if(inherits(x, "factor")) {
+    return(levels(x)[x])
+  }
+  x
+}
+
+#' @export
 format.edbl_lvls <- function(x, ...) {
   levels(x)
 }

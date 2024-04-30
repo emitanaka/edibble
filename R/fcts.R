@@ -84,6 +84,9 @@ new_edibble_fct <- function(labels = character(), levels = sort(as.character(uni
 #' @export
 as.character.edbl_fct <- function(x, ...) {
   #unname(levels(x)[x])
+  if(inherits(x, "factor")) {
+    return(as.character(format(x)))
+  }
   out <- unclass(x)
   attributes(out) <- NULL
   as.character(out)
