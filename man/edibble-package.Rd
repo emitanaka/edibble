@@ -2,8 +2,8 @@
 % Please edit documentation in R/edibble-package.R
 \docType{package}
 \name{edibble-package}
+\alias{edibble}
 \alias{edibble-package}
-\alias{_PACKAGE}
 \title{edibble: Encapsulating Elements of Experimental Design}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}

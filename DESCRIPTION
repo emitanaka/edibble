@@ -16,7 +16,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE, r6 = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Config/testthat/edition: 3
 URL: https://edibble.emitanaka.org/, https://github.com/emitanaka/edibble
 BugReports: https://github.com/emitanaka/edibble/issues

@@ -78,6 +78,7 @@ serve_table <- function(.edibble = NULL, label_nested = NULL, fail = c("error", 
 
 
 
+
 # Returns list of edibble variables
 serve_vars_not_reconciled <- function(prov) {
   namesv <- prov$fct_names()
