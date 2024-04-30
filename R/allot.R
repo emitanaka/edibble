@@ -58,7 +58,20 @@ allot_trts <- function(.edibble = NULL, ..., .record = TRUE) {
       tids <- prov$trt_ids
     }
     prov$append_fct_edges(from = tids, to = uid, group = TRUE, type = "allot")
+
+    if(is.data.frame(.edibble)) {
+
+      uids_df <- prov$lvl_id(value = .edibble[[unit]], fid = uid)
+      for(itrt in seq_along(trts)) {
+        atrt <- trts[itrt]
+        tids_df <- prov$lvl_id(value = .edibble[[atrt]], fid = tids[itrt])
+        prov$append_lvl_edges(from = tids_df,
+                                to = uids_df)
+      }
+    }
   }
+
+
 
   return_edibble_with_graph(.edibble, prov)
 }
