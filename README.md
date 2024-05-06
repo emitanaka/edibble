@@ -66,15 +66,15 @@ serve_table(des)
 #>    <U(4)>   <U(120)>      <T(2)>      <T(3)>
 #>     <chr>      <chr>       <chr>       <chr>
 #>  1 class1 student001 traditional take-home  
-#>  2 class1 student002 traditional closed-book
-#>  3 class1 student003 traditional open-book  
-#>  4 class1 student004 traditional take-home  
+#>  2 class1 student002 traditional take-home  
+#>  3 class1 student003 traditional take-home  
+#>  4 class1 student004 traditional open-book  
 #>  5 class1 student005 traditional closed-book
-#>  6 class1 student006 traditional take-home  
-#>  7 class1 student007 traditional take-home  
+#>  6 class1 student006 traditional closed-book
+#>  7 class1 student007 traditional closed-book
 #>  8 class1 student008 traditional open-book  
-#>  9 class1 student009 traditional take-home  
-#> 10 class1 student010 traditional closed-book
+#>  9 class1 student009 traditional open-book  
+#> 10 class1 student010 traditional open-book  
 #> # ℹ 110 more rows
 ```
 
@@ -105,15 +105,15 @@ out
 #>    <U(4)>   <U(120)>    <T(2)>   <T(3)>  <R(120)>   <R(120)>   <R(120)> <R(120)>
 #>     <chr>      <chr>     <chr>    <chr>     <dbl>      <dbl>      <dbl>    <dbl>
 #>  1 class1 student001 traditio… take-ho…         o          o          o        o
-#>  2 class1 student002 traditio… closed-…         o          o          o        o
-#>  3 class1 student003 traditio… open-bo…         o          o          o        o
-#>  4 class1 student004 traditio… take-ho…         o          o          o        o
+#>  2 class1 student002 traditio… take-ho…         o          o          o        o
+#>  3 class1 student003 traditio… take-ho…         o          o          o        o
+#>  4 class1 student004 traditio… open-bo…         o          o          o        o
 #>  5 class1 student005 traditio… closed-…         o          o          o        o
-#>  6 class1 student006 traditio… take-ho…         o          o          o        o
-#>  7 class1 student007 traditio… take-ho…         o          o          o        o
+#>  6 class1 student006 traditio… closed-…         o          o          o        o
+#>  7 class1 student007 traditio… closed-…         o          o          o        o
 #>  8 class1 student008 traditio… open-bo…         o          o          o        o
-#>  9 class1 student009 traditio… take-ho…         o          o          o        o
-#> 10 class1 student010 traditio… closed-…         o          o          o        o
+#>  9 class1 student009 traditio… open-bo…         o          o          o        o
+#> 10 class1 student010 traditio… open-bo…         o          o          o        o
 #> # ℹ 110 more rows
 #> # ℹ 2 more variables: room <R(4)>, teacher <R(4)>
 ```
@@ -206,8 +206,8 @@ focus and do well on). Some features include:
 
 - Work-in-progress book on this package can be found
   [here](https://emitanaka.org/edibble-book/).
-- The preprint about the framework can be found
-  [here](https://arxiv.org/abs/2307.11593).
+- The preprint about the package can be found
+  [here](https://emitanaka.org/paper-edibble/).
 
 ## Limitations
 
@@ -215,7 +215,6 @@ Currently, edibble:
 
 - expects you to know the number of units available from the start.
   Unknown numbers will be supported in future versions.
-- edibble supports experiments that are not comparative experiments.
 - does not do enough testing so design should be diagnosed after
   construction (which should be done regardless of how much testing
   edibble implements).

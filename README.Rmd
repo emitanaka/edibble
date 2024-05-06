@@ -143,14 +143,13 @@ The edibble R-package differ considerably to other packages for constructing exp
 ## Documents
 
 - Work-in-progress book on this package can be found [here](https://emitanaka.org/edibble-book/).
-- The preprint about the framework can be found [here](https://arxiv.org/abs/2307.11593).
+- The preprint about the package can be found [here](https://emitanaka.org/paper-edibble/).
 
 ## Limitations 
 
 Currently, edibble:
 
 - expects you to know the number of units available from the start. Unknown numbers will be supported in future versions.
-- edibble supports experiments that are not comparative experiments. 
 - does not do enough testing so design should be diagnosed after construction (which should be done regardless of how much testing edibble implements).
 
 ## Related Work
