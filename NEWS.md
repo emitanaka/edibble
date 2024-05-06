@@ -1,5 +1,17 @@
 # edibble (development version)
 
+Bug fixes
+
+* Factor inputs were displayed integers. Fixed so this does not happen.
+* S3 methods are exported.
+
+Improvements
+
+* If an edibble object is created from existing data, level edges are added when using `allot_trts()`. 
+* If a record factor is specified from existing data, the unit levels are added as attributes. 
+
+
+
 # edibble 1.1.0
 
 Bug fixes
