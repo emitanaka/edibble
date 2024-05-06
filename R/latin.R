@@ -28,6 +28,7 @@ latin_square <- function(n, randomise = TRUE) {
   out
 }
 
+
 #' @describeIn latin Like a Latin square design but allow different number of rows and columns
 #' @export
 latin_rectangle <- function(nr, nc, nt, randomise = TRUE) {
