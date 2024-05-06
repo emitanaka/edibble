@@ -1,4 +1,5 @@
-# edibble (development version)
+
+# edibble 1.1.1
 
 Bug fixes
 
@@ -9,8 +10,6 @@ Improvements
 
 * If an edibble object is created from existing data, level edges are added when using `allot_trts()`. 
 * If a record factor is specified from existing data, the unit levels are added as attributes. 
-
-
 
 # edibble 1.1.0
 

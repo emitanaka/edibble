@@ -1,6 +1,6 @@
 Package: edibble
 Title: Encapsulating Elements of Experimental Design 
-Version: 1.1.0.9000
+Version: 1.1.1
 Authors@R: 
     person(given = "Emi",
            family = "Tanaka",
@@ -41,7 +41,9 @@ Suggests:
     openxlsx2 (>= 1.0.0),
     visNetwork,
     blocksdesign,
-    knitr
+    knitr,
+    scales,
+    tidyr
 Depends: 
     R (>= 2.10)
 VignetteBuilder: knitr
