@@ -444,22 +444,22 @@
       
              
               irr1 irr2
-        fert1    0    2
-        fert2    0    2
+        fert1    0    0
+        fert2    0    4
       
       , ,  = wplot02
       
              
               irr1 irr2
-        fert1    2    0
-        fert2    2    0
+        fert1    0    3
+        fert2    0    1
       
       , ,  = wplot03
       
              
               irr1 irr2
-        fert1    0    2
-        fert2    0    2
+        fert1    0    3
+        fert2    0    1
       
       , ,  = wplot04
       
@@ -472,50 +472,50 @@
       
              
               irr1 irr2
-        fert1    0    2
-        fert2    0    2
+        fert1    0    4
+        fert2    0    0
       
       , ,  = wplot06
       
              
               irr1 irr2
-        fert1    2    0
-        fert2    2    0
+        fert1    0    1
+        fert2    0    3
       
       , ,  = wplot07
       
              
               irr1 irr2
-        fert1    2    0
-        fert2    2    0
+        fert1    3    0
+        fert2    1    0
       
       , ,  = wplot08
       
              
               irr1 irr2
-        fert1    2    0
-        fert2    2    0
+        fert1    3    0
+        fert2    1    0
       
       , ,  = wplot09
       
              
               irr1 irr2
-        fert1    0    2
-        fert2    0    2
+        fert1    2    0
+        fert2    2    0
       
       , ,  = wplot10
       
              
               irr1 irr2
-        fert1    2    0
-        fert2    2    0
+        fert1    1    0
+        fert2    3    0
       
       , ,  = wplot11
       
              
               irr1 irr2
-        fert1    0    2
-        fert2    0    2
+        fert1    0    3
+        fert2    0    1
       
       , ,  = wplot12
       
@@ -528,85 +528,85 @@
       
              
               irr1 irr2
-        fert1    2    0
-        fert2    2    0
+        fert1    0    2
+        fert2    0    2
       
       , ,  = wplot14
       
              
               irr1 irr2
-        fert1    0    2
-        fert2    0    2
+        fert1    3    0
+        fert2    1    0
       
       , ,  = wplot15
       
              
               irr1 irr2
-        fert1    2    0
-        fert2    2    0
+        fert1    1    0
+        fert2    3    0
       
       , ,  = wplot16
       
              
               irr1 irr2
-        fert1    0    2
-        fert2    0    2
+        fert1    0    4
+        fert2    0    0
       
       , ,  = wplot17
       
              
               irr1 irr2
-        fert1    2    0
-        fert2    2    0
+        fert1    1    0
+        fert2    3    0
       
       , ,  = wplot18
       
              
               irr1 irr2
-        fert1    0    2
-        fert2    0    2
+        fert1    0    3
+        fert2    0    1
       
       , ,  = wplot19
       
              
               irr1 irr2
-        fert1    2    0
-        fert2    2    0
+        fert1    0    1
+        fert2    0    3
       
       , ,  = wplot20
       
              
               irr1 irr2
-        fert1    0    2
-        fert2    0    2
+        fert1    3    0
+        fert2    1    0
       
       , ,  = wplot21
       
              
               irr1 irr2
-        fert1    0    2
-        fert2    0    2
+        fert1    1    0
+        fert2    3    0
       
       , ,  = wplot22
       
              
               irr1 irr2
-        fert1    0    2
-        fert2    0    2
+        fert1    0    3
+        fert2    0    1
       
       , ,  = wplot23
       
              
               irr1 irr2
-        fert1    2    0
-        fert2    2    0
+        fert1    0    0
+        fert2    4    0
       
       , ,  = wplot24
       
              
               irr1 irr2
-        fert1    2    0
-        fert2    2    0
+        fert1    1    0
+        fert2    3    0
       
       , ,  = wplot25
       
@@ -619,35 +619,35 @@
       
              
               irr1 irr2
-        fert1    0    2
-        fert2    0    2
+        fert1    0    0
+        fert2    4    0
       
       , ,  = wplot27
       
              
               irr1 irr2
-        fert1    2    0
-        fert2    2    0
+        fert1    1    0
+        fert2    3    0
       
       , ,  = wplot28
       
              
               irr1 irr2
-        fert1    2    0
-        fert2    2    0
+        fert1    0    1
+        fert2    0    3
       
       , ,  = wplot29
       
              
               irr1 irr2
-        fert1    2    0
-        fert2    2    0
+        fert1    0    3
+        fert2    0    1
       
       , ,  = wplot30
       
              
               irr1 irr2
-        fert1    0    2
-        fert2    0    2
+        fert1    3    0
+        fert2    1    0
       
 

@@ -65,16 +65,16 @@ serve_table(des)
 #>     class    student       style        exam
 #>    <U(4)>   <U(120)>      <T(2)>      <T(3)>
 #>     <chr>      <chr>       <chr>       <chr>
-#>  1 class1 student001 traditional take-home  
-#>  2 class1 student002 traditional take-home  
-#>  3 class1 student003 traditional take-home  
-#>  4 class1 student004 traditional open-book  
+#>  1 class1 student001 traditional   take-home
+#>  2 class1 student002 traditional   take-home
+#>  3 class1 student003 traditional   take-home
+#>  4 class1 student004 traditional   open-book
 #>  5 class1 student005 traditional closed-book
 #>  6 class1 student006 traditional closed-book
 #>  7 class1 student007 traditional closed-book
-#>  8 class1 student008 traditional open-book  
-#>  9 class1 student009 traditional open-book  
-#> 10 class1 student010 traditional open-book  
+#>  8 class1 student008 traditional   open-book
+#>  9 class1 student009 traditional   open-book
+#> 10 class1 student010 traditional   open-book
 #> # ℹ 110 more rows
 ```
 

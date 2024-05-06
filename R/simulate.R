@@ -475,14 +475,14 @@ effects_code <- function(dep_fcts, .data, nlevels = 1) {
                                     sprintf('%s_degree <- sample(1:%d, 1)', fct, ifelse(nfct > 5, 5, nfct - 1)),
                                     paste(sprintf('%s_effects <- as.vector(poly(%s, %s_degree)', fct, fct, fct),
                                           "%*%",
-                                          sprintf('rnorm(%s_degree, 0, %.1f))', fct, runif(1, 1, 10))))
+                                          sprintf('rnorm(%s_degree, 0, %.1f))', fct, stats::runif(1, 1, 10))))
         code_list$model_code <- c(code_list$model_code, sprintf("%s_effects", fct))
 
         # logical not accounted for
       } else if(any(c("factor", "character") %in% fct_class)) {
         code_list$process_code <- c(code_list$process_code,
                                         sprintf('        %s_effects <- rnorm(%d, 0, %.1f)',
-                                                fct, nfct, runif(1, 1, 10)))
+                                                fct, nfct, stats::runif(1, 1, 10)))
         code_list$model_code <- c(code_list$model_code, sprintf("%s_effects[index_levels(%s)]", fct, fct))
       }
     }
@@ -495,13 +495,13 @@ effects_code <- function(dep_fcts, .data, nlevels = 1) {
       if("numeric" %in% fct_class) {
         code_list$process_code <- c(code_list$process_code,
                                     sprintf('        %s_degree <- lapply(1:%d, function(i) sample(1:%d, 1))', fct, nlevels, nfct),
-                                    sprintf('        %s_effects <- lapply(1:%d, function(i) as.vector(poly(%s, %s_degree[[i]]) %*% rnorm(%s_degree[[i]], 0, %.1f)))', fct, nlevels, fct, fct, fct, runif(1, 1, 10)))
+                                    sprintf('        %s_effects <- lapply(1:%d, function(i) as.vector(poly(%s, %s_degree[[i]]) %*% rnorm(%s_degree[[i]], 0, %.1f)))', fct, nlevels, fct, fct, fct, stats::runif(1, 1, 10)))
 
         code_list$model_code <- c(code_list$model_code, sprintf("%s_effects[[i]]", fct))
       } else if(any(c("factor", "character") %in% fct_class)) {
         code_list$process_code <- c(code_list$process_code,
                                     sprintf('        %s_effects <- lapply(1:%d, function(i) rnorm(%d, 0, %.1f))',
-                                            fct, nlevels, nfct, runif(1, 1, 10)))
+                                            fct, nlevels, nfct, stats::runif(1, 1, 10)))
         code_list$model_code <- c(code_list$model_code, sprintf("%s_effects[[i]][index_levels(%s)]", fct, fct))
       }
     }

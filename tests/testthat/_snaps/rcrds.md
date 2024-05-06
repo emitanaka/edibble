@@ -8,16 +8,16 @@
           class    student   style        exam exam_mark   room
          <U(4)>   <U(120)>  <T(2)>      <T(3)>  <R(120)> <R(4)>
           <chr>      <chr>   <chr>       <chr>     <dbl>  <dbl>
-       1 class1 student001 flipped take-home           o      o
-       2 class1 student002 flipped take-home           o      x
-       3 class1 student003 flipped closed-book         o      x
-       4 class1 student004 flipped take-home           o      x
-       5 class1 student005 flipped take-home           o      x
-       6 class1 student006 flipped take-home           o      x
-       7 class1 student007 flipped open-book           o      x
-       8 class1 student008 flipped open-book           o      x
-       9 class1 student009 flipped take-home           o      x
-      10 class1 student010 flipped closed-book         o      x
+       1 class1 student001 flipped closed-book         o      o
+       2 class1 student002 flipped   take-home         o      x
+       3 class1 student003 flipped   open-book         o      x
+       4 class1 student004 flipped closed-book         o      x
+       5 class1 student005 flipped closed-book         o      x
+       6 class1 student006 flipped   open-book         o      x
+       7 class1 student007 flipped closed-book         o      x
+       8 class1 student008 flipped   open-book         o      x
+       9 class1 student009 flipped   take-home         o      x
+      10 class1 student010 flipped   take-home         o      x
       # i 110 more rows
 
 ---
@@ -44,16 +44,16 @@
           class    student   style        exam exam_mark   room
          <U(4)>   <U(120)>  <T(2)>      <T(3)>  <R(120)> <R(4)>
           <chr>      <chr>   <chr>       <chr>     <dbl>  <dbl>
-       1 class1 student001 flipped take-home           o      o
-       2 class1 student002 flipped take-home           o      x
-       3 class1 student003 flipped closed-book         o      x
-       4 class1 student004 flipped take-home           o      x
-       5 class1 student005 flipped take-home           o      x
-       6 class1 student006 flipped take-home           o      x
-       7 class1 student007 flipped open-book           o      x
-       8 class1 student008 flipped open-book           o      x
-       9 class1 student009 flipped take-home           o      x
-      10 class1 student010 flipped closed-book         o      x
+       1 class1 student001 flipped closed-book         o      o
+       2 class1 student002 flipped   take-home         o      x
+       3 class1 student003 flipped   open-book         o      x
+       4 class1 student004 flipped closed-book         o      x
+       5 class1 student005 flipped closed-book         o      x
+       6 class1 student006 flipped   open-book         o      x
+       7 class1 student007 flipped closed-book         o      x
+       8 class1 student008 flipped   open-book         o      x
+       9 class1 student009 flipped   take-home         o      x
+      10 class1 student010 flipped   take-home         o      x
       # i 110 more rows
 
 ---
@@ -83,16 +83,16 @@
           class    student   style       exam exam_mark quiz1_mark quiz2_mark   gender
          <U(4)>   <U(120)>  <T(2)>     <T(3)>  <R(120)>   <R(120)>   <R(120)> <R(120)>
           <chr>      <chr>   <chr>      <chr>     <dbl>      <dbl>      <dbl>    <dbl>
-       1 class1 student001 flipped take-home~         o          o          o        o
-       2 class1 student002 flipped take-home~         o          o          o        o
-       3 class1 student003 flipped closed-bo~         o          o          o        o
-       4 class1 student004 flipped take-home~         o          o          o        o
-       5 class1 student005 flipped take-home~         o          o          o        o
-       6 class1 student006 flipped take-home~         o          o          o        o
-       7 class1 student007 flipped open-book~         o          o          o        o
-       8 class1 student008 flipped open-book~         o          o          o        o
-       9 class1 student009 flipped take-home~         o          o          o        o
-      10 class1 student010 flipped closed-bo~         o          o          o        o
+       1 class1 student001 flipped closed-bo~         o          o          o        o
+       2 class1 student002 flipped  take-home         o          o          o        o
+       3 class1 student003 flipped  open-book         o          o          o        o
+       4 class1 student004 flipped closed-bo~         o          o          o        o
+       5 class1 student005 flipped closed-bo~         o          o          o        o
+       6 class1 student006 flipped  open-book         o          o          o        o
+       7 class1 student007 flipped closed-bo~         o          o          o        o
+       8 class1 student008 flipped  open-book         o          o          o        o
+       9 class1 student009 flipped  take-home         o          o          o        o
+      10 class1 student010 flipped  take-home         o          o          o        o
       # i 110 more rows
       # i 2 more variables: room <R(4)>, teacher <R(4)>
 
