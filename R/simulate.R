@@ -348,8 +348,8 @@ with_variables <- function(...,
 #' @param .nsim The number of simulations to run.
 #' @examples
 #' spd <- design("Split-Plot Design | Split-Unit Design") %>%
-#' set_units(mainplot = 30,
-#'           subplot = nested_in(mainplot, 4)) %>%
+#'   set_units(mainplot = 30,
+#'             subplot = nested_in(mainplot, 4)) %>%
 #'   set_trts(trt1 = LETTERS[1:3],
 #'            trt2 = 4) %>%
 #'   allot_trts(trt1 ~ mainplot,
