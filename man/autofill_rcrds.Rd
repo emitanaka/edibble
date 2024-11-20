@@ -10,7 +10,8 @@ autofill_rcrds(.data, ..., .seed = NULL, .nsim = 1L)
 \item{.data}{An edibble data.}
 
 \item{...}{If supplied, it is a name-value pair where the name should
-correspond to the record factor name and value is the f}
+correspond to the record factor name and value is the dependent factors
+selected with \code{with_variables()}.}
 
 \item{.seed}{The seed number.}
 
@@ -20,4 +21,25 @@ correspond to the record factor name and value is the f}
 This function fills the values of the record factors by automatically
 choosing a simulation process. It tries to be smart by ensuring to use
 values that is within expectation.
+}
+\examples{
+spd <- design("Split-Plot Design | Split-Unit Design") \%>\%
+set_units(mainplot = 30,
+          subplot = nested_in(mainplot, 4)) \%>\%
+  set_trts(trt1 = LETTERS[1:3],
+           trt2 = 4) \%>\%
+  allot_trts(trt1 ~ mainplot,
+             trt2 ~ subplot) \%>\%
+  assign_trts("random", seed = 719) \%>\%
+  serve_table() \%>\%
+  set_rcrds(mass = mainplot,
+            yield = subplot,
+            type = subplot) \%>\%
+  expect_rcrds(mass > 0,
+               yield > 0,
+               yield < 100,
+               factor(type, levels = c("a", "b", "c")))
+spd \%>\%
+  autofill_rcrds()
+
 }
