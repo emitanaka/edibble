@@ -954,7 +954,7 @@ Provenance <- R6::R6Class("Provenance",
                          #' Get the number of nodes in level graph
                          lvl_n = function(value) {
                            if (missing(value)) {
-                             sum(lengths(self$lvl_nodes))
+                             sum(sapply(prov$lvl_nodes, nrow))
                            } else {
                              stop("Can't set `$lvl_n`.")
                            }
