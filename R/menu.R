@@ -330,7 +330,7 @@ menu_strip <- function(t1 = random_integer_small(),
                        name_trt1 = "trt1",
                        name_trt2 = "trt2") {
   des <- new_recipe_design(name = "strip",
-                           name_full = title)
+                           name_full = name_title)
   block <- edibble_decorate("units")(name_block)
   unit <- edibble_decorate("units")(name_unit)
   row <- edibble_decorate("units")(name_row)
