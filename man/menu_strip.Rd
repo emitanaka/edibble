@@ -8,7 +8,14 @@ menu_strip(
   t1 = random_integer_small(),
   t2 = random_integer_small(),
   r = random_integer_small(),
-  seed = random_seed_number()
+  seed = random_seed_number(),
+  name_title = c("Strip-Plot Design", "Strip-Unit Design"),
+  name_block = "block",
+  name_unit = "unit",
+  name_row = "row",
+  name_col = "col",
+  name_trt1 = "trt1",
+  name_trt2 = "trt2"
 )
 }
 \arguments{
@@ -19,6 +26,14 @@ menu_strip(
 \item{r}{The number of replications for each treatment level.}
 
 \item{seed}{A scalar value for computational reproducibility.}
+
+\item{name_title}{The name of the design or title.}
+
+\item{name_unit}{The name of the unit factor}
+
+\item{name_row, name_col}{The names for the row and column factors.}
+
+\item{name_trt1, name_trt2}{The name of the treatment factors.}
 }
 \value{
 A recipe strip-unit design.

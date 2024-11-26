@@ -4,12 +4,30 @@
 \alias{menu_hyper_graeco}
 \title{Hyper-Graeco-Latin Square Design}
 \usage{
-menu_hyper_graeco(t = random_integer_small(), seed = random_seed_number())
+menu_hyper_graeco(
+  t = random_integer_small(),
+  seed = random_seed_number(),
+  name_title = "Hyper-Graeco-Latin Square Design",
+  name_block1 = "block1",
+  name_block2 = "block2",
+  name_block3 = "block3",
+  name_block4 = "block4",
+  name_unit = "name_unit",
+  name_trt = "name_trt"
+)
 }
 \arguments{
 \item{t}{The number of treatments}
 
 \item{seed}{A scalar value for computational reproducibility.}
+
+\item{name_title}{The name of the design or title.}
+
+\item{name_unit}{The name of the unit factor}
+
+\item{name_trt}{The name of the treatment factor.}
+
+\item{block1, block2, block3, block4}{The names of the block factors.}
 }
 \value{
 A recipe Hyper-Graeco-Latin square design.

@@ -7,7 +7,12 @@
 menu_youden(
   nc = random_integer_small(),
   t = random_integer_small(min = nc + 1),
-  seed = random_seed_number()
+  seed = random_seed_number(),
+  name_title = "Youden Square Design",
+  name_row = "row",
+  name_col = "col",
+  name_unit = "unit",
+  name_trt = "trt"
 )
 }
 \arguments{
@@ -16,6 +21,12 @@ menu_youden(
 \item{t}{The number of treatments.}
 
 \item{seed}{A scalar value for computational reproducibility.}
+
+\item{name_title}{The name of the design or title.}
+
+\item{name_unit}{The name of the unit factor}
+
+\item{name_trt}{The name of the treatment factor.}
 }
 \value{
 A recipe Youden square design.

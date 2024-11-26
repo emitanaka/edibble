@@ -7,7 +7,11 @@
 menu_rcbd(
   t = random_integer_small(),
   r = random_integer_small(),
-  seed = random_seed_number()
+  seed = random_seed_number(),
+  name_title = "Randomised Complete Block Design",
+  name_block = "block",
+  name_unit = "unit",
+  name_trt = "trt"
 )
 }
 \arguments{
@@ -16,6 +20,14 @@ menu_rcbd(
 \item{r}{The number of replications for each treatment level.}
 
 \item{seed}{A scalar value for computational reproducibility.}
+
+\item{name_title}{The name of the design or title.}
+
+\item{name_block}{The name of the block factor.}
+
+\item{name_unit}{The name of the unit factor}
+
+\item{name_trt}{The name of the treatment factor.}
 }
 \value{
 A recipe for randomised complete block design.

@@ -35,6 +35,10 @@ random_true_false <- function() sample(c(TRUE, FALSE), 1)
 #' @param t The number of treatments.
 #' @param r The number of replications for each treatment level.
 #' @param seed A scalar value for computational reproducibility.
+#' @param name_title The name of the design or title.
+#' @param name_block The name of the block factor.
+#' @param name_unit The name of the unit factor
+#' @param name_trt The name of the treatment factor.
 #' @family recipe-designs
 #' @examples
 #' menu_rcbd(t = 3, r = 2)
@@ -42,13 +46,17 @@ random_true_false <- function() sample(c(TRUE, FALSE), 1)
 #' @export
 menu_rcbd <- function(t = random_integer_small(),
                       r = random_integer_small(),
-                      seed = random_seed_number()) {
+                      seed = random_seed_number(),
+                      name_title = "Randomised Complete Block Design",
+                      name_block = "block",
+                      name_unit = "unit",
+                      name_trt = "trt") {
 
   des <- new_recipe_design(name = "rcbd",
-                          name_full = "Randomised Complete Block Design")
-  block <- edibble_decorate("units")("block")
-  unit <- edibble_decorate("units")("unit")
-  trt <- edibble_decorate("trts")("trt")
+                          name_full = name_title)
+  block <- edibble_decorate("units")(name_block)
+  unit <- edibble_decorate("units")(name_unit)
+  trt <- edibble_decorate("trts")(name_trt)
   des <- object_add_code(des,
         sprintf('set_units(%s = %d,
             %s = nested_in(%s, %d))', block, r, unit, block, t),
@@ -65,20 +73,28 @@ menu_rcbd <- function(t = random_integer_small(),
 #'
 #' @inheritParams menu_rcbd
 #' @family recipe-designs
+#' @param name_row,name_col The names for the row and column factors.
+#' @param name_trt1,name_trt2 The name of the treatment factors.
 #' @examples
 #' menu_graeco(t = 3)
 #' @return A recipe for Graeco-Latin square design.
 #' @export
 menu_graeco <- function(t = random_integer_small(),
-                        seed = random_seed_number()) {
+                        seed = random_seed_number(),
+                        name_title = "Graeco-Latin Square Design",
+                        name_row = "row",
+                        name_col = "col",
+                        name_unit = "unit",
+                        name_trt1 = "trt1",
+                        name_trt2 = "trt2") {
   des <- new_recipe_design(name = "graeco",
-                          name_full = "Graeco-Latin Square Design")
+                           name_full = name_title)
 
-  row <- edibble_decorate("units")("row")
-  col <- edibble_decorate("units")("col")
-  unit <- edibble_decorate("units")("unit")
-  trt1 <- edibble_decorate("trts")("trt1")
-  trt2 <- edibble_decorate("trts")("trt2")
+  row <- edibble_decorate("units")(name_row)
+  col <- edibble_decorate("units")(name_col)
+  unit <- edibble_decorate("units")(name_unit)
+  trt1 <- edibble_decorate("trts")(name_trt1)
+  trt2 <- edibble_decorate("trts")(name_trt2)
 
   des <- object_add_code(des,
                               sprintf('set_units(%s = %d,
@@ -109,9 +125,13 @@ menu_graeco <- function(t = random_integer_small(),
 #' @return A recipe for completely randomised design.
 #' @export
 menu_crd <- function(t = random_integer_small(),
-                               n = random_integer_medium(min = t),
-                               r = NULL,
-                               seed = random_seed_number()) {
+                     n = random_integer_medium(min = t),
+                     r = NULL,
+                     seed = random_seed_number(),
+                     name_title = "Completely Randomised Design",
+                     name_unit = "unit",
+                     name_trt = "trt") {
+
 
   # checks
   if(!missing(n) & !is_null(r)) {
@@ -122,10 +142,10 @@ menu_crd <- function(t = random_integer_small(),
   }
 
   des <- new_recipe_design(name = "crd",
-                          name_full = "Completely Randomised Design")
+                           name_full = name_title)
 
-  unit <- edibble_decorate("units")("unit")
-  trt <- edibble_decorate("trts")("trt")
+  unit <- edibble_decorate("units")(name_unit)
+  trt <- edibble_decorate("trts")(name_trt)
 
   des <- object_add_code(des,
                                sprintf('set_units(%s = %d)', unit, n),
@@ -152,18 +172,21 @@ menu_crd <- function(t = random_integer_small(),
 #' @return A recipe for factorial design.
 #' @export
 menu_factorial <- function(trt = c(random_integer_small(),
-                                             random_integer_small()),
-                                     r = random_integer_small(),
-                                     design = c("crd", "rcbd"),
-                                     seed = random_seed_number()) {
+                                   random_integer_small()),
+                           r = random_integer_small(),
+                           design = c("crd", "rcbd"),
+                           seed = random_seed_number(),
+                           name_title = NULL,
+                           name_unit = "unit",
+                           name_block = "block") {
   design <- match.arg(design)
   des <- new_recipe_design(name = "factorial",
-                          name_full = paste0("Factorial Design",
+                          name_full = name_title %||% paste0("Factorial Design",
                                              switch(design,
                                                     "crd" = "",
                                                     "rcbd" = " with RCBD structure")))
-  unit <- edibble_decorate("units")("unit")
-  block <- edibble_decorate("units")("block")
+  unit <- edibble_decorate("units")(name_unit)
+  block <- edibble_decorate("units")(name_block)
   ntrt <- prod(trt)
   unit_str <- switch(design,
                      "crd" = sprintf('%s = %d', unit, ntrt * r),
@@ -203,19 +226,24 @@ menu_factorial <- function(trt = c(random_integer_small(),
 #' @return A recipe split-plot design.
 #' @export
 menu_split <- function(t1 = random_integer_small(),
-                                 t2 = random_integer_small(),
-                                 r = random_integer_small(),
-                                 seed = random_seed_number()) {
+                       t2 = random_integer_small(),
+                       r = random_integer_small(),
+                       seed = random_seed_number(),
+                       name_title = c("Split-Plot Design",
+                                      "Split-Unit Design"),
+                       name_mainplot = "mainplot",
+                       name_subplot = "subplot",
+                       name_trt1 = "trt1",
+                       name_trt2 = "trt2") {
 
   n <- t1 * t2 * r
   des <- new_recipe_design(name = "split",
-                          name_full = c("Split-Plot Design",
-                                        "Split-Unit Design"))
+                           name_full = name_title)
 
-  mainplot <- edibble_decorate("units")("mainplot")
-  subplot <- edibble_decorate("units")("subplot")
-  trt1 <- edibble_decorate("trts")("trt1")
-  trt2 <- edibble_decorate("trts")("trt2")
+  mainplot <- edibble_decorate("units")(name_mainplot)
+  subplot <- edibble_decorate("units")(name_subplot)
+  trt1 <- edibble_decorate("trts")(name_trt1)
+  trt2 <- edibble_decorate("trts")(name_trt2)
 
   des <- object_add_code(des,
                                sprintf('set_units(%s = %d,
@@ -246,12 +274,16 @@ menu_split <- function(t1 = random_integer_small(),
 menu_bibd <- function(t = random_integer_small(min = 3),
                       k = random_integer_small(max = t - 1),
                       r = random_integer_small(),
-                      seed = random_seed_number()) {
+                      seed = random_seed_number(),
+                      name_title = "Balanced Incomplete Block Design",
+                      name_block = "block",
+                      name_unit = "unit",
+                      name_trt = "trt") {
   if(k >= t) abort("The size of the block `k` must be smaller than `t`.")
 
   b <- r * t / k
   lambda <- r * (k - 1) / (t - 1)
-  # since I derive b myself, below isn't necessay
+  # since I derive b myself, below isn't necessary
   # if(lambda %% 1 != 0 &
   #    b %% 1 != 0 &
   #    r <= lambda &
@@ -261,10 +293,10 @@ menu_bibd <- function(t = random_integer_small(min = 3),
   b <- as.integer(b)
 
   des <- new_recipe_design(name = "bibd",
-                           name_full = "Balanced Incomplete Block Design")
-  block <- edibble_decorate("units")("block")
-  unit <- edibble_decorate("units")("unit")
-  trt <- edibble_decorate("trts")("trt")
+                           name_full = name_title)
+  block <- edibble_decorate("units")(name_block)
+  unit <- edibble_decorate("units")(name_unit)
+  trt <- edibble_decorate("trts")(name_trt)
   des <- object_add_code(des,
                                 sprintf('set_units(%s = %d,
             %s = nested_in(%s, %d))', block, b, unit, block, k),
@@ -280,6 +312,7 @@ menu_bibd <- function(t = random_integer_small(min = 3),
 #'
 #'
 #' @inheritParams menu_split
+#' @inheritParams menu_graeco
 #' @family recipe-designs
 #' @examples
 #' menu_strip(t1 = 3, t2 = 3, r = 2)
@@ -288,16 +321,22 @@ menu_bibd <- function(t = random_integer_small(min = 3),
 menu_strip <- function(t1 = random_integer_small(),
                        t2 = random_integer_small(),
                        r = random_integer_small(),
-                       seed = random_seed_number()) {
+                       seed = random_seed_number(),
+                       name_title = c("Strip-Plot Design", "Strip-Unit Design"),
+                       name_block = "block",
+                       name_unit = "unit",
+                       name_row = "row",
+                       name_col = "col",
+                       name_trt1 = "trt1",
+                       name_trt2 = "trt2") {
   des <- new_recipe_design(name = "strip",
-                           name_full = c("Strip-Plot Design",
-                                         "Strip-Unit Design"))
-  block <- edibble_decorate("units")("block")
-  unit <- edibble_decorate("units")("unit")
-  row <- edibble_decorate("units")("row")
-  col <- edibble_decorate("units")("col")
-  trt1 <- edibble_decorate("trts")("trt1")
-  trt2 <- edibble_decorate("trts")("trt2")
+                           name_full = title)
+  block <- edibble_decorate("units")(name_block)
+  unit <- edibble_decorate("units")(name_unit)
+  row <- edibble_decorate("units")(name_row)
+  col <- edibble_decorate("units")(name_col)
+  trt1 <- edibble_decorate("trts")(name_trt1)
+  trt2 <- edibble_decorate("trts")(name_trt2)
 
   des <- object_add_code(des,
                                 sprintf('set_units(%s = %d,
@@ -329,14 +368,19 @@ menu_strip <- function(t1 = random_integer_small(),
 #' @export
 menu_youden <- function(nc = random_integer_small(),
                         t = random_integer_small(min = nc + 1),
-                        seed = random_seed_number()) {
+                        seed = random_seed_number(),
+                        name_title = "Youden Square Design",
+                        name_row = "row",
+                        name_col = "col",
+                        name_unit = "unit",
+                        name_trt = "trt") {
   des <- new_recipe_design(name = "youden",
-                          name_full = "Youden Square Design")
+                           name_full = name_title)
 
-  row <- edibble_decorate("units")("row")
-  col <- edibble_decorate("units")("col")
-  unit <- edibble_decorate("units")("unit")
-  trt <- edibble_decorate("trts")("trt")
+  row <- edibble_decorate("units")(name_row)
+  col <- edibble_decorate("units")(name_col)
+  unit <- edibble_decorate("units")(name_unit)
+  trt <- edibble_decorate("trts")(name_trt)
 
   des <- object_add_code(des,
                                sprintf('set_units(%s = %d,
@@ -358,6 +402,7 @@ menu_youden <- function(nc = random_integer_small(),
 #'
 #' @param t The number of treatments
 #' @inheritParams menu_rcbd
+#' @inheritParams menu_graeco
 #' @family recipe-designs
 #' @importFrom cli style_italic
 #' @examples
@@ -365,14 +410,19 @@ menu_youden <- function(nc = random_integer_small(),
 #' @return A recipe Latin square design.
 #' @export
 menu_lsd <- function(t = random_integer_small(),
-                               seed = random_seed_number()) {
+                     seed = random_seed_number(),
+                     name_title = "Latin Square Design",
+                     name_row = "row",
+                     name_col = "col",
+                     name_unit = "unit",
+                     name_trt = "trt") {
   des <- new_recipe_design(name = "lsd",
-                          name_full = "Latin Square Design")
+                          name_full = name_title)
 
-  row <- edibble_decorate("units")("row")
-  col <- edibble_decorate("units")("col")
-  unit <- edibble_decorate("units")("unit")
-  trt <- edibble_decorate("trts")("trt")
+  row <- edibble_decorate("units")(name_row)
+  col <- edibble_decorate("units")(name_col)
+  unit <- edibble_decorate("units")(name_unit)
+  trt <- edibble_decorate("trts")(name_trt)
 
   des <- object_add_code(des,
                                sprintf('set_units(%s = %d,
@@ -389,6 +439,7 @@ menu_lsd <- function(t = random_integer_small(),
 #' Hyper-Graeco-Latin Square Design
 #'
 #' @param t The number of treatments
+#' @param block1,block2,block3,block4 The names of the block factors.
 #' @inheritParams menu_rcbd
 #' @family recipe-designs
 #' @examples
@@ -396,16 +447,23 @@ menu_lsd <- function(t = random_integer_small(),
 #' @return A recipe Hyper-Graeco-Latin square design.
 #' @export
 menu_hyper_graeco <- function(t = random_integer_small(),
-                              seed = random_seed_number()) {
+                              seed = random_seed_number(),
+                              name_title = "Hyper-Graeco-Latin Square Design",
+                              name_block1 = "block1",
+                              name_block2 = "block2",
+                              name_block3 = "block3",
+                              name_block4 = "block4",
+                              name_unit = "name_unit",
+                              name_trt = "name_trt") {
   des <- new_recipe_design(name = "hyper_graeco",
-                           name_full = "Hyper-Graeco-Latin Square Design")
+                           name_full = name_title)
 
-  block1 <- edibble_decorate("units")("block1")
-  block2 <- edibble_decorate("units")("block2")
-  block3 <- edibble_decorate("units")("block3")
-  block4 <- edibble_decorate("units")("block4")
-  unit <- edibble_decorate("units")("unit")
-  trt <- edibble_decorate("trts")("trt")
+  block1 <- edibble_decorate("units")(name_block1)
+  block2 <- edibble_decorate("units")(name_block2)
+  block3 <- edibble_decorate("units")(name_block3)
+  block4 <- edibble_decorate("units")(name_block4)
+  unit <- edibble_decorate("units")(name_unit)
+  trt <- edibble_decorate("trts")(name_trt)
 
   des <- object_add_code(des,
                                 sprintf('set_units(%s = %d,

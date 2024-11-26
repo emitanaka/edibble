@@ -8,7 +8,10 @@ menu_factorial(
   trt = c(random_integer_small(), random_integer_small()),
   r = random_integer_small(),
   design = c("crd", "rcbd"),
-  seed = random_seed_number()
+  seed = random_seed_number(),
+  name_title = NULL,
+  name_unit = "unit",
+  name_block = "block"
 )
 }
 \arguments{
@@ -19,6 +22,12 @@ menu_factorial(
 \item{design}{The unit structure: "crd" or "rcbd". The default is "crd".}
 
 \item{seed}{A scalar value for computational reproducibility.}
+
+\item{name_title}{The name of the design or title.}
+
+\item{name_unit}{The name of the unit factor}
+
+\item{name_block}{The name of the block factor.}
 }
 \value{
 A recipe for factorial design.

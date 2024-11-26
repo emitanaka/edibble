@@ -8,7 +8,10 @@ menu_crd(
   t = random_integer_small(),
   n = random_integer_medium(min = t),
   r = NULL,
-  seed = random_seed_number()
+  seed = random_seed_number(),
+  name_title = "Completely Randomised Design",
+  name_unit = "unit",
+  name_trt = "trt"
 )
 }
 \arguments{
@@ -19,6 +22,12 @@ menu_crd(
 \item{r}{(Optional) The number of replicates.}
 
 \item{seed}{A scalar value for computational reproducibility.}
+
+\item{name_title}{The name of the design or title.}
+
+\item{name_unit}{The name of the unit factor}
+
+\item{name_trt}{The name of the treatment factor.}
 }
 \value{
 A recipe for completely randomised design.

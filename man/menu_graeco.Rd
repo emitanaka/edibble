@@ -4,12 +4,29 @@
 \alias{menu_graeco}
 \title{Graeco-Latin Square Design}
 \usage{
-menu_graeco(t = random_integer_small(), seed = random_seed_number())
+menu_graeco(
+  t = random_integer_small(),
+  seed = random_seed_number(),
+  name_title = "Graeco-Latin Square Design",
+  name_row = "row",
+  name_col = "col",
+  name_unit = "unit",
+  name_trt1 = "trt1",
+  name_trt2 = "trt2"
+)
 }
 \arguments{
 \item{t}{The number of treatments.}
 
 \item{seed}{A scalar value for computational reproducibility.}
+
+\item{name_title}{The name of the design or title.}
+
+\item{name_row, name_col}{The names for the row and column factors.}
+
+\item{name_unit}{The name of the unit factor}
+
+\item{name_trt1, name_trt2}{The name of the treatment factors.}
 }
 \value{
 A recipe for Graeco-Latin square design.

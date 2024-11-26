@@ -8,7 +8,12 @@ menu_split(
   t1 = random_integer_small(),
   t2 = random_integer_small(),
   r = random_integer_small(),
-  seed = random_seed_number()
+  seed = random_seed_number(),
+  name_title = c("Split-Plot Design", "Split-Unit Design"),
+  name_mainplot = "mainplot",
+  name_subplot = "subplot",
+  name_trt1 = "trt1",
+  name_trt2 = "trt2"
 )
 }
 \arguments{
@@ -19,6 +24,8 @@ menu_split(
 \item{r}{The number of replications for each treatment level.}
 
 \item{seed}{A scalar value for computational reproducibility.}
+
+\item{name_title}{The name of the design or title.}
 }
 \value{
 A recipe split-plot design.
