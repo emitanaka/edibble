@@ -32,12 +32,20 @@ add_anatomy <- function(anatomy, fresh, name, role) {
   if(role=="edbl_unit") {
     if(is.null(anatomy)) {
       anatomy <- stats::as.formula(paste0("~", name))
+    } else if(inherits(fresh, "nest_lvls")) {
+      parent_name <- attr(fresh, "keyname")
+      fcts <- rownames(attr(terms(anatomy), "factors"))
+      term <- paste0(parent_name, "/", name)
+      if(parent_name %in% fcts) {
+        res <- do.call(substitute, list(expr = anatomy, setNames(list(eval(parse(text = paste0("quote(", term, ")")))), parent_name)))
+        anatomy <- as.formula(res, env = environment(anatomy))
+      } else {
+        anatomy <- stats::update(anatomy,
+                                 stats::as.formula(paste0("~ . + ", term)), evaluate = FALSE)
+      }
     } else {
-      term <- ifelse(inherits(fresh, "nest_lvls"),
-                     paste0(attr(fresh, "keyname"), "/", name),
-                     name)
       anatomy <- stats::update(anatomy,
-                             stats::as.formula(paste0("~ . + ", term)), evaluate = FALSE)
+                               stats::as.formula(paste0("~ . + ", name)), evaluate = FALSE)
     }
   }
   anatomy
