@@ -90,7 +90,9 @@ format.edbl_fct <- function(x, ...) {
   if(inherits(x, "factor")) {
     return(levels(x)[x])
   }
-  x
+  xx <- unclass(x)
+  attributes(xx) <- NULL
+  xx
 }
 
 #' @export

@@ -316,13 +316,14 @@ dup_symbol <- function() "x"
 
 
 new_edibble_rcrd <- function(x, unit_values = NULL, class = NULL, ...) {
-  res <- new_vctr(x, class = c("edbl_rcrd", "edbl_fct"),
+  res <- new_vctr(x, class = c("edbl_rcrd", "edbl_fct", "character"),
                   #unit = unit_name %||% attr(x, "unit_name"),
                   unit_values = unit_values %||% attr(x, "unit_values"),
                   ...)
   class(res) <- c(class, class(res))
   res
 }
+
 
 #' @importFrom pillar pillar_shaft new_pillar_shaft_simple style_subtle
 #' @export
